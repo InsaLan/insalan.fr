@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}InsaLan{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ asset('bundles/insalan/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+    <!--[if lt IE 9]>
+      <script src="{{ asset('bundles/insalan/js/html5shiv.js') }}"></script>
+      <script src="{{ asset('bundles/insalan/js/respond.min.js') }}"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ path('insalan_news_default_index') }}">InsaLan</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{{ path('insalan_news_default_index') }}">Actualités</a></li>
+            <li><a href="#">Tournois</a></li>
+            <li><a href="#">Galerie</a></li>
+            <li><a href="#">Informations</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      {% block body %}{% endblock %}
+    </div>
+
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="{{ asset('bundles/insalan/js/bootstrap.min.js') }}"></script>
+
+    {% block javascripts %}{% endblock %}
+  </body>
+</html>

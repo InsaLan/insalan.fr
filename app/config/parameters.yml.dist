@@ -2,8 +2,8 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     symfony
-    database_user:     root
+    database_name:     insalan.fr
+    database_user:     insalan.fr
     database_password: ~
 
     mailer_transport:  smtp
@@ -11,5 +11,5 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
-    locale:            en
+    locale:            fr_FR
     secret:            ThisTokenIsNotSoSecretChangeIt

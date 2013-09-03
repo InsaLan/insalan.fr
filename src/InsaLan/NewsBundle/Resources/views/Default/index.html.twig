@@ -1,0 +1,24 @@
+{% extends 'InsaLanBundle::layout.html.twig' %}
+
+{% block title %}
+  {{ parent() }} -
+  Actualités
+{% endblock %}
+
+{% block body %}
+  <h2>Actualités</h2>
+
+  {% for n in news %}
+    <section>
+      <header>
+        <h3>{{ n.title }}</h3>
+        {{ n.createdAt | date('d/m/Y H:i') }}
+      </header>
+
+      <article>
+        {{ n.text }}
+      </article>
+    </section>
+  {% endfor %}
+
+{% endblock %}
