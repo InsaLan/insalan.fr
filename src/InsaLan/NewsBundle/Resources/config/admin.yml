@@ -1,0 +1,11 @@
+services:
+    sonata.admin.news:
+        class: InsaLan\NewsBundle\Admin\NewsAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Actualités", label: "News" }
+        arguments:
+            - ~
+            - InsaLan\NewsBundle\Entity\News
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanNewsBundle]]

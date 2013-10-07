@@ -18,6 +18,9 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $news = $em->getRepository('InsaLanNewsBundle:News')->findAll();
+
+        $this->get('session')->getFlashBag()->add('error', 'Hey!');
+
         return array('news' => $news);
     }
 }

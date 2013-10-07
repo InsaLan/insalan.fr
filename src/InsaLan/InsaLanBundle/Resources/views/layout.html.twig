@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li><a href="{{ path('insalan_news_default_index') }}">Actualités</a></li>
-            <li><a href="#">Tournois</a></li>
+            <li><a href="{{ path('insalan_tournois_default_index') }}">Tournois</a></li>
             <li><a href="#">Galerie</a></li>
             <li><a href="#">Informations</a></li>
             <li><a href="#">Contact</a></li>
@@ -33,6 +33,18 @@
     </div>
 
     <div class="container">
+      {% for message in app.session.flashbag.get('info') %}
+        <p class="alert alert-info">{{ message }}</p>
+      {% endfor %}
+
+      {% for message in app.session.flashbag.get('success') %}
+        <p class="alert alert-success">{{ message }}</p>
+      {% endfor %}
+
+      {% for message in app.session.flashbag.get('error') %}
+        <p class="alert alert-danger">{{ message }}</p>
+      {% endfor %}
+
       {% block body %}{% endblock %}
     </div>
 
