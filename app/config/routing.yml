@@ -3,10 +3,10 @@ insalan_news:
     type:     annotation
     prefix:   /
 
-insalan_tournois:
-    resource: "@InsaLanTournoisBundle/Controller/"
+insalan_tournament:
+    resource: "@InsaLanTournamentBundle/Controller/"
     type:     annotation
-    prefix:   /tournois
+    prefix:   /Tournament
 
 insalan_user:
     resource: "@InsaLanUserBundle/Controller/"
