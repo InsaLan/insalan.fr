@@ -1,6 +1,6 @@
 <?php
 
-namespace InsaLan\TournoisBundle\Controller;
+namespace InsaLan\TournamentBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
