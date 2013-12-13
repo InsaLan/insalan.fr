@@ -10,7 +10,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 /**
  * @ORM\Entity
  */
-class wwww
+class Competitor
 {
     use TimestampableEntity;
 
