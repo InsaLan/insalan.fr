@@ -6,7 +6,7 @@ insalan_news:
 insalan_tournament:
     resource: "@InsaLanTournamentBundle/Controller/"
     type:     annotation
-    prefix:   /Tournament
+    prefix:   /tournament
 
 insalan_user:
     resource: "@InsaLanUserBundle/Controller/"

@@ -17,10 +17,10 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $news = $em->getRepository('InsaLanNewsBundle:News')->findAll();
+        $news = $em->getRepository('InsaLanNewsBundle:News')->getLatest(5);
+        $sliders = $em->getRepository('InsaLanNewsBundle:Slider')->getLatest(5);
+        //$this->get('session')->getFlashBag()->add('info', 'Hey!');
 
-        $this->get('session')->getFlashBag()->add('error', 'Hey!');
-
-        return array('news' => $news);
+        return array('news' => $news, 'sliders' => $sliders);
     }
 }

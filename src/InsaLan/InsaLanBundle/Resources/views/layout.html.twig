@@ -1,56 +1,142 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8"/>
+    {% block stylesheets %}
+      {% stylesheets 'bundles/insalan/css/global.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+      {% endstylesheets %}
+    {% endblock %}
+
+    <link href="{{ asset('bundles/insalan/img/favicon.png') }}" rel="icon" type="image/png"/>
     <title>{% block title %}InsaLan{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ asset('bundles/insalan/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+
     <!--[if lt IE 9]>
       <script src="{{ asset('bundles/insalan/js/html5shiv.js') }}"></script>
-      <script src="{{ asset('bundles/insalan/js/respond.min.js') }}"></script>
     <![endif]-->
   </head>
-  <body>
-    <div class="navbar navbar-inverse">
+
+  <body id="body">
+    <header>
       <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="{{ path('insalan_news_default_index') }}">InsaLan</a>
+        <div class="logo">
+          <div class="pattern"></div>
+          <a href="{{ path('insalan_news_default_index') }}">
+            <img src="{{ asset('bundles/insalan/img/logo.png') }}" alt="InsaLan"/></a>
         </div>
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
+
+        <aside>
+          <span class="day">21</span>
+          <span class="month">Février</span>
+          <span class="place">Rennes</span>
+        </aside>
+
+        <nav>
+          <ul>
             <li><a href="{{ path('insalan_news_default_index') }}">Actualités</a></li>
             <li><a href="{{ path('insalan_tournament_default_index') }}">Tournois</a></li>
-            <li><a href="#">Galerie</a></li>
-            <li><a href="#">Informations</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="exhibition.html">Informations</a></li>
+            <li><a href="lan.html">Galerie</a></li>
+            <li><a href="partners.html">Contact</a></li>
           </ul>
-        </div>
+        </nav>
       </div>
-    </div>
+    </header>
 
-    <div class="container">
+    <section class="container">
       {% for message in app.session.flashbag.get('info') %}
-        <p class="alert alert-info">{{ message }}</p>
-      {% endfor %}
-
-      {% for message in app.session.flashbag.get('success') %}
-        <p class="alert alert-success">{{ message }}</p>
+        <p class="alert-info">{{ message }}</p>
       {% endfor %}
 
       {% for message in app.session.flashbag.get('error') %}
-        <p class="alert alert-danger">{{ message }}</p>
+        <p class="alert-error">{{ message }}</p>
       {% endfor %}
 
       {% block body %}{% endblock %}
-    </div>
 
-    <script src="//code.jquery.com/jquery.js"></script>
-    <script src="{{ asset('bundles/insalan/js/bootstrap.min.js') }}"></script>
+      <div class="clear"></div>
+    </section>
 
-    {% block javascripts %}{% endblock %}
+    <footer>
+      <div>
+        <aside>
+          <div>
+            <a id="logo" href="index.html"></a>
+            <a id="facebook" href="https://www.facebook.com/onluxgaming"></a>
+            <a id="twitter" href="https://twitter.com/OnLuxGaming"></a>
+            <div id="mail"><a href="mailto:info@onlux-gaming.lu">info@onlux-gaming.lu</a></div>
+          </div>
+        </aside>
+        <nav>
+          <ul>
+            <li id="about">
+              <header><a href="about.html">About</a></header>
+              <ul>
+                <li><a href="about.html#project">Project</a></li>
+                <li><a href="about.html#team">Team</a></li>
+                <li><a href="about.html#event">Event</a></li>
+                <li><a href="about.html#map">Access map</a></li>
+              </ul>
+            </li>
+            <li id="ex">
+              <header><a href="exhibition.html">Exhibition</a></header>
+              <div>
+                <ul>
+                  <li><a href="exhibition.html#stands">Thematic stands</a></li>
+                  <li><a href="exhibition.html#hours">Opening hours</a></li>
+                  <li><a href="exhibition.html#schedule">Activities schedule</a></li>
+                  <li><a href="exhibition.html#food">Meal &amp; Drink</a></li>
+                </ul>
+                <ul class="second">
+                  <li id="stage"><a href="exhibition.html#stage">Main Stage</a></li>
+                  <li><a href="exhibition.html#stageplan">Schedule</a></li>
+                </ul>
+              </div>
+            </li>
+            <li id="lan">
+              <header><a href="lan.html">Lan</a></header>
+              <div>
+                <ul>
+                  <li><a href="lan.html#games">Tournaments</a></li>
+                  <li><a href="lan.html#hours">Opening hours</a></li>
+                  <li><a href="lan.html#tickets">Tickets</a></li>
+                  <li><a href="lan.html#accomodations">Accomodations</a></li>
+                </ul>
+                <ul class="second">
+                  <li><a href="lan.html#rules">Event rules</a></li>
+                  <li><a href="lan.html#cash">Cashprizes</a></li>
+                  <li><a href="lan.html#sponsors">Sponsors</a></li>
+                </ul>
+              </div>
+            </li>
+            <li id="partner">
+              <header><a href="partners.html">Partners</a></header>
+              <ul>
+                <li><a href="partners.html#admin">Administrative</a></li>
+                <li><a href="partners.html#vg">Video Games</a></li>
+                <li><a href="partners.html#asso">Associations</a></li>
+                <li><a href="partners.html#food">Food &amp; Drink</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div id="copyright">
+          <p>
+            © 2013 OnLux Gaming<span>|</span>Design by <a href="http://www.alecahain.fr/">Aceltis</a><span>|</span>Code by Aceltis, Chris, Jerry and Thierno
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    {% block javascripts %}
+      {% javascripts
+        'bundles/insalan/js/mootools-core-1.4.5.js'
+        'bundles/insalan/js/mootools-more-1.4.0.1.js'
+        'bundles/insalan/js/global.js' %}
+          <script type="text/javascript" src="{{ asset_url }}"></script>
+      {% endjavascripts %}
+    {% endblock %}
   </body>
+
+<!-- Mirrored from onlux-gaming.lu/ by HTTrack Website Copier/3.x [XR&CO'2013], Sun, 22 Dec 2013 11:30:36 GMT -->
 </html>

@@ -1,0 +1,193 @@
+/** Carousel **/
+
+aside.carousel {
+  width: 1000px;
+  height: 400px;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+aside.carousel .picture {
+  height: 300px;
+  width: 100%;
+  overflow: hidden;
+}
+
+aside.carousel .grid {
+  height: 300px;
+  width: 100%;
+  background-image:
+    linear-gradient(0deg,  transparent 0%, transparent 49%, black 50%, transparent 51%, transparent 100%),
+    linear-gradient(90deg, transparent 0%, transparent 49%, black 50%, transparent 51%, transparent 100%);
+  background-size: 100px 100px;
+  position: absolute;
+  background-position: 50px 50px;
+  top: 0px;
+  left: 0px;
+}
+
+aside.carousel table {
+  width: 1000px;
+  height: 100px;
+  border-spacing: 0;
+  margin: auto;
+  border-collapse: collapse;
+}
+
+aside.carousel table .title {
+  width: 868px;
+  vertical-align: middle;
+  background: #0e0e0e;
+}
+
+aside.carousel table .title .main {
+  color: #00bff3;
+  font-family: OpenSansCond;
+  text-transform: uppercase;
+  font-size: 2.4em;
+  letter-spacing: 3px;
+  padding-left: 15px;
+}
+
+aside.carousel table .title .subtitle {
+  color: #b1b1b1;
+  font-family: Oswald;
+  text-transform: uppercase;
+  font-size: 1.1em;
+  padding-left: 15px;
+}
+
+aside.carousel table .items {
+  width: 32px;
+  background: #0e0e0e;
+  vertical-align: middle;
+}
+
+aside.carousel table .items a {
+  width: 12px;
+  height: 12px;
+  display: block;
+  background: #303030;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 6px;
+  margin-top: 6px;
+}
+
+aside.carousel table .items a:hover,
+aside.carousel table .items a.active {
+  background: #00bff3;
+}
+
+aside.carousel table .open {
+  width: 100px;
+  height: 100px;
+  background: #00bff3;
+  vertical-align: middle;
+}
+
+aside.carousel table .open a {
+  width: 100px;
+  height: 100px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+aside.carousel table .open a span {
+  display: block;
+  width: 0;
+  height: 0;
+  border-bottom: 30px solid transparent;  /* left arrow slant */
+  border-top: 30px solid transparent; /* right arrow slant */
+  border-left: 30px solid black; /* bottom, add background color here */
+  font-size: 0;
+  line-height: 0;
+  margin: auto;
+}
+
+aside.carousel table .open:hover {
+  background: #69dcfc;
+}
+
+
+aside.carousel table .open a.disabled {
+  cursor: default;
+  background: #234954;
+}
+
+/** News **/
+
+section.news {
+  width: 670px;
+  float: left;
+  margin-right: 30px;
+}
+
+section.news > h2,
+aside.twitter > h2 {
+  color: white;
+  font-family: OpenSansCond;
+  font-size: 3em;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
+aside.twitter {
+  width: 300px;
+  float: left;
+}
+
+aside.twitter > div {
+  width: 293px;
+  border: 1px solid #1a1a1a;
+  background-color: #0e0e0e;
+  padding-left: 4px;
+  border-radius: 10px;
+}
+
+section.news nav {
+  margin-top: 50px;
+}
+
+section.news nav a,
+section.news nav span {
+  font-family: OpenSansCond, sans-serif;
+}
+
+section.news nav a {
+  padding: 1px 10px;
+  width: 80px;
+  text-align: center;
+  background-color: #161616;
+  color: #00bff3;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+section.news nav a:hover {
+  background-color: #272727;
+}
+
+section.news nav .prev span {
+  margin-left: 10px;
+}
+
+section.news nav .next span {
+  margin-right: 10px;
+}
+
+section.news nav .prev,
+section.news nav .prev a {
+  display: block;
+  float: left;
+}
+
+section.news nav .next,
+section.news nav .next a {
+  display: block;
+  float: right;
+}
+
+section

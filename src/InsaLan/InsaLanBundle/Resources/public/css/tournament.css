@@ -1,0 +1,219 @@
+/* -------------------------------------------------------------------------------
+ * GAMES
+ * ----------------------------------------------------------------------------- */
+
+#games table .square {
+  background: #00bff3;
+}
+
+#games table .square div {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;  /* left arrow slant */
+  border-right: 20px solid transparent; /* right arrow slant */
+  border-bottom: 20px solid white; /* bottom, add background color here */
+  font-size: 0;
+  line-height: 0;
+  margin: auto;
+  margin-left: 21px;
+}
+
+#games table .content header {
+  text-align: center;
+  font-size: 2.5em;
+  color: white;
+  font-family: OpenSansCond;
+  letter-spacing: 2px;
+}
+
+#games table .content h2 {
+  font-family: OpenSansCond;
+  font-size: 1.5em;
+  color: #00bff3;
+  letter-spacing: 3px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+#games table .content .vote {
+  margin: auto;
+  width: 700px;
+}
+
+#games table .content .game {
+  width: 200px;
+  height: 200px;
+  margin-right: 50px;
+  float: left;
+}
+
+
+#games table .content .gamethird {
+  width: 200px;
+  height: 200px;
+  float: left;
+}
+
+#games table .content .game:hover {
+  background-color: #161616;
+}
+
+#games table .content .gamethird:hover {
+  background-color: #161616;
+}
+
+#games table .content #cs {
+  background-image: url('../img/cs.png');
+}
+
+#games table .content #quake {
+  background-image: url('../img/quake.png');
+}
+
+#games table .content #sm {
+  background-image: url('../img/sm.png');
+}
+
+#games table .content #lol {
+  background-image: url('../img/lol.png');
+}
+
+#games table .content #dota {
+  background-image: url('../img/dota.png');
+}
+
+#games table .content #hon {
+  background-image: url('../img/hon.png');
+}
+
+#games table .content #sc2 {
+  background-image: url('../img/sc2.png');
+}
+
+#games table .content #tm {
+  background-image: url('../img/tm.png');
+}
+
+#games table .content #sf4 {
+  background-image: url('../img/sf4.png');
+}
+
+/* -------------------------------------------------------------------------------
+ * HOURS
+ * ----------------------------------------------------------------------------- */
+
+#hours table .square {
+  background: white;
+}
+
+#hours table .square div {
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;  /* left arrow slant */
+  border-bottom: 20px solid transparent; /* right arrow slant */
+  border-left: 20px solid black; /* bottom, add background color here */
+  font-size: 0;
+  line-height: 0;
+  margin-top: 6px;
+  margin-left: 32px;
+}
+
+/* -------------------------------------------------------------------------------
+ * TICKETS
+ * ----------------------------------------------------------------------------- */
+
+#tickets table .square {
+  background: #00bff3;
+}
+
+#tickets table .square div {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;  /* left arrow slant */
+  border-right: 20px solid transparent; /* right arrow slant */
+  border-top: 20px solid white; /* bottom, add background color here */
+  font-size: 0;
+  line-height: 0;
+  margin: auto;
+  margin-left: 21px;
+}
+
+/* -------------------------------------------------------------------------------
+ * ACCOMODATIONS
+ * ----------------------------------------------------------------------------- */
+
+#accomodations table .square {
+  background: white;
+}
+
+#accomodations table .square div {
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;  /* left arrow slant */
+  border-bottom: 20px solid transparent; /* right arrow slant */
+  border-right: 20px solid black; /* bottom, add background color here */
+  font-size: 0;
+  line-height: 0;
+  margin-top: 6px;
+  margin-left: 28px;
+}
+
+/* -------------------------------------------------------------------------------
+ * RULES
+ * ----------------------------------------------------------------------------- */
+
+#rules table .square {
+  background: #00bff3;
+}
+
+#rules table .square div {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;  /* left arrow slant */
+  border-right: 20px solid transparent; /* right arrow slant */
+  border-bottom: 20px solid white; /* bottom, add background color here */
+  font-size: 0;
+  line-height: 0;
+  margin: auto;
+  margin-left: 21px;
+}
+
+/* -------------------------------------------------------------------------------
+ * CASH
+ * ----------------------------------------------------------------------------- */
+
+#cash table .square {
+  background: white;
+}
+
+#cash table .square div {
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;  /* left arrow slant */
+  border-bottom: 20px solid transparent; /* right arrow slant */
+  border-left: 20px solid black; /* bottom, add background color here */
+  font-size: 0;
+  line-height: 0;
+  margin-top: 6px;
+  margin-left: 32px;
+}
+
+/* -------------------------------------------------------------------------------
+ * SPONSORS
+ * ----------------------------------------------------------------------------- */
+
+#sponsors table .square {
+  background: #00bff3;
+}
+
+#sponsors table .square div {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;  /* left arrow slant */
+  border-right: 20px solid transparent; /* right arrow slant */
+  border-top: 20px solid white; /* bottom, add background color here */
+  font-size: 0;
+  line-height: 0;
+  margin: auto;
+  margin-left: 21px;
+}

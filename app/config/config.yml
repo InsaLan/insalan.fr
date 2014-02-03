@@ -31,7 +31,10 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ ]
+    bundles:
+        - InsaLanBundle
+        - InsaLanNewsBundle
+        - InsaLanTournamentBundle
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -103,7 +106,7 @@ stof_doctrine_extensions:
 
 # Sonata Admin Bundle Configuration
 sonata_block:
-    default_contexts: [cms]
+    default_contexts: [admin]
     blocks:
         # Enable the SonataAdminBundle block
         sonata.admin.block.admin_list:

@@ -11,11 +11,13 @@ class NewsLoader implements FixtureInterface
     {
         $e = new News();
         $e->setTitle('Foreign studies suck');
+        $e->setCategory('InsaLan');
         $e->setText('C\'est loin le Luxembourg :(');
         $manager->persist($e);
 
         $e = new News();
         $e->setTitle('Une nouvelle espèce découverte !');
+        $e->setCategory('Site internet');
         $e->setText('Serait-ce un beurawoojeoda ?');
         $manager->persist($e);
 

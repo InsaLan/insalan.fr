@@ -1,24 +1,140 @@
-{% extends 'InsaLanBundle::layout.html.twig' %}
+{% extends 'InsaLanNewsBundle::layout.html.twig' %}
 
 {% block title %}
-  {{ parent() }} -
-  Actualités
+  {{ parent() }}
 {% endblock %}
 
 {% block body %}
-  <h2>Actualités</h2>
+  {{ parent() }}
 
-  {% for n in news %}
-    <section>
-      <header>
-        <h3>{{ n.title }}</h3>
-        {{ n.createdAt | date('d/m/Y H:i') }}
-      </header>
+  <aside class="carousel">
+    {% for s in sliders %}
+      <div class="picture"{% if not loop.first %} style="display: none"{% endif %}>
+        <img src="{{ asset('uploads/slider/' ~ s.id ~ '.png') }}" alt=""/>
+        <div class="grid"></div>
+      </div>
+    {% endfor %}
 
-      <article>
-        {{ n.text | markdown}}
+    <table>
+      <tr>
+        <td class="title">
+          {% for s in sliders %}
+            <div{% if not loop.first %} style="display: none"{% endif %}>
+              <p class="main">{{ s.title }}</p>
+              <p class="subtitle">{{ s.subtitle }}</p>
+            </div>
+          {% endfor %}
+        </td>
+        <td class="items">
+          {% for s in sliders %}
+            <a href="#"{% if loop.first %} class="active"{% endif %}></a>
+          {% endfor %}
+        </td>
+        <td class="open">
+          {% for s in sliders %}
+            {% if s.link %}
+              <a href="{{ s.link }}"{% if not loop.first %} style="display: none"{% endif %}>
+                <span></span>
+              </a>
+            {% else %}
+              <a class="disabled"{% if not loop.first %} style="display: none"{% endif %}>
+                <span></span>
+              </a>
+            {% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+    </table>
+  </aside>
+
+  <section class="news">
+    <h2>Actualités</h2>
+
+    {% for n in news %}
+      <article class="subsection">
+        <aside>
+          <div class="square">
+            <a href="#body"><span></span></a>
+          </div>
+        </aside>
+
+        <header>
+          <h2>{{ n.title }}</h2>
+          <span class="date">{{ n.createdAt | date('d/m/Y H:i') }}</span> -
+          <span class="category">{{ n.category }}</span>
+        </header>
+
+        <section>
+          {{ n.text | markdown }}
+        </section>
       </article>
-    </section>
-  {% endfor %}
+    {% endfor %}
 
+
+    <nav>
+      <div class="prev">
+        <span>Project website opening</span>
+        <a href="#">&laquo; Précédent</a>
+      </div>
+
+      <div class="next">
+        <a href="#">Suivant &raquo;</a>
+        <span>Project website opening</span>
+      </div>
+    </nav>
+  </section>
+
+  <aside class="twitter">
+    <h2>Twitter</h2>
+    <div>
+      <a class="twitter-timeline"  href="https://twitter.com/OnLuxGaming" width="290" height="600" data-widget-id="407192659145404416" data-border-color="#2d2d2d" data-link-color="#00bff3" data-chrome="transparent noscrollbar">Tweets by @OnLuxGaming</a>
+    </div>
+  </aside>
+{% endblock %}
+
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script type="text/javascript">
+    window.addEvent('domready', function() {
+      var carousel = $$('aside.carousel');
+      for (var i = 0; i < carousel.length; ++i) {
+        var links = carousel[i].getElements('.items a');
+        links.activeId = 0;
+        links.pause = false;
+
+        carousel[i].addEvent('mouseenter', function() { links.pause = true; });
+        carousel[i].addEvent('mouseleave', function() { links.pause = false; });
+
+        links.each(function(e, j) {
+          e.addEvent('click', function(ev) {
+            e.getParent('.items').getElements('a').removeClass('active');
+            this.addClass('active');
+
+            var picture = e.getParent('aside.carousel').getElements('.picture');
+            picture.setStyle('display', 'none');
+            picture[j].setStyle('display', '');
+
+            var title = e.getParent('aside.carousel').getElements('.title > div');
+            title.setStyle('display', 'none');
+            title[j].setStyle('display', '');
+
+            var open = e.getParent('aside.carousel').getElements('.open > a');
+            open.setStyle('display', 'none');
+            open[j].setStyle('display', '');
+
+            ev.stop();
+            links.activeId = j;
+          });
+        });
+
+        links.slideShow = window.setInterval(function() {
+          if (links.pause) return;
+          links.activeId = (links.activeId + 1) % links.length;
+          links[links.activeId].click();
+        }, 5000);
+      }
+    });
+  </script>
 {% endblock %}
