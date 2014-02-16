@@ -10,7 +10,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 /**
  * @ORM\Entity
  */
-class Competitor
+class Participant
 {
     use TimestampableEntity;
 
@@ -27,4 +27,9 @@ class Competitor
      */
     protected $name;
 
+    /**
+     * @ManyToOne(targetEntity="Tournament")
+     * @JoinColumn(name="tournament_id", referencedColumnName="id")
+     */
+    protected $tournament;
 }

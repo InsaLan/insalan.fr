@@ -10,7 +10,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 /**
  * @ORM\Entity
  */
-class RoundRobin
+class Team
 {
     use TimestampableEntity;
 

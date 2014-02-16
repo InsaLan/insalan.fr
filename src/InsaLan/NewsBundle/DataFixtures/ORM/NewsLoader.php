@@ -10,9 +10,12 @@ class NewsLoader implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $e = new News();
-        $e->setTitle('Foreign studies suck');
+        $e->setTitle('Lorem ipsum ');
         $e->setCategory('InsaLan');
-        $e->setText('C\'est loin le Luxembourg :(');
+        $e->setText('Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        	Veniam, animi, recusandae, cupiditate obcaecati minus dignissimos
+        	ut debitis error quae asperiores voluptate fugit aliquam molestiae
+        	perspiciatis nisi modi sequi laboriosam similique.');
         $manager->persist($e);
 
         $e = new News();
@@ -24,3 +27,4 @@ class NewsLoader implements FixtureInterface
         $manager->flush();
     }
 }
+

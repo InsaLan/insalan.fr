@@ -15,6 +15,6 @@ class DefaultController extends Controller
     public function indexAction()
     {
       $this->get('session')->getFlashBag()->add('info', 'Hey !');
-      return array('name' => '$name');
+      return array();
     }
 }

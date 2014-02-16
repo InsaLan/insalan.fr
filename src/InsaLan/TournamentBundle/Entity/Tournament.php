@@ -26,5 +26,4 @@ class Tournament
      * @Assert\NotBlank()
      */
     protected $name;
-
 }
