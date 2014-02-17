@@ -28,8 +28,8 @@ class Participant
     protected $name;
 
     /**
-     * @ManyToOne(targetEntity="Tournament")
-     * @JoinColumn(name="tournament_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Tournament")
+     * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
      */
     protected $tournament;
 }
