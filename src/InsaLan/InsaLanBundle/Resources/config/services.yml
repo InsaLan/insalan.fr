@@ -1,0 +1,9 @@
+parameters:
+    insalan.db.table_prefix: intra_
+
+services:
+    insalan.tblprefix_subscriber:
+        class: InsaLan\InsaLanBundle\Subscriber\TablePrefixSubscriber
+        arguments: [%insalan.db.table_prefix%]
+        tags:
+            - { name: doctrine.event_subscriber }

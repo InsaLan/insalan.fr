@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  */
-class Tournament
+class Group
 {
     /**
      * @ORM\Id
@@ -23,6 +23,12 @@ class Tournament
     protected $name;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Tournament")
+     * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
+     */
+    protected $tournament;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -36,7 +42,7 @@ class Tournament
      * Set name
      *
      * @param string $name
-     * @return Tournament
+     * @return Group
      */
     public function setName($name)
     {
@@ -53,5 +59,28 @@ class Tournament
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set tournament
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Tournament $tournament
+     * @return Group
+     */
+    public function setTournament(\InsaLan\TournamentBundle\Entity\Tournament $tournament = null)
+    {
+        $this->tournament = $tournament;
+    
+        return $this;
+    }
+
+    /**
+     * Get tournament
+     *
+     * @return \InsaLan\TournamentBundle\Entity\Tournament 
+     */
+    public function getTournament()
+    {
+        return $this->tournament;
     }
 }

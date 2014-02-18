@@ -4,16 +4,11 @@ namespace InsaLan\TournamentBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
-
 /**
  * @ORM\Entity
  */
 class Knockout
 {
-    use TimestampableEntity;
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -22,14 +17,78 @@ class Knockout
     protected $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Tournament")
+     * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
+     */
+    protected $tournament;
+
+    /**
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      */
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Tournament")
-     * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
+     * Constructor
      */
-    protected $tournament;
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Knockout
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set tournament
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Tournament $tournament
+     * @return Knockout
+     */
+    public function setTournament(\InsaLan\TournamentBundle\Entity\Tournament $tournament = null)
+    {
+        $this->tournament = $tournament;
+
+        return $this;
+    }
+
+    /**
+     * Get tournament
+     *
+     * @return \InsaLan\TournamentBundle\Entity\Tournament
+     */
+    public function getTournament()
+    {
+        return $this->tournament;
+    }
 }
