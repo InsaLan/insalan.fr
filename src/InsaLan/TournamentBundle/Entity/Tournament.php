@@ -23,9 +23,14 @@ class Tournament
     protected $name;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $image;
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -41,17 +46,40 @@ class Tournament
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return Tournament
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

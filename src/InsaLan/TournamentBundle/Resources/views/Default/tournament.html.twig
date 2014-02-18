@@ -1,0 +1,27 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block title %}
+  {{ parent() }} - {{ t.name }}
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+    <ul>
+    </ul>
+  </aside>
+  <header>
+    <h2>{{ t.name }}</h2>
+  </header>
+
+  <section>
+    {{ render(controller('InsaLanTournamentBundle:Default:groups', {'tournament': t.id })) }}
+  </section>
+</article>
+
+{% endblock %}

@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\GroupRepository")
  */
 class Group
 {
@@ -29,9 +29,14 @@ class Group
     protected $tournament;
 
     /**
+     * @ORM\OneToMany(targetEntity="GroupMatch", mappedBy="group")
+     */
+    protected $matches;
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -47,14 +52,14 @@ class Group
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -70,17 +75,94 @@ class Group
     public function setTournament(\InsaLan\TournamentBundle\Entity\Tournament $tournament = null)
     {
         $this->tournament = $tournament;
-    
+
         return $this;
     }
 
     /**
      * Get tournament
      *
-     * @return \InsaLan\TournamentBundle\Entity\Tournament 
+     * @return \InsaLan\TournamentBundle\Entity\Tournament
      */
     public function getTournament()
     {
         return $this->tournament;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->matches = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add matches
+     *
+     * @param \InsaLan\TournamentBundle\Entity\GroupMatch $matches
+     * @return Group
+     */
+    public function addMatche(\InsaLan\TournamentBundle\Entity\GroupMatch $matches)
+    {
+        $this->matches[] = $matches;
+
+        return $this;
+    }
+
+    /**
+     * Remove matches
+     *
+     * @param \InsaLan\TournamentBundle\Entity\GroupMatch $matches
+     */
+    public function removeMatche(\InsaLan\TournamentBundle\Entity\GroupMatch $matches)
+    {
+        $this->matches->removeElement($matches);
+    }
+
+    /**
+     * Get matches
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMatches()
+    {
+        return $this->matches;
+    }
+
+    public function countWins()
+    {
+        $participants = array();
+        foreach ($this->getMatches() as $gm) {
+            $m = $gm->getMatch();
+            if (!isset($participants[$m->getPart1()->getId()])) {
+                $participants[$m->getPart1()->getId()] = array(
+                    'participant' => $m->getPart1(),
+                    'won' => 0,
+                    'lost' => 0
+                );
+            }
+
+            if (!isset($participants[$m->getPart2()->getId()])) {
+                $participants[$m->getPart2()->getId()] = array(
+                    'participant' => $m->getPart2(),
+                    'won' => 0,
+                    'lost' => 0
+                );
+            }
+
+            foreach ($m->getRounds() as $r) {
+                if ($r->getScore1() < $r->getScore2()) {
+                    $participants[$m->getPart1()->getId()]['lost'] += 1;
+                    $participants[$m->getPart2()->getId()]['won'] += 1;
+                }
+                else if ($r->getScore1() > $r->getScore2()) {
+                    $participants[$m->getPart1()->getId()]['won'] += 1;
+                    $participants[$m->getPart2()->getId()]['lost'] += 1;
+                }
+            }
+        }
+
+        $this->participants = $participants;
+        return $this;
     }
 }

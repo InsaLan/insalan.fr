@@ -1,0 +1,28 @@
+{% for g in groups %}
+  <table>
+    <caption>{{ g.name }}</caption>
+      {% for p in g.participants %}
+      <tr>
+        <td>{{ p.participant.name }}</td>
+        <td>{{ p.won }}</td>
+        <td>{{ p.lost }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <table>
+  {% for m in g.matches %}
+    <tr>
+      <td>
+          {{ m.match.part1.name }} vs {{ m.match.part2.name }}<br/>
+
+        {% for r in m.match.rounds %}
+          {% if r.replay %}<a href="{{ asset('uploads/demos/' ~ r.replay) }}">{% endif %}
+            {{ r.score1 }}/{{ r.score2 }}
+          {% if r.replay %}</a>{% endif %}
+        {% endfor %}
+      </td>
+    </tr>
+  {% endfor %}
+  </table>
+{% endfor %}

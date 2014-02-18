@@ -17,7 +17,7 @@ class GroupMatch
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Group")
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="matches")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      */
     protected $group;
@@ -31,7 +31,7 @@ class GroupMatch
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -47,14 +47,14 @@ class GroupMatch
     public function setGroup(\InsaLan\TournamentBundle\Entity\Group $group = null)
     {
         $this->group = $group;
-    
+
         return $this;
     }
 
     /**
      * Get group
      *
-     * @return \InsaLan\TournamentBundle\Entity\Group 
+     * @return \InsaLan\TournamentBundle\Entity\Group
      */
     public function getGroup()
     {
@@ -70,14 +70,14 @@ class GroupMatch
     public function setMatch(\InsaLan\TournamentBundle\Entity\Match $match = null)
     {
         $this->match = $match;
-    
+
         return $this;
     }
 
     /**
      * Get match
      *
-     * @return \InsaLan\TournamentBundle\Entity\Match 
+     * @return \InsaLan\TournamentBundle\Entity\Match
      */
     public function getMatch()
     {

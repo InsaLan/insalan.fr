@@ -22,7 +22,7 @@ class Round
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Match")
+     * @ORM\ManyToOne(targetEntity="Match", inversedBy="rounds")
      * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
      */
     protected $match;
@@ -36,6 +36,11 @@ class Round
      * @ORM\Column(type="integer")
      */
     protected $score2;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $replay;
 
     /**
      * Get id
@@ -114,5 +119,28 @@ class Round
     public function getMatch()
     {
         return $this->match;
+    }
+
+    /**
+     * Set replay
+     *
+     * @param string $replay
+     * @return Round
+     */
+    public function setReplay($replay)
+    {
+        $this->replay = $replay;
+
+        return $this;
+    }
+
+    /**
+     * Get replay
+     *
+     * @return string
+     */
+    public function getReplay()
+    {
+        return $this->replay;
     }
 }

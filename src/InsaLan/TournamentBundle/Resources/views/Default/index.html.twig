@@ -20,13 +20,22 @@
     <h2>Tournaments</h2>
   </header>
 
-  <section>
+  {#<section>
     <p>
       For this OnLux Gaming 1st edition, OnLux' staff wants to set up <em>3 main tournaments</em> opened to any kind of players with different skill levels.
       <br/>
       We need your help to decide which tournaments will take place at Onlux Gaming 1 !
       Please <em>vote for your preferences</em> on our <a href="https://www.facebook.com/onluxgaming" target="_blank">facebook page</a> on the different polls. We'll try to have at least one game per category (except for the miscellaneous one where you can vote for every game if you want to).
     </p>
+  </section>#}
+
+  <section>
+    <ul>
+      {% for t in tournaments %}
+        <li><a href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}">
+          {{ t.name }}</a></li>
+      {% endfor %}
+    </ul>
   </section>
 </article>
 
