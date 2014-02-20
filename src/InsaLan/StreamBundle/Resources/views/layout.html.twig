@@ -1,0 +1,18 @@
+{% extends 'InsaLanBundle::layout.html.twig' %}
+
+{% block title %}
+  {{ parent() }} -
+  Streams
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/insalan/css/stream.css' %}
+      <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+
+{% block body %}
+{% endblock %}
