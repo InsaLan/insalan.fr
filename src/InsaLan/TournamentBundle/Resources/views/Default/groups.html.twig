@@ -14,7 +14,7 @@
   {% for m in g.matches %}
     <tr>
       <td>
-          {{ m.match.part1.name }} vs {{ m.match.part2.name }}<br/>
+        {{ m.match.part1.name }} vs {{ m.match.part2.name }}<br/>
 
         {% for r in m.match.rounds %}
           {% if r.replay %}<a href="{{ asset('uploads/demos/' ~ r.replay) }}">{% endif %}

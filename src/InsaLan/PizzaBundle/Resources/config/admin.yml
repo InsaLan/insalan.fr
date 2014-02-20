@@ -1,0 +1,11 @@
+services:
+    sonata.admin.pizza.pizza:
+        class: InsaLan\PizzaBundle\Admin\PizzaAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Restauration", label: "Pizza" }
+        arguments:
+            - ~
+            - InsaLan\PizzaBundle\Entity\Pizza
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanPizzaBundle]]

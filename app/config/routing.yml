@@ -8,6 +8,11 @@ insalan_tournament:
     type:     annotation
     prefix:   /tournament
 
+#insalan_pizza:
+#    resource: "@InsaLanPizzaBundle/Controller/"
+#    type:     annotation
+#    prefix:   /pizza
+
 insalan_user:
     resource: "@InsaLanUserBundle/Controller/"
     type:     annotation
