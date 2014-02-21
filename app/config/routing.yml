@@ -8,10 +8,10 @@ insalan_tournament:
     type:     annotation
     prefix:   /tournament
 
-#insalan_pizza:
-#    resource: "@InsaLanPizzaBundle/Controller/"
-#    type:     annotation
-#    prefix:   /pizza
+insalan_pizza:
+    resource: "@InsaLanPizzaBundle/Controller/"
+    type:     annotation
+    prefix:   /pizza
 
 insalan_user:
     resource: "@InsaLanUserBundle/Controller/"
@@ -39,6 +39,10 @@ fos_user_change_password:
 
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+sonata_user:
+    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
     prefix: /admin
 
 _sonata_admin:

@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: @InsaLanNewsBundle/Resources/config/admin.yml }
+    - { resource: @InsaLanPizzaBundle/Resources/config/admin.yml }
     - { resource: @InsaLanBundle/Resources/config/services.yml }
 
 framework:
@@ -36,6 +37,7 @@ assetic:
         - InsaLanBundle
         - InsaLanNewsBundle
         - InsaLanTournamentBundle
+        - InsaLanPizzaBundle
     #java: /usr/bin/java
     filters:
         cssrewrite: ~

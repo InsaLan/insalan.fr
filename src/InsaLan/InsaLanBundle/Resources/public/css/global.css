@@ -607,7 +607,8 @@ footer #copyright span {
   margin-bottom: 10px;
 }
 
-.input input {
+.input input,
+.input select {
   display: block;
 }
 
@@ -623,11 +624,13 @@ footer #copyright span {
   width: 150px;
 }
 
-.input.left input {
+.input.left input,
+.input.left select {
   margin-left: 170px;
 }
 
-.input.right input {
+.input.right input,
+.input.right select {
   float: left;
 }
 
@@ -642,7 +645,8 @@ footer #copyright span {
 
 .input input[type=text],
 .input input[type=password],
-.input input[type=checkbox] {
+.input input[type=checkbox],
+.input select {
   color: black;
   border: solid black 1px;
   font-size: 1.2em;
@@ -660,4 +664,10 @@ input[type=submit], input[type=button] {
 
 input[type=submit]:active, input[type=button]:active {
   background-color: #0095be;
+}
+
+.input select {
+  width: 225px;
+  height: 30px;
+  line-height: 30px;
 }

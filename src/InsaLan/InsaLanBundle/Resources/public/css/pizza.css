@@ -1,0 +1,84 @@
+section > h3 {
+    color: white;
+    font-family: OpenSansCond;
+    font-size: 1.8em;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+section > dl {
+    margin-left: 10px;
+}
+
+section > dl > dt {
+    color: white;
+    font-family: Oswald;
+    margin-top: 5px;
+}
+
+section > dl > dd {
+    padding-left: 15px;
+}
+
+fieldset.form-frame {
+    margin-left: auto;
+    margin-right: auto;
+    padding : 30px;
+    padding-top: 15px;
+    text-align: center;
+}
+
+fieldset.form-frame > form {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    margin-left: 200px;
+    margin-right: 200px;
+    border: 2px groove rgb(0, 191, 243);
+    border-radius: 20px;
+}
+
+fieldset.form-frame > form > * {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+fieldset.form-frame > form > input {
+    margin-left: 5px;
+}
+
+fieldset.form-frame > form > input[type="text"] {
+    color: black;
+    font-size: 0.9em;
+    max-width: 100px;
+    border-radius: 2px;
+}
+
+fieldset.form-frame > form > input[type="text"]:focus {
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(82, 168, 236, 0.6);
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+table {
+    margin-left: auto;
+    margin-right: auto;
+    border-spacing: 15px;
+    border-collapse: collapse;
+    border: 1px groove rgb(0, 191, 243);
+    text-align: center;
+}
+
+th {
+    font-family: OpenSansCond;
+    font-size: 1.4em;
+}
+
+tr:hover {
+    background: rgb(14, 14, 14);
+    color: rgb(0, 191, 243);
+}
+
+td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 1px groove rgb(0, 191, 243);
+}
