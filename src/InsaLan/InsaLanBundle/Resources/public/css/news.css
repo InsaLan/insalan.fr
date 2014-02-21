@@ -74,14 +74,6 @@ article.subsection > header {
   margin-left: 42px;
 }
 
-article > header h2 {
-  color: white;
-  font-family: OpenSansCond;
-  font-size: 3em;
-  letter-spacing: 3px;
-  margin-bottom: 10px;
-}
-
 article.subsection > header h2 {
   font-family: OpenSansCond;
   text-transform: uppercase;

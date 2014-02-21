@@ -56,14 +56,6 @@ article > header {
   margin-bottom: 10px;
 }
 
-article > header h2 {
-  color: white;
-  font-family: OpenSansCond;
-  font-size: 3em;
-  letter-spacing: 3px;
-  margin-bottom: 10px;
-}
-
 article > header span {
   font-family: Oswald;
   text-transform: uppercase;

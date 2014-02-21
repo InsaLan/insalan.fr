@@ -214,6 +214,18 @@ body > header nav li.active:after {
 
 /** Sections **/
 
+article {
+  margin-top: 30px;
+}
+
+article > header h2 {
+  color: white;
+  font-family: OpenSansCond;
+  font-size: 3em;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
 article > section p em {
   color: #00bff3;
 }

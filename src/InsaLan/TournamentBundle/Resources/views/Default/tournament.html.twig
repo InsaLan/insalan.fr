@@ -8,19 +8,14 @@
 {{ parent() }}
 
 <article>
-  <aside>
-    <div class="square">
-      <a href="#body"><span></span></a>
-    </div>
-    <ul>
-    </ul>
-  </aside>
   <header>
     <h2>{{ t.name }}</h2>
   </header>
 
   <section>
-    {{ render(controller('InsaLanTournamentBundle:Default:groups', {'tournament': t.id })) }}
+    <div class="back" style="background-image:url('../img/{{ t.name | replace({' ': ''}) | lower }}')">
+      {{ render(controller('InsaLanTournamentBundle:Default:groups', {'tournament': t.id })) }}
+    </div>
   </section>
 </article>
 
