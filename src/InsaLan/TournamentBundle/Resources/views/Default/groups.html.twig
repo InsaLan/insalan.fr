@@ -1,3 +1,30 @@
+<aside class="matches">
+  <header>
+    <h3>Matches</h3>
+  </header>
+  {% for g in groups %}
+    <table>
+    {% for m in g.matches %}
+      <tr>
+        <td>
+          {{ m.match.part1.name }} <em>vs</em> {{ m.match.part2.name }}<br/>
+
+          {% for r in m.match.rounds %}
+            {% if r.replay %}<a href="{{ asset('uploads/demos/' ~ r.replay) }}">{% endif %}
+              {{ r.score1 }}{{ r.score2 }}
+            {% if r.replay %}</a>{% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+    {% endfor %}
+    </table>
+{% endfor %}
+</aside>
+
+<aside class="groups">
+  <header>
+    <h3>Poules</h3>
+  </header>
 {% for g in groups %}
   <table>
     <caption>{{ g.name }}</caption>
@@ -9,20 +36,5 @@
       </tr>
     {% endfor %}
   </table>
-
-  <table>
-  {% for m in g.matches %}
-    <tr>
-      <td>
-        {{ m.match.part1.name }} vs {{ m.match.part2.name }}<br/>
-
-        {% for r in m.match.rounds %}
-          {% if r.replay %}<a href="{{ asset('uploads/demos/' ~ r.replay) }}">{% endif %}
-            {{ r.score1 }}/{{ r.score2 }}
-          {% if r.replay %}</a>{% endif %}
-        {% endfor %}
-      </td>
-    </tr>
-  {% endfor %}
-  </table>
 {% endfor %}
+</aside>

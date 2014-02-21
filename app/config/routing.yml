@@ -3,6 +3,11 @@ insalan_news:
     type:     annotation
     prefix:   /
 
+insalan_stream:
+    resource: "@InsaLanStreamBundle/Controller/"
+    type:     annotation
+    prefix:   /streams
+
 insalan_tournament:
     resource: "@InsaLanTournamentBundle/Controller/"
     type:     annotation
@@ -12,6 +17,11 @@ insalan_pizza:
     resource: "@InsaLanPizzaBundle/Controller/"
     type:     annotation
     prefix:   /pizza
+
+insalan_information:
+    resource: "@InsaLanInformationBundle/Controller/"
+    type:     annotation
+    prefix:   /informations
 
 insalan_user:
     resource: "@InsaLanUserBundle/Controller/"
@@ -41,9 +51,9 @@ admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
 
-sonata_user:
-    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
-    prefix: /admin
+#sonata_user:
+#    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
+#    prefix: /admin
 
 _sonata_admin:
     resource: .

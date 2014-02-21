@@ -21,6 +21,11 @@ class User extends BaseUser
      */
     protected $credit = 0;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $table;
+
     public function __construct()
     {
         parent::__construct();
@@ -30,7 +35,7 @@ class User extends BaseUser
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -46,17 +51,40 @@ class User extends BaseUser
     public function setCredit($credit)
     {
         $this->credit = $credit;
-    
+
         return $this;
     }
 
     /**
      * Get credit
      *
-     * @return integer 
+     * @return integer
      */
     public function getCredit()
     {
         return $this->credit;
+    }
+
+    /**
+     * Set table
+     *
+     * @param integer $table
+     * @return User
+     */
+    public function setTable($table)
+    {
+        $this->table = $table;
+    
+        return $this;
+    }
+
+    /**
+     * Get table
+     *
+     * @return integer 
+     */
+    public function getTable()
+    {
+        return $this->table;
     }
 }

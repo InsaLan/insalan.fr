@@ -1,3 +1,133 @@
+article {
+  margin-top: 30px;
+}
+
+article > aside {
+  float: left;
+}
+
+article > aside .square {
+  background-color: #00bff3;
+  width: 80px;
+  height: 80px;
+}
+
+article.subsection > aside .square {
+  background-color: #00bff3;
+  width: 27px;
+  height: 27px;
+}
+
+article > aside .square a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+article > aside .square a span {
+  display: block;
+  width: 0;
+  height: 0;
+  position: relative;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  top: 30px;
+  left: 20px;
+}
+
+article.subsection > aside .square a span {
+  border-bottom: 7px solid transparent;
+  border-top: 7px solid transparent;
+  border-left: 7px solid black;
+  top: 7px;
+  left: 10px;
+}
+
+article > aside li {
+  text-align: center;
+  list-style-type: none;
+  text-transform: uppercase;
+}
+
+article > aside li:nth-child(odd) {
+  font-family: Oswald;
+  font-size: 0.8em;
+  color: white;
+  padding-top: 10px;
+}
+
+article > aside li:nth-child(even) {
+  font-family: OpenSansCond;
+  font-size: 0.9em;
+  color: #00bff3;
+}
+
+article > header {
+  height: 80px;
+  margin-left: 100px;
+  margin-bottom: 10px;
+}
+
+article.subsection > header {
+  height: auto;
+  margin-left: 42px;
+}
+
+article.subsection > header h2 {
+  font-family: OpenSansCond;
+  text-transform: uppercase;
+  color: #00bff3;
+  letter-spacing: 0px;
+  margin-bottom: 5px;
+  font-size: 2.1em;
+  line-height: 27px;
+}
+
+article > header span {
+  font-family: Oswald;
+  text-transform: uppercase;
+  color: white;
+  font-size: 0.8em;
+}
+
+article > section {
+  margin-left: 80px;
+  padding-left: 20px;
+}
+
+article.subsection > section {
+  margin-left: 0px;
+  padding-left: 0px;
+  margin-top: 10px;
+  clear: both;
+}
+
+article > section p {
+  text-align: justify;
+  line-height: 30px;
+  text-indent: 40px;
+}
+
+article.subsection > section p {
+  /* text-indent: 42px; */
+  text-indent: 0px;
+  line-height: 110%;
+}
+
+article > section p em {
+  color: #00bff3;
+}
+
+article > section p a {
+  color: white;
+}
+
+article > section p a:hover {
+  color: #00bff3;
+}
+
+
 /** Carousel **/
 
 aside.carousel {
@@ -189,5 +319,3 @@ section.news nav .next a {
   display: block;
   float: right;
 }
-
-section

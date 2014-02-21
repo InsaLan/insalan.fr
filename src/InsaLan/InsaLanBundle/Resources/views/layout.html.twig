@@ -3,7 +3,10 @@
   <head>
     <meta charset="utf-8"/>
     {% block stylesheets %}
-      {% stylesheets 'bundles/insalan/css/global.css' filter='cssrewrite' %}
+      {% stylesheets
+        'bundles/insalan/css/global.css'
+        'bundles/insalan/css/info.css'
+        filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
       {% endstylesheets %}
     {% endblock %}
@@ -26,7 +29,7 @@
         </div>
 
         <aside>
-          <span class="day">21</span>
+          <span class="day">Live</span>
           <span class="month">Février</span>
           <span class="place">Rennes</span>
         </aside>
@@ -34,10 +37,10 @@
         <nav>
           <ul>
             <li><a href="{{ path('insalan_news_default_index') }}">Actualités</a></li>
+            <!--<li><a href="{{ path('insalan_stream_default_index') }}">Streams</a></li>
             <li><a href="{{ path('insalan_tournament_default_index') }}">Tournois</a></li>
+            <li><a href="{{ path('insalan_information_default_index') }}">Infos</a></li>-->
             <li><a href="{{ path('insalan_pizza_default_index') }}">Pizzas</a></li>
-            <li><a href="exhibition.html">Informations</a></li>
-            <li><a href="lan.html">Galerie</a></li>
           </ul>
         </nav>
       </div>
@@ -64,65 +67,60 @@
             <a id="logo" href="index.html"></a>
             <a id="facebook" href="https://www.facebook.com/onluxgaming"></a>
             <a id="twitter" href="https://twitter.com/OnLuxGaming"></a>
-            <div id="mail"><a href="mailto:info@onlux-gaming.lu">info@onlux-gaming.lu</a></div>
+            <div id="mail"><a href="mailto:contact@insalan.fr">contact@insalan.fr</a></div>
           </div>
         </aside>
         <nav>
           <ul>
-            <li id="about">
-              <header><a href="about.html">About</a></header>
+            <li id="stream">
+              <header><a href="{{ path('insalan_stream_default_index') }}">Streams</a></header>
               <ul>
-                <li><a href="about.html#project">Project</a></li>
-                <li><a href="about.html#team">Team</a></li>
-                <li><a href="about.html#event">Event</a></li>
-                <li><a href="about.html#map">Access map</a></li>
+                <li><a href="#">CS:GO</a></li>
+                <li><a href="#">TF2</a></li>
+                <li><a href="#">LoL</a></li>
+                <li><a href="#">SC2</a></li>
               </ul>
             </li>
-            <li id="ex">
-              <header><a href="exhibition.html">Exhibition</a></header>
+            <li id="tournois">
+              <header><a href="{{ path('insalan_tournament_default_index') }}">Tournois</a></header>
               <div>
                 <ul>
-                  <li><a href="exhibition.html#stands">Thematic stands</a></li>
-                  <li><a href="exhibition.html#hours">Opening hours</a></li>
-                  <li><a href="exhibition.html#schedule">Activities schedule</a></li>
-                  <li><a href="exhibition.html#food">Meal &amp; Drink</a></li>
-                </ul>
-                <ul class="second">
-                  <li id="stage"><a href="exhibition.html#stage">Main Stage</a></li>
-                  <li><a href="exhibition.html#stageplan">Schedule</a></li>
+                  <li><a href="#">Résultats</a></li>
+                  <li><a href="#">Planning</a></li>
+                  <li><a href="#">Formats</a></li>
+                  <li><a href="#">Equipes</a></li>
                 </ul>
               </div>
             </li>
-            <li id="lan">
-              <header><a href="lan.html">Lan</a></header>
+            <li id="infos">
+              <header><a href="{{ path('insalan_information_default_index') }}">Infos</a></header>
               <div>
                 <ul>
-                  <li><a href="lan.html#games">Tournaments</a></li>
-                  <li><a href="lan.html#hours">Opening hours</a></li>
-                  <li><a href="lan.html#tickets">Tickets</a></li>
-                  <li><a href="lan.html#accomodations">Accomodations</a></li>
+                  <li><a href="{{ path('insalan_information_default_index') }}#asso">Association</a></li>
+                  <li><a href="{{ path('insalan_information_default_index') }}#horaire">Horaires</a></li>
+                  <li><a href="{{ path('insalan_information_default_index') }}#tarif">Tarifs</a></li>
+                  <li><a href="{{ path('insalan_information_default_index') }}#anim">Animations</a></li>
                 </ul>
                 <ul class="second">
-                  <li><a href="lan.html#rules">Event rules</a></li>
-                  <li><a href="lan.html#cash">Cashprizes</a></li>
-                  <li><a href="lan.html#sponsors">Sponsors</a></li>
+                  <li><a href="{{ path('insalan_information_default_index') }}#repas">Repas</a></li>
+                  <li><a href="{{ path('insalan_information_default_index') }}#tournoi">Tournois</a></li>
+                  <li><a href="{{ path('insalan_information_default_index') }}#finale">Finales</a></li>
+                  <li><a href="{{ path('insalan_information_default_index') }}#sponsor">Sponsors</a></li>
                 </ul>
               </div>
             </li>
-            <li id="partner">
-              <header><a href="partners.html">Partners</a></header>
+            <li id="galerie">
+              <header><a href="#">Galerie</a></header>
               <ul>
-                <li><a href="partners.html#admin">Administrative</a></li>
-                <li><a href="partners.html#vg">Video Games</a></li>
-                <li><a href="partners.html#asso">Associations</a></li>
-                <li><a href="partners.html#food">Food &amp; Drink</a></li>
+                <li><a href="#">InsaLan 9</a></li>
+                <li><a href="#">Autres</a></li>
               </ul>
             </li>
           </ul>
         </nav>
         <div id="copyright">
           <p>
-            © 2013 OnLux Gaming<span>|</span>Design by <a href="http://www.alecahain.fr/">Aceltis</a><span>|</span>Code by Aceltis, Chris, Jerry and Thierno
+            © 2014 InsaLan<span>|</span>Design by <a href="http://www.alecahain.fr/">Aceltis</a><span>|</span>Code by Nicolas
           </p>
         </div>
       </div>
@@ -137,6 +135,5 @@
       {% endjavascripts %}
     {% endblock %}
   </body>
-
-<!-- Mirrored from onlux-gaming.lu/ by HTTrack Website Copier/3.x [XR&CO'2013], Sun, 22 Dec 2013 11:30:36 GMT -->
 </html>
+

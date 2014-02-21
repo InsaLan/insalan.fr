@@ -35,9 +35,12 @@ assetic:
     use_controller: false
     bundles:
         - InsaLanBundle
+        - InsaLanStreamBundle
         - InsaLanNewsBundle
         - InsaLanTournamentBundle
         - InsaLanPizzaBundle
+        - InsaLanInformationBundle
+
     #java: /usr/bin/java
     filters:
         cssrewrite: ~

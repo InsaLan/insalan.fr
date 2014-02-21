@@ -98,7 +98,7 @@ body {
 /** Header **/
 
 body > header {
-  height: 250px;
+  height: 200px;
   background: #0e0e0e;
   border-bottom: 1px solid #2d2d2d;
 }
@@ -108,17 +108,17 @@ body > header .logo {
   top: 0px;
   left: 0px;
   width: 400px;
-  height: 250px;
+  height: 200px;
 }
 
 body > header .logo img {
-  width: 400px;
-  height: 155px;
+  width: 437px;
+  height: 128px;
 }
 
 body > header .logo .pattern {
   background: url('../img/header_pattern1.png') repeat-y;
-  top: 0px;
+  bottom: 3px;
   left: 0px;
   position: absolute;
   width: 185px;
@@ -127,7 +127,7 @@ body > header .logo .pattern {
 
 body > header .logo a {
   position: absolute;
-  bottom: 13px;
+  bottom: 33px;
   left: 0px;
 }
 
@@ -141,37 +141,37 @@ body > header aside {
 }
 
 body > header aside span {
-  font-family: Gravity;
+  font-family: Oswald;
   text-transform: uppercase;
 }
 
 body > header aside .day {
   color: white;
-  font-size: 3em;
+  font-size: 2.5em;
   position: absolute;
-  bottom: 2px;
-  right: 247px;
-  letter-spacing: 5px;
+  bottom: 4px;
+  right: 245px;
+  letter-spacing: 3px;
   width: 90px;
   text-align: center;
 }
 
 body > header aside .month {
   color: #00bff3;
-  font-size: 1.7em;
+  font-size: 1.4em;
   position: absolute;
-  letter-spacing: 14px;
-  top: 35px;
-  left: 219px;
+  letter-spacing: 20px;
+  top: 30px;
+  left: 228px;
 }
 
 body > header aside .place {
   color: white;
-  font-size: 1.7em;
+  font-size: 1.4em;
   position: absolute;
-  letter-spacing: 13px;
-  top: 66px;
-  left: 220px;
+  letter-spacing: 19px;
+  top: 60px;
+  left: 228px;
 }
 
 /** Menu **/
@@ -218,125 +218,12 @@ article {
   margin-top: 30px;
 }
 
-article > aside {
-  float: left;
-}
-
-article > aside .square {
-  background-color: #00bff3;
-  width: 80px;
-  height: 80px;
-}
-
-article.subsection > aside .square {
-  background-color: #00bff3;
-  width: 27px;
-  height: 27px;
-}
-
-article > aside .square a {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-article > aside .square a span {
-  display: block;
-  width: 0;
-  height: 0;
-  position: relative;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-bottom: 20px solid white;
-  top: 30px;
-  left: 20px;
-}
-
-article.subsection > aside .square a span {
-  border-bottom: 7px solid transparent;
-  border-top: 7px solid transparent;
-  border-left: 7px solid black;
-  top: 7px;
-  left: 10px;
-}
-
-article > aside li {
-  text-align: center;
-  list-style-type: none;
-  text-transform: uppercase;
-}
-
-article > aside li:nth-child(odd) {
-  font-family: Oswald;
-  font-size: 0.8em;
-  color: white;
-  padding-top: 10px;
-}
-
-article > aside li:nth-child(even) {
-  font-family: OpenSansCond;
-  font-size: 0.9em;
-  color: #00bff3;
-}
-
-article > header {
-  height: 80px;
-  margin-left: 100px;
-  margin-bottom: 10px;
-}
-
-article.subsection > header {
-  height: auto;
-  margin-left: 42px;
-}
-
 article > header h2 {
   color: white;
   font-family: OpenSansCond;
   font-size: 3em;
   letter-spacing: 3px;
   margin-bottom: 10px;
-}
-
-article.subsection > header h2 {
-  font-family: OpenSansCond;
-  text-transform: uppercase;
-  color: #00bff3;
-  letter-spacing: 0px;
-  margin-bottom: 5px;
-  font-size: 2.1em;
-  line-height: 27px;
-}
-
-article > header span {
-  font-family: Oswald;
-  text-transform: uppercase;
-  color: white;
-  font-size: 0.8em;
-}
-
-article > section {
-  margin-left: 80px;
-  padding-left: 20px;
-}
-
-article.subsection > section {
-  margin-left: 0px;
-  padding-left: 0px;
-  margin-top: 10px;
-  clear: both;
-}
-
-article > section p {
-  text-align: justify;
-  line-height: 30px;
-  text-indent: 40px;
-}
-
-article.subsection > section p {
-  /* text-indent: 42px; */
-  text-indent: 0px;
-  line-height: 110%;
 }
 
 article > section p em {
@@ -416,11 +303,11 @@ footer aside #logo {
   width: 214px;
   height: 63px;
   display: inline-block;
-  background: url('../img/logo_footer.png');
+  background: url('../img/logo_footer.png') no-repeat;
   opacity: 0.5;
   position: absolute;
   top: 35px;
-  left: 0px;
+  left: 31px;
 }
 
 footer aside #logo:hover {
@@ -497,25 +384,25 @@ footer nav > ul > li {
   float: left;
   display: block;
   list-style-type: none;
-  margin-right: 10px;
-  margin-left: 10px;
+  margin-right: 25px;
+  margin-left: 25px;
   margin-top: 15px;
 }
 
-footer nav #about {
+footer nav #stream {
   width: 110px;
   margin-left: 60px;
 }
 
-footer nav #ex {
+footer nav #tournois {
+  width: 110px;
+}
+
+footer nav #infos {
   width: 220px;
 }
 
-footer nav #lan {
-  width: 220px;
-}
-
-footer nav #partner {
+footer nav #galerie {
   width: 110px;
   margin-right: 0px;
 }
@@ -551,18 +438,8 @@ footer nav > ul > li > div > ul {
   display: block;
 }
 
-footer nav #ex .second li {
-  margin-left: 20px;
-}
-
-footer nav #lan .second li {
-  margin-left: 35px;
-}
-
-footer nav #stage a {
-  font-family: Oswald;
-  text-transform: uppercase;
-  color: white;
+footer nav #infos .second li {
+  margin-left: 55px;
 }
 
 /** Copyright **/

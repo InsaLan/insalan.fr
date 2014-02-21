@@ -12,22 +12,8 @@ class DefaultController extends Controller
     /**
      * @Route("/")
      * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $pizzas = $em->getRepository('InsaLanPizzaBundle:Pizza')->findAll();
-        //$this->get('session')->getFlashBag()->add('info', 'Hey!');
-
-        return array('pizzas' => $pizzas);
-    }
-
-    /**
-     * @Route("/order")
-     * @Template()
     */
-    public function orderAction()
+    public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
