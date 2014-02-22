@@ -22,7 +22,7 @@ class User extends BaseUser
     protected $credit = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="table_id", type="integer", nullable=true)
      */
     protected $table;
 
@@ -74,14 +74,14 @@ class User extends BaseUser
     public function setTable($table)
     {
         $this->table = $table;
-    
+
         return $this;
     }
 
     /**
      * Get table
      *
-     * @return integer 
+     * @return integer
      */
     public function getTable()
     {
