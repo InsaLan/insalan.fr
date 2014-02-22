@@ -33,4 +33,13 @@
 
 .video {
   margin-bottom: 50px;
+  min-height: 562px;
+}
+
+h2 {
+  color: white;
+  font-family: OpenSansCond, sans-serif;
+  font-size: 2em;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
 }
