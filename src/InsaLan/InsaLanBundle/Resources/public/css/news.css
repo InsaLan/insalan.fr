@@ -112,7 +112,7 @@ article > section p {
 article.subsection > section p {
   /* text-indent: 42px; */
   text-indent: 0px;
-  line-height: 110%;
+  line-height: 170%;
 }
 
 article > section p em {

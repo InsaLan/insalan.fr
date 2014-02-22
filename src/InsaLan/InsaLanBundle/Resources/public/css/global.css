@@ -548,3 +548,8 @@ input[type=submit]:active, input[type=button]:active {
   height: 30px;
   line-height: 30px;
 }
+
+
+strong {
+  color: #00bff3;
+}
