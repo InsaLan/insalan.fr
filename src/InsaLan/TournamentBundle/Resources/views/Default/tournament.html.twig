@@ -13,9 +13,6 @@
   </header>
 
   <section>
-    <div class="back" style="background-image:url('../img/{{ t.name | replace({' ': ''}) | lower }}')">
-      {{ render(controller('InsaLanTournamentBundle:Default:groups', {'tournament': t.id })) }}
-    </div>
   </section>
 </article>
 

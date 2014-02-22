@@ -1,25 +1,25 @@
-article {
+.info {
   margin-top: 30px;
   margin-bottom: 30px;
 }
 
-article > aside {
+.info > aside {
   float: left;
 }
 
-article > aside .square {
+.info > aside .square {
   background-color: #00bff3;
   width: 80px;
   height: 80px;
 }
 
-article > aside .square a {
+.info > aside .square a {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-article > aside .square a span {
+.info > aside .square a span {
   display: block;
   width: 0;
   height: 0;
@@ -31,44 +31,44 @@ article > aside .square a span {
   left: 20px;
 }
 
-article > aside li {
+.info > aside li {
   text-align: center;
   list-style-type: none;
   text-transform: uppercase;
 }
 
-article > aside li:nth-child(odd) {
+.info > aside li:nth-child(odd) {
   font-family: Oswald;
   font-size: 0.8em;
   color: white;
   padding-top: 10px;
 }
 
-article > aside li:nth-child(even) {
+.info > aside li:nth-child(even) {
   font-family: OpenSansCond;
   font-size: 0.9em;
   color: #00bff3;
 }
 
-article > header {
+.info > header {
   height: 80px;
   margin-left: 100px;
   margin-bottom: 10px;
 }
 
-article > header span {
+.info > header span {
   font-family: Oswald;
   text-transform: uppercase;
   color: white;
   font-size: 0.8em;
 }
 
-article > section {
+.info > section {
   margin-left: 80px;
   padding-left: 20px;
 }
 
-article > section p {
+.info > section p {
   text-align: justify;
   line-height: 30px;
   text-indent: 40px;
@@ -76,14 +76,14 @@ article > section p {
 
 /** Squares **/
 
-#horaire > aside .square, #tournoi > aside .square {
+#horaire > aside .square, #finale > aside .square {
   background: white;
 }
 
-#horaire > aside .square a span, #tournoi > aside .square a span {
+#horaire > aside .square a span, #finale > aside .square a span  {
   display: block;
   position: relative;
-  width: 0; 
+  width: 0;
   height: 0;
   border-top: 20px solid transparent;  /* left arrow slant */
   border-bottom: 20px solid transparent; /* right arrow slant */
@@ -92,7 +92,7 @@ article > section p {
   left: 30px;
 }
 
-#tarif > aside .square a span, #finale > aside .square a span {
+#tarif > aside .square a span {
   display: block;
   position: relative;
   width: 0;
@@ -105,18 +105,32 @@ article > section p {
   left: 20px;
 }
 
-#anim > aside .square, #sponsor > aside .square {
+#anim > aside .square {
   background: white;
 }
 
-#anim > aside .square a span, #sponsor > aside .square a span {
+#anim > aside .square a span {
   display: block;
   position: relative;
-  width: 0; 
+  width: 0;
   height: 0;
   border-top: 20px solid transparent;  /* left arrow slant */
   border-bottom: 20px solid transparent; /* right arrow slant */
   border-right: 20px solid black; /* bottom, add background color here */
   top: 20px;
   left: 10px;
+}
+
+#tournoi section ul li, #finale section ul li {
+  list-style-type: none;
+  margin-left: 60px;
+  color: #00bff3;
+}
+
+#tournoi section ul li span, #finale section ul li span {
+  font-family: Oswald;
+  font-size: 0.9em;
+  color: white;
+  text-transform: uppercase;
+  padding-right: 20px;
 }

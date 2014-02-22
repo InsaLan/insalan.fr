@@ -6,6 +6,7 @@
       {% stylesheets
         'bundles/insalan/css/global.css'
         'bundles/insalan/css/info.css'
+        'bundles/insalan/css/tournament.css'
         filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
       {% endstylesheets %}
@@ -37,9 +38,9 @@
         <nav>
           <ul>
             <li><a href="{{ path('insalan_news_default_index') }}">Actualités</a></li>
-            <!--<li><a href="{{ path('insalan_stream_default_index') }}">Streams</a></li>
+            <li><a href="{{ path('insalan_stream_default_index') }}">Streams</a></li>
             <li><a href="{{ path('insalan_tournament_default_index') }}">Tournois</a></li>
-            <li><a href="{{ path('insalan_information_default_index') }}">Infos</a></li>-->
+            <li><a href="{{ path('insalan_information_default_index') }}">Infos</a></li>
             <li><a href="{{ path('insalan_pizza_default_index') }}">Pizzas</a></li>
           </ul>
         </nav>
@@ -65,8 +66,8 @@
         <aside>
           <div>
             <a id="logo" href="index.html"></a>
-            <a id="facebook" href="https://www.facebook.com/onluxgaming"></a>
-            <a id="twitter" href="https://twitter.com/OnLuxGaming"></a>
+            <a id="facebook" href="https://www.facebook.com/insalan"></a>
+            <a id="twitter" href="https://twitter.com/insalan"></a>
             <div id="mail"><a href="mailto:contact@insalan.fr">contact@insalan.fr</a></div>
           </div>
         </aside>
@@ -75,10 +76,10 @@
             <li id="stream">
               <header><a href="{{ path('insalan_stream_default_index') }}">Streams</a></header>
               <ul>
-                <li><a href="#">CS:GO</a></li>
-                <li><a href="#">TF2</a></li>
-                <li><a href="#">LoL</a></li>
-                <li><a href="#">SC2</a></li>
+                <li><a href="{{ path('insalan_stream_default_index') }}#stream-cs">CS:GO</a></li>
+                <li><a href="{{ path('insalan_stream_default_index') }}#stream-tf2">TF2</a></li>
+                <li><a href="{{ path('insalan_stream_default_index') }}#stream-lol">LoL</a></li>
+                <li><a href="{{ path('insalan_stream_default_index') }}#stream-sc2">SC2</a></li>
               </ul>
             </li>
             <li id="tournois">
@@ -98,22 +99,20 @@
                 <ul>
                   <li><a href="{{ path('insalan_information_default_index') }}#asso">Association</a></li>
                   <li><a href="{{ path('insalan_information_default_index') }}#horaire">Horaires</a></li>
-                  <li><a href="{{ path('insalan_information_default_index') }}#tarif">Tarifs</a></li>
                   <li><a href="{{ path('insalan_information_default_index') }}#anim">Animations</a></li>
+                  <li><a href="{{ path('insalan_information_default_index') }}#tarif">Tarifs et Repas</a></li>
                 </ul>
                 <ul class="second">
-                  <li><a href="{{ path('insalan_information_default_index') }}#repas">Repas</a></li>
                   <li><a href="{{ path('insalan_information_default_index') }}#tournoi">Tournois</a></li>
                   <li><a href="{{ path('insalan_information_default_index') }}#finale">Finales</a></li>
-                  <li><a href="{{ path('insalan_information_default_index') }}#sponsor">Sponsors</a></li>
                 </ul>
               </div>
             </li>
             <li id="galerie">
-              <header><a href="#">Galerie</a></header>
+              <header><a href="http://www.insalan.fr/gallery/">Galerie</a></header>
               <ul>
                 <li><a href="#">InsaLan 9</a></li>
-                <li><a href="#">Autres</a></li>
+                <li><a href="http://www.insalan.fr/gallery/">Autres</a></li>
               </ul>
             </li>
           </ul>

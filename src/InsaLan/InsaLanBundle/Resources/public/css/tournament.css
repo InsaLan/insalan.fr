@@ -3,24 +3,47 @@
   width: 100%;
 }
 
-section > ul li {
+.tournois > ul li {
   margin-top: 80px;
   width: 215px;
-  height: 215px;
+  height: 218px;
+  margin-bottom: 3px;
   margin-right: 40px;
   float: left;
   list-style-type: none;
   display: block;
 }
 
-section > ul li a {
+.tournois > ul li a {
   width: 100%;
   height: 100%;
   display: inline-block;
 }
 
-#dota2 {
-  background: url("../img/dota.png") center no-repeat;
+.tournois > ul li:last-child {
+  margin-right: 0;
+}
+
+.tournois > ul li:hover {
+  background: #0e0e0e;
+  border-bottom: 3px solid #00bff3;
+  margin-bottom: 0;
+}
+
+#lol {
+  background: url('../img/lol.png') center no-repeat;
+}
+
+#sc2 {
+  background: url('../img/sc2.png') center no-repeat;
+}
+
+#cs {
+  background: url('../img/cs.png') center no-repeat;
+}
+
+#tf2 {
+  background: url('../img/tf2.png') center no-repeat;
 }
 
 .back {

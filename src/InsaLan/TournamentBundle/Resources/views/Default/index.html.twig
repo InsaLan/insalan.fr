@@ -5,22 +5,20 @@
 
 <article>
   <header>
-    <h2>Tournaments</h2>
+    <h2>Tournois</h2>
   </header>
-  
-  <section>
+
+  <section class="tournois">
     <ul>
-      {% for t in tournaments %}
-        <li><a href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}" id="{{ t.name | replace({' ': ''}) | lower }}">
-          {{ t.name }}</a></li>
-      {% endfor %}
+        <li><a href="#" id="lol"></a></li>
+        <li><a href="#" id="sc2"></a></li>
+        <li><a href="#" id="cs"></a></li>
+        <li><a href="#" id="tf2"></a></li>
     </ul>
 
     <div class="clear"></div>
     <div class="space"></div>
   </section>
 </article>
-
-
 
 {% endblock %}
