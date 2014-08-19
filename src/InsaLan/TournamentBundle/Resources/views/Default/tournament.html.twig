@@ -26,13 +26,16 @@
     window.addEvent('domready', function() {
       var matches = $$('.matches table');
       if (matches.length > 0) {
+        $$('.groups table')[0].addClass('hovered');
         matches.setStyle('display', 'none');
         matches[0].setStyle('display', '');
 
         $$('.groups table').addEvent('mouseover', function() {
           var gid = parseInt(this.dataset.gid);
           matches.setStyle('display', 'none');
+          $$('.groups table').removeClass('hovered');
           $('grpm' + gid).setStyle('display', '');
+          $(this).addClass('hovered');
         });
       }
     });

@@ -1,31 +1,7 @@
-<aside class="matches">
-  <header>
-    <h3>Matches</h3>
-  </header>
-  {% for g in groups %}
-    <table id="grpm{{ g.id }}">
-    <caption>{{ g.name }}</caption>
-    {% for m in g.matches %}
-      <tr data-p1="{{ m.match.part1.id }}" data-p2="{{ m.match.part2.id }}">
-        <td>
-          {{ m.match.part1.name }} <em>vs</em> {{ m.match.part2.name }}<br/>
-
-          {% for r in m.match.rounds %}
-            {% if r.replay %}<a href="{{ asset('uploads/demos/' ~ r.replay) }}">{% endif %}
-              [{{ r.score1 }}-{{ r.score2 }}]
-            {% if r.replay %}</a>{% endif %}
-          {% endfor %}
-        </td>
-      </tr>
-    {% endfor %}
-    </table>
-{% endfor %}
-</aside>
-
 <aside class="groups">
   <header>
     <h3>Poules</h3>
-  </header>
+  </header>{% for i in 1..3%}
 {% for g in groups %}
   <table data-gid="{{ g.id }}">
     <caption>{{ g.name }}</caption>
@@ -39,4 +15,39 @@
     {% endfor %}
   </table>
 {% endfor %}
+{% endfor %}
 </aside>
+
+<aside class="matches">
+  <header>
+    <h3>Matchs</h3>
+  </header>
+  {% for g in groups %}
+    <table id="grpm{{ g.id }}">
+    <caption>{{ g.name }}</caption>
+    {% for m in g.matches %}
+      <tr data-p1="{{ m.match.part1.id }}" data-p2="{{ m.match.part2.id }}">
+        <td>
+          <div class="p1">{{ m.match.part1.name }}</div>
+          <em>vs</em>
+          <div class="p2">{{ m.match.part2.name }}</div>
+          <div class="clear"></div>
+
+          {% for r in m.match.rounds %}
+            {% if r.replay %}<a href="{{ asset('uploads/demos/' ~ r.replay) }}"{%
+            else %}<div{% endif %} class="dot {%
+            if r.score1 > r.score2 %}p1{%
+            elseif r.score1 < r.score2 %}p2{%
+            else %}p0{% endif %}">
+            {% if r.replay %}</a>{% else %}</div>{% endif %}
+          {% endfor %}
+
+          <div class="clear"></div>
+        </td>
+      </tr>
+    {% endfor %}
+    </table>
+{% endfor %}
+</aside>
+
+<div class="clear"></div>

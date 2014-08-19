@@ -58,41 +58,37 @@
 }
 
 .groups {
-  width: 730px;
-  margin-left: 25px;
+  width: 750px;
+  margin-left: 0px;
 }
 
 .matches {
-  width: 190px;
-  margin-left: 30px;
-}
-
-.matches table {
-  width: 100%;
-  background: #161616;
-  border: 1px solid #2d2d2d;
-  text-align: justify;
-  margin-bottom: 15px;
-}
-
-.matches tr {
-  padding: 2px;
-  background: black;
-  height: 50px;
+  width: 230px;
+  margin-left: 20px;
 }
 
 .matches td {
   vertical-align: middle;
+  padding: 2px;
+  padding-bottom: 6px;
 }
 
-.groups table {
+.matches td:first-child {
+  padding-left: 5px;
+}
+.matches td:last-child {
+  padding-right: 5px;
+}
+
+.groups table,
+.matches table {
   height: auto;
-  width: 220px;
+  width: 230px;
   background-color: rgba(22, 22, 22, 0.8);
   border: 1px solid #393939;
   border-collapse: collapse;
   float: left;
-  margin-right: 23px;
+  margin-right: 20px;
   margin-bottom: 15px;
 }
 
@@ -112,13 +108,24 @@
   line-height: 30px;
 }
 
-.groups tr:hover {
-  cursor: normal;
-  background-color: rgba(0, 191, 243, 0.25);
-}
-
 .groups tr:hover td:first-child {
   color: white;
+}
+
+.groups td:hover {
+  color: white;
+}
+
+.groups tr:hover td:nth-child(2) {
+  color: #00a000;
+}
+
+.groups tr:hover td:nth-child(3) {
+  color: #a00000;
+}
+
+.groups tr:hover td:nth-child(4) {
+  color: #cccccc;
 }
 
 .groups td:first-child {
@@ -138,9 +145,26 @@
   border-right: 1px dashed #00bff3;
 }
 
+
+.groups table { background-color: rgba(22, 22, 22, 0.3); color: #555555; border-color: #2a2a2a; }
+.groups table caption { background-color: #222222; border-color: #2a2a2a; color: #888888; }
+.groups table td:nth-child(2), .groups table td:nth-child(3) {
+  border-right: 1px dashed #008cb2;
+}
+
+.groups table.hovered { background-color: rgba(22, 22, 22, 0.8); color: #a2a2a2; }
+.groups table.hovered caption { background-color: #232323; border-color: #393939; color: white; }
+.groups table.hovered td:nth-child(2), .groups table.hovered td:nth-child(3) {
+  border-right: 1px dashed #00bff3;
+}
+
 .groups, .matches {
   float: left;
   font-size: 0.9em;
+}
+
+.groups tr:hover, .matches tr:hover {
+  background-color: rgba(0, 191, 243, 0.25);
 }
 
 .matches header, .groups header {
@@ -162,4 +186,44 @@ h3 {
 
 .matches em {
   color: #00bff3;
+  position: relative;
+  top: 5px;
+}
+
+.matches .p1, .matches .p2 { width: 99px; }
+.matches .p1 {
+  float: left;
+  text-align: left;
+  padding-right: 3px;
+}
+.matches .p2 {
+  float: right;
+  text-align: right;
+  padding-left: 3px;
+}
+
+.matches .dot {
+  width: 8px;
+  height: 7px;
+  border-radius: 2px;
+  background: #008cb2;
+  margin-top: 2px;
+  padding: 0px;
+}
+
+.matches .dot.p1 {
+  margin-right: 5px;
+}
+
+.matches .dot.p2 {
+  margin-left: 5px;
+}
+
+.matches table {
+  margin-right: 0px;
+  width: 100%;
+}
+
+.matches tr:hover {
+  color: white;
 }
