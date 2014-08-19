@@ -13,7 +13,28 @@
   </header>
 
   <section>
+    {{ render(controller('InsaLanTournamentBundle:Default:groups', {'tournament': t.id })) }}
   </section>
 </article>
 
+{% endblock %}
+
+
+{% block javascripts %}
+  {{ parent() }}
+  <script type="text/javascript">
+    window.addEvent('domready', function() {
+      var matches = $$('.matches table');
+      if (matches.length > 0) {
+        matches.setStyle('display', 'none');
+        matches[0].setStyle('display', '');
+
+        $$('.groups table').addEvent('mouseover', function() {
+          var gid = parseInt(this.dataset.gid);
+          matches.setStyle('display', 'none');
+          $('grpm' + gid).setStyle('display', '');
+        });
+      }
+    });
+  </script>
 {% endblock %}

@@ -102,7 +102,7 @@ class Group
      * @param \InsaLan\TournamentBundle\Entity\GroupMatch $matches
      * @return Group
      */
-    public function addMatche(\InsaLan\TournamentBundle\Entity\GroupMatch $matches)
+    public function addMatch(\InsaLan\TournamentBundle\Entity\GroupMatch $matches)
     {
         $this->matches[] = $matches;
 
@@ -114,7 +114,7 @@ class Group
      *
      * @param \InsaLan\TournamentBundle\Entity\GroupMatch $matches
      */
-    public function removeMatche(\InsaLan\TournamentBundle\Entity\GroupMatch $matches)
+    public function removeMatch(\InsaLan\TournamentBundle\Entity\GroupMatch $matches)
     {
         $this->matches->removeElement($matches);
     }
@@ -138,7 +138,8 @@ class Group
                 $participants[$m->getPart1()->getId()] = array(
                     'participant' => $m->getPart1(),
                     'won' => 0,
-                    'lost' => 0
+                    'lost' => 0,
+                    'draw' => 0
                 );
             }
 
@@ -146,19 +147,29 @@ class Group
                 $participants[$m->getPart2()->getId()] = array(
                     'participant' => $m->getPart2(),
                     'won' => 0,
-                    'lost' => 0
+                    'lost' => 0,
+                    'draw' => 0
                 );
             }
 
+            $score1 = $score2 = 0;
+
             foreach ($m->getRounds() as $r) {
-                if ($r->getScore1() < $r->getScore2()) {
-                    $participants[$m->getPart1()->getId()]['lost'] += 1;
-                    $participants[$m->getPart2()->getId()]['won'] += 1;
-                }
-                else if ($r->getScore1() > $r->getScore2()) {
-                    $participants[$m->getPart1()->getId()]['won'] += 1;
-                    $participants[$m->getPart2()->getId()]['lost'] += 1;
-                }
+                $score1 += $r->getScore1();
+                $score2 += $r->getScore2();
+            }
+
+            if ($score1 < $score2) {
+                $participants[$m->getPart1()->getId()]['lost'] += 1;
+                $participants[$m->getPart2()->getId()]['won'] += 1;
+            }
+            else if ($score1 > $score2) {
+                $participants[$m->getPart1()->getId()]['won'] += 1;
+                $participants[$m->getPart2()->getId()]['lost'] += 1;
+            }
+            else {
+                $participants[$m->getPart1()->getId()]['draw'] += 1;
+                $participants[$m->getPart2()->getId()]['draw'] += 1;
             }
         }
 

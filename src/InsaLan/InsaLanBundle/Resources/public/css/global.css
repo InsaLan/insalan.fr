@@ -169,7 +169,7 @@ body > header aside .place {
   color: white;
   font-size: 1.4em;
   position: absolute;
-  letter-spacing: 19px;
+  letter-spacing: 18px;
   top: 60px;
   left: 228px;
 }
@@ -349,7 +349,7 @@ footer aside #twitter:hover {
 
 footer aside #mail {
   height: 27px;
-  width: 140px;
+  width: 120px;
   background: black;
   opacity: 0.5;
   text-align: center;
@@ -548,7 +548,6 @@ input[type=submit]:active, input[type=button]:active {
   height: 30px;
   line-height: 30px;
 }
-
 
 strong {
   color: #00bff3;

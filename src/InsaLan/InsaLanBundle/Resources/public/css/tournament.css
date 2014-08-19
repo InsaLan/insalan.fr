@@ -72,6 +72,7 @@
   background: #161616;
   border: 1px solid #2d2d2d;
   text-align: justify;
+  margin-bottom: 15px;
 }
 
 .matches tr {
@@ -86,15 +87,17 @@
 
 .groups table {
   height: auto;
-  width: 200px;
+  width: 220px;
   background-color: rgba(22, 22, 22, 0.8);
   border: 1px solid #393939;
+  border-collapse: collapse;
   float: left;
-  margin-right: 25px;
-  margin-left: 25px;
+  margin-right: 23px;
+  margin-bottom: 15px;
 }
 
-.groups caption {
+.groups caption,
+.matches caption {
   font-family: Oswald;
   font-size: 0.9em;
   text-transform: uppercase;
@@ -110,25 +113,28 @@
 }
 
 .groups tr:hover {
-  cursor: default;
+  cursor: normal;
   background-color: rgba(0, 191, 243, 0.25);
 }
 
-.groups td:first-child:hover {
+.groups tr:hover td:first-child {
   color: white;
 }
 
 .groups td:first-child {
-  padding-left: 3px;
+  padding-left: 5px;
 }
 
-.groups td:nth-child(2), .groups td:nth-child(3) {
-  width: 30px;
+.groups td:nth-child(2),
+.groups td:nth-child(3),
+.groups td:nth-child(4) {
+  width: 27px;
   text-align: center;
   font-size: 1.1em;
 }
 
-.groups td:nth-child(2) {
+.groups td:nth-child(2),
+.groups td:nth-child(3) {
   border-right: 1px dashed #00bff3;
 }
 
@@ -152,7 +158,6 @@ h3 {
 
 .groups h3 {
   color: #00bff3;
-  margin-left: 25px;
 }
 
 .matches em {
