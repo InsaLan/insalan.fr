@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: @InsaLanNewsBundle/Resources/config/admin.yml }
     - { resource: @InsaLanPizzaBundle/Resources/config/admin.yml }
+    - { resource: @InsaLanTournamentBundle/Resources/config/admin.yml }
     - { resource: @InsaLanBundle/Resources/config/services.yml }
 
 framework:

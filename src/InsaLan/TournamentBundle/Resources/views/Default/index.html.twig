@@ -8,14 +8,18 @@
     <h2>Tournois</h2>
   </header>
 
-  <section class="tournois">
+  <section class="tournaments">
     <ul>
-        <li><a href="http://intranet.insalan.fr/roccat-league-of-legends/" id="lol"></a></li>
-        <li><a href="http://intranet.insalan.fr/roccat-starcraft-ii/" id="sc2"></a></li>
-        <li><a href="http://intranet.insalan.fr/razer-counter-strike-go/" id="cs"></a></li>
-        <li><a href="http://intranet.insalan.fr/speedlink-team-fortress-2/" id="tf2"></a></li>
+      {% for t in tournaments %}
+        {% spaceless %}
+          <li>
+            <a href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}">
+              <img src="{{ asset('uploads/tournament/' ~ t.id ~ '.png') }}" alt="{{ t.name }}"/>
+            </a>
+          </li>
+        {% endspaceless %}
+      {% endfor %}
     </ul>
-
     <div class="clear"></div>
     <div class="space"></div>
   </section>

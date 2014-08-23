@@ -16,12 +16,12 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
     public function load(ObjectManager $manager)
     {
         $e = new Tournament();
-        $e->setName('DotA 2');
+        $e->setName('CS: GO');
         $manager->persist($e);
         $this->addReference('tournament-1', $e);
 
         $e = new Tournament();
-        $e->setName('Hearthstone');
+        $e->setName('League of Legends');
         $manager->persist($e);
         $this->addReference('tournament-2', $e);
 

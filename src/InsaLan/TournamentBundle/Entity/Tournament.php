@@ -3,12 +3,15 @@ namespace InsaLan\TournamentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity
  */
 class Tournament
 {
+    const UPLAD_PATH = 'uploads/tournament/';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -23,9 +26,9 @@ class Tournament
     protected $name;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
-    protected $image;
+    protected $description;
 
     /**
      * Get id
@@ -61,25 +64,94 @@ class Tournament
     }
 
     /**
-     * Set image
+     * Unmapped property to handle file uploads
+     */
+    private $file;
+
+    /**
+     * Sets file.
      *
-     * @param string $image
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * ORM\PostPersist
+     */
+    public function onPostPersist()
+    {
+        $this->uploadFile();
+    }
+
+    /**
+     * ORM\PostUpdate
+     */
+    public function onPostUpdate()
+    {
+        $this->uploadFile();
+    }
+
+    /**
+     * ORM\PostRemove
+     */
+    public function onPreRemove()
+    {
+        $name = self::UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->getId().'.png';
+        if (file_exists($name))
+        {
+            unlink($name);
+        }
+    }
+
+    private function uploadFile()
+    {
+        // the file property can be empty if the field is not required
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        $this->getFile()->move(
+            self::UPLOAD_PATH,
+            //$this->getFile()->getClientOriginalName()
+            $this->getId().'.png'
+        );
+
+        $this->setFile(null);
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
      * @return Tournament
      */
-    public function setImage($image)
+    public function setDescription($description)
     {
-        $this->image = $image;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get image
+     * Get description
      *
      * @return string
      */
-    public function getImage()
+    public function getDescription()
     {
-        return $this->image;
+        return $this->description;
     }
 }

@@ -3,7 +3,7 @@
   width: 100%;
 }
 
-.tournois > ul li {
+.tournaments > ul li {
   margin-top: 80px;
   width: 215px;
   height: 218px;
@@ -14,36 +14,26 @@
   display: block;
 }
 
-.tournois > ul li a {
+.tournaments > ul li a {
   width: 100%;
   height: 100%;
   display: inline-block;
+  text-align: center;
 }
 
-.tournois > ul li:last-child {
+.tournaments > ul li:last-child {
   margin-right: 0;
 }
 
-.tournois > ul li:hover {
+.tournaments > ul li:hover {
   background: #0e0e0e;
   border-bottom: 3px solid #00bff3;
   margin-bottom: 0;
 }
 
-#lol {
-  background: url('../img/lol.png') center no-repeat;
-}
-
-#sc2 {
-  background: url('../img/sc2.png') center no-repeat;
-}
-
-#cs {
-  background: url('../img/cs.png') center no-repeat;
-}
-
-#tf2 {
-  background: url('../img/tf2.png') center no-repeat;
+.tournaments > ul li a img {
+  width: 200px;
+  height: 200px;
 }
 
 .back {
