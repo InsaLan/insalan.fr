@@ -1,7 +1,7 @@
 <aside class="groups">
   <header>
     <h3>Poules</h3>
-  </header>{% for i in 1..3%}
+  </header>
 {% for g in groups %}
   <table data-gid="{{ g.id }}">
     <caption>{{ g.name }}</caption>
@@ -14,7 +14,6 @@
       </tr>
     {% endfor %}
   </table>
-{% endfor %}
 {% endfor %}
 </aside>
 

@@ -4,28 +4,28 @@ namespace InsaLan\TournamentBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use InsaLan\TournamentBundle\Entity\Knockout;
+use InsaLan\TournamentBundle\Entity\GroupStage;
 
-class KnockoutLoader extends AbstractFixture implements OrderedFixtureInterface
+class GroupStageLoader extends AbstractFixture implements OrderedFixtureInterface
 {
     public function getOrder()
     {
-        return 8;
+        return 3;
     }
 
     public function load(ObjectManager $manager)
     {
-        $e = new Knockout();
-        $e->setName('Elite bracket');
+        $e = new GroupStage();
+        $e->setName('Stage 1');
         $e->setTournament($this->getReference('tournament-1'));
         $manager->persist($e);
-        $this->addReference('knockout-1', $e);
+        $this->addReference('groupstage-1', $e);
 
-        $e = new Knockout();
-        $e->setName('Amateur bracket');
+        $e = new GroupStage();
+        $e->setName('Stage 2');
         $e->setTournament($this->getReference('tournament-1'));
         $manager->persist($e);
-        $this->addReference('knockout-2', $e);
+        $this->addReference('groupstage-2', $e);
 
         $manager->flush();
     }

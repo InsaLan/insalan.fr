@@ -10,7 +10,7 @@ class RoundLoader extends AbstractFixture implements OrderedFixtureInterface
 {
     public function getOrder()
     {
-        return 6;
+        return 7;
     }
 
     public function load(ObjectManager $manager)

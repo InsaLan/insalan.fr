@@ -10,7 +10,7 @@ class GroupMatchLoader extends AbstractFixture implements OrderedFixtureInterfac
 {
     public function getOrder()
     {
-        return 5;
+        return 6;
     }
 
     public function load(ObjectManager $manager)

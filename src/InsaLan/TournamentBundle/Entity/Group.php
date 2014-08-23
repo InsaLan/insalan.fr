@@ -23,10 +23,10 @@ class Group
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Tournament")
-     * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="GroupStage", inversedBy="groups")
+     * @ORM\JoinColumn(name="group_stage_id", referencedColumnName="id")
      */
-    protected $tournament;
+    protected $stage;
 
     /**
      * @ORM\OneToMany(targetEntity="GroupMatch", mappedBy="group")
@@ -175,5 +175,28 @@ class Group
 
         $this->participants = $participants;
         return $this;
+    }
+
+    /**
+     * Set stage
+     *
+     * @param \InsaLan\TournamentBundle\Entity\GroupStage $stage
+     * @return Group
+     */
+    public function setStage(\InsaLan\TournamentBundle\Entity\GroupStage $stage = null)
+    {
+        $this->stage = $stage;
+
+        return $this;
+    }
+
+    /**
+     * Get stage
+     *
+     * @return \InsaLan\TournamentBundle\Entity\GroupStage
+     */
+    public function getStage()
+    {
+        return $this->stage;
     }
 }

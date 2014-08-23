@@ -35,12 +35,24 @@ class DefaultController extends Controller
     /**
      * @Template()
      */
-    public function groupsAction(Entity\Tournament $tournament)
+    public function stagesAction(Entity\Tournament $tournament)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('InsaLanTournamentBundle:GroupStage');
+
+        $stages = $repo->getByTournament($tournament);
+        return array('stages' => $stages);
+    }
+
+    /**
+     * @Template()
+     */
+    public function groupsAction(Entity\GroupStage $stage)
     {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('InsaLanTournamentBundle:Group');
 
-        $groups = $repo->getByTournament($tournament);
+        $groups = $repo->getByStage($stage);
         foreach ($groups as &$group) {
             $group->countWins();
         }

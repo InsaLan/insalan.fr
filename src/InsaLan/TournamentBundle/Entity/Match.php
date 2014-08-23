@@ -9,6 +9,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Match
 {
+    const STATE_UPCOMING = 0;
+    const STATE_ONGOING  = 1;
+    const STATE_FINISHED = 2;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -29,6 +33,11 @@ class Match
     protected $part2;
 
     /**
+     * @ORM\COlumn(type="integer")
+     */
+    protected $state;
+
+    /**
      * @ORM\OneToMany(targetEntity="Round", mappedBy="match")
      */
     protected $rounds;
@@ -39,6 +48,7 @@ class Match
      */
     public function __construct()
     {
+        $this->state = Match::STATE_UPCOMING;
         $this->rounds = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -129,5 +139,28 @@ class Match
     public function getRounds()
     {
         return $this->rounds;
+    }
+
+    /**
+     * Set state
+     *
+     * @param integer $state
+     * @return Match
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return integer
+     */
+    public function getState()
+    {
+        return $this->state;
     }
 }

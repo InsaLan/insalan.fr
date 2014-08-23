@@ -5,9 +5,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\GroupStageRepository")
  */
-class Participant
+class GroupStage
 {
     /**
      * @ORM\Id
@@ -29,9 +29,22 @@ class Participant
     protected $tournament;
 
     /**
+     * @ORM\OneToMany(targetEntity="Group", mappedBy="stage")
+     */
+    protected $groups;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -42,19 +55,19 @@ class Participant
      * Set name
      *
      * @param string $name
-     * @return Participant
+     * @return GroupStage
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -65,22 +78,55 @@ class Participant
      * Set tournament
      *
      * @param \InsaLan\TournamentBundle\Entity\Tournament $tournament
-     * @return Participant
+     * @return GroupStage
      */
     public function setTournament(\InsaLan\TournamentBundle\Entity\Tournament $tournament = null)
     {
         $this->tournament = $tournament;
-    
+
         return $this;
     }
 
     /**
      * Get tournament
      *
-     * @return \InsaLan\TournamentBundle\Entity\Tournament 
+     * @return \InsaLan\TournamentBundle\Entity\Tournament
      */
     public function getTournament()
     {
         return $this->tournament;
+    }
+
+    /**
+     * Add groups
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Group $groups
+     * @return GroupStage
+     */
+    public function addGroup(\InsaLan\TournamentBundle\Entity\Group $groups)
+    {
+        $this->groups[] = $groups;
+
+        return $this;
+    }
+
+    /**
+     * Remove groups
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Group $groups
+     */
+    public function removeGroup(\InsaLan\TournamentBundle\Entity\Group $groups)
+    {
+        $this->groups->removeElement($groups);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 }

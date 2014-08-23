@@ -10,7 +10,7 @@ class KnockoutMatchLoader extends AbstractFixture implements OrderedFixtureInter
 {
     public function getOrder()
     {
-        return 8;
+        return 9;
     }
 
     public function load(ObjectManager $manager)

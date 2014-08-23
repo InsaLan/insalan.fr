@@ -10,21 +10,23 @@ class GroupRepository extends EntityRepository
     {
         return $this->createQueryBuilder('g')
             ->leftJoin('g.matches', 'gm')
+            ->leftJoin('g.stage', 'gs')
             ->leftJoin('gm.match', 'm')
             ->leftJoin('m.rounds', 'r')
             ->leftJoin('m.part1', 'p1')
             ->leftJoin('m.part2', 'p2')
             ->addSelect('m')
             ->addSelect('gm')
+            ->addSelect('gs')
             ->addSelect('r')
             ->addSelect('p1')
             ->addSelect('p2')
         ;
     }
-    public function getByTournament(Entity\Tournament $t)
+    public function getByStage(Entity\GroupStage $s)
     {
         $q = $this->getQueryBuilder();
-        $q->where('g.tournament = :t')->setParameter('t', $t);
+        $q->where('g.stage = :s')->setParameter('s', $s);
 
         return $q->getQuery()->execute();
     }

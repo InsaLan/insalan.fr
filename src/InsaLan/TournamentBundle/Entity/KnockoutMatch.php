@@ -270,4 +270,34 @@ class KnockoutMatch
     {
         return $this->children;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add children
+     *
+     * @param \InsaLan\TournamentBundle\Entity\KnockoutMatch $children
+     * @return KnockoutMatch
+     */
+    public function addChild(\InsaLan\TournamentBundle\Entity\KnockoutMatch $children)
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \InsaLan\TournamentBundle\Entity\KnockoutMatch $children
+     */
+    public function removeChild(\InsaLan\TournamentBundle\Entity\KnockoutMatch $children)
+    {
+        $this->children->removeElement($children);
+    }
 }
