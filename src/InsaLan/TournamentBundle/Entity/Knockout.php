@@ -18,7 +18,7 @@ class Knockout
 
     /**
      * @ORM\ManyToOne(targetEntity="Tournament")
-     * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $tournament;
 

@@ -10,7 +10,7 @@ class GroupStageLoader extends AbstractFixture implements OrderedFixtureInterfac
 {
     public function getOrder()
     {
-        return 3;
+        return 2;
     }
 
     public function load(ObjectManager $manager)

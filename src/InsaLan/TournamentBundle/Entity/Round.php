@@ -23,7 +23,7 @@ class Round
 
     /**
      * @ORM\ManyToOne(targetEntity="Match", inversedBy="rounds")
-     * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $match;
 

@@ -23,8 +23,8 @@ class GroupStage
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Tournament")
-     * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Tournament", fetch="EAGER")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $tournament;
 
@@ -128,5 +128,10 @@ class GroupStage
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    public function __toString()
+    {
+        return $this->getTournament().' - '.$this->getName();
     }
 }

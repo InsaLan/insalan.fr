@@ -6,6 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\GroupRepository")
+ * @ORM\Table(name="`Group`")
  */
 class Group
 {
@@ -24,14 +25,20 @@ class Group
 
     /**
      * @ORM\ManyToOne(targetEntity="GroupStage", inversedBy="groups")
-     * @ORM\JoinColumn(name="group_stage_id", referencedColumnName="id")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $stage;
 
     /**
      * @ORM\OneToMany(targetEntity="GroupMatch", mappedBy="group")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $matches;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Participant", inversedBy="groups")
+     */
+    protected $participants;
 
     /**
      * Get id
@@ -116,7 +123,7 @@ class Group
      */
     public function removeMatch(\InsaLan\TournamentBundle\Entity\GroupMatch $matches)
     {
-        $this->matches->removeElement($matches);
+        return $this->matches->removeElement($matches);
     }
 
     /**
@@ -131,26 +138,18 @@ class Group
 
     public function countWins()
     {
-        $participants = array();
+        // Initialize statistics
+        $this->stats = array();
+        foreach ($this->participants as $p) {
+            $stats = array('won' => 0, 'lost' => 0, 'draw' => 0);
+            $this->stats[$p->getId()] = $stats;
+        }
+
         foreach ($this->getMatches() as $gm) {
             $m = $gm->getMatch();
-            if (!isset($participants[$m->getPart1()->getId()])) {
-                $participants[$m->getPart1()->getId()] = array(
-                    'participant' => $m->getPart1(),
-                    'won' => 0,
-                    'lost' => 0,
-                    'draw' => 0
-                );
-            }
 
-            if (!isset($participants[$m->getPart2()->getId()])) {
-                $participants[$m->getPart2()->getId()] = array(
-                    'participant' => $m->getPart2(),
-                    'won' => 0,
-                    'lost' => 0,
-                    'draw' => 0
-                );
-            }
+            $p1 = &$this->stats[$m->getPart1()->getId()];
+            $p2 = &$this->stats[$m->getPart2()->getId()];
 
             $score1 = $score2 = 0;
 
@@ -160,20 +159,19 @@ class Group
             }
 
             if ($score1 < $score2) {
-                $participants[$m->getPart1()->getId()]['lost'] += 1;
-                $participants[$m->getPart2()->getId()]['won'] += 1;
+                ++$p1['lost'];
+                ++$p2['won'];
             }
             else if ($score1 > $score2) {
-                $participants[$m->getPart1()->getId()]['won'] += 1;
-                $participants[$m->getPart2()->getId()]['lost'] += 1;
+                ++$p1['won'];
+                ++$p2['lost'];
             }
             else {
-                $participants[$m->getPart1()->getId()]['draw'] += 1;
-                $participants[$m->getPart2()->getId()]['draw'] += 1;
+                ++$p1['draw'];
+                ++$p2['draw'];
             }
         }
 
-        $this->participants = $participants;
         return $this;
     }
 
@@ -198,5 +196,48 @@ class Group
     public function getStage()
     {
         return $this->stage;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * Add participants
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Participant $participants
+     * @return Group
+     */
+    public function addParticipant(\InsaLan\TournamentBundle\Entity\Participant $participants)
+    {
+        $this->participants[] = $participants;
+
+        return $this;
+    }
+
+    /**
+     * Remove participants
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Participant $participants
+     */
+    public function removeParticipant(\InsaLan\TournamentBundle\Entity\Participant $participants)
+    {
+        return $this->participants->removeElement($participants);
+    }
+
+    /**
+     * Get participants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getParticipants()
+    {
+        return $this->participants;
+    }
+
+    public function hasParticipant(\InsaLan\TournamentBundle\Entity\Participant $participant)
+    {
+        return $this->participants->contains($participant);
     }
 }

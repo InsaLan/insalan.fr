@@ -20,13 +20,13 @@ class KnockoutMatch
 
     /**
      * @ORM\ManyToOne(targetEntity="Knockout")
-     * @ORM\JoinColumn(name="knockout_id", referencedColumnName="id")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $knockout;
 
     /**
      * @ORM\ManyToOne(targetEntity="Match")
-     * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $match;
 
@@ -57,7 +57,7 @@ class KnockoutMatch
     /**
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="KnockoutMatch", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     private $parent;
 

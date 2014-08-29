@@ -13,7 +13,65 @@
   </header>
 
   <section>
-    {{ render(controller('InsaLanTournamentBundle:Default:stages', {'tournament': t.id })) }}
+    {% for s in stages %}
+      <section>
+        <h3>{{ s.name }}</h3>
+
+        <aside class="groups">
+          <header>
+            <h3 class="blue">Poules</h3>
+          </header>
+        {% for g in s.groups %}
+          <table data-gid="{{ g.id }}">
+            <caption>{{ g.name }}</caption>
+              {% for p in g.participants %}
+              <tr>
+                <td>{{ p.name }}</td>
+                <td>{{ g.stats[p.id].won }}</td>
+                <td>{{ g.stats[p.id].lost }}</td>
+                <td>{{ g.stats[p.id].draw }}</td>
+              </tr>
+            {% endfor %}
+          </table>
+        {% endfor %}
+        </aside>
+
+        <aside class="matches">
+          <header>
+            <h3>Matchs</h3>
+          </header>
+          {% for g in s.groups %}
+            <table id="grpm{{ g.id }}">
+            <caption>{{ g.name }}</caption>
+            {% for m in g.matches %}
+            {% if constant('InsaLan\\TournamentBundle\\Entity\\Match::STATE_UPCOMING') != m.match.state %}
+              <tr data-p1="{{ m.match.part1.id }}" data-p2="{{ m.match.part2.id }}">
+                <td>
+                  <div class="p1">{{ m.match.part1.name }}</div>
+                  <em>vs</em>
+                  <div class="p2">{{ m.match.part2.name }}</div>
+                  <div class="clear"></div>
+
+                  {% for r in m.match.rounds %}
+                    {% if r.replay %}<a href="{{ asset('uploads/demos/' ~ r.replay) }}"{%
+                    else %}<div{% endif %} class="dot {%
+                    if r.score1 > r.score2 %}p1{%
+                    elseif r.score1 < r.score2 %}p2{%
+                    else %}p0{% endif %}">
+                    {% if r.replay %}</a>{% else %}</div>{% endif %}
+                  {% endfor %}
+
+                  <div class="clear"></div>
+                </td>
+              </tr>
+            {% endif %}
+            {% endfor %}
+            </table>
+        {% endfor %}
+        </aside>
+        <div class="clear"></div>
+      </section>
+    {% endfor %}
   </section>
 </article>
 

@@ -2,10 +2,32 @@ services:
     sonata.admin.tournament.tournament:
         class: InsaLan\TournamentBundle\Admin\TournamentAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Tournois" }
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Tournoi" }
         arguments:
             - ~
             - InsaLan\TournamentBundle\Entity\Tournament
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanTournamentBundle]]
+
+    sonata.admin.tournament.groupstage:
+        class: InsaLan\TournamentBundle\Admin\GroupStageAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Phase poules" }
+        arguments:
+            - ~
+            - InsaLan\TournamentBundle\Entity\GroupStage
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanTournamentBundle]]
+
+    sonata.admin.tournament.group:
+        class: InsaLan\TournamentBundle\Admin\GroupAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Poule" }
+        arguments:
+            - ~
+            - InsaLan\TournamentBundle\Entity\Group
             - ~
         calls:
             - [ setTranslationDomain, [InsaLanTournamentBundle]]

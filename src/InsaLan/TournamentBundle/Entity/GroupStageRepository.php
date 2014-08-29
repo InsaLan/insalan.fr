@@ -14,14 +14,30 @@ class GroupStageRepository extends EntityRepository
 {
     protected function getQueryBuilder()
     {
-        return $this->createQueryBuilder('gs')
+        return $this->_em->createQueryBuilder()
+            ->from($this->_entityName, 'gs')
+            ->leftJoin('gs.groups', 'g')
+//            ->leftJoin('g.participants', 'gp')
+            ->leftJoin('g.participants', 'p')
+            ->leftJoin('g.matches', 'gm')
+            ->leftJoin('gm.match', 'm')
+            ->leftJoin('m.rounds', 'r')
+            ->addSelect('partial gs.{id, name}')
+            ->addSelect('partial g.{id, name}')
+//            ->addSelect('gp')
+            ->addSelect('partial p.{id, name}')
+            ->addSelect('gm')
+            ->addSelect('partial m.{id, state}')
+            ->addSelect('partial r.{id, score1, score2, replay}')
+            ->orderBy('gs.name, g.name, p.name')
         ;
     }
+
     public function getByTournament(Tournament $t)
     {
-        $q = $this->getQueryBuilder();
-        $q->where('gs.tournament = :t')->setParameter('t', $t);
+        $qb = $this->getQueryBuilder();
+        $qb->where('gs.tournament = :t')->setParameter('t', $t);
 
-        return $q->getQuery()->execute();
+        return $qb->getQuery()->execute();
     }
 }

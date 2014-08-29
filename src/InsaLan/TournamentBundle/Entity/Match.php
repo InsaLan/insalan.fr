@@ -6,6 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="`Match`")
  */
 class Match
 {
@@ -22,18 +23,18 @@ class Match
 
     /**
      * @ORM\ManyToOne(targetEntity="Participant")
-     * @ORM\JoinColumn(name="part1_id", referencedColumnName="id")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $part1;
 
     /**
      * @ORM\ManyToOne(targetEntity="Participant")
-     * @ORM\JoinColumn(name="part2_id", referencedColumnName="id")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $part2;
 
     /**
-     * @ORM\COlumn(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $state;
 

@@ -24,14 +24,19 @@ class Participant
 
     /**
      * @ORM\ManyToOne(targetEntity="Tournament")
-     * @ORM\JoinColumn(name="tournament_id", referencedColumnName="id")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $tournament;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Group", mappedBy="participants")
+     */
+    protected $groups;
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -47,14 +52,14 @@ class Participant
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -70,17 +75,57 @@ class Participant
     public function setTournament(\InsaLan\TournamentBundle\Entity\Tournament $tournament = null)
     {
         $this->tournament = $tournament;
-    
+
         return $this;
     }
 
     /**
      * Get tournament
      *
-     * @return \InsaLan\TournamentBundle\Entity\Tournament 
+     * @return \InsaLan\TournamentBundle\Entity\Tournament
      */
     public function getTournament()
     {
         return $this->tournament;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add groups
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Group $groups
+     * @return Participant
+     */
+    public function addGroup(\InsaLan\TournamentBundle\Entity\Group $groups)
+    {
+        $this->groups[] = $groups;
+
+        return $this;
+    }
+
+    /**
+     * Remove groups
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Group $groups
+     */
+    public function removeGroup(\InsaLan\TournamentBundle\Entity\Group $groups)
+    {
+        $this->groups->removeElement($groups);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 }

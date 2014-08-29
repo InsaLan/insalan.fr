@@ -9,6 +9,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass="InsaLan\PizzaBundle\Entity\OrderRepository")
+ * @ORM\Table(name="`Order`")
  */
 class Order
 {

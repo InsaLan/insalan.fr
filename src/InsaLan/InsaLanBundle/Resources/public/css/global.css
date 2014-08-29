@@ -85,6 +85,8 @@ body {
   font-weight: bold;
   line-height: 20px;
   cursor: pointer;
+  border: none;
+  padding: 0px;
 }
 
 .alert-error {
@@ -225,6 +227,19 @@ article > header h2 {
   letter-spacing: 3px;
   margin-bottom: 10px;
 }
+
+
+h3 {
+  font-family: OpenSansCond;
+  text-transform: uppercase;
+  color: white;
+  margin-bottom: 10px;
+}
+
+h3.blue {
+  color: #00bff3;
+}
+
 
 article > section p em {
   color: #00bff3;
@@ -473,8 +488,8 @@ footer #copyright a:hover {
 footer #copyright span {
   font-family: OpenSansCond;
   color: #00bff3;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 /** Forms **/
@@ -485,6 +500,7 @@ footer #copyright span {
 }
 
 .input input,
+.input button,
 .input select {
   display: block;
 }
@@ -502,11 +518,13 @@ footer #copyright span {
 }
 
 .input.left input,
+.input.left button,
 .input.left select {
   margin-left: 170px;
 }
 
 .input.right input,
+.input.right button,
 .input.right select {
   float: left;
 }
@@ -528,10 +546,10 @@ footer #copyright span {
   border: solid black 1px;
   font-size: 1.2em;
   height: 26px;
-  padding: 2px;
+  padding: 2px 5px 2px 2px;
 }
 
-input[type=submit], input[type=button] {
+input[type=submit], input[type=button], button {
   font-size: 1.2em;
   color: white;
   background-color: #00bff3;
@@ -539,7 +557,7 @@ input[type=submit], input[type=button] {
   padding: 5px;
 }
 
-input[type=submit]:active, input[type=button]:active {
+input[type=submit]:active, input[type=button]:active, button:active {
   background-color: #0095be;
 }
 
@@ -548,6 +566,32 @@ input[type=submit]:active, input[type=button]:active {
   height: 30px;
   line-height: 30px;
 }
+
+.oneline .input {
+  display: inline;
+  float: none;
+  width: auto;
+  height: auto;
+  margin: 0px;
+}
+
+.oneline .input label {
+  display: inline;
+  width: auto;
+}
+
+.oneline .input select,
+.oneline .input input,
+.oneline .input button {
+  display: inline;
+  width: auto;
+  margin: 0px;
+  margin-left: 10px;
+  font-size: 1em;
+  line-height: 100%;
+}
+
+
 
 strong {
   color: #00bff3;

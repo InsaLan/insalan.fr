@@ -80,6 +80,7 @@
   float: left;
   margin-right: 20px;
   margin-bottom: 15px;
+  font-size: 0.9em;
 }
 
 .groups caption,
@@ -92,6 +93,10 @@
   background: #232323;
   border: 1px solid #393939;
   border-bottom: none;
+}
+
+.groups table a, .matches table a {
+  display: block;
 }
 
 .groups td {
@@ -142,15 +147,15 @@
   border-right: 1px dashed #008cb2;
 }
 
-.groups table.hovered { background-color: rgba(22, 22, 22, 0.8); color: #a2a2a2; }
-.groups table.hovered caption { background-color: #232323; border-color: #393939; color: white; }
-.groups table.hovered td:nth-child(2), .groups table.hovered td:nth-child(3) {
+.groups table.hovered, .groups table:hover { background-color: rgba(22, 22, 22, 0.8); color: #a2a2a2; }
+.groups table.hovered caption, .groups table:hover caption { background-color: #232323; border-color: #393939; color: white; }
+.groups table.hovered td:nth-child(2), .groups table.hovered td:nth-child(3),
+.groups table:hover td:nth-child(2), .groups table:hover td:nth-child(3) {
   border-right: 1px dashed #00bff3;
 }
 
 .groups, .matches {
   float: left;
-  font-size: 0.9em;
 }
 
 .groups tr:hover, .matches tr:hover {
@@ -160,18 +165,7 @@
 .matches header, .groups header {
   height: 30px;
   margin-top: 30px;
-  margin-bottom: 30px;
-  font-size: 1.2em;
-}
-
-h3 {
-  font-family: OpenSansCond;
-  text-transform: uppercase;
-  color: white;
-}
-
-.groups h3 {
-  color: #00bff3;
+  margin-bottom: 10px;
 }
 
 .matches em {
@@ -215,5 +209,22 @@ h3 {
 }
 
 .matches tr:hover {
+  color: white;
+}
+
+a.delete {
+  float: right;
+  color: #00bff3;
+}
+
+section.actions {
+  margin-left: 300px;
+}
+
+section.actions ul {
+  list-style-type: none;
+}
+
+section.actions a:hover {
   color: white;
 }

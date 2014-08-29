@@ -18,13 +18,13 @@ class GroupMatch
 
     /**
      * @ORM\ManyToOne(targetEntity="Group", inversedBy="matches")
-     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $group;
 
     /**
      * @ORM\ManyToOne(targetEntity="Match")
-     * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $match;
 

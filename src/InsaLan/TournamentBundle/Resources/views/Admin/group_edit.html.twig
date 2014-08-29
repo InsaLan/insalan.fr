@@ -1,0 +1,41 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <header>
+    <h2>Modifier une poule</h2>
+    <section class="matches">
+      <h3>Poule</h3>
+      <table>
+        <caption>{{ group.name }}</caption>
+        {% for p in group.participants %}
+        <tr>
+          <td>
+            <a class="delete" href="{{
+              path('insalan_tournament_admin_group_deleteparticipant',
+                {group: group.id, participant: p.id}) }}">x</a>
+            {{ p.name }}
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </section>
+
+    <section class="actions">
+      <h3 class="blue">Actions</h3>
+      <section>
+        {{ form_start(form, {attr: {'class':'oneline'}}) }}
+          {{ form_errors(form) }}
+          {{ form_row(form.participant) }}
+          <div class="input left">
+            <input type="submit" value="Ajouter"/>
+          </div>
+        {{ form_end(form) }}
+      </section>
+    </section>
+  </header>
+</article>
+
+{% endblock %}
