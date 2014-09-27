@@ -142,7 +142,7 @@
 }
 
 
-.block:first-child { border-left:none; }
+.block:first-child { margin-left:none; }
 .block {
   display: block;
   background-color: black;
@@ -152,9 +152,9 @@
   font-size: 40px;
   float: left;
   font-family: OpenSansCond;
-  margin: 0;
   border-bottom: solid #00bff3 1px;
-  border-left: solid black 2px;
+  margin: 0;
+  margin-left: 1px;
 }
 
 .block:hover {
@@ -164,7 +164,7 @@
 
 .block-huge, .block-huge:hover {
   background-color: #00bff3;
-  width: 394px;
+  width: 396px;
   color: white;
 }
 
