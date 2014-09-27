@@ -597,3 +597,22 @@ input[type=submit]:active, input[type=button]:active, button:active {
 strong {
   color: #00bff3;
 }
+
+.hero > .big-picture {
+  width: 1000px;
+  height: 425px;
+}
+
+.hero > .big-picture-1 {
+  background-image: url('/bundles/insalan/img/lol-art-1.png'); 
+}
+
+.hero > .big-picture-2 {
+  background-image: url('/bundles/insalan/img/lol-art-2.png'); 
+}
+
+.hero > .big-picture-3 {
+  background-image: url('/bundles/insalan/img/lol-art-3.png'); 
+}
+
+

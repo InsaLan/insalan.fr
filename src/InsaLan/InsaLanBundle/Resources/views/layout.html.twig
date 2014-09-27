@@ -39,8 +39,13 @@
           <ul>
             <li><a href="{{ path('insalan_information_default_home') }}">Accueil</a></li>
             <li><a href="{{ path('insalan_information_default_rules') }}">Règlement</a></li>
-            <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+            {% if app.user %}
+            <li><a href="{{ path('fos_user_profile_show') }}">Mon espace</a></li>
+            <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+            {% else %}
+            <li><a href="{{ path('fos_user_profile_show') }}">Connexion</a></li>
             <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
+            {% endif %}
           </ul>
         </nav>
       </div>

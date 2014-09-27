@@ -1,0 +1,6 @@
+services:
+  user.registration_complet:
+    class: InsaLan\UserBundle\EventListener\RegistrationConfirmListener
+    arguments: [@router]
+    tags:
+      - { name: kernel.event_subscriber }

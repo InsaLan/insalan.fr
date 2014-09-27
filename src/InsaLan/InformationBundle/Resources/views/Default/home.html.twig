@@ -4,7 +4,7 @@
 {{ parent() }}
 
 <section class="hero">
-  <div class="big-picture">
+  <div class="big-picture big-picture-1">
     <div class="moto">
       QUALIFICATIONS
     </div>
@@ -19,10 +19,15 @@
     <a href="#price" class="block">
       Gratuit
     </a>
-
+    {% if app.user %}
+    <a href="{{ path('fos_user_profile_show') }}" class="block block-huge">
+      MON ESPACE 
+    </a>
+    {% else %}
     <a href="{{ path('fos_user_registration_register') }}" class="block block-huge">
       INSCRIPTION 
     </a>
+    {% endif %}
     <br style="clear: both">
   </div> 
 </section>

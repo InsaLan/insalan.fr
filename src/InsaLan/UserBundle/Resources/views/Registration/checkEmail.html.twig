@@ -12,15 +12,11 @@
   </aside>
 
   <header>
-    <h2>Compte activé</h2>
+    <h2>Validation du compte requise</h2>
   </header>
 
   <section>
-    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
-    <br>
-    <p>
-    <a href="{{ path('fos_user_profile_show') }}" class="block block-huge" style="margin-left: 302px;">Inscription à un tournoi</a>
-    </p>
+    <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
   </section>
 </article>
 

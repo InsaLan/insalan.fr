@@ -172,12 +172,6 @@
   padding-left: 60px;
 }
 
-.hero > .big-picture {
-  width: 1000px;
-  height: 425px;
-  background-image: url('/bundles/insalan/img/lol-art-1.png'); 
-}
-
 .moto {
   text-align: left;
   margin-left: 130px;
