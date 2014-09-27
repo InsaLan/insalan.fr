@@ -164,3 +164,53 @@
   font-size: 35px;
   font-family: Oswald;
 }
+
+.frame {
+  border: #2d2d2d solid 1px; 
+  margin: 10px 0px 10px 0px;
+}
+
+.frame > .step {
+  background-color: #a2a2a2; 
+  font-size: 40px; 
+  height: 60px; 
+  width: 60px; 
+  text-align:center; 
+  color: #fff; 
+  line-height: 1.5; 
+  float: left;
+}
+
+.frame > .title {
+  float:left; 
+  font-size:30px; 
+  font-family: OpenSansCond; 
+  color:#a2a2a2; 
+  margin: 0 5px 0 15px; 
+  line-height: 2;
+}
+
+.frame-active > .title, .frame-success > .title, .frame-error > .title {
+  color: #fff;
+}
+
+.frame-active > .step {
+  background-color: #00bff3; 
+}
+
+.frame-success > .step {
+  background-color: #00bf1e; 
+}
+
+.frame-danger > .step {
+  background-color: #bf0000; 
+}
+
+.frame > .ctrl {
+  margin: 0 5px 0 5px;
+}
+
+.frame > form > .field {
+  margin-top: 15px;
+  clear: none;
+}

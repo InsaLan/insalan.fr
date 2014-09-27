@@ -20,9 +20,15 @@
       <div class="step">
         1
       </div>
-      <div class="title">Entrez le nom de votre invocateur <input type="text"></div>
-      <div class="block" style="float: right">OK</div>
-      <br style="clear:both;">
+      <div class="title">Entrez le nom de votre invocateur : </div>
+      
+      <form id="step1" class="pull-left">
+        <div class="input field pull-left"><input type="text"/></div>
+        <a class="btn btn-primary ctrl pull-left" href="javascript:{}" onclick="document.getElementById('step1').submit();">OK</a>
+      </form>
+
+      <a href="" class="btn btn-danger ctrl pull-right">[X]</a>
+      <br class="clear">
     </div>
 
  {#   <div class="frame">#}
@@ -41,7 +47,7 @@
       {#<br style="clear:both;">#}
     {#</div>#}
 
-    {#<div class="frame frame-error">#}
+    {#<div class="frame frame-danger">#}
       {#<div class="step">#}
         {#4#}
       {#</div>#}
