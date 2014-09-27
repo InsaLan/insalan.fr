@@ -1,0 +1,56 @@
+{% extends 'InsaLanInformationBundle::layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<section class="hero">
+  <div class="big-picture">
+    <div class="moto">
+      QUALIFICATIONS
+    </div>
+  </div>
+  <div>
+    <a class="block">
+      0€
+    </a>
+    <a class="block">
+      64 SLOTS
+    </a>
+    <a class="block">
+      LoL
+    </a>
+
+    <a href="{{ path('fos_user_registration_register') }}" class="block block-huge">
+      INSCRIPTION
+    </a>
+    <br style="clear: both">
+  </div> 
+</section>
+
+<article id="prize" class="info">
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+    <ul>
+      <li>Qualifiés</li>
+      <li>16 équipes</li>
+    </ul>
+  </aside>
+
+  <header>
+    <h2>Déroulement & Prix</h2>
+  </header>
+  <section>
+    <p>
+      Sur les 64 équipes inscrites aux qualifications, 16 se qualifieront pour l'InsaLan. Un tournoi en ligne sera organisé entre ces 16 équipes pour déterminer les vainqueurs des qualifications. Les prix seront les suivants :
+      <ul class="shift">
+        <li>1er. 3 places offertes pour l'InsaLan X (d'une valeur d'au moins 60€)</li>
+        <li>2eme. 2 places offertes pour l'InsaLan X (d'une valeur d'au moins 40€)</li>
+        <li>3eme. 1 place offerte pour l'InsaLan X (d'une valeur d'au moins 20€)</li>
+      </ul>
+    </p>
+  </section>
+</article>
+
+{% endblock %}

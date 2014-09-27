@@ -25,23 +25,22 @@
       <div class="container">
         <div class="logo">
           <div class="pattern"></div>
-          <a href="{{ path('insalan_news_default_index') }}">
-            <img src="{{ asset('bundles/insalan/img/logo.png') }}" alt="InsaLan"/></a>
+          <a href="{{ path('insalan_information_default_home') }}">
+            <img src="{{ asset('bundles/insalan/img/logo-noyear.png') }}" alt="InsaLan"/></a>
         </div>
 
         <aside>
-          <span class="day">Live</span>
-          <span class="month">Février</span>
-          <span class="place">Rennes</span>
+          <span class="day">64</span>
+          <span class="month">Slots</span>
+          <span class="place">restants</span>
         </aside>
 
         <nav>
           <ul>
-            <li><a href="{{ path('insalan_news_default_index') }}">Actualités</a></li>
-            <li><a href="{{ path('insalan_stream_default_index') }}">Streams</a></li>
-            <li><a href="{{ path('insalan_tournament_default_index') }}">Tournois</a></li>
-            <li><a href="{{ path('insalan_information_default_index') }}">Infos</a></li>
-            {#<li><a href="{{ path('insalan_pizza_default_index') }}">Pizzas</a></li>#}
+            <li><a href="{{ path('insalan_information_default_home') }}">Accueil</a></li>
+            <li><a href="{{ path('insalan_information_default_faq') }}">FAQ</a></li>
+            <li><a href="{{ path('insalan_information_default_rules') }}">Règlement</a></li>
+            <li><a href="{{ path('fos_user_registration_register') }}">Inscriptions</a></li>
           </ul>
         </nav>
       </div>
@@ -65,7 +64,7 @@
       <div>
         <aside>
           <div>
-            <a id="logo" href="{{ path('insalan_news_default_index') }}"></a>
+            <a id="logo" href="{{ path('insalan_information_default_home') }}"></a>
             <a id="facebook" href="https://www.facebook.com/insalan"></a>
             <a id="twitter" href="https://twitter.com/insalan"></a>
             <div id="mail"><a href="mailto:contact@insalan.fr">contact@insalan.fr</a></div>
@@ -121,7 +120,7 @@
           <p>
             © 2014 InsaLan <span>|</span>
             Design by <a href="http://www.alecahain.fr/">Aceltis</a> <span>|</span>
-            Code by <a href="http://nhurman.fr/">Nicolas</a>
+            Code by <a href="http://nhurman.fr/">Nicolas</a> & <a href="http://quentin.dufour.tk">Quentin</a>
           </p>
         </div>
       </div>

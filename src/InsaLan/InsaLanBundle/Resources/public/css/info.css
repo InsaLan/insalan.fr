@@ -134,3 +134,48 @@
   text-transform: uppercase;
   padding-right: 20px;
 }
+
+.hero > h1 {
+  font-family: OpenSansCond;
+  font-size: 50px;
+  color: #fff;
+}
+
+.block {
+  display: block;
+  background-color: #fff;
+  width: 200px;
+  color: #000;
+  text-align: center;
+  font-size: 40px;
+  float: left;
+  font-family: Oswald;
+  margin: 0;
+}
+
+.block-huge {
+  background-color: #00bff3;
+  width: 400px;
+}
+
+.block-huge:hover {
+  background-color: #78d9f3;
+}
+
+.shift {
+  padding-left: 60px;
+}
+
+.hero > .big-picture {
+  width: 1000px;
+  height: 425px;
+  background-image: url('/bundles/insalan/img/lol-art-1.png'); 
+}
+
+.moto {
+  text-align: left;
+  margin-left: 130px;
+  color: #fff;
+  font-size: 35px;
+  font-family: Oswald;
+}
