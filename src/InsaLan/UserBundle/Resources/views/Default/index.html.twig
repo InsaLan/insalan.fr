@@ -1,0 +1,62 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Inscription aux qualifications</h2>
+  </header>
+
+  <section>
+    <div class="frame frame-active">
+      <div class="step">
+        1
+      </div>
+      <div class="title">Entrez le nom de votre invocateur <input type="text"></div>
+      <div class="block" style="float: right">OK</div>
+      <br style="clear:both;">
+    </div>
+
+ {#   <div class="frame">#}
+      {#<div class="step">#}
+        {#2#}
+      {#</div>#}
+      {#<div class="title">Validez votre invocateur</div>#}
+      {#<br style="clear:both;">#}
+    {#</div>#}
+
+    {#<div class="frame frame-active">#}
+      {#<div class="step">#}
+        {#3#}
+      {#</div>#}
+      {#<div class="title">Créer ou rejoindre une équipe</div>#}
+      {#<br style="clear:both;">#}
+    {#</div>#}
+
+    {#<div class="frame frame-error">#}
+      {#<div class="step">#}
+        {#4#}
+      {#</div>#}
+      {#<div class="title">Choisissez un nom et un mot de passe</div>#}
+      {#<br style="clear:both;">#}
+    {#</div>#}
+
+    {#<div class="frame frame-success">#}
+      {#<div class="step">#}
+        {#5#}
+      {#</div>#}
+      {#<div class="title">Equipe validée. Votre inscription aux qualifications a été prise en compte.</div>#}
+      {#<br style="clear:both;">#}
+    {#</div>#}
+
+  </section>
+</article>
+{% endblock fos_user_content %}

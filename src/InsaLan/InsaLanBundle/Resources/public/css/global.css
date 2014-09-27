@@ -615,4 +615,66 @@ strong {
   background-image: url('/bundles/insalan/img/lol-art-3.png'); 
 }
 
+.btn {
+  display: block;
+  background-color: black;
+  text-align: center;
+  font-size: 40px;
+  float: left;
+  font-family: OpenSansCond;
+}
 
+.btn-primary {
+  color: white;
+  border-bottom: solid #00bff3 1px;
+}
+
+.btn-primary:hover {
+  background: #0E0E0E;
+  color: #00bff3;
+}
+.btn-plain, .btn-plain:hover {
+  background-color: #00bff3;
+  color: white;
+}
+
+.frame {
+  border: #2d2d2d solid 1px; 
+  margin: 10px 0px 10px 0px;
+}
+
+.frame > .step {
+  background-color: #a2a2a2; 
+  font-size: 40px; 
+  height: 60px; 
+  width: 60px; 
+  text-align:center; 
+  color: #fff; 
+  line-height: 1.5; 
+  float: left;
+}
+
+.frame > .title {
+  float:left; 
+  font-size:30px; 
+  font-family: OpenSansCond; 
+  color:#a2a2a2; 
+  margin: 0 5px 0 15px; 
+  line-height: 2;
+}
+
+.frame-active > .title, .frame-success > .title, .frame-error > .title {
+  color: #fff;
+}
+
+.frame-active > .step {
+  background-color: #00bff3; 
+}
+
+.frame-success > .step {
+  background-color: #00bf1e; 
+}
+
+.frame-error > .step {
+  background-color: #bf0000; 
+}

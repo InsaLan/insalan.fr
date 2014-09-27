@@ -144,28 +144,13 @@
 
 .block:first-child { margin-left:none; }
 .block {
-  display: block;
-  background-color: black;
   width: 200px;
-  color: white;
-  text-align: center;
-  font-size: 40px;
-  float: left;
-  font-family: OpenSansCond;
-  border-bottom: solid #00bff3 1px;
   margin: 0;
   margin-left: 1px;
 }
 
-.block:hover {
-  background: #0E0E0E;
-  color: #00bff3;
-}
-
-.block-huge, .block-huge:hover {
-  background-color: #00bff3;
+.block-huge {
   width: 396px;
-  color: white;
 }
 
 .shift {

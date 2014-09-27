@@ -10,21 +10,21 @@
     </div>
   </div>
   <div>
-    <a href="#games" class="block">
+    <a href="#games" class="btn btn-primary block">
       LoL
     </a>
-    <a href="#organization" class="block">
+    <a href="#organization" class="btn btn-primary block">
       64 Slots
     </a>
-    <a href="#price" class="block">
+    <a href="#price" class="btn btn-primary block">
       Gratuit
     </a>
     {% if app.user %}
-    <a href="{{ path('fos_user_profile_show') }}" class="block block-huge">
+    <a href="{{ path('insalan_user_default_index') }}" class="btn btn-plain block-huge">
       MON ESPACE 
     </a>
     {% else %}
-    <a href="{{ path('fos_user_registration_register') }}" class="block block-huge">
+    <a href="{{ path('fos_user_registration_register') }}" class="btn btn-plain block-huge">
       INSCRIPTION 
     </a>
     {% endif %}

@@ -28,7 +28,7 @@ class RegistrationConfirmListener implements EventSubscriberInterface
 
     public function onRegistrationConfirm($event)
     {
-        $url = $this->router->generate('fos_user_profile_show');
+        $url = $this->router->generate('insalan_user_default_index');
 
         $event->setResponse(new RedirectResponse($url));
     }
