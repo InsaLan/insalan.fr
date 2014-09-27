@@ -141,25 +141,31 @@
   color: #fff;
 }
 
+
+.block:first-child { border-left:none; }
 .block {
   display: block;
-  background-color: #fff;
+  background-color: black;
   width: 200px;
-  color: #000;
+  color: white;
   text-align: center;
   font-size: 40px;
   float: left;
-  font-family: Oswald;
+  font-family: OpenSansCond;
   margin: 0;
+  border-bottom: solid #00bff3 1px;
+  border-left: solid black 2px;
 }
 
-.block-huge {
+.block:hover {
+  background: #0E0E0E;
+  color: #00bff3;
+}
+
+.block-huge, .block-huge:hover {
   background-color: #00bff3;
-  width: 400px;
-}
-
-.block-huge:hover {
-  background-color: #78d9f3;
+  width: 394px;
+  color: white;
 }
 
 .shift {
