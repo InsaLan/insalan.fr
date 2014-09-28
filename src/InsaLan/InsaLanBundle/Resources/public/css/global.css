@@ -604,15 +604,15 @@ strong {
 }
 
 .hero > .big-picture-1 {
-  background-image: url('/bundles/insalan/img/lol-art-1.png'); 
+  background-image: url('../img/lol-art-1.png'); 
 }
 
 .hero > .big-picture-2 {
-  background-image: url('/bundles/insalan/img/lol-art-2.png'); 
+  background-image: url('../img/lol-art-2.png'); 
 }
 
 .hero > .big-picture-3 {
-  background-image: url('/bundles/insalan/img/lol-art-3.png'); 
+  background-image: url('../img/lol-art-3.png'); 
 }
 
 .btn {
