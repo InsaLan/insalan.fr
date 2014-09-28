@@ -168,9 +168,17 @@
 .frame {
   border: #2d2d2d solid 1px; 
   margin: 10px 0px 10px 0px;
+  padding: 0px -1px 0px -1px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.frame > .step {
+.frame > header {
+  border-bottom: 1px dashed #2d2d2d;
+}
+
+.frame > header > .step {
   background-color: #a2a2a2; 
   font-size: 40px; 
   height: 60px; 
@@ -181,7 +189,7 @@
   float: left;
 }
 
-.frame > .title {
+.frame > header > .title {
   float:left; 
   font-size:30px; 
   font-family: OpenSansCond; 
@@ -190,27 +198,34 @@
   line-height: 2;
 }
 
-.frame-active > .title, .frame-success > .title, .frame-error > .title {
+.frame-active > header > .title, 
+.frame-success > header > .title, 
+.frame-danger > header > .title {
   color: #fff;
 }
 
-.frame-active > .step {
+.frame-active > header > .step {
   background-color: #00bff3; 
 }
 
-.frame-success > .step {
+.frame-success > header > .step {
   background-color: #00bf1e; 
 }
 
-.frame-danger > .step {
+.frame-danger > header > .step {
   background-color: #bf0000; 
 }
 
-.frame > .ctrl {
+.frame > header > .ctrl {
   margin: 0 5px 0 5px;
 }
 
 .frame > form > .field {
   margin-top: 15px;
-  clear: none;
+}
+
+.frame > form input {
+  display:block; 
+  width:891px; 
+  margin: 5px 50px 5px 50px;
 }

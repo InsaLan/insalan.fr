@@ -26,6 +26,25 @@ class User extends BaseUser
      */
     protected $table;
 
+    /**
+     * @ORM\Column(name="lol_id", type="integer", nullable=true)
+     */
+    protected $lol_id;
+
+    /**
+     * @ORM\Column(name="lol_name", type="string", length=255, nullable=true)
+     */
+    protected $lol_name;
+
+    /**
+     * @ORM\Column(name="lol_id_validated", type="integer")
+     * -1 = Id does not exists
+     * 0 = Validated
+     * 1 = Error
+     * 2 = No information
+     */
+    protected $lol_id_validated = 2;
+
     public function __construct()
     {
         parent::__construct();
@@ -86,5 +105,68 @@ class User extends BaseUser
     public function getTable()
     {
         return $this->table;
+    }
+
+    /**
+     * Set lol_id
+     *
+     * @param integer $lol_id
+     * @return User
+     */
+    public function setLolId($lol_id) {
+      $this->lol_id = $lol_id;
+      return $this;
+    }
+
+    /**
+     * Get lol_id
+     *
+     * @return string
+     */
+    public function getLolId()
+    {
+        return $this->lol_id;
+    }
+
+    /**
+     * Set lol_id_validated
+     *
+     * @param integer $lol_id_validated
+     * @return User
+     */
+    public function setLolIdValidated($lol_id_validated) {
+      $this->lol_id_validated = $lol_id_validated;
+      return $this;
+    }
+
+    /**
+     * Get lol_id_validated
+     *
+     * @return integer
+     */
+    public function getLolIdValidated()
+    {
+        return $this->lol_id_validated;
+    }
+
+    /**
+     * Set lol_name
+     *
+     * @param integer $lol_name
+     * @return User
+     */
+    public function setLolName($lol_name) {
+      $this->lol_name = $lol_name;
+      return $this;
+    }
+
+    /**
+     * Get lol_name
+     *
+     * @return string
+     */
+    public function getLolName()
+    {
+        return $this->lol_name;
     }
 }

@@ -7,3 +7,6 @@ services:
         arguments: [%insalan.db.table_prefix%]
         tags:
             - { name: doctrine.event_subscriber }
+    insalan.lol:
+        class: InsaLan\InsaLanBundle\API\Lol
+        arguments: [%lol_api_key%]

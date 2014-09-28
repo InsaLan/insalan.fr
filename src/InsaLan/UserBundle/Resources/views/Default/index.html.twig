@@ -16,51 +16,143 @@
   </header>
 
   <section>
-    <div class="frame frame-active">
-      <div class="step">
-        1
-      </div>
-      <div class="title">Entrez le nom de votre invocateur : </div>
-      
-      <form id="step1" class="pull-left">
-        <div class="input field pull-left"><input type="text"/></div>
-        <a class="btn btn-primary ctrl pull-left" href="javascript:{}" onclick="document.getElementById('step1').submit();">OK</a>
-      </form>
 
-      <a href="" class="btn btn-danger ctrl pull-right">[X]</a>
-      <br class="clear">
+    {# STEP 1 #}
+    {% if app.user.lolIdValidated == -1 %}
+    <div class="frame frame-danger">
+      <header>
+        <div class="step">
+          1
+        </div>
+        <div class="title">Invocateur introuvable. Réessayez ?</div>
+        <br class="clear">
+      </header>
+      <form id="step1" class="" method="POST" action="{{ path('insalan_user_default_gameidlolset') }}" >
+        <div class="input field"><input type="text"  placeholder="Nom de votre invocateur (ex: superboum)" name="summoner"/></div>
+        <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step1').submit();">OK</a>
+      </form>
     </div>
 
- {#   <div class="frame">#}
-      {#<div class="step">#}
-        {#2#}
-      {#</div>#}
-      {#<div class="title">Validez votre invocateur</div>#}
-      {#<br style="clear:both;">#}
-    {#</div>#}
+    {% elseif app.user.lolId == null %}
+    <div class="frame frame-active">
+      <header>
+        <div class="step">
+          1
+        </div>
+        <div class="title">Entrez le nom de votre invocateur</div>
+        <br class="clear">
+      </header>
+      <form id="step1" class="" method="POST" action="{{ path('insalan_user_default_gameidlolset') }}" >
+        <div class="input field"><input type="text"  placeholder="Nom de votre invocateur (ex: superboum)" name="summoner"/></div>
+        <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step1').submit();">OK</a>
+      </form>
+    </div>
+    {% else %}
+    <div class="frame">
+      <header>
+        <div class="step">
+          1
+        </div>
+        <div class="title">Nom de votre invocateur : {{ app.user.lolName }}</div>
+        <br class="clear">
+      </header>
+    </div>
+    {% endif %}
 
-    {#<div class="frame frame-active">#}
-      {#<div class="step">#}
-        {#3#}
-      {#</div>#}
-      {#<div class="title">Créer ou rejoindre une équipe</div>#}
-      {#<br style="clear:both;">#}
+
+
+
+    {# STEP 2 #}
+
+    {% if app.user.lolid == null %}
+    
+    {% elseif app.user.lolIdValidated == 2 %}
+    <div class="frame frame-active">
+      <header>
+        <div class="step">
+          2
+        </div>
+        <div class="title">Validez votre invocateur en créant un page de maitrise "<strong>insalan{{app.user.id}}</strong></div>
+        <br style="clear:both;">
+      </header>
+      <div style="margin: 5px 20px 5px 20px">
+        <p>Nous devons vérifier que vous êtes bien l'invocateur {{ app.user.lolName }}.</p>
+        <p>Pour celà, vous devez créer ou renommer une page de maitrise de cette manière "<strong>insalan{{ app.user.id }}</strong>" (sans les guillements).</p>
+        <p>En cliquant sur "OK", notre système va scanner vos pages de maitrises à la recherche de "<strong>insalan{{ app.user.id }}</strong>".
+        <p>Une fois votre compte validé, vous pouvez renommer ou supprimer cette page de maitrise.</p>
+      </div>
+      <form id="step2" method="POST" action="{{ path('insalan_user_default_gameidlolvalidate') }}">
+        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_gameidlolreset') }}">ANNULER</a>
+        <a class="btn btn-primary ctrl grid-8 pull-left" href="javascript:{}" onclick="document.getElementById('step2').submit();">OK</a>
+        <br class="clear">
+      </form>
+    </div>
+    
+    {% elseif app.user.lolIdValidated == 1 %}
+    <div class="frame frame-danger">
+      <header>
+        <div class="step">
+          2
+        </div>
+        <div class="title">Echec de validation. Réessayez ?</div>
+        <br style="clear:both;">
+      </header>
+      <div style="margin: 5px 20px 5px 20px">
+        <p>Nous devons vérifier que vous êtes bien l'invocateur {{ app.user.lolName }}.</p>
+        <p>Pour celà, vous devez créer ou renommer une page de maitrise de cette manière "<strong>insalan{{ app.user.id }}</strong>" (sans les guillements).</p>
+        <p>En cliquant sur "OK", notre système va scanner vos pages de maitrises à la recherche de "<strong>insalan{{ app.user.id }}</strong>".
+        <p>Une fois votre compte validé, vous pouvez renommer ou supprimer cette page de maitrise.</p>
+      </div>
+      <form id="step2" method="POST" action="{{ path('insalan_user_default_gameidlolvalidate') }}">
+        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_gameidlolreset') }}">ANNULER</a>
+        <a class="btn btn-primary ctrl grid-8 pull-left" href="javascript:{}" onclick="document.getElementById('step2').submit();">OK</a>
+        <br class="clear">
+      </form>
+    </div>
+    
+    {% elseif app.user.lolIdValidated == 0 %}
+    <div class="frame">
+      <header>
+        <div class="step">
+          2
+        </div>
+        <div class="title">Invocateur validé</div>
+        <br style="clear:both;">
+      </header>
+    </div>
+    {% endif %}
+
+
+
+
+{#    <div class="frame frame-active">#}
+      {#<header>#}
+        {#<div class="step">#}
+          {#3#}
+        {#</div>#}
+        {#<div class="title">Créer ou rejoindre une équipe</div>#}
+        {#<br style="clear:both;">#}
+      {#</header>#}
     {#</div>#}
 
     {#<div class="frame frame-danger">#}
+      {#<header>#}
       {#<div class="step">#}
         {#4#}
       {#</div>#}
       {#<div class="title">Choisissez un nom et un mot de passe</div>#}
       {#<br style="clear:both;">#}
+      {#</header>#}
     {#</div>#}
 
     {#<div class="frame frame-success">#}
+      {#<header>#}
       {#<div class="step">#}
         {#5#}
       {#</div>#}
       {#<div class="title">Equipe validée. Votre inscription aux qualifications a été prise en compte.</div>#}
       {#<br style="clear:both;">#}
+      {#</header>#}
     {#</div>#}
 
   </section>

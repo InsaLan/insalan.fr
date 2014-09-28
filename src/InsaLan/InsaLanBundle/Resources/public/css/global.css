@@ -620,7 +620,6 @@ strong {
   background-color: black;
   text-align: center;
   font-size: 40px;
-  float: left;
   font-family: OpenSansCond;
 }
 
@@ -659,4 +658,44 @@ strong {
 
 .clear {
   clear: both;
+}
+
+.grid-1 {
+  width: 100px;
+}
+
+.grid-2 {
+  width: 20%;
+}
+
+.grid-3 {
+  width: 300px;
+}
+
+.grid-4 {
+  width: 400px;
+}
+
+.grid-5 {
+  width: 500px;
+}
+
+.grid-6 {
+  width: 600px;
+}
+
+.grid-7 {
+  width: 700px
+}
+
+.grid-8 {
+  width: 80%;
+}
+
+.grid-9 {
+  width: 900px;
+}
+
+.grid-10 {
+  width: 1000px;
 }
