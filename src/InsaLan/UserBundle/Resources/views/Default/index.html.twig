@@ -53,7 +53,12 @@
         <div class="step">
           1
         </div>
-        <div class="title">Nom de votre invocateur : {{ app.user.lolName }}</div>
+        <div class="title">
+          Invocateur séléctionné : {{ app.user.lolName }}
+        </div>
+        <div class="pull-right" style="height:60px">
+          <img height="60" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ app.user.lolPicture }}.png">
+        </div>
         <br class="clear">
       </header>
     </div>

@@ -45,6 +45,11 @@ class User extends BaseUser
      */
     protected $lol_id_validated = 2;
 
+    /**
+     * @ORM\Column(name="lol_picture", type="integer", nullable=true)
+     */
+    protected $lol_picture;
+
     public function __construct()
     {
         parent::__construct();
@@ -152,7 +157,7 @@ class User extends BaseUser
     /**
      * Set lol_name
      *
-     * @param integer $lol_name
+     * @param string $lol_name
      * @return User
      */
     public function setLolName($lol_name) {
@@ -168,5 +173,26 @@ class User extends BaseUser
     public function getLolName()
     {
         return $this->lol_name;
+    }
+
+    /**
+     * Set lol_picture
+     *
+     * @param integer $lol_picture
+     * @return User
+     */
+    public function setLolPicture($lol_picture) {
+      $this->lol_picture = $lol_picture;
+      return $this;
+    }
+
+    /**
+     * Get lol_picture
+     *
+     * @return integer
+     */
+    public function getLolPicture()
+    {
+        return $this->lol_picture;
     }
 }

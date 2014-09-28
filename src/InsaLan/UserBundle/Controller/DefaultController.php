@@ -37,6 +37,7 @@ class DefaultController extends Controller
         $r_summoner = $api_summoner->info($name);
         $user->setLolId($r_summoner->id);
         $user->setLolName($r_summoner->name);
+        $user->setLolPicture($r_summoner->profileIconId);
         $user->setLolIdValidated(2);
         $logger->info('[STEP] 1 - Submitted summoner name : '.$r_summoner->id);
 
