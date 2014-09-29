@@ -183,10 +183,21 @@
           <div class="title">En attente des autres joueurs de l'équipe !</div>
           <br style="clear:both;">
         </header>
-        <div class="text">Coéquipiers validés : todo</div>
+        <div class="text">Coéquipiers validés : 
+        <ul class="shift">
+        {% for player in app.user.player.team.players %}
+          <li>{{ player.getName() }}</li>
+        {% endfor %}
+        {% for i in app.user.player.team.players.count()+1..5 %}
+          <li><em>(libre)</em></li>
+        {% endfor %}
+        </ul>
+        </div>
         <a class="btn btn-danger ctrl grid-10 pull-left" href="{{ path('insalan_user_default_teamidlolleave') }}">Annuler</a>
         <br class="clear">
       </div>
+      {% else %}
+
       {% endif %}
 
 
