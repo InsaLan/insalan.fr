@@ -132,14 +132,14 @@
     {# STEP 3 #}
     {% if app.user.player == null or app.user.player.lolIdValidated != 0%}
     
-    {% elseif app.user.player.lolIdValidated == 0 %}
+    {% elseif app.user.player.lolIdValidated == 0 and app.user.player.team == null %}
     <div class="frame frame-active">
       <header class="full">
         <div class="step">
           3
         </div>
         <div class="title">Créer ou rejoindre une équipe</div>
-        <br style="clear:both;">
+        <br class="clear">
       </header>
       <div class="text">
         <p>
@@ -149,19 +149,47 @@
           Si vous souhaitez rejoindre une équipe, entrez le nom et le mot de passe choisi par votre coéquipier, puis cliquez sur rejoindre.
         </p>
       </div>
-      <form id="step3" method="POST" action="{{ path('insalan_user_default_gameidlolvalidate') }}">
+      <form id="step3" method="POST" action="{{ path('insalan_user_default_teamidlolselect') }}">
         
-        <div class="input field half pull-left"><input type="text"  placeholder="Nom de votre équipe" name="summoner"/></div>
-        <div class="input field half pull-left "><input type="password"  placeholder="Mot de passe" name="summoner"/></div>
+        <div class="input field half pull-left"><input type="text"  placeholder="Nom de votre équipe" name="name"/></div>
+        <div class="input field half pull-left "><input type="password"  placeholder="Mot de passe" name="password"/></div>
         <br class="clear">
         
         <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_gameidlolinvalidate') }}">ANNULER</a>
-        <a class="btn btn-primary ctrl grid-4 pull-left" href="javascript:{}" onclick="document.getElementById('step2').submit();">CREER</a>
-        <a class="btn btn-primary ctrl grid-4 pull-left" href="javascript:{}" onclick="document.getElementById('step2').submit();">REJOINDRE</a>
+        <a class="btn btn-primary ctrl grid-4 pull-left" href="javascript:{}" onclick="document.getElementById('step3').submit();">CREER</a>
+        <a class="btn btn-primary ctrl grid-4 pull-left" href="javascript:{}" onclick="document.getElementById('step3').submit();">REJOINDRE</a>
         <br class="clear">
 
       </form>
     </div>
+    {% elseif app.user.player.team != null %}
+    <div class="frame">
+      <header>
+        <div class="step">
+          3
+        </div>
+        <div class="title">Equipe sélectionnée : {{ app.user.player.team.getName() }}</div>
+        <br style="clear:both;">
+      </header>
+    </div>
+
+
+      {% if app.user.player.team.validated == false %}
+      <div class="frame frame-active">
+        <header class="full">
+          <div class="step">
+            4
+          </div>
+          <div class="title">En attente des autres joueurs de l'équipe !</div>
+          <br style="clear:both;">
+        </header>
+        <div class="text">Coéquipiers validés : todo</div>
+        <a class="btn btn-danger ctrl grid-10 pull-left" href="{{ path('insalan_user_default_teamidlolleave') }}">Annuler</a>
+        <br class="clear">
+      </div>
+      {% endif %}
+
+
     {% endif %}
 
   </section>
