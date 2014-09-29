@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use GuzzleHttp\Exception\ClientException;
+use InsaLan\TournamentBundle\Entity\Player;
 
 class DefaultController extends Controller
 {
@@ -35,10 +36,11 @@ class DefaultController extends Controller
       
       try {
         $r_summoner = $api_summoner->info($name);
-        $user->setLolId($r_summoner->id);
-        $user->setLolName($r_summoner->name);
-        $user->setLolPicture($r_summoner->profileIconId);
-        $user->setLolIdValidated(2);
+        $user->setPlayer(new Player());
+        $user->getPlayer()->setLolId($r_summoner->id);
+        $user->getPlayer()->setName($r_summoner->name);
+        $user->getPlayer()->setLolPicture($r_summoner->profileIconId);
+        $user->getPlayer()->setLolIdValidated(2);
         $em = $this->getDoctrine()->getManager();
         $em->persist($this->getUser());
         $em->flush();
@@ -61,12 +63,12 @@ class DefaultController extends Controller
      */
     public function gameIdLolReset(Request $request) {
       $user = $this->getUser();
-
-      $user->setLolId(null);
-      $user->setLolName(null);
-
+      $p = $user->getPlayer();
+      $user->removePlayer();
+      
       $em = $this->getDoctrine()->getManager();
-      $em->persist($this->getUser());
+      $em->persist($user);
+      $em->remove($p);
       $em->flush();
        
       return $this->redirect($this->generateUrl('insalan_user_default_index'));
@@ -82,12 +84,12 @@ class DefaultController extends Controller
       $user = $this->getUser();   
       $logger = $this->get('logger');
       
-      $user->setLolIdValidated(1);
+      $user->getPlayer()->setLolIdValidated(1);
       try {
-        $mastery_pages = $api_summoner->masteryPages($user->getLolId());
+        $mastery_pages = $api_summoner->masteryPages($user->getPlayer()->getLolId());
         foreach ($mastery_pages as $page) {
           if ($page->get('name') == 'insalan'.$user->getId()) {
-            $user->setLolIdValidated(0);
+            $user->getPlayer()->setLolIdValidated(0);
             break;
           }
           $logger->info('Loop '.$page->get('name'));
@@ -115,7 +117,7 @@ class DefaultController extends Controller
     public function gameIdLolInvalidate() {
       $user = $this->getUser();
 
-      $user->setLolIdValidated(2);
+      $user->getPlayer()->setLolIdValidated(2);
 
       $em = $this->getDoctrine()->getManager();
       $em->persist($this->getUser());

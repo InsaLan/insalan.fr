@@ -3,6 +3,7 @@ namespace InsaLan\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use InsaLan\TournamentBundle\Entity\Player;
 
 /**
  * @ORM\Entity
@@ -27,27 +28,10 @@ class User extends BaseUser
     protected $table;
 
     /**
-     * @ORM\Column(name="lol_id", type="integer", nullable=true, unique=true)
+     * @ORM\OneToOne(targetEntity="InsaLan\TournamentBundle\Entity\Player", inversedBy="user", cascade={"all"},  orphanRemoval=true)
      */
-    protected $lol_id;
+    protected $player;
 
-    /**
-     * @ORM\Column(name="lol_name", type="string", length=255, nullable=true, unique=true)
-     */
-    protected $lol_name;
-
-    /**
-     * @ORM\Column(name="lol_id_validated", type="integer")
-     * 0 = Validated
-     * 1 = Error
-     * 2 = No information
-     */
-    protected $lol_id_validated = 2;
-
-    /**
-     * @ORM\Column(name="lol_picture", type="integer", nullable=true)
-     */
-    protected $lol_picture;
 
     public function __construct()
     {
@@ -112,86 +96,30 @@ class User extends BaseUser
     }
 
     /**
-     * Set lol_id
+     * Get Player
      *
-     * @param integer $lol_id
-     * @return User
+     * @return Player
      */
-    public function setLolId($lol_id) {
-      $this->lol_id = $lol_id;
+    public function getPlayer() {
+      return $this->player;
+    }
+
+    /**
+     * Set Player
+     *
+     * @param Player
+     * @return this
+     */
+    public function setPlayer(Player $p) {
+      $this->player = $p;
+
       return $this;
     }
 
-    /**
-     * Get lol_id
-     *
-     * @return string
-     */
-    public function getLolId()
-    {
-        return $this->lol_id;
-    }
+    public function removePlayer() {
+      $this->player = null;
 
-    /**
-     * Set lol_id_validated
-     *
-     * @param integer $lol_id_validated
-     * @return User
-     */
-    public function setLolIdValidated($lol_id_validated) {
-      $this->lol_id_validated = $lol_id_validated;
       return $this;
     }
 
-    /**
-     * Get lol_id_validated
-     *
-     * @return integer
-     */
-    public function getLolIdValidated()
-    {
-        return $this->lol_id_validated;
-    }
-
-    /**
-     * Set lol_name
-     *
-     * @param string $lol_name
-     * @return User
-     */
-    public function setLolName($lol_name) {
-      $this->lol_name = $lol_name;
-      return $this;
-    }
-
-    /**
-     * Get lol_name
-     *
-     * @return string
-     */
-    public function getLolName()
-    {
-        return $this->lol_name;
-    }
-
-    /**
-     * Set lol_picture
-     *
-     * @param integer $lol_picture
-     * @return User
-     */
-    public function setLolPicture($lol_picture) {
-      $this->lol_picture = $lol_picture;
-      return $this;
-    }
-
-    /**
-     * Get lol_picture
-     *
-     * @return integer
-     */
-    public function getLolPicture()
-    {
-        return $this->lol_picture;
-    }
 }

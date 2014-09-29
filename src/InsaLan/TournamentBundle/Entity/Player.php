@@ -3,6 +3,7 @@ namespace InsaLan\TournamentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use InsaLan\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity
@@ -22,6 +23,28 @@ class Player
      */
     protected $name;
 
+    /**
+     * @ORM\OneToOne(targetEntity="InsaLan\UserBundle\Entity\User", mappedBy="player")
+     */
+    protected $user;
+
+    /**
+     * @ORM\Column(name="lol_id", type="integer", nullable=true, unique=true)
+     */
+    protected $lol_id;
+
+    /**
+     * @ORM\Column(name="lol_id_validated", type="integer")
+     * 0 = Validated
+     * 1 = Error
+     * 2 = No information
+     */
+    protected $lol_id_validated = 2;
+
+    /**
+     * @ORM\Column(name="lol_picture", type="integer", nullable=true)
+     */
+    protected $lol_picture;
     /**
      * Get id
      *
@@ -53,5 +76,68 @@ class Player
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set lol_id
+     *
+     * @param integer $lol_id
+     * @return User
+     */
+    public function setLolId($lol_id) {
+      $this->lol_id = $lol_id;
+      return $this;
+    }
+
+    /**
+     * Get lol_id
+     *
+     * @return string
+     */
+    public function getLolId()
+    {
+        return $this->lol_id;
+    }
+
+    /**
+     * Set lol_id_validated
+     *
+     * @param integer $lol_id_validated
+     * @return User
+     */
+    public function setLolIdValidated($lol_id_validated) {
+      $this->lol_id_validated = $lol_id_validated;
+      return $this;
+    }
+
+    /**
+     * Get lol_id_validated
+     *
+     * @return integer
+     */
+    public function getLolIdValidated()
+    {
+        return $this->lol_id_validated;
+    }
+
+    /**
+     * Set lol_picture
+     *
+     * @param integer $lol_picture
+     * @return User
+     */
+    public function setLolPicture($lol_picture) {
+      $this->lol_picture = $lol_picture;
+      return $this;
+    }
+
+    /**
+     * Get lol_picture
+     *
+     * @return integer
+     */
+    public function getLolPicture()
+    {
+        return $this->lol_picture;
     }
 }

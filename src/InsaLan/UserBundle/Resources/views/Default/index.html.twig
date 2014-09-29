@@ -33,7 +33,7 @@
       </form>
     </div>
 
-    {% elseif app.user.lolId == null %}
+    {% elseif app.user.player == null %}
     <div class="frame frame-active">
       <header class="full">
         <div class="step">
@@ -54,10 +54,10 @@
           1
         </div>
         <div class="title">
-          Invocateur séléctionné : {{ app.user.lolName }}
+          Invocateur séléctionné : {{ app.user.player.name }}
         </div>
         <div class="pull-right" style="height:60px">
-          <img height="60" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ app.user.lolPicture }}.png">
+          <img height="60" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ app.user.player.lolPicture }}.png">
         </div>
         <br class="clear">
       </header>
@@ -69,9 +69,9 @@
 
     {# STEP 2 #}
 
-    {% if app.user.lolid == null %}
+    {% if app.user.player == null %}
     
-    {% elseif app.user.lolIdValidated == 2 %}
+    {% elseif app.user.player.lolIdValidated == 2 %}
     <div class="frame frame-active">
       <header class="full">
         <div class="step">
@@ -81,7 +81,7 @@
         <br style="clear:both;">
       </header>
       <div class="text">
-        <p>Nous devons vérifier que vous êtes bien l'invocateur {{ app.user.lolName }}.</p>
+        <p>Nous devons vérifier que vous êtes bien l'invocateur {{ app.user.player.name }}.</p>
         <p>Pour celà, vous devez créer ou renommer une page de maitrise de cette manière "<strong>insalan{{ app.user.id }}</strong>" (sans les guillements).</p>
         <p>En cliquant sur "OK", notre système va scanner vos pages de maitrises à la recherche de "<strong>insalan{{ app.user.id }}</strong>".
         <p>Une fois votre compte validé, vous pouvez renommer ou supprimer cette page de maitrise.</p>
@@ -93,7 +93,7 @@
       </form>
     </div>
     
-    {% elseif app.user.lolIdValidated == 1 %}
+    {% elseif app.user.player.lolIdValidated == 1 %}
     <div class="frame frame-danger">
       <header class="full">
         <div class="step">
@@ -103,7 +103,7 @@
         <br style="clear:both;">
       </header>
       <div class="text">
-        <p>Nous devons vérifier que vous êtes bien l'invocateur {{ app.user.lolName }}.</p>
+        <p>Nous devons vérifier que vous êtes bien l'invocateur {{ app.user.player.name }}.</p>
         <p>Pour celà, vous devez créer ou renommer une page de maitrise de cette manière "<strong>insalan{{ app.user.id }}</strong>" (sans les guillements).</p>
         <p>En cliquant sur "OK", notre système va scanner vos pages de maitrises à la recherche de "<strong>insalan{{ app.user.id }}</strong>".
         <p>Une fois votre compte validé, vous pouvez renommer ou supprimer cette page de maitrise.</p>
@@ -115,7 +115,7 @@
       </form>
     </div>
     
-    {% elseif app.user.lolIdValidated == 0 %}
+    {% elseif app.user.player.lolIdValidated == 0 %}
     <div class="frame">
       <header>
         <div class="step">
@@ -130,9 +130,9 @@
 
 
     {# STEP 3 #}
-    {% if app.user.lolIdValidated != 0%}
+    {% if app.user.player == null or app.user.player.lolIdValidated != 0%}
     
-    {% elseif app.user.lolIdValidated == 0 %}
+    {% elseif app.user.player.lolIdValidated == 0 %}
     <div class="frame frame-active">
       <header class="full">
         <div class="step">
