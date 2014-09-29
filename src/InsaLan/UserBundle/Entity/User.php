@@ -3,6 +3,7 @@ namespace InsaLan\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use InsaLan\TournamentBundle\Entity\Player;
 
 /**
  * @ORM\Entity
@@ -106,7 +107,7 @@ class User extends BaseUser
     /**
      * Set Player
      *
-     * @param Player
+     * @param InsaLan\TournamentBundle\Entity\Player
      * @return this
      */
     public function setPlayer(Player $p) {
