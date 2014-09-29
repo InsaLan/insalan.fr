@@ -104,4 +104,21 @@ class DefaultController extends Controller
 
       return $this->redirect($this->generateUrl('insalan_user_default_index'));
     }
+
+    /**
+     * @Route("/game-id/lol/invalidate")     
+     * @Method({"GET"})
+     */
+    public function gameIdLolInvalidate() {
+      $user = $this->getUser();
+
+      $user->setLolIdValidated(2);
+
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($this->getUser());
+      $em->flush();
+       
+      return $this->redirect($this->generateUrl('insalan_user_default_index'));
+
+    }
 }
