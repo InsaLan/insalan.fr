@@ -143,27 +143,26 @@
       </header>
       <div class="text">
         <p>
-          Vous pouvez créer une nouvelle équipe ou rejoindre celle de vos amis.
+          Si vous souhaitez créer une équipe, choisissez un nom et un mot de passe, puis cliquez sur créer.
+        </p>
+        <p>
+          Si vous souhaitez rejoindre une équipe, entrez le nom et le mot de passe choisi par votre coéquipier, puis cliquez sur rejoindre.
         </p>
       </div>
       <form id="step3" method="POST" action="{{ path('insalan_user_default_gameidlolvalidate') }}">
+        
+        <div class="input field half pull-left"><input type="text"  placeholder="Nom de votre équipe" name="summoner"/></div>
+        <div class="input field half pull-left "><input type="password"  placeholder="Mot de passe" name="summoner"/></div>
+        <br class="clear">
+        
         <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_gameidlolinvalidate') }}">ANNULER</a>
         <a class="btn btn-primary ctrl grid-4 pull-left" href="javascript:{}" onclick="document.getElementById('step2').submit();">CREER</a>
         <a class="btn btn-primary ctrl grid-4 pull-left" href="javascript:{}" onclick="document.getElementById('step2').submit();">REJOINDRE</a>
         <br class="clear">
+
       </form>
     </div>
     {% endif %}
-
-    {#<div class="frame frame-danger">#}
-      {#<header>#}
-      {#<div class="step">#}
-        {#4#}
-      {#</div>#}
-      {#<div class="title">Choisissez un nom et un mot de passe</div>#}
-      {#<br style="clear:both;">#}
-      {#</header>#}
-    {#</div>#}
 
   </section>
 </article>

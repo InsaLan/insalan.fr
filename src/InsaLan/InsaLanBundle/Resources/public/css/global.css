@@ -759,10 +759,18 @@ strong {
   margin-top: 15px;
 }
 
-.frame > form input {
+.frame > form > .field > input {
   display:block; 
   width:891px; 
   margin: 5px 50px 5px 50px;
+}
+
+.frame > form > .half {
+  clear: none;
+}
+
+.frame > form > .half > input {
+  width: 390px;
 }
 
 .frame > .text {
