@@ -3,7 +3,6 @@ namespace InsaLan\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use InsaLan\TournamentBundle\Entity\Player;
 
 /**
  * @ORM\Entity
