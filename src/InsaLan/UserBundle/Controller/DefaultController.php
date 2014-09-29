@@ -124,4 +124,43 @@ class DefaultController extends Controller
       return $this->redirect($this->generateUrl('insalan_user_default_index'));
 
     }
+
+
+    /**
+     *
+     * Work in progress !
+     * 
+     * @Route("/team-id/lol/select")
+     * @Method({"POST"})
+     */
+
+    public function teamIdLolSelect() {
+      $user = $this->getUser();
+
+      $name = $request->request->get('name');
+      $password = $request->request->get('password');
+
+      $teamRepo = $this->getDoctrine()->getRepository('InsaLanUserBundle:Team');
+
+      try {
+        if($user->getTeam() !== null) throw new \Exception('User already in a team');
+
+        $team = $teamRepo->findOneByName($name);
+        if(!$team) {
+          //TODO : create the team
+        }
+        else {
+          if($password !== $team->getPassword) throw new \Exception('Invalid password');
+          //TODO : add the user to the team
+        }
+
+
+      } catch(\Exception $e) {
+        //TODO : error handling
+      }
+
+      return $this->redirect($this->generateUrl('insalan_user_default_index'));
+
+    }
+
 }
