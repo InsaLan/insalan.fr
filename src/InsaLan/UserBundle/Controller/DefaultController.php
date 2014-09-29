@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use GuzzleHttp\Exception\ClientException;
 use InsaLan\TournamentBundle\Entity\Player;
+use InsaLan\TournamentBundle\Entity\Team;
 
 class DefaultController extends Controller
 {
@@ -129,40 +130,78 @@ class DefaultController extends Controller
 
 
     /**
-     *
-     * Work in progress !
-     * 
      * @Route("/team-id/lol/select")
      * @Method({"POST"})
      */
 
-    public function teamIdLolSelect() {
+    public function teamIdLolSelect(Request $request) {
       $user = $this->getUser();
+
+      $logger = $this->get('logger');
 
       $name = $request->request->get('name');
       $password = $request->request->get('password');
 
-      $teamRepo = $this->getDoctrine()->getRepository('InsaLanUserBundle:Team');
+      $teamRepo = $this->getDoctrine()->getRepository('InsaLanTournamentBundle:Team');
+
+      $em = $this->getDoctrine()->getManager();
 
       try {
-        if($user->getTeam() !== null) throw new \Exception('User already in a team');
+        if($user->getPlayer()->getTeam() !== null) throw new \Exception('User already in a team');
 
         $team = $teamRepo->findOneByName($name);
         if(!$team) {
-          //TODO : create the team
+          $team = new Team();
+          $team->setName($name);
+          $team->setPassword($password);
+
+          $user->getPlayer()->setTeam($team);
+
         }
         else {
-          if($password !== $team->getPassword) throw new \Exception('Invalid password');
-          //TODO : add the user to the team
+          if($password !== $team->getPassword()) throw new \Exception('Invalid password');
+          if($team->getPlayers()->count() >= 5) throw new \Exception('No free slot in this team');
+          
+          $user->getPlayer()->setTeam($team);
         }
 
+        $em->persist($team);
+        $em->persist($user);
+        $em->flush();
 
       } catch(\Exception $e) {
-        //TODO : error handling
+        throw $e;
       }
 
       return $this->redirect($this->generateUrl('insalan_user_default_index'));
 
+    }
+
+    /**
+     * @Route("/team-id/lol/leave")
+     * @Method({"GET"})
+     */
+    
+    public function teamIdLolLeave() {
+      $em = $this->getDoctrine()->getManager();
+      $user = $this->getUser();
+      $team = $user->getPlayer()->getTeam();
+
+      $user->getPlayer()->setTeam(null);
+
+      $em->persist($user);
+      $em->flush();
+
+      //Should we destroy the team in DB ?
+      if($team->getPlayers()->count() === 0) {
+        $em->remove($team);
+      } else {
+        $em->persist($team);
+      }
+
+      $em->flush();
+
+      return $this->redirect($this->generateUrl('insalan_user_default_index'));
     }
 
 }

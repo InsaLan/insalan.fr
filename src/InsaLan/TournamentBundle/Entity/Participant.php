@@ -6,6 +6,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"team" = "Team", "player" = "Player"})
  */
 class Participant
 {
@@ -16,11 +19,6 @@ class Participant
      */
     protected $id;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank()
-     */
-    protected $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="Tournament")
@@ -34,36 +32,25 @@ class Participant
     protected $groups;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $validated = false;
+
+    /**
      * Get id
-     *
-     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Participant
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
 
     /**
-     * Get name
-     *
-     * @return string
+     * Constructor
      */
-    public function getName()
+    public function __construct()
     {
-        return $this->name;
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -82,18 +69,11 @@ class Participant
     /**
      * Get tournament
      *
-     * @return \InsaLan\TournamentBundle\Entity\Tournament
+     * @return \InsaLan\TournamentBundle\Entity\Tournament 
      */
     public function getTournament()
     {
         return $this->tournament;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -122,10 +102,21 @@ class Participant
     /**
      * Get groups
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getGroups()
     {
         return $this->groups;
+    }
+
+
+    /**
+     * Get validated
+     *
+     * @return boolean 
+     */
+    public function getValidated()
+    {
+        return $this->validated;
     }
 }

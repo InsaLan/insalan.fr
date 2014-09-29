@@ -8,7 +8,7 @@ use InsaLan\UserBundle\Entity\User;
 /**
  * @ORM\Entity
  */
-class Player
+class Player extends Participant
 {
     /**
      * @ORM\Id
@@ -45,6 +45,13 @@ class Player
      * @ORM\Column(name="lol_picture", type="integer", nullable=true)
      */
     protected $lol_picture;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy="players")
+     * @ORM\JoinColumn()
+     */
+    protected $team;
+
     /**
      * Get id
      *
@@ -140,4 +147,60 @@ class Player
     {
         return $this->lol_picture;
     }
+
+    /**
+     * Set user
+     *
+     * @param \InsaLan\UserBundle\Entity\User $user
+     * @return Player
+     */
+    public function setUser(\InsaLan\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \InsaLan\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set team
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Team $team
+     * @return Player
+     */
+    public function setTeam(\InsaLan\TournamentBundle\Entity\Team $team = null)
+    {
+        $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * Get team
+     *
+     * @return \InsaLan\TournamentBundle\Entity\Team 
+     */
+    public function getTeam()
+    {
+        return $this->team;
+    }
+
+
 }
