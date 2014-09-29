@@ -661,7 +661,7 @@ strong {
 }
 
 .grid-1 {
-  width: 100px;
+  width: 10%;
 }
 
 .grid-2 {
@@ -669,23 +669,23 @@ strong {
 }
 
 .grid-3 {
-  width: 300px;
+  width: 30%;
 }
 
 .grid-4 {
-  width: 400px;
+  width: 40%;
 }
 
 .grid-5 {
-  width: 500px;
+  width: 50%;
 }
 
 .grid-6 {
-  width: 600px;
+  width: 60%;
 }
 
 .grid-7 {
-  width: 700px
+  width: 70%;
 }
 
 .grid-8 {
@@ -693,11 +693,11 @@ strong {
 }
 
 .grid-9 {
-  width: 900px;
+  width: 90%;
 }
 
 .grid-10 {
-  width: 1000px;
+  width: 100%;
 }
 
 .frame {
