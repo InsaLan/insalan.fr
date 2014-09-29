@@ -49,6 +49,12 @@ class User extends BaseUser
      */
     protected $lol_picture;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy="users")
+     * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
+     */
+    protected $team;
+
     public function __construct()
     {
         parent::__construct();
@@ -193,5 +199,28 @@ class User extends BaseUser
     public function getLolPicture()
     {
         return $this->lol_picture;
+    }
+
+    /**
+     * Set team
+     *
+     * @param \InsaLan\UserBundle\Entity\Team $team
+     * @return User
+     */
+    public function setTeam(\InsaLan\UserBundle\Entity\Team $team = null)
+    {
+        $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * Get team
+     *
+     * @return \InsaLan\UserBundle\Entity\Team 
+     */
+    public function getTeam()
+    {
+        return $this->team;
     }
 }
