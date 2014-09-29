@@ -39,16 +39,19 @@ class DefaultController extends Controller
         $user->setLolName($r_summoner->name);
         $user->setLolPicture($r_summoner->profileIconId);
         $user->setLolIdValidated(2);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($this->getUser());
+        $em->flush();
         $logger->info('[STEP] 1 - Submitted summoner name : '.$r_summoner->id);
 
       } catch(\Exception $e) {
-        $user->setLolIdValidated(-1);
+        $this->get('session')->getFlashBag()->add(
+            'errorStep',
+            'An error occured'
+        );
         $logger->error('[STEP] 1 - '.$e->getMessage());
       }
       
-      $em = $this->getDoctrine()->getManager();
-      $em->persist($this->getUser());
-      $em->flush();
       return $this->redirect($this->generateUrl('insalan_user_default_index'));
     }
 

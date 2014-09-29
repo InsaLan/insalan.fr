@@ -27,18 +27,17 @@ class User extends BaseUser
     protected $table;
 
     /**
-     * @ORM\Column(name="lol_id", type="integer", nullable=true)
+     * @ORM\Column(name="lol_id", type="integer", nullable=true, unique=true)
      */
     protected $lol_id;
 
     /**
-     * @ORM\Column(name="lol_name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="lol_name", type="string", length=255, nullable=true, unique=true)
      */
     protected $lol_name;
 
     /**
      * @ORM\Column(name="lol_id_validated", type="integer")
-     * -1 = Id does not exists
      * 0 = Validated
      * 1 = Error
      * 2 = No information

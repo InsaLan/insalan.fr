@@ -18,18 +18,18 @@
   <section>
 
     {# STEP 1 #}
-    {% if app.user.lolIdValidated == -1 %}
+    {% if app.session.flashbag.get('errorStep')|length > 0 %}
     <div class="frame frame-danger">
       <header class="full">
         <div class="step">
           1
         </div>
-        <div class="title">Invocateur introuvable. Réessayez ?</div>
+        <div class="title">Invocateur introuvable ou déjà inscrit. Réessayez ?</div>
         <br class="clear">
       </header>
       <form id="step1" class="" method="POST" action="{{ path('insalan_user_default_gameidlolset') }}" >
         <div class="input field"><input type="text"  placeholder="Nom de votre invocateur (ex: superboum)" name="summoner"/></div>
-        <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step1').submit();">OK</a>
+        <a class="btn btn-danger ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step1').submit();">OK</a>
       </form>
     </div>
 
