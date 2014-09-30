@@ -29,11 +29,13 @@
             <img src="{{ asset('bundles/insalan/img/logo-noyear.png') }}" alt="InsaLan"/></a>
         </div>
 
+        {% block top_infos %}
         <aside>
           <span class="day">64</span>
           <span class="month">Slots</span>
           <span class="place">restants</span>
         </aside>
+        
 
         <nav>
           <ul>
@@ -48,6 +50,7 @@
             {% endif %}
           </ul>
         </nav>
+        {% endblock %}
       </div>
     </header>
 
@@ -75,6 +78,8 @@
             <div id="mail"><a href="mailto:contact@insalan.fr">contact@insalan.fr</a></div>
           </div>
         </aside>
+        
+        {% block bottom_infos %}
         <nav>
           <ul>
             <li id="stream">
@@ -121,6 +126,7 @@
             </li>
           </ul>
         </nav>
+        {% endblock %}
         <div id="copyright">
           <p>
             © 2014 InsaLan <span>|</span>
