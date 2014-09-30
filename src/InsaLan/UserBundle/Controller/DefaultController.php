@@ -20,7 +20,15 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+      $user = $this->getUser();   
+      if ($user->getPlayer() !== null 
+          && $user->getPlayer()->getTeam() !== null 
+          && $user->getPlayer()->getTeam()->getValidated()) 
+      {
         return array();
+        } else {  
+        return $this->redirect($this->generateUrl('insalan_user_default_join'));
+      }
     }
 
     /**
@@ -50,7 +58,7 @@ class DefaultController extends Controller
         $user->getPlayer()->setLolId($r_summoner->id);
         $user->getPlayer()->setName($r_summoner->name);
         $user->getPlayer()->setLolPicture($r_summoner->profileIconId);
-        $user->getPlayer()->setLolIdValidated(2);
+        $user->getPlayer()->setLolIdValidated(false);
         $em = $this->getDoctrine()->getManager();
         $em->persist($this->getUser());
         $em->flush();
@@ -58,8 +66,8 @@ class DefaultController extends Controller
 
       } catch(\Exception $e) {
         $this->get('session')->getFlashBag()->add(
-            'errorStep',
-            'An error occured'
+            'errorStep1',
+            $e->getMessage()
         );
         $logger->error('[STEP] 1 - '.$e->getMessage());
       }
@@ -94,24 +102,25 @@ class DefaultController extends Controller
       $user = $this->getUser();   
       $logger = $this->get('logger');
       
-      $user->getPlayer()->setLolIdValidated(1);
       try {
         $mastery_pages = $api_summoner->masteryPages($user->getPlayer()->getLolId());
         foreach ($mastery_pages as $page) {
           if ($page->get('name') == 'insalan'.$user->getId()) {
-            $user->getPlayer()->setLolIdValidated(0);
+            $user->getPlayer()->setLolIdValidated(true);
             break;
           }
-          $logger->info('Loop '.$page->get('name'));
         }
+
+        if(!$user->getPlayer()->getLolIdValidated()) { throw new \Exception('Can\'t found mastery page'); }
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
 
       } catch(\Exception $e) {
         $this->get('session')->getFlashBag()->add(
-          'error',
-          'Verifiez que la page de maitrise existe, et réessayez dans quelques secondes.'
+          'errorStep2',
+          $e->getMessage()
         );
         $logger->error('[STEP] 2 - '.$e->getMessage());
       }
@@ -127,7 +136,7 @@ class DefaultController extends Controller
     public function gameIdLolInvalidate() {
       $user = $this->getUser();
 
-      $user->getPlayer()->setLolIdValidated(2);
+      $user->getPlayer()->setLolIdValidated(false);
 
       $em = $this->getDoctrine()->getManager();
       $em->persist($this->getUser());
@@ -137,12 +146,10 @@ class DefaultController extends Controller
 
     }
 
-
     /**
      * @Route("/team-id/lol/select")
      * @Method({"POST"})
      */
-
     public function teamIdLolSelect(Request $request) {
       $user = $this->getUser();
 
@@ -169,17 +176,23 @@ class DefaultController extends Controller
         }
         else {
           if($password !== $team->getPassword()) throw new \Exception('Invalid password');
-          if($team->getPlayers()->count() >= 5) throw new \Exception('No free slot in this team');
+          if($team->getPlayers()->count() >= 5) throw new \Exception('No more free slot in this team');
           
           $user->getPlayer()->setTeam($team);
         }
 
-        $em->persist($team);
+        $user->getPlayer()->getTeam()->validate();
+
         $em->persist($user);
+        $em->persist($user->getPlayer()->getTeam());
         $em->flush();
 
       } catch(\Exception $e) {
-        throw $e;
+        $this->get('session')->getFlashBag()->add(
+          'errorStep3',
+          $e->getMessage()
+        );
+        $logger->error('[STEP] 3 - '.$e->getMessage());
       }
 
       return $this->redirect($this->generateUrl('insalan_user_default_join'));

@@ -96,10 +96,12 @@ class Team extends Participant
     {
         return $this->name;
     }
-
-    public function preSave()
+    /*
+     */
+    public function validate()
     {
-        $this->validated = ($this->players->count() === 5);
+      var_dump('HELLLO');
+      $this->setValidated($this->players->count() === 5);
     }
 
     /**
@@ -110,7 +112,7 @@ class Team extends Participant
      */
     public function addPlayer(\InsaLan\TournamentBundle\Entity\Player $players)
     {
-        $this->players[] = $players;
+        $this->players->add($players);
 
         return $this;
     }

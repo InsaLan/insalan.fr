@@ -34,12 +34,9 @@ class Player extends Participant
     protected $lol_id;
 
     /**
-     * @ORM\Column(name="lol_id_validated", type="integer")
-     * 0 = Validated
-     * 1 = Error
-     * 2 = No information
+     * @ORM\Column(name="lol_id_validated", type="boolean")
      */
-    protected $lol_id_validated = 2;
+    protected $lol_id_validated = false;
 
     /**
      * @ORM\Column(name="lol_picture", type="integer", nullable=true)
@@ -109,7 +106,7 @@ class Player extends Participant
     /**
      * Set lol_id_validated
      *
-     * @param integer $lol_id_validated
+     * @param boolean $lol_id_validated
      * @return User
      */
     public function setLolIdValidated($lol_id_validated) {
@@ -120,7 +117,7 @@ class Player extends Participant
     /**
      * Get lol_id_validated
      *
-     * @return integer
+     * @return boolean
      */
     public function getLolIdValidated()
     {
@@ -187,9 +184,11 @@ class Player extends Participant
      */
     public function setTeam(\InsaLan\TournamentBundle\Entity\Team $team = null)
     {
-        $this->team = $team;
-
-        return $this;
+      $this->team = $team;
+      if (isset($team)) {
+        $team->addPlayer($this);
+      }
+      return $this;
     }
 
     /**
@@ -201,6 +200,4 @@ class Player extends Participant
     {
         return $this->team;
     }
-
-
 }

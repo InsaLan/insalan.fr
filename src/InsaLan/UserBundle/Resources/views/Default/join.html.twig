@@ -18,7 +18,9 @@
   <section>
 
     {# STEP 1 #}
-    {% if app.session.flashbag.get('errorStep')|length > 0 %}
+    {% set errorStep1 =  app.session.flashbag.get('errorStep1') %}
+
+    {% if errorStep1|length > 0 %}
     <div class="frame frame-danger">
       <header class="full">
         <div class="step">
@@ -27,6 +29,7 @@
         <div class="title">Invocateur introuvable ou déjà inscrit. Réessayez ?</div>
         <br class="clear">
       </header>
+      <p>Ce message d'erreur vous sera peut-être utile : <strong>{{ errorStep1|first }}</strong></p>
       <form id="step1" class="" method="POST" action="{{ path('insalan_user_default_gameidlolset') }}" >
         <div class="input field"><input type="text"  placeholder="Nom de votre invocateur (ex: superboum)" name="summoner"/></div>
         <a class="btn btn-danger ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step1').submit();">Ok</a>
@@ -68,10 +71,34 @@
 
 
     {# STEP 2 #}
+    {% set errorStep2 =  app.session.flashbag.get('errorStep2') %}
 
     {% if app.user.player == null %}
     
-    {% elseif app.user.player.lolIdValidated == 2 %}
+    {% elseif errorStep2|length > 0 %}
+    <div class="frame frame-danger">
+      <header class="full">
+        <div class="step">
+          2
+        </div>
+        <div class="title">Echec de validation. Réessayez ?</div>
+        <br style="clear:both;">
+      </header>
+      <div class="text">
+        <p>Nous devons vérifier que vous êtes bien l'invocateur {{ app.user.player.name }}.</p>
+        <p>Pour celà, vous devez créer ou renommer une page de maitrise de cette manière "<strong>insalan{{ app.user.id }}</strong>" (sans les guillements).</p>
+        <p>En cliquant sur "Ok", notre système va scanner vos pages de maitrises à la recherche de "<strong>insalan{{ app.user.id }}</strong>".
+        <p>Une fois votre compte validé, vous pouvez renommer ou supprimer cette page de maitrise.</p>
+        <p>Ce message d'erreur vous sera peut-être utile : <strong>{{ errorStep2|first }}</strong></p>
+      </div>
+      <form id="step2" method="POST" action="{{ path('insalan_user_default_gameidlolvalidate') }}">
+        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_gameidlolreset') }}">Annuler</a>
+        <a class="btn btn-primary ctrl grid-8 pull-left" href="javascript:{}" onclick="document.getElementById('step2').submit();">Ok</a>
+        <br class="clear">
+      </form>
+    </div>
+
+    {% elseif app.user.player.lolIdValidated == false %}
     <div class="frame frame-active">
       <header class="full">
         <div class="step">
@@ -93,29 +120,7 @@
       </form>
     </div>
     
-    {% elseif app.user.player.lolIdValidated == 1 %}
-    <div class="frame frame-danger">
-      <header class="full">
-        <div class="step">
-          2
-        </div>
-        <div class="title">Echec de validation. Réessayez ?</div>
-        <br style="clear:both;">
-      </header>
-      <div class="text">
-        <p>Nous devons vérifier que vous êtes bien l'invocateur {{ app.user.player.name }}.</p>
-        <p>Pour celà, vous devez créer ou renommer une page de maitrise de cette manière "<strong>insalan{{ app.user.id }}</strong>" (sans les guillements).</p>
-        <p>En cliquant sur "Ok", notre système va scanner vos pages de maitrises à la recherche de "<strong>insalan{{ app.user.id }}</strong>".
-        <p>Une fois votre compte validé, vous pouvez renommer ou supprimer cette page de maitrise.</p>
-      </div>
-      <form id="step2" method="POST" action="{{ path('insalan_user_default_gameidlolvalidate') }}">
-        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_gameidlolreset') }}">Annuler</a>
-        <a class="btn btn-primary ctrl grid-8 pull-left" href="javascript:{}" onclick="document.getElementById('step2').submit();">Ok</a>
-        <br class="clear">
-      </form>
-    </div>
-    
-    {% elseif app.user.player.lolIdValidated == 0 %}
+    {% elseif app.user.player.lolIdValidated == true %}
     <div class="frame">
       <header>
         <div class="step">
@@ -130,9 +135,45 @@
 
 
     {# STEP 3 #}
-    {% if app.user.player == null or app.user.player.lolIdValidated != 0%}
+    {% set errorStep3 =  app.session.flashbag.get('errorStep3') %}
     
-    {% elseif app.user.player.lolIdValidated == 0 and app.user.player.team == null %}
+    {% if app.user.player == null or app.user.player.lolIdValidated == false %}
+
+    {% elseif errorStep3 |length > 0 %}
+    <div class="frame frame-danger">
+      <header class="full">
+        <div class="step">
+          3
+        </div>
+        <div class="title">Impossible de créer ou rejoindre cette équipe</div>
+        <br class="clear">
+      </header>
+      <div class="text">
+        <p>
+          Si vous souhaitez créer une équipe, ce nom d'équipe est peut être déjà pris.
+        </p>
+        <p>
+          Si vous souhaitez rejoindre une équipe, vérifiez le mot de passe que vous avez entré.
+        </p>
+        <p>
+          Ce message d'erreur vous sera peut etre utile : <strong>{{ errorStep3|first }}</strong>
+        </p>
+      </div>
+      <form id="step3" method="POST" action="{{ path('insalan_user_default_teamidlolselect') }}">
+        
+        <div class="input field half pull-left"><input type="text"  placeholder="Nom de votre équipe" name="name"/></div>
+        <div class="input field half pull-left "><input type="password"  placeholder="Mot de passe" name="password"/></div>
+        <br class="clear">
+        
+        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_gameidlolinvalidate') }}">Annuler</a>
+        <a class="btn btn-primary ctrl grid-4 pull-left" href="javascript:{}" onclick="document.getElementById('step3').submit();">Créer</a>
+        <a class="btn btn-primary ctrl grid-4 pull-left" href="javascript:{}" onclick="document.getElementById('step3').submit();">Rejoindre</a>
+        <br class="clear">
+
+      </form>
+    </div>
+
+    {% elseif app.user.player.lolIdValidated == true and app.user.player.team == null %}
     <div class="frame frame-active">
       <header class="full">
         <div class="step">
@@ -178,7 +219,7 @@
     
 
     {# STEP 4 #}
-    {% if app.user.player == null or app.user.player.lolIdValidated == 0 or app.user.player.team == null %}
+    {% if app.user.player == null or app.user.player.lolIdValidated == false or app.user.player.team == null %}
     {% elseif app.user.player.team.validated == false %}
     <div class="frame frame-active">
       <header class="full">
@@ -190,11 +231,12 @@
       </header>
       <div class="text">Coéquipiers validés : 
       <ul class="shift">
-      {% for player in app.user.player.team.players %}
-        <li>{{ player.getName() }}</li>
-      {% endfor %}
-      {% for i in app.user.player.team.players.count()+1..5 %}
+      {% for i in 0..4 %}
+        {% if i < app.user.player.team.players.count() %}
+        <li>{{ app.user.player.team.players[i].getName() }}</li>
+        {% else %}
         <li><em>(libre)</em></li>
+        {% endif %}
       {% endfor %}
       </ul>
       </div>
@@ -212,9 +254,15 @@
         <br style="clear:both;">
       </header>
       <div class="text">
+        <p>
         Votre équipe est validée !
+        </p>
+        <p>
+        Votre inscription a bien été prise en compte, vous pouvez accéder à votre espace.
+        </p>
       </div>
-      <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_user_default_index') }}">Mon espace</a>
+      <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_teamidlolleave') }}">Annuler</a>
+      <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_user_default_index') }}">Mon espace</a>
       <br class="clear">
     </div>
     {% endif %}
