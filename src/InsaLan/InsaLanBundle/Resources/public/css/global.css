@@ -717,11 +717,10 @@ strong {
   background-color: #a2a2a2; 
   font-size: 40px; 
   height: 60px; 
-  width: 60px; 
+  min-width: 60px; 
   text-align:center; 
   color: #fff; 
   line-height: 1.5; 
-  float: left;
 }
 
 .frame > header > .title {

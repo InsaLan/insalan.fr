@@ -11,8 +11,27 @@
   </aside>
 
   <header>
-    <h2>Mon équipe</h2>
+    <h2>Mon équipe {{ app.user.player.team.name }}</h2>
   </header>
+
+  {% for player in app.user.player.team.players %}
+  <div class="frame frame-active grid-10 pull-left">
+    <header>
+      <div class="pull-left" style="height:60px">
+        <img height="60" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ player.lolPicture }}.png">
+      </div>
+      <div class="title">
+        {{ player.name }}
+      </div>
+      <div class="title pull-right">
+        Capitaine
+      </div>
+      <br class="clear">
+    </header>
+  </div>
+  {% endfor %}
+  <br class="clear">
+  <a href="{{ path('insalan_user_default_teamidlolleave') }}">[Quitter mon équipe]</a>
 </article>
 
 <article>

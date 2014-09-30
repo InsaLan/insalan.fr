@@ -23,7 +23,7 @@
     {% if errorStep1|length > 0 %}
     <div class="frame frame-danger">
       <header class="full">
-        <div class="step">
+        <div class="step pull-left">
           1
         </div>
         <div class="title">Invocateur introuvable ou déjà inscrit. Réessayez ?</div>
@@ -39,7 +39,7 @@
     {% elseif app.user.player == null %}
     <div class="frame frame-active">
       <header class="full">
-        <div class="step">
+        <div class="step pull-left">
           1
         </div>
         <div class="title">Entrez le nom de votre invocateur</div>
@@ -53,7 +53,7 @@
     {% else %}
     <div class="frame">
       <header>
-        <div class="step">
+        <div class="step pull-left">
           1
         </div>
         <div class="title">
@@ -78,7 +78,7 @@
     {% elseif errorStep2|length > 0 %}
     <div class="frame frame-danger">
       <header class="full">
-        <div class="step">
+        <div class="step pull-left">
           2
         </div>
         <div class="title">Echec de validation. Réessayez ?</div>
@@ -101,7 +101,7 @@
     {% elseif app.user.player.lolIdValidated == false %}
     <div class="frame frame-active">
       <header class="full">
-        <div class="step">
+        <div class="step pull-left">
           2
         </div>
         <div class="title">Validez votre invocateur en créant un page de maitrise "<strong>insalan{{app.user.id}}</strong>"</div>
@@ -123,7 +123,7 @@
     {% elseif app.user.player.lolIdValidated == true %}
     <div class="frame">
       <header>
-        <div class="step">
+        <div class="step pull-left">
           2
         </div>
         <div class="title">Invocateur validé</div>
@@ -142,7 +142,7 @@
     {% elseif errorStep3 |length > 0 %}
     <div class="frame frame-danger">
       <header class="full">
-        <div class="step">
+        <div class="step pull-left">
           3
         </div>
         <div class="title">Impossible de créer ou rejoindre cette équipe</div>
@@ -176,7 +176,7 @@
     {% elseif app.user.player.lolIdValidated == true and app.user.player.team == null %}
     <div class="frame frame-active">
       <header class="full">
-        <div class="step">
+        <div class="step pull-left">
           3
         </div>
         <div class="title">Créer ou rejoindre une équipe</div>
@@ -206,7 +206,7 @@
     {% elseif app.user.player.team != null %}
     <div class="frame">
       <header>
-        <div class="step">
+        <div class="step pull-left">
           3
         </div>
         <div class="title">Equipe sélectionnée : {{ app.user.player.team.getName() }}</div>
@@ -223,7 +223,7 @@
     {% elseif app.user.player.team.validated == false %}
     <div class="frame frame-active">
       <header class="full">
-        <div class="step">
+        <div class="step pull-left">
           4
         </div>
         <div class="title">En attente des autres joueurs de l'équipe !</div>
@@ -247,7 +247,7 @@
     {% else %}
     <div class="frame frame-success">
       <header class="full">
-        <div class="step">
+        <div class="step pull-left">
           4
         </div>
         <div class="title">Equipe validée</div>
