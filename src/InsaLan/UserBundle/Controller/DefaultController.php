@@ -24,6 +24,15 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/join")
+     * @Template()
+     */
+    public function joinAction()
+    {
+        return array();
+    }
+
+    /**
      * @Route("/game-id/lol/set")     
      * @Method({"POST"})
      */
@@ -55,7 +64,7 @@ class DefaultController extends Controller
         $logger->error('[STEP] 1 - '.$e->getMessage());
       }
       
-      return $this->redirect($this->generateUrl('insalan_user_default_index'));
+      return $this->redirect($this->generateUrl('insalan_user_default_join'));
     }
 
     /**
@@ -72,7 +81,7 @@ class DefaultController extends Controller
       $em->remove($p);
       $em->flush();
        
-      return $this->redirect($this->generateUrl('insalan_user_default_index'));
+      return $this->redirect($this->generateUrl('insalan_user_default_join'));
     }
 
     /**
@@ -108,7 +117,7 @@ class DefaultController extends Controller
       }
 
 
-      return $this->redirect($this->generateUrl('insalan_user_default_index'));
+      return $this->redirect($this->generateUrl('insalan_user_default_join'));
     }
 
     /**
@@ -124,7 +133,7 @@ class DefaultController extends Controller
       $em->persist($this->getUser());
       $em->flush();
        
-      return $this->redirect($this->generateUrl('insalan_user_default_index'));
+      return $this->redirect($this->generateUrl('insalan_user_default_join'));
 
     }
 
@@ -173,7 +182,7 @@ class DefaultController extends Controller
         throw $e;
       }
 
-      return $this->redirect($this->generateUrl('insalan_user_default_index'));
+      return $this->redirect($this->generateUrl('insalan_user_default_join'));
 
     }
 
@@ -201,7 +210,7 @@ class DefaultController extends Controller
 
       $em->flush();
 
-      return $this->redirect($this->generateUrl('insalan_user_default_index'));
+      return $this->redirect($this->generateUrl('insalan_user_default_join'));
     }
 
 }

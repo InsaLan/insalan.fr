@@ -3,6 +3,17 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Mon équipe</h2>
+  </header>
+</article>
 
 <article>
   <aside>
@@ -12,197 +23,12 @@
   </aside>
 
   <header>
-    <h2>Inscription aux qualifications</h2>
+    <h2>Mes prochains matchs</h2>
   </header>
 
-  <section>
-
-    {# STEP 1 #}
-    {% if app.session.flashbag.get('errorStep')|length > 0 %}
-    <div class="frame frame-danger">
-      <header class="full">
-        <div class="step">
-          1
-        </div>
-        <div class="title">Invocateur introuvable ou déjà inscrit. Réessayez ?</div>
-        <br class="clear">
-      </header>
-      <form id="step1" class="" method="POST" action="{{ path('insalan_user_default_gameidlolset') }}" >
-        <div class="input field"><input type="text"  placeholder="Nom de votre invocateur (ex: superboum)" name="summoner"/></div>
-        <a class="btn btn-danger ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step1').submit();">OK</a>
-      </form>
-    </div>
-
-    {% elseif app.user.player == null %}
-    <div class="frame frame-active">
-      <header class="full">
-        <div class="step">
-          1
-        </div>
-        <div class="title">Entrez le nom de votre invocateur</div>
-        <br class="clear">
-      </header>
-      <form id="step1" class="" method="POST" action="{{ path('insalan_user_default_gameidlolset') }}" >
-        <div class="input field"><input type="text"  placeholder="Nom de votre invocateur (ex: superboum)" name="summoner"/></div>
-        <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step1').submit();">OK</a>
-      </form>
-    </div>
-    {% else %}
-    <div class="frame">
-      <header>
-        <div class="step">
-          1
-        </div>
-        <div class="title">
-          Invocateur séléctionné : {{ app.user.player.name }}
-        </div>
-        <div class="pull-right" style="height:60px">
-          <img height="60" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ app.user.player.lolPicture }}.png">
-        </div>
-        <br class="clear">
-      </header>
-    </div>
-    {% endif %}
-
-
-
-
-    {# STEP 2 #}
-
-    {% if app.user.player == null %}
-    
-    {% elseif app.user.player.lolIdValidated == 2 %}
-    <div class="frame frame-active">
-      <header class="full">
-        <div class="step">
-          2
-        </div>
-        <div class="title">Validez votre invocateur en créant un page de maitrise "<strong>insalan{{app.user.id}}</strong>"</div>
-        <br style="clear:both;">
-      </header>
-      <div class="text">
-        <p>Nous devons vérifier que vous êtes bien l'invocateur {{ app.user.player.name }}.</p>
-        <p>Pour celà, vous devez créer ou renommer une page de maitrise de cette manière "<strong>insalan{{ app.user.id }}</strong>" (sans les guillements).</p>
-        <p>En cliquant sur "OK", notre système va scanner vos pages de maitrises à la recherche de "<strong>insalan{{ app.user.id }}</strong>".
-        <p>Une fois votre compte validé, vous pouvez renommer ou supprimer cette page de maitrise.</p>
-      </div>
-      <form id="step2" method="POST" action="{{ path('insalan_user_default_gameidlolvalidate') }}">
-        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_gameidlolreset') }}">ANNULER</a>
-        <a class="btn btn-primary ctrl grid-8 pull-left" href="javascript:{}" onclick="document.getElementById('step2').submit();">OK</a>
-        <br class="clear">
-      </form>
-    </div>
-    
-    {% elseif app.user.player.lolIdValidated == 1 %}
-    <div class="frame frame-danger">
-      <header class="full">
-        <div class="step">
-          2
-        </div>
-        <div class="title">Echec de validation. Réessayez ?</div>
-        <br style="clear:both;">
-      </header>
-      <div class="text">
-        <p>Nous devons vérifier que vous êtes bien l'invocateur {{ app.user.player.name }}.</p>
-        <p>Pour celà, vous devez créer ou renommer une page de maitrise de cette manière "<strong>insalan{{ app.user.id }}</strong>" (sans les guillements).</p>
-        <p>En cliquant sur "OK", notre système va scanner vos pages de maitrises à la recherche de "<strong>insalan{{ app.user.id }}</strong>".
-        <p>Une fois votre compte validé, vous pouvez renommer ou supprimer cette page de maitrise.</p>
-      </div>
-      <form id="step2" method="POST" action="{{ path('insalan_user_default_gameidlolvalidate') }}">
-        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_gameidlolreset') }}">ANNULER</a>
-        <a class="btn btn-primary ctrl grid-8 pull-left" href="javascript:{}" onclick="document.getElementById('step2').submit();">OK</a>
-        <br class="clear">
-      </form>
-    </div>
-    
-    {% elseif app.user.player.lolIdValidated == 0 %}
-    <div class="frame">
-      <header>
-        <div class="step">
-          2
-        </div>
-        <div class="title">Invocateur validé</div>
-        <br style="clear:both;">
-      </header>
-    </div>
-    {% endif %}
-
-
-
-    {# STEP 3 #}
-    {% if app.user.player == null or app.user.player.lolIdValidated != 0%}
-    
-    {% elseif app.user.player.lolIdValidated == 0 and app.user.player.team == null %}
-    <div class="frame frame-active">
-      <header class="full">
-        <div class="step">
-          3
-        </div>
-        <div class="title">Créer ou rejoindre une équipe</div>
-        <br class="clear">
-      </header>
-      <div class="text">
-        <p>
-          Si vous souhaitez créer une équipe, choisissez un nom et un mot de passe, puis cliquez sur créer.
-        </p>
-        <p>
-          Si vous souhaitez rejoindre une équipe, entrez le nom et le mot de passe choisi par votre coéquipier, puis cliquez sur rejoindre.
-        </p>
-      </div>
-      <form id="step3" method="POST" action="{{ path('insalan_user_default_teamidlolselect') }}">
-        
-        <div class="input field half pull-left"><input type="text"  placeholder="Nom de votre équipe" name="name"/></div>
-        <div class="input field half pull-left "><input type="password"  placeholder="Mot de passe" name="password"/></div>
-        <br class="clear">
-        
-        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_gameidlolinvalidate') }}">ANNULER</a>
-        <a class="btn btn-primary ctrl grid-4 pull-left" href="javascript:{}" onclick="document.getElementById('step3').submit();">CREER</a>
-        <a class="btn btn-primary ctrl grid-4 pull-left" href="javascript:{}" onclick="document.getElementById('step3').submit();">REJOINDRE</a>
-        <br class="clear">
-
-      </form>
-    </div>
-    {% elseif app.user.player.team != null %}
-    <div class="frame">
-      <header>
-        <div class="step">
-          3
-        </div>
-        <div class="title">Equipe sélectionnée : {{ app.user.player.team.getName() }}</div>
-        <br style="clear:both;">
-      </header>
-    </div>
-
-
-      {% if app.user.player.team.validated == false %}
-      <div class="frame frame-active">
-        <header class="full">
-          <div class="step">
-            4
-          </div>
-          <div class="title">En attente des autres joueurs de l'équipe !</div>
-          <br style="clear:both;">
-        </header>
-        <div class="text">Coéquipiers validés : 
-        <ul class="shift">
-        {% for player in app.user.player.team.players %}
-          <li>{{ player.getName() }}</li>
-        {% endfor %}
-        {% for i in app.user.player.team.players.count()+1..5 %}
-          <li><em>(libre)</em></li>
-        {% endfor %}
-        </ul>
-        </div>
-        <a class="btn btn-danger ctrl grid-10 pull-left" href="{{ path('insalan_user_default_teamidlolleave') }}">Annuler</a>
-        <br class="clear">
-      </div>
-      {% else %}
-
-      {% endif %}
-
-
-    {% endif %}
-
-  </section>
+  <p>
+    Les matchs seront affichés le 25 octobre à 00h00.
+  </p>
 </article>
+
 {% endblock fos_user_content %}
