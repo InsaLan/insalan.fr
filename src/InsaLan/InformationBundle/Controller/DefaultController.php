@@ -9,22 +9,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/faq-normal")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        return array();
-    }
-    
-    /**
      * @Route("/")
      * @Template()
      */
     public function homeAction()
-    {
+    {   
+
+        if(time() < 1412287201) {
+            return $this->redirect($this->generateUrl('insalan_information_default_wait'));
+        }
         return array();
     }
     
@@ -38,10 +31,31 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/faq-normal")
+     * @Template()
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        return array();
+    }
+    
+
+    /**
      * @Route("/rules")
      * @Template()
      */
     public function rulesAction()
+    {
+        return array();
+    }
+
+    /**
+     * @Route("/wait")
+     * @Template()
+     */
+    public function waitAction()
     {
         return array();
     }
