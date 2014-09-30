@@ -57,6 +57,9 @@ class DefaultController extends Controller
      */
     public function waitAction()
     {
+        if(time() > 1412287201) {
+            return $this->redirect($this->generateUrl('insalan_information_default_home'));
+        }
         return array();
     }
 }

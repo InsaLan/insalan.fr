@@ -100,7 +100,6 @@ class Team extends Participant
      */
     public function validate()
     {
-      var_dump('HELLLO');
       $this->setValidated($this->players->count() === 5);
     }
 
@@ -113,7 +112,7 @@ class Team extends Participant
     public function addPlayer(\InsaLan\TournamentBundle\Entity\Player $players)
     {
         $this->players->add($players);
-
+        $this->validate();
         return $this;
     }
 
@@ -124,7 +123,9 @@ class Team extends Participant
      */
     public function removePlayer(\InsaLan\TournamentBundle\Entity\Player $players)
     {
-        $this->players->removeElement($players);
+      $this->players->removeElement($players);
+      $this->validate();
+      return $this;
     }
 
     /**

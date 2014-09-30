@@ -171,20 +171,17 @@ class DefaultController extends Controller
           $team->setName($name);
           $team->setPassword($password);
 
-          $user->getPlayer()->setTeam($team);
+          $user->getPlayer()->joinTeam($team);
 
         }
         else {
           if($password !== $team->getPassword()) throw new \Exception('Invalid password');
           if($team->getPlayers()->count() >= 5) throw new \Exception('No more free slot in this team');
           
-          $user->getPlayer()->setTeam($team);
+          $user->getPlayer()->joinTeam($team);
         }
 
-        $user->getPlayer()->getTeam()->validate();
-
         $em->persist($user);
-        $em->persist($user->getPlayer()->getTeam());
         $em->flush();
 
       } catch(\Exception $e) {
@@ -209,8 +206,9 @@ class DefaultController extends Controller
       $user = $this->getUser();
       $team = $user->getPlayer()->getTeam();
 
-      $user->getPlayer()->setTeam(null);
+      $user->getPlayer()->leaveTeam();
 
+      
       $em->persist($user);
       $em->flush();
 

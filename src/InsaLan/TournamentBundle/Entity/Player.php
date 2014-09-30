@@ -44,7 +44,7 @@ class Player extends Participant
     protected $lol_picture;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Team", inversedBy="players")
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy="players", cascade={"persist"})
      * @ORM\JoinColumn()
      */
     protected $team;
@@ -177,17 +177,28 @@ class Player extends Participant
     }
 
     /**
-     * Set team
+     * Join team
      *
      * @param \InsaLan\TournamentBundle\Entity\Team $team
      * @return Player
      */
-    public function setTeam(\InsaLan\TournamentBundle\Entity\Team $team = null)
+    public function joinTeam(\InsaLan\TournamentBundle\Entity\Team $team)
     {
       $this->team = $team;
-      if (isset($team)) {
-        $team->addPlayer($this);
-      }
+      $team->addPlayer($this);
+      return $this;
+    }
+
+     /**
+     * Leave team
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Team $team
+     * @return Player
+     */
+    public function leaveTeam()
+    {
+      $this->team->removePlayer($this);
+      $this->team = null;
       return $this;
     }
 
