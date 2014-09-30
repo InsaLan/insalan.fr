@@ -724,7 +724,6 @@ strong {
 }
 
 .frame > header > .title {
-  float:left; 
   font-size:30px; 
   font-family: OpenSansCond; 
   color:#a2a2a2; 

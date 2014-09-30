@@ -26,7 +26,7 @@
         <div class="step pull-left">
           1
         </div>
-        <div class="title">Invocateur introuvable ou déjà inscrit. Réessayez ?</div>
+        <div class="title pull-left">Invocateur introuvable ou déjà inscrit. Réessayez ?</div>
         <br class="clear">
       </header>
       <p>Ce message d'erreur vous sera peut-être utile : <strong>{{ errorStep1|first }}</strong></p>
@@ -42,7 +42,7 @@
         <div class="step pull-left">
           1
         </div>
-        <div class="title">Entrez le nom de votre invocateur</div>
+        <div class="title pull-left">Entrez le nom de votre invocateur</div>
         <br class="clear">
       </header>
       <form id="step1" class="" method="POST" action="{{ path('insalan_user_default_gameidlolset') }}" >
@@ -56,7 +56,7 @@
         <div class="step pull-left">
           1
         </div>
-        <div class="title">
+        <div class="title pull-left">
           Invocateur séléctionné : {{ app.user.player.name }}
         </div>
         <div class="pull-right" style="height:60px">
@@ -81,7 +81,7 @@
         <div class="step pull-left">
           2
         </div>
-        <div class="title">Echec de validation. Réessayez ?</div>
+        <div class="title pull-left">Echec de validation. Réessayez ?</div>
         <br style="clear:both;">
       </header>
       <div class="text">
@@ -104,7 +104,7 @@
         <div class="step pull-left">
           2
         </div>
-        <div class="title">Validez votre invocateur en créant une page de maitrises "<strong>insalan{{app.user.id}}</strong>"</div>
+        <div class="title pull-left">Validez votre invocateur en créant une page de maitrises "<strong>insalan{{app.user.id}}</strong>"</div>
         <br style="clear:both;">
       </header>
       <div class="text">
@@ -126,7 +126,7 @@
         <div class="step pull-left">
           2
         </div>
-        <div class="title">Invocateur validé</div>
+        <div class="title pull-left">Invocateur validé</div>
         <br style="clear:both;">
       </header>
     </div>
@@ -145,7 +145,7 @@
         <div class="step pull-left">
           3
         </div>
-        <div class="title">Impossible de créer ou rejoindre cette équipe</div>
+        <div class="title pull-left">Impossible de créer ou rejoindre cette équipe</div>
         <br class="clear">
       </header>
       <div class="text">
@@ -179,7 +179,7 @@
         <div class="step pull-left">
           3
         </div>
-        <div class="title">Créer ou rejoindre une équipe</div>
+        <div class="title pull-left">Créer ou rejoindre une équipe</div>
         <br class="clear">
       </header>
       <div class="text">
@@ -209,7 +209,7 @@
         <div class="step pull-left">
           3
         </div>
-        <div class="title">Equipe sélectionnée : {{ app.user.player.team.getName() }}</div>
+        <div class="title pull-left">Equipe sélectionnée : {{ app.user.player.team.getName() }}</div>
         <br style="clear:both;">
       </header>
     </div>
@@ -226,7 +226,7 @@
         <div class="step pull-left">
           4
         </div>
-        <div class="title">En attente des autres joueurs de l'équipe !</div>
+        <div class="title pull-left">En attente des autres joueurs de l'équipe !</div>
         <br style="clear:both;">
       </header>
       <div class="text">Coéquipiers validés : 
@@ -250,7 +250,7 @@
         <div class="step pull-left">
           4
         </div>
-        <div class="title">Equipe validée</div>
+        <div class="title pull-left">Equipe validée</div>
         <br style="clear:both;">
       </header>
       <div class="text">

@@ -198,7 +198,6 @@ class DefaultController extends Controller
           $team->setName($name);
           $team->setPassword($password);
           $user->getPlayer()->joinTeam($team);
-          $user->getPlayer()->setTeam($team);
         }
         else {
           if($password !== $team->getPassword()) throw new ControllerException('Invalid password');
