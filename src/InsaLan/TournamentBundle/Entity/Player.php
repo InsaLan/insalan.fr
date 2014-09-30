@@ -88,9 +88,10 @@ class Player extends Participant
      * @param integer $lol_id
      * @return User
      */
-    public function setLolId($lol_id) {
-      $this->lol_id = $lol_id;
-      return $this;
+    public function setLolId($lol_id)
+    {
+        $this->lol_id = $lol_id;
+        return $this;
     }
 
     /**
@@ -109,9 +110,10 @@ class Player extends Participant
      * @param boolean $lol_id_validated
      * @return User
      */
-    public function setLolIdValidated($lol_id_validated) {
-      $this->lol_id_validated = $lol_id_validated;
-      return $this;
+    public function setLolIdValidated($lol_id_validated)
+    {
+        $this->lol_id_validated = $lol_id_validated;
+        return $this;
     }
 
     /**
@@ -173,6 +175,7 @@ class Player extends Participant
      */
     public function __construct()
     {
+        parent::__construct();
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 

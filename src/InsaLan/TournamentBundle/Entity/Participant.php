@@ -7,10 +7,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorColumn(name="kind", type="string")
  * @ORM\DiscriminatorMap({"team" = "Team", "player" = "Player"})
  */
-class Participant
+abstract class Participant
 {
     /**
      * @ORM\Id
@@ -18,7 +18,6 @@ class Participant
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="Tournament")
@@ -34,7 +33,7 @@ class Participant
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $validated = false;
+    protected $validated;
 
     /**
      * Get id
@@ -44,14 +43,16 @@ class Participant
         return $this->id;
     }
 
-
     /**
      * Constructor
      */
     public function __construct()
     {
+        $this->validated = false;
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+    public abstract function getName();
 
     /**
      * Set tournament

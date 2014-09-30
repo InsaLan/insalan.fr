@@ -17,4 +17,5 @@ parameters:
     debug_toolbar:          true
     debug_redirects:        false
     use_assetic_controller: true
+    
     lol_api_key: ~
