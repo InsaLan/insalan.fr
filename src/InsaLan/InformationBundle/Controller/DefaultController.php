@@ -8,16 +8,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class DefaultController extends Controller
 {
+    const OPENING_DATE = '2014/10/03 00:00:00';
+
     /**
      * @Route("/")
      * @Template()
      */
     public function homeAction()
-    {   
-
-        if(time() < 1412287201) {
-            return $this->redirect($this->generateUrl('insalan_information_default_wait'));
+    {
+        if(time() < strtotime(self::OPENING_DATE)) {
+            return $this->redirect($this->generateUrl(
+                'insalan_information_default_wait'));
         }
+
         return array();
     }
     
@@ -36,8 +39,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
         return array();
     }
     
@@ -57,7 +58,7 @@ class DefaultController extends Controller
      */
     public function waitAction()
     {
-        if(time() > 1412287201) {
+        if(time() >= strtotime(self::OPENING_DATE)) {
             return $this->redirect($this->generateUrl('insalan_information_default_home'));
         }
         return array();

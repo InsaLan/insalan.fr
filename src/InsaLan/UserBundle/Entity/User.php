@@ -110,16 +110,18 @@ class User extends BaseUser
      * @param InsaLan\TournamentBundle\Entity\Player
      * @return this
      */
-    public function setPlayer(Player $p) {
-      $this->player = $p;
+    public function setPlayer(Player $p)
+    {
+        $this->player = $p;
 
-      return $this;
+        return $this;
     }
 
-    public function removePlayer() {
-      $this->player = null;
+    public function removePlayer()
+    {
+        $this->player = null;
 
-      return $this;
+        return $this;
     }
 
 }

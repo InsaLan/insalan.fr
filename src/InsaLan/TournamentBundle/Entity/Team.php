@@ -18,7 +18,7 @@ class Team extends Participant
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
     protected $password;
@@ -37,6 +37,7 @@ class Team extends Participant
 
     public function __construct()
     {
+        parent::__construct();
         $this->players = new ArrayCollection();
     }
 
