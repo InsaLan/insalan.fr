@@ -22,3 +22,4 @@ parameters:
     
     fos_user_email_address: no-reply@example.com
     fos_user_email_sender_name: webmaster
+    ga_tracking: UA-xxxxx
