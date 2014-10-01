@@ -121,7 +121,8 @@ abstract class Participant
         return $this->validated;
     }
 
-    public function setValidated($validated) {
+    public function setValidated($validated)
+    {
       $this->validated = $validated;
       
       return $this;

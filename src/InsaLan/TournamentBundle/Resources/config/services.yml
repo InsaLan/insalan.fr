@@ -31,3 +31,8 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [InsaLanTournamentBundle]]
+
+    insalan.tournament.participant_validator:
+        class: InsaLan\TournamentBundle\Subscriber\ParticipantValidator
+        tags:
+            - { name: doctrine.event_subscriber }
