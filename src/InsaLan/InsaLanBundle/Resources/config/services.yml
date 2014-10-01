@@ -10,3 +10,6 @@ services:
     insalan.lol:
         class: InsaLan\InsaLanBundle\API\Lol
         arguments: [%lol_api_key%]
+    insalan.free_slots:
+        class: InsaLan\InsaLanBundle\Service\FreeSlots
+        arguments: [@doctrine]

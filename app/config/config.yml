@@ -36,6 +36,8 @@ twig:
     form:
         resources:
             - 'InsaLanBundle:Form:fields.html.twig'
+    globals:
+        free_slots: "@insalan.free_slots"
 
 # Assetic Configuration
 assetic:
