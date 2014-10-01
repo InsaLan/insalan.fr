@@ -11,7 +11,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorMap({"team" = "Team", "player" = "Player"})
  */
 abstract class Participant
-{
+{   
+
+    const STATUS_PENDING   = 0; // Not ready for validation
+    const STATUS_WAITING   = 1; // Ready for validation, but no slot free
+    const STATUS_VALIDATED = 2; // Validated
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -31,7 +36,7 @@ abstract class Participant
     protected $groups;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer", columnDefinition="ENUM(0,1,2)")
      */
     protected $validated;
 
@@ -123,8 +128,7 @@ abstract class Participant
 
     public function setValidated($validated)
     {
-      $this->validated = $validated;
-      
-      return $this;
+        $this->validated = $validated;
+        return $this;
     }
 }

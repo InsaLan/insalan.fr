@@ -216,7 +216,7 @@
 
     {# STEP 4 #}
     {% if app.user.player == null or app.user.player.lolIdValidated == false or app.user.player.team == null %}
-    {% elseif app.user.player.team.validated == false %}
+    {% elseif app.user.player.team.getValidated() == 0 %}
     <div class="frame frame-active">
       <header class="full">
         <div class="step pull-left">
@@ -238,6 +238,28 @@
       </div>
       <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_teamidlolleave') }}">Annuler</a>
       <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_user_default_index') }}">Actualiser</a>
+      <br class="clear">
+    </div>
+    {% elseif app.user.player.team.getValidated() == 1 %}
+    <div class="frame frame-active">
+      <header class="full">
+        <div class="step pull-left">
+          4
+        </div>
+        <div class="title pull-left">Equipe en attente</div>
+        <br style="clear:both;">
+      </header>
+      <div class="text">
+        <p>
+        Votre équipe est en attente !
+        </p>
+        <p>
+        Il n'y a pour le moment aucun slot de disponible pour votre équipe. Pas de panique ! Elle sera validée dès qu'une place se libèrera :)<br />
+        Vous pouvez accéder à votre espace pour plus d'informations.
+        </p>
+      </div>
+      <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_teamidlolleave') }}">Annuler</a>
+      <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_user_default_index') }}">Mon espace</a>
       <br class="clear">
     </div>
     {% else %}

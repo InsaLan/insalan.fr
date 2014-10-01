@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use GuzzleHttp\Exception\ClientException;
 use InsaLan\TournamentBundle\Entity\Player;
 use InsaLan\TournamentBundle\Entity\Team;
+use InsaLan\TournamentBundle\Entity\Participant;
 
 class DefaultController extends Controller
 {
@@ -22,9 +23,9 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $user = $this->getUser();   
-        if ($user->getPlayer() !== null 
-            && $user->getPlayer()->getTeam() !== null 
-            && $user->getPlayer()->getTeam()->getValidated()) 
+        if (   $user->getPlayer()                             !== null 
+            && $user->getPlayer()->getTeam()                  !== null 
+            && $user->getPlayer()->getTeam()->getValidated()  !== Participant::STATUS_PENDING) 
         {
             return array();
         } else {  
