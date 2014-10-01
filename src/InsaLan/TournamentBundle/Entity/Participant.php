@@ -36,7 +36,7 @@ abstract class Participant
     protected $groups;
 
     /**
-     * @ORM\Column(type="integer", columnDefinition="ENUM(0,1,2)")
+     * @ORM\Column(type="integer")
      */
     protected $validated;
 
