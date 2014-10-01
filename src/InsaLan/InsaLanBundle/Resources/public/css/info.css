@@ -74,6 +74,10 @@
   text-indent: 40px;
 }
 
+.info > section h3 {
+  text-indent: 40px;
+}
+
 article > p {
   text-align: justify;
 }
@@ -82,8 +86,9 @@ article > p + p {
   margin-top: 20px;
 }
 
-article > p + h3 {
-  margin-top: 25px;
+article > p + h3,
+section > p + h3 {
+  margin-top: 35px;
 }
 
 article > ul li {
