@@ -68,7 +68,7 @@ class Player extends Participant
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -133,8 +133,8 @@ class Player extends Participant
      * @return User
      */
     public function setLolPicture($lol_picture) {
-      $this->lol_picture = $lol_picture;
-      return $this;
+        $this->lol_picture = $lol_picture;
+        return $this;
     }
 
     /**
@@ -187,12 +187,12 @@ class Player extends Participant
      */
     public function joinTeam(\InsaLan\TournamentBundle\Entity\Team $team)
     {
-      $this->team = $team;
-      $team->addPlayer($this);
-      return $this;
+        $this->team = $team;
+        $team->addPlayer($this);
+        return $this;
     }
 
-     /**
+    /**
      * Leave team
      *
      * @param \InsaLan\TournamentBundle\Entity\Team $team
@@ -200,9 +200,9 @@ class Player extends Participant
      */
     public function leaveTeam()
     {
-      $this->team->removePlayer($this);
-      $this->team = null;
-      return $this;
+        $this->team->removePlayer($this);
+        $this->team = null;
+        return $this;
     }
 
     /**

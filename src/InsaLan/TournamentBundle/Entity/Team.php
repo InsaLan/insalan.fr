@@ -106,10 +106,10 @@ class Team extends Participant
      */
     public function validate()
     {
-      if ($this->captain === null && $this->players->count() > 0) { 
-        $this->setCaptain($this->players->first());
-      }
-      $this->setValidated($this->players->count() === 5);
+        if ($this->captain === null && $this->players->count() > 0) { 
+            $this->setCaptain($this->players->first());
+        }
+        $this->setValidated($this->players->count() === 5);
     }
 
     /**
@@ -132,9 +132,9 @@ class Team extends Participant
      */
     public function removePlayer(\InsaLan\TournamentBundle\Entity\Player $players)
     {
-      $this->players->removeElement($players);
-      $this->validate();
-      return $this;
+        $this->players->removeElement($players);
+        $this->validate();
+        return $this;
     }
 
     /**
@@ -148,26 +148,26 @@ class Team extends Participant
     }
 
 
-   /**
-      * Set captain
-      *
-      * @param \InsaLan\TournamentBundle\Entity\Player $captain
-      * @return Team
-      */
-     public function setCaptain(\InsaLan\TournamentBundle\Entity\Player $captain = null)
-     {
-         $this->captain = $captain;
- 
-         return $this;
-     }
- 
-     /**
-      * Get captain
-      *
-      * @return \InsaLan\TournamentBundle\Entity\Player 
-      */
-     public function getCaptain()
-     {
-         return $this->captain;
-     }
+    /**
+     * Set captain
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Player $captain
+     * @return Team
+     */
+    public function setCaptain(\InsaLan\TournamentBundle\Entity\Player $captain = null)
+    {
+        $this->captain = $captain;
+
+        return $this;
+    }
+
+    /**
+     * Get captain
+     *
+     * @return \InsaLan\TournamentBundle\Entity\Player 
+     */
+    public function getCaptain()
+    {
+        return $this->captain;
+    }
 }
