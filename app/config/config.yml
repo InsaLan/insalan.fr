@@ -133,6 +133,9 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: InsaLan\UserBundle\Entity\User
+    from_email:
+        address:        "%fos_user_email_address%"
+        sender_name:    "%fos_user_email_sender_name%"
     registration:
         confirmation:
             enabled:    true # change to true for required email confirmation
