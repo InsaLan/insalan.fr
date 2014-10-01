@@ -39,17 +39,21 @@
 
         <nav>
           <ul>
+          {% if free_slots.opened %}
             <li><a href="{{ path('insalan_information_default_home') }}">Accueil</a></li>
+          {% else %}
+            <li><a href="{{ path('insalan_information_default_wait') }}">Accueil</a></li>
+          {% endif %}
             <li><a href="{{ path('insalan_information_default_rules') }}">Règlement</a></li>
-            {% if app.user %}
+          {% if app.user %}
             <li><a href="{{ path('insalan_user_default_index') }}">Mon espace</a></li>
             <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
-            {% else %}
+          {% else %}
             {% if free_slots.opened %}
               <li><a href="{{ path('insalan_user_default_index') }}">Connexion</a></li>
               <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
             {% endif %}
-            {% endif %}
+          {% endif %}
           </ul>
         </nav>
         {% endblock %}
@@ -84,7 +88,7 @@
         {% block bottom_infos %}
         <nav>
           <ul>
-
+            {% if free_slots.opened %}
             <li>
               <header><a href="{{ path('insalan_tournament_default_index') }}">Qualifications</a></header>
               <div>
@@ -96,6 +100,8 @@
                 </ul>
               </div>
             </li>
+            {% endif %}
+            
             <li>
               <header><a href="{{ path('insalan_information_default_index') }}">Infos</a></header>
               <div>
