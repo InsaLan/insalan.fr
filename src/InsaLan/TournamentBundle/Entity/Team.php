@@ -106,10 +106,7 @@ class Team extends Participant
      */
     public function validate()
     {
-        if ($this->captain === null && $this->players->count() > 0) { 
-            $this->setCaptain($this->players->first());
-        }
-        $this->setValidated($this->players->count() === 5);
+      //deprecated.
     }
 
     /**

@@ -233,7 +233,6 @@ class DefaultController extends Controller
 
         $user->getPlayer()->leaveTeam();
 
-
         $em->persist($user);
         $em->flush();
 
