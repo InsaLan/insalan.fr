@@ -45,7 +45,7 @@ class DefaultController extends Controller
      * @Route("/game-id/lol/set")     
      * @Method({"POST"})
      */
-    public function gameIdLolSet(Request $request)
+    public function gameIdLolSetAction(Request $request)
     {
       $name = $request->request->get('summoner');
       $api_lol = $this->container->get('insalan.lol');
@@ -102,7 +102,7 @@ class DefaultController extends Controller
      * @Route("/game-id/lol/reset")     
      * @Method({"GET"})
      */
-    public function gameIdLolReset(Request $request)
+    public function gameIdLolResetAction(Request $request)
     {
       $user = $this->getUser();
       $p = $user->getPlayer();
@@ -120,7 +120,7 @@ class DefaultController extends Controller
      * @Route("/game-id/lol/validate")     
      * @Method({"POST"})
      */
-    public function gameIdLolValidate()
+    public function gameIdLolValidateAction()
     { 
       $api_lol = $this->container->get('insalan.lol');
       $api_summoner = $api_lol->getApi()->summoner();
@@ -157,7 +157,7 @@ class DefaultController extends Controller
      * @Route("/game-id/lol/invalidate")     
      * @Method({"GET"})
      */
-    public function gameIdLolInvalidate()
+    public function gameIdLolInvalidateAction()
     {
       $user = $this->getUser();
 
@@ -175,7 +175,7 @@ class DefaultController extends Controller
      * @Route("/team-id/lol/select")
      * @Method({"POST"})
      */
-    public function teamIdLolSelect(Request $request)
+    public function teamIdLolSelectAction(Request $request)
     {
       $user = $this->getUser();
       $logger = $this->get('logger');
@@ -225,7 +225,7 @@ class DefaultController extends Controller
      * @Method({"GET"})
      */
     
-    public function teamIdLolLeave()
+    public function teamIdLolLeaveAction()
     {
       $em = $this->getDoctrine()->getManager();
       $user = $this->getUser();
