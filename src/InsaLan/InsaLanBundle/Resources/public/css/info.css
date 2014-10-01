@@ -74,6 +74,34 @@
   text-indent: 40px;
 }
 
+article > p {
+  text-align: justify;
+}
+
+article > p + p {
+  margin-top: 20px;
+}
+
+article > p + h3 {
+  margin-top: 25px;
+}
+
+article > ul li {
+  list-style: none;
+}
+
+article > ul li:before {
+  content:'\2022';
+  display: block;
+  position: relative;
+  max-width: 0px;
+  max-height: 0px;
+  color: white;
+  font-size: 23px;
+  bottom: 4px;
+  left: -20px;
+}
+
 /** Squares **/
 
 #horaire > aside .square, #finale > aside .square {
