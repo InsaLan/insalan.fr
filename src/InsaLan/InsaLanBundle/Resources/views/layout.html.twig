@@ -80,54 +80,43 @@
         </aside>
         
         {% block bottom_infos %}
-        {#
         <nav>
           <ul>
-            <li id="stream">
-              <header><a href="{{ path('insalan_stream_default_index') }}">Streams</a></header>
-              <ul>
-                <li><a href="{{ path('insalan_stream_default_index') }}#stream-cs">CS:GO</a></li>
-                <li><a href="{{ path('insalan_stream_default_index') }}#stream-tf2">TF2</a></li>
-                <li><a href="{{ path('insalan_stream_default_index') }}#stream-lol">LoL</a></li>
-                <li><a href="{{ path('insalan_stream_default_index') }}#stream-sc2">SC2</a></li>
-              </ul>
-            </li>
-            <li id="tournois">
-              <header><a href="{{ path('insalan_tournament_default_index') }}">Tournois</a></header>
+
+            <li>
+              <header><a href="{{ path('insalan_tournament_default_index') }}">Qualifications</a></header>
               <div>
                 <ul>
-                  <li><a href="http://intranet.insalan.fr/">Résultats</a></li>
-                  <li><a href="http://intranet.insalan.fr/">Planning</a></li>
-                  <li><a href="http://intranet.insalan.fr/">Formats</a></li>
-                  <li><a href="http://intranet.insalan.fr/">Equipes</a></li>
+                  <li><a href="{{ path('insalan_information_default_home') }}">Accueil</a></li>
+                  <li><a href="{{ path('insalan_information_default_rules') }}">Règlement</a></li>
+                  <li><a href="{{ path('insalan_user_default_index') }}">Connexion</a></li>
+                  <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
                 </ul>
               </div>
             </li>
-            <li id="infos">
+            <li>
               <header><a href="{{ path('insalan_information_default_index') }}">Infos</a></header>
               <div>
                 <ul>
-                  <li><a href="{{ path('insalan_information_default_index') }}#asso">Association</a></li>
-                  <li><a href="{{ path('insalan_information_default_index') }}#horaire">Horaires</a></li>
-                  <li><a href="{{ path('insalan_information_default_index') }}#anim">Animations</a></li>
-                  <li><a href="{{ path('insalan_information_default_index') }}#tarif">Tarifs et Repas</a></li>
-                </ul>
-                <ul class="second">
-                  <li><a href="{{ path('insalan_information_default_index') }}#tournoi">Tournois</a></li>
-                  <li><a href="{{ path('insalan_information_default_index') }}#finale">Finales</a></li>
+                  <li><a href="{{ path('insalan_information_default_home') }}#rewards">Récompenses</a></li>
+                  <li><a href="{{ path('insalan_information_default_home') }}#organization">Déroulement</a></li>
+                  <li><a href="{{ path('insalan_information_default_home') }}#games">Jeux</a></li>
+                  <li><a href="{{ path('insalan_information_default_home') }}#price">Prix</a></li>
                 </ul>
               </div>
             </li>
-            <li id="galerie">
-              <header><a href="http://www.insalan.fr/gallery/">Galerie</a></header>
+            
+            <li>
+              <header><a href="{{ path('insalan_stream_default_index') }}">InsaLan.fr</a></header>
               <ul>
-                <li><a href="#">InsaLan 9</a></li>
-                <li><a href="http://www.insalan.fr/gallery/">Autres</a></li>
+                <li><a href="http://www.insalan.fr/news/">News</a></li>
+                <li><a href="http://www.insalan.fr/gallery/">Galerie</a></li>
+                <li><a href="http://www.insalan.fr/forum/">Forum</a></li>
+                <li><a href="http://www.insalan.fr/pages/contact">Contact</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-        #}
         {% endblock %}
         <div id="copyright">
           <p>
