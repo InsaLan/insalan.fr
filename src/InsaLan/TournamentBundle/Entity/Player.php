@@ -31,17 +31,17 @@ class Player extends Participant
     /**
      * @ORM\Column(name="lol_id", type="integer", nullable=true, unique=true)
      */
-    protected $lol_id;
+    protected $lolId;
 
     /**
      * @ORM\Column(name="lol_id_validated", type="boolean")
      */
-    protected $lol_id_validated = false;
+    protected $lolIdValidated;
 
     /**
      * @ORM\Column(name="lol_picture", type="integer", nullable=true)
      */
-    protected $lol_picture;
+    protected $lolPicture;
 
     /**
      * @ORM\ManyToOne(targetEntity="Team", inversedBy="players", cascade={"persist"})
@@ -49,6 +49,15 @@ class Player extends Participant
      */
     protected $team;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->lolIdValidated = false;
+    }
     /**
      * Get id
      *
@@ -68,7 +77,7 @@ class Player extends Participant
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -83,68 +92,68 @@ class Player extends Participant
     }
 
     /**
-     * Set lol_id
+     * Set lolId
      *
-     * @param integer $lol_id
+     * @param integer $lolId
      * @return User
      */
-    public function setLolId($lol_id)
+    public function setLolId($lolId)
     {
-        $this->lol_id = $lol_id;
+        $this->lolId = $lolId;
         return $this;
     }
 
     /**
-     * Get lol_id
+     * Get lolId
      *
      * @return string
      */
     public function getLolId()
     {
-        return $this->lol_id;
+        return $this->lolId;
     }
 
     /**
-     * Set lol_id_validated
+     * Set lolId_validated
      *
-     * @param boolean $lol_id_validated
+     * @param boolean $lolIdValidated
      * @return User
      */
-    public function setLolIdValidated($lol_id_validated)
+    public function setLolIdValidated($lolIdValidated)
     {
-        $this->lol_id_validated = $lol_id_validated;
+        $this->lolIdValidated = $lolIdValidated;
         return $this;
     }
 
     /**
-     * Get lol_id_validated
+     * Get lolId_validated
      *
      * @return boolean
      */
     public function getLolIdValidated()
     {
-        return $this->lol_id_validated;
+        return $this->lolIdValidated;
     }
 
     /**
-     * Set lol_picture
+     * Set lolPicture
      *
-     * @param integer $lol_picture
+     * @param integer $lolPicture
      * @return User
      */
-    public function setLolPicture($lol_picture) {
-      $this->lol_picture = $lol_picture;
-      return $this;
+    public function setLolPicture($lolPicture) {
+        $this->lolPicture = $lolPicture;
+        return $this;
     }
 
     /**
-     * Get lol_picture
+     * Get lolPicture
      *
      * @return integer
      */
     public function getLolPicture()
     {
-        return $this->lol_picture;
+        return $this->lolPicture;
     }
 
     /**
@@ -171,15 +180,6 @@ class Player extends Participant
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Join team
      *
      * @param \InsaLan\TournamentBundle\Entity\Team $team
@@ -187,12 +187,12 @@ class Player extends Participant
      */
     public function joinTeam(\InsaLan\TournamentBundle\Entity\Team $team)
     {
-      $this->team = $team;
-      $team->addPlayer($this);
-      return $this;
+        $this->team = $team;
+        $team->addPlayer($this);
+        return $this;
     }
 
-     /**
+    /**
      * Leave team
      *
      * @param \InsaLan\TournamentBundle\Entity\Team $team
@@ -200,9 +200,9 @@ class Player extends Participant
      */
     public function leaveTeam()
     {
-      $this->team->removePlayer($this);
-      $this->team = null;
-      return $this;
+        $this->team->removePlayer($this);
+        $this->team = null;
+        return $this;
     }
 
     /**

@@ -23,7 +23,7 @@ class DefaultController extends Controller
 
         return array();
     }
-    
+
     /**
      * @Route("/faq")
      * @Template()
@@ -41,7 +41,7 @@ class DefaultController extends Controller
     {
         return array();
     }
-    
+
 
     /**
      * @Route("/rules")
