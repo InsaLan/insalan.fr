@@ -25,7 +25,7 @@ class DefaultController extends Controller
         $user = $this->getUser();   
         if (   $user->getPlayer()                             !== null 
             && $user->getPlayer()->getTeam()                  !== null 
-            && $user->getPlayer()->getTeam()->getValidated()  !== Participant::STATUS_PENDING) 
+            && $user->getPlayer()->getTeam()->getValidated()  === Participant::STATUS_VALIDATED) 
         {
             return array();
         } else {  
