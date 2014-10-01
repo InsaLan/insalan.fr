@@ -57,9 +57,9 @@ class DefaultController extends Controller
 
         try {
             $r_summoner = $api_summoner->info($name);
-            $u = $em->getRepository('InsaLanTournamentBundle:Player')->findBy(array('lol_id' => $r_summoner->id));
+            $u = $em->getRepository('InsaLanTournamentBundle:Player')->findBy(array('lolId' => $r_summoner->id));
             if ($u) {
-                throw new ControllerException('Summoner name already taken');
+                throw new ControllerException('Cet invocateur est déjà inscrit');
             }
 
             $user->setPlayer(new Player());
@@ -76,10 +76,10 @@ class DefaultController extends Controller
 
             if ('GuzzleHttp\\Exception\\ClientException' === $className
                 && 404 == $e->getResponse()->getStatusCode()) {
-                    $details = 'Invocateur introuvable';
+                    $details = 'Invocateur introuvable sur EUW';
                 }
             else if (0 === strpos($className, 'GuzzleHttp')) {
-                $details = 'Erreur de l\'API';
+                $details = 'Erreur de l\'API. Veuillez réessayer.';
             }
             else if ('InsaLan\\UserBundle\\Exception\\ControllerException' === $className) {
                 $details = $e->getMessage();
@@ -136,7 +136,7 @@ class DefaultController extends Controller
                 }
             }
 
-            if(!$user->getPlayer()->getLolIdValidated()) { throw new ControllerException('Can\'t find mastery page'); }
+            if(!$user->getPlayer()->getLolIdValidated()) { throw new ControllerException('La page de maîtrises n\'a pas été trouvée.'); }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -190,7 +190,7 @@ class DefaultController extends Controller
         $password = $encoder->encodePassword($password, sha1('pleaseHashPasswords'.$name));
 
         try {
-            if($user->getPlayer()->getTeam() !== null) throw new ControllerException('User already in a team');
+            if($user->getPlayer()->getTeam() !== null) throw new ControllerException('Vous êtes déjà dans une équipe !');
 
             $team = $teamRepo->findOneByName($name);
             if(!$team) {
@@ -200,8 +200,8 @@ class DefaultController extends Controller
                 $user->getPlayer()->joinTeam($team);
             }
             else {
-                if($password !== $team->getPassword()) throw new ControllerException('Invalid password');
-                if($team->getPlayers()->count() >= 5) throw new ControllerException('No more free slot in this team');
+                if($password !== $team->getPassword()) throw new ControllerException('Mot de passe incorrect');
+                if($team->getPlayers()->count() >= 5) throw new ControllerException('L\'équipe que vous essayez de rejoindre est complète');
 
                 $user->getPlayer()->joinTeam($team);
             }
