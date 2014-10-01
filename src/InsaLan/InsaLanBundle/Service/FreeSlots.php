@@ -46,5 +46,11 @@ class FreeSlots
         if(count($participant) === 1) return $participant[0];
         else return null;
     }
+
+    public function opened()
+    {
+        $date = strtotime(\InsaLan\InformationBundle\Controller\DefaultController::OPENING_DATE);
+        return (time() >= $date);
+    }
 }
 ?>

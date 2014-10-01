@@ -11,6 +11,12 @@ security:
             id: fos_user.user_provider.username
 
     firewalls:
+        opening:
+            request_matcher: insalan.opening_matcher
+            anonymous: false
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
         main:
             pattern: ^/
             form_login:
@@ -24,7 +30,6 @@ security:
 
         default:
             anonymous: ~
-
 
     access_control:
         - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -45,8 +45,10 @@
             <li><a href="{{ path('insalan_user_default_index') }}">Mon espace</a></li>
             <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
             {% else %}
-            <li><a href="{{ path('insalan_user_default_index') }}">Connexion</a></li>
-            <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
+            {% if free_slots.opened %}
+              <li><a href="{{ path('insalan_user_default_index') }}">Connexion</a></li>
+              <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
+            {% endif %}
             {% endif %}
           </ul>
         </nav>
@@ -122,7 +124,7 @@
           <p>
             © 2014 InsaLan <span>|</span>
             Design by <a href="http://www.alecahain.fr/">Aceltis</a> <span>|</span>
-            Code by <a href="http://nhurman.fr/">Nicolas</a> & <a href="http://quentin.dufour.tk">Quentin</a>
+            Code by <a href="http://nhurman.fr/">Nicolas</a> &amp; <a href="http://quentin.dufour.tk">Quentin</a>
           </p>
         </div>
       </div>

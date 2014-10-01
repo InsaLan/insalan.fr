@@ -59,7 +59,8 @@ class DefaultController extends Controller
     public function waitAction()
     {
         if(time() >= strtotime(self::OPENING_DATE)) {
-            return $this->redirect($this->generateUrl('insalan_information_default_home'));
+            return $this->redirect($this->generateUrl(
+                'insalan_information_default_home'));
         }
         return array();
     }
