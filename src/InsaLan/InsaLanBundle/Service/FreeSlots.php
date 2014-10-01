@@ -23,10 +23,13 @@ class FreeSlots
         $this->doctrine = $doctrine;
     }
 
+    /**
+     * @return int Number of free slots currently available.
+     */
     public function get()
     {
        return self::TOTAL_SLOTS - count($this->doctrine
-       	                                     ->getRepository('InsaLanTournamentBundle:Participant')
+                                             ->getRepository('InsaLanTournamentBundle:Participant')
                                              ->findByValidated(true));
     }
 }
