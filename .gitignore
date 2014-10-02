@@ -10,3 +10,6 @@
 /web/css/
 /web/js/
 /web/uploads/
+/deploy/conf/*
+/deploy/tmp/*
+!/deploy/conf/*.dist
