@@ -56,7 +56,7 @@
           1
         </div>
         <div class="title pull-left">
-          Invocateur séléctionné : {{ app.user.player.name }}
+          Invocateur sélectionné : {{ app.user.player.name }}
         </div>
         <div class="pull-right" style="height:60px">
           <img height="60" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ app.user.player.lolPicture }}.png">
@@ -106,8 +106,8 @@
       </header>
       <div class="text">
         <p>Nous devons vérifier que vous êtes bien l'invocateur {{ app.user.player.name }}.</p>
-        <p>Pour celà, vous devez créer ou renommer une page de maitrise de cette manière "<strong>insalan{{ app.user.id }}</strong>" (sans les guillements).</p>
-        <p>En cliquant sur "Ok", notre système va scanner vos pages de maitrises à la recherche de "<strong>insalan{{ app.user.id }}</strong>".
+        <p>Pour cela, vous devez créer ou renommer une page de maitrise de cette manière "<strong>insalan{{ app.user.id }}</strong>" (sans les guillements).</p>
+        <p>En cliquant sur "Ok", notre système va scanner vos maitrises à la recherche de la page "<strong>insalan{{ app.user.id }}</strong>".
         <p>Une fois votre compte validé, vous pouvez renommer ou supprimer cette page de maitrise.</p>
       </div>
       <form id="step2" method="POST" action="{{ path('insalan_user_default_gameidlolvalidate') }}">
@@ -205,7 +205,7 @@
         <div class="step pull-left">
           3
         </div>
-        <div class="title pull-left">Equipe sélectionnée : {{ app.user.player.team.getName() }}</div>
+        <div class="title pull-left">Équipe sélectionnée : {{ app.user.player.team.getName() }}</div>
         <br style="clear:both;">
       </header>
     </div>
