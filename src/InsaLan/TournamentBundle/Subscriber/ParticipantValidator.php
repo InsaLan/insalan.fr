@@ -50,7 +50,7 @@ class ParticipantValidator implements EventSubscriber
                 $team->setCaptain($team->getPlayers()->first());
             }
 
-            if($team->getPlayers()->count() === self::TEAM_SIZE) {
+            if($team->getPlayers()->count() >= self::TEAM_SIZE) {
                 //Ready for validation
                 if($this->fs->get() > 0)
                     $team->setValidated(Participant::STATUS_VALIDATED);

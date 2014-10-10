@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Doctrine\ORM\Query;
+
 use InsaLan\TournamentBundle\Entity;
 
 class DefaultController extends Controller
@@ -40,5 +42,24 @@ class DefaultController extends Controller
         }
 
         return array('t' => $tournament, 'stages' => $stages);
+    }
+
+    /**
+     * @Route("/teams")
+     * @Template()
+     */
+    public function teamListAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery("
+            SELECT partial t.{id,name,validated}, partial p.{id,name,lolId} 
+            FROM InsaLanTournamentBundle:Team t
+            JOIN t.players p
+            ");
+        $query->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true);
+        $query->execute();
+
+        return array('teams' => $query->getResult());
     }
 }

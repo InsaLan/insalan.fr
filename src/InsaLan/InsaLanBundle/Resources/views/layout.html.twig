@@ -41,6 +41,7 @@
           <ul>
           {% if free_slots.opened %}
             <li><a href="{{ path('insalan_information_default_home') }}">Accueil</a></li>
+            <li><a href="{{ path('insalan_tournament_default_teamlist') }}">Équipes</a></li>
           {% else %}
             <li><a href="{{ path('insalan_information_default_wait') }}">Accueil</a></li>
           {% endif %}

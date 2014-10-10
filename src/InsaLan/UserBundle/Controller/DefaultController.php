@@ -202,7 +202,7 @@ class DefaultController extends Controller
             }
             else {
                 if($password !== $team->getPassword()) throw new ControllerException('Mot de passe incorrect');
-                if($team->getPlayers()->count() >= 5) throw new ControllerException('L\'équipe que vous essayez de rejoindre est complète');
+                if($team->getPlayers()->count() >= 8) throw new ControllerException('L\'équipe que vous essayez de rejoindre est complète');
 
                 $user->getPlayer()->joinTeam($team);
             }

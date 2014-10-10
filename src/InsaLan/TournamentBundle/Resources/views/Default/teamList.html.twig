@@ -1,0 +1,69 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block title %}
+  {{ parent() }} - Equipes
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <header>
+    <h2>Équipes validées</h2>
+  </header>
+
+  <section>
+    {% for t in teams %}
+    {% if t.validated == 2 %}
+    <div class="frame frame-active grid-5 pull-left">
+        <header class="full">
+            <div class="title pull-left">
+                {{ t.name }}
+            </div>
+            <br class="clear">
+        </header>
+        <section>
+            <ul class="shift">
+                {% for p in t.players %}
+                <li><a href="http://www.lolking.net/summoner/euw/{{ p.lolId }}">{{ p.name }}</a></li>    
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+    {% endif %}
+    {% endfor %}
+  <br class="clear">
+  </section>
+</article>
+
+<article>
+  <header>
+    <h2>Équipes en cours de création</h2>
+  </header>
+
+  <section>
+    {% for t in teams %}
+    {% if t.validated == 0 %}
+    <div class="frame frame-active grid-5 pull-left">
+        <header class="full">
+            <div class="title pull-left">
+                {{ t.name }}
+            </div>
+            <br class="clear">
+        </header>
+        <section>
+            <ul class="shift">
+                {% for p in t.players %}
+                <li><a href="http://www.lolking.net/summoner/euw/{{ p.lolId }}">{{ p.name }}</a></li>    
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+    {% endif %}
+    {% endfor %}
+  <br class="clear">
+  </section>
+</article>
+
+{% endblock %}
+
