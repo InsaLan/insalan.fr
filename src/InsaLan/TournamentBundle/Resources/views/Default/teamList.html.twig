@@ -19,7 +19,7 @@
     <div class="frame frame-active grid-5 pull-left">
         <header class="full">
             <div class="title pull-left">
-                {{ t.name }}
+                {{count + 1}}. {{ t.name }}
             </div>
             <br class="clear">
         </header>
@@ -37,6 +37,7 @@
         {% endif %}
     {% endif %}
     {% endfor %}
+    <br class="clear">
   </section>
 </article>
 
@@ -52,7 +53,7 @@
     <div class="frame frame-active grid-5 pull-left">
         <header class="full">
             <div class="title pull-left">
-                {{ t.name }}
+                {{count}}. {{ t.name }}
             </div>
             <br class="clear">
         </header>
@@ -70,6 +71,7 @@
         {% endif %}
     {% endif %}
     {% endfor %}
+    <br class="clear">
   </section>
 </article>
 
