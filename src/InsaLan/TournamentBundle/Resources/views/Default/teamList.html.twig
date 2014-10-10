@@ -13,6 +13,7 @@
   </header>
 
   <section>
+    {% set count=0 %}
     {% for t in teams %}
     {% if t.validated == 2 %}
     <div class="frame frame-active grid-5 pull-left">
@@ -30,9 +31,12 @@
             </ul>
         </section>
     </div>
+    {% set count=count+1 %}
+        {% if count % 2 == 0%}
+        <br class="clear">
+        {% endif %}
     {% endif %}
     {% endfor %}
-  <br class="clear">
   </section>
 </article>
 
@@ -42,6 +46,7 @@
   </header>
 
   <section>
+    {% set count=0 %}
     {% for t in teams %}
     {% if t.validated == 0 %}
     <div class="frame frame-active grid-5 pull-left">
@@ -59,9 +64,12 @@
             </ul>
         </section>
     </div>
+    {% set count=count+1 %}
+        {% if count % 2 == 0%}
+        <br class="clear">
+        {% endif %}
     {% endif %}
     {% endfor %}
-  <br class="clear">
   </section>
 </article>
 
