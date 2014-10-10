@@ -774,3 +774,7 @@ strong {
 .frame > .text {
   margin: 5px 20px 5px 20px;
 }
+
+li a:hover {
+  color: #fff; 
+}
