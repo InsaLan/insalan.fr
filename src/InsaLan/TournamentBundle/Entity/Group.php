@@ -224,6 +224,7 @@ class Group
     public function removeParticipant(\InsaLan\TournamentBundle\Entity\Participant $participants)
     {
         return $this->participants->removeElement($participants);
+
     }
 
     /**

@@ -14,9 +14,10 @@ class AdminController extends Controller
 {
     /**
      * @Route("/admin/group")
+     * @Route("/{id}/admin/group", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function group_indexAction()
+    public function group_indexAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -28,29 +29,42 @@ class AdminController extends Controller
 
         $form = $this->createFormBuilder()
             ->add('tournament', 'choice', array('label' => 'Tournoi', 'choices' => $a))
+            ->setAction($this->generateUrl('insalan_tournament_admin_group_index'))
             ->getForm();
 
         $tournament = $stages = null;
+        $data = null;
 
-        if ($this->getRequest()->isMethod('POST')) {
-            $form->handleRequest($this->getRequest());
-            if ($form->isValid()) {
-                // Get Tournament object
-                $data = $form->getData();
-                foreach ($tournaments as &$t) {
-                    if ($t->getId() == $data['tournament']) {
-                        $tournament = $t;
-                    }
+        $form->handleRequest($this->getRequest());
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+            return $this->redirect($this->generateUrl(
+                'insalan_tournament_admin_group_index_1',
+                array('id' => $data['tournament'])));
+        }
+        else if (null !== $id) {
+            $data = array('tournament' => $id);
+            $form->get('tournament')->submit($id);
+
+            // Get Tournament object
+            foreach ($tournaments as &$t) {
+                if ($t->getId() == $data['tournament']) {
+                    $tournament = $t;
                 }
+            }
 
-                // Find group stages and groups for this tournament
-                $stages = $em->getRepository('InsaLanTournamentBundle:GroupStage')
-                    ->getByTournament($tournament);
+            if (null === $tournament) {
+                throw new NotFoundHttpException('InsaLan\\TournamentBundle\\Entity\\Tournament object not found.');;
+            }
 
-                foreach ($stages as $s) {
-                    foreach ($s->getGroups() as $g) {
-                        $g->countWins();
-                    }
+            // Find group stages and groups for this tournament
+            $stages = $em->getRepository('InsaLanTournamentBundle:GroupStage')
+                ->getByTournament($tournament);
+
+            foreach ($stages as $s) {
+                foreach ($s->getGroups() as $g) {
+                    $g->countWins();
                 }
             }
         }
@@ -178,20 +192,13 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/group/{id}/addlist", requirements={"id" = "\d+"})
-     */
-    public function group_addParticipantListAction($id)
-    {
-
-    }
-
-    /**
      * @Route("/admin/group/{group}/delete/{participant}")
      */
     public function group_deleteParticipantAction(Entity\Group $group, Entity\Participant $participant)
     {
         $em = $this->getDoctrine()->getManager();
         if ($group->removeParticipant($participant)) {
+            $em->getRepository('InsaLanTournamentBundle:GroupMatch')->removeParticipant($group, $participant);
             $em->persist($group);
             $em->flush();
 

@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\GroupMatchRepository")
  */
 class GroupMatch
 {
@@ -23,7 +23,7 @@ class GroupMatch
     protected $group;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Match")
+     * @ORM\OneToOne(targetEntity="Match")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $match;
