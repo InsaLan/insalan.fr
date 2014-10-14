@@ -1,0 +1,27 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Compte activé</h2>
+  </header>
+
+  <section>
+    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+    <br>
+    <p>
+    <a href="{{ path('insalan_user_default_index') }}" class="block block-huge" style="margin-left: 302px;">Inscription à un tournoi</a>
+    </p>
+  </section>
+</article>
+
+{% endblock fos_user_content %}

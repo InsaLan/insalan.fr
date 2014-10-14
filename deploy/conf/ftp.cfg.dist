@@ -1,0 +1,5 @@
+server_host="127.0.0.1"
+server_user="user"
+server_password="p4ssw0rd"
+server_path="/"
+server_port="21"

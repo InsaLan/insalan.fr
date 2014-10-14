@@ -6,21 +6,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="kind", type="string")
+ * @ORM\DiscriminatorMap({"team" = "Team", "player" = "Player"})
  */
-class Participant
-{
+abstract class Participant
+{   
+
+    const STATUS_PENDING   = 0; // Not ready for validation
+    const STATUS_WAITING   = 1; // Ready for validation, but no slot free
+    const STATUS_VALIDATED = 2; // Validated
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank()
-     */
-    protected $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="Tournament")
@@ -34,9 +36,12 @@ class Participant
     protected $groups;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $validated;
+
+    /**
      * Get id
-     *
-     * @return integer
      */
     public function getId()
     {
@@ -44,27 +49,15 @@ class Participant
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return Participant
+     * Constructor
      */
-    public function setName($name)
+    public function __construct()
     {
-        $this->name = $name;
-
-        return $this;
+        $this->validated = false;
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+    public abstract function getName();
 
     /**
      * Set tournament
@@ -82,18 +75,11 @@ class Participant
     /**
      * Get tournament
      *
-     * @return \InsaLan\TournamentBundle\Entity\Tournament
+     * @return \InsaLan\TournamentBundle\Entity\Tournament 
      */
     public function getTournament()
     {
         return $this->tournament;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -122,10 +108,27 @@ class Participant
     /**
      * Get groups
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getGroups()
     {
         return $this->groups;
+    }
+
+
+    /**
+     * Get validated
+     *
+     * @return boolean 
+     */
+    public function getValidated()
+    {
+        return $this->validated;
+    }
+
+    public function setValidated($validated)
+    {
+        $this->validated = $validated;
+        return $this;
     }
 }

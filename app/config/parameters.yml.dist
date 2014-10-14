@@ -17,3 +17,9 @@ parameters:
     debug_toolbar:          true
     debug_redirects:        false
     use_assetic_controller: true
+    
+    lol_api_key: ~
+    
+    fos_user_email_address: no-reply@example.com
+    fos_user_email_sender_name: webmaster
+    ga_tracking: UA-xxxxx

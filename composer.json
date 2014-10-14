@@ -23,7 +23,8 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "knplabs/knp-markdown-bundle": "dev-master",
         "sonata-project/admin-bundle": "~2.3",
-        "sonata-project/doctrine-orm-admin-bundle": "dev-master"
+        "sonata-project/doctrine-orm-admin-bundle": "dev-master",
+        "paquettg/leaguewrap": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

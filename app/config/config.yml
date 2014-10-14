@@ -3,8 +3,9 @@ imports:
     - { resource: security.yml }
     - { resource: @InsaLanNewsBundle/Resources/config/admin.yml }
     - { resource: @InsaLanPizzaBundle/Resources/config/admin.yml }
-    - { resource: @InsaLanTournamentBundle/Resources/config/admin.yml }
+    - { resource: @InsaLanTournamentBundle/Resources/config/services.yml }
     - { resource: @InsaLanBundle/Resources/config/services.yml }
+    - { resource: @InsaLanUserBundle/Resources/config/services.yml }
 
 framework:
     #esi:             ~
@@ -35,6 +36,9 @@ twig:
     form:
         resources:
             - 'InsaLanBundle:Form:fields.html.twig'
+    globals:
+        free_slots: "@insalan.free_slots"
+        ga_tracking: "%ga_tracking%"
 
 # Assetic Configuration
 assetic:
@@ -130,6 +134,13 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: InsaLan\UserBundle\Entity\User
+    from_email:
+        address:        "%fos_user_email_address%"
+        sender_name:    "%fos_user_email_sender_name%"
+    registration:
+        confirmation:
+            enabled:    true # change to true for required email confirmation
+            template:   FOSUserBundle:Registration:email.txt.twig
 
 stof_doctrine_extensions:
     default_locale: %locale%

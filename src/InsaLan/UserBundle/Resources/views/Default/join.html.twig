@@ -1,0 +1,292 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Inscription aux qualifications</h2>
+  </header>
+
+  <section>
+
+    {# STEP 1 #}
+    {% set errorStep1 =  app.session.flashbag.get('errorStep1') %}
+
+    {% if errorStep1|length > 0 %}
+    <div class="frame frame-danger">
+      <header class="full">
+        <div class="step pull-left">
+          1
+        </div>
+        <div class="title pull-left">{{ errorStep1|first }}</div>
+        <br class="clear">
+      </header>
+      <form id="step1" class="" method="POST" action="{{ path('insalan_user_default_gameidlolset') }}" >
+        <div class="input field"><input type="text"  placeholder="Votre nom d'invocateur" name="summoner"/></div>
+        <a class="btn btn-danger ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step1').submit();">Ok</a>
+      </form>
+    </div>
+
+    {% elseif app.user.player == null %}
+    <div class="frame frame-active">
+      <header class="full">
+        <div class="step pull-left">
+          1
+        </div>
+        <div class="title pull-left">Entrez le nom de votre invocateur</div>
+        <br class="clear">
+      </header>
+      <form id="step1" class="" method="POST" action="{{ path('insalan_user_default_gameidlolset') }}" >
+        <div class="input field"><input type="text" placeholder="Votre nom d'invocateur" name="summoner"/></div>
+        <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step1').submit();">Ok</a>
+      </form>
+    </div>
+    {% else %}
+    <div class="frame">
+      <header>
+        <div class="step pull-left">
+          1
+        </div>
+        <div class="title pull-left">
+          Invocateur sélectionné : {{ app.user.player.name }}
+        </div>
+        <div class="pull-right" style="height:60px">
+          <img height="60" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ app.user.player.lolPicture }}.png">
+        </div>
+        <br class="clear">
+      </header>
+    </div>
+    {% endif %}
+
+
+
+
+    {# STEP 2 #}
+    {% set errorStep2 =  app.session.flashbag.get('errorStep2') %}
+
+    {% if app.user.player == null %}
+    
+    {% elseif errorStep2|length > 0 %}
+    <div class="frame frame-danger">
+      <header class="full">
+        <div class="step pull-left">
+          2
+        </div>
+        <div class="title pull-left">{{ errorStep2|first }}</div>
+        <br style="clear:both;">
+      </header>
+      <div class="text">
+        <p>Validez votre invocateur en créant une page de maîtrises "<strong>insalan{{app.user.id}}</strong>"</p>
+        <p>Vérifiez que vous avez bien enregistré votre page de maîtrises.</p>
+        <p>Réessayez dans quelques secondes, les serveurs de jeux peuvent mettre du temps pour prendre en compte cette modification.</p>
+      </div>
+      <form id="step2" method="POST" action="{{ path('insalan_user_default_gameidlolvalidate') }}">
+        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_gameidlolreset') }}">Annuler</a>
+        <a class="btn btn-primary ctrl grid-8 pull-left" href="javascript:{}" onclick="document.getElementById('step2').submit();">Ok</a>
+        <br class="clear">
+      </form>
+    </div>
+
+    {% elseif app.user.player.lolIdValidated == false %}
+    <div class="frame frame-active">
+      <header class="full">
+        <div class="step pull-left">
+          2
+        </div>
+        <div class="title pull-left">Validez votre invocateur en créant une page de maîtrises "<strong>insalan{{app.user.id}}</strong>"</div>
+        <br style="clear:both;">
+      </header>
+      <div class="text">
+        <p>Nous devons vérifier que vous êtes bien l'invocateur {{ app.user.player.name }}.</p>
+        <p>Pour cela, vous devez créer ou renommer une page de maitrise de cette manière "<strong>insalan{{ app.user.id }}</strong>" (sans les guillements).</p>
+        <p>En cliquant sur "Ok", notre système va scanner vos maitrises à la recherche de la page "<strong>insalan{{ app.user.id }}</strong>".
+        <p>Une fois votre compte validé, vous pouvez renommer ou supprimer cette page de maitrise.</p>
+      </div>
+      <form id="step2" method="POST" action="{{ path('insalan_user_default_gameidlolvalidate') }}">
+        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_gameidlolreset') }}">Annuler</a>
+        <a class="btn btn-primary ctrl grid-8 pull-left" href="javascript:{}" onclick="document.getElementById('step2').submit();">Ok</a>
+        <br class="clear">
+      </form>
+    </div>
+    
+    {% elseif app.user.player.lolIdValidated == true %}
+    <div class="frame">
+      <header>
+        <div class="step pull-left">
+          2
+        </div>
+        <div class="title pull-left">Invocateur validé</div>
+        <br style="clear:both;">
+      </header>
+    </div>
+    {% endif %}
+
+
+
+    {# STEP 3 #}
+    {% set errorStep3 =  app.session.flashbag.get('errorStep3') %}
+    
+    {% if app.user.player == null or app.user.player.lolIdValidated == false %}
+
+    {% elseif errorStep3 |length > 0 %}
+    <div class="frame frame-danger">
+      <header class="full">
+        <div class="step pull-left">
+          3
+        </div>
+        <div class="title pull-left">{{ errorStep3|first }}</div>
+        <br class="clear">
+      </header>
+      <div class="text">
+        <p>
+          Si vous souhaitez créer une équipe, ce nom d'équipe est peut être déjà pris.
+        </p>
+        <p>
+          Si vous souhaitez rejoindre une équipe, vérifiez le mot de passe que vous avez entré.
+        </p>
+      </div>
+      <form id="step3" method="POST" action="{{ path('insalan_user_default_teamidlolselect') }}">
+        
+
+
+        <div class="input field half pull-left"><input type="text"  placeholder="Nom de votre équipe" name="name"/></div>
+        <div class="input field half pull-left "><input type="password"  placeholder="Mot de passe" name="password"/></div>
+        <br class="clear">
+        
+        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_gameidlolinvalidate') }}">Annuler</a>
+        <a class="btn btn-primary ctrl grid-4 pull-left" href="javascript:{}" onclick="document.getElementById('step3').submit();">Créer</a>
+        <a class="btn btn-primary ctrl grid-4 pull-left" href="javascript:{}" onclick="document.getElementById('step3').submit();">Rejoindre</a>
+        <br class="clear">
+
+      </form>
+    </div>
+
+    {% elseif app.user.player.lolIdValidated == true and app.user.player.team == null %}
+    <div class="frame frame-active">
+      <header class="full">
+        <div class="step pull-left">
+          3
+        </div>
+        <div class="title pull-left">Créer ou rejoindre une équipe</div>
+        <br class="clear">
+      </header>
+      <div class="text">
+        <p>
+          Si vous souhaitez créer une équipe, choisissez un nom et un mot de passe, puis cliquez sur créer.
+        </p>
+        <p>
+          Si vous souhaitez rejoindre une équipe, entrez le nom et le mot de passe choisi par votre coéquipier, puis cliquez sur rejoindre.
+        </p>
+      </div>
+      <form id="step3" method="POST" action="{{ path('insalan_user_default_teamidlolselect') }}">
+        
+        <div class="input field half pull-left"><input type="text"  placeholder="Nom de votre équipe" name="name"/></div>
+        <div class="input field half pull-left "><input type="password"  placeholder="Mot de passe" name="password"/></div>
+        <br class="clear">
+        
+        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_gameidlolinvalidate') }}">Annuler</a>
+        <a class="btn btn-primary ctrl grid-4 pull-left" href="javascript:{}" onclick="document.getElementById('step3').submit();">Créer</a>
+        <a class="btn btn-primary ctrl grid-4 pull-left" href="javascript:{}" onclick="document.getElementById('step3').submit();">Rejoindre</a>
+        <br class="clear">
+
+      </form>
+    </div>
+    {% elseif app.user.player.team != null %}
+    <div class="frame">
+      <header>
+        <div class="step pull-left">
+          3
+        </div>
+        <div class="title pull-left">Équipe sélectionnée : {{ app.user.player.team.getName() }}</div>
+        <br style="clear:both;">
+      </header>
+    </div>
+
+
+    {% endif %}
+    
+
+    {# STEP 4 #}
+    {% if app.user.player == null or app.user.player.lolIdValidated == false or app.user.player.team == null %}
+    {% elseif app.user.player.team.getValidated() == 0 %}
+    <div class="frame frame-active">
+      <header class="full">
+        <div class="step pull-left">
+          4
+        </div>
+        <div class="title pull-left">En attente des autres joueurs de l'équipe !</div>
+        <br style="clear:both;">
+      </header>
+      <div class="text">Coéquipiers validés : 
+      <ul class="shift">
+      {% for i in 0..4 %}
+        {% if i < app.user.player.team.players.count() %}
+        <li>{{ app.user.player.team.players[i].getName() }}</li>
+        {% else %}
+        <li><em>(libre)</em></li>
+        {% endif %}
+      {% endfor %}
+      </ul>
+      </div>
+      <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_teamidlolleave') }}">Annuler</a>
+      <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_user_default_index') }}">Actualiser</a>
+      <br class="clear">
+    </div>
+    {% elseif app.user.player.team.getValidated() == 1 %}
+    <div class="frame frame-active">
+      <header class="full">
+        <div class="step pull-left">
+          4
+        </div>
+        <div class="title pull-left">Equipe en attente</div>
+        <br style="clear:both;">
+      </header>
+      <div class="text">
+        <p>
+        Votre équipe est en attente !
+        </p>
+        <p>
+        Il n'y a pour le moment aucun slot de disponible pour votre équipe. Pas de panique ! Elle sera validée dès qu'une place se libèrera :)<br />
+        Vous pouvez accéder à votre espace pour plus d'informations.
+        </p>
+      </div>
+      <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_teamidlolleave') }}">Annuler</a>
+      <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_user_default_index') }}">Mon espace</a>
+      <br class="clear">
+    </div>
+    {% else %}
+    <div class="frame frame-success">
+      <header class="full">
+        <div class="step pull-left">
+          4
+        </div>
+        <div class="title pull-left">Equipe validée</div>
+        <br style="clear:both;">
+      </header>
+      <div class="text">
+        <p>
+        Votre équipe est validée !
+        </p>
+        <p>
+        Votre inscription a bien été prise en compte, vous pouvez accéder à votre espace pour plus d'informations.
+        </p>
+      </div>
+      <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_user_default_teamidlolleave') }}">Annuler</a>
+      <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_user_default_index') }}">Mon espace</a>
+      <br class="clear">
+    </div>
+    {% endif %}
+
+
+
+  </section>
+</article>
+{% endblock fos_user_content %}

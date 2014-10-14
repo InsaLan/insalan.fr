@@ -11,6 +11,12 @@ security:
             id: fos_user.user_provider.username
 
     firewalls:
+        opening:
+            request_matcher: insalan.opening_matcher
+            anonymous: false
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
         main:
             pattern: ^/
             form_login:
@@ -18,6 +24,7 @@ security:
                 csrf_provider: form.csrf_provider
             logout:       true
             anonymous:    true
+            switch_user: { role: ROLE_ADMIN, parameter: _want_to_be }
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -25,11 +32,11 @@ security:
         default:
             anonymous: ~
 
-
     access_control:
         - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/, role: ROLE_USER }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/tournament/admin/, role: ROLE_ADMIN }
         - { path: '^/tournament/[0-9]+/admin/', role: ROLE_ADMIN }

@@ -1,0 +1,23 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Validation du compte requise</h2>
+  </header>
+
+  <section>
+    <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
+  </section>
+</article>
+
+{% endblock fos_user_content %}

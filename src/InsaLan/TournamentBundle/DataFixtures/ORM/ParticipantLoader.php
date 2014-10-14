@@ -4,7 +4,7 @@ namespace InsaLan\TournamentBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use InsaLan\TournamentBundle\Entity\Participant;
+use InsaLan\TournamentBundle\Entity\Player;
 
 class ParticipantLoader extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -15,22 +15,24 @@ class ParticipantLoader extends AbstractFixture implements OrderedFixtureInterfa
 
     public function load(ObjectManager $manager)
     {
-        $e = new Participant();
+        $e = new Player();
         $e->setName('Herpandine');
         $e->setTournament($this->getReference('tournament-1'));
         $manager->persist($e);
         $this->addReference('participant-1', $e);
 
-        $e = new Participant();
+        $e = new Player();
         $e->setName('Séssette');
         $e->setTournament($this->getReference('tournament-1'));
         $manager->persist($e);
         $this->addReference('participant-2', $e);
 
-        for ($i = 3; $i <= 8; ++$i) {
-            $e = new Participant();
+        for ($i = 3; $i <= 303; ++$i) {
+            $e = new Player();
             $e->setName('Part '.$i);
             $e->setTournament($this->getReference('tournament-1'));
+            $teamId = (int)(($i-3)/5);
+            $e->joinTeam($this->getReference('team-'.$teamId));
             $manager->persist($e);
             $this->addReference('participant-'.$i, $e);
         }

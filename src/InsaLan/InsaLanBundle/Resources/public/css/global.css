@@ -514,7 +514,7 @@ footer #copyright span {
 
 .input.left label {
   float: left;
-  width: 150px;
+  width: 180px;
 }
 
 .input.left input,
@@ -541,6 +541,7 @@ footer #copyright span {
 .input input[type=text],
 .input input[type=password],
 .input input[type=checkbox],
+.input input[type=email],
 .input select {
   color: black;
   border: solid black 1px;
@@ -595,4 +596,185 @@ input[type=submit]:active, input[type=button]:active, button:active {
 
 strong {
   color: #00bff3;
+}
+
+.hero > .big-picture {
+  width: 1000px;
+  height: 425px;
+}
+
+.hero > .big-picture-1 {
+  background-image: url('../img/lol-art-1.png'); 
+}
+
+.hero > .big-picture-2 {
+  background-image: url('../img/lol-art-2.png'); 
+}
+
+.hero > .big-picture-3 {
+  background-image: url('../img/lol-art-3.png'); 
+}
+
+.btn {
+  display: block;
+  background-color: black;
+  text-align: center;
+  font-size: 40px;
+  font-family: OpenSansCond;
+}
+
+.btn-primary {
+  color: white;
+  border-bottom: solid #00bff3 1px;
+}
+
+.btn-danger {
+  color: white;
+  border-bottom: solid #bf0000 1px;
+}
+
+.btn-primary:hover {
+  background: #0E0E0E;
+  color: #00bff3;
+}
+
+.btn-danger:hover {
+  background: #0E0E0E;
+  color: #bf0000;
+}
+
+.btn-plain, .btn-plain:hover {
+  background-color: #00bff3;
+  color: white;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.clear {
+  clear: both;
+}
+
+.grid-1 {
+  width: 10%;
+}
+
+.grid-2 {
+  width: 20%;
+}
+
+.grid-3 {
+  width: 30%;
+}
+
+.grid-4 {
+  width: 40%;
+}
+
+.grid-5 {
+  width: 50%;
+}
+
+.grid-6 {
+  width: 60%;
+}
+
+.grid-7 {
+  width: 70%;
+}
+
+.grid-8 {
+  width: 80%;
+}
+
+.grid-9 {
+  width: 90%;
+}
+
+.grid-10 {
+  width: 100%;
+}
+
+.frame {
+  border: #2d2d2d solid 1px; 
+  margin: 10px 0px 10px 0px;
+  padding: 0px -1px 0px -1px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.frame > .full {
+  border-bottom: 1px dashed #2d2d2d;
+}
+
+.frame > header > .step {
+  background-color: #a2a2a2; 
+  font-size: 40px; 
+  height: 60px; 
+  min-width: 60px; 
+  text-align:center; 
+  color: #fff; 
+  line-height: 1.5; 
+}
+
+.frame > header > .title {
+  font-size:30px; 
+  font-family: OpenSansCond; 
+  color:#a2a2a2; 
+  margin: 0 5px 0 15px; 
+  line-height: 2;
+}
+
+.frame-active > header > .title, 
+.frame-success > header > .title, 
+.frame-danger > header > .title {
+  color: #fff;
+}
+
+.frame-active > header > .step {
+  background-color: #00bff3; 
+}
+
+.frame-success > header > .step {
+  background-color: #00bf1e; 
+}
+
+.frame-danger > header > .step {
+  background-color: #bf0000; 
+}
+
+.frame > header > .ctrl {
+  margin: 0 5px 0 5px;
+}
+
+.frame > form > .field {
+  margin-top: 15px;
+}
+
+.frame > form > .field > input {
+  display:block; 
+  width:891px; 
+  margin: 5px 50px 5px 50px;
+}
+
+.frame > form > .half {
+  clear: none;
+}
+
+.frame > form > .half > input {
+  width: 390px;
+}
+
+.frame > .text {
+  margin: 5px 20px 5px 20px;
+}
+
+li a:hover {
+  color: #fff; 
 }

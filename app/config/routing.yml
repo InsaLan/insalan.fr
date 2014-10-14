@@ -1,7 +1,7 @@
 insalan_news:
     resource: "@InsaLanNewsBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /news
 
 insalan_stream:
     resource: "@InsaLanStreamBundle/Controller/"
@@ -13,15 +13,15 @@ insalan_tournament:
     type:     annotation
     prefix:   /tournament
 
-insalan_pizza:
-    resource: "@InsaLanPizzaBundle/Controller/"
-    type:     annotation
-    prefix:   /pizza
+#insalan_pizza:
+    #resource: "@InsaLanPizzaBundle/Controller/"
+    #type:     annotation
+    #prefix:   /pizza
 
 insalan_information:
     resource: "@InsaLanInformationBundle/Controller/"
     type:     annotation
-    prefix:   /informations
+    prefix:   /
 
 insalan_user:
     resource: "@InsaLanUserBundle/Controller/"

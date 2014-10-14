@@ -11,3 +11,6 @@
 /web/js/
 /web/uploads/
 /web/config.php
+/deploy/conf/*
+/deploy/tmp/*
+!/deploy/conf/*.dist

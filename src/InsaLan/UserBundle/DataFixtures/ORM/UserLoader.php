@@ -2,13 +2,14 @@
 namespace InsaLan\UserBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use InsaLan\UserBundle\Entity\User;
 
-class UserLoader implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
+class UserLoader extends AbstractFixture implements ContainerAwareInterface, OrderedFixtureInterface
 {
     private $container;
 
@@ -28,6 +29,7 @@ class UserLoader implements FixtureInterface, ContainerAwareInterface, OrderedFi
         $e->setPassword($encoder->encodePassword('admin', $e->getSalt()));
         $e->setEnabled(true);
         $e->addRole('ROLE_ADMIN');
+        $this->addReference('user-1', $e);
         $manager->persist($e);
 
         $e = new User();
@@ -39,6 +41,7 @@ class UserLoader implements FixtureInterface, ContainerAwareInterface, OrderedFi
         $e->setPassword($encoder->encodePassword('user', $e->getSalt()));
         $e->setEnabled(true);
         $e->addRole('ROLE_USER');
+        $this->addReference('user-2', $e);
         $manager->persist($e);
 
         $manager->flush();
