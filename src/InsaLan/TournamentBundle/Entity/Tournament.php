@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Tournament
 {
-    const UPLAD_PATH = 'uploads/tournament/';
+    const UPLOAD_PATH = 'uploads/tournament/';
 
     /**
      * @ORM\Id

@@ -27,6 +27,14 @@
       <div class="title pull-right">
         Capitaine
       </div>
+      {% elseif app.user.player.team.captain.id == app.user.player.id %}
+      <div class="pull-right" style="line-height: 60px; margin-right: 10px">
+        <form action="{{ path('insalan_tournament_default_setcaptain') }}" method="POST">
+            <input type="number" style="display:none;" name="team_id" value="{{ player.team.id }}">
+            <input type="number" style="display:none;" name="player_id" value="{{ player.id }}">
+            <input type="submit" value="Promouvoir Capitaine">
+        </form>
+      </div>
       {% endif %}
       <br class="clear">
     </header>

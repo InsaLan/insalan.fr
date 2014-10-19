@@ -7,15 +7,15 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class TournamentAdmin extends Admin
+class PlayerAdmin extends Admin
 {
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
             ->add('name')
-            ->add('description')
-            ->add('file', 'file', array('required' => false))
+            ->add('user')
+            ->add('team')
         ;
     }
 
@@ -24,6 +24,7 @@ class TournamentAdmin extends Admin
     {
         $datagridMapper
             ->add('name')
+            ->add('team')
         ;
     }
 
@@ -32,6 +33,23 @@ class TournamentAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('name')
+            ->addIdentifier('user.email')
+            ->addIdentifier('team.name')
         ;
+    }
+
+    public function postPersist($e)
+    {
+        $e->onPostPersist();
+    }
+
+    public function postUpdate($e)
+    {
+        $e->onPostUpdate();
+    }
+
+    public function preRemove($e)
+    {
+        $e->onPreRemove();
     }
 }
