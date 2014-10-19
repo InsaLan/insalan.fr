@@ -32,6 +32,28 @@ services:
         calls:
             - [ setTranslationDomain, [InsaLanTournamentBundle]]
 
+    sonata.admin.tournament.player:
+        class: InsaLan\TournamentBundle\Admin\PlayerAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Joueur" }
+        arguments:
+            - ~
+            - InsaLan\TournamentBundle\Entity\Player
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanTournamentBundle]]
+
+    sonata.admin.tournament.team:
+        class: InsaLan\TournamentBundle\Admin\TeamAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Equipes" }
+        arguments:
+            - ~
+            - InsaLan\TournamentBundle\Entity\Team
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanTournamentBundle]]
+
     insalan.tournament.participant_validator:
         class: InsaLan\TournamentBundle\Subscriber\ParticipantValidator
         arguments: [@insalan.free_slots]

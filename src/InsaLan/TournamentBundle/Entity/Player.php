@@ -321,4 +321,13 @@ class Player extends Participant
     {
         return $this->groups;
     }
+
+    /**
+     * To string
+     *
+     * @return String
+     */
+    public function __toString() {
+        return $this->name;
+    }
 }

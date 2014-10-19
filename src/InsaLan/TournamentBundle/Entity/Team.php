@@ -39,6 +39,21 @@ class Team extends Participant
      */
     protected $captain;
 
+    /**
+     * @var integer
+     */
+    protected $validated;
+
+    /**
+     * @var \InsaLan\TournamentBundle\Entity\Tournament
+     */
+    protected $tournament;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $groups;
+
 
     public function __construct()
     {
@@ -160,21 +175,6 @@ class Team extends Participant
     {
         return $this->captain;
     }
-    /**
-     * @var integer
-     */
-    protected $validated;
-
-    /**
-     * @var \InsaLan\TournamentBundle\Entity\Tournament
-     */
-    protected $tournament;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    protected $groups;
-
 
     /**
      * Set validated
@@ -253,5 +253,15 @@ class Team extends Participant
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * To String of Team
+     *
+     * @return Team
+     */
+    public function __toString() 
+    {
+        return $this->name;
     }
 }
