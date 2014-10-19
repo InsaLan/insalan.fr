@@ -15,7 +15,7 @@ class MatchLoader extends AbstractFixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 1; $i <= 4; ++$i) {
+        /*for ($i = 1; $i <= 4; ++$i) {
             for ($j = $i + 1; $j <= 4; ++$j) {
                 $e = new Match();
                 $e->setPart1($this->getReference('participant-'.$i));
@@ -35,7 +35,15 @@ class MatchLoader extends AbstractFixture implements OrderedFixtureInterface
                 $manager->persist($e);
                 $this->addReference('match-'.$i.'-'.$j, $e);
             }
-        }
+        }*/
+
+        $e = new Match();
+        $e->setPart1($this->getReference('participant-1'));
+        $e->setPart2($this->getReference('participant-2'));
+        $e->setState(Match::STATE_FINISHED);
+        $manager->persist($e);
+        $this->addReference('match-1', $e);
+
 
         $manager->flush();
     }

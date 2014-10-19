@@ -60,7 +60,7 @@ class AdminController extends Controller
 
             // Find group stages and groups for this tournament
             $stages = $em->getRepository('InsaLanTournamentBundle:GroupStage')
-                ->getByTournament($tournament);
+                ->findByTournament($tournament);
 
             foreach ($stages as $s) {
                 foreach ($s->getGroups() as $g) {
@@ -111,7 +111,7 @@ class AdminController extends Controller
      */
     public function group_addParticipantAction(Entity\Group $group)
     {
-        $form = $this->addParticipantForm($group);
+        /*$form = $this->addParticipantForm($group);
 
         if ($this->getRequest()->isMethod('POST')) {
             $form->handleRequest($this->getRequest());
@@ -123,52 +123,6 @@ class AdminController extends Controller
 
                 if ($participant) {
                     $participant = $participant[0];
-                    /*$matches = $em->getRepository('InsaLanTournamentBundle:GroupMatch')
-                        ->findByGroup($group);
-
-                    $found = false;
-                    foreach ($matches as $m) {
-                        $p1 = $m->getMatch();
-                        $p2 = $p1->getPart2();
-                        $p1 = $p1->getPart1();
-
-                        if ($p1 == $participant || $p2 == $participant) {
-                            $this->get('session')->getFlashBag()->add('error',
-                                'Participant already in group.');
-                            $found = true;
-                            break;
-                        }
-                    }
-
-                    if (!$found) {
-                        $parts = array();
-                        foreach ($matches as $m) {
-                            $p1 = $m->getMatch();
-                            $p2 = $p1->getPart2();
-                            $p1 = $p1->getPart1();
-
-                            foreach (array($p1, $p2) as $p) {
-                                if (!in_array($p->getId(), $parts)) {
-                                    $parts[] = $p->getId();
-
-                                    $m = new Entity\Match;
-                                    $m->setPart1($p);
-                                    $m->setPart2($participant);
-                                    $em->persist($m);
-
-                                    $gm = new Entity\GroupMatch;
-                                    $gm->setGroup($group);
-                                    $gm->setMatch($m);
-                                    $em->persist($gm);
-
-                                    $em->flush();
-                                }
-                            }
-                        }
-
-                        $this->get('session')->getFlashBag()->add('info', 'Participant added.');
-                    }
-                    */
 
                     if (!$group->hasParticipant($participant)) {
                         $group->addParticipant($participant);
@@ -184,7 +138,10 @@ class AdminController extends Controller
                     $this->get('session')->getFlashBag()->add('error', 'Participant not found.');
                 }
             }
-        }
+        }*/
+
+        $this->get('session')->getFlashBag()->add('error',
+                'Not ready for that.');
 
         return $this->redirect($this->generateUrl(
             'insalan_tournament_admin_group_edit',
@@ -195,7 +152,14 @@ class AdminController extends Controller
      * @Route("/admin/group/{group}/delete/{participant}")
      */
     public function group_deleteParticipantAction(Entity\Group $group, Entity\Participant $participant)
-    {
+    {   
+
+        
+        $this->get('session')->getFlashBag()->add('error',
+                'Not ready for that.');
+
+        /*$em->persist($group);
+
         $em = $this->getDoctrine()->getManager();
         if ($group->removeParticipant($participant)) {
             $em->getRepository('InsaLanTournamentBundle:GroupMatch')->removeParticipant($group, $participant);
@@ -208,7 +172,7 @@ class AdminController extends Controller
         else {
             $this->get('session')->getFlashBag()->add('error',
                 'Participant not found.');
-        }
+        }*/
 
         return $this->redirect($this->generateUrl(
             'insalan_tournament_admin_group_edit',

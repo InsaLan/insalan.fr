@@ -10,7 +10,7 @@ class GroupLoader extends AbstractFixture implements OrderedFixtureInterface
 {
     public function getOrder()
     {
-        return 3;
+        return 6;
     }
 
     public function load(ObjectManager $manager)
@@ -18,6 +18,9 @@ class GroupLoader extends AbstractFixture implements OrderedFixtureInterface
         $e = new Group();
         $e->setName('Group A');
         $e->setStage($this->getReference('groupstage-1'));
+        $e->addParticipant($this->getReference('participant-1'));
+        $e->addParticipant($this->getReference('participant-2'));
+        $e->addMatch($this->getReference('match-1'));
         $manager->persist($e);
         $this->addReference('group-1', $e);
 

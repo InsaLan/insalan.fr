@@ -15,7 +15,14 @@ class RoundLoader extends AbstractFixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 1; $i <= 4; ++$i) {
+        
+        $e = new Round();
+        $e->setMatch($this->getReference('match-1'));
+        $e->setScore1(mt_rand(0, 1));
+        $e->setScore2(1 - $e->getScore1());
+        $manager->persist($e);
+
+        /*for ($i = 1; $i <= 4; ++$i) {
             for ($j = $i + 1; $j <= 4; ++$j) {
                 for ($k = 0; $k < 2; ++$k) {
                     $e = new Round();
@@ -37,7 +44,9 @@ class RoundLoader extends AbstractFixture implements OrderedFixtureInterface
                     $manager->persist($e);
                 }
             }
-        }
+        }*/
+
+
 
         $manager->flush();
     }

@@ -32,8 +32,7 @@ class DefaultController extends Controller
     public function tournamentAction(Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $stages = $em->getRepository('InsaLanTournamentBundle:GroupStage')
-            ->getByTournament($tournament);
+        $stages = $em->getRepository('InsaLanTournamentBundle:GroupStage')->findByTournament($tournament);
 
         foreach ($stages as $s) {
             foreach ($s->getGroups() as $g) {

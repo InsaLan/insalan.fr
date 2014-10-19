@@ -18,7 +18,7 @@ class GroupRepository extends EntityRepository
             ->addSelect('partial gs.{id, name}')
 //            ->addSelect('gp')
             ->addSelect('p')
-            ->orderBy('gs.name, g.name, p.name')
+            ->orderBy('gs.name, g.name')
         ;
     }
 

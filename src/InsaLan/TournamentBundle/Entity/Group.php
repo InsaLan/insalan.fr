@@ -24,13 +24,7 @@ class Group
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GroupStage", inversedBy="groups")
-     * @ORM\JoinColumn(onDelete="cascade")
-     */
-    protected $stage;
-
-    /**
-     * @ORM\OneToMany(targetEntity="GroupMatch", mappedBy="group")
+     * @ORM\ManyToMany(targetEntity="Match")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $matches;
@@ -39,6 +33,11 @@ class Group
      * @ORM\ManyToMany(targetEntity="Participant", inversedBy="groups")
      */
     protected $participants;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GroupStage", inversedBy="groups")
+     */
+    protected $stage;
 
     /**
      * Get id
@@ -101,15 +100,16 @@ class Group
     public function __construct()
     {
         $this->matches = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->participants = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * Add matches
      *
-     * @param \InsaLan\TournamentBundle\Entity\GroupMatch $matches
+     * @param \InsaLan\TournamentBundle\Entity\Match $matches
      * @return Group
      */
-    public function addMatch(\InsaLan\TournamentBundle\Entity\GroupMatch $matches)
+    public function addMatch(\InsaLan\TournamentBundle\Entity\Match $matches)
     {
         $this->matches[] = $matches;
 
@@ -119,9 +119,9 @@ class Group
     /**
      * Remove matches
      *
-     * @param \InsaLan\TournamentBundle\Entity\GroupMatch $matches
+     * @param \InsaLan\TournamentBundle\Entity\Match $matches
      */
-    public function removeMatch(\InsaLan\TournamentBundle\Entity\GroupMatch $matches)
+    public function removeMatch(\InsaLan\TournamentBundle\Entity\Match $matches)
     {
         return $this->matches->removeElement($matches);
     }
@@ -145,8 +145,7 @@ class Group
             $this->stats[$p->getId()] = $stats;
         }
 
-        foreach ($this->getMatches() as $gm) {
-            $m = $gm->getMatch();
+        foreach ($this->getMatches() as $m) {
 
             $p1 = &$this->stats[$m->getPart1()->getId()];
             $p2 = &$this->stats[$m->getPart2()->getId()];

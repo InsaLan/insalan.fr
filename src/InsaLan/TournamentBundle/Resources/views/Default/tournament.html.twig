@@ -44,15 +44,15 @@
             <table id="grpm{{ g.id }}">
             <caption>{{ g.name }}</caption>
             {% for m in g.matches %}
-            {% if constant('InsaLan\\TournamentBundle\\Entity\\Match::STATE_UPCOMING') != m.match.state %}
-              <tr data-p1="{{ m.match.part1.id }}" data-p2="{{ m.match.part2.id }}">
+            {% if constant('InsaLan\\TournamentBundle\\Entity\\Match::STATE_UPCOMING') != m.state %}
+              <tr data-p1="{{ m.part1.id }}" data-p2="{{ m.part2.id }}">
                 <td>
-                  <div class="p1">{{ m.match.part1.name }}</div>
+                  <div class="p1">{{ m.part1.name }}</div>
                   <em>vs</em>
-                  <div class="p2">{{ m.match.part2.name }}</div>
+                  <div class="p2">{{ m.part2.name }}</div>
                   <div class="clear"></div>
 
-                  {% for r in m.match.rounds %}
+                  {% for r in m.rounds %}
                     {% if r.replay %}<a href="{{ asset('uploads/demos/' ~ r.replay) }}"{%
                     else %}<div{% endif %} class="dot {%
                     if r.score1 > r.score2 %}p1{%
