@@ -59,3 +59,7 @@ services:
         arguments: [@insalan.free_slots]
         tags:
             - { name: doctrine.event_subscriber }
+    
+    insalan.pvp_net:
+        class: InsaLan\TournamentBundle\Service\PvpNet
+        arguments: [@insalan.lol]
