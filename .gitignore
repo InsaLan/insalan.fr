@@ -13,3 +13,4 @@
 /deploy/conf/*
 /deploy/tmp/*
 !/deploy/conf/*.dist
+*~

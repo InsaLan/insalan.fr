@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\TeamRepository")
  */
 class Team extends Participant
 {
@@ -159,5 +159,99 @@ class Team extends Participant
     public function getCaptain()
     {
         return $this->captain;
+    }
+    /**
+     * @var integer
+     */
+    protected $validated;
+
+    /**
+     * @var \InsaLan\TournamentBundle\Entity\Tournament
+     */
+    protected $tournament;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $groups;
+
+
+    /**
+     * Set validated
+     *
+     * @param integer $validated
+     * @return Team
+     */
+    public function setValidated($validated)
+    {
+        $this->validated = $validated;
+
+        return $this;
+    }
+
+    /**
+     * Get validated
+     *
+     * @return integer 
+     */
+    public function getValidated()
+    {
+        return $this->validated;
+    }
+
+    /**
+     * Set tournament
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Tournament $tournament
+     * @return Team
+     */
+    public function setTournament(\InsaLan\TournamentBundle\Entity\Tournament $tournament = null)
+    {
+        $this->tournament = $tournament;
+
+        return $this;
+    }
+
+    /**
+     * Get tournament
+     *
+     * @return \InsaLan\TournamentBundle\Entity\Tournament 
+     */
+    public function getTournament()
+    {
+        return $this->tournament;
+    }
+
+    /**
+     * Add groups
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Group $groups
+     * @return Team
+     */
+    public function addGroup(\InsaLan\TournamentBundle\Entity\Group $groups)
+    {
+        $this->groups[] = $groups;
+
+        return $this;
+    }
+
+    /**
+     * Remove groups
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Group $groups
+     */
+    public function removeGroup(\InsaLan\TournamentBundle\Entity\Group $groups)
+    {
+        $this->groups->removeElement($groups);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 }
