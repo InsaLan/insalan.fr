@@ -31,6 +31,21 @@ class Tournament
     protected $description;
 
     /**
+     * @ORM\Column(type="date", nullable=false)
+     */
+    protected $registrationOpen;
+
+    /**
+     * @ORM\Column(type="date", nullable=false)
+     */
+    protected $registrationClose;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    protected $registrationLimit;
+
+    /**
      * Get id
      *
      * @return integer
@@ -158,5 +173,74 @@ class Tournament
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Set registration_open
+     *
+     * @param \DateTime $registrationOpen
+     * @return Tournament
+     */
+    public function setRegistrationOpen($registrationOpen)
+    {
+        $this->registrationOpen = $registrationOpen;
+
+        return $this;
+    }
+
+    /**
+     * Get registration_open
+     *
+     * @return \DateTime 
+     */
+    public function getRegistrationOpen()
+    {
+        return $this->registrationOpen;
+    }
+
+    /**
+     * Set registration_close
+     *
+     * @param \DateTime $registrationClose
+     * @return Tournament
+     */
+    public function setRegistrationClose($registrationClose)
+    {
+        $this->registrationClose = $registrationClose;
+
+        return $this;
+    }
+
+    /**
+     * Get registration_close
+     *
+     * @return \DateTime 
+     */
+    public function getRegistrationClose()
+    {
+        return $this->registrationClose;
+    }
+
+    /**
+     * Set registration_limit
+     *
+     * @param \integer $registrationLimit
+     * @return Tournament
+     */
+    public function setRegistrationLimit($registrationLimit)
+    {
+        $this->registrationLimit = $registrationLimit;
+
+        return $this;
+    }
+
+    /**
+     * Get registration_limit
+     *
+     * @return \integer 
+     */
+    public function getRegistrationLimit()
+    {
+        return $this->registrationLimit;
     }
 }

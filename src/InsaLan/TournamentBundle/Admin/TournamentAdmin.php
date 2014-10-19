@@ -15,6 +15,9 @@ class TournamentAdmin extends Admin
         $formMapper
             ->add('name')
             ->add('description')
+            ->add('registrationOpen')
+            ->add('registrationClose')
+            ->add('registrationLimit')
             ->add('file', 'file', array('required' => false))
         ;
     }
@@ -32,6 +35,9 @@ class TournamentAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('name')
+            ->addIdentifier('registrationOpen')
+            ->addIdentifier('registrationClose')
+            ->addIdentifier('registrationLimit')
         ;
     }
 }

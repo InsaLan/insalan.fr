@@ -17,11 +17,17 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
     {
         $e = new Tournament();
         $e->setName('CS: GO');
+        $e->setRegistrationOpen(new \DateTime());
+        $e->setRegistrationClose((new \DateTime())->modify('+3 day'));
+        $e->setRegistrationLimit(64);
         $manager->persist($e);
         $this->addReference('tournament-1', $e);
 
         $e = new Tournament();
         $e->setName('League of Legends');
+        $e->setRegistrationOpen(new \DateTime());
+        $e->setRegistrationClose((new \DateTime())->modify('+3 day'));
+        $e->setRegistrationLimit(64);
         $manager->persist($e);
         $this->addReference('tournament-2', $e);
 
