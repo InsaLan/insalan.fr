@@ -3,7 +3,9 @@
 namespace InsaLan\TournamentBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use InsaLan\TournamentBundle\Entity;
@@ -43,7 +45,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/teams")
+     * @Route("/team")
      * @Template()
      */
     public function teamListAction()
@@ -53,4 +55,39 @@ class DefaultController extends Controller
 
         return array('teams' => $teams);
     }
+
+    /**
+     * @Route("/team/captain")
+     * @Method({"POST"})
+     */
+    public function setCaptainAction(Request $request) 
+    {
+
+        $team_id = $request->request->get('team_id');
+        $player_id = $request->request->get('player_id');
+
+
+        $em = $this->getDoctrine()->getManager();
+        $team = $em->getRepository('InsaLanTournamentBundle:Team')->find($team_id);
+
+        if (!$team) {
+            throw $this->createNotFoundException(
+                'No team found for this id : '.$team_id
+            );
+        }
+
+        foreach($team->getPlayers() as $player) {
+            if ($player->getId() == $player_id) {
+                $team->setCaptain($player);
+                $em->flush(); 
+                return $this->redirect($this->generateUrl('insalan_user_default_index'));
+            }
+        }
+
+        throw $this->createNotFoundException(
+            'No user found for this id : '.$player_id
+        );
+
+    } 
+
 }

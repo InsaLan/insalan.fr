@@ -34,19 +34,4 @@ class TournamentAdmin extends Admin
             ->addIdentifier('name')
         ;
     }
-
-    public function postPersist($e)
-    {
-        $e->onPostPersist();
-    }
-
-    public function postUpdate($e)
-    {
-        $e->onPostUpdate();
-    }
-
-    public function preRemove($e)
-    {
-        $e->onPreRemove();
-    }
 }

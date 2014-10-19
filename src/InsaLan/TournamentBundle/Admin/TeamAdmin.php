@@ -45,19 +45,5 @@ class TeamAdmin extends Admin
         $collection->remove('create');
     }
 
-    public function postPersist($e)
-    {
-        $e->onPostPersist();
-    }
-
-    public function postUpdate($e)
-    {
-        $e->onPostUpdate();
-    }
-
-    public function preRemove($e)
-    {
-        $e->onPreRemove();
-    }
 
 }
