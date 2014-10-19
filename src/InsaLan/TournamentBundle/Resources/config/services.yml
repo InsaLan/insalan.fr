@@ -40,3 +40,4 @@ services:
 
     insalan.pvp_net:
         class: InsaLan\TournamentBundle\Service\PvpNet
+        arguments: [@insalan.lol]
