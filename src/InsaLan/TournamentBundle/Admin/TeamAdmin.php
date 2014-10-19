@@ -6,17 +6,18 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
-class TournamentAdmin extends Admin
+class TeamAdmin extends Admin
 {
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
             ->add('name')
-            ->add('description')
-            ->add('file', 'file', array('required' => false))
-        ;
+            ->add('tournament')
+            ->add('captain')
+            ;
     }
 
     // Fields to be shown on filter forms
@@ -24,7 +25,8 @@ class TournamentAdmin extends Admin
     {
         $datagridMapper
             ->add('name')
-        ;
+            ->add('tournament')
+            ;
     }
 
     // Fields to be shown on lists
@@ -32,6 +34,16 @@ class TournamentAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('name')
-        ;
+            ->addIdentifier('tournament.name')
+            ->addIdentifier('captain.name')
+            ;
     }
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        //@todo We should handle password encryption to authorize add. Don't know how to do yet
+        $collection->remove('create');
+    }
+
+
 }

@@ -28,7 +28,8 @@ class DefaultController extends Controller
             && $user->getPlayer()->getTeam()->getValidated()  !== Participant::STATUS_PENDING ) 
         {
             return array();
-        } else {  
+        } else { 
+             
             return $this->redirect($this->generateUrl('insalan_user_default_join'));
         }
     }
