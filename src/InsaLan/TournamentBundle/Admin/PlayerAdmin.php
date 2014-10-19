@@ -16,6 +16,9 @@ class PlayerAdmin extends Admin
             ->add('name')
             ->add('user')
             ->add('team')
+            ->add('lolIdValidated')
+            ->add('lolPicture')
+            ->add('lolId')
         ;
     }
 
