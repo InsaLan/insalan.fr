@@ -7,15 +7,14 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class GroupAdmin extends Admin
+class MatchAdmin extends Admin
 {
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name')
-            ->add('stage')
-            ->add('participants') // !! problem with SQL Queries number
+            ->add('part1')
+            ->add('part2')
         ;
     }
 
@@ -23,8 +22,8 @@ class GroupAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name')
-            ->add('stage')
+            ->add('part1')
+            ->add('part2')
         ;
     }
 
@@ -32,25 +31,9 @@ class GroupAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('name')
-            ->addIdentifier('stage')
+            ->addIdentifier('part1')
+            ->addIdentifier('part2')
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function createQuery($context = 'list')
-    {
-        $query = parent::createQuery($context);
-
-        $query
-            ->addSelect('s')
-            ->addSelect('t')
-            ->leftJoin($query->getRootAlias().'.stage', 's')
-            ->leftJoin('s.tournament', 't')
-        ;
-
-        return $query;
-    }
 }
