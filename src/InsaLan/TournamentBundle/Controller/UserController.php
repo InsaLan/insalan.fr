@@ -100,8 +100,18 @@ class UserController extends Controller
     public function joinAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        $tournament = $em
+            ->getRepository('InsaLanTournamentBundle:Tournament')
+            ->findOneById($id);
+        $usr = $this
+            ->get('security.context')
+            ->getToken()
+            ->getUser();
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUser($usr->getId());
 
-        return array();
+        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
     }
 
     protected function fetchInfo($user, $player) {
