@@ -44,7 +44,7 @@ class UserController extends Controller
 
         $form = $this->createForm(new SetLolPlayerType(), $player);
         $form->handleRequest($request);
-        
+
         if ($form->isValid()) {
             $player->setLolIdValidated(false);
             $em->persist($player);
@@ -64,20 +64,32 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByUser($usr->getId());
+
         if ($player === null) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_setlolplayer'));
-        }
-
-        try {
-          $apiLol = $this->container->get('insalan.lol');
-          $apiSummoner = $apiLol->getApi()->summoner();
-          $rSummoner = $apiSummoner->info($player->getLolName());
-        } catch(\Exception $e) {
+        } elseif ($player->getLolIdValidated()) {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        } else {
             $details = null;
-            $className = get_class($e);
-        }
+            try {
+                $this->fetchInfo($usr, $player);
+                $em->persist($user);
+                $em->flush();
+            } catch(\Exception $e) {
+                $className = get_class($e);
 
-        return array('player' => $player);
+                if ('GuzzleHttp\\Exception\\ClientException' === $className && 404 == $e->getResponse()->getStatusCode()) {
+                    $details = 'Invocateur introuvable sur EUW';
+                }
+                else if (0 === strpos($className, 'GuzzleHttp')) {
+                    $details = 'Erreur de l\'API. Veuillez réessayer.';
+                } else {
+                    $details = 'Une erreur inconnue est survenue';
+                }
+            }
+
+            return array('player' => $player, 'error' => $details);
+        }
 
     }
 
@@ -90,5 +102,23 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         return array();
+    }
+
+    protected function fetchInfo($user, $player) {
+        $apiLol = $this->container->get('insalan.lol');
+        $apiSummoner = $apiLol->getApi()->summoner();
+        $rSummoner = $apiSummoner->info($player->getLolName());
+        $player->setLolId($rSummoner->id);
+        $player->setLolName($rSummoner->name);
+        $player->setLolPicture($rSummoner->profileIconId);
+
+        $masteryPages = $apiSummoner->masteryPages($player->getLolId());
+        foreach ($masteryPages as $page) {
+            if ($page->get('name') == 'insalan'.$user->getId()) {
+                $player->setLolIdValidated(true);
+                break;
+            }
+        }
+
     }
 }
