@@ -46,14 +46,39 @@ class UserController extends Controller
         $form->handleRequest($request);
         
         if ($form->isValid()) {
+            $player->setLolIdValidated(false);
             $em->persist($player);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+            return $this->redirect($this->generateUrl('insalan_tournament_user_validatelolplayer'));
         }
 
-
         return array('form' => $form->createView());
+    }
+
+    /**
+     * @Route("/user/player/lol/validate")
+     * @Template()
+     */
+    public function validateLolPlayerAction() {
+        $em = $this->getDoctrine()->getManager();
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $player = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByUser($usr->getId());
+        if ($player === null) {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_setlolplayer'));
+        }
+
+        try {
+          $apiLol = $this->container->get('insalan.lol');
+          $apiSummoner = $apiLol->getApi()->summoner();
+          $rSummoner = $apiSummoner->info($player->getLolName());
+        } catch(\Exception $e) {
+            $details = null;
+            $className = get_class($e);
+        }
+
+        return array('player' => $player);
+
     }
 
     /**

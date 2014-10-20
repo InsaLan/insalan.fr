@@ -1,0 +1,55 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Inscription à un tournoi</h2>
+  </header>
+
+  <section>
+
+    <div class="frame">
+      <header>
+        <div class="step pull-left">
+          1
+        </div>
+        <div class="title pull-left">
+          Invocateur sélectionné : {{ player.lolName }}
+        </div>
+        <div class="pull-right" style="height:60px">
+          <img height="60" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ player.lolPicture }}.png">
+        </div>
+        <br class="clear">
+      </header>
+    </div>
+    <div class="frame frame-active">
+      <header class="full">
+        <div class="step pull-left">
+          2
+        </div>
+        <div class="title pull-left">Validez votre invocateur en créant une page de maîtrises "<strong>insalan{{app.user.id}}</strong>"</div>
+        <br style="clear:both;">
+      </header>
+      <div class="text">
+        <p>Nous devons vérifier que vous êtes bien l'invocateur {{ player.name }}.</p>
+        <p>Pour cela, vous devez créer ou renommer une page de maitrise de cette manière "<strong>insalan{{ app.user.id }}</strong>" (sans les guillements).</p>
+        <p>En cliquant sur "Ok", notre système va scanner vos maitrises à la recherche de la page "<strong>insalan{{ app.user.id }}</strong>".
+        <p>Une fois votre compte validé, vous pouvez renommer ou supprimer cette page de maitrise.</p>
+      </div>
+      <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_setlolplayer') }}">Annuler</a>
+      <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_tournament_user_validatelolplayer') }}">Ok</a>
+      <br class="clear">
+    </div>
+
+
+  </section>
+</article>
+{% endblock %}

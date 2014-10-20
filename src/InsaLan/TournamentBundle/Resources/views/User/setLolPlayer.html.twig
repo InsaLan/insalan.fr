@@ -3,13 +3,41 @@
 {% block body %}
 {{ parent() }}
 
-<h1>Hello</h1>
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
 
-{{ form_start(form) }}
-    {{ form_errors(form) }}
+  <header>
+    <h2>Inscription à un tournoi</h2>
+  </header>
 
-    {{ form_row(form.lolName) }}
+  <section>
 
-    <input type="submit" />
-{{ form_end(form) }}
+      {#{{ form_errors(form) }}#}
+    <div class="frame frame-active">
+      <header class="full">
+        <div class="step pull-left">
+          1
+        </div>
+        <div class="title pull-left">Entrez le nom de votre invocateur</div>
+        <br class="clear">
+      </header>
+        <form action="{{ path('insalan_tournament_user_setlolplayer') }}" id="step1"  method="post" {{ form_enctype(form) }}>
+        
+        <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
+        
+        <div class="input field">
+          <input type="text" placeholder="Votre nom d'invocateur" name="{{ form.lolName.vars.full_name }}" value="{{ form.vars.value.lolName }}"/>
+        </div>
+        
+        <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step1').submit();">Ok</a>
+      </form>
+    </div>
+
+
+  </section>
+</article>
 {% endblock %}
