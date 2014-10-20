@@ -1,0 +1,77 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+{% if player is not null %}
+    <article>
+      <header>
+        <h2>Prochain match</h2>
+      </header>
+    </article>
+
+    <article>
+      <header>
+        <h2>Mon équipe</h2>
+      </header>
+    </article>
+
+    <article>
+      <header>
+        <h2>Inscription à un tournoi</h2>
+      </header>
+
+      <section class="tournaments">
+        <ul>
+          {% for t in tournaments %}
+            {% spaceless %}
+              <li>
+                <a href="{{ path('insalan_tournament_user_join', {id: t.id}) }}">
+                  <img src="{{ asset('uploads/tournament/' ~ t.id ~ '.png') }}" alt="{{ t.name }}"/>
+                </a>
+              </li>
+            {% endspaceless %}
+          {% endfor %}
+        </ul>
+        <div class="clear"></div>
+      </section>
+    </article>
+{% endif %}
+
+<article>
+  <header>
+    <h2>Choisissez un jeu</h2>
+  </header>
+
+  <section style="margin: 0px -3px 0px -3px">
+    <div class="grid2">
+      <a href="{{ path('insalan_tournament_user_setlolplayer') }}" class="btn btn-primary block pull-left">
+        LoL
+      </a>
+    </div>
+    <div class="grid2">
+      <a href="#games" class="btn btn-primary block pull-left">
+        CS:GO
+      </a>
+    </div>
+    <div class="grid2">
+      <a href="#games" class="btn btn-primary block pull-left">
+        HS
+      </a>
+    </div>
+
+    <div class="grid2">
+      <a href="#games" class="btn btn-primary block pull-left">
+        Dota 2
+      </a>
+    </div>
+    
+    <div class="grid2">
+      <a href="#games" class="btn btn-primary block pull-left">
+        SC2
+      </a>
+    </div>
+  </section>
+</article>
+
+{% endblock %}

@@ -13,12 +13,13 @@ class PlayerAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name')
             ->add('user')
             ->add('team')
-            ->add('lolIdValidated')
+            ->add('lolName')
+            ->add('lolIdValidated', null, array('required'=>false))
             ->add('lolPicture')
             ->add('lolId')
+            ->add('tournament')
         ;
     }
 
@@ -26,8 +27,11 @@ class PlayerAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name')
+            ->add('lolName')
+            ->add('user.username')
+            ->add('user.email')
             ->add('team')
+            ->add('tournament')
         ;
     }
 
@@ -35,24 +39,12 @@ class PlayerAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('name')
-            ->addIdentifier('user.email')
-            ->addIdentifier('team.name')
+            ->addIdentifier('user.username')
+            ->addIdentifier('lolName')
+            ->add('tournament')
+            ->add('user.email')
+            ->add('team.name')
         ;
     }
 
-    public function postPersist($e)
-    {
-        $e->onPostPersist();
-    }
-
-    public function postUpdate($e)
-    {
-        $e->onPostUpdate();
-    }
-
-    public function preRemove($e)
-    {
-        $e->onPreRemove();
-    }
 }

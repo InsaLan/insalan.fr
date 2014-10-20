@@ -21,15 +21,15 @@ class Player extends Participant
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      */
-    protected $name;
+    protected $lolName;
 
     /**
-     * @ORM\OneToOne(targetEntity="InsaLan\UserBundle\Entity\User", mappedBy="player")
+     * @ORM\OneToOne(targetEntity="InsaLan\UserBundle\Entity\User")
      */
     protected $user;
 
     /**
-     * @ORM\Column(name="lol_id", type="integer", nullable=true, unique=true)
+     * @ORM\Column(name="lol_id", type="integer", nullable=true, unique=false)
      */
     protected $lolId;
 
@@ -69,16 +69,26 @@ class Player extends Participant
     }
 
     /**
-     * Set name
+     * Set lolName
      *
      * @param string $name
      * @return Player
      */
-    public function setName($name)
+    public function setLolName($name)
     {
-        $this->name = $name;
+        $this->lolName = $name;
 
         return $this;
+    }
+
+    /**
+     * Get lolName
+     *
+     * @return string 
+     */
+    public function getLolName()
+    {
+        return $this->lolName;
     }
 
     /**
@@ -86,9 +96,8 @@ class Player extends Participant
      *
      * @return string 
      */
-    public function getName()
-    {
-        return $this->name;
+    public function getName() {
+        return $this->user->getUsername();
     }
 
     /**
@@ -328,6 +337,6 @@ class Player extends Participant
      * @return String
      */
     public function __toString() {
-        return $this->name;
+        return 'LoL: '.$this->lolName;
     }
 }

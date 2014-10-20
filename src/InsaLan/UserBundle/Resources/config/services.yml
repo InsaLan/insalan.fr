@@ -1,6 +1,18 @@
 services:
-  user.registration_complet:
-    class: InsaLan\UserBundle\EventListener\RegistrationConfirmListener
-    arguments: [@router]
-    tags:
-      - { name: kernel.event_subscriber }
+    user.registration_complet:
+        class: InsaLan\UserBundle\EventListener\RegistrationConfirmListener
+        arguments: [@router]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    sonata.admin.tournament.user:
+        class: InsaLan\UserBundle\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Compte", label: "Utilisateur" }
+        arguments:
+            - ~
+            - InsaLan\UserBundle\Entity\User
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanUserBundle]]
+

@@ -1,0 +1,15 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<h1>Hello</h1>
+
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.lolName) }}
+
+    <input type="submit" />
+{{ form_end(form) }}
+{% endblock %}

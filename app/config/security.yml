@@ -37,7 +37,6 @@ security:
         - { path: ^/user/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/, role: ROLE_USER }
+        - { path: ^/tournament/user, role: ROLE_USER }
         - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/tournament/admin/, role: ROLE_ADMIN }
-        - { path: '^/tournament/[0-9]+/admin/', role: ROLE_ADMIN }
 

@@ -16,20 +16,20 @@ class ParticipantLoader extends AbstractFixture implements OrderedFixtureInterfa
     public function load(ObjectManager $manager)
     {
         $e = new Player();
-        $e->setName('Herpandine');
+        $e->setLolName('Herpandine');
         $e->setTournament($this->getReference('tournament-1'));
         $manager->persist($e);
         $this->addReference('participant-1', $e);
 
         $e = new Player();
-        $e->setName('Séssette');
+        $e->setLolName('Séssette');
         $e->setTournament($this->getReference('tournament-1'));
         $manager->persist($e);
         $this->addReference('participant-2', $e);
 
         for ($i = 3; $i <= 303; ++$i) {
             $e = new Player();
-            $e->setName('Part '.$i);
+            $e->setLolName('Part '.$i);
             $e->setTournament($this->getReference('tournament-1'));
             $teamId = (int)(($i-3)/5);
             $e->joinTeam($this->getReference('team-'.$teamId));

@@ -27,12 +27,6 @@ class User extends BaseUser
      */
     protected $table;
 
-    /**
-     * @ORM\OneToOne(targetEntity="InsaLan\TournamentBundle\Entity\Player", inversedBy="user", cascade={"all"},  orphanRemoval=true)
-     */
-    protected $player;
-
-
     public function __construct()
     {
         parent::__construct();

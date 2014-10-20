@@ -54,23 +54,15 @@ services:
         calls:
             - [ setTranslationDomain, [InsaLanTournamentBundle]]
 
-    sonata.admin.tournament.match:
-        class: InsaLan\TournamentBundle\Admin\MatchAdmin
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Matchs" }
-        arguments:
-            - ~
-            - InsaLan\TournamentBundle\Entity\Match
-            - ~
-        calls:
-            - [ setTranslationDomain, [InsaLanTournamentBundle]]
-
     insalan.tournament.participant_validator:
         class: InsaLan\TournamentBundle\Subscriber\ParticipantValidator
         arguments: [@insalan.free_slots]
         tags:
             - { name: doctrine.event_subscriber }
 
-    insalan.pvp_net:
-        class: InsaLan\TournamentBundle\Service\PvpNet
-        arguments: [@insalan.lol]
+    validator.unique.existing_lol_id:
+        class: InsaLan\TournamentBundle\Validator\Constraint\ExistingLolIdValidator
+        calls:
+            - [setLolApi, ["@insalan.lol"]]
+        tags:
+           - { name: validator.constraint_validator, alias: existing_lol_id }

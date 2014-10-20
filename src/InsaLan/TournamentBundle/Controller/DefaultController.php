@@ -19,7 +19,6 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        //$this->get('session')->getFlashBag()->add('info', 'Hey !');
 
         $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findAll();
         return array('tournaments' => $tournaments);
