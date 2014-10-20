@@ -97,7 +97,11 @@ class Player extends Participant
      * @return string 
      */
     public function getName() {
-        return $this->lolName;
+        if (isset($this->lolName)) {
+            return $this->lolName;
+        } else {
+            return "Joueur sans nom";
+        }
     }
 
     /**
