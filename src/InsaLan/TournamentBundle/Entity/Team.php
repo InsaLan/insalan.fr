@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\TeamRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Team extends Participant
 {
@@ -19,7 +20,6 @@ class Team extends Participant
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
      */
     protected $password;
 
@@ -53,6 +53,8 @@ class Team extends Participant
      * @var \Doctrine\Common\Collections\Collection
      */
     protected $groups;
+
+    protected $plainPassword;
 
 
     public function __construct()
@@ -263,5 +265,16 @@ class Team extends Participant
     public function __toString() 
     {
         return $this->name;
+    }
+
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+        return $this;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
     }
 }

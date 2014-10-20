@@ -8,6 +8,8 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
+use InsaLan\UserBundle\Entity\User;
+
 class TeamAdmin extends Admin
 {
     // Fields to be shown on create/edit forms
@@ -17,6 +19,13 @@ class TeamAdmin extends Admin
             ->add('name')
             ->add('tournament')
             ->add('captain')
+            ->add('plainPassword', 'repeated', array(
+                'required' => false,
+                'type' => 'password',
+                'first_options' => array('label' => 'Mot de passe'),
+                'second_options' => array('label' => 'Confirmation de mot de passe'),
+            ))
+
             ;
     }
 
@@ -38,12 +47,23 @@ class TeamAdmin extends Admin
             ->addIdentifier('captain.name')
             ;
     }
-
-    protected function configureRoutes(RouteCollection $collection)
+    public function prePersist($e)
     {
-        //@todo We should handle password encryption to authorize add. Don't know how to do yet
-        $collection->remove('create');
+        $this->hashPassword($e);
     }
 
+    public function preUpdate($e)
+    {
+        $this->hashPassword($e);
+    }
 
+    protected function hashPassword($e)
+    {
+        if ($e->getPlainPassword() !== null && $e->getPlainPassword() !== "") {
+            $container = $this->getConfigurationPool()->getContainer();
+            $factory = $container->get('security.encoder_factory');
+            $encoder = $factory->getEncoder(new User());
+            $e->setPassword($encoder->encodePassword($e->getPlainPassword(), sha1('pleaseHashPasswords'.$e->getName())));
+        }
+    }
 }

@@ -97,7 +97,7 @@ class Player extends Participant
      * @return string 
      */
     public function getName() {
-        return $this->user->getUsername();
+        return $this->lolName;
     }
 
     /**
