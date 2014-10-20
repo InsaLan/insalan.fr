@@ -16,7 +16,6 @@
 
   <section>
 
-      {#{{ form_errors(form) }}#}
     <div class="frame frame-active">
       <header class="full">
         <div class="step pull-left">
@@ -25,7 +24,7 @@
         <div class="title pull-left">Entrez le nom de votre invocateur</div>
         <br class="clear">
       </header>
-        <form action="{{ path('insalan_tournament_user_setlolplayer') }}" id="step1"  method="post" {{ form_enctype(form) }}>
+        <form action="{{ path('insalan_tournament_user_setplayer', {game: selectedGame}) }}" id="step1"  method="post" {{ form_enctype(form) }}>
         
         <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
         
