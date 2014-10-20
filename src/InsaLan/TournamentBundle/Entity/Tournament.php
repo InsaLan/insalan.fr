@@ -46,6 +46,11 @@ class Tournament
     protected $registrationLimit;
 
     /**
+     * @ORM\Column(type="enum", type="string", nullable=false, columnDefinition="enum('lol', 'dota2', 'sc2', 'hs', 'csgo', 'manual')")
+     */
+    protected $type;
+
+    /**
      * Get id
      *
      * @return integer
@@ -242,5 +247,28 @@ class Tournament
     public function getRegistrationLimit()
     {
         return $this->registrationLimit;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Tournament
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

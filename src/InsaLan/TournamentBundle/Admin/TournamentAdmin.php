@@ -18,6 +18,15 @@ class TournamentAdmin extends Admin
             ->add('registrationOpen')
             ->add('registrationClose')
             ->add('registrationLimit')
+            ->add('type', 'choice', array(
+                'choices'   => array(
+                    'lol' => 'League of Legends',
+                    'csgo' => 'Counter Strike Global Offensive',
+                    'hs' => 'HearthStone',
+                    'dota2' => 'Dota 2',
+                    'sc2' => 'StarCraft 2',
+                    'manual' => 'Autre/Manuel'),
+                'required'  => true))
             ->add('file', 'file', array('required' => false))
         ;
     }
@@ -27,6 +36,7 @@ class TournamentAdmin extends Admin
     {
         $datagridMapper
             ->add('name')
+            ->add('type')
         ;
     }
 
@@ -35,9 +45,10 @@ class TournamentAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('name')
-            ->addIdentifier('registrationOpen')
-            ->addIdentifier('registrationClose')
-            ->addIdentifier('registrationLimit')
+            ->add('registrationOpen')
+            ->add('registrationClose')
+            ->add('registrationLimit')
+            ->add('type')
         ;
     }
 }
