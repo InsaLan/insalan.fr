@@ -15,6 +15,8 @@ class MatchAdmin extends Admin
         $formMapper
             ->add('part1')
             ->add('part2')
+            ->add('group')
+            ->add('state')
         ;
     }
 
@@ -24,6 +26,7 @@ class MatchAdmin extends Admin
         $datagridMapper
             ->add('part1')
             ->add('part2')
+            ->add('group')
         ;
     }
 
@@ -33,6 +36,7 @@ class MatchAdmin extends Admin
         $listMapper
             ->addIdentifier('part1')
             ->addIdentifier('part2')
+            ->addIdentifier('group.name')
         ;
     }
 

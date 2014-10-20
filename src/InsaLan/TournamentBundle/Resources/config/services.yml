@@ -54,6 +54,17 @@ services:
         calls:
             - [ setTranslationDomain, [InsaLanTournamentBundle]]
 
+    sonata.admin.tournament.match:
+        class: InsaLan\TournamentBundle\Admin\MatchAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Matchs" }
+        arguments:
+            - ~
+            - InsaLan\TournamentBundle\Entity\Match
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanTournamentBundle]]
+
     insalan.tournament.participant_validator:
         class: InsaLan\TournamentBundle\Subscriber\ParticipantValidator
         arguments: [@insalan.free_slots]
