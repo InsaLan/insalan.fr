@@ -24,7 +24,7 @@ class Group
     protected $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Match")
+     * @ORM\ManyToMany(targetEntity="Match", cascade={"persist"})
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $matches;

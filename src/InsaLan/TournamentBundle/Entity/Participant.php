@@ -131,4 +131,5 @@ abstract class Participant
         $this->validated = $validated;
         return $this;
     }
+
 }

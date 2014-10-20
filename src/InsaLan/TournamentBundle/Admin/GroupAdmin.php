@@ -16,6 +16,7 @@ class GroupAdmin extends Admin
             ->add('name')
             ->add('stage')
             ->add('participants') // !! problem with SQL Queries number
+            ->add('matches', 'sonata_type_collection', array(), array('edit' => 'inline', 'inline' => 'table'))
         ;
     }
 

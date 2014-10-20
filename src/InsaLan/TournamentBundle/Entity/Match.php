@@ -164,4 +164,8 @@ class Match
     {
         return $this->state;
     }
+
+    public function __toString() {
+        return $this->part1 . " vs " . $this->part2;
+    }
 }
