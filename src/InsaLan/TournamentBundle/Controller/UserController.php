@@ -73,7 +73,7 @@ class UserController extends Controller
             $details = null;
             try {
                 $this->fetchInfo($usr, $player);
-                $em->persist($user);
+                $em->persist($player);
                 $em->flush();
             } catch(\Exception $e) {
                 $className = get_class($e);
