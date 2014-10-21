@@ -68,7 +68,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/join/team/{id}")
+     * @Route("/user/join/{id}/team")
      * @Template()
      */
     public function joinTeamAction($id)
@@ -86,6 +86,22 @@ class UserController extends Controller
             ->findOneByUser($usr->getId());
 
         return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
+    }
+
+    /**
+     * @Route("/user/join/{id}/team/create")
+     * @Template()
+     */
+    public function createTeamAction($id) {
+        return array();
+    }
+
+    /**
+     * @Route("/user/join/{id}/team/existing")
+     * @Template()
+     */
+    public function existingTeamAction($id) {
+        return array();
     }
 
     protected function lolSet($em, $usr, $player, $request) {
