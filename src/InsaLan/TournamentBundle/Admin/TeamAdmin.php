@@ -43,8 +43,8 @@ class TeamAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('name')
-            ->addIdentifier('tournament.name')
-            ->addIdentifier('captain.name')
+            ->add('tournament.name')
+            ->add('captain.name')
             ;
     }
     public function prePersist($e)

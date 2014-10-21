@@ -61,6 +61,17 @@ services:
         arguments:
             - ~
             - InsaLan\TournamentBundle\Entity\Match
+            - InsaLanTournamentBundle:CRUD
+        calls:
+            - [ setTranslationDomain, [InsaLanTournamentBundle]]
+
+    sonata.admin.tournament.round:
+        class: InsaLan\TournamentBundle\Admin\RoundAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Rounds" }
+        arguments:
+            - ~
+            - InsaLan\TournamentBundle\Entity\Round
             - ~
         calls:
             - [ setTranslationDomain, [InsaLanTournamentBundle]]

@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 
 use InsaLan\TournamentBundle\Entity\Match;
 
@@ -17,7 +18,7 @@ class GroupAdmin extends Admin
         $formMapper
             ->add('name')
             ->add('stage')
-            ->add('participants') // !! problem with SQL Queries number
+            ->add('participants')
             // DISABLED SEE BELOW ->add('matches', 'sonata_type_collection', array(), array('edit' => 'inline', 'inline' => 'table'))
         ;
     }
@@ -36,7 +37,18 @@ class GroupAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('name')
-            ->addIdentifier('stage')
+            ->add('stage')
+            ->add("Participants", null, array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
+            ->add('_action','actions',array('actions'  => array('edit' => array(),'show' => array())));
+        ;
+    }
+
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('name')
+            ->add('stage')
+            ->add('participants')
         ;
     }
 
