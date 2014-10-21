@@ -85,6 +85,8 @@ class UserController extends Controller
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUser($usr->getId());
 
+
+
         return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
     }
 

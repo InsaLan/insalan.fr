@@ -277,4 +277,13 @@ class Team extends Participant
     {
         return $this->plainPassword;
     }
+
+    /**
+     * is validated
+     */
+    public function isValidated($type) {
+        if ($type === 'lol') {
+            return $this->lolIdValidated;
+        }
+    }
 }
