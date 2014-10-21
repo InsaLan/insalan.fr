@@ -71,6 +71,22 @@ class Match
         " - " .$this->getGroupStage()->getName();
     }
 
+    public function getWinner()
+    {   
+        $won1 = 0;
+        $won2 = 0;
+        foreach($this->getRounds() as $r)
+        {
+            if($r->getScore1() > $r->getScore2())
+                $won1++;
+            if($r->getScore2() > $r->getScore1())
+                $won2++;
+        }
+
+        if($won1 === $won2) return null;
+        return ($won1 > $won2 ? $this->getPart1() : $this->getPart2());
+    }
+
     // End of Customs
 
     /**

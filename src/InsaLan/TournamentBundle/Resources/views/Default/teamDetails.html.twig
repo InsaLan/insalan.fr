@@ -1,0 +1,66 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block title %}
+  {{ parent() }} - {{ team.getName() }}
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <header>
+    <h2>{{ team.name }} ({{ team.tournament }})</h2>
+  </header>
+
+  {% for g in team.groups %}
+  
+    <h3>{{ g.stage.name }} - {{ g.name }}</h3>
+
+    {% set i=0 %}
+    {% for m in g.matches %}
+      
+    {% if (m.part1 == team or m.part2 == team) %}
+    {% set i=i+1 %}
+    <div class="match_detail" data-p1="{{ m.part1.id }}" data-p2="{{ m.part2.id }}">
+
+      <table cellpadding="3px">
+        <caption>Match {{i}}</caption>
+        <thead>
+          <th style="width:50%">{{ m.part1.name }}</th>
+          <th style="width:50%">{{ m.part2.name }}</th>
+        </thead>
+        {% for r in m.rounds %}
+        <tr>
+          <td class="{% if r.score1 > r.score2 %}won{% elseif r.score1 < r.score2 %}lost{% endif %}">
+            {{r.score1}}
+          </td>
+          <td class="{% if r.score1 < r.score2 %}won{% elseif r.score1 > r.score2 %}lost{% endif %}">
+            {{r.score2}}
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      {% if m.state == 0 %}
+        <p>Match en attente</p>
+      {% elseif m.state == 1 %}
+        <p><strong>Le match peut être joué !</strong></p>
+        <p style="font-size:20px;">
+          <a href="{{ m.pvpNetUrl }}">Rejoindre ou créer la partie !</a>
+        </p>
+      {% else %}
+        <p>Match terminé !</p>
+        <p>Remporté par <strong>{{ m.getWinner().name }}</strong></p>
+      {% endif %}
+
+    </div>
+
+    {% endif %}
+    {% endfor %}
+
+    <div class="clear"></div>
+
+  {% endfor %}
+
+{% endblock %}
+
