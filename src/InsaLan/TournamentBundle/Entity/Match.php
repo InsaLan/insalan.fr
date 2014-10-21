@@ -48,6 +48,30 @@ class Match
      */
     protected $group;
 
+    // CUSTOM FUNCTIONS FOR ADMIN
+    
+    public function __toString()
+    {
+        return $this->part1 . " vs " . $this->part2;
+    }
+
+    public function getTournament()
+    {
+        return $this->getGroup()->getTournament();
+    }
+
+    public function getGroupStage()
+    {
+        return $this->getGroup()->getStage();
+    }
+
+    public function getExtraInfos()
+    {
+        return $this->getTournament()->getName() .
+        " - " .$this->getGroupStage()->getName();
+    }
+
+    // End of Customs
 
     /**
      * Constructor
@@ -168,10 +192,6 @@ class Match
     public function getState()
     {
         return $this->state;
-    }
-
-    public function __toString() {
-        return $this->part1 . " vs " . $this->part2;
     }
 
     /**

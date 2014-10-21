@@ -41,6 +41,37 @@ class Round
      */
     protected $replay;
 
+    // CUSTOM FUNCTIONS FOR ADMIN
+    
+    public function __toString()
+    {
+        return "[" . $this->getScore1() . " - " . $this->getScore2() . "]";
+    }
+
+    public function getTournament()
+    {
+        return $this->getMatch()->getTournament();
+    }
+
+    public function getGroupStage()
+    {
+        return $this->getMatch()->getGroupStage();
+    }
+
+    public function getGroup()
+    {
+        return $this->getMatch()->getGroup();
+    }
+
+    public function getExtraInfos()
+    {
+        return $this->getTournament()->getName() .
+        " - " .$this->getGroupStage()->getName() .
+         " (" .$this->getGroup()->getName() . ")";
+    }
+
+    // End Of Customs
+
     /**
      * Get id
      *
@@ -198,4 +229,5 @@ class Round
     {
         return $this->updatedAt;
     }
+
 }

@@ -39,6 +39,20 @@ class Group
      */
     protected $stage;
 
+    // CUSTOM FUNCTIONS FOR ADMIN
+    
+    public function getTournament()
+    {
+        return $this->getStage()->getTournament();
+    }
+
+    public function getExtraInfos()
+    {
+        return count($this->getParticipants());
+    }
+
+    // End of custom functions
+
     /**
      * Get id
      *
@@ -72,28 +86,7 @@ class Group
         return $this->name;
     }
 
-    /**
-     * Set tournament
-     *
-     * @param \InsaLan\TournamentBundle\Entity\Tournament $tournament
-     * @return Group
-     */
-    public function setTournament(\InsaLan\TournamentBundle\Entity\Tournament $tournament = null)
-    {
-        $this->tournament = $tournament;
-
-        return $this;
-    }
-
-    /**
-     * Get tournament
-     *
-     * @return \InsaLan\TournamentBundle\Entity\Tournament
-     */
-    public function getTournament()
-    {
-        return $this->tournament;
-    }
+    
     /**
      * Constructor
      */
