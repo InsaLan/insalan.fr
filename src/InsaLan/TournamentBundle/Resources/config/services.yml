@@ -61,7 +61,7 @@ services:
         arguments:
             - ~
             - InsaLan\TournamentBundle\Entity\Match
-            - ~
+            - InsaLanTournamentBundle:CRUD
         calls:
             - [ setTranslationDomain, [InsaLanTournamentBundle]]
 

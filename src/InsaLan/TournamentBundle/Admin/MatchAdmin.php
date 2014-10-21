@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 use InsaLan\TournamentBundle\Entity\Match;
 
@@ -64,8 +65,18 @@ class MatchAdmin extends Admin
             ->add('part1', null, array('label' => "Participant 1"))
             ->add('part2', null, array('label' => "Participant 2"))
             ->add('group.name', null, array('label' => "Groupe"))
-            ->add('_action','actions',array('actions'  => array('view' => array(), 'edit' => array())));
+            ->add('_action','actions',
+                array('actions'  => array('view' => array(),
+                      'edit' => array(),
+                      'createRound' => array(
+                        'template' => 'InsaLanTournamentBundle:Admin:list__action_create_round.html.twig'
+                      ))));
         ;
+    }
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('createRound', $this->getRouterIdParameter().'/createRound');
     }
 
 
