@@ -20,7 +20,10 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setRegistrationOpen(new \DateTime());
         $e->setRegistrationClose((new \DateTime())->modify('+3 day'));
         $e->setRegistrationLimit(64);
+        $e->setTeamMaxPlayer(8);
+        $e->setTeamMinPlayer(5);
         $e->setType('csgo');
+        $e->setParticipantType('team');
         $manager->persist($e);
         $this->addReference('tournament-1', $e);
 
@@ -29,7 +32,10 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setRegistrationOpen(new \DateTime());
         $e->setRegistrationClose((new \DateTime())->modify('+3 day'));
         $e->setRegistrationLimit(64);
+        $e->setTeamMaxPlayer(8);
+        $e->setTeamMinPlayer(5);
         $e->setType('lol');
+        $e->setParticipantType('team');
         $manager->persist($e);
         $this->addReference('tournament-2', $e);
 

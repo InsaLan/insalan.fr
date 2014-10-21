@@ -18,6 +18,15 @@ class TournamentAdmin extends Admin
             ->add('registrationOpen')
             ->add('registrationClose')
             ->add('registrationLimit')
+            ->add('teamMaxPlayer')
+            ->add('teamMinPlayer')
+            ->add('participantType', 'choice', array(
+                'choices' => array(
+                    'team' => 'Par équipe',
+                    'player' => 'Joueur seul'
+                ),
+                'required' => true
+            ))
             ->add('type', 'choice', array(
                 'choices'   => array(
                     'lol' => 'League of Legends',
@@ -48,6 +57,7 @@ class TournamentAdmin extends Admin
             ->add('registrationOpen')
             ->add('registrationClose')
             ->add('registrationLimit')
+            ->add('participantType')
             ->add('type')
         ;
     }

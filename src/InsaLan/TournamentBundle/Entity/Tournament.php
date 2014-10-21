@@ -51,6 +51,21 @@ class Tournament
     protected $type;
 
     /**
+     * @ORM\Column(type="enum", type="string", nullable=false, columnDefinition="enum('team', 'player')")
+     */
+    protected $participantType;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    protected $teamMinPlayer;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    protected $teamMaxPlayer;
+
+    /**
      * Get id
      *
      * @return integer
@@ -270,5 +285,74 @@ class Tournament
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set teamMinPlayer
+     *
+     * @param integer $teamMinPlayer
+     * @return Tournament
+     */
+    public function setTeamMinPlayer($teamMinPlayer)
+    {
+        $this->teamMinPlayer = $teamMinPlayer;
+
+        return $this;
+    }
+
+    /**
+     * Get teamMinPlayer
+     *
+     * @return integer 
+     */
+    public function getTeamMinPlayer()
+    {
+        return $this->teamMinPlayer;
+    }
+
+    /**
+     * Set teamMaxPlayer
+     *
+     * @param integer $teamMaxPlayer
+     * @return Tournament
+     */
+    public function setTeamMaxPlayer($teamMaxPlayer)
+    {
+        $this->teamMaxPlayer = $teamMaxPlayer;
+
+        return $this;
+    }
+
+    /**
+     * Get teamMaxPlayer
+     *
+     * @return integer 
+     */
+    public function getTeamMaxPlayer()
+    {
+        return $this->teamMaxPlayer;
+    }
+
+    /**
+     * Set participantType
+     *
+     * @param string $participantType
+     * @return Tournament
+     */
+    public function setParticipantType($participantType)
+    {
+        $this->participantType = $participantType;
+
+        return $this;
+    }
+
+    /**
+     * Get participantType
+     *
+     * @return string 
+     */
+    public function getParticipantType()
+    {
+        return $this->participantType;
     }
 }

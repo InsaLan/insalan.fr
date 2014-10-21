@@ -89,6 +89,27 @@ class UserController extends Controller
     }
 
     /**
+     * @Route("/user/join/{id}/player")
+     * @Template()
+     */
+    public function joinPlayerAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tournament = $em
+            ->getRepository('InsaLanTournamentBundle:Tournament')
+            ->findOneById($id);
+        $usr = $this
+            ->get('security.context')
+            ->getToken()
+            ->getUser();
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUser($usr->getId());
+
+        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
+    }
+
+    /**
      * @Route("/user/join/{id}/team/create")
      * @Template()
      */
