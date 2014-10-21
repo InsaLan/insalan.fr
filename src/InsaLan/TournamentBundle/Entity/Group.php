@@ -24,7 +24,7 @@ class Group
     protected $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Match", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Match", cascade={"persist"}, mappedBy="group")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $matches;
@@ -145,7 +145,7 @@ class Group
             $this->stats[$p->getId()] = $stats;
         }
 
-        foreach ($this->getMatches() as $m) {
+        foreach ($this->getmatches() as $m) {
 
             $p1 = &$this->stats[$m->getPart1()->getId()];
             $p2 = &$this->stats[$m->getPart2()->getId()];
@@ -239,5 +239,26 @@ class Group
     public function hasParticipant(\InsaLan\TournamentBundle\Entity\Participant $participant)
     {
         return $this->participants->contains($participant);
+    }
+
+    /**
+     * Get the match between two participants in this group only
+     * 
+     * @param  \InsaLan\TournamentBundle\Entity\Participant $A
+     * @param  \InsaLan\TournamentBundle\Entity\Participant $B
+     * @return \InsaLan\TournamentBundle\Entity\Match       or null if not available
+     */
+    public function getMatchBetween(\InsaLan\TournamentBundle\Entity\Participant $A, \InsaLan\TournamentBundle\Entity\Participant $B)
+    {
+        $matches = $this->getMatches()->toArray();
+
+        foreach($matches as $match)
+        {
+            if(($match->getPart1() === $A && $match->getPart2() === $B) ||
+               ($match->getPart1() === $B && $match->getPart2() === $A))
+                return $match;
+        }
+
+        return null;
     }
 }

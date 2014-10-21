@@ -7,6 +7,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
+use InsaLan\TournamentBundle\Entity\Match;
+
 class GroupAdmin extends Admin
 {
     // Fields to be shown on create/edit forms
@@ -16,7 +18,7 @@ class GroupAdmin extends Admin
             ->add('name')
             ->add('stage')
             ->add('participants') // !! problem with SQL Queries number
-            ->add('matches', 'sonata_type_collection', array(), array('edit' => 'inline', 'inline' => 'table'))
+            // DISABLED SEE BELOW ->add('matches', 'sonata_type_collection', array(), array('edit' => 'inline', 'inline' => 'table'))
         ;
     }
 
@@ -53,5 +55,60 @@ class GroupAdmin extends Admin
         ;
 
         return $query;
+    }
+
+    public function preUpdate($group)
+    {
+        $this->autoManageMatches($group);
+    }
+
+    public function prePersist($group)
+    {
+        $this->autoManageMatches($group);
+    }
+
+    private function autoManageMatches($group)
+    {   
+
+        $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
+
+        // Clean up deprecated matches
+        
+        foreach($group->getMatches()->toArray() as $match) {
+
+            if(!$group->hasParticipant($match->getPart1()) ||
+               !$group->hasParticipant($match->getPart2())) {
+
+                $group->removeMatch($match);
+                $em->remove($match);
+
+            }
+        }
+
+        // Create missing matches 
+        
+        $participants = $group->getParticipants()->getValues();
+
+        for($i = 0; $i < count($participants); $i++)
+        {
+            for($j = $i+1; $j < count($participants); $j++)
+            {
+
+                $a = $participants[$i];
+                $b = $participants[$j];
+
+                if(!$group->getMatchBetween($a, $b)) {
+                    $match = new Match();
+                    $match->setPart1($a);
+                    $match->setPart2($b);
+                    $match->setState(Match::STATE_UPCOMING);
+                    $match->setGroup($group);
+                    $group->addMatch($match);
+                    $em->persist($match);
+                }
+
+            }
+        }
+
     }
 }

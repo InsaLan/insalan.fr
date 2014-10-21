@@ -50,8 +50,8 @@ php app/console server:run 0.0.0.0:9001 #available for everyone
 ```
 (you can also use the php builtin development web server : `cd web && php -S localhost:9001`)
 
-Deploy on mutualised
---------------------
+Deploy on shared web hosting services
+-------------------------------------
 
 You can use the deploy-ftp script to deploy on a mutualised website.
 You must also have ncftp on your client (yum install ncftp/apt-get install ncftp)

@@ -43,6 +43,11 @@ class Match
      */
     protected $rounds;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="matches")
+     */
+    protected $group;
+
 
     /**
      * Constructor
@@ -167,5 +172,28 @@ class Match
 
     public function __toString() {
         return $this->part1 . " vs " . $this->part2;
+    }
+
+    /**
+     * Set group
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Group $group
+     * @return Match
+     */
+    public function setGroup(\InsaLan\TournamentBundle\Entity\Group $group = null)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return \InsaLan\TournamentBundle\Entity\Group 
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }
