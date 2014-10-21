@@ -9,8 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use InsaLan\TournamentBundle\Form\SetLolPlayerType;
+use InsaLan\TournamentBundle\Form\TeamType;
 
 use InsaLan\TournamentBundle\Entity\Player;
+use InsaLan\TournamentBundle\Entity\Team;
 
 class UserController extends Controller
 {
@@ -42,7 +44,6 @@ class UserController extends Controller
             $player->setUser($usr);
         } 
 
-
         if ($game === 'lol') {
             return $this->lolSet($em,$usr,$player,$request);
         }
@@ -59,7 +60,7 @@ class UserController extends Controller
         $player = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByUser($usr->getId());
 
         if ($player === null) {
-            return $this->redirect($this->generateUrl('insalan_tournament_user_setlolplayer'));
+            return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer', array('game' => $game)));
         } else if ($game === 'lol') {
             return $this->lolValidation($em, $usr, $player);
         } else {
@@ -84,6 +85,15 @@ class UserController extends Controller
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUser($usr->getId());
+
+        // Check if there is a player associated to this user
+        if ($player === null) {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer', array('game' => $tournament->getType())));
+        } 
+        // Check if this player is validated for the game
+        else if (!$player->isValidated($tournament->getType())) {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer', array('game' => $tournament->getType())));
+        }
 
         return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
     }
@@ -113,7 +123,17 @@ class UserController extends Controller
      * @Route("/user/join/{id}/team/create")
      * @Template()
      */
-    public function createTeamAction($id) {
+    public function createTeamAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $team = new Team();
+
+        $form = $this->createForm(new TeamType(), $player);
+        $form->handleRequest($request);
+        
+        $tournament = $em
+            ->getRepository('InsaLanTournamentBundle:Tournament')
+            ->findOneById($id);
         return array();
     }
 

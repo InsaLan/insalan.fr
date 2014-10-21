@@ -341,6 +341,15 @@ class Player extends Participant
      * @return String
      */
     public function __toString() {
-        return 'LoL: '.$this->lolName;
+        return $this->getName();
+    }
+
+    /**
+     * is validated
+     */
+    public function isValidated($type) {
+        if ($type === 'lol') {
+            return $this->lolIdValidated;
+        }
     }
 }
