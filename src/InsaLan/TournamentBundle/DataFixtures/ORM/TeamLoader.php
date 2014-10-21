@@ -40,6 +40,7 @@ class TeamLoader extends AbstractFixture implements OrderedFixtureInterface, Con
             $t->setName("Tondeuse Gaming $i");
             $t->setPassword($encoder->encodePassword('hello', sha1('pleaseHashPasswords'.$name)));
             $t->setValidated(2);
+            $t->setTournament($this->getReference('tournament-2'));
             $this->addReference('team-'.$i, $t);
             $manager->persist($t);
         }

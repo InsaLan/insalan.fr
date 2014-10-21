@@ -8,24 +8,33 @@
     <h2>Bienvenue {{ app.user.username }}</h2>
   </header>
 
-
-  <div class="frame">
+  {% if player != null %}
+  {% for t in player.team %}
+  <div class="frame frame-active">
     <header class="full">
       <div class="step pull-left">
-        E
+        
       </div>
-      <div class="title pull-left">Mon équipe</div>
+      <div class="title pull-left">Équipe {{ t.name }}</div>
       <br class="clear">
     </header>
     <section>
-      <p>Hello</p>
+      <div class="text">
+        <ul class="shift">
+          {% for p in t.players %}
+          <li>{{ p.getName(t.tournament.type) }}</li>
+          {% endfor %}
+        </ul>
+      </div>
     </section>
   </div>
+  {% endfor %}
+  {% endif %}
 
   <div class="frame">
     <header class="full">
       <div class="step pull-left">
-        T
+        +
       </div>
       <div class="title pull-left">Inscription à un tournoi</div>
       <br class="clear">

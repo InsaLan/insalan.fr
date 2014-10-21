@@ -1,42 +1,34 @@
 {% extends 'InsaLanTournamentBundle::layout.html.twig' %}
 
 {% block body %}
-{{ parent() }}
+  {{ parent() }}
 
-<article>
-  <aside>
-    <div class="square">
-      <a href="#body"><span></span></a>
-    </div>
-  </aside>
+  <article>
+    <aside>
+      <div class="square">
+        <a href="#body"><span></span></a>
+      </div>
+    </aside>
 
-  <header>
-    <h2>Inscription à un tournoi</h2>
-  </header>
+    <header>
+      <h2>Inscription à un tournoi</h2>
+    </header>
 
-  <section>
+    <section>
+   
+      {% if selectedGame == 'lol' %}
+        {% include 'InsaLanTournamentBundle:Part:Step1LolActive.html.twig' %}
+      {% else %}
+      <div class="frame frame-danger">
+        <header>
+          <div class="step pull-left">
+            1
+          </div>
+          <div class="title pull-left">Pas encore implémenté</div>
+          <br class="clear">
+        </header>
+      {% endif %}
 
-    <div class="frame frame-active">
-      <header class="full">
-        <div class="step pull-left">
-          1
-        </div>
-        <div class="title pull-left">Entrez le nom de votre invocateur</div>
-        <br class="clear">
-      </header>
-        <form action="{{ path('insalan_tournament_user_setplayer', {game: selectedGame}) }}" id="step1"  method="post" {{ form_enctype(form) }}>
-        
-        <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
-        
-        <div class="input field">
-          <input type="text" placeholder="Votre nom d'invocateur" name="{{ form.lolName.vars.full_name }}" value="{{ form.vars.value.lolName }}"/>
-        </div>
-        
-        <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step1').submit();">Ok</a>
-      </form>
-    </div>
-
-
-  </section>
-</article>
+    </section>
+  </article>
 {% endblock %}

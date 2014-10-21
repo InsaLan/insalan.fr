@@ -16,7 +16,12 @@ class TeamType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('password')
+            ->add('plainPassword', 'repeated', array(
+                'required' => true,
+                'type' => 'password',
+                'first_options' => array('label' => 'Mot de passe'),
+                'second_options' => array('label' => 'Confirmation de mot de passe'),
+            ))
         ;
     }
     

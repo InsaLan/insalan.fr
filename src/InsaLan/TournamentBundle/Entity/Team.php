@@ -30,7 +30,7 @@ class Team extends Participant
     protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Player", mappedBy="team")
+     * @ORM\ManyToMany(targetEntity="Player", mappedBy="team")
      */
     protected $players;
 

@@ -16,6 +16,8 @@ use InsaLan\TournamentBundle\Entity\Team;
 
 class UserController extends Controller
 {
+
+
     /**
      * @Route("/user")
      * @Template()
@@ -47,6 +49,7 @@ class UserController extends Controller
         if ($game === 'lol') {
             return $this->lolSet($em,$usr,$player,$request);
         }
+        return array('selectedGame' => $game);
 
     }
 
@@ -87,7 +90,7 @@ class UserController extends Controller
             ->findOneByUser($usr->getId());
 
         // Check if there is a player associated to this user
-        if ($player === null) {
+        if ($player === null || !$player->isNamed($tournament->getType())) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer', array('game' => $tournament->getType())));
         } 
         // Check if this player is validated for the game
@@ -125,16 +128,35 @@ class UserController extends Controller
      */
     public function createTeamAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
-
-        $team = new Team();
-
-        $form = $this->createForm(new TeamType(), $player);
-        $form->handleRequest($request);
-        
         $tournament = $em
             ->getRepository('InsaLanTournamentBundle:Tournament')
             ->findOneById($id);
-        return array();
+        $usr = $this
+            ->get('security.context')
+            ->getToken()
+            ->getUser();
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUser($usr->getId());
+
+        $team = new Team();
+        
+        $form = $this->createForm(new TeamType(), $team);
+        $form->handleRequest($request);
+
+        if ($form->isValid() && $team->getPlainPassword() !== null && $team->getPlainPassword() !== "") {
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($usr);
+            $team->setPassword($encoder->encodePassword($team->getPlainPassword(), sha1('pleaseHashPasswords'.$team->getName())));
+            $team->setTournament($tournament);
+            $player->joinTeam($team);
+            $em->persist($team);
+            $em->persist($player);
+            $em->flush();
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
+
+        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player, 'form' => $form->createView());
     }
 
     /**

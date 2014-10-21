@@ -44,7 +44,7 @@ class Player extends Participant
     protected $lolPicture;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Team", inversedBy="players", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Team", inversedBy="players", cascade={"persist"})
      * @ORM\JoinColumn()
      */
     protected $team;
@@ -96,6 +96,14 @@ class Player extends Participant
      *
      * @return string 
      */
+    public function getNameFor($type) {
+        if ($type === 'lol') {
+            return $this->lolName;
+        } else {
+            return $this->getName();
+        }
+    }
+
     public function getName() {
         if (isset($this->lolName)) {
             return $this->lolName;
@@ -200,7 +208,7 @@ class Player extends Participant
      */
     public function joinTeam(\InsaLan\TournamentBundle\Entity\Team $team)
     {
-        $this->team = $team;
+        $this->addTeam($team);
         $team->addPlayer($this);
         return $this;
     }
@@ -211,22 +219,13 @@ class Player extends Participant
      * @param \InsaLan\TournamentBundle\Entity\Team $team
      * @return Player
      */
-    public function leaveTeam()
+    public function leaveTeam($team)
     {
         $this->team->removePlayer($this);
-        $this->team = null;
+        $this->removeTeam($team);
         return $this;
     }
 
-    /**
-     * Get team
-     *
-     * @return \InsaLan\TournamentBundle\Entity\Team 
-     */
-    public function getTeam()
-    {
-        return $this->team;
-    }
     /**
      * @var integer
      */
@@ -264,19 +263,6 @@ class Player extends Participant
     public function getValidated()
     {
         return $this->validated;
-    }
-
-    /**
-     * Set team
-     *
-     * @param \InsaLan\TournamentBundle\Entity\Team $team
-     * @return Player
-     */
-    public function setTeam(\InsaLan\TournamentBundle\Entity\Team $team = null)
-    {
-        $this->team = $team;
-
-        return $this;
     }
 
     /**
@@ -345,11 +331,54 @@ class Player extends Participant
     }
 
     /**
+     * is set
+     */
+    public function isNamed($type) {
+        if ($type === 'lol') {
+            return $this->lolName !== null;
+        } else {
+            return false;
+        }
+    }
+    /**
      * is validated
      */
     public function isValidated($type) {
         if ($type === 'lol') {
             return $this->lolIdValidated;
         }
+    }
+
+    /**
+     * Add team
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Team $team
+     * @return Player
+     */
+    public function addTeam(\InsaLan\TournamentBundle\Entity\Team $team)
+    {
+        $this->team[] = $team;
+
+        return $this;
+    }
+
+    /**
+     * Remove team
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Team $team
+     */
+    public function removeTeam(\InsaLan\TournamentBundle\Entity\Team $team)
+    {
+        $this->team->removeElement($team);
+    }
+
+    /**
+     * Get team
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTeam()
+    {
+        return $this->team;
     }
 }

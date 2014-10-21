@@ -1,0 +1,31 @@
+    <div class="frame frame-active">
+      <header class="full">
+        <div class="step pull-left">
+          4
+        </div>
+        <div class="title pull-left">Créer une équipe</div>
+        <br class="clear">
+      </header>
+        <form action="{{ path('insalan_tournament_user_createteam', {id: tournament.id}) }}" id="step4" method="post" {{ form_enctype(form) }}>
+       
+          {{ form_widget(form._token) }}
+        
+          {{ form_errors(form) }}
+          <div class="input field">
+            {{ form_widget(form.name, {'attr': {'placeholder': 'Nom de votre équipe'}}) }}
+          </div>
+  
+
+          <div class="input field">
+            {{ form_widget(form.plainPassword.first, {'attr': {'placeholder': 'Mot de passe'}}) }}
+          </div>
+ 
+          <div class="input field">
+            {{ form_widget(form.plainPassword.second, {'attr': {'placeholder': 'Confirmation de mot de passe'}}) }}
+          </div>
+                   
+          <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_jointeam', {id: tournament.id}) }}">Annuler</a>
+          <a class="btn btn-primary ctrl grid-8 pull-left" href="javascript:{}" onclick="document.getElementById('step4').submit();">Créer mon équipe</a>
+          <br class="clear">
+        </form>
+    </div>
