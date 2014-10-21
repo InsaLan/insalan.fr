@@ -88,3 +88,7 @@ services:
             - [setLolApi, ["@insalan.lol"]]
         tags:
            - { name: validator.constraint_validator, alias: existing_lol_id }
+
+    insalan.tournament.pvp_net:
+        class: InsaLan\TournamentBundle\Service\PvpNet
+        arguments: [@insalan.lol]

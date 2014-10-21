@@ -226,3 +226,34 @@ section.actions ul {
 section.actions a:hover {
   color: white;
 }
+
+.match_detail {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  width: 300px;
+  height: 200px;
+  margin-bottom: 5px;
+  padding: 10px;
+  background-color: rgba(22, 22, 22, 0.8);
+  border: 1px solid #393939;
+}
+
+.match_detail table {
+  border: none;
+  text-align: center;
+  width: 100%;
+}
+
+.match_detail table th {
+  font-weight: bold;
+}
+
+.match_detail .won {
+  color: #00a000;
+}
+
+.match_detail .lost {
+  color: #a00000;
+}

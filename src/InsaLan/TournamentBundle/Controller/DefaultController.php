@@ -86,6 +86,29 @@ class DefaultController extends Controller
             'No user found for this id : '.$player_id
         );
 
-    } 
+    }
+
+    /**
+     * @Route("/team/{id}", requirements={"id" = "\d+"})
+     * @Template()
+     */
+    public function teamDetailsAction(Entity\Team $team)
+    {   
+        $pvpService = $this->get('insalan.tournament.pvp_net');
+
+        foreach ($team->getGroups() as $g)
+        {
+            $g->countWins();
+            // TODO : LoL Only !
+            foreach ($g->getMatches() as $m)
+            {   
+                $name = "INSALAN Match " . $m->getId();
+                $m->pvpNetUrl = $pvpService->generateUrl(array("name" => $name));
+            }
+        }
+
+        return array("team" => $team);
+
+    }
 
 }

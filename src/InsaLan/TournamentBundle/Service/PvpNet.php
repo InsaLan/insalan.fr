@@ -88,7 +88,7 @@ class PvpNet
         $size = @$conf['size']       ?: "5";
         $spec = @$conf['spectators'] ?: "specALL"; 
         $name = @$conf['name']       ?: "default";
-        $pass = @$conf['password']   ?: "default";
+        $pass = @$conf['password']   ?: "l1ttl3k1tt!";
 
         // Generation
         // https://github.com/Skymirrh/rito-pls/blob/master/gen.php
