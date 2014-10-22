@@ -733,6 +733,7 @@ strong {
 
 .frame-active > header > .title, 
 .frame-success > header > .title, 
+.frame-warning > header > .title, 
 .frame-danger > header > .title {
   color: #fff;
 }
@@ -743,6 +744,10 @@ strong {
 
 .frame-success > header > .step {
   background-color: #00bf1e; 
+}
+
+.frame-warning > header > .step {
+  background-color: #e38700; 
 }
 
 .frame-danger > header > .step {
