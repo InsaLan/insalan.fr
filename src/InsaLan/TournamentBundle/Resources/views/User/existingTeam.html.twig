@@ -1,0 +1,35 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Inscription à &laquo; {{ tournament.name }} &raquo;</h2>
+    {{ tournament.description }}
+  </header>
+
+  <section>
+
+    {% if tournament.type == 'lol' %}
+      {% include 'InsaLanTournamentBundle:Part:Step1LolValidated.html.twig' %}
+      {% include 'InsaLanTournamentBundle:Part:Step2LolValidated.html.twig' %}
+      {% include 'InsaLanTournamentBundle:Part:Step3LolValidated.html.twig' %}
+      {% include 'InsaLanTournamentBundle:Part:Step4bisLolActive.html.twig' %}
+    
+    {% else %}
+      <div class="alert alert-error">
+        <p>L'inscription pour ce type de tournoi n'est pas encore supportée</p>
+      </div>
+    
+    {% endif %}
+
+  </section>
+</article>
+{% endblock %}

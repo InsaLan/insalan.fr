@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use InsaLan\TournamentBundle\Form\SetLolPlayerType;
 use InsaLan\TournamentBundle\Form\TeamType;
+use InsaLan\TournamentBundle\Form\TeamLoginType;
 
 use InsaLan\TournamentBundle\Entity\Player;
 use InsaLan\TournamentBundle\Entity\Team;
@@ -176,7 +177,26 @@ class UserController extends Controller
      * @Template()
      */
     public function existingTeamAction($id) {
-        return array();
+        $em = $this->getDoctrine()->getManager();
+        $tournament = $em
+            ->getRepository('InsaLanTournamentBundle:Tournament')
+            ->findOneById($id);
+        $usr = $this
+            ->get('security.context')
+            ->getToken()
+            ->getUser();
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUser($usr->getId());
+
+        $team = new Team();
+
+        $form = $this->createForm(new TeamType(), $team);
+        if ($form->isValid() && $team->getPlainPassword() !== null && $team->getPlainPassword() !== "") {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
+        
+        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player, 'form' => $form);
     }
 
     protected function lolSet($em, $usr, $player, $request, $tournamentId) {
