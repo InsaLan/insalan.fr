@@ -7,7 +7,7 @@
           <br class="clear">
         </header>
 
-        <form action="{{ path('insalan_tournament_user_setplayer', {game: selectedGame}) }}" id="step1" method="post" {{ form_enctype(form) }}>
+        <form action="{{ path('insalan_tournament_user_setplayer', {game: selectedGame, tournamentId: tournamentId}) }}" id="step1" method="post" {{ form_enctype(form) }}>
           <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
           <div class="input field">
             <input type="text" placeholder="Votre nom d'invocateur" name="{{ form.lolName.vars.full_name }}" value="{{ form.vars.value.lolName }}"/>

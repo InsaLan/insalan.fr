@@ -31,6 +31,12 @@ class Tournament
     protected $description;
 
     /**
+     * @ORM\OneToMany(targetEntity="Participant", mappedBy="tournament")
+     * @ORM\JoinColumn(onDelete="cascade")
+     */
+    protected $participants;
+
+    /**
      * @ORM\Column(type="date", nullable=false)
      */
     protected $registrationOpen;
@@ -354,5 +360,45 @@ class Tournament
     public function getParticipantType()
     {
         return $this->participantType;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->participants = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add participants
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Participant $participants
+     * @return Tournament
+     */
+    public function addParticipant(\InsaLan\TournamentBundle\Entity\Participant $participants)
+    {
+        $this->participants[] = $participants;
+
+        return $this;
+    }
+
+    /**
+     * Remove participants
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Participant $participants
+     */
+    public function removeParticipant(\InsaLan\TournamentBundle\Entity\Participant $participants)
+    {
+        $this->participants->removeElement($participants);
+    }
+
+    /**
+     * Get participants
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getParticipants()
+    {
+        return $this->participants;
     }
 }

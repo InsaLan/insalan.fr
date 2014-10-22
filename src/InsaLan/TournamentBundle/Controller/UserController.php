@@ -34,10 +34,10 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/player/set/{game}")
+     * @Route("/user/player/set/{game}/for_tournament/{tournamentId}")
      * @Template()
      */
-    public function setPlayerAction(Request $request, $game) {
+    public function setPlayerAction(Request $request, $game, $tournamentId) {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByUser($usr->getId());
@@ -47,17 +47,17 @@ class UserController extends Controller
         } 
 
         if ($game === 'lol') {
-            return $this->lolSet($em,$usr,$player,$request);
+            return $this->lolSet($em,$usr,$player,$request, $tournamentId);
         }
-        return array('selectedGame' => $game);
+        return array('selectedGame' => $game, 'tournamentId' => $tournamentId);
 
     }
 
     /**
-     * @Route("/user/player/validate/{game}")
+     * @Route("/user/player/validate/{game}/for_tournament/{tournamentId}")
      * @Template()
      */
-    public function validatePlayerAction($game) {
+    public function validatePlayerAction($game, $tournamentId) {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByUser($usr->getId());
@@ -65,7 +65,7 @@ class UserController extends Controller
         if ($player === null) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer', array('game' => $game)));
         } else if ($game === 'lol') {
-            return $this->lolValidation($em, $usr, $player);
+            return $this->lolValidation($em, $usr, $player, $tournamentId);
         } else {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
         } 
@@ -91,11 +91,23 @@ class UserController extends Controller
 
         // Check if there is a player associated to this user
         if ($player === null || !$player->isNamed($tournament->getType())) {
-            return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer', array('game' => $tournament->getType())));
+            return $this->redirect(
+                $this->generateUrl(
+                    'insalan_tournament_user_setplayer',
+                    array(
+                        'game' => $tournament->getType(),
+                        'tournamentId' => $id
+                    )));
         } 
         // Check if this player is validated for the game
         else if (!$player->isValidated($tournament->getType())) {
-            return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer', array('game' => $tournament->getType())));
+            return $this->redirect(
+                $this->generateUrl(
+                    'insalan_tournament_user_validateplayer', 
+                    array(
+                        'game' => $tournament->getType(),
+                        'tournamentId' => $id
+                    )));
         }
 
         return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
@@ -140,7 +152,7 @@ class UserController extends Controller
             ->findOneByUser($usr->getId());
 
         $team = new Team();
-        
+
         $form = $this->createForm(new TeamType(), $team);
         $form->handleRequest($request);
 
@@ -167,7 +179,7 @@ class UserController extends Controller
         return array();
     }
 
-    protected function lolSet($em, $usr, $player, $request) {
+    protected function lolSet($em, $usr, $player, $request, $tournamentId) {
         $form = $this->createForm(new SetLolPlayerType(), $player);
         $form->handleRequest($request);
 
@@ -177,16 +189,21 @@ class UserController extends Controller
             $em->flush();
 
             return $this->redirect(
-                $this->generateUrl('insalan_tournament_user_validateplayer', array('game'=>'lol'))
+                $this->generateUrl('insalan_tournament_user_validateplayer', array('game'=>'lol', 'tournamentId' => $tournamentId))
             );
         }
 
-        return array('form' => $form->createView(), 'selectedGame' => 'lol');
+        return array('form' => $form->createView(), 'selectedGame' => 'lol', 'tournamentId' => $tournamentId);
     }
 
-    protected function lolValidation($em, $usr, $player) {
+    protected function lolValidation($em, $usr, $player, $tournamentId) {
         if ($player->getLolIdValidated()) {
-            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+            return $this->redirect(
+                $this->generateUrl(
+                    'insalan_tournament_user_jointeam', 
+                    array(
+                        'id' => $tournamentId
+                    )));
         } else {
             $details = null;
             try {
@@ -206,7 +223,7 @@ class UserController extends Controller
                 }
             }
 
-            return array('player' => $player, 'error' => $details, 'selectedGame' => 'lol');
+            return array('player' => $player, 'error' => $details, 'selectedGame' => 'lol', 'tournamentId' => $tournamentId);
         }
 
     }

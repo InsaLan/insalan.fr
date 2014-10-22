@@ -25,7 +25,7 @@ abstract class Participant
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Tournament")
+     * @ORM\ManyToOne(targetEntity="Tournament", inversedBy="participants")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $tournament;

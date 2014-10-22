@@ -44,8 +44,8 @@
         <p>En cliquant sur "Ok", notre système va scanner vos maitrises à la recherche de la page "<strong>insalan{{ app.user.id }}</strong>".
         <p>Une fois votre compte validé, vous pouvez renommer ou supprimer cette page de maitrise.</p>
       </div>
-      <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_setplayer', {game: selectedGame}) }}">Annuler</a>
-      <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_tournament_user_validateplayer', {game: selectedGame}) }}">Ok</a>
+      <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_setplayer', {game: selectedGame, tournamentId: tournamentId}) }}">Annuler</a>
+      <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_tournament_user_validateplayer', {game: selectedGame, tournamentId: tournamentId}) }}">Ok</a>
       <br class="clear">
     </div>
 

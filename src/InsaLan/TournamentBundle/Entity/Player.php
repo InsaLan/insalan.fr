@@ -381,4 +381,15 @@ class Player extends Participant
     {
         return $this->team;
     }
+
+    /**
+     * Is Registered For Tournament
+     */
+    public function isRegisteredForTournament($id) {
+        $registered = false;
+        foreach ($this->team as $team) {
+            $registered = $registered || $team->getTournament()->getId() == $id; //Needed type conversion
+        }
+        return $registered;
+    }
 }
