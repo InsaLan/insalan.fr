@@ -184,7 +184,7 @@ class UserController extends Controller
         $form = $this->createForm(new TeamType(), $team);
         $form->handleRequest($request);
 
-        if ($form->isValid() && $team->getPlainPassword() !== null && $team->getPlainPassword() !== "") {
+        if ($form->isValid()) {
             $factory = $this->get('security.encoder_factory');
             $encoder = $factory->getEncoder($usr);
             $team->setPassword($encoder->encodePassword($team->getPlainPassword(), sha1('pleaseHashPasswords'.$team->getName())));
@@ -203,7 +203,7 @@ class UserController extends Controller
      * @Route("/user/join/{id}/team/existing")
      * @Template()
      */
-    public function existingTeamAction($id) {
+    public function existingTeamAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
         $tournament = $em
             ->getRepository('InsaLanTournamentBundle:Tournament')
@@ -218,12 +218,27 @@ class UserController extends Controller
 
         $team = new Team();
 
-        $form = $this->createForm(new TeamType(), $team);
-        if ($form->isValid() && $team->getPlainPassword() !== null && $team->getPlainPassword() !== "") {
-            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        $form = $this->createForm(new TeamLoginType(), $team);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($usr);
+            $team->setPassword($encoder->encodePassword($team->getPlainPassword(), sha1('pleaseHashPasswords'.$team->getName())));
+            $team2 = $em
+                ->getRepository('InsaLanTournamentBundle:Team')
+                ->findOneByName($team->getName());
+            if ($team2 !== null && $team2->getPassword() === $team->getPassword()) {
+                $player->joinTeam($team2);
+                $em->persist($player);
+                $em->persist($team);
+                $em->flush();
+                return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+            }
+
         }
         
-        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player, 'form' => $form);
+        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player, 'form' => $form->createView());
     }
 
     protected function lolSet($em, $usr, $player, $request, $tournamentId) {

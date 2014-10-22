@@ -14,18 +14,22 @@
   <div class="frame frame-success">
     <header class="full">
       <div class="step pull-left">
-        
+        &#10003;
       </div>
-      <div class="title pull-left">Équipe validée &laquo {{ t.name }} &raquo</div>
+      <div class="title pull-left">{{ t.name }}</div>
+      <div class="title pull-right">{{ t.tournament.name }}</div>
       <br class="clear">
     </header>
    {% else %}
    <div class="frame frame-warning">
     <header class="full">
       <div class="step pull-left">
-        
+       ! 
       </div>
-      <div class="title pull-left">Équipe non validée &laquo {{ t.name }} &raquo</div>
+      <div class="title pull-left">{{ t.name }} (non validée)</div>
+      <div class="pull-right">
+        <img style="margin-right:20px;max-height:50px" src="{{ asset('uploads/tournament/' ~ t.tournament.id ~ '.png') }}" alt="{{ t.tournament.name }}"/>
+      </div>
       <br class="clear">
     </header>
     {% endif %}
@@ -46,10 +50,10 @@
   {% endfor %}
   {% endif %}
 
-  <div class="frame">
+  <div class="frame frame-active">
     <header class="full">
       <div class="step pull-left">
-        +
+        &#x271a;
       </div>
       <div class="title pull-left">Inscription à un tournoi</div>
       <br class="clear">

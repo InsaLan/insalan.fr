@@ -9,8 +9,8 @@
         <form action="{{ path('insalan_tournament_user_createteam', {id: tournament.id}) }}" id="step4" method="post" {{ form_enctype(form) }}>
        
           {{ form_widget(form._token) }}
-        
           {{ form_errors(form) }}
+
           <div class="input field">
             {{ form_widget(form.name, {'attr': {'placeholder': 'Nom de votre équipe'}}) }}
           </div>

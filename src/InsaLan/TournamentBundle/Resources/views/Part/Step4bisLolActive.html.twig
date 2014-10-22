@@ -6,5 +6,21 @@
         <div class="title pull-left">Rejoindre une équipe existante</div>
         <br class="clear">
       </header>
+        <form action="{{ path('insalan_tournament_user_existingteam', {id: tournament.id}) }}" id="step4" method="post" {{ form_enctype(form) }}>
         
+          {{ form_widget(form._token) }}
+          {{ form_errors(form) }}
+          
+          <div class="input field">
+            {{ form_widget(form.name, {'attr': {'placeholder': 'Nom de l\'équipe que vous voulez rejoindre'}}) }}
+          </div>
+          
+          <div class="input field">
+            {{ form_widget(form.plainPassword, {'attr': {'placeholder': 'Mot de passe'}}) }}
+          </div>
+          
+          <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_jointeam', {id: tournament.id}) }}">Annuler</a>
+          <a class="btn btn-primary ctrl grid-8 pull-left" href="javascript:{}" onclick="document.getElementById('step4').submit();">Rejoindre mon équipe</a>
+          <br class="clear">
+        </form>
     </div>
