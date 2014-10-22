@@ -16,7 +16,7 @@
       <div class="step pull-left">
         
       </div>
-      <div class="title pull-left">Équipe {{ t.name }}</div>
+      <div class="title pull-left">Équipe validée &laquo {{ t.name }} &raquo</div>
       <br class="clear">
     </header>
    {% else %}
@@ -25,19 +25,23 @@
       <div class="step pull-left">
         
       </div>
-      <div class="title pull-left">Équipe {{ t.name }}</div>
+      <div class="title pull-left">Équipe non validée &laquo {{ t.name }} &raquo</div>
       <br class="clear">
     </header>
     {% endif %}
-    <section>
       <div class="text">
         <ul class="shift">
           {% for p in t.players %}
-          <li>{{ p.getName(t.tournament.type) }}</li>
+          <li>
+            
+            {{ p.getName(t.tournament.type) }}
+          </li>
           {% endfor %}
         </ul>
+        <p>
+          <a href="{{ path('insalan_tournament_user_leaveteam', {teamId: t.id}) }}">[Quitter l'équipe]</a>
+        </p>
       </div>
-    </section>
   </div>
   {% endfor %}
   {% endif %}

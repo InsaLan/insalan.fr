@@ -109,9 +109,36 @@ class UserController extends Controller
                         'game' => $tournament->getType(),
                         'tournamentId' => $id
                     )));
+        } else if ($player->isRegisteredForTournament($id)) {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
         }
 
         return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
+    }
+
+    /**
+     * @Route("/user/leave/team/{teamId}")
+     * @Template()
+     */
+    public function leaveTeamAction($teamId) {
+        $em = $this->getDoctrine()->getManager();
+        $team = $em
+            ->getRepository('InsaLanTournamentBundle:Team')
+            ->findOneById($teamId);
+        $usr = $this
+            ->get('security.context')
+            ->getToken()
+            ->getUser();
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUser($usr->getId());
+
+        $player->leaveTeam($team);
+        $em->persist($player);
+        $em->persist($team);
+        $em->flush();
+        return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
     }
 
     /**

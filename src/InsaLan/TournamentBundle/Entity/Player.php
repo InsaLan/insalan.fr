@@ -221,7 +221,7 @@ class Player extends Participant
      */
     public function leaveTeam($team)
     {
-        $this->team->removePlayer($this);
+        $team->removePlayer($this);
         $this->removeTeam($team);
         return $this;
     }
@@ -386,10 +386,18 @@ class Player extends Participant
      * Is Registered For Tournament
      */
     public function isRegisteredForTournament($id) {
-        $registered = false;
+        return $this->getTeamByTournamentId($id) !== null;
+    }
+
+    /**
+     * Get team by tournament id
+     */
+    public function getTeamByTournamentId($id) {
         foreach ($this->team as $team) {
-            $registered = $registered || $team->getTournament()->getId() == $id; //Needed type conversion
+            if ($team->getTournament()->getId() == $id) {
+                return $team;
+            }
         }
-        return $registered;
+        return null;
     }
 }
