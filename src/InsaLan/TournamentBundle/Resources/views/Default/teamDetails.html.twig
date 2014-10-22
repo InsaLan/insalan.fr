@@ -44,10 +44,19 @@
       {% if m.state == 0 %}
         <p>Match en attente</p>
       {% elseif m.state == 1 %}
-        <p><strong>Le match peut être joué !</strong></p>
-        <p style="font-size:20px;">
-          <a href="{{ m.pvpNetUrl }}">Rejoindre ou créer la partie !</a>
-        </p>
+
+        {% if authorized == true %}
+        <a href="{{ m.pvpNetUrl }}"><strong>Créer ou rejoindre un round</strong></a>
+
+        <br /><br />
+
+        <a href="{{ path('insalan_tournament_default_teamvalidatematch', {id: team.id, match: m.id }) }}"><strong>Valider un round</strong></a>
+        {% else %}
+
+        <p>Match en attente</p>
+
+        {% endif %}
+
       {% else %}
         <p>Match terminé !</p>
         <p>Remporté par <strong>{{ m.getWinner().name }}</strong></p>
