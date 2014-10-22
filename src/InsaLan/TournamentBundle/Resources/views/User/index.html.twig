@@ -10,7 +10,8 @@
 
   {% if player != null %}
   {% for t in player.team %}
-  <div class="frame frame-active">
+  {% if t.validated %}
+  <div class="frame frame-success">
     <header class="full">
       <div class="step pull-left">
         
@@ -18,6 +19,16 @@
       <div class="title pull-left">Équipe {{ t.name }}</div>
       <br class="clear">
     </header>
+   {% else %}
+   <div class="frame frame-warning">
+    <header class="full">
+      <div class="step pull-left">
+        
+      </div>
+      <div class="title pull-left">Équipe {{ t.name }}</div>
+      <br class="clear">
+    </header>
+    {% endif %}
     <section>
       <div class="text">
         <ul class="shift">

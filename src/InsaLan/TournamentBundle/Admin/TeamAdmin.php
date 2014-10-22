@@ -19,6 +19,13 @@ class TeamAdmin extends Admin
             ->add('name')
             ->add('tournament')
             ->add('captain')
+            ->add('validated', 'choice', array(
+                'required' => true,
+                'choices' => array(
+                    0 => 'Non validée',
+                    1 => 'Validée' 
+                )
+            ))
             ->add('plainPassword', 'repeated', array(
                 'required' => false,
                 'type' => 'password',
@@ -45,6 +52,7 @@ class TeamAdmin extends Admin
             ->addIdentifier('name')
             ->add('tournament.name')
             ->add('captain.name')
+            ->add('validated');
             ;
     }
     public function prePersist($e)
