@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\TournamentRepository")
- * @ORM\HasLifecycleCallbacks
  */
 class Tournament
 {

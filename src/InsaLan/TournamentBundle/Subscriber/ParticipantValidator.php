@@ -43,7 +43,7 @@ class ParticipantValidator implements EventSubscriber
 
             $validatedTeams = $em
                 ->getRepository('InsaLanTournamentBundle:Team')
-                ->findByValidated(Participant::STATUS_VALIDATED);
+                ->getWaitingTeams();
             foreach($validatedTeams as $team) {
                 $this->unValidateTeam($team,$em);
             }
