@@ -7,7 +7,6 @@
   <header>
     <h2>Bienvenue {{ app.user.username }}</h2>
   </header>
-
   {% if player != null %}
   {% for t in player.team %}
   {% if t.validated %}
@@ -42,9 +41,10 @@
           </li>
           {% endfor %}
         </ul>
-        <p>
+        <p class="pull-right">
           <a href="{{ path('insalan_tournament_user_leaveteam', {teamId: t.id}) }}">[Quitter l'équipe]</a>
         </p>
+        <br class="clear">
       </div>
   </div>
   {% endfor %}

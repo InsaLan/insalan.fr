@@ -13,12 +13,10 @@ use InsaLan\InsaLanBundle\Service\FreeSlots;
 class ParticipantValidator implements EventSubscriber
 {   
     private $updated_teams;
-    private $fs;
 
-    public function __construct(FreeSlots $fs)
+    public function __construct()
     {
         $this->updated_teams = [];
-        $this->fs   = $fs;
     }
 
     public function getSubscribedEvents()
@@ -35,33 +33,12 @@ class ParticipantValidator implements EventSubscriber
     public function preUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+        
         if($entity instanceof Player) {
-
             $em = $args->getEntityManager();
 
             foreach($entity->getTeam() as $team) {
-                if ($team->getCaptain() === null && $team->getPlayers()->count() > 0) { 
-                    $team->setCaptain($team->getPlayers()->first());
-                }
-                if($team->getPlayers()->count() >= $team->getTournament()->getTeamMinPlayer()) {
-                    //Ready for validation
-                    if($this->fs->get() > 0)
-                        $team->setValidated(Participant::STATUS_VALIDATED);
-                    else
-                        $team->setValidated(Participant::STATUS_WAITING);
-                } else {
-                    //Not Ready for validation
-                    if($team->getValidated() === Participant::STATUS_VALIDATED) {
-                        //If previously was validated, push another team in validated state.
-                        $validated = $this->fs->selectWaitingTeam();
-                        if($validated !== null) {
-                            $validated->setValidated(Participant::STATUS_VALIDATED);
-                            $this->updated_teams[] = $validated;
-                        }
-                    }
-                    $team->setValidated(Participant::STATUS_PENDING);
-                }
-                $this->updated_teams[] = $team; //register for further save
+                $this->validateTeam($team,$em);
             }
         }
 
@@ -77,6 +54,36 @@ class ParticipantValidator implements EventSubscriber
             $this->updated_teams = []; //put this ABSOLUTELY BEFORE the flush.
             $em->flush();
         }
+    }
+
+    protected function validateTeam($team,$em) {                
+        if ($team->getCaptain() === null && $team->getPlayers()->count() > 0) { 
+            $team->setCaptain($team->getPlayers()->first());
+        }
+        if($team->getPlayers()->count() >= $team->getTournament()->getTeamMinPlayer()) {
+            //Ready for validation
+            $freeSlots = $em
+                ->getRepository('InsaLanTournamentBundle:Tournament')
+                ->getFreeSlots($team->getTournament()->getId());
+            if($freeSlots > 0)
+                $team->setValidated(Participant::STATUS_VALIDATED);
+            else
+                $team->setValidated(Participant::STATUS_WAITING);
+        } else {
+            //Not Ready for validation
+            if($team->getValidated() === Participant::STATUS_VALIDATED) {
+                //If previously was validated, push another team in validated state.
+                $validated = $em
+                    ->getRepository('InsaLanTournamentBundle:Tournament')
+                    ->selectWaitingParticipant($team->getTournament()->getId());
+                if($validated !== null) {
+                    $validated->setValidated(Participant::STATUS_VALIDATED);
+                    $this->updated_teams[] = $validated;
+                }
+            }
+            $team->setValidated(Participant::STATUS_PENDING);
+        }
+        $this->updated_teams[] = $team; //register for further save
     }
 }
 

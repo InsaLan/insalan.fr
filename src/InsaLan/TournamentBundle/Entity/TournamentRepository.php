@@ -5,6 +5,8 @@ namespace InsaLan\TournamentBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
+use InsaLan\TournamentBundle\Entity\Participant;
+
 class TournamentRepository extends EntityRepository
 {
     public function findOpened() {
@@ -13,5 +15,27 @@ class TournamentRepository extends EntityRepository
             ->setParameter('now', new \DateTime())
             ->getQuery();
         return $query->getResult();
+    }
+
+    public function getFreeSlots($tournamentId) {
+        $tournament = $this->findOneById($tournamentId);
+        $freeSlots = $tournament->getRegistrationLimit();
+        foreach($tournament->getParticipants() as $participant) {
+            if ($participant->getValidated() === Participant::STATUS_VALIDATED) {
+                $freeSlots--;
+            }
+        }
+        return $freeSlots;
+    }
+
+    public function selectWaitingParticipant($tournamentId) {
+        $tournament = $this->findOneById($tournamentId);
+        $participants = array();
+        foreach($tournament->getParticipants() as $participant) {
+            if ($participant->getValidated() === Participant::STATUS_WAITING) {
+                $participants[] = $participant;
+            }
+        }
+        return $participants;
     }
 }

@@ -11,7 +11,7 @@ class TeamRepository extends EntityRepository
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("
-            SELECT partial t.{id,name,validated}, partial p.{id,name,lolId} 
+            SELECT partial t.{id,name,validated}, partial p.{id,lolName,lolId} 
             FROM InsaLanTournamentBundle:Team t
             JOIN t.players p
             ");
