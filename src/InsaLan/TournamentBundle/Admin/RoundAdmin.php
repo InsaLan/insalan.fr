@@ -19,6 +19,7 @@ class RoundAdmin extends Admin
             ->add('match')
             ->add('score1', null, array('label' => "Score 1"))
             ->add('score2', null, array('label' => "Score 2"))
+            ->add('replayFile', 'file', array('required' => false, 'label' => "Fichier de replay"))
         ;
     }
 
@@ -29,6 +30,7 @@ class RoundAdmin extends Admin
             ->add('match',   null, array('route' => array('name' => 'show')))
             ->add('score1',  null, array('label' => "Score 1"))
             ->add('score2',  null, array('label' => "Score 2"))
+            ->add('fullReplay', "string", array('label' => "Replay"))
         ;
     }
 

@@ -7,11 +7,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Round
 {
+
+    const UPLOAD_PATH = 'uploads/tournament/replays/';
+    const UPLOAD_EXT  = '.lol';
 
     /**
      * @ORM\Id
@@ -71,6 +77,73 @@ class Round
     }
 
     // End Of Customs
+    
+    // Replay Upload management
+    
+    protected $replayFile;
+
+    public function getReplayFile()
+    {
+        return $this->replayFile;
+    }
+
+    public function setReplayFile(UploadedFile $file = null)
+    {
+        $this->replayFile = $file;
+        if($file === null)
+            $this->setReplay(null);
+        else
+            $this->setReplay($this->getFileName());
+    }
+
+    /**
+     * @ORM\PreRemove
+     */
+    public function onPreRemove()
+    {   
+        $this->removeReplayFile($this->replay);
+    }
+
+     /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function uploadFile()
+    {
+        
+        $this->removeReplayFile($this->oldReplay);
+
+        if (null === $this->getReplayFile()) {
+            return;
+        }
+
+        $this->getReplayFile()->move(
+            self::UPLOAD_PATH,
+            $this->getFileName()
+        );
+
+        $this->setReplayFile(null);
+    }
+
+    public function getFullReplay()
+    {   
+        if(!$this->getReplay()) return "non";
+        else return self::UPLOAD_PATH.$this->getReplay();
+    }
+
+    private function getFileName()
+    { 
+        return "Match_".$this->getMatch()->getId()."_round_".$this->getId()."_".date("dmyHis").self::UPLOAD_EXT;
+    }
+
+    private function removeReplayFile($name)
+    {   
+        if(!$name) return;
+        $name = self::UPLOAD_PATH.DIRECTORY_SEPARATOR.$name;
+        if (file_exists($name))
+            unlink($name);
+    }
+    // End of Replay Upload managemet
 
     /**
      * Get id
@@ -151,6 +224,8 @@ class Round
         return $this->match;
     }
 
+
+    protected $oldReplay = ""; // for easy remove, not mapped
     /**
      * Set replay
      *
@@ -158,7 +233,8 @@ class Round
      * @return Round
      */
     public function setReplay($replay)
-    {
+    {   
+        $this->oldReplay = $this->replay;
         $this->replay = $replay;
 
         return $this;
