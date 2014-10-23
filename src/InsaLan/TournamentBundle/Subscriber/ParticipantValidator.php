@@ -12,8 +12,6 @@ use InsaLan\InsaLanBundle\Service\FreeSlots;
 
 class ParticipantValidator implements EventSubscriber
 {   
-    const TEAM_SIZE = 5;
-
     private $updated_teams;
     private $fs;
 
@@ -39,39 +37,32 @@ class ParticipantValidator implements EventSubscriber
         $entity = $args->getEntity();
         if($entity instanceof Player) {
 
-            if(!$args->hasChangedField("team")) return;
-
             $em = $args->getEntityManager();
 
-            $team = $entity->getTeam();
-            if(!$team) $team = $args->getOldValue("team");
-
-            if ($team->getCaptain() === null && $team->getPlayers()->count() > 0) { 
-                $team->setCaptain($team->getPlayers()->first());
-            }
-
-            if($team->getPlayers()->count() >= self::TEAM_SIZE) {
-                //Ready for validation
-                if($this->fs->get() > 0)
-                    $team->setValidated(Participant::STATUS_VALIDATED);
-                else
-                    $team->setValidated(Participant::STATUS_WAITING);
-            } else {
-                //Not Ready for validation
-                if($team->getValidated() === Participant::STATUS_VALIDATED) {
-                    //If previously was validated, push another team in validated state.
-                    $validated = $this->fs->selectWaitingTeam();
-                    if($validated !== null) {
-                        $validated->setValidated(Participant::STATUS_VALIDATED);
-                        $this->updated_teams[] = $validated;
-                    }
+            foreach($entity->getTeam() as $team) {
+                if ($team->getCaptain() === null && $team->getPlayers()->count() > 0) { 
+                    $team->setCaptain($team->getPlayers()->first());
                 }
-                
-                $team->setValidated(Participant::STATUS_PENDING);
-
+                if($team->getPlayers()->count() >= $team->getTournament()->getTeamMinPlayer()) {
+                    //Ready for validation
+                    if($this->fs->get() > 0)
+                        $team->setValidated(Participant::STATUS_VALIDATED);
+                    else
+                        $team->setValidated(Participant::STATUS_WAITING);
+                } else {
+                    //Not Ready for validation
+                    if($team->getValidated() === Participant::STATUS_VALIDATED) {
+                        //If previously was validated, push another team in validated state.
+                        $validated = $this->fs->selectWaitingTeam();
+                        if($validated !== null) {
+                            $validated->setValidated(Participant::STATUS_VALIDATED);
+                            $this->updated_teams[] = $validated;
+                        }
+                    }
+                    $team->setValidated(Participant::STATUS_PENDING);
+                }
+                $this->updated_teams[] = $team; //register for further save
             }
-
-            $this->updated_teams[] = $team; //register for further save
         }
 
     }
