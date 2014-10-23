@@ -33,15 +33,27 @@ class ParticipantValidator implements EventSubscriber
     public function preUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        
+
         if($entity instanceof Player) {
             $em = $args->getEntityManager();
-
-            foreach($entity->getTeam() as $team) {
+            $teams = $entity->getTeam();
+            foreach($teams as $team) { 
                 $this->validateTeam($team,$em);
+            }
+
+            $validatedTeams = $em
+                ->getRepository('InsaLanTournamentBundle:Team')
+                ->findByValidated(Participant::STATUS_VALIDATED);
+            foreach($validatedTeams as $team) {
+                $this->unValidateTeam($team,$em);
             }
         }
 
+    }
+
+    public function preRemove(LifecycleEventArgs $args)
+    {
+        var_dump(get_class($args->getEntity()));
     }
 
     public function postFlush(PostFlushEventArgs $args)
@@ -69,21 +81,27 @@ class ParticipantValidator implements EventSubscriber
                 $team->setValidated(Participant::STATUS_VALIDATED);
             else
                 $team->setValidated(Participant::STATUS_WAITING);
-        } else {
-            //Not Ready for validation
+        }
+
+        $this->updated_teams[] = $team; //register for further save
+    }
+
+    protected function unValidateTeam($team,$em) {
+        if($team->getPlayers()->count() < $team->getTournament()->getTeamMinPlayer()) {
             if($team->getValidated() === Participant::STATUS_VALIDATED) {
                 //If previously was validated, push another team in validated state.
-                $validated = $em
+                $waitingTeams = $em
                     ->getRepository('InsaLanTournamentBundle:Tournament')
                     ->selectWaitingParticipant($team->getTournament()->getId());
-                if($validated !== null) {
-                    $validated->setValidated(Participant::STATUS_VALIDATED);
-                    $this->updated_teams[] = $validated;
+                foreach($waitingTeams as $waitingTeam) {
+                    $waitingTeam->setValidated(Participant::STATUS_VALIDATED);
+                    $this->updated_teams[] = $waitingTeam;
                 }
             }
+
             $team->setValidated(Participant::STATUS_PENDING);
+            $this->updated_teams[] = $team; //register for further save
         }
-        $this->updated_teams[] = $team; //register for further save
     }
 }
 

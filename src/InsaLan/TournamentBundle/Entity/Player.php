@@ -7,6 +7,7 @@ use InsaLan\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Player extends Participant
 {
