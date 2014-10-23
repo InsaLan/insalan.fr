@@ -41,11 +41,11 @@
           </li>
           {% endfor %}
         </ul>
-        <p class="pull-right">
-          <a href="{{ path('insalan_tournament_user_leaveteam', {teamId: t.id}) }}">[Quitter l'équipe]</a>
-        </p>
-        <br class="clear">
       </div>
+
+      <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: t.id}) }}">Quitter</a>
+        <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_tournament_user_teamdetails', {id: t.id }) }}">Jouer mes matchs</a>
+        <br class="clear">
   </div>
   {% endfor %}
   {% endif %}

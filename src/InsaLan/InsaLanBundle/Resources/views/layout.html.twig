@@ -30,17 +30,17 @@
         </div>
 
         {% block top_infos %}
-        <aside>
-          <span class="day">{{ free_slots.get() }}</span>
-          <span class="month">Slots</span>
-          <span class="place">restants</span>
-        </aside>
+        {#<aside>#}
+          {#<span class="day"></span>#}
+          {#<span class="month">Slots</span>#}
+          {#<span class="place">restants</span>#}
+        {#</aside>#}
         
 
         <nav>
           <ul>
             <li><a href="{{ path('insalan_information_default_home') }}">Accueil</a></li>
-            <li><a href="{{ path('insalan_tournament_default_teamlist') }}">Équipes</a></li>
+            <li><a href="{{ path('insalan_tournament_default_index') }}">Tournois</a></li>
             <li><a href="{{ path('insalan_information_default_rules') }}">Règlement</a></li>
           {% if app.user %}
             <li><a href="{{ path('insalan_tournament_user_index') }}">Mon espace</a></li>
@@ -83,7 +83,6 @@
         {% block bottom_infos %}
         <nav>
           <ul>
-            {% if free_slots.opened %}
             <li>
               <header><a href="{{ path('insalan_tournament_default_index') }}">Qualifications</a></header>
               <div>
@@ -95,7 +94,6 @@
                 </ul>
               </div>
             </li>
-            {% endif %}
             
             <li>
               <header><a href="{{ path('insalan_information_default_index') }}">Infos</a></header>

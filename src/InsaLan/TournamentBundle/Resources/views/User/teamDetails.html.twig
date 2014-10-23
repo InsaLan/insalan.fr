@@ -40,7 +40,7 @@
           </td>
           <td>
             {% if r.replay == null and authorized %}
-              <a href="{{ path('insalan_tournament_default_roundaddreplay', {id: team.id, round: r.id }) }}">replay</a>
+              <a href="{{ path('insalan_tournament_user_roundaddreplay', {id: team.id, round: r.id }) }}">replay</a>
             {% elseif r.replay != null %}
               <a href="{{ asset('uploads/tournament/replays/' ~ r.replay) }}">voir</a>
             {% endif %}
@@ -58,7 +58,7 @@
 
         <br /><br />
 
-        <a href="{{ path('insalan_tournament_default_teamvalidatematch', {id: team.id, match: m.id }) }}"><strong>Valider un round</strong></a>
+        <a href="{{ path('insalan_tournament_user_teamvalidatematch', {id: team.id, match: m.id }) }}"><strong>Valider un round</strong></a>
         {% else %}
 
         <p>Match en attente</p>
