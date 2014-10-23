@@ -150,10 +150,48 @@ class DefaultController extends Controller
         $em->persist($match);
         $em->flush();
 
-        $this->redirect($this->generateUrl('insalan_tournament_default_teamvalidatematch'));
-
+        return $this->redirect($this->generateUrl('insalan_tournament_default_teamdetails', array('id' => $team->getId())));
 
     }
+
+    /**
+     * @Route("/team/{id}/addReplay/{round}", requirements={"id" = "\d+"})
+     * @Template()
+     */
+    public function roundAddReplayAction(Request $request, Entity\Team $team, Entity\Round $round)
+    {   
+
+        // Check security
+        if(!$this->isUserInTeam($team))
+            throw new \Exception("Invalid user");
+
+        if($round->getMatch()->getPart1()->getId() !== $team->getId()
+        && $round->getMatch()->getPart2()->getId() !== $team->getId())
+            throw new \Exception("Invalid round");
+
+        if($round->getReplay() !== null)
+            throw new \Exception("Le fichier a déjà été envoyé !");
+
+        $form = $this->createFormBuilder($round)
+            ->add('replayFile', 'file', array("label" => "Fichier"))
+            ->add('save', 'submit', array("label" => "Ajouter le fichier"))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid())
+        {   
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($round);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('insalan_tournament_default_teamdetails', array('id' => $team->getId())));
+        }
+
+        return array("form" => $form->createView());
+    }
+
+    /** PRIVATE **/
 
     private function isUserInTeam(Entity\Team $team)
     {   

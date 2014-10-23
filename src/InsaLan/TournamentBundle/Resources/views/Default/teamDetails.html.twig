@@ -26,8 +26,9 @@
       <table cellpadding="3px">
         <caption>Match {{i}}</caption>
         <thead>
-          <th style="width:50%">{{ m.part1.name }}</th>
-          <th style="width:50%">{{ m.part2.name }}</th>
+          <th style="width:45%">{{ m.part1.name }}</th>
+          <th style="width:45%">{{ m.part2.name }}</th>
+          <th style="width:10%"></th>
         </thead>
         {% for r in m.rounds %}
         <tr>
@@ -36,6 +37,13 @@
           </td>
           <td class="{% if r.score1 < r.score2 %}won{% elseif r.score1 > r.score2 %}lost{% endif %}">
             {{r.score2}}
+          </td>
+          <td>
+            {% if r.replay == null and authorized %}
+              <a href="{{ path('insalan_tournament_default_roundaddreplay', {id: team.id, round: r.id }) }}">replay</a>
+            {% elseif r.replay != null %}
+              <a href="{{ asset('uploads/tournament/replays/' ~ r.replay) }}">voir</a>
+            {% endif %}
           </td>
         </tr>
         {% endfor %}
