@@ -28,6 +28,6 @@
         <p>Une fois votre compte validé, vous pouvez renommer ou supprimer cette page de maitrise.</p>
       </div>
       <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_setplayer', {game: selectedGame, tournamentId: tournamentId}) }}">Annuler</a>
-      <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_tournament_user_validateplayer', {game: selectedGame, tournamentId: tournamentId}) }}">Ok</a>
+      <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_tournament_user_validateplayer', {game: selectedGame, tournamentId: tournamentId, check: 'yes'}) }}">Ok</a>
       <br class="clear">
     </div>

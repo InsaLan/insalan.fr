@@ -59,15 +59,17 @@ class UserController extends Controller
      * @Route("/user/player/validate/{game}/for_tournament/{tournamentId}")
      * @Template()
      */
-    public function validatePlayerAction($game, $tournamentId) {
+    public function validatePlayerAction(Request $request, $game, $tournamentId) {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByUser($usr->getId());
 
+        $check = $request->query->get('check') === "yes";
+
         if ($player === null) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer', array('game' => $game)));
         } else if ($game === 'lol') {
-            return $this->lolValidation($em, $usr, $player, $tournamentId);
+            return $this->lolValidation($em, $usr, $player, $tournamentId, $check);
         } else {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
         } 
@@ -259,7 +261,7 @@ class UserController extends Controller
         return array('form' => $form->createView(), 'selectedGame' => 'lol', 'tournamentId' => $tournamentId);
     }
 
-    protected function lolValidation($em, $usr, $player, $tournamentId) {
+    protected function lolValidation($em, $usr, $player, $tournamentId, $check) {
         if ($player->getLolIdValidated()) {
             return $this->redirect(
                 $this->generateUrl(
@@ -267,6 +269,8 @@ class UserController extends Controller
                     array(
                         'id' => $tournamentId
                     )));
+        } else if (!$check) {
+            return array('player' => $player, 'error' => null, 'selectedGame' => 'lol', 'tournamentId' => $tournamentId);
         } else {
             $details = null;
             try {
@@ -285,7 +289,6 @@ class UserController extends Controller
                     $details = 'Une erreur inconnue est survenue';
                 }
             }
-
             return array('player' => $player, 'error' => $details, 'selectedGame' => 'lol', 'tournamentId' => $tournamentId);
         }
 
