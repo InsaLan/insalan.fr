@@ -129,6 +129,9 @@ class Team extends Participant
      */
     public function addPlayer(\InsaLan\TournamentBundle\Entity\Player $players)
     {
+        if ($this->getPlayers()->count() >= $this->getTournament()->getTeamMaxPlayer()) {
+            throw new \Exception("Équipe pleine");
+        }
         $this->players->add($players);
         return $this;
     }

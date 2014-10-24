@@ -1,3 +1,17 @@
+{% if error %}
+    <div class="frame frame-danger">
+      <header class="full">
+        <div class="step pull-left">
+          4
+        </div>
+        <div class="title pull-left">Créer une équipe</div>
+        <br class="clear">
+      </header>
+      <div class="text">
+        <p>{{ error }}</p>
+      </div>
+{% else %}
+
     <div class="frame frame-active">
       <header class="full">
         <div class="step pull-left">
@@ -6,6 +20,8 @@
         <div class="title pull-left">Créer une équipe</div>
         <br class="clear">
       </header>
+{% endif %}
+
         <form action="{{ path('insalan_tournament_user_createteam', {id: tournament.id}) }}" id="step4" method="post" {{ form_enctype(form) }}>
        
           {{ form_widget(form._token) }}

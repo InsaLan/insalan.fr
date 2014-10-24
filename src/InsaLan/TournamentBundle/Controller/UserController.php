@@ -224,24 +224,30 @@ class UserController extends Controller
         $form = $this->createForm(new TeamLoginType(), $team);
         $form->handleRequest($request);
 
+        $details = null;
         if ($form->isValid()) {
-            $factory = $this->get('security.encoder_factory');
-            $encoder = $factory->getEncoder($usr);
-            $team->setPassword($encoder->encodePassword($team->getPlainPassword(), sha1('pleaseHashPasswords'.$team->getName())));
-            $team2 = $em
-                ->getRepository('InsaLanTournamentBundle:Team')
-                ->findOneByName($team->getName());
-            if ($team2 !== null && $team2->getPassword() === $team->getPassword()) {
-                $player->joinTeam($team2);
-                $em->persist($player);
-                $em->persist($team);
-                $em->flush();
-                return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+            try {
+                $factory = $this->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($usr);
+                $team->setPassword($encoder->encodePassword($team->getPlainPassword(), sha1('pleaseHashPasswords'.$team->getName())));
+                $team2 = $em
+                    ->getRepository('InsaLanTournamentBundle:Team')
+                    ->findOneByName($team->getName());
+                if ($team2 !== null && $team2->getPassword() === $team->getPassword()) {
+                    $player->joinTeam($team2);
+                    $em->persist($player);
+                    $em->persist($team);
+                    $em->flush();
+                    return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+                } else {
+                    throw new \Exception("Equipe ou mot de passe invalide");
+                }
+            } catch (\Exception $e) {
+                $details = $e->getMessage(); //I'll go in hell for this line :s Sry bro 
             }
 
         }
-
-        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player, 'form' => $form->createView());
+        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player, 'error' => $details, 'form' => $form->createView());
     }
 
     protected function lolSet($em, $usr, $player, $request, $tournamentId) {
