@@ -16,38 +16,22 @@
 
   <section>
 
-    <div class="frame">
+    {% if selectedGame == 'lol' %}
+      {% include 'InsaLanTournamentBundle:Part:Step1LolValidated.html.twig' %}
+      {% include 'InsaLanTournamentBundle:Part:Step2LolActive.html.twig' %}
+    {% else %}
+    <div class="frame frame-danger">
       <header>
         <div class="step pull-left">
           1
         </div>
-        <div class="title pull-left">
-          Invocateur sélectionné : {{ player.lolName }}
-        </div>
-        <div class="pull-right" style="height:60px">
-          <img height="60" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ player.lolPicture }}.png">
-        </div>
+        <div class="title pull-left">Pas encore implémenté</div>
         <br class="clear">
       </header>
     </div>
-    <div class="frame frame-active">
-      <header class="full">
-        <div class="step pull-left">
-          2
-        </div>
-        <div class="title pull-left">Validez votre invocateur en créant une page de maîtrises "<strong>insalan{{app.user.id}}</strong>"</div>
-        <br style="clear:both;">
-      </header>
-      <div class="text">
-        <p>Nous devons vérifier que vous êtes bien l'invocateur {{ player.name }}.</p>
-        <p>Pour cela, vous devez créer ou renommer une page de maitrise de cette manière "<strong>insalan{{ app.user.id }}</strong>" (sans les guillements).</p>
-        <p>En cliquant sur "Ok", notre système va scanner vos maitrises à la recherche de la page "<strong>insalan{{ app.user.id }}</strong>".
-        <p>Une fois votre compte validé, vous pouvez renommer ou supprimer cette page de maitrise.</p>
-      </div>
-      <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_setplayer', {game: selectedGame, tournamentId: tournamentId}) }}">Annuler</a>
-      <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_tournament_user_validateplayer', {game: selectedGame, tournamentId: tournamentId}) }}">Ok</a>
-      <br class="clear">
-    </div>
+    {% endif %}
+
+
 
 
   </section>

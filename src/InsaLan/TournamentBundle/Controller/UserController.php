@@ -238,7 +238,7 @@ class UserController extends Controller
             }
 
         }
-        
+
         return array('tournament' => $tournament, 'user' => $usr, 'player' => $player, 'form' => $form->createView());
     }
 
@@ -345,7 +345,7 @@ class UserController extends Controller
             $round->setScore2(1);
 
         // TODO : not for LoL only
-        
+
         $match->setState(Entity\Match::STATE_FINISHED);
 
         $em = $this->getDoctrine()->getManager();
@@ -369,7 +369,7 @@ class UserController extends Controller
             throw new \Exception("Invalid user");
 
         if($round->getMatch()->getPart1()->getId() !== $team->getId()
-        && $round->getMatch()->getPart2()->getId() !== $team->getId())
+            && $round->getMatch()->getPart2()->getId() !== $team->getId())
             throw new \Exception("Invalid round");
 
         if($round->getReplay() !== null)
@@ -421,14 +421,13 @@ class UserController extends Controller
         $player->setLolId($rSummoner->id);
         $player->setLolName($rSummoner->name);
         $player->setLolPicture($rSummoner->profileIconId);
-
         $masteryPages = $apiSummoner->masteryPages($player->getLolId());
         foreach ($masteryPages as $page) {
             if ($page->get('name') == 'insalan'.$user->getId()) {
                 $player->setLolIdValidated(true);
-                break;
+                return;
             }
         }
-
+        throw $this->createNotFoundException('La page de maîtrise n\'existe pas');
     }
 }
