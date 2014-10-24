@@ -17,7 +17,7 @@
       </div>
       <div class="title pull-left">{{ t.name }}</div>
       <div class="title pull-right">
-        <img style="margin-right:20px;max-height:60px;display:block;" src="{{ asset(t.tournament.getUploadDir() ~ t.tournament.logoPath) }}" alt="{{ t.tournament.name }}"/>
+        <img style="margin-right:0px;max-height:60px;display:block;" src="{{ asset(t.tournament.getUploadDir() ~ t.tournament.logoPath) }}" alt="{{ t.tournament.name }}"/>
       </div>
       <br class="clear">
     </header>
@@ -29,7 +29,7 @@
             <img height="40" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ p.lolPicture }}.png">
           </div>
           <div style="margin: 8px 0px 0px 10px;" class="pull-left">
-            <span>{{ p.getName(t.tournament.type) }}</span>
+            <span><a href="http://www.lolking.net/summoner/euw/{{ p.lolId }}">{{ p.getName(t.tournament.type) }}</a></span>
           </div>
           <br class="clear">
         </li>
@@ -56,11 +56,16 @@
       <br class="clear">
     </header>
     <div class="text">
-      <ul class="shift">
+      <ul class="shift" style="list-style-type:none">
         {% for p in t.players %}
-        <li>       
-          <img height="60" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ p.lolPicture }}.png">
-          {{ p.getName(t.tournament.type) }}
+        <li>
+          <div class="pull-left">
+            <img height="40" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ p.lolPicture }}.png">
+          </div>
+          <div style="margin: 8px 0px 0px 10px;" class="pull-left">
+            <span><a href="http://www.lolking.net/summoner/euw/{{ p.lolId }}">{{ p.getName(t.tournament.type) }}</a></span>
+          </div>
+          <br class="clear">
         </li>
         {% endfor %}
       </ul>
