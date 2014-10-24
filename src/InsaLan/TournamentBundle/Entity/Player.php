@@ -221,6 +221,9 @@ class Player extends Participant
      */
     public function leaveTeam($team)
     {
+        if ($team->getCaptain() !== null && $team->getCaptain()->getId() === $this->getId()) {
+            $team->setCaptain(null);
+        }
         $team->removePlayer($this);
         $this->removeTeam($team);
         return $this;
