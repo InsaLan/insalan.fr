@@ -14,7 +14,7 @@
         {% spaceless %}
           <li>
             <a href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}">
-              <img src="{{ asset('uploads/tournament/' ~ t.id ~ '.png') }}" alt="{{ t.name }}"/>
+              <img src="{{ asset(t.getUploadDir() ~ t.logoPath)  }}" alt="{{ t.name }}"/>
             </a>
           </li>
         {% endspaceless %}
