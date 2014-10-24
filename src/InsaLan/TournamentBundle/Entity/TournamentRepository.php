@@ -11,8 +11,8 @@ class TournamentRepository extends EntityRepository
 {
     public function findOpened() {
         $query = $this->createQueryBuilder('t')
-            ->where('t.registrationOpen < :now AND t.registrationClose > :now')
-            ->setParameter('now', new \DateTime())
+            ->where('t.registrationOpen <= :now AND t.registrationClose >= :now')
+            ->setParameter('now', (new \DateTime())->setTime(00,00))
             ->getQuery();
         return $query->getResult();
     }
