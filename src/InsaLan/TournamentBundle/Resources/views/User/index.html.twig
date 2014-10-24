@@ -22,10 +22,16 @@
       <br class="clear">
     </header>
     <div class="text">
-      <ul class="shift">
+      <ul class="shift" style="list-style-type:none">
         {% for p in t.players %}
-        <li>       
-          {{ p.getName(t.tournament.type) }}
+        <li>
+          <div class="pull-left">
+            <img height="40" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ p.lolPicture }}.png">
+          </div>
+          <div style="margin: 8px 0px 0px 10px;" class="pull-left">
+            <span>{{ p.getName(t.tournament.type) }}</span>
+          </div>
+          <br class="clear">
         </li>
         {% endfor %}
       </ul>
@@ -35,6 +41,8 @@
     <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_tournament_user_teamdetails', {id: t.id }) }}">Jouer mes matchs</a>
     <br class="clear">
   </div>
+
+
   {% else %}
   <div class="frame frame-warning">
     <header class="full">
@@ -51,6 +59,7 @@
       <ul class="shift">
         {% for p in t.players %}
         <li>       
+          <img height="60" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ p.lolPicture }}.png">
           {{ p.getName(t.tournament.type) }}
         </li>
         {% endfor %}
