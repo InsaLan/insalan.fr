@@ -236,7 +236,7 @@ class UserController extends Controller
                 if ($team2 !== null && $team2->getPassword() === $team->getPassword()) {
                     $player->joinTeam($team2);
                     $em->persist($player);
-                    $em->persist($team);
+                    $em->persist($team2);
                     $em->flush();
                     return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
                 } else {
