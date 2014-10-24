@@ -1,3 +1,13 @@
+{% if form_errors(form.lolName) %}
+      <div class="frame frame-danger">
+        <header class="full">
+          <div class="step pull-left">
+            1
+          </div>
+          <div class="title pull-left">Cet invocateur n'existe pas sur EUW :/</div>
+          <br class="clear">
+        </header>
+{% else %}
       <div class="frame frame-active">
         <header class="full">
           <div class="step pull-left">
@@ -6,7 +16,7 @@
           <div class="title pull-left">Entrez le nom de votre invocateur</div>
           <br class="clear">
         </header>
-
+{% endif %}
         <form action="{{ path('insalan_tournament_user_setplayer', {game: selectedGame, tournamentId: tournamentId}) }}" id="step1" method="post" {{ form_enctype(form) }}>
           <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
           <div class="input field">
