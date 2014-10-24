@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\TournamentRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Tournament
 {
@@ -70,6 +71,11 @@ class Tournament
      * @ORM\Column(type="integer", nullable=false)
      */
     protected $teamMaxPlayer;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $logoPath;
 
     /**
      * Get id
@@ -400,5 +406,52 @@ class Tournament
     public function getParticipants()
     {
         return $this->participants;
+    }
+
+    public function getUploadDir()
+    {
+        return 'uploads/tournament/logo/';
+    }
+
+    protected function getUploadRootDir()
+    {
+        // le chemin absolu du répertoire où les documents uploadés doivent être sauvegardés
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    public function setFileName() {
+        $this->logoPath = sha1(uniqid(mt_rand(), true)).'.'.$this->file->guessExtension();
+    }
+
+    public function upload() {
+        if (null === $this->file) {
+            return;
+        }
+        $this->setFileName();
+        $this->file->move($this->getUploadRootDir(), $this->logoPath);
+        $this->file = null;
+    }
+
+    /**
+     * Set logoPath
+     *
+     * @param string $logoPath
+     * @return Tournament
+     */
+    public function setLogoPath($logoPath)
+    {
+        $this->logoPath = $logoPath;
+
+        return $this;
+    }
+
+    /**
+     * Get logoPath
+     *
+     * @return string 
+     */
+    public function getLogoPath()
+    {
+        return $this->logoPath;
     }
 }

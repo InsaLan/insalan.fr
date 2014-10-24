@@ -23,6 +23,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setTeamMaxPlayer(8);
         $e->setTeamMinPlayer(5);
         $e->setType('csgo');
+        $e->setLogoPath('fixtures-1.png');
         $e->setParticipantType('team');
         $manager->persist($e);
         $this->addReference('tournament-1', $e);
@@ -35,6 +36,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setTeamMaxPlayer(8);
         $e->setTeamMinPlayer(5);
         $e->setType('lol');
+        $e->setLogoPath('fixtures-2.png');
         $e->setParticipantType('team');
         $manager->persist($e);
         $this->addReference('tournament-2', $e);

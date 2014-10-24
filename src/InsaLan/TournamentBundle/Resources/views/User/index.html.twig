@@ -16,37 +16,51 @@
         &#10003;
       </div>
       <div class="title pull-left">{{ t.name }}</div>
-      <div class="title pull-right">{{ t.tournament.name }}</div>
+      <div class="title pull-right">
+        <img style="margin-right:20px;max-height:60px;display:block;" src="{{ asset(t.tournament.getUploadDir() ~ t.tournament.logoPath) }}" alt="{{ t.tournament.name }}"/>
+      </div>
       <br class="clear">
     </header>
-   {% else %}
-   <div class="frame frame-warning">
+    <div class="text">
+      <ul class="shift">
+        {% for p in t.players %}
+        <li>       
+          {{ p.getName(t.tournament.type) }}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: t.id}) }}">Quitter</a>
+    <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_tournament_user_teamdetails', {id: t.id }) }}">Jouer mes matchs</a>
+    <br class="clear">
+  </div>
+  {% else %}
+  <div class="frame frame-warning">
     <header class="full">
       <div class="step pull-left">
        ! 
       </div>
       <div class="title pull-left">{{ t.name }} (non validée)</div>
       <div class="pull-right">
-        <img style="margin-right:20px;max-height:50px" src="{{ asset('uploads/tournament/' ~ t.tournament.id ~ '.png') }}" alt="{{ t.tournament.name }}"/>
+        <img style="margin:0px;max-height:60px;display:block;" src="{{ asset(t.tournament.getUploadDir() ~ t.tournament.logoPath) }}" alt="{{ t.tournament.name }}"/>
       </div>
       <br class="clear">
     </header>
-    {% endif %}
-      <div class="text">
-        <ul class="shift">
-          {% for p in t.players %}
-          <li>
-            
-            {{ p.getName(t.tournament.type) }}
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
+    <div class="text">
+      <ul class="shift">
+        {% for p in t.players %}
+        <li>       
+          {{ p.getName(t.tournament.type) }}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
 
-      <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: t.id}) }}">Quitter</a>
-        <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_tournament_user_teamdetails', {id: t.id }) }}">Jouer mes matchs</a>
-        <br class="clear">
+    <a class="btn btn-danger ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: t.id}) }}">Quitter</a>
+    <br class="clear">
   </div>
+  {% endif %}
   {% endfor %}
   {% endif %}
 
@@ -68,7 +82,7 @@
                 {% else %}
                 <a href="{{ path('insalan_tournament_user_joinplayer', {id: t.id}) }}">
                 {% endif %}
-                  <img src="{{ asset('uploads/tournament/' ~ t.id ~ '.png') }}" alt="{{ t.name }}"/>
+                  <img src="{{ asset(t.getUploadDir() ~ t.logoPath) }} " alt="{{ t.name }}"/>
                 </a>
               </li>
             {% endspaceless %}

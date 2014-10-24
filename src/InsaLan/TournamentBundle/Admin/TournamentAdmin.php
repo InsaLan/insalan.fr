@@ -61,4 +61,12 @@ class TournamentAdmin extends Admin
             ->add('type')
         ;
     }
+    
+    public function prePersist($e) {
+        $e->upload();
+    }
+    
+    public function preUpdate($e) {
+        $this->prePersist($e);
+    }
 }
