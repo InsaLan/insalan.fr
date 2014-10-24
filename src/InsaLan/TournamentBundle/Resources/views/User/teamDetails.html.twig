@@ -54,11 +54,15 @@
       {% elseif m.state == 1 %}
 
         {% if authorized == true %}
-        <a href="{{ m.pvpNetUrl }}"><strong>Créer ou rejoindre un round</strong></a>
+        <p>
+            Match à jouer entre <br> 
+            <strong><a href="">{{ m.part1 }}</a></strong> et <strong><a href="">{{ m.part2 }}</a></strong>
+        </p>
 
         <br /><br />
-
-        <a href="{{ path('insalan_tournament_user_teamvalidatematch', {id: team.id, match: m.id }) }}"><strong>Valider un round</strong></a>
+        <form action="{{ path('insalan_tournament_user_teamvalidatematch', {id: team.id, match: m.id }) }}" method="GET">
+            <input value="Récupérer le match" type="submit">
+        </form>
         {% else %}
 
         <p>Match en attente</p>
