@@ -56,7 +56,7 @@
         {% if authorized == true %}
         <p>
             Match à jouer entre <br> 
-            <strong><a href="">{{ m.part1 }}</a></strong> et <strong><a href="">{{ m.part2 }}</a></strong>
+            <strong><a href="{{ path('insalan_tournament_default_teampage', {id: m.part1.id}) }}">{{ m.part1 }}</a></strong> et <strong><a href="{{ path('insalan_tournament_default_teampage',{id: m.part2.id}) }}">{{ m.part2 }}</a></strong>
         </p>
 
         <br /><br />

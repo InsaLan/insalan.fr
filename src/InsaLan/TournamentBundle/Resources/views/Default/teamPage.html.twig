@@ -1,0 +1,36 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block title %}
+  {{ parent() }} - Equipes
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="frame frame-active">
+    <header class="full">
+      <div class="pull-left">
+        <img style="margin-left:0px;max-height:60px;display:block;" src="{{ asset(team.tournament.getUploadDir() ~ team.tournament.logoPath) }}" alt="{{ team.tournament.name }}"/>
+      </div>
+      <div class="title pull-left">{{ team.name }}</div>
+      <br class="clear">
+    </header>
+    <div class="text">
+      <ul class="shift" style="list-style-type:none">
+        {% for p in team.players %}
+        <li>
+          <div class="pull-left">
+            <img height="40" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ p.lolPicture }}.png">
+          </div>
+          <div style="margin: 8px 0px 0px 10px;" class="pull-left">
+            <span><a href="http://www.lolking.net/summoner/euw/{{ p.lolId }}">{{ p.getName(team.tournament.type) }}</a></span>
+          </div>
+          <br class="clear">
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+
+{% endblock %}

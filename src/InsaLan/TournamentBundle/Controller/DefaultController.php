@@ -88,5 +88,19 @@ class DefaultController extends Controller
 
     }
 
+    /**
+     * @Route("/public/team/{id}")
+     * @Method({"GET"})
+     * @Template
+     */
+
+    public function teamPageAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $team = $em->getRepository('InsaLanTournamentBundle:Team')->findOneById($id);
+        if ($team === null) {
+            return $this->createNotFoundException('Cette équipe est introuvable');
+        }
+        return array('team' => $team);
+    }
 
 }
