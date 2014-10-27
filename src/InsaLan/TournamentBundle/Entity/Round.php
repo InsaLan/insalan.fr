@@ -15,9 +15,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Round
 {
-
     const UPLOAD_PATH = 'uploads/tournament/replays/';
-    const UPLOAD_EXT  = '.lol';
+    const UPLOAD_EXT  = '.lrf';
 
     /**
      * @ORM\Id
@@ -47,8 +46,13 @@ class Round
      */
     protected $replay;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $data;
+
     // CUSTOM FUNCTIONS FOR ADMIN
-    
+
     public function __toString()
     {
         return "[" . $this->getScore1() . " - " . $this->getScore2() . "]";
@@ -77,9 +81,9 @@ class Round
     }
 
     // End Of Customs
-    
+
     // Replay Upload management
-    
+
     protected $replayFile;
 
     public function getReplayFile()
@@ -100,7 +104,7 @@ class Round
      * @ORM\PreRemove
      */
     public function onPreRemove()
-    {   
+    {
         $this->removeReplayFile($this->replay);
     }
 
@@ -110,7 +114,7 @@ class Round
      */
     public function uploadFile()
     {
-        
+
         $this->removeReplayFile($this->oldReplay);
 
         if (null === $this->getReplayFile()) {
@@ -126,18 +130,21 @@ class Round
     }
 
     public function getFullReplay()
-    {   
-        if(!$this->getReplay()) return "non";
-        else return self::UPLOAD_PATH.$this->getReplay();
+    {
+        if(!$this->getReplay()) {
+            return null;
+        }
+
+        return self::UPLOAD_PATH.$this->getReplay();
     }
 
     private function getFileName()
-    { 
-        return "Match_".$this->getMatch()->getId()."_round_".$this->getId()."_".date("dmyHis").self::UPLOAD_EXT;
+    {
+        return sprintf("%s_M%d-R%d", date('Ymd-His'), $this->getMatch()->getId(), $this->getId()).self::UPLOAD_EXT;
     }
 
     private function removeReplayFile($name)
-    {   
+    {
         if(!$name) return;
         $name = self::UPLOAD_PATH.DIRECTORY_SEPARATOR.$name;
         if (file_exists($name))
@@ -233,7 +240,7 @@ class Round
      * @return Round
      */
     public function setReplay($replay)
-    {   
+    {
         $this->oldReplay = $this->replay;
         $this->replay = $replay;
 
@@ -276,7 +283,7 @@ class Round
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -299,11 +306,34 @@ class Round
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
 
+
+    /**
+     * Set data
+     *
+     * @param string $data
+     * @return Round
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * Get data
+     *
+     * @return string
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
 }

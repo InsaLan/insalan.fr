@@ -6,20 +6,30 @@ use InsaLan\TournamentBundle\Entity;
 
 class GroupRepository extends EntityRepository
 {
-    protected function getQueryBuilder()
+    protected function getQueryBuilder($gs = true)
     {
-        return $this->_em->createQueryBuilder()
+        $qb = $this->_em->createQueryBuilder()
             ->from($this->_entityName, 'g')
-            ->leftJoin('g.stage', 'gs')
-//            ->leftJoin('g.participants', 'gp')
             ->leftJoin('g.participants', 'p')
-//            ->leftJoin('g.matches', 'gm')
+            ->leftJoin('g.matches', 'm')
+            ->leftJoin('m.part1', 'p1')
+            ->leftJoin('m.part2', 'p2')
+            ->leftJoin('m.rounds', 'r')
             ->addSelect('partial g.{id, name}')
-            ->addSelect('partial gs.{id, name}')
-//            ->addSelect('gp')
+            ->addSelect('partial m.{id, state}')
+            ->addSelect('partial r.{id, score1, score2, replay}')
             ->addSelect('p')
-            ->orderBy('gs.name, g.name')
-        ;
+            ->addSelect('p1')
+            ->addSelect('p2');
+
+        if ($gs) {
+          $qb
+            ->leftJoin('g.stage', 'gs')
+            ->addSelect('partial gs.{id, name}')
+            ->orderBy('gs.name, g.name');
+        }
+
+        return $qb;
     }
 
     public function getByStages(Array $stages)
@@ -43,9 +53,9 @@ class GroupRepository extends EntityRepository
         return $q->getQuery()->execute();
     }
 
-    public function getById($id)
+    public function getById($id, $gs = true)
     {
-        $q = $this->getQueryBuilder();
+        $q = $this->getQueryBuilder($gs);
         $q->where('g.id = :i')->setParameter('i', (int)$id);
 
         return $q->getQuery()->getSingleResult();

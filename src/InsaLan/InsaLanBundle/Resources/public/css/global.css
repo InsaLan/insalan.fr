@@ -604,15 +604,15 @@ strong {
 }
 
 .hero > .big-picture-1 {
-  background-image: url('../img/lol-art-1.png'); 
+  background-image: url('../img/lol-art-1.png');
 }
 
 .hero > .big-picture-2 {
-  background-image: url('../img/lol-art-2.png'); 
+  background-image: url('../img/lol-art-2.png');
 }
 
 .hero > .big-picture-3 {
-  background-image: url('../img/lol-art-3.png'); 
+  background-image: url('../img/lol-art-3.png');
 }
 
 .btn {
@@ -701,7 +701,7 @@ strong {
 }
 
 .frame {
-  border: #2d2d2d solid 1px; 
+  border: #2d2d2d solid 1px;
   margin: 10px 0px 10px 0px;
   padding: 0px -1px 0px -1px;
   -webkit-box-sizing: border-box;
@@ -714,44 +714,44 @@ strong {
 }
 
 .frame > header > .step {
-  background-color: #a2a2a2; 
-  font-size: 40px; 
-  height: 60px; 
-  min-width: 60px; 
-  text-align:center; 
-  color: #fff; 
-  line-height: 1.5; 
+  background-color: #a2a2a2;
+  font-size: 40px;
+  height: 60px;
+  min-width: 60px;
+  text-align:center;
+  color: #fff;
+  line-height: 1.5;
 }
 
 .frame > header > .title {
-  font-size:30px; 
-  font-family: OpenSansCond; 
-  color:#a2a2a2; 
-  margin: 0 5px 0 15px; 
+  font-size:30px;
+  font-family: OpenSansCond;
+  color:#a2a2a2;
+  margin: 0 5px 0 15px;
   line-height: 2;
 }
 
-.frame-active > header > .title, 
-.frame-success > header > .title, 
-.frame-warning > header > .title, 
+.frame-active > header > .title,
+.frame-success > header > .title,
+.frame-warning > header > .title,
 .frame-danger > header > .title {
   color: #fff;
 }
 
 .frame-active > header > .step {
-  background-color: #00bff3; 
+  background-color: #00bff3;
 }
 
 .frame-success > header > .step {
-  background-color: #00bf1e; 
+  background-color: #00bf1e;
 }
 
 .frame-warning > header > .step {
-  background-color: #e38700; 
+  background-color: #e38700;
 }
 
 .frame-danger > header > .step {
-  background-color: #bf0000; 
+  background-color: #bf0000;
 }
 
 .frame > header > .ctrl {
@@ -763,8 +763,8 @@ strong {
 }
 
 .frame > form > .field > input {
-  display:block; 
-  width:891px; 
+  display:block;
+  width:891px;
   margin: 5px 50px 5px 50px;
 }
 
@@ -781,5 +781,5 @@ strong {
 }
 
 li a:hover {
-  color: #fff; 
+  color: #fff;
 }

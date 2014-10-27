@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorMap({"team" = "Team", "player" = "Player"})
  */
 abstract class Participant
-{   
+{
 
     const STATUS_PENDING   = 0; // Not ready for validation
     const STATUS_WAITING   = 1; // Ready for validation, but no slot free
@@ -75,7 +75,7 @@ abstract class Participant
     /**
      * Get tournament
      *
-     * @return \InsaLan\TournamentBundle\Entity\Tournament 
+     * @return \InsaLan\TournamentBundle\Entity\Tournament
      */
     public function getTournament()
     {
@@ -108,7 +108,7 @@ abstract class Participant
     /**
      * Get groups
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroups()
     {
@@ -119,7 +119,7 @@ abstract class Participant
     /**
      * Get validated
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getValidated()
     {

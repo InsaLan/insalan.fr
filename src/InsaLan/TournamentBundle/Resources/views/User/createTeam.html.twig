@@ -1,4 +1,4 @@
-{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+{% extends 'InsaLanTournamentBundle:User:layout.html.twig' %}
 
 {% block body %}
 {{ parent() }}
@@ -22,12 +22,12 @@
       {% include 'InsaLanTournamentBundle:Part:Step2LolValidated.html.twig' %}
       {% include 'InsaLanTournamentBundle:Part:Step3LolValidated.html.twig' %}
       {% include 'InsaLanTournamentBundle:Part:Step4LolActive.html.twig' %}
-    
+
     {% else %}
       <div class="alert alert-error">
         <p>L'inscription pour ce type de tournoi n'est pas encore supportée</p>
       </div>
-    
+
     {% endif %}
 
   </section>

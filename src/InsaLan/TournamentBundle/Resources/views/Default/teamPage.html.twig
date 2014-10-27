@@ -1,5 +1,12 @@
 {% extends 'InsaLanTournamentBundle::layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
+      <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block title %}
   {{ parent() }} - Equipes
 {% endblock %}

@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use InsaLan\TournamentBundle\Form\SetLolPlayerType;
 use InsaLan\TournamentBundle\Form\TeamType;
 use InsaLan\TournamentBundle\Form\TeamLoginType;
+use InsaLan\TournamentBundle\Exception\ControllerException;
 
 use InsaLan\TournamentBundle\Entity\Player;
 use InsaLan\TournamentBundle\Entity\Team;
@@ -18,8 +19,6 @@ use InsaLan\TournamentBundle\Entity;
 
 class UserController extends Controller
 {
-
-
     /**
      * @Route("/user")
      * @Template()
@@ -46,7 +45,7 @@ class UserController extends Controller
         if ($player === null) {
             $player = new Player();
             $player->setUser($usr);
-        } 
+        }
 
         if ($game === 'lol') {
             return $this->lolSet($em,$usr,$player,$request, $tournamentId);
@@ -72,7 +71,7 @@ class UserController extends Controller
             return $this->lolValidation($em, $usr, $player, $tournamentId, $check);
         } else {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
-        } 
+        }
     }
 
     /**
@@ -102,12 +101,12 @@ class UserController extends Controller
                         'game' => $tournament->getType(),
                         'tournamentId' => $id
                     )));
-        } 
+        }
         // Check if this player is validated for the game
         else if (!$player->isValidated($tournament->getType())) {
             return $this->redirect(
                 $this->generateUrl(
-                    'insalan_tournament_user_validateplayer', 
+                    'insalan_tournament_user_validateplayer',
                     array(
                         'game' => $tournament->getType(),
                         'tournamentId' => $id
@@ -240,10 +239,12 @@ class UserController extends Controller
                     $em->flush();
                     return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
                 } else {
-                    throw new \Exception("Equipe ou mot de passe invalide");
+                    throw new ControllerException("Equipe ou mot de passe invalide");
                 }
-            } catch (\Exception $e) {
-                $details = $e->getMessage(); //I'll go in hell for this line :s Sry bro 
+            } catch (ControllerException $e) {
+                $details = $e->getMessage(); //I'll go in hell for this line :s Sry bro
+                // YES YOU WILL YOU FILTHY MAGGOT
+                // Use a custom exception type if you want to do this
             }
 
         }
@@ -271,7 +272,7 @@ class UserController extends Controller
         if ($player->getLolIdValidated()) {
             return $this->redirect(
                 $this->generateUrl(
-                    'insalan_tournament_user_jointeam', 
+                    'insalan_tournament_user_jointeam',
                     array(
                         'id' => $tournamentId
                     )));
@@ -305,7 +306,7 @@ class UserController extends Controller
      * @Template()
      */
     public function teamDetailsAction(Entity\Team $team)
-    {   
+    {
         $pvpService = $this->get('insalan.tournament.pvp_net');
 
         foreach ($team->getGroups() as $g)
@@ -313,9 +314,13 @@ class UserController extends Controller
             $g->countWins();
             // TODO : LoL Only !
             foreach ($g->getMatches() as $m)
-            {   
-                $name = "INSALAN Match " . $m->getId();
-                $m->pvpNetUrl = $pvpService->generateUrl(array("name" => $name));
+            {
+                $round = 1;
+                $name = "InsaLan Match " . $m->getId() ." G".$round;
+                $m->pvpNetUrl = $pvpService->generateUrl(array(
+                    "name" => $name,
+                    "extra" => $m->getId(),
+                    "pass" => md5('insalan_match_#'.$m->getId().'_'.$round)));
             }
         }
 
@@ -328,18 +333,30 @@ class UserController extends Controller
      */
     public function teamValidateMatchAction(Entity\Team $team, Entity\Match $match)
     {
-        $pvpService = $this->get('insalan.tournament.pvp_net');
+        try {
+            $pvpService = $this->get('insalan.tournament.pvp_net');
 
-        if($match->getPart1() !== $team && $match->getPart2() !== $team)
-            throw new \Exception("Invalid team");
+            if($match->getPart1() !== $team && $match->getPart2() !== $team)
+                throw new ControllerException("Invalid team");
 
-        if(!$this->isUserInTeam($team))
-            throw new \Exception("Invalid user");
+            if(!$this->isUserInTeam($team))
+                throw new ControllerException("Invalid user");
 
-        if($match->getState() != Entity\Match::STATE_ONGOING)
-            throw new \Exception("Invalid match : not in ongoing state");
+            if($match->getState() != Entity\Match::STATE_ONGOING)
+                throw new ControllerException("Invalid match: not in ongoing state");
 
-        $matchResult = $pvpService->getGameResult($match->getPart1(), $match->getPart2());
+            try {
+                $matchResult = $pvpService->getGameResult($match->getPart1(), $match->getPart2());
+                $data = $matchResult[1];
+                $matchResult = $matchResult[0];
+            } catch (\Exception $e) {
+                throw new ControllerException($e->getMessage());
+            }
+        }
+        catch (ControllerException $e) {
+            $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+            return $this->redirect($this->generateUrl('insalan_tournament_user_teamdetails', array('id' => $team->getId())));
+        }
 
         $round = new Entity\Round();
         $round->setMatch($match);
@@ -347,11 +364,14 @@ class UserController extends Controller
         $round->setScore1(0);
         $round->setScore2(0);
 
-        if($matchResult)
-            $round->setScore1(1);
+        $round->setData($data);
 
-        else
+        if($matchResult) {
+            $round->setScore1(1);
+        }
+        else {
             $round->setScore2(1);
+        }
 
         // TODO : not for LoL only
 
@@ -371,18 +391,22 @@ class UserController extends Controller
      * @Template()
      */
     public function roundAddReplayAction(Request $request, Entity\Team $team, Entity\Round $round)
-    {   
+    {
+        try {
+            // Check security
+            if(!$this->isUserInTeam($team))
+                throw new ControllerException("Invalid user");
 
-        // Check security
-        if(!$this->isUserInTeam($team))
-            throw new \Exception("Invalid user");
+            if($round->getMatch()->getPart1()->getId() !== $team->getId()
+                && $round->getMatch()->getPart2()->getId() !== $team->getId())
+                throw new ControllerException("Invalid round");
 
-        if($round->getMatch()->getPart1()->getId() !== $team->getId()
-            && $round->getMatch()->getPart2()->getId() !== $team->getId())
-            throw new \Exception("Invalid round");
-
-        if($round->getReplay() !== null)
-            throw new \Exception("Le fichier a déjà été envoyé !");
+            if($round->getReplay() !== null)
+                throw new ControllerException("Le fichier a déjà été envoyé !");
+        } catch (ControllerException $e) {
+            $this->get('session')->getFlashBag()->add('error', $e->getMessage());
+            return $this->redirect($this->generateUrl('insalan_tournament_user_teamdetails', array('id' => $team->getId())));
+        }
 
         $form = $this->createFormBuilder($round)
             ->add('replayFile', 'file', array("label" => "Fichier"))
@@ -392,7 +416,7 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid())
-        {   
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($round);
             $em->flush();
@@ -406,7 +430,7 @@ class UserController extends Controller
     /** PRIVATE **/
 
     private function isUserInTeam(Entity\Team $team)
-    {   
+    {
 
         $user = $this->get('security.context')->getToken()->getUser();
 

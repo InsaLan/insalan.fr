@@ -33,7 +33,7 @@ window.addEvent('domready', function() {
         p += 'news/';
       }
 
-      if (module.startsWith(p)) {
+      if (0 === module.lastIndexOf(p, 0)) {
         a.parentNode.addClass('active');
       }
     });

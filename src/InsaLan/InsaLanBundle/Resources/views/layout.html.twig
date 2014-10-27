@@ -6,13 +6,14 @@
       {% stylesheets
         'bundles/insalan/css/global.css'
         'bundles/insalan/css/info.css'
-        'bundles/insalan/css/tournament.css'
         filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
       {% endstylesheets %}
     {% endblock %}
 
     <link href="{{ asset('bundles/insalan/img/favicon.png') }}" rel="icon" type="image/png"/>
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans|Open+Sans:300|Oswald" rel="stylesheet" type="text/css"/>
+
     <title>{% block title %}InsaLan{% endblock %}</title>
 
     <!--[if lt IE 9]>
@@ -35,7 +36,7 @@
           {#<span class="month">Slots</span>#}
           {#<span class="place">restants</span>#}
         {#</aside>#}
-        
+
 
         <nav>
           <ul>
@@ -69,6 +70,8 @@
       <div class="clear"></div>
     </section>
 
+    {% block rawbody %}{% endblock %}
+
     <footer>
       <div>
         <aside>
@@ -79,7 +82,7 @@
             <div id="mail"><a href="mailto:contact@insalan.fr">contact@insalan.fr</a></div>
           </div>
         </aside>
-        
+
         {% block bottom_infos %}
         <nav>
           <ul>
@@ -94,7 +97,7 @@
                 </ul>
               </div>
             </li>
-            
+
             <li>
               <header><a href="{{ path('insalan_information_default_index') }}">Infos</a></header>
               <div>
@@ -106,7 +109,7 @@
                 </ul>
               </div>
             </li>
-            
+
             <li>
               <header><a href="{{ path('insalan_stream_default_index') }}">InsaLan.fr</a></header>
               <ul>

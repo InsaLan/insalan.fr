@@ -7,7 +7,7 @@ use InsaLan\InsaLanBundle\API\Lol;
 use InsaLan\TournamentBundle\Entity\Team;
 
 class PvpNet
-{ 
+{
 
     private $API;
 
@@ -19,24 +19,23 @@ class PvpNet
     /**
      * Get the game result between teamA and teamB.
      * Throws an exception if no game was found.
-     * @param  Team          $teamA Teams can have more players than 5.     
-     * @param  Team          $teamB     
+     * @param  Team          $teamA Teams can have more players than 5.
+     * @param  Team          $teamB
      * @param  phpTimestamp  $dateLimit Games before this timestamp will not be analyzed
      *                                  Ideally, that should be the pvpNetUrl generation date
      * @return true if teamA won, false otherwise.
      */
     public function getGameResult(Team $teamA, Team $teamB, $dateLimit = null)
-    {   
+    {
 
         if($dateLimit === null)
             $dateLimit = time() - 3600 * 24; //One day
 
         foreach($teamA->getPlayers()->toArray() as $summoner)
-        {   
+        {
             $games = $this->API->game()->recent($summoner->getLolId());
-            foreach($games as $game) 
+            foreach($games as $game)
             {
-
                 if($game->invalid) continue;
                 if(intval($game->createDate / 1000) < $dateLimit) continue;
 
@@ -54,9 +53,11 @@ class PvpNet
                         $teamBChecked++;
                 }
 
-                if($teamAChecked === 5 && $teamBChecked === 5)
-                    return $winner; //We have found the right game, and it's correct :)
-
+                if(true  || ($teamAChecked === 5 && $teamBChecked === 5)) {
+                    //We have found the right game, and it's correct :)
+                    $data = $this->API->match()->match($game->gameId, false);
+                    return array($winner, json_encode($data->raw()));
+                }
             }
 
         }
@@ -67,37 +68,38 @@ class PvpNet
 
     /**
      * Generate a PVPNet url to join or create a custom game (LoL)
-     * 
+     *
      * @param  array  $conf Array of optionnals parameters
-     * 
+     *
      *                      (map => "map1"
      *                       type => "pick6"
      *                       size => 5
      *                       spectators => "specALL"
      *                       name => "default"
      *                       password => "default")
-     *                       
+     *
      * @return string
      */
     public function generateUrl($conf = array())
     {
         // Default values
-        
-        $map  = @$conf['map']        ?: "map1";  
+
+        $map  = @$conf['map']        ?: "map1";
         $type = @$conf['type']       ?: "pick6";
-        $size = @$conf['size']       ?: "5";
-        $spec = @$conf['spectators'] ?: "specALL"; 
+        $size = @$conf['size']       ?: "team5";
+        $spec = @$conf['spectators'] ?: "specLOBBYONLY";
         $name = @$conf['name']       ?: "default";
-        $pass = @$conf['password']   ?: "l1ttl3k1tt!";
+        $id   = @$conf['extra']      ?: uniqid();
+        $pass = @$conf['password']   ?: md5($id);
 
         // Generation
         // https://github.com/Skymirrh/rito-pls/blob/master/gen.php
-        
-        $conf = array('name' => $name, 'password' => $pass);
+
+        $conf = array('name' => $name, 'extra' => $id, 'password' => $pass, 'report' => '');
         $json_base64 = base64_encode(json_encode($conf, JSON_UNESCAPED_SLASHES));
         $url_format = "pvpnet://lol/customgame/joinorcreate/%s/%s/%s/%s/%s";
-        return sprintf($url_format, $map, $type, $size, $spec, $json_base64);
 
+        return sprintf($url_format, $map, $type, $size, $spec, $json_base64);
     }
 
     private function isSummonerInTeam($summonerId, Team $team)

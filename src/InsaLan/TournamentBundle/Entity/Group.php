@@ -40,7 +40,7 @@ class Group
     protected $stage;
 
     // CUSTOM FUNCTIONS FOR ADMIN
-    
+
     public function getTournament()
     {
         return $this->getStage()->getTournament();
@@ -86,7 +86,7 @@ class Group
         return $this->name;
     }
 
-    
+
     /**
      * Constructor
      */
@@ -138,8 +138,7 @@ class Group
             $this->stats[$p->getId()] = $stats;
         }
 
-        foreach ($this->getmatches() as $m) {
-
+        foreach ($this->getMatches() as $m) {
             $p1 = &$this->stats[$m->getPart1()->getId()];
             $p2 = &$this->stats[$m->getPart2()->getId()];
 
@@ -236,7 +235,7 @@ class Group
 
     /**
      * Get the match between two participants in this group only
-     * 
+     *
      * @param  \InsaLan\TournamentBundle\Entity\Participant $A
      * @param  \InsaLan\TournamentBundle\Entity\Participant $B
      * @return \InsaLan\TournamentBundle\Entity\Match       or null if not available

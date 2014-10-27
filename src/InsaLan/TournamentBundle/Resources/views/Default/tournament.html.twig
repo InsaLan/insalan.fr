@@ -4,103 +4,246 @@
   {{ parent() }} - {{ t.name }}
 {% endblock %}
 
-{% block body %}
-{{ parent() }}
-
-<article>
-  <header>
-    <h2>{{ t.name }}</h2>
-  </header>
-
-  <section>
-    {% for s in stages %}
-      <section>
-        <h3>{{ s.name }}</h3>
-
-        <aside class="groups">
-          <header>
-            <h3 class="blue">Poules</h3>
-          </header>
-        {% set count = 0 %}
-        {% for g in s.groups %}
-          {% set count = count + 1 %}
-          <table data-gid="{{ g.id }}">
-            <caption>{{ g.name }}</caption>
-              {% for p in g.participants %}
-              <tr>
-                <td>{{ p.name }}</td>
-                <td>{{ g.stats[p.id].won }}</td>
-                <td>{{ g.stats[p.id].lost }}</td>
-                <td>{{ g.stats[p.id].draw }}</td>
-              </tr>
-            {% endfor %}
-          </table>
-        {% if count is divisibleby(3) %}
-          <br class="clear">
-        {% endif %}
-        {% endfor %}
-        </aside>
-
-        <aside class="matches">
-          <header>
-            <h3>Matchs</h3>
-          </header>
-          {% for g in s.groups %}
-            <table id="grpm{{ g.id }}">
-            <caption>{{ g.name }}</caption>
-            {% for m in g.matches %}
-            {% if constant('InsaLan\\TournamentBundle\\Entity\\Match::STATE_UPCOMING') != m.state %}
-              <tr data-p1="{{ m.part1.id }}" data-p2="{{ m.part2.id }}">
-                <td>
-                  <div class="p1">{{ m.part1.name }}</div>
-                  <em>vs</em>
-                  <div class="p2">{{ m.part2.name }}</div>
-                  <div class="clear"></div>
-
-                  {% for r in m.rounds %}
-                    {% if r.replay %}<a href="{{ asset('uploads/demos/' ~ r.replay) }}"{%
-                    else %}<div{% endif %} class="dot {%
-                    if r.score1 > r.score2 %}p1{%
-                    elseif r.score1 < r.score2 %}p2{%
-                    else %}p0{% endif %}">
-                    {% if r.replay %}</a>{% else %}</div>{% endif %}
-                  {% endfor %}
-
-                  <div class="clear"></div>
-                </td>
-              </tr>
-            {% endif %}
-            {% endfor %}
-            </table>
-        {% endfor %}
-        </aside>
-        <div class="clear"></div>
-      </section>
-    {% endfor %}
-  </section>
-</article>
-
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/insalan/css/tournament2.css' filter='cssrewrite' %}
+      <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 {% endblock %}
 
+{% block rawbody %}
+{{ parent() }}
+  <header class="game">
+    <div class="container">
+      <img src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" alt="Logo"/>
+      {{ t.name }}
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="results">
+      <section class="matchs">
+        <h3>Matchs</h3>
+        {% for s in stages %}
+          {% for g in s.groups %}
+            <table class="matchs" id="matchs{{ g.id }}">
+              {% set matchFound = false %}
+              {% for m in g.matches %}
+                {% if constant('InsaLan\\TournamentBundle\\Entity\\Match::STATE_FINISHED') == m.state %}
+                {% set matchFound = true %}
+                <tr data-mid="{{ m.id }}" class="match">
+                  <td>{{ m.part1.name }}</td>
+                  <td>
+                    {% set score1 = 0 %}
+                    {% set score2 = 0 %}
+                    {% for r in m.rounds %}
+                      {% if r.score1 > r.score2 %}
+                        {% set score1 = score1 + 1 %}
+                      {% elseif r.score1 < r.score2 %}
+                        {% set score2 = score2 + 1 %}
+                      {% endif %}
+                    {% endfor %}
+                    {{ score1 }}-{{ score2 }}
+                  </td>
+                  <td>{{ m.part2.name }}</td>
+                </tr>
+                {% endif %}
+              {% endfor %}
+              {% if not matchFound %}
+              <tr>
+                <th colspan="3" style="text-align: center; padding: 7px; font-style: italic">
+                  Aucune information disponible
+                </th>
+              </tr>
+              {% endif %}
+            </table>
+          {% endfor %}
+        {% endfor %}
+      </section>
+
+      <section class="tabs">
+        <nav>
+          <ul>
+            {% for s in stages %}
+              <li>{{ s.name }}</li>
+            {% endfor %}
+          </ul>
+          <div class="clear"></div>
+        </nav>
+        {% for s in stages %}
+        <div class="groups" id="stage{{ s.id }}">
+          {% for g in s.groups %}
+          <table class="group" data-gid="{{ g.id }}">
+            <tr>
+              <th>{{ g.name }}</th>
+              <th>W</th>
+              <th>L</th>
+            </tr>
+            {% for p in g.participants %}
+            <tr>
+              <td>{{ p.name }}</td>
+              <td>{{ g.stats[p.id].won }}</td>
+              <td>{{ g.stats[p.id].lost }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endfor %}
+          <div class="clear"></div>
+        </div>
+        {% endfor %}
+      </section>
+      <div class="clear"></div>
+    </section>
+  </div>
+
+  <section class="match-details">
+    <div class="container" style="display: none">
+      <header>
+        <div class="team">
+          <h3></h3>
+          <div class="details">
+            <span class="rank">
+              Rank: <span></span>
+            </span>
+            <span class="won"></span> -
+            <span class="lost"></span>
+          </div>
+        </div>
+        <div class="score">&nbsp;</div>
+        <div class="team">
+          <h3></h3>
+          <div class="details">
+            <span class="rank">
+              Rank: <span></span>
+            </span>
+            <span class="won"></span> -
+            <span class="lost"></span>
+          </div>
+        </div>
+      </header>
+
+      <section class="rounds">
+        <nav>
+          <ul>
+            <li class="disabled" data-rid="0">-</li>
+            <li class="disabled" data-rid="1">-</li>
+            <li class="disabled" data-rid="2">-</li>
+            <li class="disabled" data-rid="3">-</li>
+            <li class="disabled" data-rid="4">-</li>
+          </ul>
+        </nav>
+        <div class="download clear g1">
+          <a href="#">Télécharger le Replay</a>
+        </div>
+      </section>
+
+
+      <table id="team100">
+        <caption></caption>
+        <tr>
+          <th>Joueur</th>
+          <th>Champion</th>
+          <th>K/D/A</th>
+          <th>Summoners</th>
+          <th>Items</th>
+          <th class="gold">Gold</th>
+          <th class="cs">CS</th>
+        </tr>
+        <tr id="champ-template" style="display: none">
+          <td class="name"></td>
+          <td class="champion">
+            <span class="champ"></span>
+            <div class="lvl">
+              LVL<br/>
+              <span class="level"></span>
+            </div>
+          </td>
+          <td class="kda"></td>
+          <td class="spells">
+            <span class="spell0"></span>
+            <span class="spell1"></span>
+          </td>
+          <td class="items">
+            <span class="item0"></span>
+            <span class="item1"></span>
+            <span class="item2"></span>
+            <span class="item3"></span>
+            <span class="item4"></span>
+            <span class="item5"></span>
+            <span class="item6"></span>
+          </td>
+          <td class="gold"></td>
+          <td class="cs"></td>
+        </tr>
+      </table>
+
+      <table id="team200">
+        <caption></caption>
+        <tr>
+          <th>Joueur</th>
+          <th>Champion</th>
+          <th>K/D/A</th>
+          <th>Summoners</th>
+          <th>Items</th>
+          <th class="gold">Gold</th>
+          <th class="cs">CS</th>
+        </tr>
+      </table>
+    </div>
+  </section>
+{% endblock %}
 
 {% block javascripts %}
   {{ parent() }}
+  {% javascripts
+    'bundles/insalan/js/tournament.js'
+    'bundles/insalan/data/champion.js'
+    'bundles/insalan/data/item.js'
+    'bundles/insalan/data/summoner.js'
+  %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+  {% endjavascripts %}
+
+
   <script type="text/javascript">
+    loadMatch.url = '{{ path('insalan_tournament_default_matchdata', {id:'__id__'}) }}';
+    loadRound.replayUrl = '{{ asset('') }}';
+
     window.addEvent('domready', function() {
-      var matches = $$('.matches table');
+      var matches = $$('table.matchs');
+      var groups = $$('table.group');
+
       if (matches.length > 0) {
-        $$('.groups table')[0].addClass('hovered');
+        groups[0].addClass('active');
         matches.setStyle('display', 'none');
         matches[0].setStyle('display', '');
 
-        $$('.groups table').addEvent('mouseover', function() {
+        groups.addEvent('click', function() {
           var gid = parseInt(this.dataset.gid);
-          matches.setStyle('display', 'none');
-          $$('.groups table').removeClass('hovered');
-          $('grpm' + gid).setStyle('display', '');
-          $(this).addClass('hovered');
+          $$('table.matchs').setStyle('display', 'none');
+          $$('table.group').removeClass('active');
+          $('matchs' + gid).setStyle('display', '');
+          $(this).addClass('active');
         });
       }
+
+      var target = $$('.match-details .container')[0];
+      matches = $$('table.matchs tr.match');
+      matches.addEvent('click', function() {
+        var mid = parseInt(this.dataset.mid);
+        loadMatch(mid, target);
+        new Fx.Scroll(window).toElement(target);
+        $$('table.matchs tr.match').removeClass('active');
+        $(this).addClass('active');
+      });
+
+      $$('.rounds nav ul li').addEvent('click', function() {
+        if ($(this).hasClass('disabled')) {
+          return;
+        }
+
+        loadRound(target, this);
+      })
     });
   </script>
 {% endblock %}

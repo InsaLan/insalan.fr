@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\MatchRepository")
  * @ORM\Table(name="`Match`")
  */
 class Match
@@ -49,7 +49,7 @@ class Match
     protected $group;
 
     // CUSTOM FUNCTIONS FOR ADMIN
-    
+
     public function __toString()
     {
         return $this->part1 . " vs " . $this->part2;
@@ -72,7 +72,7 @@ class Match
     }
 
     public function getWinner()
-    {   
+    {
         $won1 = 0;
         $won2 = 0;
         foreach($this->getRounds() as $r)
@@ -226,7 +226,7 @@ class Match
     /**
      * Get group
      *
-     * @return \InsaLan\TournamentBundle\Entity\Group 
+     * @return \InsaLan\TournamentBundle\Entity\Group
      */
     public function getGroup()
     {

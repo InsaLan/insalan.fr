@@ -1,0 +1,491 @@
+body {
+  background: #0e0e0e;
+}
+
+body > footer {
+  margin-top: 0px;
+}
+
+.spinner {
+  position: absolute;
+  opacity: 0.9;
+  z-index: 999;
+  background: black;
+}
+
+.spinner-msg {
+  text-align: center;
+  font-weight: bold;
+}
+
+.spinner-img {
+  background: url('../img/spinner.gif') no-repeat;
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
+}
+
+
+/************************************************/
+
+.game {
+  height: 120px;
+  line-height: 120px;
+  vertical-align: middle;
+  border: solid #2d2d2d 1px;
+  border-left: none;
+  border-right: none;
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 250%;
+  background: black;
+}
+
+.game img {
+  vertical-align: middle;
+  padding-right: 20px;
+}
+
+/************************************************/
+
+.results {
+  background: #0e0e0e url('../img/bg-LoL.png') no-repeat top;
+  padding-top: 20px;
+  min-height: 500px;
+}
+
+.results section.matchs {
+  width: 260px;
+  float: left;
+  position: sticky;
+  top: 5px;
+}
+
+.results table.matchs {
+  width: 100%;
+  font-family: 'PT Sans', sans-serif;
+  border-collapse: collapse;
+  border: solid #393939 1px;
+  table-layout:fixed;
+}
+
+.results table.matchs tr:hover {
+  outline: solid #00617b 1px;
+  cursor: pointer;
+}
+
+.results table.matchs tr.active, .results table.matchs tr.active:hover {
+  outline: solid #00Bff3 1px;
+}
+
+.results table.matchs tr:nth-child(odd) {
+  background: #0e0e0e;
+}
+
+.results table.matchs tr:nth-child(even) {
+  background: #141414;
+}
+
+.results table.matchs td {
+  padding: 10px 7px;
+}
+
+.results table.matchs td:nth-child(1),
+.results table.matchs td:nth-child(3) {
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.results table.matchs td:nth-child(2) {
+  color: #00bff3;
+  font-size: 150%;
+  text-shadow: 1px 2px 0px black;
+  text-align: center;
+  width: 40px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.results table.matchs td:nth-child(3) {
+  text-align: right;
+}
+
+.results .tabs {
+  float: left;
+  width: 700px;
+  margin-left: 40px;
+}
+
+.results .matchs h3,
+.results .tabs nav {
+  margin-bottom: 20px;
+}
+
+.results .matchs h3,
+.results .tabs nav ul li {
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 150%;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+.results .matchs h3:hover,
+.results .tabs nav ul li:hover {
+  color: #00bff3;
+}
+
+.results .tabs nav ul li {
+  list-style-type: none;
+  float: left;
+  margin-left: 50px;
+}
+
+.results .tabs nav ul li:first-child {
+  margin-left: 0px;
+}
+
+.results table.group:hover {
+  outline: solid #00617b 1px;
+}
+
+.results table.group.active, .results table.group.active:hover {
+  outline: solid #00bff3 1px;
+}
+
+.results table.group {
+  width: 335px; /* 213 */
+  float: left;
+  color: #9d9e9c;
+  border: solid #393939 1px;
+  border-collapse: collapse;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.results table.group td:nth-child(1) {
+  word-wrap: break-word;
+}
+
+.results table.group:nth-child(2n) {
+  margin-right: 0px;
+}
+
+.results table.group th {
+  background: #232323;
+  color: white;
+  font-family: 'Oswald', sans-serif;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 90%;
+  border-bottom: solid #393939 1px;
+  text-align: left;
+}
+
+.results table.group th,
+.results table.group td {
+  padding: 3px 8px;
+}
+
+.results table.group td {
+  padding-left: 12px;
+  background: rgba(14, 14, 14, 0.8);
+}
+
+.results table.group th:nth-child(2),
+.results table.group th:nth-child(3),
+.results table.group td:nth-child(2),
+.results table.group td:nth-child(3) {
+  padding: 0px;
+  text-align: center;
+  width: 30px;
+}
+
+.results table.group th:nth-child(2),
+.results table.group th:nth-child(3) {
+  color: #00bff3;
+}
+
+.results table.group td:nth-child(2) {
+  border-right: dashed #124d5b 1px;
+  color: #5b9966;
+}
+
+.results table.group td:nth-child(3) {
+  color: #b12e22;
+}
+
+/************************************************/
+
+.match-details {
+  background: url('../img/fade-bot.png') repeat-x top, url('../img/tweed.png') repeat;
+  padding-top: 40px;
+  padding-bottom: 100px;
+}
+
+.match-details header {
+  width: 940px;
+  height: 224px;
+  box-shadow: 0px 2px 8px 0px #000000;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+.match-details header.wleft {
+  background: url('../img/won-left.png') no-repeat;
+}
+
+.match-details header.wright {
+  background: url('../img/won-right.png') no-repeat;
+}
+
+.match-details header .team {
+  width: 320px;
+  float: left;
+}
+
+.match-details header .team h3 {
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: white;
+  font-size: 250%;
+  text-align: center;
+  margin-top: 20px;
+  text-shadow: 2px 3px 0px black;
+}
+
+.match-details header .team .details {
+  border-top: solid #00bff3 1px;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 240px;
+  height: 45px;
+  line-height: 44px;
+  margin: auto;
+  margin-top: 10px;
+  color: white;
+  font-size: 150%;
+  font-family: 'Open Sans', sans-serif;
+  padding-left: 10px;
+}
+
+.match-details header .team .details .rank {
+  float: right;
+  padding-right: 10px;
+}
+
+.match-details header .team .details .rank span {
+  color: #00bff3;
+}
+
+.match-details header .team .details .won {
+  color: #5b9966;;
+}
+
+.match-details header .team .details .lost {
+  color: #b12e22;;
+}
+
+.match-details header .score {
+  float: left;
+  width: 300px;
+  text-align: center;
+  color: #00bff3;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 800%;
+  font-weight: bold;
+  line-height: 224px;
+  text-shadow: 1px 2px 4px black;
+}
+
+/************************************************/
+
+.match-details .rounds {
+  width: 940px;
+  margin: auto;
+}
+
+.match-details .rounds ul li {
+  list-style-type: none;
+  float: left;
+  width: 188px;
+  text-align: center;
+  display: block;
+  height: 75px;
+  line-height: 75px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #b1b1b1;
+  font-size: 150%;
+  font-family: "Open Sans";
+  border-top: solid #717171 1px;
+  border-bottom: solid #717171 1px;
+}
+
+.match-details .rounds ul li.active,
+.match-details .rounds ul li:hover {
+  background: #0e0e0e;
+  color: #00bff3;
+  cursor: pointer;
+}
+
+.match-details .rounds ul li.disabled:hover {
+  background: rgba(0, 0, 0, 0.3);
+  color: #b1b1b1;
+  cursor: auto;
+}
+
+.match-details .rounds .download {
+  margin-bottom: 20px;
+  position: relative;
+  top: -1px;
+}
+
+.match-details .rounds .download.g1 {
+  margin-left: 0px;
+}
+.match-details .rounds .download.g2 {
+  margin-left: 188px;
+}
+.match-details .rounds .download.g3 {
+  margin-left: 376px;
+}
+.match-details .rounds .download.g4 {
+  margin-left: 564px;
+}
+.match-details .rounds .download.g5 {
+  margin-left: 752px;
+}
+
+.match-details .rounds .download a {
+  font-size: 80%;
+  font-weight: bold;
+  font-family: 'Open Sans';
+  color: white;
+  text-decoration: none;
+  background: #00bff3 url('../img/download.png') no-repeat 4px 7px;
+  text-transform: uppercase;
+  padding: 6px;
+  padding-left: 25px;
+  text-shadow: 0px 0px 4px white;
+  display: inline-block;
+  width: 157px;
+}
+
+.match-details .rounds .download a:hover {
+  text-shadow: 0px 0px 2px black;
+}
+
+.match-details .winner {
+  color: rgb(124, 197, 118);
+  text-shadow: 1px 1px 0px black;
+  background: rgba(124, 197, 118, 0.24);
+  padding: 3px 7px;
+  width: 926px;
+  margin: auto;
+  margin-right: 10px;
+  text-transform: uppercase;
+}
+
+/************************************************/
+
+.match-details table {
+  border-collapse: collapse;
+  width: 940px;
+  margin: auto;
+  color: white;
+  font-family: 'PT Sans', sans-serif;
+  margin-top: 20px;
+}
+
+.match-details table caption {
+  text-align: left;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 150%;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.match-details table th {
+  height: 48px;
+  text-align: left;
+  font-size: 100%;
+  font-family: 'Open Sans', sans-serif;
+  color: #171717;
+  font-weight: bold;
+  padding-left: 7px;
+}
+
+
+.match-details table#team100 th {
+  background: url('../img/table-header-blue.png') repeat-x;
+}
+
+.match-details table#team200 th {
+  background: url('../img/table-header-purple.png') repeat-x;
+}
+
+.match-details table img {
+  border-radius: 2px;
+}
+
+.match-details table .champion  { width: 75px; }
+.match-details table .kda    { width: 70px; }
+.match-details table .items  { width: 350px; }
+.match-details table .spells { width: 100px; }
+.match-details table .gold   { width: 40px; }
+.match-details table .cs     { width: 40px; }
+
+
+.match-details table tr .gold,
+.match-details table tr .cs {
+  text-align: center;
+}
+
+.match-details table tr .spells img {
+  border: solid #0f3b47 3px;
+}
+
+.match-details table tr:nth-child(even) .items img {
+  border: solid #232323 3px;
+}
+.match-details table tr:nth-child(odd) .items img {
+  border: solid #151515 3px;
+}
+
+.match-details table tr:nth-child(even) {
+  background: #131313;
+}
+.match-details table tr:nth-child(odd) {
+  background: #232323;
+}
+
+.match-details table td {
+  padding: 5px;
+}
+
+.match-details table .champ {
+  float: left;
+  display: block;
+}
+
+.match-details table .lvl {
+  float: left;
+  font-size: 60%;
+  text-align: center;
+  padding-top: 2px;
+  padding-left: 2px;
+}
+
+.match-details table .level {
+  font-size: 180%;
+}
+
+/************************************************/
+
+.match-details td, .match-details th,
+.results td, .results th {
+  vertical-align: middle;
+}
