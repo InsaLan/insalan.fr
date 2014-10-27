@@ -53,7 +53,7 @@ class PvpNet
                         $teamBChecked++;
                 }
 
-                if(true  || ($teamAChecked === 5 && $teamBChecked === 5)) {
+                if($teamAChecked === 5 && $teamBChecked === 5) {
                     //We have found the right game, and it's correct :)
                     $data = $this->API->match()->match($game->gameId, false);
                     return array($winner, json_encode($data->raw()));
