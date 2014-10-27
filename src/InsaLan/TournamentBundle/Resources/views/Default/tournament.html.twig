@@ -21,7 +21,9 @@
           <header>
             <h3 class="blue">Poules</h3>
           </header>
+        {% set count = 0 %}
         {% for g in s.groups %}
+          {% set count = count + 1 %}
           <table data-gid="{{ g.id }}">
             <caption>{{ g.name }}</caption>
               {% for p in g.participants %}
@@ -33,6 +35,9 @@
               </tr>
             {% endfor %}
           </table>
+        {% if count is divisibleby(3) %}
+          <br class="clear">
+        {% endif %}
         {% endfor %}
         </aside>
 
