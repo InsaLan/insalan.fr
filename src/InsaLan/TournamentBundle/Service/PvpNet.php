@@ -46,17 +46,40 @@ class PvpNet
                 $teamAChecked = 1;
                 $teamBChecked = 0;
 
-                foreach($game->fellowPlayers as $player) {
-                    if($player->teamId === $teamACode && $this->isSummonerInTeam($player->summonerId, $teamA))
+                $players = array();
+                $players[$game->teamId.'-'.$game->championId] = $summoner->getLolId();
+
+                foreach ($game->fellowPlayers as $player) {
+                    $players[$player->teamId.'-'.$player->championId] = $player->summonerId;
+
+                    if ($player->teamId === $teamACode && $this->isSummonerInTeam($player->summonerId, $teamA)) {
                         $teamAChecked++;
-                    elseif($player->teamId === $teamBCode && $this->isSummonerInTeam($player->summonerId, $teamB))
+                    }
+                    elseif ($player->teamId === $teamBCode && $this->isSummonerInTeam($player->summonerId, $teamB)) {
                         $teamBChecked++;
+                    }
+                    else {
+                        break;
+                    }
                 }
 
                 if($teamAChecked === 5 && $teamBChecked === 5) {
-                    //We have found the right game, and it's correct :)
-                    $data = $this->API->match()->match($game->gameId, false);
-                    return array($winner, json_encode($data->raw()));
+                    // We have found the right game, and it's correct :)
+                    $data = $this->API->match()->match($game->gameId, false)->raw();
+
+                    // If the game is obfuscated, get summoner data from the match history API
+                    if (!isset($data['participantIdentities'][key($data['participantIdentities'])]['player'])) {
+                        $names = $this->API->summoner()->name($players);
+
+                        foreach ($data['participants'] as &$part) {
+                            $summonerId = $players[$part['teamId'].'-'.$part['championId']];
+                            $data['participantIdentities'][$part['participantId']]['player'] = array(
+                                'summonerId'   => $summonerId,
+                                'summonerName' => $names[$summonerId]);
+                        }
+                    }
+
+                    return array($winner, json_encode($data));
                 }
             }
 
