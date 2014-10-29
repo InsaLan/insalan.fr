@@ -114,7 +114,6 @@ class Round
      */
     public function uploadFile()
     {
-
         $this->removeReplayFile($this->oldReplay);
 
         if (null === $this->getReplayFile()) {
@@ -123,7 +122,7 @@ class Round
 
         $this->getReplayFile()->move(
             self::UPLOAD_PATH,
-            $this->getFileName()
+            $this->getReplay()
         );
 
         $this->setReplayFile(null);
