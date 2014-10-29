@@ -18,6 +18,8 @@ class Round
     const UPLOAD_PATH = 'uploads/tournament/replays/';
     const UPLOAD_EXT  = '.lrf';
 
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -114,6 +116,7 @@ class Round
      */
     public function uploadFile()
     {
+
         $this->removeReplayFile($this->oldReplay);
 
         if (null === $this->getReplayFile()) {
@@ -122,7 +125,7 @@ class Round
 
         $this->getReplayFile()->move(
             self::UPLOAD_PATH,
-            $this->getReplay()
+            $this->getFileName()
         );
 
         $this->setReplayFile(null);
@@ -254,62 +257,6 @@ class Round
     public function getReplay()
     {
         return $this->replay;
-    }
-    /**
-     * @var \DateTime
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     */
-    private $updatedAt;
-
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return Round
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return Round
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
     }
 
 
