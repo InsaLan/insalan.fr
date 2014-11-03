@@ -74,7 +74,7 @@ class PvpNet
      *                      (map => "map1"
      *                       type => "pick6"
      *                       size => 5
-     *                       spectators => "specALL"
+     *                       spectators => "specLOBBYONLY"
      *                       name => "default"
      *                       password => "default")
      *
@@ -87,7 +87,7 @@ class PvpNet
         $map  = @$conf['map']        ?: "map1";
         $type = @$conf['type']       ?: "pick6";
         $size = @$conf['size']       ?: "team5";
-        $spec = @$conf['spectators'] ?: "specLOBBYONLY";
+        $spec = @$conf['spectators'] ?: "specALL";
         $name = @$conf['name']       ?: "default";
         $id   = @$conf['extra']      ?: uniqid();
         $pass = @$conf['password']   ?: md5($id);
