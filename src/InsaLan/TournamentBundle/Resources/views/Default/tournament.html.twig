@@ -81,7 +81,7 @@
             </tr>
             {% for p in g.participants %}
             <tr>
-              <td>{{ p.name }}</td>
+              <td><a href="{{ path('insalan_tournament_default_teampage', {id: p.id}) }}">{{ p.name }}</a></td>
               <td>{{ g.stats[p.id].won }}</td>
               <td>{{ g.stats[p.id].lost }}</td>
             </tr>
