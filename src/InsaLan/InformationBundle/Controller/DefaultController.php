@@ -16,11 +16,6 @@ class DefaultController extends Controller
      */
     public function homeAction()
     {
-        if(time() < strtotime(self::OPENING_DATE)) {
-            return $this->redirect($this->generateUrl(
-                'insalan_information_default_wait'));
-        }
-
         return array();
     }
 
@@ -49,19 +44,6 @@ class DefaultController extends Controller
      */
     public function rulesAction()
     {
-        return array();
-    }
-
-    /**
-     * @Route("/wait")
-     * @Template()
-     */
-    public function waitAction()
-    {
-        if(time() >= strtotime(self::OPENING_DATE)) {
-            return $this->redirect($this->generateUrl(
-                'insalan_information_default_home'));
-        }
         return array();
     }
 }

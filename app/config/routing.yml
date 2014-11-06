@@ -1,7 +1,7 @@
 insalan_news:
     resource: "@InsaLanNewsBundle/Controller/"
     type:     annotation
-    prefix:   /news
+    prefix:   /
 
 insalan_stream:
     resource: "@InsaLanStreamBundle/Controller/"
