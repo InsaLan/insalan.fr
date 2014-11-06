@@ -4,7 +4,7 @@
 
 {% block fos_user_content %}
 {% if error %}
-  <p class="alert-error">{{ error|trans }}</p>
+  <p class="alert-error">{{ error.message|trans }}</p>
 {% endif %}
 
 <article>

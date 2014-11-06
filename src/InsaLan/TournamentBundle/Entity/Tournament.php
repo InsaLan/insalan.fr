@@ -53,12 +53,14 @@ class Tournament
     protected $registrationLimit;
 
     /**
-     * @ORM\Column(type="enum", type="string", nullable=false, columnDefinition="enum('lol', 'dota2', 'sc2', 'hs', 'csgo', 'manual')")
+     * @ORM\Column(type="enum", type="string", nullable=false)
+     * ORM\Column(type="enum", type="string", nullable=false, columnDefinition="enum('lol', 'dota2', 'sc2', 'hs', 'csgo', 'manual')")
      */
     protected $type;
 
     /**
-     * @ORM\Column(type="enum", type="string", nullable=false, columnDefinition="enum('team', 'player')")
+     * @ORM\Column(type="enum", type="string", nullable=false)
+     * ORM\Column(type="enum", type="string", nullable=false, columnDefinition="enum('team', 'player')")
      */
     protected $participantType;
 
@@ -223,7 +225,7 @@ class Tournament
     /**
      * Get registration_open
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getRegistrationOpen()
     {
@@ -246,7 +248,7 @@ class Tournament
     /**
      * Get registration_close
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getRegistrationClose()
     {
@@ -269,7 +271,7 @@ class Tournament
     /**
      * Get registration_limit
      *
-     * @return \integer 
+     * @return \integer
      */
     public function getRegistrationLimit()
     {
@@ -292,7 +294,7 @@ class Tournament
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -315,7 +317,7 @@ class Tournament
     /**
      * Get teamMinPlayer
      *
-     * @return integer 
+     * @return integer
      */
     public function getTeamMinPlayer()
     {
@@ -338,7 +340,7 @@ class Tournament
     /**
      * Get teamMaxPlayer
      *
-     * @return integer 
+     * @return integer
      */
     public function getTeamMaxPlayer()
     {
@@ -361,7 +363,7 @@ class Tournament
     /**
      * Get participantType
      *
-     * @return string 
+     * @return string
      */
     public function getParticipantType()
     {
@@ -401,7 +403,7 @@ class Tournament
     /**
      * Get participants
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getParticipants()
     {
@@ -448,7 +450,7 @@ class Tournament
     /**
      * Get logoPath
      *
-     * @return string 
+     * @return string
      */
     public function getLogoPath()
     {
