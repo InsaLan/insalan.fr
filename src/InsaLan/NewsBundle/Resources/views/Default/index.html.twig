@@ -70,19 +70,11 @@
     {% endfor %}
   </section>
 
-  <aside class="twitter">
-    <h2>Twitter</h2>
-    <div>
-      <a class="twitter-timeline"  href="https://twitter.com/insalan" width="290" height="600" data-widget-id="437047916515962881" data-border-color="#2d2d2d" data-link-color="#00bff3" data-chrome="transparent noscrollbar">Tweets by @InsaLan</a>
-    </div>
-  </aside>
 {% endblock %}
 
 
 {% block javascripts %}
   {{ parent() }}
-
-  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
   <script type="text/javascript">
     window.addEvent('domready', function() {
