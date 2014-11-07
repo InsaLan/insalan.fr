@@ -26,7 +26,7 @@
       <div class="container">
         <div class="logo">
           <div class="pattern"></div>
-          <a href="{{ path('insalan_information_default_home') }}">
+          <a href="{{ path('insalan_news_default_index') }}">
             <img src="{{ asset('bundles/insalan/img/logo-noyear.png') }}" alt="InsaLan"/></a>
         </div>
 
@@ -40,16 +40,10 @@
 
         <nav>
           <ul>
-            <li><a href="{{ path('insalan_information_default_home') }}">Accueil</a></li>
-            <li><a href="{{ path('insalan_tournament_default_index') }}">Tournois</a></li>
-            <li><a href="{{ path('insalan_information_default_rules') }}">Règlement</a></li>
-          {% if app.user %}
-            <li><a href="{{ path('insalan_tournament_user_index') }}">Mon espace</a></li>
-            <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
-          {% else %}
-            <li><a href="{{ path('insalan_tournament_user_index') }}">Connexion</a></li>
-            <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
-          {% endif %}
+            <li><a href="{{ path('insalan_news_default_index') }}">Accueil</a></li>
+            <li><a href="{{ path('insalan_information_default_partner') }}">Partenaires</a></li>
+            <li><a href="{{ path('insalan_information_default_faq') }}">Informations</a></li>
+            <li><a href="{{ path('insalan_information_default_contact') }}">Contact</a></li>
           </ul>
         </nav>
         {% endblock %}
@@ -90,7 +84,7 @@
               <header><a href="{{ path('insalan_tournament_default_index') }}">Qualifications</a></header>
               <div>
                 <ul>
-                  <li><a href="{{ path('insalan_information_default_home') }}">Accueil</a></li>
+                  <li><a href="{{ path('insalan_news_default_index') }}">Accueil</a></li>
                   <li><a href="{{ path('insalan_information_default_rules') }}">Règlement</a></li>
                   <li><a href="{{ path('insalan_user_default_index') }}">Connexion</a></li>
                   <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
@@ -99,7 +93,7 @@
             </li>
 
             <li>
-              <header><a href="{{ path('insalan_information_default_index') }}">Infos</a></header>
+              <header><a href="{{ path('insalan_information_default_faq') }}">Infos</a></header>
               <div>
                 <ul>
                   <li><a href="{{ path('insalan_information_default_home') }}#rewards">Récompenses</a></li>

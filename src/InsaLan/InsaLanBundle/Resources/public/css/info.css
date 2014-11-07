@@ -160,7 +160,7 @@ article > ul li:before {
   color: #00bff3;
 }
 
-#tournoi section ul li span, #finale section ul li span {
+#tournoi section ul li span, #finale section ul li span, .emphase {
   font-family: Oswald;
   font-size: 0.9em;
   color: white;
@@ -198,4 +198,14 @@ article > ul li:before {
   font-family: Oswald;
 }
 
+.partner a {
+  display: block;
+  margin: auto;
+}
 
+.partner img {
+  max-height: 100px;
+  max-width: 190px;
+  display: block;
+  margin: auto;
+}

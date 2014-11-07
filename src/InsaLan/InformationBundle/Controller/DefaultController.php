@@ -29,14 +29,21 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/faq-normal")
+     * @Route("/partner")
      * @Template()
      */
-    public function indexAction()
+    public function partnerAction()
     {
         return array();
     }
-
+    /**
+     * @Route("/contact")
+     * @Template()
+     */
+    public function contactAction()
+    {
+        return array();
+    }
 
     /**
      * @Route("/rules")

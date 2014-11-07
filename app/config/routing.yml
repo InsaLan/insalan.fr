@@ -21,7 +21,7 @@ insalan_tournament:
 insalan_information:
     resource: "@InsaLanInformationBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /infos
 
 insalan_user:
     resource: "@InsaLanUserBundle/Controller/"
