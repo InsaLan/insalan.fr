@@ -255,6 +255,9 @@ body > footer {
   text-align: center;
   margin-top: 20px;
   text-shadow: 2px 3px 0px black;
+  word-wrap: break-word;
+  height: 130px;
+  overflow: hidden;
 }
 
 .match-details header .team .details {
