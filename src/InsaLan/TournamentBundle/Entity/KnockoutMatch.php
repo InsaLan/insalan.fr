@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Uses Tree extension for Doctrine (Nested Set)
+ * 
+ * https://github.com/Atlantic18/DoctrineExtensions/blob/master/doc/tree.md
+ */
+
 namespace InsaLan\TournamentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -6,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\KnockoutMatchRepository")
  * @Gedmo\Tree(type="nested")
  */
 class KnockoutMatch

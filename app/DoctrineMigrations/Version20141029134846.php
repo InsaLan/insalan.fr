@@ -15,8 +15,8 @@ class Version20141029134846 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
         
-        $this->addSql('ALTER TABLE intra_round ADD createdAt DATETIME NOT NULL, ADD updatedAt DATETIME NOT NULL');
-        $this->addSql('ALTER TABLE intra_tournament CHANGE type type VARCHAR(255) NOT NULL, CHANGE participantType participantType VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE intra_Round ADD createdAt DATETIME NOT NULL, ADD updatedAt DATETIME NOT NULL');
+        $this->addSql('ALTER TABLE intra_Tournament CHANGE type type VARCHAR(255) NOT NULL, CHANGE participantType participantType VARCHAR(255) NOT NULL');
     }
 
     public function down(Schema $schema)
