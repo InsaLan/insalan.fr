@@ -55,6 +55,13 @@ class MatchAdmin extends Admin
     {
         $datagridMapper
             ->add('group')
+            ->add('state', null, array(
+                'choices'   => array(
+                    Match::STATE_UPCOMING => 'En attente',
+                    Match::STATE_ONGOING  => 'En cours',
+                    Match::STATE_FINISHED => 'Terminé'
+                ),
+                'label'     => "Statut"))
         ;
     }
 
@@ -65,6 +72,13 @@ class MatchAdmin extends Admin
             ->add('part1', null, array('label' => "Participant 1"))
             ->add('part2', null, array('label' => "Participant 2"))
             ->add('group.name', null, array('label' => "Groupe"))
+            ->add('state', 'choice', array(
+                'choices'   => array(
+                    Match::STATE_UPCOMING => 'En attente',
+                    Match::STATE_ONGOING  => 'En cours',
+                    Match::STATE_FINISHED => 'Terminé'
+                ),
+                'label'     => "Statut"))
             ->add('_action','actions',
                 array('actions'  => array('view' => array(),
                       'edit' => array(),
