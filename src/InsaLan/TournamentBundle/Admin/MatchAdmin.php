@@ -12,7 +12,14 @@ use Sonata\AdminBundle\Route\RouteCollection;
 use InsaLan\TournamentBundle\Entity\Match;
 
 class MatchAdmin extends Admin
-{
+{   
+
+    protected $stateDef = array(
+                            Match::STATE_UPCOMING => 'En attente',
+                            Match::STATE_ONGOING  => 'En cours',
+                            Match::STATE_FINISHED => 'Terminé'
+                        );
+
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -24,11 +31,7 @@ class MatchAdmin extends Admin
             ->add('group', 'entity',
                 array('read_only' => true, 'disabled' => true, 'class' => 'InsaLan\TournamentBundle\Entity\Group'))*/
             ->add('state', 'choice', array(
-                'choices'   => array(
-                    Match::STATE_UPCOMING => 'En attente',
-                    Match::STATE_ONGOING  => 'En cours',
-                    Match::STATE_FINISHED => 'Terminé'
-                    ),
+                'choices'   => $this->stateDef,
                 'required'  => true))
         ;
     }
@@ -39,13 +42,10 @@ class MatchAdmin extends Admin
             ->add("Tournois", "string", array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
             ->add('part1', null, array('label' => "Participant 1"))
             ->add('part2', null, array('label' => "Participant 2"))
-            ->add('group', null, array('label' => "Groupe"))
+            ->add('group', null, array('label' => "Poule"))
+            ->add('koMatch.knockout', null, array('label' => "Arbre"))
             ->add('state', 'choice', array(
-                'choices'   => array(
-                    Match::STATE_UPCOMING => 'En attente',
-                    Match::STATE_ONGOING  => 'En cours',
-                    Match::STATE_FINISHED => 'Terminé'
-                ),
+                'choices'   => $this->stateDef,
                 'label'     => "Statut"))
             ->add('rounds', null, array('route' => array('name' => 'show')));
     }
@@ -54,7 +54,11 @@ class MatchAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('group')
+            ->add('group', null, array('label' => "Poule"))
+            ->add('koMatch.knockout', null, array('label' => "Arbre"))
+            ->add('state', 'doctrine_orm_string', array(), 'choice', array('choices' => $this->stateDef))
+            ->add('part1', null, array('label' => "Participant 1"))
+            ->add('part2', null, array('label' => "Participant 2"))
         ;
     }
 
@@ -64,13 +68,13 @@ class MatchAdmin extends Admin
         $listMapper
             ->add('part1', null, array('label' => "Participant 1"))
             ->add('part2', null, array('label' => "Participant 2"))
-            ->add('group.name', null, array('label' => "Groupe"))
+            ->add('extraInfos', null, array('label' => "Conteneur"))
             ->add('_action','actions',
                 array('actions'  => array('view' => array(),
                       'edit' => array(),
                       'createRound' => array(
                         'template' => 'InsaLanTournamentBundle:Admin:list__action_create_round.html.twig'
-                      ))));
+                      ))))
         ;
     }
 

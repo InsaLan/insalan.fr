@@ -49,7 +49,7 @@ class Match
     protected $group;
 
     /**
-     * @ORM\OneToOne(targetEntity="KnockoutMatch")
+     * @ORM\OneToOne(targetEntity="KnockoutMatch", mappedBy="match")
      */
     protected $koMatch;
 
@@ -61,20 +61,38 @@ class Match
     }
 
     public function getTournament()
-    {
-        return $this->getGroup()->getTournament();
+    {   
+        if($this->getGroup())
+            return $this->getGroup()->getTournament();
+        elseif($this->getKoMatch())
+            return $this->getKoMatch()->getKnockout()->getTournament();
+        else
+            return null;
     }
 
     public function getGroupStage()
-    {
-        return $this->getGroup()->getStage();
+    {   
+        if($this->getGroup())
+            return $this->getGroup()->getStage();
+        else
+            return null;
     }
 
     public function getExtraInfos()
-    {
-        return $this->getTournament()->getName() .
-        " - " .$this->getGroupStage()->getName();
-    }
+    {   
+
+        if($this->getGroup())
+        {
+            return $this->getGroup()->__toString();
+        }
+
+        elseif($this->getKoMatch())
+        {
+            return $this->getKoMatch()->__toString();
+        }
+
+        else return "?";
+    }   
 
     public function getWinner()
     {

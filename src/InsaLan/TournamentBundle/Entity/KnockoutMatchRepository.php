@@ -63,6 +63,7 @@ class KnockoutMatchRepository extends NestedTreeRepository
 
         if($parentMatch === null) {
             $parentMatch = new Match();
+            $parentMatch->setKoMatch($parent);
             $parent->setMatch($parentMatch);
         }
 

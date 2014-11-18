@@ -191,7 +191,7 @@ class Group
 
     public function __toString()
     {
-        return $this->getName();
+        return $this->getName() . " " . $this->getStage()->__toString();
     }
 
     /**

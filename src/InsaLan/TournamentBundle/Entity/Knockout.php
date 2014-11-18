@@ -36,6 +36,11 @@ class Knockout
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->name . " " . $this->tournament->getName();
+    }
+
     /**
      * Get id
      *

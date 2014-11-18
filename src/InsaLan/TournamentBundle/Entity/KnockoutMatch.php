@@ -32,7 +32,7 @@ class KnockoutMatch
     protected $knockout;
 
     /**
-     * @ORM\OneToOne(targetEntity="Match")
+     * @ORM\OneToOne(targetEntity="Match", inversedBy="koMatch")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $match;
@@ -94,7 +94,7 @@ class KnockoutMatch
 
     public function __toString()
     {
-        return $this->getFrenchLevel() . " " . $this->getKnockout()->getName() . " " . $this->getKnockout()->getTournament()->getName();
+        return $this->getFrenchLevel() . " " . $this->getKnockout()->__toString();
     }
 
     /**

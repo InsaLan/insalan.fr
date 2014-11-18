@@ -132,6 +132,6 @@ class GroupStage
 
     public function __toString()
     {
-        return $this->getTournament().' - '.$this->getName();
+        return $this->getName() . ' ' . $this->getTournament()->__toString() ;
     }
 }
