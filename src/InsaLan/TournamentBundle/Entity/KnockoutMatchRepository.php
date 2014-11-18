@@ -13,6 +13,7 @@ class KnockoutMatchRepository extends NestedTreeRepository
      * Generate a correct sized tree based on players number.
      * @param  Knockout $knockout
      * @param  Number   $players
+     * @return KnockoutMatch The root of the tree
      */
     public function generateMatches(Knockout $knockout, $players)
     {
@@ -21,17 +22,19 @@ class KnockoutMatchRepository extends NestedTreeRepository
             throw new \Exception("Wrong number of players while generating a KO tree");
 
         $lvl = 1;
-        while(pow(2, $lvl) <= $players) { $lvl++; }
+        while(pow(2, $lvl) < $players) { $lvl++; }
         
         $em = $this->getEntityManager();
 
         $root = new KnockoutMatch();
         $root->setKnockout($knockout);
 
-        createChildren($root, $lvl - 2);
+        $this->createChildren($root, $lvl - 1);
 
         $em->persist($root);
         $em->flush();
+
+        return $root;
     }
 
     /**
@@ -70,8 +73,52 @@ class KnockoutMatchRepository extends NestedTreeRepository
         else
             throw new \Exception("Unexpected invalid tree propagation : a match has already been created and filled with participants !");
 
+        $em = $this->getEntityManager();
+        $em->persist($parentMatch);
+        $em->persist($parent);
+        $em->flush();
+
         /** TODO : loser bracket listenner!  **/
 
+    }
+
+    /**
+     * Get the correct KOMatch root (final) given a Knockout tree.
+     * @param  Knockout $ko The knockout container
+     * @return KnockoutMatch
+     */
+    public function getRoot(Knockout $ko)
+    {
+        $q = $this->createQueryBuilder('kom')
+            ->where('kom.knockout = :k AND kom.parent IS NULL')
+            ->setParameter('k', $ko);
+
+        return $q->getQuery()->getSingleResult();
+    }
+
+    /**
+     * Get the depth of a given tree from 0.
+     * For example :
+     *
+     * X
+     * X  X       
+     *      X
+     * X  X
+     * X  
+     *
+     * Has a depth of 2
+     *
+     * @param  Knockout $ko [description]
+     * @return [type]       [description]
+     */
+    public function getDepth(Knockout $ko)
+    {
+        $q = $this->createQueryBuilder('kom')
+            ->select('MAX(kom.level)')
+            ->where('kom.knockout = :k')
+            ->setParameter('k', $ko);
+
+        return $q->getQuery()->getSingleScalarResult();
     }
 
 
@@ -86,6 +133,7 @@ class KnockoutMatchRepository extends NestedTreeRepository
             $child = new KnockoutMatch();
             $child->setKnockout($koMatch->getKnockout());
             $child->setParent($koMatch);
+            $koMatch->addChildren($child);
 
             $this->createChildren($child, $depth - 1);
 

@@ -75,6 +75,29 @@ class KnockoutMatch
     private $children;
 
     /**
+     * @return String A french description of this match level in the tree
+     */
+    public function getFrenchLevel()
+    {
+        switch ($this->getLevel()) {
+            case 0: return "Finale";
+            case 1: return "Demi-finale";
+            case 2: return "1/4 de finale";
+            case 3: return "1/8 de finale";
+            case 4: return "1/16 de finale";
+            case 5: return "1/32 de finale";
+            case 6: return "1/64 de finale";
+            default: return "?";
+        }
+
+    }
+
+    public function __toString()
+    {
+        return $this->getFrenchLevel() . " " . $this->getKnockout()->getName() . " " . $this->getKnockout()->getTournament()->getName();
+    }
+
+    /**
      * Get id
      *
      * @return integer

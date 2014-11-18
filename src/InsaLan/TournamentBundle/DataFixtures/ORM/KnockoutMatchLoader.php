@@ -15,23 +15,21 @@ class KnockoutMatchLoader extends AbstractFixture implements OrderedFixtureInter
 
     public function load(ObjectManager $manager)
     {
-        $e = new KnockoutMatch();
-        $e->setKnockout($this->getReference('knockout-1'));
-        $manager->persist($e);
-        $this->addReference('knockoutmatch-2-1', $e);
+        $repository = $manager->getRepository('InsaLanTournamentBundle:KnockoutMatch');
+        $rootA = $repository->generateMatches($this->getReference('knockout-1'), 8);
+        $rootB = $repository->generateMatches($this->getReference('knockout-2'), 5);
 
-        $e = new KnockoutMatch();
-        $e->setKnockout($this->getReference('knockout-1'));
-        $e->setParent($this->getReference('knockoutmatch-2-1'));
-        $manager->persist($e);
-        $this->addReference('knockoutmatch-1-1', $e);
+        $children = $rootA->getChildren()->toArray();
+        $children = $children[0];
+        $children = $children->getChildren()->toArray();
 
-        $e = new KnockoutMatch();
-        $e->setKnockout($this->getReference('knockout-1'));
-        $e->setParent($this->getReference('knockoutmatch-2-1'));
-        $manager->persist($e);
-        $this->addReference('knockoutmatch-1-2', $e);
+        $gm = $children[0];
+        $gm->setMatch($this->getReference('match-2'));
 
+        $manager->persist($gm);
         $manager->flush();
+
+        $repository->propagateVictory($gm);
+
     }
 }

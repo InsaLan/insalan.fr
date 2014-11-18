@@ -48,6 +48,11 @@ class Match
      */
     protected $group;
 
+    /**
+     * @ORM\OneToOne(targetEntity="KnockoutMatch")
+     */
+    protected $koMatch;
+
     // CUSTOM FUNCTIONS FOR ADMIN
 
     public function __toString()
@@ -231,5 +236,28 @@ class Match
     public function getGroup()
     {
         return $this->group;
+    }
+
+    /**
+     * Set koMatch
+     *
+     * @param \InsaLan\TournamentBundle\Entity\KnockoutMatch $group
+     * @return KnockoutMatch
+     */
+    public function setKoMatch(\InsaLan\TournamentBundle\Entity\KnockoutMatch $koMatch = null)
+    {
+        $this->koMatch = $koMatch;
+
+        return $this;
+    }
+
+    /**
+     * Get koMatch
+     *
+     * @return \InsaLan\TournamentBundle\Entity\KnockoutMatch
+     */
+    public function getKoMatch()
+    {
+        return $this->koMatch;
     }
 }
