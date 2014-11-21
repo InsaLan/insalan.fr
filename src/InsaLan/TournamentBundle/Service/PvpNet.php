@@ -107,7 +107,7 @@ class PvpNet
     {
         // Default values
 
-        $map  = @$conf['map']        ?: "map1";
+        $map  = @$conf['map']        ?: "map11";
         $type = @$conf['type']       ?: "pick6";
         $size = @$conf['size']       ?: "team5";
         $spec = @$conf['spectators'] ?: "specALL";
