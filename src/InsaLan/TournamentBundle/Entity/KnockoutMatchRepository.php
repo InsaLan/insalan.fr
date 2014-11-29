@@ -45,6 +45,15 @@ class KnockoutMatchRepository extends NestedTreeRepository
     {
         $match  = $koMatch->getMatch();
         $parent = $koMatch->getParent();
+        $first  = true;
+
+        // Determines wether this match is the first or the second
+            
+        $children = $this->getChildren($parent, true, 'left');
+        if($children[0]->getId() !== $koMatch->getId())
+            $first = false;
+
+        //
 
         if($match === null)
             throw new \Exception("Tried to propagate an uninitialized match");
@@ -67,13 +76,11 @@ class KnockoutMatchRepository extends NestedTreeRepository
             $parent->setMatch($parentMatch);
         }
 
-        if($parentMatch->getPart1() === null)
+        if($first)
             $parentMatch->setPart1($winner);
-        elseif($parentMatch->getPart2() === null && $parentMatch->getPart1()->getId() !== $winner->getId())
-            $parentMatch->setPart2($winner);
         else
-            throw new \Exception("Unexpected invalid tree propagation : a match has already been created and filled with participants !");
-
+            $parentMatch->setPart2($winner);
+       
         $em = $this->getEntityManager();
         $em->persist($parentMatch);
         $em->persist($parent);
@@ -119,7 +126,93 @@ class KnockoutMatchRepository extends NestedTreeRepository
             ->where('kom.knockout = :k')
             ->setParameter('k', $ko);
 
-        return $q->getQuery()->getSingleScalarResult();
+        return intval($q->getQuery()->getSingleScalarResult());
+    }
+
+    /**
+     * Get children that are at a specific level, sorted from left to right
+     * @param  Knockout $ko  The knockout tree
+     * @param  Number   $lvl 
+     * @return KnockoutMatch[]
+     */
+    public function getLvlChildren(Knockout $ko, $lvl)
+    {   
+
+        
+
+        $children = $this->getChildren($this->getRoot($ko), null, "left", "asc");
+
+        $lastChildren = array();
+        foreach($children as $child)
+        {
+            if($child->getLevel() === $lvl)
+                $lastChildren[] = $child;
+        }
+
+        return $lastChildren;
+    }
+
+    /**
+     * Get JSON format for jQuery Bracket
+     * @param  Knockout $ko
+     * @return String
+     */
+    public function getJson(Knockout $ko)
+    {
+        $teams = array();
+        $depth = $this->getDepth($ko);
+
+        $children = $this->getLvlChildren($ko, $depth);
+
+        foreach($children as $child) {
+
+            $match = $child->getMatch();
+            if($match === null) {
+                $teams[] = array("-", "-");
+                continue;
+            }
+
+            $part1 = $match->getPart1();
+            $part2 = $match->getPart2();
+
+            if($part1 === null) $part1 = "-";
+            else $part1 = $part1->getName();
+
+            if($part2 === null) $part2 = "-";
+            else $part2 = $part2->getName();
+
+            $teams[] = array($part1, $part2);
+        }
+
+        $results = array();
+
+        for($lvl = $depth; $lvl >= 0; $lvl--) {
+            $parents = array();
+            $round   = array();
+            $i = 0;
+            foreach($children as $child) {
+                
+                if($i++ % 2 === 0)
+                    $parents[] = $child->getParent();
+
+                $match = $child->getMatch();
+                if($match === null) {
+                    $round[] = array(null, null);
+                    continue;
+                }
+
+                $round[] = array($match->getScore1(), $match->getScore2());
+
+            }
+            $results[] = $round;
+            $children = $parents;
+        }
+
+        return json_encode(array(
+            "teams" => $teams,
+            "results" => $results
+        ));
+
     }
 
 

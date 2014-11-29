@@ -16,20 +16,26 @@ class KnockoutMatchLoader extends AbstractFixture implements OrderedFixtureInter
     public function load(ObjectManager $manager)
     {
         $repository = $manager->getRepository('InsaLanTournamentBundle:KnockoutMatch');
-        $rootA = $repository->generateMatches($this->getReference('knockout-1'), 8);
-        $rootB = $repository->generateMatches($this->getReference('knockout-2'), 5);
+        $rootA = $repository->generateMatches($this->getReference('knockout-1'), 5);
+        $rootB = $repository->generateMatches($this->getReference('knockout-2'), 8);
 
-        $children = $rootA->getChildren()->toArray();
-        $children = $children[0];
-        $children = $children->getChildren()->toArray();
+        $lvl1 = $rootA->getChildren()->toArray();
+        $lvl21 = $lvl1[0]->getChildren()->toArray();
+        $lvl22 = $lvl1[1]->getChildren()->toArray();
 
-        $gm = $children[0];
-        $gm->setMatch($this->getReference('match-2'));
+        $lvl21[0]->setMatch($this->getReference('match-2'));
+        $lvl21[1]->setMatch($this->getReference('match-3'));
+        $lvl22[0]->setMatch($this->getReference('match-4'));
 
-        $manager->persist($gm);
+        $manager->persist($lvl21[0]);
+        $manager->persist($lvl21[1]);
+        $manager->persist($lvl22[0]);
         $manager->flush();
 
-        $repository->propagateVictory($gm);
+        $repository->propagateVictory($lvl21[1]);
+        $repository->propagateVictory($lvl21[0]);
+
+        $repository->propagateVictory($lvl22[0]);
 
     }
 }

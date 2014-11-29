@@ -96,18 +96,33 @@ class Match
 
     public function getWinner()
     {
-        $won1 = 0;
-        $won2 = 0;
+        $won1 = $this->getScore1();
+        $won2 = $this->getScore2();
+        
+        if($won1 === $won2) return null;
+        return ($won1 > $won2 ? $this->getPart1() : $this->getPart2());
+    }
+
+    public function getScore1()
+    {   
+        $won = 0;
         foreach($this->getRounds() as $r)
         {
             if($r->getScore1() > $r->getScore2())
-                $won1++;
-            if($r->getScore2() > $r->getScore1())
-                $won2++;
+                $won++;
         }
+        return $won;
+    }
 
-        if($won1 === $won2) return null;
-        return ($won1 > $won2 ? $this->getPart1() : $this->getPart2());
+    public function getScore2()
+    {
+        $won = 0;
+        foreach($this->getRounds() as $r)
+        {
+            if($r->getScore2() > $r->getScore1())
+                $won++;
+        }
+        return $won;
     }
 
     // End of Customs
