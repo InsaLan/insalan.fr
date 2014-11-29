@@ -35,7 +35,8 @@ class KnockoutMatchLoader extends AbstractFixture implements OrderedFixtureInter
         $repository->propagateVictory($lvl21[1]);
         $repository->propagateVictory($lvl21[0]);
 
-        $repository->propagateVictory($lvl22[0]);
+        $repository->propagateVictory($lvl22[0], true);
 
+        $repository->propagateVictory($lvl1[1], true); //propagate a direct match
     }
 }
