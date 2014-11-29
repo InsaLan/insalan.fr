@@ -6,14 +6,23 @@
 {% endblock %}
 
 
-{#
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets 'bundles/insalan/css/tournament.css' %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
+    {% stylesheets 'bundles/insalan/css/jquery.bracket.min.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
-#}
+
+{% block javascripts %}
+    {% javascripts 'bundles/insalan/js/jquery.js'
+                   'bundles/insalan/js/jquery.bracket.min.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript">
+        jQuery.noConflict();
+    </script>
+    {{ parent() }}
+{% endblock %}
 
 {% block body %}
 {% endblock %}
