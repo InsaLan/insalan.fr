@@ -11,6 +11,24 @@
     {% stylesheets 'bundles/insalan/css/jquery.bracket.min.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
+
+    <style type="text/css"> {# overrides jQBracket style #}
+      div.jQBracket {
+        width: 100% !important;
+      }
+      div.jQBracket .bracket {
+        float:left !important;
+      }
+      div.jQBracket .team {
+        width: 150px !important;
+      }
+      div.jQBracket .round {
+        width: 150px !important;
+      }
+      div.jQBracket .team div.label {
+        width: 130px !important;
+      }
+    </style>
 {% endblock %}
 
 {% block javascripts %}

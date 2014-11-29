@@ -146,4 +146,27 @@ class DefaultController extends Controller
 
         return new \Symfony\Component\HttpFoundation\JsonResponse($out);
     }
+
+    /**
+     * @Route("/public/knockout/{id}")
+     * @Method({"GET"})
+     * @Template
+     */
+    public function knockoutAction(Entity\Tournament $t)
+    {   
+        $em = $this->getDoctrine()->getManager();
+
+        $KOs = $em->getRepository('InsaLanTournamentBundle:Knockout')->findByTournament($t);
+
+        $output = array();
+
+        foreach($KOs as $ko) {
+            $ko->jsonData = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getJson($ko);
+            $output[] = $ko;
+        }
+
+        return array("tournament" => $t, "knockouts" => $output);
+        
+
+    }
 }
