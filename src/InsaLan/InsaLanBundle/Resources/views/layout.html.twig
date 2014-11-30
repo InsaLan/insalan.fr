@@ -31,12 +31,17 @@
         </div>
 
         {% block top_infos %}
-        {#<aside>#}
-          {#<span class="day"></span>#}
-          {#<span class="month">Slots</span>#}
-          {#<span class="place">restants</span>#}
-        {#</aside>#}
-
+        <aside>
+            <div class="input">
+                {% if app.user %}
+                <a href="{{ path('fos_user_registration_register') }}" class="btn2 pull-right" style="margin-left: 10px;">Déconnexion</a>
+                <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right">Mon compte</a>
+                {% else %}
+                <a href="{{ path('fos_user_registration_register') }}" class="btn2 pull-right" style="margin-left: 10px;">Inscription</a>
+                <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right">Connexion</a>
+                {% endif %}
+            </div>
+        </aside>
 
         <nav>
           <ul>

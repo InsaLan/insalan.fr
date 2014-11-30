@@ -139,7 +139,7 @@ body > header aside {
   position: absolute;
   top: 0px;
   right: 0px;
-  background: url('../img/header_pattern2.png');
+  padding: 10px;
 }
 
 body > header aside span {
@@ -501,6 +501,7 @@ footer #copyright span {
 
 .input input,
 .input button,
+.input .btn2,
 .input select {
   display: block;
 }
@@ -550,7 +551,7 @@ footer #copyright span {
   padding: 2px 5px 2px 2px;
 }
 
-input[type=submit], input[type=button], button {
+input[type=submit], input[type=button], button, .btn2 {
   font-size: 1.2em;
   color: white;
   background-color: #00bff3;
@@ -558,8 +559,12 @@ input[type=submit], input[type=button], button {
   padding: 5px;
 }
 
-input[type=submit]:active, input[type=button]:active, button:active {
+input[type=submit]:active, input[type=button]:active, button:active, .btn2:active {
   background-color: #0095be;
+}
+
+.btn2-nocolor {
+    background-color: #A2A2A2;
 }
 
 .input select {
