@@ -1,0 +1,45 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block title %}
+  {{ parent() }} - {{ tournament.name }}
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+
+  <header>
+    <h2>Arbres - {{ tournament.name }}</h2>
+  </header>
+
+  {% for ko in knockouts %}
+
+    <h1 style="margin-top:20px">{{ ko.name }}</h1>
+
+    <div id="bracketContainer_{{ ko.id }}">
+    </div>
+
+    <div class="clear"></div>
+
+  {% endfor %}
+
+</article>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+<script type="text/javascript">
+{% for ko in knockouts %}
+(function($) {
+    $('#bracketContainer_{{ ko.id }}').bracket({
+      init:  {{ ko.jsonData|raw }},
+      skipConsolationRound: true,
+    });
+})(jQuery);
+{% endfor %}
+</script>
+
+{% endblock %}

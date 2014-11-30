@@ -28,6 +28,16 @@ class Knockout
      */
     protected $name;
 
+    /** For Bracket Generation **/
+
+    protected $size;
+    public function getSize() {
+        return $this->size;
+    }
+    public function setSize($s) {
+        $this->size = intval($s);
+    }
+
     /**
      * Constructor
      */
@@ -37,8 +47,12 @@ class Knockout
     }
 
     public function __toString()
-    {
-        return $this->name . " " . $this->tournament->getName();
+    {   
+        if($this->tournament)
+            return $this->name . " " . $this->tournament->getName();
+
+        else
+            return $this->name;
     }
 
     /**

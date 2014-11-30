@@ -95,10 +95,17 @@ class Match
     }   
 
     public function getWinner()
-    {
+    {   
+
+        if($this->getPart1() === null && $this->getPart2() !== null)
+            return $this->getPart2();
+
+        if($this->getPart2() === null && $this->getPart1() !== null)
+            return $this->getPart1();
+
         $won1 = $this->getScore1();
         $won2 = $this->getScore2();
-        
+
         if($won1 === $won2) return null;
         return ($won1 > $won2 ? $this->getPart1() : $this->getPart2());
     }

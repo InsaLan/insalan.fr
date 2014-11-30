@@ -18,6 +18,7 @@ class KnockoutMatchLoader extends AbstractFixture implements OrderedFixtureInter
         $repository = $manager->getRepository('InsaLanTournamentBundle:KnockoutMatch');
         $rootA = $repository->generateMatches($this->getReference('knockout-1'), 5);
         $rootB = $repository->generateMatches($this->getReference('knockout-2'), 8);
+        $manager->flush();
 
         $lvl1 = $rootA->getChildren()->toArray();
         $lvl21 = $lvl1[0]->getChildren()->toArray();
@@ -35,7 +36,8 @@ class KnockoutMatchLoader extends AbstractFixture implements OrderedFixtureInter
         $repository->propagateVictory($lvl21[1]);
         $repository->propagateVictory($lvl21[0]);
 
-        $repository->propagateVictory($lvl22[0]);
+        $repository->propagateVictory($lvl22[0], true);
 
+        $repository->propagateVictory($lvl1[1], true); //propagate a direct match
     }
 }

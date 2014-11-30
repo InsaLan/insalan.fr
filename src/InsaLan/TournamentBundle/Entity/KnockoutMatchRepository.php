@@ -40,9 +40,11 @@ class KnockoutMatchRepository extends NestedTreeRepository
     /**
      * Propagate winner into the tree
      * @param  KnockoutMatch $koMatch
+     * @param  Boolean       $forcePropagate allow propagate if match not played
      */
-    public function propagateVictory(KnockoutMatch $koMatch)
-    {
+    public function propagateVictory(KnockoutMatch $koMatch, $forcePropagate = false)
+    {   
+        $em = $this->getEntityManager();
         $match  = $koMatch->getMatch();
         $parent = $koMatch->getParent();
         $first  = true;
@@ -53,22 +55,30 @@ class KnockoutMatchRepository extends NestedTreeRepository
         if($children[0]->getId() !== $koMatch->getId())
             $first = false;
 
-        //
 
         if($match === null)
-            throw new \Exception("Tried to propagate an uninitialized match");
+            return;
 
-        if($match->getState() !== Match::STATE_FINISHED)
+        if($match->getState() !== Match::STATE_FINISHED && !$forcePropagate)
             return;
 
         if($parent === null)
             return; /** TODO : call a kind of "endOfKnockout" method **/
 
-        $winner      = $match->getWinner();
-        $parentMatch = $parent->getMatch();
+        $winner = $match->getWinner();
 
-        if($winner === null)
-            return; /** TODO : throw a error to the correct handler, because we need to make a decision. This case shoul never happen. **/
+        // If autopropagated this case can happen
+        if($match->getPart2() === null) {
+            $match->setState(Match::STATE_FINISHED);
+            $r = new Round();
+            $r->setScore1(1);
+            $r->setScore2(0);
+            $r->setMatch($match);
+            $match->addRound($r);
+            $em->persist($r);
+        }
+
+        $parentMatch = $parent->getMatch();
 
         if($parentMatch === null) {
             $parentMatch = new Match();
@@ -80,8 +90,7 @@ class KnockoutMatchRepository extends NestedTreeRepository
             $parentMatch->setPart1($winner);
         else
             $parentMatch->setPart2($winner);
-       
-        $em = $this->getEntityManager();
+    
         $em->persist($parentMatch);
         $em->persist($parent);
         $em->flush();
