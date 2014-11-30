@@ -63,19 +63,19 @@
 
       <section class="tabs">
         <nav>
-          <ul>
+            <ul>
             {% for s in stages %}
-              <li>{{ s.name }}</li>
+            <li><a href="#" class="tablink" data-target="stage{{ s.id }}">{{ s.name }}</a></li>
             {% endfor %}
-            {% for k in knockout %}
-              <li>{{ k.name }}</li>
+            {% for k in knockouts %}
+              <li><a href="#" class="tablink" data-target="ko{{ k.id }}">{{ k.name }}</a></li>
             {% endfor %}
 
           </ul>
           <div class="clear"></div>
         </nav>
         {% for s in stages %}
-        <div class="groups" id="stage{{ s.id }}">
+        <div class="groups" id="stage{{ s.id }}" style="display: none;">
           {% for g in s.groups %}
           <table class="group" data-gid="{{ g.id }}">
             <tr>
@@ -94,6 +94,16 @@
           {% endfor %}
           <div class="clear"></div>
         </div>
+        {% endfor %}
+
+        {% for k in knockouts %}
+        <div class="groups" id="ko{{ k.id }}" style="display: none;">
+            <div id="bracketContainer_{{ k.id }}">
+            </div>
+
+            <div class="clear"></div>
+        </div>
+
         {% endfor %}
       </section>
       <div class="clear"></div>
@@ -250,4 +260,26 @@
       })
     });
   </script>
+  
+  <script>
+  {% for k in knockouts %}
+    (function($) {
+        $('#bracketContainer_{{ k.id }}').bracket({
+          init:  {{ k.jsonData|raw }},
+          skipConsolationRound: true,
+        });
+    })(jQuery);
+  {% endfor %}
+  </script>
+
+  <script>
+      (function($) {
+        $(".tablink").click(function() { 
+            $(".groups").hide();
+            var target = $( this ).data('target');
+            $("#"+target).show();
+        });
+    })(jQuery);
+  </script>
+
 {% endblock %}

@@ -126,7 +126,7 @@ body > footer {
 .results .tabs nav ul li {
   color: white;
   font-family: 'Open Sans', sans-serif;
-  font-size: 150%;
+  font-size: 100%;
   font-weight: normal;
   text-transform: uppercase;
 }
@@ -139,7 +139,7 @@ body > footer {
 .results .tabs nav ul li {
   list-style-type: none;
   float: left;
-  margin-left: 50px;
+  margin-left: 20px;
 }
 
 .results .tabs nav ul li:first-child {
