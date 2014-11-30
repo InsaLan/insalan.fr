@@ -34,7 +34,7 @@
         <aside>
             <div class="input">
                 {% if app.user %}
-                <a href="{{ path('fos_user_registration_register') }}" class="btn2 pull-right" style="margin-left: 10px;">Déconnexion</a>
+                <a href="{{ path('fos_user_security_logout') }}" class="btn2 pull-right" style="margin-left: 10px;">Déconnexion</a>
                 <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right">Mon compte</a>
                 {% else %}
                 <a href="{{ path('fos_user_registration_register') }}" class="btn2 pull-right" style="margin-left: 10px;">Inscription</a>
