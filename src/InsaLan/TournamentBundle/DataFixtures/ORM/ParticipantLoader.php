@@ -18,6 +18,7 @@ class ParticipantLoader extends AbstractFixture implements OrderedFixtureInterfa
         $e = new Player();
         $e->setLolName('Herpandine');
         $e->setTournament($this->getReference('tournament-1'));
+        $e->setUser($this->getReference('user-1'));
         $manager->persist($e);
         $this->addReference('participant-1', $e);
 
@@ -42,6 +43,7 @@ class ParticipantLoader extends AbstractFixture implements OrderedFixtureInterfa
         $e = new Player();
         $e->setLolName('Rémi');
         $e->setTournament($this->getReference('tournament-1'));
+        $e->setUser($this->getReference('user-2'));
         $manager->persist($e);
         $this->addReference('participant---1', $e);
 

@@ -55,5 +55,18 @@ class RoundAdmin extends Admin
         ;
     }
 
+    public function postUpdate($round)
+    {   
+
+        $match = $round->getMatch();
+        if($match->getState() === Match::STATE_FINISHED && $match->getKoMatch())
+        {
+            $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
+            $repository = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch');
+            $repository->propagateVictory($match->getKoMatch());
+            $em->flush();
+        }
+    }
+
 
 }

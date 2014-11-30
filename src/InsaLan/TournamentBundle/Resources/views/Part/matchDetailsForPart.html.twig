@@ -1,0 +1,57 @@
+   
+    <div class="match_detail" data-p1="{{ m.part1.id }}" data-p2="{{ m.part2.id }}">
+
+      <table cellpadding="3px">
+        <caption>Match {{i}}</caption>
+        <thead>
+          <th style="width:45%">{{ m.part1.name }}</th>
+          <th style="width:45%">{{ m.part2.name }}</th>
+          <th style="width:10%"></th>
+        </thead>
+        {% for r in m.rounds %}
+        <tr>
+          <td class="{% if r.score1 > r.score2 %}won{% elseif r.score1 < r.score2 %}lost{% endif %}">
+            {{r.score1}}
+          </td>
+          <td class="{% if r.score1 < r.score2 %}won{% elseif r.score1 > r.score2 %}lost{% endif %}">
+            {{r.score2}}
+          </td>
+          <td>
+            {% if r.replay == null and authorized %}
+              <a href="{{ path('insalan_tournament_user_roundaddreplay', {id: part.id, round: r.id }) }}">replay</a>
+            {% elseif r.replay != null %}
+              <a href="{{ asset('uploads/tournament/replays/' ~ r.replay) }}">voir</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      {% if m.state == 0 %}
+        <p>Match en attente</p>
+      {% elseif m.state == 1 %}
+
+        {% if authorized == true %}
+        <p>
+            Match à jouer entre <br>
+            <strong><a href="{{ path('insalan_tournament_default_teampage', {id: m.part1.id}) }}">{{ m.part1 }}</a></strong> et <strong><a href="{{ path('insalan_tournament_default_teampage',{id: m.part2.id}) }}">{{ m.part2 }}</a></strong>
+        </p>
+
+        <br />
+        <form action="{{ path('insalan_tournament_user_teamvalidatematch', {id: part.id, match: m.id }) }}" method="GET">
+          <i>Tournament Code :</i>
+          <input title="Dans le launcher : Play - Custom - Tournament Code" type="text" value="{{ m.pvpNetUrl }}" style="width: 95%;padding: 3px 5px;background: #232323;cursor: help" onclick="this.setSelectionRange(0, this.value.length)"/><br/>
+          <input value="Récupérer le match" type="submit">
+        </form>
+        {% else %}
+
+        <p>Match en attente</p>
+
+        {% endif %}
+
+      {% else %}
+        <p>Match terminé !</p>
+        <p>Remporté par <strong>{{ m.getWinner().name }}</strong></p>
+      {% endif %}
+
+    </div>

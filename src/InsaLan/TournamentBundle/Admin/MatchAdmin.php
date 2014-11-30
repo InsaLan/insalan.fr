@@ -83,5 +83,15 @@ class MatchAdmin extends Admin
         $collection->add('createRound', $this->getRouterIdParameter().'/createRound');
     }
 
+    public function postUpdate($match)
+    {
+        if($match->getState() === Match::STATE_FINISHED && $match->getKoMatch())
+        {
+            $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
+            $repository = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch');
+            $repository->propagateVictory($match->getKoMatch());
+            $em->flush();
+        }
+    }
 
 }

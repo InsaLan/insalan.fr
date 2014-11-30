@@ -76,17 +76,6 @@ services:
         calls:
             - [ setTranslationDomain, [InsaLanTournamentBundle]]
 
-    sonata.admin.tournament.knockout:
-        class: InsaLan\TournamentBundle\Admin\KnockoutAdmin
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Arbres" }
-        arguments:
-            - ~
-            - InsaLan\TournamentBundle\Entity\Knockout
-            - ~
-        calls:
-            - [ setTranslationDomain, [InsaLanTournamentBundle]]
-
     insalan.tournament.participant_validator:
         class: InsaLan\TournamentBundle\Subscriber\ParticipantValidator
         tags:

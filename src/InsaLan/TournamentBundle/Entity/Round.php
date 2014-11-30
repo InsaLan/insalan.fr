@@ -76,10 +76,9 @@ class Round
     }
 
     public function getExtraInfos()
-    {
-        return $this->getTournament()->getName() .
-        " - " .$this->getGroupStage()->getName() .
-         " (" .$this->getGroup()->getName() . ")";
+    {   
+
+        return $this->getMatch()->getExtraInfos();
     }
 
     // End Of Customs

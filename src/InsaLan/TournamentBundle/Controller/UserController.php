@@ -305,33 +305,72 @@ class UserController extends Controller
      * @Route("/user/team/{id}", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function teamDetailsAction(Entity\Team $team)
+    public function teamDetailsAction(Entity\Participant $part)
     {
-        $pvpService = $this->get('insalan.tournament.pvp_net');
 
-        foreach ($team->getGroups() as $g)
+        // Get Knockout & Group Matches
+        
+        $em = $this->getDoctrine()->getManager();
+        $matches = $em->getRepository("InsaLanTournamentBundle:Match")->getByParticipant($part);
+
+        $kos = array();
+        $grs = array();
+
+        // Populate and sort arrays
+        foreach($matches as $m)
         {
-            $g->countWins();
-            // TODO : LoL Only !
-            foreach ($g->getMatches() as $m)
-            {
-                $round = 1;
-                $name = "InsaLan Match " . $m->getId() ." G".$round;
-                $m->pvpNetUrl = $pvpService->generateUrl(array(
-                    "name" => $name,
-                    "extra" => $m->getId(),
-                    "pass" => md5('insalan_match_#'.$m->getId().'_'.$round)));
+            if($m->getGroup() !== null) {
+                $id = $m->getGroup()->getId();
+                if(!isset($grs[$id])) {
+                    $grs[$id] = array();
+                }
+                $grs[$id][] = $m;
+            }
+            elseif($m->getKoMatch() !== null) {
+                $id = $m->getKoMatch()->getKnockout()->getId();
+                if(!isset($kos[$id])) {
+                    $kos[$id] = array();
+                }
+                $kos[$id][] = $m;
             }
         }
 
-        return array("team" => $team, "authorized" => $this->isUserInTeam($team));
+        foreach ($grs as $g)
+        {   
+            foreach($g as $m) 
+            {
+                $this->populateTournamentCode($m);
+            }
+        }
+
+        foreach ($kos as $g)
+        {   
+            foreach($g as $m) 
+            {
+                $this->populateTournamentCode($m);
+            }
+        }
+
+
+        return array("part" => $part, "groupMatches" => $grs, "knockoutMatches" => $kos, "authorized" => $this->isUserInTeam($part));
+    }
+
+    private function populateTournamentCode(Entity\Match $m)
+    {   
+        $pvpService = $this->get('insalan.tournament.pvp_net');
+        $round = 1;
+        $name = "InsaLan Match " . $m->getId() ." G".$round;
+        $m->pvpNetUrl = $pvpService->generateUrl(array(
+            "name" => $name,
+            "extra" => $m->getId(),
+            "pass" => md5('insalan_match_#'.$m->getId().'_'.$round)));
     }
 
     /**
      * @Route("/user/public/team/{id}/validate/{match}", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function teamValidateMatchAction(Entity\Team $team, Entity\Match $match)
+    public function teamValidateMatchAction(Entity\Participant $team, Entity\Match $match)
     {
         try {
             $pvpService = $this->get('insalan.tournament.pvp_net');
@@ -380,7 +419,13 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($round);
         $em->persist($match);
+
         $em->flush();
+
+        if($match->getKoMatch()) {
+            $em->getRepository("InsaLanTournamentBundle:KnockoutMatch")->propagateVictory($match->getKoMatch());
+            $em->flush();
+        }
 
         return $this->redirect($this->generateUrl('insalan_tournament_user_teamdetails', array('id' => $team->getId())));
 
@@ -390,7 +435,7 @@ class UserController extends Controller
      * @Route("/user/team/{id}/addReplay/{round}", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function roundAddReplayAction(Request $request, Entity\Team $team, Entity\Round $round)
+    public function roundAddReplayAction(Request $request, Entity\Participant $team, Entity\Round $round)
     {
         try {
             // Check security
@@ -429,21 +474,28 @@ class UserController extends Controller
 
     /** PRIVATE **/
 
-    private function isUserInTeam(Entity\Team $team)
+    private function isUserInTeam(Entity\Participant $part)
     {
 
         $user = $this->get('security.context')->getToken()->getUser();
 
-        foreach ($team->getPlayers() as $p)
-        {
-            if($p->getUser() !== null && $p->getUser()->getId() === $user->getId())
+        if($part instanceof Entity\Team) {
+
+            foreach ($team->getPlayers() as $p)
             {
-                return true;
+                if($p->getUser() !== null && $p->getUser()->getId() === $user->getId())
+                {
+                    return true;
+                }
+
             }
 
+            return false;
         }
 
-        return false;
+        else {
+            return $part->getUser() === $user && $user !== null;
+        }
     }
 
 

@@ -37,10 +37,42 @@ class KnockoutMatchRepository extends NestedTreeRepository
         return $root;
     }
 
+    /**
+     * Propagate each knockoutMatch in a Knockout
+     * It handles correctly null participants and absent matches
+     * @param  Knockout $ko
+     */
     public function propagateVictoryAll(Knockout $ko)
     {
         $knockoutMatches = $this->getChildren($this->getRoot($ko), null, "level", "desc");
+        $lvl = -1;
+        $last = array();
         foreach($knockoutMatches as $koMatch) {
+            if($lvl === -1) $lvl = $koMatch->getLevel();
+            if($lvl !== $koMatch->getLevel()) {
+
+                /**
+                 * We need to finish games that has no participant
+                 * at the start of the tree. In order to achieve
+                 * this and not break classic rules, we have to
+                 * re-iterate into a tree level after the first
+                 * iteration.
+                 *
+                 * This should never happen if tree have a correct
+                 * number of participants.
+                 */
+
+                $lvl = $koMatch->getLevel();
+                foreach($last as $m) {
+                    $parentMatch = $m->getParent()->getMatch();
+                    if(!$parentMatch) continue;
+                    if(($parentMatch->getPart1() === null || $parentMatch->getPart2() === null)
+                        && $m->bothChildrenEnded)
+                        $parentMatch->setState(Match::STATE_FINISHED);
+                }
+                $last = array();
+            }
+            $last[] = $koMatch;
             $this->propagateVictory($koMatch);
         }
 
@@ -72,6 +104,7 @@ class KnockoutMatchRepository extends NestedTreeRepository
             $bothChildrenEnded = ($children[0]->getMatch()->getState() === Match::STATE_FINISHED
                             &&    $children[1]->getMatch()->getState() === Match::STATE_FINISHED);
 
+        $koMatch->bothChildrenEnded = $bothChildrenEnded; // Save it for later use.
 
         if($match === null)
             return;
@@ -114,10 +147,6 @@ class KnockoutMatchRepository extends NestedTreeRepository
             $parentMatch->setPart1($winner);
         else
             $parentMatch->setPart2($winner);
-
-        if(($parentMatch->getPart1() === null || $parentMatch->getPart2() === null) && $bothChildrenEnded) {
-            $parentMatch->setState(Match::STATE_FINISHED);
-        }
     
         $em->persist($parentMatch);
         $em->persist($parent);

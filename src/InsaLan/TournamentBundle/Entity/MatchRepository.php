@@ -37,4 +37,15 @@ class MatchRepository extends EntityRepository
         $q->where('m.id = :id')->setParameter('id', (int)$id);
         return $q->getQuery()->getSingleResult();
     }
+
+    public function getByParticipant(Entity\Participant $part)
+    {
+        $q = $this->getQueryBuilder();
+        $q->addSelect('partial r.{id, score1, score2, replay}');
+        $q->where('m.part1 = :a OR m.part2 = :a')
+          ->setParameter('a', $part);
+        $q->orderBy("m.id");
+
+        return $q->getQuery()->execute();
+    }
 }

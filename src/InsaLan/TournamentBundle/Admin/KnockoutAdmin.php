@@ -9,15 +9,6 @@ use Sonata\AdminBundle\Form\FormMapper;
 
 class KnockoutAdmin extends Admin
 {
-    // Fields to be shown on create/edit forms
-    protected function configureFormFields(FormMapper $formMapper)
-    {
-        $formMapper
-            ->add('name')
-            ->add('tournament')
-            ->add('size', 'integer')
-        ;
-    }
 
     // Fields to be shown on filter forms
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
