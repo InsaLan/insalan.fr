@@ -190,7 +190,8 @@ class Group
     }
 
     public function __toString()
-    {
+    {   
+        if($this->getStage() === null) return "";
         return $this->getName() . " " . $this->getStage()->__toString();
     }
 
