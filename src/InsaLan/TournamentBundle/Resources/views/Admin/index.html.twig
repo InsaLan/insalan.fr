@@ -1,0 +1,47 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
+      <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <header>
+    <h2>Gestion des Tournois</h2>
+  </header>
+
+  <section>
+    {{ form_start(form, {attr:{'class':'oneline'}}) }}
+      {{ form_errors(form) }}
+      {{ form_row(form.tournament) }}
+      <div class="input left">
+        <input type="submit" value="&rarr;"/>
+      </div>
+    {{ form_end(form) }}
+  </section>
+
+</article>
+
+{% if stages %}
+  <hr style="margin: 20px 0px;"/>
+  {% for s in stages %}
+    <h3>{{ s.name }}</h3>
+  {% endfor %}
+
+{% endif %}
+
+{% if knockouts %}
+  <hr style="margin: 20px 0px;"/>
+  {% for ko in knockouts %}
+    <h3>{{ ko.name }}</h3>
+  {% endfor %}
+
+{% endif %}
+
+{% endblock %}
