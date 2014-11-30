@@ -24,20 +24,19 @@ class KnockoutMatchLoader extends AbstractFixture implements OrderedFixtureInter
         $lvl21 = $lvl1[0]->getChildren()->toArray();
         $lvl22 = $lvl1[1]->getChildren()->toArray();
 
-        $lvl21[0]->setMatch($this->getReference('match-2'));
-        $lvl21[1]->setMatch($this->getReference('match-3'));
-        $lvl22[0]->setMatch($this->getReference('match-4'));
+        $lvl21[0]->setMatch($this->getReference('match-2')); // Herpandine vs Sessette
+        $lvl21[1]->setMatch($this->getReference('match-3')); // Tanche vs Semi-Tanche
+        $lvl22[0]->setMatch($this->getReference('match-4')); // Rémi vs (nobody)
+        $lvl22[1]->setMatch($this->getReference('match-5')); // (nobdoy) vs (nobody)
 
+        // populate matches
         $manager->persist($lvl21[0]);
         $manager->persist($lvl21[1]);
         $manager->persist($lvl22[0]);
+        $manager->persist($lvl22[1]);
+
+        $repository->propagateVictoryAll($this->getReference('knockout-1'));
+
         $manager->flush();
-
-        $repository->propagateVictory($lvl21[1]);
-        $repository->propagateVictory($lvl21[0]);
-
-        $repository->propagateVictory($lvl22[0], true);
-
-        $repository->propagateVictory($lvl1[1], true); //propagate a direct match
     }
 }

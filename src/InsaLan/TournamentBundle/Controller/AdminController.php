@@ -179,11 +179,17 @@ class AdminController extends Controller
                 $match->setPart1($part1);
                 $match->setPart2($part2);
 
+                if($part1 === null || $part2 === null)
+                    $match->setState(Entity\Match::STATE_FINISHED);
+
                 $em->persist($km);
                 $em->persist($match);
 
             }
 
+            // Propagate for potential empty matches
+
+            $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->propagateVictoryAll($ko);
             $em->flush();
             
         }

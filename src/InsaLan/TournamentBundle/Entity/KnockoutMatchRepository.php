@@ -37,12 +37,20 @@ class KnockoutMatchRepository extends NestedTreeRepository
         return $root;
     }
 
+    public function propagateVictoryAll(Knockout $ko)
+    {
+        $knockoutMatches = $this->getChildren($this->getRoot($ko), null, "level", "desc");
+        foreach($knockoutMatches as $koMatch) {
+            $this->propagateVictory($koMatch);
+        }
+
+    }
+
     /**
      * Propagate winner into the tree
      * @param  KnockoutMatch $koMatch
-     * @param  Boolean       $forcePropagate allow propagate if match not played
      */
-    public function propagateVictory(KnockoutMatch $koMatch, $forcePropagate = false)
+    public function propagateVictory(KnockoutMatch $koMatch)
     {   
         $em = $this->getEntityManager();
         $match  = $koMatch->getMatch();
@@ -55,11 +63,20 @@ class KnockoutMatchRepository extends NestedTreeRepository
         if($children[0]->getId() !== $koMatch->getId())
             $first = false;
 
+        // Determines wether or not both children matches are ended
+    
+        if(!$children[0]->getMatch() || !$children[1]->getMatch())
+            $bothChildrenEnded = false;
+        
+        else
+            $bothChildrenEnded = ($children[0]->getMatch()->getState() === Match::STATE_FINISHED
+                            &&    $children[1]->getMatch()->getState() === Match::STATE_FINISHED);
+
 
         if($match === null)
             return;
 
-        if($match->getState() !== Match::STATE_FINISHED && !$forcePropagate)
+        if($match->getState() !== Match::STATE_FINISHED)
             return;
 
         if($parent === null)
@@ -69,10 +86,17 @@ class KnockoutMatchRepository extends NestedTreeRepository
 
         // If autopropagated this case can happen
         if($match->getPart2() === null) {
-            $match->setState(Match::STATE_FINISHED);
             $r = new Round();
             $r->setScore1(1);
             $r->setScore2(0);
+            $r->setMatch($match);
+            $match->addRound($r);
+            $em->persist($r);
+        }
+        elseif($match->getPart1() === null) {
+            $r = new Round();
+            $r->setScore2(1);
+            $r->setScore1(0);
             $r->setMatch($match);
             $match->addRound($r);
             $em->persist($r);
@@ -90,10 +114,13 @@ class KnockoutMatchRepository extends NestedTreeRepository
             $parentMatch->setPart1($winner);
         else
             $parentMatch->setPart2($winner);
+
+        if(($parentMatch->getPart1() === null || $parentMatch->getPart2() === null) && $bothChildrenEnded) {
+            $parentMatch->setState(Match::STATE_FINISHED);
+        }
     
         $em->persist($parentMatch);
         $em->persist($parent);
-        $em->flush();
 
         /** TODO : loser bracket listenner!  **/
 
