@@ -281,7 +281,7 @@ class Match
     /**
      * Set koMatch
      *
-     * @param \InsaLan\TournamentBundle\Entity\KnockoutMatch $group
+     * @param \InsaLan\TournamentBundle\Entity\KnockoutMatch $koMatch
      * @return KnockoutMatch
      */
     public function setKoMatch(\InsaLan\TournamentBundle\Entity\KnockoutMatch $koMatch = null)

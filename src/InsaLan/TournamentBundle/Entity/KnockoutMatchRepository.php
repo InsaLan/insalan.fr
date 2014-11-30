@@ -147,8 +147,6 @@ class KnockoutMatchRepository extends NestedTreeRepository
     public function getLvlChildren(Knockout $ko, $lvl)
     {   
 
-        
-
         $children = $this->getChildren($this->getRoot($ko), null, "left", "asc");
 
         $lastChildren = array();

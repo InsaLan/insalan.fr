@@ -145,7 +145,62 @@ class AdminController extends Controller
      * @Template()
      */
     public function knockoutAction(Entity\Knockout $ko)
-    {
-        die("Good!");
+    {   
+        $em = $this->getDoctrine()->getManager();
+        
+        $depth    = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getDepth($ko);
+        $children = pow(2, $depth + 1);
+
+        if($this->get('request')->getMethod() === "POST") {
+
+            $koMatches = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getLvlChildren($ko, $depth);
+
+            for($i = 0; $i < $children / 2; $i++) {
+
+                $part1 = $this->get('request')->request->get("participant_".($i*2+1));
+                $part2 = $this->get('request')->request->get("participant_".($i*2+2));
+
+                $part1 = $em->getRepository('InsaLanTournamentBundle:Participant')->findOneById($part1);
+                $part2 = $em->getRepository('InsaLanTournamentBundle:Participant')->findOneById($part2);
+
+                // Is there any previous match ?
+                $km = $koMatches[$i];
+
+                if($km->getMatch()) {
+                    $match = $km->getMatch();
+                }
+                else {
+                    $match = new Entity\Match();
+                    $match->setState(Entity\Match::STATE_UPCOMING);
+                    $km->setMatch($match);
+                    $match->setKoMatch($km);
+                }
+                
+                $match->setPart1($part1);
+                $match->setPart2($part2);
+
+                $em->persist($km);
+                $em->persist($match);
+
+            }
+
+            $em->flush();
+            
+        }
+
+        $ko->jsonData = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getJson($ko);
+
+        // Get participants in this tournament
+        $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByTournament($ko->getTournament());
+        $a = array(null => '');
+        foreach ($participants as $p) {
+            $a[$p->getId()] = $p->getName();
+        }
+
+        asort($a);
+
+        // No form here, because Symfony is stupid and does not allow dynamic number a field without verbose and boring class.
+
+        return array('knockout' => $ko, 'participants' => $a, 'children' => $children);
     }
 }

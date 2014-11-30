@@ -40,9 +40,11 @@
   <hr style="margin: 20px 0px;"/>
   <section class="knockouts">
     <h2>Arbres</h2>
+    <ul style="margin-left: 30px">
     {% for ko in knockouts %}
-      <h3>{{ ko.name }}</h3>
+      <li><a href="{{ path('insalan_tournament_admin_knockout', {id: ko.id}) }}">{{ ko.name }}</a></li>
     {% endfor %}
+    </ul>
 
     {{ form_start(formKo) }}
       {{ form_errors(formKo) }}
