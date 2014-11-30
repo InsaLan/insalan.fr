@@ -32,6 +32,7 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $stages = $em->getRepository('InsaLanTournamentBundle:GroupStage')->getByTournament($tournament);
+        $knockout = $em->getRepository('InsaLanTournamentBundle:Knockout')->findByTournament($tournament);
 
         foreach ($stages as $s) {
             foreach ($s->getGroups() as $g) {
@@ -39,7 +40,7 @@ class DefaultController extends Controller
             }
         }
 
-        return array('t' => $tournament, 'stages' => $stages);
+        return array('t' => $tournament, 'stages' => $stages, 'knockout' => $knockout);
     }
 
     /**
