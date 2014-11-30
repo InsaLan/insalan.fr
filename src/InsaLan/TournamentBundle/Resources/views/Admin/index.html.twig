@@ -28,20 +28,32 @@
 
 </article>
 
-{% if stages %}
+{% if tournament %}
+  {#<hr style="margin: 20px 0px;"/>
+  <section class="groups">
+    <h2>Poules</h2>
+    {% for s in stages %}
+      <h3>{{ s.name }}</h3>
+    {% endfor %}
+  </section>#}
+
   <hr style="margin: 20px 0px;"/>
-  {% for s in stages %}
-    <h3>{{ s.name }}</h3>
-  {% endfor %}
+  <section class="knockouts">
+    <h2>Arbres</h2>
+    {% for ko in knockouts %}
+      <h3>{{ ko.name }}</h3>
+    {% endfor %}
 
-{% endif %}
+    {{ form_start(formKo) }}
+      {{ form_errors(formKo) }}
+      {{ form_row(formKo.name) }}
+      {{ form_row(formKo.size) }}
+      <div class="input left">
+        <input type="submit" id="_submit" name="_submit" value="Ajouter" />
+      </div>
+    {{ form_end(formKo) }}
 
-{% if knockouts %}
-  <hr style="margin: 20px 0px;"/>
-  {% for ko in knockouts %}
-    <h3>{{ ko.name }}</h3>
-  {% endfor %}
-
+  </section>
 {% endif %}
 
 {% endblock %}

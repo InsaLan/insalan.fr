@@ -38,6 +38,5 @@ security:
         - { path: ^/user/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/, role: ROLE_USER }
         - { path: ^/tournament/user, role: ROLE_USER }
-        - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/tournament/admin/, role: ROLE_ADMIN }
+        - { path: /admin/, role: ROLE_ADMIN }
 
