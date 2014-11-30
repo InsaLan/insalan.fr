@@ -1,8 +1,12 @@
-   
+{% if m.part1 and m.part2 %}
     <div class="match_detail" data-p1="{{ m.part1.id }}" data-p2="{{ m.part2.id }}">
 
       <table cellpadding="3px">
-        <caption>Match {{i}}</caption>
+        {% if m.koMatch %}
+          <caption>{{ m.koMatch.getFrenchLevel() }}</caption>
+        {% else %}
+          <caption>Match {{i}}</caption>
+        {% endif %}
         <thead>
           <th style="width:45%">{{ m.part1.name }}</th>
           <th style="width:45%">{{ m.part2.name }}</th>
@@ -55,3 +59,4 @@
       {% endif %}
 
     </div>
+  {% endif %}
