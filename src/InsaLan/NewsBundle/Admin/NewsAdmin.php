@@ -16,6 +16,7 @@ class NewsAdmin extends Admin
             ->add('title')
             ->add('category')
             ->add('text')
+            ->add('createdAt')
         ;
     }
 
