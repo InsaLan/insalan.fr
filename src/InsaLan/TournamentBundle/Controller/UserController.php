@@ -181,6 +181,10 @@ class UserController extends Controller
         $tournament = $em
             ->getRepository('InsaLanTournamentBundle:Tournament')
             ->findOneById($id);
+
+        if($tournament->getParticipantType() !== "team")
+            throw new ControllerException("Not Allowed");
+
         $usr = $this
             ->get('security.context')
             ->getToken()
@@ -218,6 +222,10 @@ class UserController extends Controller
         $tournament = $em
             ->getRepository('InsaLanTournamentBundle:Tournament')
             ->findOneById($id);
+
+        if($tournament->getParticipantType() !== "team")
+            throw new ControllerException("Not Allowed");
+
         $usr = $this
             ->get('security.context')
             ->getToken()
