@@ -1,4 +1,4 @@
-{% if form_errors(form.lolName) %}
+{% if form_errors(form.gameName) %}
       <div class="frame frame-danger">
         <header class="full">
           <div class="step pull-left">
@@ -17,10 +17,10 @@
           <br class="clear">
         </header>
 {% endif %}
-        <form action="{{ path('insalan_tournament_user_setplayer', {game: selectedGame, tournamentId: tournamentId}) }}" id="step1" method="post" {{ form_enctype(form) }}>
+        <form action="{{ path('insalan_tournament_user_setplayer', {game: selectedGame, tournament: tournamentId}) }}" id="step1" method="post" {{ form_enctype(form) }}>
           <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
           <div class="input field">
-            <input type="text" placeholder="Votre nom d'invocateur" name="{{ form.lolName.vars.full_name }}" value="{{ form.vars.value.lolName }}"/>
+            <input type="text" placeholder="Votre nom d'invocateur" name="{{ form.gameName.vars.full_name }}" value="{{ form.vars.value.gameName }}"/>
           </div>
           <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step1').submit();">Ok</a>
         </form>

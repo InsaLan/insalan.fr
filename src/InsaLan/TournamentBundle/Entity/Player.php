@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use InsaLan\UserBundle\Entity\User;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\PlayerRepository")
  */
 class Player extends Participant
 {
@@ -18,30 +18,30 @@ class Player extends Participant
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(name="game_name", type="string", length=50)
      * @Assert\NotBlank()
      */
-    protected $lolName;
+    protected $gameName;
 
     /**
-     * @ORM\OneToOne(targetEntity="InsaLan\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="InsaLan\UserBundle\Entity\User")
      */
     protected $user;
 
     /**
-     * @ORM\Column(name="lol_id", type="integer", nullable=true, unique=false)
+     * @ORM\Column(name="game_id", type="integer", nullable=true, unique=false)
      */
-    protected $lolId;
+    protected $gameId;
 
     /**
-     * @ORM\Column(name="lol_id_validated", type="boolean")
+     * @ORM\Column(name="game_validated", type="boolean")
      */
-    protected $lolIdValidated;
+    protected $gameValidated;
 
     /**
-     * @ORM\Column(name="lol_picture", type="integer", nullable=true)
+     * @ORM\Column(name="game_avatar", type="integer", nullable=true)
      */
-    protected $lolPicture;
+    protected $gameAvatar;
 
     /**
      * @ORM\ManyToMany(targetEntity="Team", inversedBy="players", cascade={"persist"})
@@ -50,13 +50,19 @@ class Player extends Participant
     protected $team;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Tournament")
+     */
+    protected $pendingTournament;
+    // this is a temporary variable when a player has not validated its account, and/or is waiting for a team.
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         parent::__construct();
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->lolIdValidated = false;
+        $this->gameValidated = false;
     }
     /**
      * Get id
@@ -68,114 +74,20 @@ class Player extends Participant
         return $this->id;
     }
 
-    /**
-     * Set lolName
-     *
-     * @param string $name
-     * @return Player
-     */
-    public function setLolName($name)
-    {
-        $this->lolName = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get lolName
-     *
-     * @return string 
-     */
-    public function getLolName()
-    {
-        return $this->lolName;
-    }
 
     /**
      * Get name
      *
      * @return string 
      */
-    public function getNameFor($type) {
-        if ($type === 'lol') {
-            return $this->lolName;
-        } else {
-            return $this->getName();
-        }
-    }
-
     public function getName() {
-        if (isset($this->lolName)) {
-            return $this->lolName;
+        if (isset($this->gameName)) {
+            return $this->gameName;
         } else {
             return "Joueur sans nom";
         }
     }
 
-    /**
-     * Set lolId
-     *
-     * @param integer $lolId
-     * @return User
-     */
-    public function setLolId($lolId)
-    {
-        $this->lolId = $lolId;
-        return $this;
-    }
-
-    /**
-     * Get lolId
-     *
-     * @return string
-     */
-    public function getLolId()
-    {
-        return $this->lolId;
-    }
-
-    /**
-     * Set lolId_validated
-     *
-     * @param boolean $lolIdValidated
-     * @return User
-     */
-    public function setLolIdValidated($lolIdValidated)
-    {
-        $this->lolIdValidated = $lolIdValidated;
-        return $this;
-    }
-
-    /**
-     * Get lolId_validated
-     *
-     * @return boolean
-     */
-    public function getLolIdValidated()
-    {
-        return $this->lolIdValidated;
-    }
-
-    /**
-     * Set lolPicture
-     *
-     * @param integer $lolPicture
-     * @return User
-     */
-    public function setLolPicture($lolPicture) {
-        $this->lolPicture = $lolPicture;
-        return $this;
-    }
-
-    /**
-     * Get lolPicture
-     *
-     * @return integer
-     */
-    public function getLolPicture()
-    {
-        return $this->lolPicture;
-    }
 
     /**
      * Set user
@@ -337,19 +249,14 @@ class Player extends Participant
      * is set
      */
     public function isNamed($type) {
-        if ($type === 'lol') {
-            return $this->lolName !== null;
-        } else {
-            return false;
-        }
+        return $this->gameName !== null;
     }
+
     /**
      * is validated
      */
     public function isValidated($type) {
-        if ($type === 'lol') {
-            return $this->lolIdValidated;
-        }
+        return $this->gameValidated;
     }
 
     /**
@@ -402,5 +309,121 @@ class Player extends Participant
             }
         }
         return null;
+    }
+
+    /**
+     * Set gameName
+     *
+     * @param string $gameName
+     * @return Player
+     */
+    public function setGameName($gameName)
+    {
+        $this->gameName = $gameName;
+
+        return $this;
+    }
+
+    /**
+     * Get gameName
+     *
+     * @return string 
+     */
+    public function getGameName()
+    {
+        return $this->gameName;
+    }
+
+    /**
+     * Set gameId
+     *
+     * @param integer $gameId
+     * @return Player
+     */
+    public function setGameId($gameId)
+    {
+        $this->gameId = $gameId;
+
+        return $this;
+    }
+
+    /**
+     * Get gameId
+     *
+     * @return integer 
+     */
+    public function getGameId()
+    {
+        return $this->gameId;
+    }
+
+    /**
+     * Set gameValidated
+     *
+     * @param boolean $gameValidated
+     * @return Player
+     */
+    public function setGameValidated($gameValidated)
+    {
+        $this->gameValidated = $gameValidated;
+
+        return $this;
+    }
+
+    /**
+     * Get gameValidated
+     *
+     * @return boolean 
+     */
+    public function getGameValidated()
+    {
+        return $this->gameValidated;
+    }
+
+    /**
+     * Set gameAvatar
+     *
+     * @param integer $gameAvatar
+     * @return Player
+     */
+    public function setGameAvatar($gameAvatar)
+    {
+        $this->gameAvatar = $gameAvatar;
+
+        return $this;
+    }
+
+    /**
+     * Get gameAvatar
+     *
+     * @return integer 
+     */
+    public function getGameAvatar()
+    {
+        return $this->gameAvatar;
+    }
+
+
+    /**
+     * Set pendingTournament
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Tournament $pendingTournament
+     * @return Player
+     */
+    public function setPendingTournament(\InsaLan\TournamentBundle\Entity\Tournament $pendingTournament = null)
+    {
+        $this->pendingTournament = $pendingTournament;
+
+        return $this;
+    }
+
+    /**
+     * Get pendingTournament
+     *
+     * @return \InsaLan\TournamentBundle\Entity\Tournament 
+     */
+    public function getPendingTournament()
+    {
+        return $this->pendingTournament;
     }
 }

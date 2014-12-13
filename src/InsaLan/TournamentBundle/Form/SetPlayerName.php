@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SetLolPlayerType extends AbstractType
+class SetPlayerName extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,7 +15,7 @@ class SetLolPlayerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('lolName')
+            ->add('gameName')
         ;
     }
     

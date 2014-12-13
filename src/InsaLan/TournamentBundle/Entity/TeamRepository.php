@@ -13,7 +13,7 @@ class TeamRepository extends EntityRepository
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("
-            SELECT partial t.{id,name,validated}, partial p.{id,lolName,lolId} 
+            SELECT partial t.{id,name,validated}, partial p.{id,gameName,gameId} 
             FROM InsaLanTournamentBundle:Team t
             JOIN t.players p
             ");
@@ -26,7 +26,7 @@ class TeamRepository extends EntityRepository
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("
-            SELECT partial t.{id,name,validated}, partial p.{id,lolName,lolId}, partial to.{id,teamMinPlayer} 
+            SELECT partial t.{id,name,validated}, partial p.{id,gameName,gameId}, partial to.{id,teamMinPlayer} 
             FROM InsaLanTournamentBundle:Team t
             JOIN t.players p
             JOIN t.tournament to

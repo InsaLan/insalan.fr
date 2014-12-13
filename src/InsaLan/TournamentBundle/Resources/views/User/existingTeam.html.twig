@@ -20,15 +20,13 @@
     {% if tournament.type == 'lol' %}
       {% include 'InsaLanTournamentBundle:Part:Step1LolValidated.html.twig' %}
       {% include 'InsaLanTournamentBundle:Part:Step2LolValidated.html.twig' %}
-      {% include 'InsaLanTournamentBundle:Part:Step3LolValidated.html.twig' %}
-      {% include 'InsaLanTournamentBundle:Part:Step4bisLolActive.html.twig' %}
-
     {% else %}
-      <div class="alert alert-error">
-        <p>L'inscription pour ce type de tournoi n'est pas encore supportée</p>
-      </div>
-
+      {% include 'InsaLanTournamentBundle:Part:Step1ManualValidated.html.twig' %}
+      {% include 'InsaLanTournamentBundle:Part:Step2ManualValidated.html.twig' %}
     {% endif %}
+
+    {% include 'InsaLanTournamentBundle:Part:Step3Validated.html.twig' %}
+      {% include 'InsaLanTournamentBundle:Part:Step4bisActive.html.twig' %}
 
   </section>
 </article>

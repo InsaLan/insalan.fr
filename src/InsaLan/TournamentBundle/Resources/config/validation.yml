@@ -1,4 +1,4 @@
 InsaLan\TournamentBundle\Entity\Player:
     properties:
-        lolName:
+        gameName:
             - InsaLan\TournamentBundle\Validator\Constraint\ExistingLolId: ~

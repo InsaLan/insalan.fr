@@ -15,10 +15,10 @@ class PlayerAdmin extends Admin
         $formMapper
             ->add('user')
             ->add('team')
-            ->add('lolName')
-            ->add('lolIdValidated', null, array('required'=>false))
-            ->add('lolPicture')
-            ->add('lolId')
+            ->add('gameName')
+            ->add('gameValidated', null, array('required'=>false))
+            ->add('gameAvatar')
+            ->add('gameId')
             ->add('tournament')
         ;
     }
@@ -27,7 +27,7 @@ class PlayerAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('lolName')
+            ->add('gameName')
             ->add('user.username')
             ->add('user.email')
             ->add('team')
@@ -40,7 +40,7 @@ class PlayerAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('user.username')
-            ->addIdentifier('lolName')
+            ->addIdentifier('gameName')
             ->add('tournament')
             ->add('user.email')
             ->add('team.name')

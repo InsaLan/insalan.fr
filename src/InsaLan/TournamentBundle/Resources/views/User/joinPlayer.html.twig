@@ -1,0 +1,28 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Inscription à &laquo; {{ tournament.name }} &raquo;</h2>
+    {{ tournament.description }}
+  </header>
+
+  <section>
+
+    
+      <div class="alert alert-error">
+        <p>L'inscription pour ce type de tournoi n'est pas encore supportée</p>
+      </div>
+    
+
+  </section>
+</article>
+{% endblock %}

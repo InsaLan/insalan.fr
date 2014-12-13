@@ -22,7 +22,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setRegistrationLimit(64);
         $e->setTeamMaxPlayer(8);
         $e->setTeamMinPlayer(5);
-        $e->setType('csgo');
+        $e->setType('manual');
         $e->setLogoPath('fixtures-1.png');
         $e->setParticipantType('team');
         $manager->persist($e);
@@ -40,6 +40,19 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setParticipantType('team');
         $manager->persist($e);
         $this->addReference('tournament-2', $e);
+
+        $e = new Tournament();
+        $e->setName('StarCraft II');
+        $e->setRegistrationOpen(new \DateTime());
+        $e->setRegistrationClose((new \DateTime())->modify('+3 day'));
+        $e->setRegistrationLimit(1);
+        $e->setTeamMaxPlayer(1);
+        $e->setTeamMinPlayer(1);
+        $e->setType('manual');
+        $e->setLogoPath('fixtures-3.png');
+        $e->setParticipantType('player');
+        $manager->persist($e);
+        $this->addReference('tournament-3', $e);
 
         $manager->flush();
     }

@@ -33,7 +33,7 @@ class PvpNet
 
         foreach($teamA->getPlayers()->toArray() as $summoner)
         {
-            $games = $this->API->game()->recent($summoner->getLolId());
+            $games = $this->API->game()->recent($summoner->getGameId());
             foreach($games as $game)
             {
                 if($game->invalid) continue;
@@ -47,7 +47,7 @@ class PvpNet
                 $teamBChecked = 0;
 
                 $players = array();
-                $players[$game->teamId.'-'.$game->championId] = $summoner->getLolId();
+                $players[$game->teamId.'-'.$game->championId] = $summoner->getGameId();
 
                 foreach ($game->fellowPlayers as $player) {
                     $players[$player->teamId.'-'.$player->championId] = $player->summonerId;
@@ -128,7 +128,7 @@ class PvpNet
     private function isSummonerInTeam($summonerId, Team $team)
     {
         foreach($team->getPlayers()->toArray() as $player) {
-            if($player->getLolId() === $summonerId) return true;
+            if($player->getGameId() === $summonerId) return true;
         }
 
         return false;

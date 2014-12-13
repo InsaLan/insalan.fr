@@ -7,7 +7,12 @@
   <header>
     <h2>Bienvenue {{ app.user.username }}</h2>
   </header>
-  {% if player != null %}
+  Vous faites partie des tournois suivants : 
+  {% for player in participants %}
+
+    {{ player.tournament.name }}
+
+  {#{% if player != null %}
   {% for t in player.team %}
   {% if t.validated == 2 %}
   <div class="frame frame-success">
@@ -26,10 +31,10 @@
         {% for p in t.players %}
         <li>
           <div class="pull-left">
-            <img height="40" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ p.lolPicture }}.png">
+            <img height="40" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ p.gameAvatar }}.png">
           </div>
           <div style="margin: 8px 0px 0px 10px;" class="pull-left">
-            <span><a href="http://www.lolking.net/summoner/euw/{{ p.lolId }}">{{ p.getName(t.tournament.type) }}</a></span>
+            <span><a href="http://www.lolking.net/summoner/euw/{{ p.gameId }}">{{ p.getName(t.tournament.type) }}</a></span>
           </div>
           <br class="clear">
         </li>
@@ -60,10 +65,10 @@
         {% for p in t.players %}
         <li>
           <div class="pull-left">
-            <img height="40" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ p.lolPicture }}.png">
+            <img height="40" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ p.gameAvatar }}.png">
           </div>
           <div style="margin: 8px 0px 0px 10px;" class="pull-left">
-            <span><a href="http://www.lolking.net/summoner/euw/{{ p.lolId }}">{{ p.getName(t.tournament.type) }}</a></span>
+            <span><a href="http://www.lolking.net/summoner/euw/{{ p.gameId }}">{{ p.getName(t.tournament.type) }}</a></span>
           </div>
           <br class="clear">
         </li>
@@ -76,7 +81,8 @@
   </div>
   {% endif %}
   {% endfor %}
-  {% endif %}
+  {% endif %}#}
+  {% endfor %}
 
   <div class="frame frame-active">
     <header class="full">
@@ -94,7 +100,7 @@
                 {% if t.participantType == 'team' %}
                 <a href="{{ path('insalan_tournament_user_jointeam', {id: t.id}) }}">
                 {% else %}
-                <a href="{{ path('insalan_tournament_user_joinplayer', {id: t.id}) }}">
+                <a href="{{ path('insalan_tournament_user_setplayer', {tournament: t.id}) }}">
                 {% endif %}
                   <img src="{{ asset(t.getUploadDir() ~ t.logoPath) }} " alt="{{ t.name }}"/>
                 </a>

@@ -27,10 +27,10 @@
         {% for p in team.players %}
         <li>
           <div class="pull-left">
-            <img height="40" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ p.lolPicture }}.png">
+            <img height="40" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ p.gameAvatar }}.png">
           </div>
           <div style="margin: 8px 0px 0px 10px;" class="pull-left">
-            <span><a href="http://www.lolking.net/summoner/euw/{{ p.lolId }}">{{ p.getName(team.tournament.type) }}</a></span>
+            <span><a href="http://www.lolking.net/summoner/euw/{{ p.gameId }}">{{ p.getName(team.tournament.type) }}</a></span>
           </div>
           <br class="clear">
         </li>

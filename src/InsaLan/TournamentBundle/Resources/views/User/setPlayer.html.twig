@@ -18,13 +18,15 @@
    
       {% if selectedGame == 'lol' %}
         {% include 'InsaLanTournamentBundle:Part:Step1LolActive.html.twig' %}
+      {% elseif selectedGame == 'manual' %}
+        {% include 'InsaLanTournamentBundle:Part:Step1ManualActive.html.twig' %}
       {% else %}
       <div class="frame frame-danger">
         <header>
           <div class="step pull-left">
             1
           </div>
-          <div class="title pull-left">Pas encore implémenté</div>
+          <div class="title pull-left">Les inscriptions à ce type de tournoi ne sont pas encore implémentées :(</div>
           <br class="clear">
         </header>
       </div>
