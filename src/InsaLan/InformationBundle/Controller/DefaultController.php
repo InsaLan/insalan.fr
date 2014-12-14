@@ -29,6 +29,15 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/cosplay")
+     * @Template()
+     */
+    public function cosplayAction()
+    {
+        return array();
+    }
+
+    /**
      * @Route("/partner")
      * @Template()
      */

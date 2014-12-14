@@ -1,0 +1,61 @@
+{% extends 'InsaLanInformationBundle::layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<img src="{{ asset('bundles/insalan/img/cosplay.png') }}" width="1000"/>
+
+<article id="asso" class="info">
+    <aside>
+        <div class="square">
+            <a href="#body"><span></span></a>
+        </div>
+    </aside>
+
+    <header>
+        <h2>Le concours Cosplay de l'InsaLan</h2>
+    </header>
+
+    <section>
+        <p>
+            Le concours se déroulera à partir de <strong>15h30, le samedi 7 février 2015.</strong> 
+            On vous le rappelle, cette année <strong>Atsu</strong> fera parti du jury ! Vous avez jusqu'au 4 février pour vous inscrire. Pour toutes questions, vous pouvez nous contacter via Facebook ou par mail à l’adresse <a href="mailto:cosplay@insalan.fr">cosplay@insalan.fr</a>. 
+            C’est gratuit mais attention le nombre de places est limité !
+
+        </p>
+    </section>
+</article>
+
+<article id="asso" class="info">
+    <aside>
+        <div class="square">
+            <a href="#body"><span></span></a>
+        </div>
+    </aside>
+
+    <header>
+        <h2>Je participe !</h2>
+    </header>
+
+    <section>
+        <p>
+
+            <ol class="shift">
+                <li>Télécharger et remplir <a href="#">[la fiche d'inscription]</a></li>
+                <li>Pour les mineurs : télécharger et remplir <a href="#">[l'autorisation parentale]</a></li>
+                <li>Joindre une image du personnage cosplayé correspondant exactement au cosplay réalisé</li>
+                <li>Signer le ou les documents (imprimer, signer, scanner ou via une tablette graphique ou directement le jour de l'évènement)</li>
+                <li>Envoyer votre dossier (si possible en PDF) à <a href="mailto:cosplay@insalan.fr">cosplay@insalan.fr</a></li>
+            </ol>
+        </p>
+        <p>
+            <em>Un problème ? Une question ? Envoyez nous un mail à <a href="mailto:cosplay@insalan.fr">cosplay@insalan.fr</a></em>
+        </p>
+    </section>
+</article>
+<hr/>
+
+
+
+
+{% endblock %}
