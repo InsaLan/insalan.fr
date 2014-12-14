@@ -26,4 +26,22 @@ class PlayerRepository extends EntityRepository
 
     }
 
+    public function getWaitingPlayer(Tournament $t) {
+
+        $q = $this->createQueryBuilder('p')
+             ->where('p.tournament = :tournament AND p.validated = :state')
+             ->orderBy('p.id')
+             ->setParameter('tournament', $t)
+             ->setParameter('state', Participant::STATUS_WAITING)
+             ->setMaxResults(1);
+
+        try {
+            return $q->getQuery()->getSingleResult();
+        }
+        catch(\Exception $e) {
+            return null;
+        }
+
+    }
+
 }

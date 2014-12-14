@@ -54,6 +54,19 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $manager->persist($e);
         $this->addReference('tournament-3', $e);
 
+        $e = new Tournament();
+        $e->setName('TF2');
+        $e->setRegistrationOpen(new \DateTime());
+        $e->setRegistrationClose((new \DateTime())->modify('+3 day'));
+        $e->setRegistrationLimit(1);
+        $e->setTeamMaxPlayer(1);
+        $e->setTeamMinPlayer(1);
+        $e->setType('manual');
+        $e->setLogoPath('fixtures-4.png');
+        $e->setParticipantType('team');
+        $manager->persist($e);
+        $this->addReference('tournament-4', $e);
+
         $manager->flush();
     }
 }

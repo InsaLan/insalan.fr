@@ -22,7 +22,25 @@ class TeamRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function getWaitingTeams() {
+    public function getWaitingTeam(Tournament $t) {
+
+        $q = $this->createQueryBuilder('t')
+             ->where('t.tournament = :tournament AND t.validated = :state')
+             ->orderBy('t.id')
+             ->setParameter('tournament', $t)
+             ->setParameter('state', Participant::STATUS_WAITING)
+             ->setMaxResults(1);
+
+        try {
+            return $q->getQuery()->getSingleResult();
+        }
+        catch(\Exception $e) {
+            return null;
+        }
+
+    }
+
+    /*public function getWaitingTeams() {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("
@@ -36,5 +54,5 @@ class TeamRepository extends EntityRepository
         //$query->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true);
         $query->execute();
         return $query->getResult();
-    }
+    }*/
 }

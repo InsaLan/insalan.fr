@@ -55,6 +55,10 @@ class Player extends Participant
     protected $pendingTournament;
     // this is a temporary variable when a player has not validated its account, and/or is waiting for a team.
 
+    public function getParticipantType() {
+        return "player";
+    }
+
     /**
      * Constructor
      */
@@ -121,7 +125,6 @@ class Player extends Participant
     public function joinTeam(\InsaLan\TournamentBundle\Entity\Team $team)
     {
         $this->addTeam($team);
-        $team->addPlayer($this);
         return $this;
     }
 

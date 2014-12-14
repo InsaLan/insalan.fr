@@ -40,6 +40,10 @@ abstract class Participant
      */
     protected $validated;
 
+    public function getParticipantType() {
+        return "participant";
+    }
+
     /**
      * Get id
      */

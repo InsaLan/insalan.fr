@@ -40,6 +40,11 @@ class Team extends Participant
     protected $captain;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $lastUpdated; // for callback lifecycle...
+
+    /**
      * @var integer
      */
     protected $validated;
@@ -56,6 +61,9 @@ class Team extends Participant
 
     protected $plainPassword;
 
+    public function getParticipantType() {
+        return "team";
+    }
 
     public function __construct()
     {
@@ -128,11 +136,13 @@ class Team extends Participant
      * @return Team
      */
     public function addPlayer(\InsaLan\TournamentBundle\Entity\Player $players)
-    {
+    {   
+
         if ($this->getPlayers()->count() >= $this->getTournament()->getTeamMaxPlayer()) {
-            throw new \Exception("Équipe pleine");
+            throw new \InsaLan\TournamentBundle\Exception\ControllerException("Cette équipe est pleine.");
         }
         $this->players->add($players);
+        $this->setLastUpdated(time());
         return $this;
     }
 
@@ -144,6 +154,7 @@ class Team extends Participant
     public function removePlayer(\InsaLan\TournamentBundle\Entity\Player $players)
     {
         $this->players->removeElement($players);
+        $this->setLastUpdated(time());
         return $this;
     }
 
@@ -282,4 +293,27 @@ class Team extends Participant
     }
 
 
+
+    /**
+     * Set lastUpdated
+     *
+     * @param integer $lastUpdated
+     * @return Team
+     */
+    public function setLastUpdated($lastUpdated)
+    {
+        $this->lastUpdated = $lastUpdated;
+
+        return $this;
+    }
+
+    /**
+     * Get lastUpdated
+     *
+     * @return integer 
+     */
+    public function getLastUpdated()
+    {
+        return $this->lastUpdated;
+    }
 }

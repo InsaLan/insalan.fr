@@ -108,6 +108,29 @@ class UserController extends Controller
     }
 
     /**
+     * @Route("/user/leave/{id}")
+     */
+    public function leaveAction(Entity\Tournament $tournament) {
+        $em = $this->getDoctrine()->getManager();
+        
+        $usr = $this
+            ->get('security.context')
+            ->getToken()
+            ->getUser();
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        if($player->getTournament()->getParticipantType() !== "player")
+            throw new ControllerException("Not Allowed");
+
+        $em->remove($player);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+    }
+
+    /**
      * @Route("/user/join/{id}/team")
      * @Template()
      */
@@ -156,17 +179,28 @@ class UserController extends Controller
         $team = $em
             ->getRepository('InsaLanTournamentBundle:Team')
             ->findOneById($teamId);
+
+        if($team === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+
         $usr = $this
             ->get('security.context')
             ->getToken()
             ->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
-            ->findOneByUserAndPendingTournament($usr->getId());
+            ->findOneByUserAndPendingTournament($usr, $team->getTournament());
 
         $player->leaveTeam($team);
-        $em->persist($player);
+        $team->removePlayer($player);
+
         $em->persist($team);
+
+        if($team->getPlayers()->count() === 0)
+            $em->remove($team);            
+
+        $em->persist($player);
         $em->flush();
         return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
@@ -249,12 +283,14 @@ class UserController extends Controller
                     ->getRepository('InsaLanTournamentBundle:Team')
                     ->findOneByName($team->getName());
 
-                if($team2 === null || $team2->getTournament()->getId() !== $id)
+
+                if($team2 === null || $team2->getTournament()->getId() !== $tournament->getId())
                     throw new ControllerException("Equipe invalide");
 
 
                 if ($team2->getPassword() === $team->getPassword()) {
                     $player->joinTeam($team2);
+                    $team2->addPlayer($player);
                     $em->persist($player);
                     $em->persist($team2);
                     $em->flush();
@@ -263,9 +299,7 @@ class UserController extends Controller
                     throw new ControllerException("Mot de passe invalide");
                 }
             } catch (ControllerException $e) {
-                $details = $e->getMessage(); //I'll go in hell for this line :s Sry bro
-                // YES YOU WILL YOU FILTHY MAGGOT
-                // Use a custom exception type if you want to do this
+                $details = $e->getMessage();
             }
 
         }
@@ -493,7 +527,7 @@ class UserController extends Controller
 
         if($part instanceof Entity\Team) {
 
-            foreach ($team->getPlayers() as $p)
+            foreach ($part->getPlayers() as $p)
             {
                 if($p->getUser() !== null && $p->getUser()->getId() === $user->getId())
                 {

@@ -7,81 +7,64 @@
   <header>
     <h2>Bienvenue {{ app.user.username }}</h2>
   </header>
-  Vous faites partie des tournois suivants : 
-  {% for player in participants %}
 
-    {{ player.tournament.name }}
+  {% for participant in participants %}
 
-  {#{% if player != null %}
-  {% for t in player.team %}
-  {% if t.validated == 2 %}
-  <div class="frame frame-success">
+  <div class="frame {% if participant.validated == 2 %} frame-success {% endif %}">
     <header class="full">
       <div class="step pull-left">
-        &#10003;
+        {% if participant.validated == 2 %} &#10003; {% else %} ! {% endif %}
       </div>
-      <div class="title pull-left">{{ t.name }}</div>
+      <div class="title pull-left">
+        {% if participant.participantType == 'team' %} Equipe {% endif %}
+        {{ participant.name }}
+      </div>
       <div class="title pull-right">
-        <img style="margin-right:0px;max-height:60px;display:block;" src="{{ asset(t.tournament.getUploadDir() ~ t.tournament.logoPath) }}" alt="{{ t.tournament.name }}"/>
+        <img style="margin-right:0px;max-height:60px;display:block;" src="{{ asset(participant.tournament.getUploadDir() ~ participant.tournament.logoPath) }}" alt=""/>
       </div>
       <br class="clear">
     </header>
     <div class="text">
-      <ul class="shift" style="list-style-type:none">
-        {% for p in t.players %}
+      {% if participant.participantType == 'team' %}
+        <ul class="shift" style="list-style-type:none">
+        {% for p in participant.players %}
         <li>
-          <div class="pull-left">
-            <img height="40" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ p.gameAvatar }}.png">
-          </div>
-          <div style="margin: 8px 0px 0px 10px;" class="pull-left">
-            <span><a href="http://www.lolking.net/summoner/euw/{{ p.gameId }}">{{ p.getName(t.tournament.type) }}</a></span>
+          <div style="margin: 8px 0px 0px 10px; font-size:20px" class="pull-left">
+            <span>{{ p.gameName }}</span>
           </div>
           <br class="clear">
         </li>
         {% endfor %}
-      </ul>
-    </div>
+        </ul>
+      {% endif %}
 
-    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: t.id}) }}">Quitter</a>
-    <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_tournament_user_teamdetails', {id: t.id }) }}">Jouer mes matchs</a>
-    <br class="clear">
-  </div>
-
-
-  {% else %}
-  <div class="frame frame-warning">
-    <header class="full">
-      <div class="step pull-left">
-       !
-      </div>
-      <div class="title pull-left">{{ t.name }} (non validée)</div>
-      <div class="pull-right">
-        <img style="margin:0px;max-height:60px;display:block;" src="{{ asset(t.tournament.getUploadDir() ~ t.tournament.logoPath) }}" alt="{{ t.tournament.name }}"/>
-      </div>
       <br class="clear">
-    </header>
-    <div class="text">
-      <ul class="shift" style="list-style-type:none">
-        {% for p in t.players %}
-        <li>
-          <div class="pull-left">
-            <img height="40" src="http://ddragon.leagueoflegends.com/cdn/4.17.1/img/profileicon/{{ p.gameAvatar }}.png">
-          </div>
-          <div style="margin: 8px 0px 0px 10px;" class="pull-left">
-            <span><a href="http://www.lolking.net/summoner/euw/{{ p.gameId }}">{{ p.getName(t.tournament.type) }}</a></span>
-          </div>
-          <br class="clear">
-        </li>
-        {% endfor %}
-      </ul>
+
+      {% if participant.validated == 1 %}
+        Le tournoi {{ participant.tournament.name }} est complet ! En cas de désistement, vous serez automatiquement validé.
+      {% endif %}
+      {% if participant.validated == 0 and participant.participantType == 'team' %}
+        L'équipe sera validée quand {{ participant.tournament.teamMinPlayer }} joueurs seront inscrits.
+      {% endif %}
     </div>
 
-    <a class="btn btn-danger ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: t.id}) }}">Quitter</a>
+    {% if participant.participantType == 'team' %}
+
+      <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Quitter</a>
+
+    {% else %}
+
+      <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leave', {id: participant.tournament.id}) }}">Abandonner</a>
+
+    {% endif %}
+
+    {% if participant.validated == 2 %}
+      <a class="btn btn-primary ctrl grid-8 pull-left" href="{{ path('insalan_tournament_user_teamdetails', {id: participant.id }) }}">Jouer mes matchs</a>
+    {% endif %}
+
     <br class="clear">
   </div>
-  {% endif %}
-  {% endfor %}
-  {% endif %}#}
+
   {% endfor %}
 
   <div class="frame frame-active">
