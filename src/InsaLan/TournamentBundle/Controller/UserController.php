@@ -238,6 +238,7 @@ class UserController extends Controller
             $team->setPassword($encoder->encodePassword($team->getPlainPassword(), sha1('pleaseHashPasswords'.$team->getName())));
             $team->setTournament($tournament);
             $player->joinTeam($team);
+            $team->addPlayer($player);
             $em->persist($team);
             $em->persist($player);
             $em->flush();

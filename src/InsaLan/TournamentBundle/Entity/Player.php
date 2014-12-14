@@ -39,6 +39,11 @@ class Player extends Participant
     protected $gameValidated;
 
     /**
+     * @ORM\Column(name="payment_done", type="boolean")
+     */
+    protected $paymentDone;
+
+    /**
      * @ORM\Column(name="game_avatar", type="integer", nullable=true)
      */
     protected $gameAvatar;
@@ -67,6 +72,7 @@ class Player extends Participant
         parent::__construct();
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->gameValidated = false;
+        $this->paymentDone = false;
     }
     /**
      * Get id
@@ -428,5 +434,28 @@ class Player extends Participant
     public function getPendingTournament()
     {
         return $this->pendingTournament;
+    }
+
+    /**
+     * Set paymentDone
+     *
+     * @param boolean $paymentDone
+     * @return Player
+     */
+    public function setPaymentDone($paymentDone)
+    {
+        $this->paymentDone = $paymentDone;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentDone
+     *
+     * @return boolean 
+     */
+    public function getPaymentDone()
+    {
+        return $this->paymentDone;
     }
 }

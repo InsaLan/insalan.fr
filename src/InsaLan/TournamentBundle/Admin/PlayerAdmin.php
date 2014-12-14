@@ -20,6 +20,7 @@ class PlayerAdmin extends Admin
             ->add('gameAvatar')
             ->add('gameId')
             ->add('tournament')
+            ->add('paymentDone')
         ;
     }
 
@@ -44,6 +45,7 @@ class PlayerAdmin extends Admin
             ->add('tournament')
             ->add('user.email')
             ->add('team.name')
+            ->add('paymentDone')
         ;
     }
 

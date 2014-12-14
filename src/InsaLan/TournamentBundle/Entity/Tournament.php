@@ -80,6 +80,11 @@ class Tournament
     protected $logoPath;
 
     /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    protected $webPrice;
+
+    /**
      * Get id
      *
      * @return integer
@@ -373,7 +378,8 @@ class Tournament
      * Constructor
      */
     public function __construct()
-    {
+    {   
+        $this->webPrice = 0;
         $this->participants = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -455,5 +461,28 @@ class Tournament
     public function getLogoPath()
     {
         return $this->logoPath;
+    }
+
+    /**
+     * Set webPrice
+     *
+     * @param integer $webPrice
+     * @return Tournament
+     */
+    public function setWebPrice($webPrice)
+    {
+        $this->webPrice = $webPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get webPrice
+     *
+     * @return integer 
+     */
+    public function getWebPrice()
+    {
+        return $this->webPrice;
     }
 }

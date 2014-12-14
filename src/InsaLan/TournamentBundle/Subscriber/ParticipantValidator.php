@@ -38,7 +38,6 @@ class ParticipantValidator implements EventSubscriber
     {      
 
         $entity = $args->getEntity();
-
         $em = $args->getEntityManager();
 
         if($entity instanceof Player) {
@@ -69,35 +68,38 @@ class ParticipantValidator implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {   
         $entity = $args->getEntity();
+        if($entity instanceof Participant) {
         
-        if($entity->getTournament() !== null && $entity->getValidated() === Participant::STATUS_VALIDATED) {
-            
-            $em = $args->getEntityManager();
-
-            if($entity instanceof Player) {
-
+            if($entity->getTournament() !== null && $entity->getValidated() === Participant::STATUS_VALIDATED) {
                 
-                $waitingPlayer = $em
-                    ->getRepository('InsaLanTournamentBundle:Player')
-                    ->getWaitingPlayer($entity->getTournament());
+                $em = $args->getEntityManager();
 
-                if($waitingPlayer) {
-                    $waitingPlayer->setValidated(Participant::STATUS_VALIDATED);
-                    $this->updated_participants[] = $waitingPlayer;
+                if($entity instanceof Player) {
+
+                    
+                    $waitingPlayer = $em
+                        ->getRepository('InsaLanTournamentBundle:Player')
+                        ->getWaitingPlayer($entity->getTournament());
+
+                    if($waitingPlayer) {
+                        $waitingPlayer->setValidated(Participant::STATUS_VALIDATED);
+                        $this->updated_participants[] = $waitingPlayer;
+                    }
+
+                } else {
+
+                    $waitingTeam = $em
+                        ->getRepository('InsaLanTournamentBundle:Team')
+                        ->getWaitingTeam($entity->getTournament());
+
+                    if($waitingTeam) {
+                        $waitingTeam->setValidated(Participant::STATUS_VALIDATED);
+                        $this->updated_participants[] = $waitingTeam;
+                    }
+
                 }
-
-            } else {
-
-                $waitingTeam = $em
-                    ->getRepository('InsaLanTournamentBundle:Team')
-                    ->getWaitingTeam($entity->getTournament());
-
-                if($waitingTeam) {
-                    $waitingTeam->setValidated(Participant::STATUS_VALIDATED);
-                    $this->updated_participants[] = $waitingTeam;
-                }
-
             }
+
         }
 
 
@@ -116,6 +118,9 @@ class ParticipantValidator implements EventSubscriber
     }
 
     protected function validatePlayer($player,$em) {
+
+        if(!$player->getPaymentDone() && $player->getTournament()->getWebPrice() > 0) return;
+
         $freeSlots = $em
                 ->getRepository('InsaLanTournamentBundle:Tournament')
                 ->getFreeSlots($player->getTournament()->getId());
@@ -132,6 +137,16 @@ class ParticipantValidator implements EventSubscriber
         
 
         if($team->getPlayers()->count() >= $team->getTournament()->getTeamMinPlayer()) {
+
+            // Check players payments
+            $minPaymentNumbers = floor($team->getTournament()->getTeamMinPlayer() / 2) + 1;
+            $sumPayments = 0;
+            foreach($team->getPlayers() as $p) {
+                if($p->getPaymentDone()) $sumPayments++;
+            }
+
+            if($sumPayments < $minPaymentNumbers && $team->getTournament()->getWebPrice() > 0) return;
+
             //Ready for validation
             $freeSlots = $em
                 ->getRepository('InsaLanTournamentBundle:Tournament')
@@ -165,6 +180,7 @@ class ParticipantValidator implements EventSubscriber
         }
 
     }
+
 }
 
 ?>
