@@ -80,24 +80,28 @@
             {% for t in tournaments %}
             {% spaceless %}
             {% if t.isOpenedInFuture %}
-            <h2>{{ t.name }}</h2>
-            <p>
-                {{ t.teamMinPlayer }} à {{ t.teamMaxPlayer }} joueurs 
+            <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
+            <h2>{{ t.name }} (ouverture le {{ t.registrationOpen|date('d/m/Y H:i') }})</h2>
+            <p class="pull-left">
+                {{ t.teamMinPlayer }} joueur(s) 
                 - 
                 {{ t.registrationLimit }} slots
-            </p>
+            </p><br class="clear">
             {% elseif t.isOpenedNow %}
             
                 {% if t.participantType == 'team' %}
-                    <a style="color:#fff" href="{{ path('insalan_tournament_user_jointeam', {id: t.id}) }}">
+                    <a class="list-choice" href="{{ path('insalan_tournament_user_jointeam', {id: t.id}) }}">
                 {% else %}
-                    <a style="color:#fff" href="{{ path('insalan_tournament_user_setplayer', {tournament: t.id}) }}">
+                    <a class="list-choice" href="{{ path('insalan_tournament_user_setplayer', {tournament: t.id}) }}">
                 {% endif %}
+                <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
                 <h2>{{ t.name }}</h2>
                 <p>
-                {{ t.teamMinPlayer }} à {{ t.teamMaxPlayer }} joueurs 
+                {{ t.teamMinPlayer }} joueur(s) 
                 - 
                 {{ t.registrationLimit }} slots
+                -
+                Inscriptions jusqu'au {{ t.registrationClose|date('d/m/Y H:i') }}
                 </p>
                 </a>
             {% endif %}

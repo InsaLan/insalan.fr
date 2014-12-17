@@ -38,12 +38,12 @@ class Tournament
     protected $participants;
 
     /**
-     * @ORM\Column(type="date", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     protected $registrationOpen;
 
     /**
-     * @ORM\Column(type="date", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     protected $registrationClose;
 
@@ -85,17 +85,17 @@ class Tournament
     protected $webPrice;
 
     public function isOpenedInFuture() {
-        $now = (new \DateTime())->setTime(00,00);
+        $now = new \DateTime();
         return $this->registrationOpen > $now;
     }
 
     public function isOpenedNow() {
-        $now = (new \DateTime())->setTime(00,00);
+        $now = new \DateTime();
         return $this->registrationOpen <= $now && $this->registrationClose >= $now;
     }
 
     public function isOpenedInPast() {
-        $now = (new \DateTime())->setTime(00,00);
+        $now = new \DateTime();
         return $this->registrationClose < $now;
     }
 

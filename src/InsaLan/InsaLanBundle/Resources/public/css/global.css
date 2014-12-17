@@ -821,4 +821,10 @@ li a:hover {
   padding-bottom: 100px;
 }
 
+.list-choice {
+    color: #fff;
+}
 
+.list-choice:hover {
+    color: #00BFF3;
+}
