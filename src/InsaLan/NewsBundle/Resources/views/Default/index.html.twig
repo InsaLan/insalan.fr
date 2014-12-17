@@ -7,7 +7,6 @@
 {% block body %}
   {{ parent() }}
 
-  {#<img src="{{ asset('bundles/insalan/img/banner.png') }}"> #}
   <div class="grid-7 pull-left">
       <iframe width="700" height="394" src="//www.youtube.com/embed/WdpiNhS1TtA?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
   </div>
@@ -15,28 +14,43 @@
       <div class="frame frame-active">
           <header class="full">
               <div class="title pull-left">LoL</div>
-              <small class="pull-right">slots: 32<br>à gagner: ??? €</small>
+              <small class="pull-right">
+                  slots: 32
+                  <!--<br>à gagner: ??? €-->
+              </small>
             <br class="clear">
           </header>
           <header class="full">
               <div class="title pull-left">CS:GO</div>
 
-              <small class="pull-right">slots: 24<br>à gagner: ??? €</small>
+              <small class="pull-right">
+                  slots: 24
+                  <!--<br>à gagner: ??? €-->
+              </small>
               <br class="clear">
           </header>
           <header class="full">
               <div class="title pull-left">StarCraft II</div>
-              <small class="pull-right">slots: 64<br>à gagner: ??? €</small>
+              <small class="pull-right">
+                  slots: 64
+                  <!--<br>à gagner: ??? €-->
+              </small>
               <br class="clear">
           </header>
           <header class="full">
               <div class="title pull-left">Dota 2</div>
-              <small class="pull-right">slots: 12<br>à gagner: ??? €</small>
+              <small class="pull-right">
+                  slots: 12
+                  <!--<br>à gagner: ??? €-->
+              </small>
               <br class="clear">
           </header>
           <header class="full">
               <div class="title pull-left">Hearthstone</div>
-              <small class="pull-right">slots: 32<br>à gagner: ??? €</small>
+              <small class="pull-right">
+                  slots: 32
+                  <!--<br>à gagner: ??? €-->
+              </small>
               <br class="clear">
           </header>
           <header class="huge-button">
@@ -54,7 +68,14 @@
       </div>
   </div>
   <br class="clear">
-  <article>
+  <article id="horaire" class="info">
+      <aside>
+          <div class="square">
+              <a href="">
+                  <span></span>
+              </a>
+          </div>
+      </aside>
       <header>
           <h2>Du 5 au 8 février 2015 à l'INSA Rennes</h2>
       </header>
@@ -62,7 +83,7 @@
   </section>
 <section class="highlight">
     <div class="container" style="text-align:center">
-        <div class="grid-2-5 pull-left">
+        <div class="grid-3-3 pull-left">
             <h1>JEUDI</h1>
             <div style="text-align: center">
                 <strong>20h00 - 23h59</strong>
@@ -71,9 +92,7 @@
                 Ouverture de la halle au public
                 <br>Bornes d'arcades, jeux, quizz
             </div>
-        </div>
-
-        <div class="grid-2-5 pull-left">
+            <br><br> 
             <h1>VENDREDI</h1>
             <div style="text-align: center">
                 <strong>20h00 - 23h59</strong>
@@ -85,7 +104,7 @@
             </div>
         </div>
         
-        <div class="grid-2-5 pull-left">
+        <div class="grid-3-3 pull-left">
             <h1>SAMEDI</h1>
             <div style="text-align: center">
                 <strong>08h00 - 23h59</strong>
@@ -110,20 +129,57 @@
                 <strong>15h30</strong>
             </div>
             <div>
-                Cosplay sur la scène
+                Concours cosplay
             </div>
             <div style="text-align: center">
                 <strong>17h30</strong>
             </div>
             <div>
-                Tournoi sur scène
+                Tournois sur scène
             </div>
         </div>
         
-        <div class="grid-2-5 pull-left">
+        <div class="grid-3-3 pull-left">
             <h1>DIMANCHE</h1>
+            <div style="text-align: center">
+                <strong>11h00</strong>
+            </div>
+            <div>
+                Finale Hearthstone
+             </div>
+             <div style="text-align: center">
+                <strong>13h00</strong>
+            </div>
+            <div>
+                Finale Dota 2
+            </div>
+            <div style="text-align: center">
+                <strong>14h30</strong>
+            </div>
+            <div>
+                Finale StarCraft 2
+            </div>
+            <div style="text-align: center">
+                <strong>16h00</strong>
+            </div>
+            <div>
+                Finale League of Legends
+            </div>
+            <div style="text-align: center">
+                <strong>17h30</strong>
+            </div>
+            <div>
+                Finale Counter-Strike: Global Offensive
+            </div>
+            <div style="text-align: center">
+                <strong>19h00</strong>
+            </div>
+            <div>
+                Cérémonie de cloture
+            </div>
         </div>
-        <br class="clear">
+        <br class="clear"><br><br>
+        <p>Entrée gratuite pour les visiteurs. L'inscription aux tournois officiels coûte 22€ en ligne et 30€ sur place.</p>
     </div>
 </section>
 <section class="container">
@@ -148,8 +204,15 @@
           {{ n.text | markdown }}
         </section>
       </article>
-    {% endfor %}
-  </section>
+      {% endfor %}
+
+      </section>
+      <aside class="twitter">
+          <h2>Twitter</h2>
+            <a class="twitter-timeline"  href="https://twitter.com/insalan" data-widget-id="545202120761573376">Tweets de @insalan</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </aside>
+        <br class="clear">
 
 {% endblock %}
 
