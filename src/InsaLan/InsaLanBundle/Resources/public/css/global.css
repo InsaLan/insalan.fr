@@ -673,6 +673,10 @@ strong {
   width: 20%;
 }
 
+.grid-2-5 {
+  width: 25%;
+}
+
 .grid-3 {
   width: 30%;
 }
@@ -806,3 +810,11 @@ strong {
 li a:hover {
   color: #fff;
 }
+
+.highlight {
+  background: url('../img/fade-bot.png') repeat-x top, url('../img/tweed.png') repeat;
+  padding-top: 40px;
+  padding-bottom: 100px;
+}
+
+
