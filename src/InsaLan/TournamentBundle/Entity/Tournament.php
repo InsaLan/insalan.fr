@@ -84,6 +84,21 @@ class Tournament
      */
     protected $webPrice;
 
+    public function isOpenedInFuture() {
+        $now = (new \DateTime())->setTime(00,00);
+        return $this->registrationOpen > $now;
+    }
+
+    public function isOpenedNow() {
+        $now = (new \DateTime())->setTime(00,00);
+        return $this->registrationOpen <= $now && $this->registrationClose >= $now;
+    }
+
+    public function isOpenedInPast() {
+        $now = (new \DateTime())->setTime(00,00);
+        return $this->registrationClose < $now;
+    }
+
     /**
      * Get id
      *

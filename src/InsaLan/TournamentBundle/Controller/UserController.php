@@ -28,7 +28,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
 
-        $rawTournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findOpened();
+        $rawTournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findAll();
         $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($usr);
 
         $tournaments = array();
