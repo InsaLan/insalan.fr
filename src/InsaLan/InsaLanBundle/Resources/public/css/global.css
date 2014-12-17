@@ -785,6 +785,24 @@ strong {
   margin: 5px 20px 5px 20px;
 }
 
+.frame > .huge-button {
+    text-align: center;
+    background-color: #009ec9;
+}
+
+.frame > .huge-button:hover {
+    background-color: #58d2f3;
+}
+
+.frame > .huge-button > .title {
+    width: 90%;
+}
+
+.frame > header > small {
+    text-align: right;
+    padding: 10px 5px 0px 0px;
+}
+
 li a:hover {
   color: #fff;
 }
