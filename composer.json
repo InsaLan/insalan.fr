@@ -27,8 +27,8 @@
         "sonata-project/admin-bundle": "~2.3",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "paquettg/leaguewrap": "dev-master",
-        "payum/payum-bundle": "*@stable",
-        "payum/offline": "*@stable"
+        "payum/offline": "*@stable",
+        "payum/payum": "*@stable"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
