@@ -38,6 +38,8 @@ twig:
             - 'InsaLanBundle:Form:fields.html.twig'
     globals:
         ga_tracking: "%ga_tracking%"
+    paths:
+        %kernel.root_dir%/../vendor/payum/core/Payum/Core/Resources/views: PayumCore
 
 # Assetic Configuration
 assetic:
@@ -89,11 +91,19 @@ doctrine:
                 prefix: Gedmo\Tree\Entity
                 dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
                 is_bundle: false
+            payum:
+                is_bundle: false
+                type: xml
+                dir: %kernel.root_dir%/../vendor/payum/core/Payum/Core/Bridge/Doctrine/Resources/mapping
+                prefix: Payum\Core\Model
+
+
         filters:
             softdeleteable:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                 enabled: true
 
+                   
 services:
     gedmo.listener.softdeleteable:
         class: Gedmo\SoftDeleteable\SoftDeleteableListener
@@ -157,3 +167,21 @@ sonata_block:
         sonata.admin.block.admin_list:
             contexts:   [admin]
         # Your other blocks
+
+payum:
+    security:
+        token_storage:
+            InsaLan\UserBundle\Entity\PaymentToken: { doctrine: orm }
+
+    storages:
+        InsaLan\UserBundle\Entity\Order: { doctrine: orm }
+
+    contexts:
+        paypal_express_checkout_and_doctrine_orm:
+            paypal_express_checkout_nvp:
+                username: '%paypal_express_checkout_username%'
+                password: '%paypal_express_checkout_password%'
+                signature: '%paypal_express_checkout_signature%'
+                sandbox: true
+        offline:
+            offline: ~

@@ -59,3 +59,12 @@ _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
+
+payum_capture:
+    resource: "@PayumBundle/Resources/config/routing/capture.xml"
+
+payum_authorize:
+    resource: "@PayumBundle/Resources/config/routing/notify.xml"
+
+payum_notify:
+    resource: "@PayumBundle/Resources/config/routing/notify.xml"
