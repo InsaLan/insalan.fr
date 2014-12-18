@@ -26,7 +26,9 @@
         "knplabs/knp-markdown-bundle": "dev-master",
         "sonata-project/admin-bundle": "~2.3",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
-        "paquettg/leaguewrap": "dev-master"
+        "paquettg/leaguewrap": "dev-master",
+        "payum/payum-bundle": "*@stable",
+        "payum/offline": "*@stable"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
