@@ -20,7 +20,7 @@ cp app/config/parameters.yml.dist app/config/parameters.yml
 vim app/config/parameters.yml
 ```
 
-Create database & load fixtures
+Create database & load fixtures (php-mbstring needed)
 
 ```bash
 php app/console doctrine:database:create
