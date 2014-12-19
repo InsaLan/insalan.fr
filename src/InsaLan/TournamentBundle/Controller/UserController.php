@@ -14,6 +14,7 @@ use Payum\Core\Reply\HttpResponse;
 use Payum\Core\Request\Capture;
 use Payum\Core\Request\GetHumanStatus;
 use Payum\Offline\PaymentFactory as OfflinePaymentFactory;
+use Payum\Paypal\ExpressCheckout\Nvp\Api;
 
 use InsaLan\TournamentBundle\Form\SetPlayerName;
 use InsaLan\TournamentBundle\Form\TeamType;
@@ -55,7 +56,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/player/set/{tournament}")
+     * @Route("/{tournament}/user/player/set")
      * @Template()
      */
     public function setPlayerAction(Request $request, Entity\Tournament $tournament) {
@@ -70,15 +71,12 @@ class UserController extends Controller
             $player->setPendingTournament($tournament);
         }
 
-        if ($game === 'lol' || $game === 'manual') {
-            return $this->usernameSet($em, $usr, $player, $request, $tournament);
-        }
-        return array('selectedGame' => $game, 'tournamentId' => $tournament->getId());
+        return $this->usernameSet($em, $usr, $player, $request, $tournament);
 
     }
 
     /**
-     * @Route("/user/player/validate/{tournament}")
+     * @Route("/{tournament}/user/player/validate")
      * @Template()
      */
     public function validatePlayerAction(Request $request, Entity\Tournament $tournament) {
@@ -90,28 +88,24 @@ class UserController extends Controller
 
         if ($player === null) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer'));
-        } else if ($game === 'manual') {
+        } else {
 
             $player->setGameValidated(true);
             $this->finalizePlayerAfterValidation($player, $tournament);
             $em->persist($player);
             $em->flush();
 
-            if ($tournament->getParticipantType() == "team") { 
+            if ($tournament->getParticipantType() === "team") { 
                 return $this->redirect(
-                    $this->generateUrl('insalan_tournament_user_jointeam', array('id' => $tournament->getId()))
+                    $this->generateUrl('insalan_tournament_user_jointeam', array('tournament' => $tournament->getId()))
                 );
             } else {
                 return $this->redirect(
-                    $this->generateUrl('insalan_tournament_user_pay', array('id' => $tournament->getId()))
+                    $this->generateUrl('insalan_tournament_user_pay', array('tournament' => $tournament->getId()))
                 );
             }
 
-        } else if ($game === 'lol') {
-            return $this->lolValidation($em, $usr, $player, $tournament->getId(), $check);
-        } else {
-            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
-        }
+        } 
     }
 
     private function finalizePlayerAfterValidation($player, $tournament) {
@@ -121,7 +115,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/leave/{id}")
+     * @Route("/{tournament}/user/leave")
      */
     public function leaveAction(Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
@@ -144,7 +138,7 @@ class UserController extends Controller
     }
    
     /**
-     * @Route("/user/pay/{id}/details")
+     * @Route("/{tournament}/user/pay/details")
      * @Template()
      */
     public function payAction(Entity\Tournament $tournament) {
@@ -162,7 +156,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/pay/{id}/paypal_ec")
+     * @Route("/{tournament}/user/pay/paypal_ec")
      */
     public function payPaypalECAction(Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
@@ -181,12 +175,19 @@ class UserController extends Controller
 
         $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
         $order = $storage->createModel();
+
         $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $tournament->getCurrency();
         $order['PAYMENTREQUEST_0_AMT'] = $price;
+        $order['NOSHIPPING'] = Api::NOSHIPPING_NOT_DISPLAY_ADDRESS;
+        $order['REQCONFIRMSHIPPING'] = Api::REQCONFIRMSHIPPING_NOT_REQUIRED;
+        
+        $order['L_PAYMENTREQUEST_0_ITEMCATEGORY0'] = Api::PAYMENTREQUEST_ITERMCATEGORY_DIGITAL;
         $order['L_PAYMENTREQUEST_0_NAME0'] = 'Place pour le tournoi '.$tournament->getName();
         $order['L_PAYMENTREQUEST_0_AMT0'] = $tournament->getWebPrice();
         $order['L_PAYMENTREQUEST_0_DESC0'] = $tournament->getDescription();
         $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;
+        
+        $order['L_PAYMENTREQUEST_0_ITEMCATEGORY1'] = Api::PAYMENTREQUEST_ITERMCATEGORY_DIGITAL;
         $order['L_PAYMENTREQUEST_0_NAME1'] = 'Majoration paiement en ligne';
         $order['L_PAYMENTREQUEST_0_AMT1'] = $tournament->getOnlineIncreaseInPrice();
         $order['L_PAYMENTREQUEST_0_DESC1'] = 'Frais de gestion du paiement';
@@ -198,7 +199,8 @@ class UserController extends Controller
         $captureToken = $this->get('payum.security.token_factory')->createCaptureToken(
             $paymentName,
             $order,
-            'insalan_tournament_user_paydone'
+            'insalan_tournament_user_paydone',
+            array('tournament' => $tournament->getId())
         );
 
         $order['RETURNURL'] = $captureToken->getTargetUrl();
@@ -209,36 +211,42 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/pay/done")
+     * @Route("/{tournament}/user/pay/done")
      * @Template()
      */
-    public function payDoneAction(Request $request) {
-       $token = $this->get('payum.security.http_request_verifier')->verify($request);
+    public function payDoneAction(Request $request, Entity\Tournament $tournament) {
+        $em = $this->getDoctrine()->getManager();
+        $usr = $this
+            ->get('security.context')
+            ->getToken()
+            ->getUser();
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
 
+
+        $token = $this->get('payum.security.http_request_verifier')->verify($request);
         $payment = $this->get('payum')->getPayment($token->getPaymentName());
+        
+        //$this->get('payum.security.http_request_verifier')->invalidate($token);
 
-        $this->get('payum.security.http_request_verifier')->invalidate($token);
-
-        // Once you have token you can get the model from the storage directly. 
-        //$identity = $token->getDetails();
-        //$order = $payum->getStorage($identity->getClass())->find($identity);
-
-        // or Payum can fetch the model for you while executing a request (Preferred).
         $payment->execute($status = new GetHumanStatus($token));
 
-        return array('status' => $status);
+        if ($status->isCaptured()) {
+            $player->setPaymentDone(true); 
+            $em->persist($player);
+        }
+
+        return array('status' => $status, 'tournament' => $tournament, 'user' => $usr, 'player' => $player);
     }
 
     /**
-     * @Route("/user/join/{id}/team")
+     * @Route("{tournament}/user/join/team")
      * @Template()
      */
-    public function joinTeamAction($id)
+    public function joinTeamAction(Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $tournament = $em
-            ->getRepository('InsaLanTournamentBundle:Tournament')
-            ->findOneById($id);
         $usr = $this
             ->get('security.context')
             ->getToken()
@@ -253,7 +261,7 @@ class UserController extends Controller
                 $this->generateUrl(
                     'insalan_tournament_user_setplayer',
                     array(
-                        'tournament' => $id
+                        'tournament' => $tournament->getId()
                     )));
         }
         // Check if this player is validated for the game
@@ -262,7 +270,7 @@ class UserController extends Controller
                 $this->generateUrl(
                     'insalan_tournament_user_validateplayer',
                     array(
-                        'tournament' => $id
+                        'tournament' => $tournament->getId()
                     )));
         }
 
@@ -306,14 +314,11 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/join/{id}/team/create")
+     * @Route("{tournament}/user/join/team/create")
      * @Template()
      */
-    public function createTeamAction(Request $request, $id) {
+    public function createTeamAction(Request $request, Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
-        $tournament = $em
-            ->getRepository('InsaLanTournamentBundle:Tournament')
-            ->findOneById($id);
 
         if($tournament->getParticipantType() !== "team")
             throw new ControllerException("Not Allowed");
@@ -348,10 +353,10 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/join/{id}/team/existing")
+     * @Route("{tournament}/user/join/team/existing")
      * @Template()
      */
-    public function existingTeamAction(Request $request, $id) {
+    public function existingTeamAction(Request $request, Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
         $tournament = $em
             ->getRepository('InsaLanTournamentBundle:Tournament')

@@ -1,0 +1,27 @@
+{% if status.isCaptured %}
+<div class="frame frame-success">
+  <header class="full">
+    <div class="step pull-left">
+        {{ counter }}
+    </div>
+    <div class="title pull-left">Paiement réussi</div>
+    <br class="clear">
+  </header>
+    <div class="text">
+        Votre paiement a bien été validé
+    </div>
+</div>
+{% else %}
+<div class="frame frame-error">
+  <header class="full">
+    <div class="step pull-left">
+        {{ counter }}
+    </div>
+    <div class="title pull-left">Echec du paiement</div>
+    <br class="clear">
+  </header>
+    <div class="text">
+        Une erreur est survenue
+    </div>
+</div>
+{% endif %}

@@ -11,13 +11,23 @@
   </aside>
 
   <header>
-      <h2>Paiement réussi</h2>
-      {{ dump(status) }}
+    <h2>Inscription à &laquo; {{ tournament.name }} &raquo;</h2>
+    {{ tournament.description }}
   </header>
 
   <section>
 
-    lel
+      {% if tournament.participantType == 'team' %}
+          {% include 'InsaLanTournamentBundle:Part:Step1ManualValidated.html.twig' with {'counter': 1} %}
+          {% include 'InsaLanTournamentBundle:Part:Step2ManualValidated.html.twig' with {'counter': 2} %}
+          {% include 'InsaLanTournamentBundle:Part:Step3ManualValidated.html.twig' with {'counter': 3} %}
+          {% include 'InsaLanTournamentBundle:Part:Step4ManualValidated.html.twig' with {'counter': 4} %}
+      {% else %}
+      {% include 'InsaLanTournamentBundle:Part:Step1ManualValidated.html.twig' with {'counter': 1} %}
+      {% include 'InsaLanTournamentBundle:Part:Step2ManualValidated.html.twig' with {'counter': 2} %}
+      {% include 'InsaLanTournamentBundle:Part:Step3ManualSoloValidated.html.twig' with {'counter': 3} %}
+      {% include 'InsaLanTournamentBundle:Part:Step4ManualSoloActive.html.twig' with {'counter': 4} %}
+      {% endif %}
 
   </section>
 </article>

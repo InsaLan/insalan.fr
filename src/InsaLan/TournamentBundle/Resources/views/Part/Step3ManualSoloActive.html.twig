@@ -1,7 +1,7 @@
 <div class="frame frame-active">
   <header class="full">
     <div class="step pull-left">
-      3
+        {{ counter }}
     </div>
     <div class="title pull-left">Récapitulatif avant paiement</div>
     <br class="clear">
@@ -93,7 +93,7 @@
   </div>
   
   <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_setplayer', {tournament: tournament.id}) }}">Annuler</a>
-  <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_user_existingteam', {id: tournament.id}) }}">Chèque/Sur place</a>
-  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_paypaypalec', {id: tournament.id}) }}">Paiement en ligne</a>
+  <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_user_existingteam', {tournament: tournament.id}) }}">Chèque/Sur place</a>
+  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_paypaypalec', {tournament: tournament.id}) }}">Paiement en ligne</a>
   <br class="clear">
 </div>

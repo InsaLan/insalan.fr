@@ -16,7 +16,7 @@
   </div>
   
   <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_setplayer', {tournament: tournament.id}) }}">Annuler</a>
-  <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_createteam', {id: tournament.id}) }}">Créer</a>
-  <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_existingteam', {id: tournament.id}) }}">Rejoindre</a>
+  <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_createteam', {tournament: tournament.id}) }}">Créer</a>
+  <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_existingteam', {tournament: tournament.id}) }}">Rejoindre</a>
   <br class="clear">
 </div>

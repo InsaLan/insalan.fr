@@ -54,7 +54,7 @@
 
         {% else %}
 
-        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leave', {id: participant.tournament.id}) }}">Abandonner</a>
+        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leave', {tournament: participant.tournament.id}) }}">Abandonner</a>
 
         {% endif %}
 
@@ -90,7 +90,7 @@
             {% elseif t.isOpenedNow and not t.getLocked %}
             
                 {% if t.participantType == 'team' %}
-                    <a class="list-choice" href="{{ path('insalan_tournament_user_jointeam', {id: t.id}) }}">
+                    <a class="list-choice" href="{{ path('insalan_tournament_user_jointeam', {tournament: t.id}) }}">
                 {% else %}
                     <a class="list-choice" href="{{ path('insalan_tournament_user_setplayer', {tournament: t.id}) }}">
                 {% endif %}
