@@ -25,7 +25,7 @@ class TeamLoader extends AbstractFixture implements OrderedFixtureInterface, Con
     }
     public function getOrder()
     {
-        return 1;
+        return 2;
     }
 
     public function load(ObjectManager $manager)
