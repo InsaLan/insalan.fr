@@ -77,7 +77,6 @@ class UserController extends Controller
 
     /**
      * @Route("/{tournament}/user/player/validate")
-     * @Template()
      */
     public function validatePlayerAction(Request $request, Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
@@ -346,7 +345,7 @@ class UserController extends Controller
             $em->persist($team);
             $em->persist($player);
             $em->flush();
-            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+            return $this->redirect($this->generateUrl('insalan_tournament_user_pay', array('tournament' => $tournament->getId())));
         }
 
         return array('tournament' => $tournament, 'user' => $usr, 'player' => $player, 'form' => $form->createView());

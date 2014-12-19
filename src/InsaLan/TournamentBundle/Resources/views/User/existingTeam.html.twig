@@ -17,16 +17,11 @@
 
   <section>
 
-    {% if tournament.type == 'lol' %}
-      {% include 'InsaLanTournamentBundle:Part:Step1LolValidated.html.twig' %}
-      {% include 'InsaLanTournamentBundle:Part:Step2LolValidated.html.twig' %}
-    {% else %}
-      {% include 'InsaLanTournamentBundle:Part:Step1ManualValidated.html.twig' %}
-      {% include 'InsaLanTournamentBundle:Part:Step2ManualValidated.html.twig' %}
-    {% endif %}
 
-    {% include 'InsaLanTournamentBundle:Part:Step3Validated.html.twig' %}
-      {% include 'InsaLanTournamentBundle:Part:Step4bisActive.html.twig' %}
+    {% include 'InsaLanTournamentBundle:Part:ChooseGameNameValidated.html.twig'  with {'counter': 1}%}
+    {% include 'InsaLanTournamentBundle:Part:ChoiceTeamValidated.html.twig'  with {'counter': 2}%}
+    {% include 'InsaLanTournamentBundle:Part:JoinTeamActive.html.twig'  with {'counter': 3}%}
+
 
   </section>
 </article>

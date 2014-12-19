@@ -18,14 +18,13 @@
   <section>
 
       {% if tournament.participantType == 'team' %}
-          {% include 'InsaLanTournamentBundle:Part:Step1ManualValidated.html.twig' %}
-          {% include 'InsaLanTournamentBundle:Part:Step2ManualValidated.html.twig' %}
-          {% include 'InsaLanTournamentBundle:Part:Step3ManualValidated.html.twig' %}
-          {% include 'InsaLanTournamentBundle:Part:Step4ManualActive.html.twig' %}
+          {% include 'InsaLanTournamentBundle:Part:ChooseGameNameValidated.html.twig'  with {'counter': 1}%}
+          {% include 'InsaLanTournamentBundle:Part:ChoiceTeamValidated.html.twig'  with {'counter': 2}%}
+          {% include 'InsaLanTournamentBundle:Part:CreateJoinTeamValidated.html.twig'  with {'counter': 3}%}
+          {% include 'InsaLanTournamentBundle:Part:BeforePaymentActive.html.twig'  with {'counter': 4}%}
       {% else %}
-          {% include 'InsaLanTournamentBundle:Part:Step1ManualValidated.html.twig' %}
-          {% include 'InsaLanTournamentBundle:Part:Step2ManualValidated.html.twig' %}
-          {% include 'InsaLanTournamentBundle:Part:Step3ManualSoloActive.html.twig' %}
+          {% include 'InsaLanTournamentBundle:Part:ChooseGameNameValidated.html.twig'  with {'counter': 1}%}
+          {% include 'InsaLanTournamentBundle:Part:BeforePaymentActive.html.twig'  with {'counter': 2} %}
       {% endif %}
 
   </section>
