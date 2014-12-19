@@ -27,3 +27,4 @@ parameters:
     paypal_express_checkout_username: ~
     paypal_express_checkout_password: ~
     paypal_express_checkout_signature: ~
+    paypal_express_checkout_sandbox: true

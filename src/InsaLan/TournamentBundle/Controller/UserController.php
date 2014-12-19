@@ -8,6 +8,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Payum\Core\Model\Order;
+use Payum\Core\Reply\HttpRedirect;
+use Payum\Core\Reply\HttpResponse;
+use Payum\Core\Request\Capture;
+use Payum\Core\Request\GetHumanStatus;
+use Payum\Offline\PaymentFactory as OfflinePaymentFactory;
+
 use InsaLan\TournamentBundle\Form\SetPlayerName;
 use InsaLan\TournamentBundle\Form\TeamType;
 use InsaLan\TournamentBundle\Form\TeamLoginType;
@@ -137,10 +144,10 @@ class UserController extends Controller
     }
    
     /**
-     * @Route("/user/pay/{id}")
+     * @Route("/user/pay/{id}/details")
      * @Template()
      */
-    public function payAction(Entity\Tournament $tournament) {$em = $this->getDoctrine()->getManager();
+    public function payAction(Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
         
         $usr = $this
@@ -152,6 +159,74 @@ class UserController extends Controller
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
         return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
+    }
+
+    /**
+     * @Route("/user/pay/{id}/paypal_ec")
+     */
+    public function payPaypalECAction(Entity\Tournament $tournament) {
+        $em = $this->getDoctrine()->getManager();
+        
+        $usr = $this
+            ->get('security.context')
+            ->getToken()
+            ->getUser();
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        $paymentName = 'paypal_express_checkout_and_doctrine_orm';
+
+        $price = ($tournament->getWebPrice() + $tournament->getOnlineIncreaseInPrice());
+
+        $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
+        $order = $storage->createModel();
+        $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $tournament->getCurrency();
+        $order['PAYMENTREQUEST_0_AMT'] = $price;
+        $order['L_PAYMENTREQUEST_0_NAME0'] = 'Place pour le tournoi '.$tournament->getName();
+        $order['L_PAYMENTREQUEST_0_AMT0'] = $tournament->getWebPrice();
+        $order['L_PAYMENTREQUEST_0_DESC0'] = $tournament->getDescription();
+        $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;
+        $order['L_PAYMENTREQUEST_0_NAME1'] = 'Majoration paiement en ligne';
+        $order['L_PAYMENTREQUEST_0_AMT1'] = $tournament->getOnlineIncreaseInPrice();
+        $order['L_PAYMENTREQUEST_0_DESC1'] = 'Frais de gestion du paiement';
+        $order['L_PAYMENTREQUEST_0_NUMBER1'] = 1;
+
+        $storage->updateModel($order);
+
+        $payment = $this->get('payum')->getPayment('paypal_express_checkout_and_doctrine_orm');
+        $captureToken = $this->get('payum.security.token_factory')->createCaptureToken(
+            $paymentName,
+            $order,
+            'insalan_tournament_user_paydone'
+        );
+
+        $order['RETURNURL'] = $captureToken->getTargetUrl();
+        $order['CANCELURL'] = $captureToken->getTargetUrl();
+        $order['INVNUM'] = $usr->getId();
+        $storage->updateModel($order);
+        return $this->redirect($captureToken->getTargetUrl());
+    }
+
+    /**
+     * @Route("/user/pay/done")
+     * @Template()
+     */
+    public function payDoneAction(Request $request) {
+       $token = $this->get('payum.security.http_request_verifier')->verify($request);
+
+        $payment = $this->get('payum')->getPayment($token->getPaymentName());
+
+        $this->get('payum.security.http_request_verifier')->invalidate($token);
+
+        // Once you have token you can get the model from the storage directly. 
+        //$identity = $token->getDetails();
+        //$order = $payum->getStorage($identity->getClass())->find($identity);
+
+        // or Payum can fetch the model for you while executing a request (Preferred).
+        $payment->execute($status = new GetHumanStatus($token));
+
+        return array('status' => $status);
     }
 
     /**

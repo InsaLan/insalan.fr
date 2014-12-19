@@ -7,7 +7,26 @@
     <br class="clear">
   </header>
   <div class="text">
+      Ces informations vous seront utiles plus tard :
+      <br>
       <table class="order">
+          <tr>
+              <td>
+                  Nom de votre compte insalan.fr
+              </td>
+              <td>
+                  {{ user.username }}
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Email de contact
+              </td>
+              <td>
+                  {{ user.email }}
+              </td>
+          </tr>
+
           <tr>
               <td>
                   Tournoi
@@ -18,17 +37,63 @@
           </tr>
           <tr>
               <td>
+                  Pseudonyme en jeu
+              </td>
+              <td>
+                  {{ player.name }}
+              </td>
+          </tr>
+
+          <tr>
+              <td>
                   Prix
               </td>
               <td>
-                  {{ tournament.webprice }} 
+                  {{ tournament.webprice }} {{ tournament.currency }} 
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Majoration si paiement en ligne
+              </td>
+              <td>
+                  {{ tournament.onlineIncreaseInPrice }} {{ tournament.currency }}
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Début du tournoi
+              </td>
+              <td>
+                  Le {{ tournament.tournamentOpen|date('d/m/Y à H:i') }}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                  Fin du tournoi
+              </td>
+              <td>
+                  Le {{ tournament.tournamentClose|date('d/m/Y à H:i') }}
               </td>
           </tr>
       </table>
+      <br>
+      <p>
+          Si vous jouez en équipe (CS:GO, Dota, LoL), votre inscription sera validée dès le paiement de 3 membres sur 5.<br>
+          Si vous jouez seul (SC2, HS), votre inscription sera validée dès que vous avez payé.
+      </p>
+      <br>
+      <p>
+          Si vous choisissez l'envoi par chèque, nous ne pouvons pas vous assurer qu'il restera des places lors de a réception de ce dernier, sauf si 3 de vos coéquipiers ont déjà payé en ligne (cf ci-dessus).
+      </p>
+      <br>
+      <p>
+          Si vous payez sur place, 3 membres de votre équipe doivent avoir payé en ligne ou par chèque.
+      </p>
   </div>
   
   <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_setplayer', {tournament: tournament.id}) }}">Annuler</a>
-  <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_createteam', {id: tournament.id}) }}">Paypal</a>
-  <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_existingteam', {id: tournament.id}) }}">Chèque/Sur place</a>
+  <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_user_existingteam', {id: tournament.id}) }}">Chèque/Sur place</a>
+  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_paypaypalec', {id: tournament.id}) }}">Paiement en ligne</a>
   <br class="clear">
 </div>

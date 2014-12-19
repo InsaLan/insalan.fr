@@ -828,3 +828,15 @@ li a:hover {
 .list-choice:hover {
     color: #00BFF3;
 }
+
+.order {
+ width: 500px;
+ margin: auto;
+ border-collapse: collapse;
+}
+
+.order td {
+    border-bottom: 1px solid #2D2D2D;
+    margin:0; padding: 5px;
+
+}
