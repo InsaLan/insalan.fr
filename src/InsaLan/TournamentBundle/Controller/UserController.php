@@ -89,10 +89,16 @@ class UserController extends Controller
             $this->finalizePlayerAfterValidation($player, $tournament);
             $em->persist($player);
             $em->flush();
-            
-            return $this->redirect(
-                $this->generateUrl('insalan_tournament_user_jointeam', array('id' => $tournament->getId()))
-            );
+
+            if ($tournament->getParticipantType() == "team") { 
+                return $this->redirect(
+                    $this->generateUrl('insalan_tournament_user_jointeam', array('id' => $tournament->getId()))
+                );
+            } else {
+                return $this->redirect(
+                    $this->generateUrl('insalan_tournament_user_pay', array('id' => $tournament->getId()))
+                );
+            }
 
         } else if ($game === 'lol') {
             return $this->lolValidation($em, $usr, $player, $tournament->getId(), $check);
@@ -128,6 +134,24 @@ class UserController extends Controller
         $em->flush();
 
         return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+    }
+   
+    /**
+     * @Route("/user/pay/{id}")
+     * @Template()
+     */
+    public function payAction(Entity\Tournament $tournament) {$em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+        
+        $usr = $this
+            ->get('security.context')
+            ->getToken()
+            ->getUser();
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
     }
 
     /**

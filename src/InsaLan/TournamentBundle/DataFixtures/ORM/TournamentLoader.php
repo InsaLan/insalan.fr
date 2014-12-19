@@ -22,6 +22,11 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setRegistrationLimit(64);
         $e->setTeamMaxPlayer(8);
         $e->setTeamMinPlayer(5);
+        $e->setWebPrice(22);
+        $e->setOnlineIncreaseInPrice(1);
+        $e->setCurrency('EUR');
+        $e->setTournamentOpen((new \DateTime())->modify('+90 day'));
+        $e->setTournamentClose((new \DateTime())->modify('+93 day'));
         $e->setType('manual');
         $e->setLogoPath('fixtures-1.png');
         $e->setParticipantType('team');
@@ -35,6 +40,11 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setRegistrationLimit(64);
         $e->setTeamMaxPlayer(8);
         $e->setTeamMinPlayer(5);
+        $e->setWebPrice(22);
+        $e->setOnlineIncreaseInPrice(1);
+        $e->setCurrency('EUR');
+        $e->setTournamentOpen((new \DateTime())->modify('+90 day'));
+        $e->setTournamentClose((new \DateTime())->modify('+93 day'));
         $e->setType('lol');
         $e->setLogoPath('fixtures-2.png');
         $e->setParticipantType('team');
@@ -48,6 +58,11 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setRegistrationLimit(1);
         $e->setTeamMaxPlayer(1);
         $e->setTeamMinPlayer(1);
+        $e->setWebPrice(22);
+        $e->setOnlineIncreaseInPrice(1);
+        $e->setCurrency('EUR');
+        $e->setTournamentOpen((new \DateTime())->modify('+90 day'));
+        $e->setTournamentClose((new \DateTime())->modify('+93 day'));
         $e->setType('manual');
         $e->setLogoPath('fixtures-3.png');
         $e->setParticipantType('player');
@@ -61,6 +76,11 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setRegistrationLimit(1);
         $e->setTeamMaxPlayer(1);
         $e->setTeamMinPlayer(1);
+        $e->setWebPrice(22);
+        $e->setOnlineIncreaseInPrice(1);
+        $e->setCurrency('EUR');
+        $e->setTournamentOpen((new \DateTime())->modify('+90 day'));
+        $e->setTournamentClose((new \DateTime())->modify('+93 day'));
         $e->setType('manual');
         $e->setLogoPath('fixtures-4.png');
         $e->setParticipantType('team');

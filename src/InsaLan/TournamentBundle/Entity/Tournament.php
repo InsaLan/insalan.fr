@@ -46,6 +46,16 @@ class Tournament
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $registrationClose;
+  
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $tournamentOpen;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $tournamentClose;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
@@ -80,9 +90,19 @@ class Tournament
     protected $logoPath;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $webPrice;
+
+    /**
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
+     */
+    protected $onlineIncreaseInPrice;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $currency;
 
     public function isOpenedInFuture() {
         $now = new \DateTime();
@@ -499,5 +519,97 @@ class Tournament
     public function getWebPrice()
     {
         return $this->webPrice;
+    }
+
+    /**
+     * Set tournamentOpen
+     *
+     * @param \DateTime $tournamentOpen
+     * @return Tournament
+     */
+    public function setTournamentOpen($tournamentOpen)
+    {
+        $this->tournamentOpen = $tournamentOpen;
+
+        return $this;
+    }
+
+    /**
+     * Get tournamentOpen
+     *
+     * @return \DateTime 
+     */
+    public function getTournamentOpen()
+    {
+        return $this->tournamentOpen;
+    }
+
+    /**
+     * Set tournamentClose
+     *
+     * @param \DateTime $tournamentClose
+     * @return Tournament
+     */
+    public function setTournamentClose($tournamentClose)
+    {
+        $this->tournamentClose = $tournamentClose;
+
+        return $this;
+    }
+
+    /**
+     * Get tournamentClose
+     *
+     * @return \DateTime 
+     */
+    public function getTournamentClose()
+    {
+        return $this->tournamentClose;
+    }
+
+    /**
+     * Set onlineIncreaseInPrice
+     *
+     * @param integer $onlineIncreaseInPrice
+     * @return Tournament
+     */
+    public function setOnlineIncreaseInPrice($onlineIncreaseInPrice)
+    {
+        $this->onlineIncreaseInPrice = $onlineIncreaseInPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get onlineIncreaseInPrice
+     *
+     * @return integer 
+     */
+    public function getOnlineIncreaseInPrice()
+    {
+        return $this->onlineIncreaseInPrice;
+    }
+
+    /**
+     * Set currency
+     *
+     * @param string $currency
+     * @return Tournament
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    /**
+     * Get currency
+     *
+     * @return string 
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
     }
 }

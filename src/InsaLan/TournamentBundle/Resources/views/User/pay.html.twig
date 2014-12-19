@@ -1,0 +1,44 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Inscription à &laquo; {{ tournament.name }} &raquo;</h2>
+    {{ tournament.description }}
+  </header>
+
+  <section>
+
+    {% if tournament.type == 'lol' %}
+      {% include 'InsaLanTournamentBundle:Part:Step1LolValidated.html.twig' %}
+      {% include 'InsaLanTournamentBundle:Part:Step2LolValidated.html.twig' %}
+      {% include 'InsaLanTournamentBundle:Part:Step3Active.html.twig' %}
+    {% elseif tournament.type == 'manual' %}
+      {% if tournament.participantType == 'team' %}
+          {% include 'InsaLanTournamentBundle:Part:Step1ManualValidated.html.twig' %}
+          {% include 'InsaLanTournamentBundle:Part:Step2ManualValidated.html.twig' %}
+          {% include 'InsaLanTournamentBundle:Part:Step3ManualValidated.html.twig' %}
+          {% include 'InsaLanTournamentBundle:Part:Step4ManualActive.html.twig' %}
+      {% else %}
+          {% include 'InsaLanTournamentBundle:Part:Step1ManualValidated.html.twig' %}
+          {% include 'InsaLanTournamentBundle:Part:Step2ManualValidated.html.twig' %}
+          {% include 'InsaLanTournamentBundle:Part:Step3ManualSoloActive.html.twig' %}
+      {% endif %}
+    {% else %}
+      <div class="alert alert-error">
+        <p>L'inscription pour ce type de tournoi n'est pas encore supportée</p>
+      </div>
+    
+    {% endif %}
+
+  </section>
+</article>
+{% endblock %}

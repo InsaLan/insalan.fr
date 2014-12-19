@@ -8,7 +8,7 @@ use Payum\Core\Model\Order as BaseOrder;
  * @ORM\Table
  * @ORM\Entity
  */
-class Order extends BaseOrder
+class PaymentStorage extends BaseOrder
 {
     /**
      * @ORM\Column(name="id", type="integer")

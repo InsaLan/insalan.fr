@@ -1,4 +1,3 @@
-{% if tournament.participantType == "team" %}
 <div class="frame frame-active">
   <header class="full">
     <div class="step pull-left">
@@ -21,14 +20,3 @@
   <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_existingteam', {id: tournament.id}) }}">Rejoindre</a>
   <br class="clear">
 </div>
-{% else %}
-<div class="frame frame-active">
-  <header>
-    <div class="step pull-left">
-      3
-    </div>
-    <div class="title pull-left">Inscription validée !</div>
-    <br style="clear:both;">
-  </header>
-</div>
-{% endif %}
