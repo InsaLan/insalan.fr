@@ -32,7 +32,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
 
             //Payum
-            //new Payum\Bundle\PayumBundle\PayumBundle(),
+            new Payum\Bundle\PayumBundle\PayumBundle(),
 
             // InsaLan
             new InsaLan\InsaLanBundle\InsaLanBundle(),

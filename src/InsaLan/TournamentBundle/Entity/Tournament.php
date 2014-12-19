@@ -63,6 +63,11 @@ class Tournament
     protected $registrationLimit;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $locked;
+
+    /**
      * @ORM\Column(type="enum", type="string", nullable=false)
      * ORM\Column(type="enum", type="string", nullable=false, columnDefinition="enum('lol', 'dota2', 'sc2', 'hs', 'csgo', 'manual')")
      */
@@ -611,5 +616,28 @@ class Tournament
     public function getCurrency()
     {
         return $this->currency;
+    }
+
+    /**
+     * Set locked
+     *
+     * @param string $locked
+     * @return Tournament
+     */
+    public function setLocked($locked)
+    {
+        $this->locked = $locked;
+
+        return $this;
+    }
+
+    /**
+     * Get locked
+     *
+     * @return string 
+     */
+    public function getLocked()
+    {
+        return $this->locked;
     }
 }

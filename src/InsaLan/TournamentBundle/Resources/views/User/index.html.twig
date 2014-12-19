@@ -79,7 +79,7 @@
             <br>
             {% for t in tournaments %}
             {% spaceless %}
-            {% if t.isOpenedInFuture %}
+            {% if t.isOpenedInFuture  %}
             <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
             <h2>{{ t.name }} (ouverture le {{ t.registrationOpen|date('d/m/Y H:i') }})</h2>
             <p class="pull-left">
@@ -87,7 +87,7 @@
                 - 
                 {{ t.registrationLimit }} slots
             </p><br class="clear">
-            {% elseif t.isOpenedNow %}
+            {% elseif t.isOpenedNow and not t.getLocked %}
             
                 {% if t.participantType == 'team' %}
                     <a class="list-choice" href="{{ path('insalan_tournament_user_jointeam', {id: t.id}) }}">
@@ -104,6 +104,15 @@
                 Inscriptions jusqu'au {{ t.registrationClose|date('d/m/Y H:i') }}
                 </p>
                 </a>
+            {% elseif t.isOpenedNow and t.getLocked %}
+            <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
+            <h2>{{ t.name }} (ce tournoi n'est accessible que sur invitation)</h2>
+            <p class="pull-left">
+                {{ t.teamMinPlayer }} joueur(s) 
+                - 
+                {{ t.registrationLimit }} slots
+            </p><br class="clear">
+
             {% endif %}
             {% endspaceless %}
             <br>

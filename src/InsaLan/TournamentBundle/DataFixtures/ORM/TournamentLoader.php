@@ -79,6 +79,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setWebPrice(22);
         $e->setOnlineIncreaseInPrice(1);
         $e->setCurrency('EUR');
+        $e->setLocked('ItCouldBeAPassKey');
         $e->setTournamentOpen((new \DateTime())->modify('+90 day'));
         $e->setTournamentClose((new \DateTime())->modify('+93 day'));
         $e->setType('manual');
