@@ -401,9 +401,6 @@ class UserController extends Controller
      */
     public function existingTeamAction(Request $request, Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
-        $tournament = $em
-            ->getRepository('InsaLanTournamentBundle:Tournament')
-            ->findOneById($id);
 
         if($tournament->getParticipantType() !== "team")
             throw new ControllerException("Not Allowed");
