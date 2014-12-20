@@ -25,6 +25,7 @@ class TournamentAdmin extends Admin
             ->add('onlineIncreaseInPrice')
             ->add('teamMaxPlayer')
             ->add('teamMinPlayer')
+            ->add('locked', null, array('required'=>false))
             ->add('participantType', 'choice', array(
                 'choices' => array(
                     'team' => 'Par équipe',
