@@ -440,7 +440,7 @@ class UserController extends Controller
                     $em->persist($player);
                     $em->persist($team2);
                     $em->flush();
-                    return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+                    return $this->redirect($this->generateUrl('insalan_tournament_user_pay', array('tournament' => $tournament->getId())));
                 } else {
                     throw new ControllerException("Mot de passe invalide");
                 }

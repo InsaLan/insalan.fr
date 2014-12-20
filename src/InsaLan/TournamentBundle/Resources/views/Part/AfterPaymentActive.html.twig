@@ -8,8 +8,66 @@
     <br class="clear">
   </header>
     <div class="text">
-        Votre paiement a bien été validé
+        Votre paiement a été validé.
+
+ Ces informations vous seront utiles plus tard :
+      <br>
+      <table class="order">
+          <tr>
+              <td>
+                  Nom de votre compte insalan.fr
+              </td>
+              <td>
+                  {{ user.username }}
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Email de contact
+              </td>
+              <td>
+                  {{ user.email }}
+              </td>
+          </tr>
+
+          <tr>
+              <td>
+                  Tournoi
+              </td>
+              <td>
+                  {{ tournament.name }}
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Pseudonyme en jeu
+              </td>
+              <td>
+                  {{ player.name }}
+              </td>
+          </tr>
+
+                  <tr>
+              <td>
+                  Début du tournoi
+              </td>
+              <td>
+                  Le {{ tournament.tournamentOpen|date('d/m/Y à H:i') }}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                  Fin du tournoi
+              </td>
+              <td>
+                  Le {{ tournament.tournamentClose|date('d/m/Y à H:i') }}
+              </td>
+          </tr>
+      </table>
+
     </div>
+    <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_index') }}">Ok</a>
+    <br class="clear">
 </div>
 {% else %}
 <div class="frame frame-danger">
@@ -21,7 +79,8 @@
     <br class="clear">
   </header>
     <div class="text">
-        Une erreur est survenue
+        Une erreur est survenue. Vous pouvez contacter un administrateur via contact@insalan.fr ou au 06 76 79 99 88.
     </div>
+          <a class="btn btn-danger ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: tournament.id}) }}">Réessayer</a>
 </div>
 {% endif %}
