@@ -21,7 +21,14 @@
   </header>
 
   <div class="container">
-    <section class="results">
+
+  {% if t.name == "League of Legends" ? set shortName "LoL" %}
+  {% if t.name == "CS:GO" ? set shortName "CSGO" %}
+  {% if t.name == "StarCraft II" ? set shortName "SC2" %}
+  {% if t.name == "Dota 2" ? set shortName "Dota2" %}
+  {% if t.name == "Hearthstone" ? set shortName "HS" %}
+
+    <section class="results bg{{ shortName }}">
       <section class="matchs">
         <h3>Matchs</h3>
         {% for s in stages %}
