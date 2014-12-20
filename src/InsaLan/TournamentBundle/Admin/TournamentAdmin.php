@@ -17,8 +17,12 @@ class TournamentAdmin extends Admin
             ->add('description')
             ->add('registrationOpen')
             ->add('registrationClose')
+            ->add('tournamentOpen')
+            ->add('tournamentClose')
             ->add('registrationLimit')
             ->add('webPrice')
+            ->add('currency')
+            ->add('onlineIncreaseInPrice')
             ->add('teamMaxPlayer')
             ->add('teamMinPlayer')
             ->add('participantType', 'choice', array(
