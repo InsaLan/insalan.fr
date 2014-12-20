@@ -205,21 +205,7 @@ class UserController extends Controller
 
         $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $tournament->getCurrency();
         $order['PAYMENTREQUEST_0_AMT'] = $price;
-        $order['NOSHIPPING'] = Api::NOSHIPPING_NOT_DISPLAY_ADDRESS;
-        $order['REQCONFIRMSHIPPING'] = Api::REQCONFIRMSHIPPING_NOT_REQUIRED;
         
-        $order['L_PAYMENTREQUEST_0_ITEMCATEGORY0'] = Api::PAYMENTREQUEST_ITERMCATEGORY_DIGITAL;
-        $order['L_PAYMENTREQUEST_0_NAME0'] = 'Place pour le tournoi '.$tournament->getName();
-        $order['L_PAYMENTREQUEST_0_AMT0'] = $tournament->getWebPrice();
-        $order['L_PAYMENTREQUEST_0_DESC0'] = $tournament->getDescription();
-        $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;
-        
-        $order['L_PAYMENTREQUEST_0_ITEMCATEGORY1'] = Api::PAYMENTREQUEST_ITERMCATEGORY_DIGITAL;
-        $order['L_PAYMENTREQUEST_0_NAME1'] = 'Majoration paiement en ligne';
-        $order['L_PAYMENTREQUEST_0_AMT1'] = $tournament->getOnlineIncreaseInPrice();
-        $order['L_PAYMENTREQUEST_0_DESC1'] = 'Frais de gestion du paiement';
-        $order['L_PAYMENTREQUEST_0_NUMBER1'] = 1;
-
         $storage->updateModel($order);
 
         $payment = $this->get('payum')->getPayment('paypal_express_checkout_and_doctrine_orm');
