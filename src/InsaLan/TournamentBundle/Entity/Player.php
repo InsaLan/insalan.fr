@@ -71,6 +71,7 @@ class Player extends Participant
     {
         parent::__construct();
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->team = new \Doctrine\Common\Collections\ArrayCollection();
         $this->gameValidated = false;
         $this->paymentDone = false;
     }
