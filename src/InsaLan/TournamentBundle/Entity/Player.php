@@ -467,4 +467,8 @@ class Player extends Participant
         }
         return null;
     }
+
+    public function isOk() {
+        return $this->paymentDone && $this->gameValidated;
+    }
 }

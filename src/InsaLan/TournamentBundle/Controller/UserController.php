@@ -275,6 +275,7 @@ class UserController extends Controller
 
         $payment->execute($status = new GetHumanStatus($token));
 
+
         if ($status->isCaptured()) {
             $player->setPaymentDone(true); 
             $em->persist($player);

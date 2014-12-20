@@ -20,7 +20,7 @@ class PlayerAdmin extends Admin
             ->add('gameAvatar')
             ->add('gameId')
             ->add('tournament')
-            ->add('paymentDone')
+            ->add('paymentDone', null, array('required'=>false))
         ;
     }
 

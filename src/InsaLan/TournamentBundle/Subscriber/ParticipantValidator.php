@@ -46,23 +46,24 @@ class ParticipantValidator implements EventSubscriber
                 $this->validatePlayer($entity,$em);
             }
 
-        }
-
-        elseif($entity instanceof Team) {    
-
-            if ($entity->getCaptain() === null && $entity->getPlayers()->count() > 0) { 
-                $entity->setCaptain($entity->getPlayers()->first());
-                $this->updated_participants[] = $entity;
+            foreach($entity->getTeam() as $t) {
+                $this->teamLogic($t,$em);
             }
+        }
+    }
 
-            if($entity->getValidated() !== Participant::STATUS_VALIDATED)
-                $this->validateTeam($entity,$em);
-
-            else
-                $this->unValidateTeam($entity,$em);
-
+    //Team Validation depends only of Players, so we can reasonnably execute it only when a user is updated. I guess.
+    private function teamLogic($team,$em) {
+        if ($team->getCaptain() === null && $team->getPlayers()->count() > 0) { 
+            $team->setCaptain($team->getPlayers()->first());
+            $this->updated_participants[] = $team;
         }
 
+        if($team->getValidated() !== Participant::STATUS_VALIDATED)
+            $this->validateTeam($team,$em);
+
+        else
+            $this->unValidateTeam($team,$em);
     }
 
     public function preRemove(LifecycleEventArgs $args)
