@@ -208,7 +208,6 @@ class UserController extends Controller
         $order['NOSHIPPING'] = Api::NOSHIPPING_NOT_DISPLAY_ADDRESS;
         $order['REQCONFIRMSHIPPING'] = Api::REQCONFIRMSHIPPING_NOT_REQUIRED;
         
-        $order['L_PAYMENTREQUEST_0_ITEMCATEGORY0'] = Api::PAYMENTREQUEST_ITERMCATEGORY_DIGITAL;
         $order['L_PAYMENTREQUEST_0_NAME0'] = 'Place pour le tournoi '.$tournament->getName();
         $order['L_PAYMENTREQUEST_0_AMT0'] = $tournament->getWebPrice();
         $order['L_PAYMENTREQUEST_0_DESC0'] = $tournament->getDescription();
