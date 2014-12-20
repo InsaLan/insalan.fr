@@ -54,6 +54,34 @@ class UserController extends Controller
 
         return array('tournaments' => $tournaments, 'participants' => $participants);
     }
+    /**
+     * @Route("/{tournament}/user/enroll")
+     */
+    public function enrollAction(Request $request, Entity\Tournament $tournament) {
+        $em = $this->getDoctrine()->getManager();
+        
+        $usr = $this
+            ->get('security.context')
+            ->getToken()
+            ->getUser();
+        
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        if ($player === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer',array('tournament' => $tournament->getId())));
+        else if (!$player->getGameValidated())
+            return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer',array('tournament' => $tournament->getId())));
+        else if ($tournament->getParticipantType() === 'team' && $player->getTeamForTournament($tournament) === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_jointeam',array('tournament' => $tournament->getId())));
+        else if (!$player->getPaymentDone())
+            return $this->redirect($this->generateUrl('insalan_tournament_user_pay',array('tournament' => $tournament->getId())));
+        else
+            return $this->redirect($this->generateUrl('insalan_tournament_user_paydone',array('tournament' => $tournament->getId())));
+
+
+    }
 
     /**
      * @Route("/{tournament}/user/player/set")
@@ -198,7 +226,7 @@ class UserController extends Controller
         $captureToken = $this->get('payum.security.token_factory')->createCaptureToken(
             $paymentName,
             $order,
-            'insalan_tournament_user_paydone',
+            'insalan_tournament_user_paydonetemp',
             array('tournament' => $tournament->getId())
         );
 
@@ -208,12 +236,28 @@ class UserController extends Controller
         $storage->updateModel($order);
         return $this->redirect($captureToken->getTargetUrl());
     }
-
+    
     /**
      * @Route("/{tournament}/user/pay/done")
      * @Template()
      */
     public function payDoneAction(Request $request, Entity\Tournament $tournament) {
+        $em = $this->getDoctrine()->getManager();
+        $usr = $this
+            ->get('security.context')
+            ->getToken()
+            ->getUser();
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
+    }
+
+    /**
+     * @Route("/{tournament}/user/pay/done_temp")
+     */
+    public function payDoneTempAction(Request $request, Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
         $usr = $this
             ->get('security.context')
@@ -234,9 +278,9 @@ class UserController extends Controller
         if ($status->isCaptured()) {
             $player->setPaymentDone(true); 
             $em->persist($player);
+            $em->flush();
         }
-
-        return array('status' => $status, 'tournament' => $tournament, 'user' => $usr, 'player' => $player);
+        return $this->redirect($this->generateUrl('insalan_tournament_user_paydone', array('tournament' => $tournament->getId()))); 
     }
 
     /**
@@ -306,7 +350,7 @@ class UserController extends Controller
         if($team->getPlayers()->count() === 0)
             $em->remove($team);            
 
-        $em->persist($player);
+        $em->remove($player);
         $em->flush();
         return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 

@@ -3,7 +3,7 @@
     <div class="step pull-left">
         {{ counter }}
     </div>
-    <div class="title pull-left">Choix de l'équipe {{ player.team.name }}</div>
+    <div class="title pull-left">Équipe sélectionnée : {{ player.getTeamForTournament(tournament) }}</div>
     <br style="clear:both;">
   </header>
 </div>

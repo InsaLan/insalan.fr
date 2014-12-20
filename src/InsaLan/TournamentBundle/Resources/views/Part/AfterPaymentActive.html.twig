@@ -1,4 +1,4 @@
-{% if status.isCaptured %}
+{% if player.paymentDone %}
 <div class="frame frame-success">
   <header class="full">
     <div class="step pull-left">
@@ -12,7 +12,7 @@
     </div>
 </div>
 {% else %}
-<div class="frame frame-error">
+<div class="frame frame-danger">
   <header class="full">
     <div class="step pull-left">
         {{ counter }}

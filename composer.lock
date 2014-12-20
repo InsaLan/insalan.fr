@@ -418,7 +418,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/3beb3a780485ab01f86941f4892cd23ef8c39c6b",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/d9763ccbb637958133c42bdcc3d31c5a6821b9e2",
                 "reference": "d9763ccbb637958133c42bdcc3d31c5a6821b9e2",
                 "shasum": ""
             },

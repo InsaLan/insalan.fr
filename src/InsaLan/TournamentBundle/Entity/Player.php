@@ -458,4 +458,13 @@ class Player extends Participant
     {
         return $this->paymentDone;
     }
+
+    public function getTeamForTournament(Tournament $tournament)
+    {
+        foreach ($this->team as $t) {
+            if ($t->getTournament()->getId() == $tournament->getId())
+                return $t;
+        }
+        return null;
+    }
 }
