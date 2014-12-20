@@ -1,0 +1,36 @@
+<div class="frame frame-active">
+    <header class="full">
+        <div class="step pull-left">
+            {{ counter }}
+        </div>
+        <div class="title pull-left">Paiement en attente</div>
+        <br class="clear">
+    </header>
+    <div class="text">
+
+        <strong>Paiement par chèque</strong><br>
+        Vous devez envoyer un chèque de {{ tournament.webPrice }} à l'ordre de AEIR InsaLan par la poste à l'adresse suivante : 
+        <br>
+        Lucie Labadie<br>
+        DBXXX INSA Rennes<br>
+        20 avnue des Buttes de Coësmes<br>
+        35708 Rennes CEDEX 7<br>
+        <br>
+
+        <strong>Paiement sur place</strong><br>
+        Vous pourrez payer sur place en liquide, par chèque ou par carte bancaire (majoration de 1€).<br>
+
+        <small>
+            Si vous jouez en équipe (CS:GO, Dota, LoL), votre inscription sera validée dès le paiement de 3 membres sur 5.<br>
+            Si vous jouez seul (SC2, HS), votre inscription sera validée dès que vous aurez payé.
+        <br>
+            Si vous choisissez l'envoi par chèque, nous ne pouvons pas vous assurer qu'il restera des places lors de a réception de ce dernier, sauf si 3 de vos coéquipiers ont déjà payé en ligne (cf ci-dessus).
+        <br>
+            Si vous payez sur place, 3 membres de votre équipe doivent avoir payé en ligne ou par chèque.
+        </small>
+
+    </div>
+    <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_index') }}">Ok</a>
+    <br class="clear">
+</div>
+

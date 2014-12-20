@@ -37,7 +37,7 @@
   {% else %}
   <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leave', {tournament: tournament.id}) }}">Annuler</a>
   {% endif %}
-  <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_user_existingteam', {tournament: tournament.id}) }}">Chèque/Sur place</a>
+  <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_user_payoffline', {tournament: tournament.id}) }}">Chèque/Sur place</a>
   <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_paypaypalec', {tournament: tournament.id}) }}">Paiement en ligne</a>
   <br class="clear">
 </div>

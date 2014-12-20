@@ -1,0 +1,34 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Inscription à &laquo; {{ tournament.name }} &raquo;</h2>
+    {{ tournament.description }}
+  </header>
+
+  <section>
+
+      {% if tournament.participantType == 'team' %}
+          {% include 'InsaLanTournamentBundle:Part:ChooseGameNameValidated.html.twig' with {'counter': 1} %}
+          {% include 'InsaLanTournamentBundle:Part:ChoiceTeamValidated.html.twig' with {'counter': 2} %}
+          {% include 'InsaLanTournamentBundle:Part:CreateJoinTeamValidated.html.twig' with {'counter': 3} %}
+          {% include 'InsaLanTournamentBundle:Part:BeforePaymentValidated.html.twig' with {'counter': 4} %}
+          {% include 'InsaLanTournamentBundle:Part:WaitPaymentActive.html.twig' with {'counter': 5} %}
+      {% else %}
+          {% include 'InsaLanTournamentBundle:Part:ChooseGameNameValidated.html.twig' with {'counter': 1} %}
+          {% include 'InsaLanTournamentBundle:Part:BeforePaymentValidated.html.twig' with {'counter': 2} %}
+          {% include 'InsaLanTournamentBundle:Part:WaitPaymentActive.html.twig' with {'counter': 3} %}
+      {% endif %}
+
+  </section>
+</article>
+{% endblock %}

@@ -283,6 +283,23 @@ class UserController extends Controller
         }
         return $this->redirect($this->generateUrl('insalan_tournament_user_paydone', array('tournament' => $tournament->getId()))); 
     }
+    
+    /**
+     * @Route("/{tournament}/user/pay/offline")
+     * @Template()
+     */
+    public function payOfflineAction(Request $request, Entity\Tournament $tournament) {
+        $em = $this->getDoctrine()->getManager();
+        $usr = $this
+            ->get('security.context')
+            ->getToken()
+            ->getUser();
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+        
+        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
+    }
 
     /**
      * @Route("{tournament}/user/join/team")
