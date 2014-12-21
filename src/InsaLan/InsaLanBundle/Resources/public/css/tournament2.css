@@ -53,6 +53,26 @@ body > footer {
   min-height: 500px;
 }
 
+.bgLoL {
+  background: #0e0e0e url('../img/bg-LoL.png') no-repeat top;
+}
+
+.bgSC2 {
+  background: #0e0e0e url('../img/bg-SC2.png') no-repeat top;
+}
+
+.bgCSGO {
+  background: #0e0e0e url('../img/bg-CSGO.png') no-repeat top;
+}
+
+.bgHS {
+  background: #0e0e0e url('../img/bg-HS.png') no-repeat top;
+}
+
+.bgDota2 {
+  background: #0e0e0e url('../img/bg-Dota2.png') no-repeat top;
+}
+
 .results section.matchs {
   width: 260px;
   float: left;
