@@ -48,8 +48,19 @@
             {% if participant.validated == 1 %}
             Le tournoi {{ participant.tournament.name }} est complet ! En cas de désistement, vous serez automatiquement validé.
             {% endif %}
-            {% if participant.validated == 0 and participant.participantType == 'team' %}
-            L'équipe sera validée quand {{ participant.tournament.teamMinPlayer }} joueurs seront inscrits et que 3 auront payé.
+            {% if participant.validated == 0 %}
+                {% if participant.participantType == 'team' %}
+                L'équipe sera validée quand {{ participant.tournament.teamMinPlayer }} joueurs seront inscrits et que 3 auront payé.
+                {% endif %}
+                {% if participant.participantType == 'player' %}
+                Votre participation sera validée après paiement.
+                {% endif %}
+                <br />
+                {% if participant.tournament.isFull() %}
+                    <strong>Attention, ce tournoi est complet.</strong> Lors de la validation de votre participation, vous serez placé sur liste d'attente.
+                {% else %}
+                    Il reste actuellement <strong>{{ participant.tournament.freeSlots }}</strong> slot(s) libre(s) dans votre tournoi.
+                {% endif %}
             {% endif %}
         </div>
 
@@ -96,13 +107,19 @@
             
                 <a class="list-choice" href="{{ path('insalan_tournament_user_enroll', {tournament: t.id}) }}">
                 <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
-                <h2>{{ t.name }}</h2>
+                <h2>{{ t.name }}{% if t.isFull %} - COMPLET {% endif %}</h2>
                 <p>
                 {{ t.teamMinPlayer }} joueur(s) 
                 - 
-                {{ t.registrationLimit - t.getNumberOfValidatedParticipants }} slots restants ( sur {{ t.registrationLimit }} slots disponibles)
-                -
-                Inscriptions jusqu'au {{ t.registrationClose|date('d/m/Y H:i') }}
+                Inscriptions jusqu'au {{ t.registrationClose|date('d/m/Y') }}
+                {% if not t.isFull %}
+                    - 
+                    {% if t.freeSlots > 1 %}
+                        {{ t.freeSlots }} / {{ t.registrationLimit }} slots disponibles
+                    {% else %}
+                        Un seul slot disponible !
+                    {% endif %}
+                {% endif %}
                 </p>
                 </a>
             {% elseif t.isOpenedNow and t.getLocked %}

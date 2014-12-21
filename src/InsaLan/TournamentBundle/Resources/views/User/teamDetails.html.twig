@@ -12,6 +12,10 @@
     <h2>{{ part.name }} ({{ part.tournament }})</h2>
   </header>
 
+  {% if groupMatches|length == 0 and knockoutMatches|length == 0 %}
+    <p style="margin-bottom:200px; margin-top:50px">Aucun match n'est pour l'instant disponible.</p>
+  {% endif %}
+
   {% for g in groupMatches %}
 
     <h3>{{ g[0].group.stage.name }} - {{ g[0].group.name }}</h3>

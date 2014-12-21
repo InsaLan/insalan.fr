@@ -21,6 +21,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findAll();
+
         return array('tournaments' => $tournaments);
     }
 

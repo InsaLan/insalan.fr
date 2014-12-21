@@ -124,6 +124,22 @@ class Tournament
         return $this->registrationClose < $now;
     }
 
+    public function isFull() {
+        return $this->getFreeSlots() === 0;
+    }
+
+    public function getValidatedSlots() {
+        $nb = 0;
+        foreach($this->getParticipants() as $p) {
+            $nb += ($p->getValidated() === Participant::STATUS_VALIDATED ? 1 : 0);
+        }
+        return $nb;
+    }
+
+    public function getFreeSlots() {
+        return $this->registrationLimit - $this->getValidatedSlots();
+    }
+
     /**
      * Get id
      *
