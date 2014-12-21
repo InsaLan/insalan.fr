@@ -100,8 +100,6 @@
             <h2>{{ t.name }} (ouverture le {{ t.registrationOpen|date('d/m/Y H:i') }})</h2>
             <p class="pull-left">
                 {{ t.teamMinPlayer }} joueur(s) 
-                - 
-                {{ t.registrationLimit - t.getNumberOfValidatedParticipants }} slots restants ( sur {{ t.registrationLimit }} slots disponibles)
             </p><br class="clear">
             {% elseif t.isOpenedNow and not t.getLocked %}
             
@@ -127,8 +125,6 @@
             <h2>{{ t.name }} (ce tournoi n'est accessible que sur invitation)</h2>
             <p class="pull-left">
                 {{ t.teamMinPlayer }} joueur(s) 
-                - 
-                {{ t.registrationLimit - t.getNumberOfValidatedParticipants }} slots restants ( sur {{ t.registrationLimit }} slots disponibles)
             </p><br class="clear">
 
             {% endif %}
