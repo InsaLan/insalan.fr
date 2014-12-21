@@ -90,7 +90,7 @@
             <p class="pull-left">
                 {{ t.teamMinPlayer }} joueur(s) 
                 - 
-                {{ t.registrationLimit }} slots
+                {{ t.registrationLimit - t.getNumberOfValidatedParticipants }} slots restants ( sur {{ t.registrationLimit }} slots disponibles)
             </p><br class="clear">
             {% elseif t.isOpenedNow and not t.getLocked %}
             
@@ -100,7 +100,7 @@
                 <p>
                 {{ t.teamMinPlayer }} joueur(s) 
                 - 
-                {{ t.registrationLimit }} slots
+                {{ t.registrationLimit - t.getNumberOfValidatedParticipants }} slots restants ( sur {{ t.registrationLimit }} slots disponibles)
                 -
                 Inscriptions jusqu'au {{ t.registrationClose|date('d/m/Y H:i') }}
                 </p>
@@ -111,7 +111,7 @@
             <p class="pull-left">
                 {{ t.teamMinPlayer }} joueur(s) 
                 - 
-                {{ t.registrationLimit }} slots
+                {{ t.registrationLimit - t.getNumberOfValidatedParticipants }} slots restants ( sur {{ t.registrationLimit }} slots disponibles)
             </p><br class="clear">
 
             {% endif %}

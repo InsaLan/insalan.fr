@@ -640,4 +640,18 @@ class Tournament
     {
         return $this->locked;
     }
+
+    public function getValidatedParticipants() 
+    {
+        $validated  = [];
+        foreach ($this->participants as $p) {
+            if ($p->getValidated())
+                $validated[] = $p;
+        }
+        return $validated;
+    }
+
+    public function getNumberOfValidatedParticipants() {
+        return count($this->getValidatedParticipants());
+    }
 }
