@@ -645,7 +645,7 @@ class Tournament
     {
         $validated  = [];
         foreach ($this->participants as $p) {
-            if ($p->getValidated())
+            if ($p->getValidated() === 2)
                 $validated[] = $p;
         }
         return $validated;
