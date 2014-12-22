@@ -21,7 +21,7 @@
   </header>
 
   <div class="container">
-    <section class="results bg{% if t.name == "League of Legends" %}{{ 'LoL' }}{% endif %}{% if t.name == "StarCraft II" %}{{ 'SC2' }}{% endif %}{% if t.name == "Dota 2" %}{{ 'Dota2'}}{% endif %}{% if t.name == "Hearthstone" %}{{ 'HS' }}{% endif %}">
+    <section class="results bg{% if "League of Legends" in t.name %}{{ 'LoL' }}{% endif %}{% if "StarCraft II" in t.name %}{{ 'SC2' }}{% endif %}{% if "Dota 2" in in t.name %}{{ 'Dota2'}}{% endif %}{% if "Hearthstone" in t.name %}{{ 'HS' }}{% endif %}">
       <section class="matchs">
         <h3>Matchs</h3>
         {% for s in stages %}
