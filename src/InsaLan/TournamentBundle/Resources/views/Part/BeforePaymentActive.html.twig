@@ -18,18 +18,7 @@
            </tr>
         </table>
            <br>
-      {#<p>#}
-          {#Si vous jouez en équipe (CS:GO, Dota, LoL), votre inscription sera validée dès le paiement de 3 membres sur 5.<br>#}
-          {#Si vous jouez seul (SC2, HS), votre inscription sera validée dès que vous avez payé.#}
-      {#</p>#}
-      {#<br>#}
-      {#<p>#}
-          {#Si vous choisissez l'envoi par chèque, nous ne pouvons pas vous assurer qu'il restera des places lors de a réception de ce dernier, sauf si 3 de vos coéquipiers ont déjà payé en ligne (cf ci-dessus).#}
-      {#</p>#}
-      {#<br>#}
-      {#<p>#}
-          {#Si vous payez sur place, 3 membres de votre équipe doivent avoir payé en ligne ou par chèque.#}
-      {#</p>#}
+
   </div>
 
   {% if tournament.participantType == 'team' %}
@@ -38,7 +27,7 @@
   <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leave', {tournament: tournament.id}) }}">Annuler</a>
   {% endif %}
 
-  {% if tournament.freeSlots > 0 %}
+  {% if tournament.freeSlots > 0 or (tournament.participantType == 'team' and player.teamForTournament(tournament).validated) %}
 
   <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_user_payoffline', {tournament: tournament.id}) }}">Chèque/Sur place</a>
   <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_paypaypalec', {tournament: tournament.id}) }}">Paiement en ligne</a>

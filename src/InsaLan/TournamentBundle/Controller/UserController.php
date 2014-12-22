@@ -187,9 +187,6 @@ class UserController extends Controller
      */
     public function payPaypalECAction(Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
-
-        if($tournament->getFreeSlots() === 0)
-            throw new ControllerException("No slot remaining.");
         
         $usr = $this
             ->get('security.context')
