@@ -37,7 +37,17 @@
   {% else %}
   <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leave', {tournament: tournament.id}) }}">Annuler</a>
   {% endif %}
+
+  {% if tournament.freeSlots > 0 %}
+
   <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_user_payoffline', {tournament: tournament.id}) }}">Chèque/Sur place</a>
   <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_paypaypalec', {tournament: tournament.id}) }}">Paiement en ligne</a>
+
+  {% else %}
+
+  <span class="btn ctrl grid-8 pull-left">Tournoi complet, paiement impossible.</span>
+
+  {% endif %}
+
   <br class="clear">
 </div>
