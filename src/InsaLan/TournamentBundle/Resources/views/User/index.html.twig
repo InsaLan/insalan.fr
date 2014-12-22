@@ -57,7 +57,7 @@
                 {% endif %}
                 <br />
                 {% if participant.tournament.isFull() %}
-                    <strong>Attention, ce tournoi est complet.</strong> Lors de la validation de votre participation, vous serez placé sur liste d'attente.
+                    <strong>Attention, ce tournoi est complet.</strong>
                 {% else %}
                     Il reste actuellement <strong>{{ participant.tournament.freeSlots }}</strong> slot(s) libre(s) dans votre tournoi.
                 {% endif %}
