@@ -21,7 +21,8 @@
   </header>
 
   <div class="container">
-    <section class="results bg{% if "League of Legends" in t.name %}{{ 'LoL' }}{% endif %}{% if "StarCraft II" in t.name %}{{ 'SC2' }}{% endif %}{% if "Dota 2" in in t.name %}{{ 'Dota2'}}{% endif %}{% if "Hearthstone" in t.name %}{{ 'HS' }}{% endif %}">
+    {# TODO : SHOULD USE t.type IN THE FUTURE #}
+    <section class="results bg{% if t.name matches "/league/i" %}LoL{% endif %}{% if t.name matches "/starcraft/i" %}SC2{% endif %}{% if t.name matches "/dota/i" %}Dota2{% endif %}{% if t.name matches "/heartstone/i" %}HS{% endif %}">
       <section class="matchs">
         <h3>Matchs</h3>
         {% for s in stages %}
