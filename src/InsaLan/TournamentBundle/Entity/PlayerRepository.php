@@ -26,6 +26,20 @@ class PlayerRepository extends EntityRepository
 
     }
 
+    public function getPlayersForTournament($id) {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery("
+            SELECT partial p.{id,gameName,gameId,validated} 
+            FROM InsaLanTournamentBundle:Player p
+            WHERE p.tournament = :tournamentId
+            ");
+        $query->setParameter('tournamentId', $id);
+        $query->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true);
+        $query->execute();
+        return $query->getResult();
+    } 
+
     public function getWaitingPlayer(Tournament $t) {
 
         $q = $this->createQueryBuilder('p')

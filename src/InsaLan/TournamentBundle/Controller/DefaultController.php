@@ -62,6 +62,19 @@ class DefaultController extends Controller
 
         return array('teams' => $teams);
     }
+ 
+    /**
+     * @Route("/{id}/public/player", requirements={"id" = "\d+"})
+     * @Template()
+     */
+    public function playerListAction(Entity\Tournament $tournament)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $players =  $em->getRepository('InsaLanTournamentBundle:Player')->getPlayersForTournament($tournament->getId());
+
+        return array('players' => $players);
+    }
+
 
     /**
      * @Route("/public/team/captain")

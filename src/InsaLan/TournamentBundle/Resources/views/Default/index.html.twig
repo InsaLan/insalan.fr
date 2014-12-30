@@ -22,7 +22,12 @@
         <li style="text-align:center">
               <h2>{{ t.name }}</h2>  
               <strong>
-                  <a href="{{ path("insalan_tournament_default_teamlist", {"id":t.id}) }}">
+                  {% if t.participantType == "team" %}
+                      <a href="{{ path("insalan_tournament_default_teamlist", {"id":t.id}) }}">
+                  {% else %}
+                      <a href="{{ path("insalan_tournament_default_playerlist", {"id":t.id}) }}">
+                  {% endif %}
+
                   {% if t.isFull() %}
                     COMPLET
                   {% else %}

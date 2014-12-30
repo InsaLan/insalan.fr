@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block title %}
-  {{ parent() }} - Equipes
+  {{ parent() }} - Joueurs
 {% endblock %}
 
 {% block body %}
@@ -16,27 +16,20 @@
 
 <article>
   <header>
-    <h2>Équipes validées</h2>
+    <h2>Joueurs validées</h2>
   </header>
 
   <section>
     {% set count=0 %}
-    {% for t in teams %}
-    {% if t.validated == 2 %}
+    {% for p in players %}
+    {% if p.validated == 2 %}
     <div class="frame frame-active grid-5 pull-left">
-        <header class="full">
+        <header>
             <div class="title pull-left">
-                {{count + 1}}. {{ t.name }}
+                {{count + 1}}. {{ p.name }}
             </div>
             <br class="clear">
         </header>
-        <section>
-            <ul class="shift">
-                {% for p in t.players %}
-                <li>{{ p.name }}</li>
-                {% endfor %}
-            </ul>
-        </section>
     </div>
     {% set count=count+1 %}
         {% if count % 2 == 0%}
@@ -50,27 +43,20 @@
 
 <article>
   <header>
-    <h2>Équipes en cours de création</h2>
+    <h2>Joueurs en cours d'inscription</h2>
   </header>
 
   <section>
     {% set count=0 %}
-    {% for t in teams %}
-    {% if t.validated == 0 %}
+    {% for p in players %}
+    {% if p.validated != 2 %}
     <div class="frame frame-active grid-5 pull-left">
-        <header class="full">
+        <header>
             <div class="title pull-left">
-                {{count+1}}. {{ t.name }}
+                {{count+1}}. {{ p.name }}
             </div>
             <br class="clear">
         </header>
-        <section>
-            <ul class="shift">
-                {% for p in t.players %}
-                <li>{{ p.name }}</li>
-                {% endfor %}
-            </ul>
-        </section>
     </div>
     {% set count=count+1 %}
         {% if count % 2 == 0%}
