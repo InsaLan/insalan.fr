@@ -26,7 +26,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/public/{id}", requirements={"id" = "\d+"})
+     * @Route("/{id}/public", requirements={"id" = "\d+"})
      * @Template()
      */
     public function tournamentAction(Entity\Tournament $tournament)
@@ -52,13 +52,13 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/public/team")
+     * @Route("/{id}/public/team", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function teamListAction()
+    public function teamListAction(Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $teams =  $em->getRepository('InsaLanTournamentBundle:Team')->getAllTeams();
+        $teams =  $em->getRepository('InsaLanTournamentBundle:Team')->getTeamsForTournament($tournament->getId());
 
         return array('teams' => $teams);
     }

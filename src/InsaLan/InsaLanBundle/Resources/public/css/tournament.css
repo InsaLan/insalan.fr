@@ -6,15 +6,15 @@
 .tournaments > ul li {
   margin-top: 80px;
   width: 215px;
-  height: 218px;
+  height: 280px;
   margin-bottom: 3px;
-  margin-right: 40px;
+  margin-right: 35px;
   float: left;
   list-style-type: none;
   display: block;
 }
 
-.tournaments > ul li a {
+.tournaments > ul li .imga {
   width: 100%;
   height: 100%;
   line-height: 200px;

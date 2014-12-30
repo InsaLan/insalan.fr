@@ -19,13 +19,19 @@
     <ul>
       {% for t in tournaments %}
         {% spaceless %}
-          <li style="text-align:center">
-            {% if t.isFull() %}
-            COMPLET
-            {% else %}
-            {{ t.validatedSlots }} / {{ t.registrationLimit }} participants
-            {% endif %}
-            <a href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}">
+        <li style="text-align:center">
+              <h2>{{ t.name }}</h2>  
+              <strong>
+                  <a href="{{ path("insalan_tournament_default_teamlist", {"id":t.id}) }}">
+                  {% if t.isFull() %}
+                    COMPLET
+                  {% else %}
+                    {{ t.validatedSlots }} / {{ t.registrationLimit }} participants
+                  {% endif %}
+                  </a>
+              </strong>
+
+            <a class="imga" href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}">
               <img src="{{ asset(t.getUploadDir() ~ t.logoPath)  }}" alt="{{ t.name }}"/>
             </a>
           </li>

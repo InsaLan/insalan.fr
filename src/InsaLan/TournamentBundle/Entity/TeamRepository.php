@@ -21,7 +21,22 @@ class TeamRepository extends EntityRepository
         $query->execute();
         return $query->getResult();
     }
+ 
+    public function getTeamsForTournament($id) {
+        $em = $this->getEntityManager();
 
+        $query = $em->createQuery("
+            SELECT partial t.{id,name,validated}, partial p.{id,gameName,gameId} 
+            FROM InsaLanTournamentBundle:Team t
+            JOIN t.players p
+            WHERE t.tournament = :tournamentId
+            ");
+        $query->setParameter('tournamentId', $id);
+        $query->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true);
+        $query->execute();
+        return $query->getResult();
+    } 
+ 
     public function getWaitingTeam(Tournament $t) {
 
         $q = $this->createQueryBuilder('t')
