@@ -10,7 +10,7 @@ class ParticipantLoader extends AbstractFixture implements OrderedFixtureInterfa
 {
     public function getOrder()
     {
-        return 2;
+        return 3;
     }
 
     public function load(ObjectManager $manager)
