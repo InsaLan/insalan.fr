@@ -18,9 +18,10 @@ class ParticipantLoader extends AbstractFixture implements OrderedFixtureInterfa
         $e = new Player();
         $e->setGameName('Herpandine');
         $e->setTournament($this->getReference('tournament-1'));
-        //$e->setPendingTournament($this->getReference('tournament-1'));
-        //$e->setUser($this->getReference('user-1'));
+        $e->setPendingTournament($this->getReference('tournament-1'));
+        $e->setUser($this->getReference('user-1'));
         $e->setGameValidated(true);
+        $e->setValidated(2);
         $manager->persist($e);
         $this->addReference('participant-1', $e);
 

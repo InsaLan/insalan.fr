@@ -27,7 +27,7 @@ class KnockoutAdmin extends Admin
         ;
     }
 
-    public function postPersist($ko)
+    /*public function postPersist($ko)
     {   
 
         $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
@@ -35,5 +35,5 @@ class KnockoutAdmin extends Admin
 
         $repository->generateMatches($ko, $ko->getSize());
 
-    }
+    }*/
 }
