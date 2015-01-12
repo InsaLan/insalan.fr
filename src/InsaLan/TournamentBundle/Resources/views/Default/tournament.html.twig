@@ -258,11 +258,13 @@
         }
 
         loadRound(target, this);
-      })
+      });
+
     });
   </script>
   
   <script>
+  function buildTrees() {
   {% for k in knockouts %}
     (function($) {
         $('#bracketContainer_{{ k.id }}').bracket({
@@ -271,6 +273,7 @@
         });
     })(jQuery);
   {% endfor %}
+  }
   </script>
 
   <script>
@@ -279,6 +282,7 @@
             $(".groups").hide();
             var target = $( this ).data('target');
             $("#"+target).show();
+            buildTrees();
         });
     })(jQuery);
   </script>
