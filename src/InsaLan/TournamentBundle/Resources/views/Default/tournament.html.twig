@@ -22,7 +22,7 @@
 
   <div class="container">
     {# TODO : SHOULD USE t.type IN THE FUTURE #}
-    <section class="results bg{% if t.name matches "/league/i" %}LoL{% endif %}{% if t.name matches "/starcraft/i" %}SC2{% endif %}{% if t.name matches "/dota/i" %}Dota2{% endif %}{% if t.name matches "/hearthstone/i" %}HS{% endif %}">
+    <section class="results bg{% if t.name matches "/league/i" %}LoL{% endif %}{% if t.name matches "/starcraft/i" %}SC2{% endif %}{% if t.name matches "/dota/i" %}Dota2{% endif %}{% if t.name matches "/hearthstone/i" %}HS{% endif %}{% if t.name matches "/counter-strike/i" %}CSGO{% endif %}">
       <section class="matchs">
         <h3>Matchs</h3>
         {% for s in stages %}
