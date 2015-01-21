@@ -5,4 +5,8 @@
 
 Your placement is {{ participant.placement }}.
 
+{% if unavailable[1] is defined %}
+The placement 1 is unavailable.
+{% endif %}
+
 {% endblock %}

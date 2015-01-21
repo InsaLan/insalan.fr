@@ -85,7 +85,7 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
         }
 
-        if($placement = $request->query->get("placement")) {
+        if(null !== ($placement = $request->query->get("placement"))) {
             $placement = intval($placement);
             $registered = $em->getRepository('InsaLanTournamentBundle:Participant')
                              ->findOneBy(array("placement" => $placement, "tournament" => $tournament));
@@ -100,7 +100,10 @@ class UserController extends Controller
             }
         }
 
-        return array('tournament' => $tournament, 'participant' => $participant);
+        // Getting unavailable placements for interface
+        
+        $unavailable = $em->getRepository("InsaLanTournamentBundle:Tournament")->getUnavailablePlacements($tournament);
+        return array('tournament' => $tournament, 'participant' => $participant, 'unavailable' => $unavailable);
     }
 
     /**
