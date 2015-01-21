@@ -33,7 +33,7 @@ class TeamAdmin extends Admin
                 'first_options' => array('label' => 'Mot de passe'),
                 'second_options' => array('label' => 'Confirmation de mot de passe'),
             ))
-
+            ->add('placement')
             ;
     }
 
@@ -53,8 +53,9 @@ class TeamAdmin extends Admin
             ->addIdentifier('name')
             ->add('tournament.name')
             ->add('captain.name')
-            ->add('validated');
-            ;
+            ->add('validated')
+            ->add('placement')
+        ;
     }
     public function prePersist($e)
     {

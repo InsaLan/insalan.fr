@@ -40,6 +40,11 @@ abstract class Participant
      */
     protected $validated;
 
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     */
+    protected $placement;
+
     public function getParticipantType() {
         return "participant";
     }
@@ -136,4 +141,27 @@ abstract class Participant
         return $this;
     }
 
+
+    /**
+     * Set placement
+     *
+     * @param integer $placement
+     * @return Participant
+     */
+    public function setPlacement($placement)
+    {
+        $this->placement = $placement;
+
+        return $this;
+    }
+
+    /**
+     * Get placement
+     *
+     * @return integer 
+     */
+    public function getPlacement()
+    {
+        return $this->placement;
+    }
 }

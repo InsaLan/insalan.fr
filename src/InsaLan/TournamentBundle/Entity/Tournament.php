@@ -68,6 +68,11 @@ class Tournament
     protected $locked;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $placement;
+
+    /**
      * @ORM\Column(type="enum", type="string", nullable=false)
      * ORM\Column(type="enum", type="string", nullable=false, columnDefinition="enum('lol', 'dota2', 'sc2', 'hs', 'csgo', 'manual')")
      */
@@ -122,6 +127,16 @@ class Tournament
     public function isOpenedInPast() {
         $now = new \DateTime();
         return $this->registrationClose < $now;
+    }
+
+    public function isPending() {
+        $now = new \DateTime();
+        return $this->tournamentOpen > $now;
+    }
+
+    public function isPlaying() {
+        $now = new \DateTime();
+        return $this->tournamentOpen <= $now && $this->tournamentClose >= $now;
     }
 
     public function isFull() {
@@ -657,4 +672,27 @@ class Tournament
         return $this->locked;
     }
 
+
+    /**
+     * Set placement
+     *
+     * @param boolean $placement
+     * @return Tournament
+     */
+    public function setPlacement($placement)
+    {
+        $this->placement = $placement;
+
+        return $this;
+    }
+
+    /**
+     * Get placement
+     *
+     * @return boolean 
+     */
+    public function getPlacement()
+    {
+        return $this->placement;
+    }
 }
