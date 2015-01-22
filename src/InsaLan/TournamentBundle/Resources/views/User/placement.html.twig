@@ -3,10 +3,18 @@
 {% block body %}
 {{ parent() }}
 
-Your placement is {{ participant.placement }}.
+{# Your placement is {{ participant.placement }}.
 
 {% if unavailable[1] is defined %}
 The placement 1 is unavailable.
-{% endif %}
+{% endif %} #}
+
+<div style="position:relative; margin-height: 50px; height:1000px; width: 840px; margin-top: 100px;">
+  {% for s in structure %}
+    <div style="position: absolute; background-color: #00bff3; height:{{ 23*s[5]-2 }}px; width:{{  23*s[4]-2 }}px; border: 1px solid black; top: {{ 23*s[3] }}px; left: {{ 23*s[2] }}px; color:black">
+      {{ s[1] }}
+    </div>
+  {% endfor %}
+</div>
 
 {% endblock %}
