@@ -27,6 +27,11 @@ class Tournament
     protected $name;
 
     /**
+     * @ORM\Column(type="string", nullable=true, length=10)
+     */
+    protected $shortName;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      */
     protected $description;
@@ -66,6 +71,11 @@ class Tournament
      * @ORM\Column(type="string", nullable=true)
      */
     protected $locked;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $placement;
 
     /**
      * @ORM\Column(type="enum", type="string", nullable=false)
@@ -122,6 +132,16 @@ class Tournament
     public function isOpenedInPast() {
         $now = new \DateTime();
         return $this->registrationClose < $now;
+    }
+
+    public function isPending() {
+        $now = new \DateTime();
+        return $this->tournamentOpen > $now;
+    }
+
+    public function isPlaying() {
+        $now = new \DateTime();
+        return $this->tournamentOpen <= $now && $this->tournamentClose >= $now;
     }
 
     public function isFull() {
@@ -437,6 +457,7 @@ class Tournament
     {   
         $this->webPrice = 0;
         $this->participants = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->placement = false;
     }
 
     /**
@@ -657,4 +678,50 @@ class Tournament
         return $this->locked;
     }
 
+
+    /**
+     * Set placement
+     *
+     * @param boolean $placement
+     * @return Tournament
+     */
+    public function setPlacement($placement)
+    {
+        $this->placement = $placement;
+
+        return $this;
+    }
+
+    /**
+     * Get placement
+     *
+     * @return boolean 
+     */
+    public function getPlacement()
+    {
+        return $this->placement;
+    }
+
+    /**
+     * Set shortName
+     *
+     * @param string $shortName
+     * @return Tournament
+     */
+    public function setShortName($shortName)
+    {
+        $this->shortName = $shortName;
+
+        return $this;
+    }
+
+    /**
+     * Get shortName
+     *
+     * @return string 
+     */
+    public function getShortName()
+    {
+        return $this->shortName;
+    }
 }

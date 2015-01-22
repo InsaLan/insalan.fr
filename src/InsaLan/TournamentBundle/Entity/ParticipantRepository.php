@@ -49,6 +49,8 @@ class ParticipantRepository extends EntityRepository
             if($p->getTournament()->getId() === $t->getId())
                 return $p;
         }
+
+        return null;
     }
 
 }

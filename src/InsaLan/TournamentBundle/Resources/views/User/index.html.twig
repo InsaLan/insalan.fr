@@ -4,140 +4,143 @@
 {{ parent() }}
 
 <article>
-    <header>
-        <h2>Bienvenue {{ app.user.username }}</h2>
+  <header>
+    <h2>Bienvenue {{ app.user.username }}</h2>
+  </header>
+
+  {% for participant in participants %}
+
+  <div class="frame {% if participant.validated == 2 %} frame-success {% endif %}">
+    <header class="full">
+      <div class="step pull-left">
+        {% if participant.validated == 2 %} &#10003; {% else %} ! {% endif %}
+      </div>
+      <div class="title pull-left">
+        {% if participant.participantType == 'team' %} Equipe {% endif %}
+        {{ participant.name }}
+      </div>
+      <div class="title pull-right">
+        <img style="margin-right:0px;max-height:60px;display:block;" src="{{ asset(participant.tournament.getUploadDir() ~ participant.tournament.logoPath) }}" alt=""/>
+      </div>
+      <br class="clear">
     </header>
-
-    {% for participant in participants %}
-
-    <div class="frame {% if participant.validated == 2 %} frame-success {% endif %}">
-        <header class="full">
-            <div class="step pull-left">
-                {% if participant.validated == 2 %} &#10003; {% else %} ! {% endif %}
-            </div>
-            <div class="title pull-left">
-                {% if participant.participantType == 'team' %} Equipe {% endif %}
-                {{ participant.name }}
-            </div>
-            <div class="title pull-right">
-                <img style="margin-right:0px;max-height:60px;display:block;" src="{{ asset(participant.tournament.getUploadDir() ~ participant.tournament.logoPath) }}" alt=""/>
-            </div>
-            <br class="clear">
-        </header>
-        <div class="text">
-            {% if participant.participantType == 'team' %}
-            <ul class="shift" style="list-style-type:none">
-                {% for p in participant.players %}
-                <li>
-                    <div style="margin: 8px 0px 0px 10px; font-size:20px" class="pull-left">
-                        {% if p.ok %}
-                           &#10003; 
-                        {% else %}
-                           &#x2718;
-                        {% endif %}
-                        <span>{{ p.gameName }}</span>
-                    </div>
-                    <br class="clear">
-                </li>
-                {% endfor %}
-            </ul>
+    <div class="text">
+      {% if participant.participantType == 'team' %}
+      <ul class="shift" style="list-style-type:none">
+        {% for p in participant.players %}
+        <li>
+          <div style="margin: 8px 0px 0px 10px; font-size:20px" class="pull-left">
+            {% if p.ok %}
+               &#10003; 
+            {% else %}
+               &#x2718;
             {% endif %}
+            <span>{{ p.gameName }}</span>
+          </div>
+          <br class="clear">
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
 
-            <br class="clear">
+      <br class="clear">
 
-            {% if participant.validated == 1 %}
-            Le tournoi {{ participant.tournament.name }} est complet ! En cas de désistement, vous serez automatiquement validé.
-            {% endif %}
-            {% if participant.validated == 0 %}
-                {% if participant.participantType == 'team' %}
-                L'équipe sera validée quand {{ participant.tournament.teamMinPlayer }} joueurs seront inscrits et que 3 auront payé.
-                {% endif %}
-                {% if participant.participantType == 'player' %}
-                Votre participation sera validée après paiement.
-                {% endif %}
-                <br />
-                {% if participant.tournament.isFull() %}
-                    <strong>Attention, ce tournoi est complet.</strong>
-                {% else %}
-                    Il reste actuellement <strong>{{ participant.tournament.freeSlots }}</strong> slot(s) libre(s) dans votre tournoi.
-                {% endif %}
-            {% endif %}
-        </div>
-
-        {% if participant.validated == 2  %}
-        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_teamdetails', {id: participant.id }) }}">Jouer mes matchs</a>
-        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
-        {% elseif participant.participantType == 'team' %}
-
-        <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
-
-        {% else %}
-
-        <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
-
+      {% if participant.validated == 1 %}
+      Le tournoi {{ participant.tournament.name }} est complet ! En cas de désistement, vous serez automatiquement validé.
+      {% endif %}
+      {% if participant.validated == 0 %}
+        {% if participant.participantType == 'team' %}
+        L'équipe sera validée quand {{ participant.tournament.teamMinPlayer }} joueurs seront inscrits et que 3 auront payé.
         {% endif %}
-
-
-        <br class="clear">
+        {% if participant.participantType == 'player' %}
+        Votre participation sera validée après paiement.
+        {% endif %}
+        <br />
+        {% if participant.tournament.isFull() %}
+          <strong>Attention, ce tournoi est complet.</strong>
+        {% else %}
+          Il reste actuellement <strong>{{ participant.tournament.freeSlots }}</strong> slot(s) libre(s) dans votre tournoi.
+        {% endif %}
+      {% endif %}
     </div>
 
-    {% endfor %}
+    {% if participant.validated == 2  %}
 
-    <div class="frame frame-active">
-        <header class="full">
-            <div class="step pull-left">
-                &#x271a;
-            </div>
-            <div class="title pull-left">Inscription à un tournoi</div>
-            <br class="clear">
-        </header>
-        <div class="text">
-            <br>
-            {% for t in tournaments %}
-            {% spaceless %}
-            {% if t.isOpenedInFuture  %}
-            <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
-            <h2>{{ t.name }} (ouverture le {{ t.registrationOpen|date('d/m/Y H:i') }})</h2>
-            <p class="pull-left">
-                {{ t.teamMinPlayer }} joueur(s) 
-            </p><br class="clear">
-            {% elseif t.isOpenedNow and not t.getLocked %}
-            
-                <a class="list-choice" href="{{ path('insalan_tournament_user_enroll', {tournament: t.id}) }}">
-                <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
-                <h2>{{ t.name }}{% if t.isFull %} - COMPLET {% endif %}</h2>
-                <p>
-                {{ t.teamMinPlayer }} joueur(s) 
-                - 
-                Inscriptions jusqu'au {{ t.registrationClose|date('d/m/Y') }}
-                {% if not t.isFull %}
-                    - 
-                    {% if t.freeSlots > 1 %}
-                        {{ t.freeSlots }} / {{ t.registrationLimit }} slots disponibles
-                    {% else %}
-                        Un seul slot disponible !
-                    {% endif %}
-                {% endif %}
-                </p>
-                </a>
-            {% elseif t.isOpenedNow and t.getLocked %}
-            <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
-            <h2>{{ t.name }} (ce tournoi n'est accessible que sur invitation)</h2>
-            <p class="pull-left">
-                {{ t.teamMinPlayer }} joueur(s) 
-            </p><br class="clear">
+      {% if participant.tournament.isPlaying %}
+        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_teamdetails', {id: participant.id }) }}">Jouer mes matchs</a>
+      {% elseif participant.tournament.placement  %}
+        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_placement', {tournament: participant.tournament.id }) }}">Choisir une place</a>
+      {% endif %}
 
-            {% endif %}
-            {% endspaceless %}
-            <br>
-            <hr style="width:960px">
-            <br>
-            {% endfor %}
-                <div class="clear"></div>
-            </div>
-        </div>
+      <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
 
-    </article>
+    {% else %}
 
-    {#<img src="{{ asset(t.getUploadDir() ~ t.logoPath) }} " alt="{{ t.name }}"/>#}
-    {% endblock %}
+      <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
+
+    {% endif %}
+
+
+    <br class="clear">
+  </div>
+
+  {% endfor %}
+
+  <div class="frame frame-active">
+    <header class="full">
+      <div class="step pull-left">
+        &#x271a;
+      </div>
+      <div class="title pull-left">Inscription à un tournoi</div>
+      <br class="clear">
+    </header>
+    <div class="text">
+      <br>
+      {% for t in tournaments %}
+      {% spaceless %}
+      {% if t.isOpenedInFuture  %}
+      <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
+      <h2>{{ t.name }} (ouverture le {{ t.registrationOpen|date('d/m/Y H:i') }})</h2>
+      <p class="pull-left">
+        {{ t.teamMinPlayer }} joueur(s) 
+      </p><br class="clear">
+      {% elseif t.isOpenedNow and not t.getLocked %}
+      
+        <a class="list-choice" href="{{ path('insalan_tournament_user_enroll', {tournament: t.id}) }}">
+        <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
+        <h2>{{ t.name }}{% if t.isFull %} - COMPLET {% endif %}</h2>
+        <p>
+        {{ t.teamMinPlayer }} joueur(s) 
+        - 
+        Inscriptions jusqu'au {{ t.registrationClose|date('d/m/Y') }}
+        {% if not t.isFull %}
+          - 
+          {% if t.freeSlots > 1 %}
+            {{ t.freeSlots }} / {{ t.registrationLimit }} slots disponibles
+          {% else %}
+            Un seul slot disponible !
+          {% endif %}
+        {% endif %}
+        </p>
+        </a>
+      {% elseif t.isOpenedNow and t.getLocked %}
+      <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
+      <h2>{{ t.name }} (ce tournoi n'est accessible que sur invitation)</h2>
+      <p class="pull-left">
+        {{ t.teamMinPlayer }} joueur(s) 
+      </p><br class="clear">
+
+      {% endif %}
+      {% endspaceless %}
+      <br>
+      <hr style="width:960px">
+      <br>
+      {% endfor %}
+        <div class="clear"></div>
+      </div>
+    </div>
+
+  </article>
+
+  {#<img src="{{ asset(t.getUploadDir() ~ t.logoPath) }} " alt="{{ t.name }}"/>#}
+  {% endblock %}

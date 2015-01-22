@@ -14,6 +14,7 @@ class TournamentAdmin extends Admin
     {
         $formMapper
             ->add('name')
+            ->add('shortName')
             ->add('description')
             ->add('registrationOpen')
             ->add('registrationClose')
@@ -26,6 +27,7 @@ class TournamentAdmin extends Admin
             ->add('teamMaxPlayer')
             ->add('teamMinPlayer')
             ->add('locked', null, array('required'=>false))
+            ->add('placement')
             ->add('participantType', 'choice', array(
                 'choices' => array(
                     'team' => 'Par équipe',
