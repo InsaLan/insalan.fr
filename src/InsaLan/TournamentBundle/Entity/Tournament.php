@@ -27,6 +27,11 @@ class Tournament
     protected $name;
 
     /**
+     * @ORM\Column(type="string", nullable=true, length=10)
+     */
+    protected $shortName;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      */
     protected $description;
@@ -452,6 +457,7 @@ class Tournament
     {   
         $this->webPrice = 0;
         $this->participants = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->placement = false;
     }
 
     /**
@@ -694,5 +700,28 @@ class Tournament
     public function getPlacement()
     {
         return $this->placement;
+    }
+
+    /**
+     * Set shortName
+     *
+     * @param string $shortName
+     * @return Tournament
+     */
+    public function setShortName($shortName)
+    {
+        $this->shortName = $shortName;
+
+        return $this;
+    }
+
+    /**
+     * Get shortName
+     *
+     * @return string 
+     */
+    public function getShortName()
+    {
+        return $this->shortName;
     }
 }

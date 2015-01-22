@@ -14,6 +14,7 @@ class TournamentAdmin extends Admin
     {
         $formMapper
             ->add('name')
+            ->add('shortName')
             ->add('description')
             ->add('registrationOpen')
             ->add('registrationClose')

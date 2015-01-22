@@ -17,6 +17,8 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
     {
         $e = new Tournament();
         $e->setName('CS: GO');
+        $e->setShortName('csgo');
+        $e->setPlacement(true);
         $e->setRegistrationOpen(new \DateTime());
         $e->setRegistrationClose((new \DateTime())->modify('+3 day'));
         $e->setRegistrationLimit(64);
@@ -35,6 +37,8 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
 
         $e = new Tournament();
         $e->setName('League of Legends');
+        $e->setShortName('lol');
+        $e->setPlacement(true);
         $e->setRegistrationOpen(new \DateTime());
         $e->setRegistrationClose((new \DateTime())->modify('+3 day'));
         $e->setRegistrationLimit(64);
@@ -53,6 +57,8 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
 
         $e = new Tournament();
         $e->setName('StarCraft II');
+        $e->setShortName('st2');
+        $e->setPlacement(true);
         $e->setRegistrationOpen(new \DateTime());
         $e->setRegistrationClose((new \DateTime())->modify('+3 day'));
         $e->setRegistrationLimit(1);
