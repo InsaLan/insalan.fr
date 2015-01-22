@@ -27,7 +27,7 @@ class TournamentAdmin extends Admin
             ->add('teamMaxPlayer')
             ->add('teamMinPlayer')
             ->add('locked', null, array('required'=>false))
-            ->add('placement')
+            ->add('placement', null, array('required' => false))
             ->add('participantType', 'choice', array(
                 'choices' => array(
                     'team' => 'Par équipe',
