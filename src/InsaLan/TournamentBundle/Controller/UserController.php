@@ -42,6 +42,14 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
 
+        if ($usr->getFirstname() == null || $usr->getFirstname() == "" || $usr->getLastname() == null || $usr->getLastname() == "" || $usr->getBirthdate() == null) {
+            $this->get('session')->getFlashBag()->add(
+                'info',
+                'Il nous manque encore quelques informations...'
+            );
+            return $this->redirect($this->generateUrl('insalan_user_default_index'));
+        }
+
         $rawTournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findAll();
         $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($usr);
 

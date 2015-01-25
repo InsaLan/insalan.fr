@@ -9,33 +9,30 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use GuzzleHttp\Exception\ClientException;
-use InsaLan\TournamentBundle\Entity\Player;
-use InsaLan\TournamentBundle\Entity\Team;
-use InsaLan\TournamentBundle\Entity\Participant;
+use InsaLan\UserBundle\Form\UserType;
 
 class DefaultController extends Controller
 {   
-    /**
-     * DEPRECATED ?
-     */
 
     /**
      * @Route("/")
-     * @Template()
+     * @Template("InsaLanUserBundle:Default:more.html.twig")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return $this->redirect($this->generateUrl('insalan_user_default_join'));
-    }
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $form = $this->createForm(new UserType(), $usr);
+        $em = $this->getDoctrine()->getManager();
 
-    /**
-     * @Route("/join")
-     * @Template()
-     */
-    public function joinAction()
-    {
-        return array();
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em->persist($usr);
+            $em->flush();
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
+
+        return array('form' => $form->createView());
     }
 
     

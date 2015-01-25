@@ -5,7 +5,7 @@
 
 <article>
   <header>
-    <h2>Bienvenue {{ app.user.username }}</h2>
+      <h2><span class="pull-left">Bienvenue {{ app.user.username }} </span><span class="pull-right"><a href="{{ path('insalan_user_default_index') }}">&#x2699;</a></span><br class="clear"></h2>
   </header>
 
   {% for participant in participants %}

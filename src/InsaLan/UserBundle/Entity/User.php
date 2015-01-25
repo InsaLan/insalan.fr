@@ -32,6 +32,26 @@ class User extends BaseUser
         parent::__construct();
         // your own logic
     }
+    
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $firstname;
+
+     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $lastname;
+
+     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $phoneNumber;
+
+    /**
+     * @ORM\Column(type="date", nullable=true) 
+     */
+    private $birthdate;
 
     /**
      * Get id
@@ -118,4 +138,96 @@ class User extends BaseUser
         return $this;
     }
 
+
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     * @return User
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string 
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     * @return User
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string 
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * Set phoneNumber
+     *
+     * @param string $phoneNumber
+     * @return User
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumber
+     *
+     * @return string 
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * Set birthdate
+     *
+     * @param \DateTime $birthdate
+     * @return User
+     */
+    public function setBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+
+        return $this;
+    }
+
+    /**
+     * Get birthdate
+     *
+     * @return \DateTime 
+     */
+    public function getBirthdate()
+    {
+        return $this->birthdate;
+    }
 }
