@@ -246,6 +246,7 @@ class UserController extends Controller
 
         $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
         $order = $storage->createModel();
+        $order->setUser($usr);
 
         $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $tournament->getCurrency();
         $order['PAYMENTREQUEST_0_AMT'] = $price;
