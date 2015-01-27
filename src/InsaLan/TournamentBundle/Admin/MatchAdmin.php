@@ -90,6 +90,18 @@ class MatchAdmin extends Admin
             $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
             $repository = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch');
             $repository->propagateVictory($match->getKoMatch());
+
+            $ko = $match->getKoMatch()->getKnockout();
+
+            if($ko->getDoubleElimination()) {
+                // deal with it.
+                $repository->propagateFromNode(
+                    $repository
+                    ->getRoot($ko)
+                    ->getChildren()
+                    ->get(1)); // only update the hard part of the tree
+            }
+
             $em->flush();
         }
     }

@@ -110,6 +110,14 @@ class Match
         return ($won1 > $won2 ? $this->getPart1() : $this->getPart2());
     }
 
+    public function getLoser()
+    {
+        $winner = $this->getWinner();
+        if(!$winner) return null;
+        return ($this->getPart1() === $winner ? $this->getPart2() : $this->getPart1());
+
+    }
+
     public function getScore1()
     {   
         $won = 0;

@@ -18,6 +18,7 @@ class AdminController extends Controller
         return $this->createFormBuilder()
                     ->add('name', 'text', array("label" => "Nom"))
                     ->add('size', 'integer', array("label" => "Taille", "precision" => 0))
+                    ->add('double', 'checkbox', array("label" => "Double Elimination", "required" => false))
                     ->setAction($this->generateUrl('insalan_tournament_admin_create_ko',
                                                   array('id' => $tournament)))
                     ->getForm();
@@ -133,7 +134,7 @@ class AdminController extends Controller
         $em->flush();
 
         $em->getRepository("InsaLanTournamentBundle:KnockoutMatch")
-           ->generateMatches($ko, $data['size']);
+           ->generateMatches($ko, $data['size'], $data['double']);
 
         return $this->redirect($this->generateUrl(
                 'insalan_tournament_admin_knockout',
@@ -148,12 +149,16 @@ class AdminController extends Controller
     {   
         $em = $this->getDoctrine()->getManager();
         
-        $depth    = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getDepth($ko);
-        $children = pow(2, $depth + 1);
+        $depth    = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getLeftDepth($ko);
+        $children = pow(2, $depth + ($ko->getDoubleElimination() ? 0 : 1));
 
         if($this->get('request')->getMethod() === "POST") {
 
-            $koMatches = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getLvlChildren($ko, $depth);
+            $root = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getRoot($ko);
+            if($ko->getDoubleElimination()) {
+                $root = $root->getChildren()->get(0);
+            }
+            $koMatches = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getLvlChildren($root, $depth);
 
             for($i = 0; $i < $children / 2; $i++) {
 
@@ -178,9 +183,6 @@ class AdminController extends Controller
                 
                 $match->setPart1($part1);
                 $match->setPart2($part2);
-
-                if($part1 === null || $part2 === null)
-                    $match->setState(Entity\Match::STATE_FINISHED);
 
                 $em->persist($km);
                 $em->persist($match);

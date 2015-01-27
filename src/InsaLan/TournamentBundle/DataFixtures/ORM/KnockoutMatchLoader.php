@@ -16,9 +16,12 @@ class KnockoutMatchLoader extends AbstractFixture implements OrderedFixtureInter
     public function load(ObjectManager $manager)
     {
         $repository = $manager->getRepository('InsaLanTournamentBundle:KnockoutMatch');
-        $rootA = $repository->generateMatches($this->getReference('knockout-1'), 5);
+        $rootA = $repository->generateMatches($this->getReference('knockout-1'), 5, true);
         $rootB = $repository->generateMatches($this->getReference('knockout-2'), 8);
         $manager->flush();
+
+        $rootA = $rootA->getChildren()->toArray();
+        $rootA = $rootA[0];
 
         $lvl1 = $rootA->getChildren()->toArray();
         $lvl21 = $lvl1[0]->getChildren()->toArray();
@@ -27,13 +30,13 @@ class KnockoutMatchLoader extends AbstractFixture implements OrderedFixtureInter
         $lvl21[0]->setMatch($this->getReference('match-2')); // Herpandine vs Sessette
         $lvl21[1]->setMatch($this->getReference('match-3')); // Tanche vs Semi-Tanche
         $lvl22[0]->setMatch($this->getReference('match-4')); // Rémi vs (nobody)
-        $lvl22[1]->setMatch($this->getReference('match-5')); // (nobdoy) vs (nobody)
+        //$lvl22[1]->setMatch($this->getReference('match-5')); // (nobdoy) vs (nobody)
 
         // populate matches
         $manager->persist($lvl21[0]);
         $manager->persist($lvl21[1]);
         $manager->persist($lvl22[0]);
-        $manager->persist($lvl22[1]);
+        //$manager->persist($lvl22[1]);
 
         $repository->propagateVictoryAll($this->getReference('knockout-1'));
 

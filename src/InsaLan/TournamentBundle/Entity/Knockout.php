@@ -28,6 +28,11 @@ class Knockout
      */
     protected $name;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $doubleElimination;
+
     /** For Bracket Generation **/
 
     protected $size;
@@ -44,6 +49,7 @@ class Knockout
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->doubleElimination = false;
     }
 
     public function __toString()
@@ -109,5 +115,28 @@ class Knockout
     public function getTournament()
     {
         return $this->tournament;
+    }
+
+    /**
+     * Set doubleElimination
+     *
+     * @param boolean $doubleElimination
+     * @return Knockout
+     */
+    public function setDoubleElimination($doubleElimination)
+    {
+        $this->doubleElimination = $doubleElimination;
+
+        return $this;
+    }
+
+    /**
+     * Get doubleElimination
+     *
+     * @return boolean 
+     */
+    public function getDoubleElimination()
+    {
+        return $this->doubleElimination;
     }
 }

@@ -46,10 +46,13 @@
     {% endfor %}
     </ul>
 
+    <h2 style="margin-top:20px">Nouvel arbre</h2>
+
     {{ form_start(formKo) }}
       {{ form_errors(formKo) }}
       {{ form_row(formKo.name) }}
       {{ form_row(formKo.size) }}
+      {{ form_row(formKo.double) }}
       <div class="input left">
         <input type="submit" id="_submit" name="_submit" value="Ajouter" />
       </div>

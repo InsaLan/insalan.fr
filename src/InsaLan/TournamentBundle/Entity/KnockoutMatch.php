@@ -75,19 +75,62 @@ class KnockoutMatch
     private $children;
 
     /**
+     * @ORM\ManyToOne(targetEntity="KnockoutMatch")
+     */
+    private $loserDestination;
+
+
+    /**
+     * @ORM\Column(type="boolean") 
+     */
+    private $oddNode; // if true, this node is waiting for a player from winner bracket
+
+
+    public $cancelWait;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->oddNode = false;
+        $this->autoVictory = false;
+        $this->cancelWait = false;
+    }
+
+    /**
      * @return String A french description of this match level in the tree
      */
     public function getFrenchLevel()
-    {
-        switch ($this->getLevel()) {
-            case 0: return "Finale";
-            case 1: return "Demi-finale";
-            case 2: return "1/4 de finale";
-            case 3: return "1/8 de finale";
-            case 4: return "1/16 de finale";
-            case 5: return "1/32 de finale";
-            case 6: return "1/64 de finale";
-            default: return "?";
+    {   
+        if(!$this->getKnockout()->getDoubleElimination()) {
+            switch ($this->getLevel()) {
+                case 0: return "Finale";
+                case 1: return "Demi-finale";
+                case 2: return "1/4 de finale";
+                case 3: return "1/8 de finale";
+                case 4: return "1/16 de finale";
+                case 5: return "1/32 de finale";
+                case 6: return "1/64 de finale";
+                default: return "?";
+            }
+        } else {
+            if($this->getLevel() === 0) return "GRANDE FINALE";
+            $p = "W.B.";
+            if(!$this->getLoserDestination())
+                $p = "L.B.";
+
+            switch ($this->getLevel()) {
+                case 1: return "Finale " . $p;
+                case 2: return "Demi-finale " . $p;
+                case 3: return "1/4 de finale " . $p;
+                case 4: return "1/8 de finale " . $p;
+                case 5: return "1/16 de finale " . $p;
+                case 6: return "1/32 de finale " . $p;
+                case 7: return "1/64 de finale " . $p;
+                default: return "?";
+            }
         }
 
     }
@@ -300,14 +343,7 @@ class KnockoutMatch
     {
         return $this->children;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
+    
     /**
      * Add children
      *
@@ -330,4 +366,51 @@ class KnockoutMatch
     {
         $this->children->removeElement($children);
     }
+
+    /**
+     * Set loserDestination
+     *
+     * @param \InsaLan\TournamentBundle\Entity\KnockoutMatch $loserDestination
+     * @return KnockoutMatch
+     */
+    public function setLoserDestination(\InsaLan\TournamentBundle\Entity\KnockoutMatch $loserDestination = null)
+    {
+        $this->loserDestination = $loserDestination;
+
+        return $this;
+    }
+
+    /**
+     * Get loserDestination
+     *
+     * @return \InsaLan\TournamentBundle\Entity\KnockoutMatch 
+     */
+    public function getLoserDestination()
+    {
+        return $this->loserDestination;
+    }
+
+    /**
+     * Set oddNode
+     *
+     * @param boolean $oddNode
+     * @return KnockoutMatch
+     */
+    public function setOddNode($oddNode)
+    {
+        $this->oddNode = $oddNode;
+
+        return $this;
+    }
+
+    /**
+     * Get oddNode
+     *
+     * @return boolean 
+     */
+    public function getOddNode()
+    {
+        return $this->oddNode;
+    }
+
 }

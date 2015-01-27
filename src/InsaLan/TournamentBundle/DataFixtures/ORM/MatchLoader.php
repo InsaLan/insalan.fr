@@ -47,7 +47,6 @@ class MatchLoader extends AbstractFixture implements OrderedFixtureInterface
 
         $e = new Match();
         $e->setPart1($this->getReference('participant---1'));
-        $e->setState(Match::STATE_FINISHED);
 
         $manager->persist($e);
         $this->addReference('match-4', $e);
