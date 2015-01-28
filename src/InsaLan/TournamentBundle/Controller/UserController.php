@@ -234,6 +234,13 @@ class UserController extends Controller
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
+        if($tournament->isFree()) {
+            $player->setPaymentDone(true);
+            $em->persist($player);
+            $em->flush();
+            return $this->redirect($this->generateUrl('insalan_tournament_user_paydone', array("tournament" => $tournament->getId())));
+        }
+
         return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
     }
 

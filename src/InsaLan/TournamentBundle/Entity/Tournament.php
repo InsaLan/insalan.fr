@@ -724,4 +724,9 @@ class Tournament
     {
         return $this->shortName;
     }
+
+    public function isFree()
+    {
+        return $this->webPrice == 0 && $this->onlineIncreaseInPrice == 0;
+    }
 }

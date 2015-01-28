@@ -3,7 +3,11 @@
     <div class="step pull-left">
         {{ counter }}
     </div>
+    {% if tournament.free %}
+    <div class="title pull-left">Tournoi grauit, pas de paiement</div>
+    {% else %}
     <div class="title pull-left">Récapitulatif avant paiement</div>
+    {% endif %}
     <br class="clear">
   </header>
 </div>
