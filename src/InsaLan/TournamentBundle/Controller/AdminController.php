@@ -9,20 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use InsaLan\TournamentBundle\Entity;
+use InsaLan\TournamentBundle\Exception\ControllerException;
 
 class AdminController extends Controller
 {   
-
-
-    private function getFormKo($tournament) {
-        return $this->createFormBuilder()
-                    ->add('name', 'text', array("label" => "Nom"))
-                    ->add('size', 'integer', array("label" => "Taille", "precision" => 0))
-                    ->add('double', 'checkbox', array("label" => "Double Elimination", "required" => false))
-                    ->setAction($this->generateUrl('insalan_tournament_admin_create_ko',
-                                                  array('id' => $tournament)))
-                    ->getForm();
-    }
 
     /**
      * @Route("/admin")
@@ -110,6 +100,80 @@ class AdminController extends Controller
     }
 
     /**
+     * @Route("/admin/stage/{id}")
+     * @Template()
+     */
+    public function stageAction(Entity\GroupStage $g)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $matches = $em->getRepository("InsaLanTournamentBundle:Match")->getByGroupStage($g);
+
+        return array("stage" => $g, "matches" => $matches);
+
+    }
+
+    /**
+     * @Route("/admin/knockout/{id}")
+     * @Template()
+     */
+    public function knockoutAction(Entity\Knockout $k)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $matches = $em->getRepository("InsaLanTournamentBundle:Match")->getByKnockout($k);
+
+        return array("knockout" => $k, "matches" => $matches);
+
+    }
+
+    /**
+     * @Route("/admin/match/{id}/setState/{state}")
+     */
+    public function match_setStateAction(Entity\Match $m, $state)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $state = intval($state);
+
+        if($state !== Entity\Match::STATE_UPCOMING &&
+           $state !== Entity\Match::STATE_ONGOING &&
+           $state !== Entity\Match::STATE_FINISHED)
+            throw new ControllerException("Unexpected argument state");
+
+        $m->setState($state);
+        $this->updateMatch($m);
+        $em->persist($m);
+        $em->flush();
+
+        return $this->getReturnRedirect($m);
+
+    }
+
+    /**
+     * @Route("/admin/match/{id}/addRound")
+     */
+    public function match_addRoundAction(Entity\Match $m)
+    {   
+        $request = $this->get('request');
+        if($request->getMethod() !== "POST")
+            throw new ControllerException("Bad method");
+
+        $score1 = intval($request->get('score1'));
+        $score2 = intval($request->get('score2'));
+
+        $r = new Entity\Round();
+        $r->setScore1($score1);
+        $r->setScore2($score2);
+        $r->setMatch($m);
+        $m->addRound($r);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($r);
+        $em->persist($m);
+        $em->flush();
+
+        return $this->getReturnRedirect($m);
+    }
+
+    /**
      * @Route("/{id}/admin/create/ko")
      */
     public function create_koAction(Entity\Tournament $tournament)
@@ -118,12 +182,12 @@ class AdminController extends Controller
         $form->handleRequest($this->getRequest());
         
         if(!$form->isValid())
-            throw new \Exception("Not allowed");
+            throw new ControllerException("Not allowed");
 
         $data = $form->getData();
 
         if($data['size'] <= 1)
-            throw new \Exception("Not allowed");
+            throw new ControllerException("Not allowed");
 
         $em = $this->getDoctrine()->getManager();
 
@@ -137,15 +201,15 @@ class AdminController extends Controller
            ->generateMatches($ko, $data['size'], $data['double']);
 
         return $this->redirect($this->generateUrl(
-                'insalan_tournament_admin_knockout',
+                'insalan_tournament_admin_knockout_view',
                 array('id' => $ko->getId())));
     }
 
     /**
-     * @Route("/admin/knockout/{id}")
+     * @Route("/admin/knockout/{id}/view")
      * @Template()
      */
-    public function knockoutAction(Entity\Knockout $ko)
+    public function knockout_viewAction(Entity\Knockout $ko)
     {   
         $em = $this->getDoctrine()->getManager();
         
@@ -210,5 +274,51 @@ class AdminController extends Controller
         // No form here, because Symfony is stupid and does not allow dynamic number a field without verbose and boring class.
 
         return array('knockout' => $ko, 'participants' => $a, 'children' => $children);
+    }
+
+
+    private function updateMatch(Entity\Match $match) {
+
+        if($match->getState() !== Entity\Match::STATE_FINISHED || !$match->getKoMatch())
+            return;
+
+        $em = $this->getDoctrine()->getManager();
+
+        $repository = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch');
+        $repository->propagateVictory($match->getKoMatch());
+
+        $ko = $match->getKoMatch()->getKnockout();
+
+        if($ko->getDoubleElimination()) {
+            // deal with it.
+            $repository->propagateFromNode(
+                $repository
+                ->getRoot($ko)
+                ->getChildren()
+                ->get(1)); // only update the hard part of the tree
+        }
+
+    }
+
+    private function getFormKo($tournament) {
+        return $this->createFormBuilder()
+                    ->add('name', 'text', array("label" => "Nom"))
+                    ->add('size', 'integer', array("label" => "Taille", "precision" => 0))
+                    ->add('double', 'checkbox', array("label" => "Double Elimination", "required" => false))
+                    ->setAction($this->generateUrl('insalan_tournament_admin_create_ko',
+                                                  array('id' => $tournament)))
+                    ->getForm();
+    }
+
+    private function getReturnRedirect(Entity\Match $m) {
+        if($m->getKoMatch()) {
+            return $this->redirect($this->generateUrl(
+                'insalan_tournament_admin_knockout',
+                array('id' => $m->getKoMatch()->getKnockout()->getId())));
+        }
+
+        return $this->redirect($this->generateUrl(
+                'insalan_tournament_admin_stage',
+                array('id' => $m->getGroup()->getStage()->getId())));
     }
 }

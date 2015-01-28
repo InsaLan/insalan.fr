@@ -57,7 +57,7 @@ class Round
 
     public function __toString()
     {
-        return "[" . $this->getScore1() . " - " . $this->getScore2() . "]";
+        return "[" . $this->getScore1() . " : " . $this->getScore2() . "]";
     }
 
     public function getTournament()

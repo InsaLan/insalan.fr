@@ -1,12 +1,4 @@
-{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-{% endblock %}
-
+{% extends 'InsaLanTournamentBundle::Admin/layout.html.twig' %}
 
 {% block body %}
 {{ parent() }}
@@ -29,15 +21,18 @@
 </article>
 
 {% if tournament %}
-  {#<hr style="margin: 20px 0px;"/>
+  <hr style="margin: 20px 0px;"/>
   <section class="groups">
     <h2>Poules</h2>
+    <ul style="margin-left: 30px">
     {% for s in stages %}
-      <h3>{{ s.name }}</h3>
+      <li><a href="{{ path('insalan_tournament_admin_stage', {id: s.id}) }}">{{ s.name }}</a></li>
     {% endfor %}
-  </section>#}
+    </ul>
+  </section>
 
-  <hr style="margin: 20px 0px;"/>
+  <div class="clear"></div>
+
   <section class="knockouts">
     <h2>Arbres</h2>
     <ul style="margin-left: 30px">

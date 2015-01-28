@@ -565,7 +565,10 @@ class UserController extends Controller
      * @Template()
      */
     public function teamValidateMatchAction(Entity\Participant $team, Entity\Match $match)
-    {
+    {   
+
+        throw new ControllerException("Not supported");
+
         try {
             $pvpService = $this->get('insalan.tournament.pvp_net');
 

@@ -543,6 +543,7 @@ footer #copyright span {
 .input input[type=password],
 .input input[type=checkbox],
 .input input[type=email],
+.input input[type=number],
 .input select {
   color: black;
   border: solid black 1px;

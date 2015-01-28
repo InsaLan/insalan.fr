@@ -241,6 +241,11 @@ section.actions a:hover {
   border: 1px solid #393939;
 }
 
+.match_detail_playing {
+  background-color: #00475B;
+  border: 1px solid #00bff3;
+}
+
 .match_detail table {
   border: none;
   text-align: center;

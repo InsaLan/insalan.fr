@@ -151,6 +151,8 @@ class KnockoutMatchRepository extends NestedTreeRepository
             $loserKo = $koMatch->getLoserDestination();
             if($loserKo && (!$match->getPart1() || !$match->getPart2())) {
                 $loserKo->cancelWait = true;
+                $loserKo->setOddNode(false);
+                $this->getEntityManager()->persist($loserKo);
             }
 
         }
@@ -384,7 +386,7 @@ class KnockoutMatchRepository extends NestedTreeRepository
 
         return json_encode(array(
                 "teams" => $teams,
-                "results" => array($results, $losers, $finals)
+                "results" => array($results, $losers, array($finals))
         ));
 
     }
