@@ -4,11 +4,19 @@
     <div class="step pull-left">
         {{ counter }}
     </div>
-    <div class="title pull-left">Paiement validé</div>
+    {% if tournament.free %}
+        <div class="title pull-left">Inscription joueur terminée</div>
+    {% else %}
+        <div class="title pull-left">Paiement validé</div>
+    {% endif %}
     <br class="clear">
   </header>
     <div class="text">
-        Votre paiement a été validé.
+    {% if tournament.free %}
+    Votre inscription en tant que joueur est validée. Si vous êtes en équipe, votre équipe sera validée quand plus de la moitié des joueurs auront validé leur inscription.
+    {% else %}
+    Votre paiement a été validé.
+    {% endif %}
 
  Ces informations vous seront utiles plus tard :
       <br>

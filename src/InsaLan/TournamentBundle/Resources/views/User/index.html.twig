@@ -50,7 +50,11 @@
       {% endif %}
       {% if participant.validated == 0 %}
         {% if participant.participantType == 'team' %}
-        L'équipe sera validée quand {{ participant.tournament.teamMinPlayer }} joueurs seront inscrits et que 3 auront payé.
+          {% if participant.tournament.free %}
+        L'équipe sera validée quand {{ participant.tournament.teamMinPlayer }} joueurs seront inscrits.
+          {% else %}
+        L'équipe sera validée quand {{ participant.tournament.teamMinPlayer }} joueurs seront inscrits et que plus de la moitié aura payé sa place.
+          {% endif %}
         {% endif %}
         {% if participant.participantType == 'player' %}
         Votre participation sera validée après paiement.
