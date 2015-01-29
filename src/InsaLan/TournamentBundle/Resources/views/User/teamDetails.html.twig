@@ -46,5 +46,13 @@
 
   {% endfor %}
 
+  {% if part.tournament.playerInfos and authorized %}
+    <div class="clear" style="margin-top:20px"></div>
+    <section class="infos">
+      {{ part.tournament.playerInfos | markdown }}
+    </section>
+    <div class="clear" style="margin-bottom:20px"></div>
+  {% endif %}
+
 {% endblock %}
 

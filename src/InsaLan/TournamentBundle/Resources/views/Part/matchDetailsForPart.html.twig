@@ -36,12 +36,12 @@
       {% elseif m.state == 1 %}
 
         {% if authorized == true %}
-        <p>
-            Match à jouer entre <br>
-            <strong><a href="{{ path('insalan_tournament_default_teampage', {id: m.part1.id}) }}">{{ m.part1 }}</a></strong> et <strong><a href="{{ path('insalan_tournament_default_teampage',{id: m.part2.id}) }}">{{ m.part2 }}</a></strong>
+        <p style="color:yellow">
+            Round à jouer !
         </p>
 
-        <br />
+        <p>Contactez un admin pour valider le score.</p>
+
         {#<form action="{{ path('insalan_tournament_user_teamvalidatematch', {id: part.id, match: m.id }) }}" method="GET">
           <i>Tournament Code :</i>
           <input title="Dans le launcher : Play - Custom - Tournament Code" type="text" value="{{ m.pvpNetUrl }}" style="width: 95%;padding: 3px 5px;background: #232323;cursor: help" onclick="this.setSelectionRange(0, this.value.length)"/><br/>
@@ -49,7 +49,7 @@
         </form>#}
         {% else %}
 
-        <p>Match en attente</p>
+        <p style="color:yellow">Match en cours !</p>
 
         {% endif %}
 

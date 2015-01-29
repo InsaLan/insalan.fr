@@ -119,6 +119,11 @@ class Tournament
      */
     protected $currency;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $playerInfos;
+
     public function isOpenedInFuture() {
         $now = new \DateTime();
         return $this->registrationOpen > $now;
@@ -728,5 +733,28 @@ class Tournament
     public function isFree()
     {
         return $this->webPrice == 0 && $this->onlineIncreaseInPrice == 0;
+    }
+
+    /**
+     * Set playerInfos
+     *
+     * @param string $playerInfos
+     * @return Tournament
+     */
+    public function setPlayerInfos($playerInfos)
+    {
+        $this->playerInfos = $playerInfos;
+
+        return $this;
+    }
+
+    /**
+     * Get playerInfos
+     *
+     * @return string 
+     */
+    public function getPlayerInfos()
+    {
+        return $this->playerInfos;
     }
 }

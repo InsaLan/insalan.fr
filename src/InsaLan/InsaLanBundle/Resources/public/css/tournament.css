@@ -263,3 +263,22 @@ section.actions a:hover {
 .match_detail .lost {
   color: #a00000;
 }
+
+/** For tournament infos */
+
+section.infos table {
+  min-width: 50%;
+  max-width: 90%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+section.infos li {
+  margin-left: 30px;
+}
+
+section.infos td, section.infos th {
+  border: 1px solid #393939;
+  padding: 5px;
+  text-align: center
+}
