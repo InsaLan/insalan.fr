@@ -198,14 +198,3 @@ article > ul li:before {
   font-family: Oswald;
 }
 
-.partner a {
-  display: block;
-  margin: auto;
-}
-
-.partner img {
-  max-height: 100px;
-  max-width: 190px;
-  display: block;
-  margin: auto;
-}

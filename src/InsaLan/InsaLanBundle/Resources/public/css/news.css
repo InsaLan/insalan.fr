@@ -333,3 +333,30 @@ section.news nav .next a {
   display: block;
   float: right;
 }
+
+.partner-list {
+    text-align: center;
+}
+
+.partner {
+    margin: 0px 10px 0px 10px;
+    display: inline;
+}
+
+.partner > a {
+  margin: auto;
+}
+
+.partner > a > img {
+  height: 70px;
+  display: inline;
+  margin: auto;
+}
+
+.partner-small > a > img {
+  height: 60px;
+}
+
+.partner-xsmall > a > img {
+  height: 30px;
+}
