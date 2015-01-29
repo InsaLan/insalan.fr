@@ -4,20 +4,33 @@
     {% for m in matches %}
       {% if m.state == 1 %}
         <tr>
-          <td class="grid-1">
+          <td class="grid-2">
             {% if m.group %}
               {{ m.group.name }}
             {% else %}
               {{ m.koMatch.frenchLevel }}
             {% endif %}
           </td>
-          <td class="grid-2">{{ m.part1 }}</td>
-          <td class="grid-2">{{ m.part2 }}</td>
-          <td class="grid-1"><strong>{{ m.score1 }} : {{ m.score2 }}</strong></td>
+          <td class="grid-2"><b>{{ m.part1 }}</b></td>
           <td class="grid-1">
-            <a href="{{ path("insalan_tournament_admin_match_setstate", {id: m.id, state: 2}) }}"><button>Terminer</button></a>
+            <!-- You've never seen this thing. Forget it. -->
+            <form style='display:inline;' method="POST" action="{{ path("insalan_tournament_admin_match_addround", {id: m.id}) }}">
+              <input type="hidden" value="1" name="score1"/>
+              <input type="hidden" value="0" name="score2"/>
+              <input type="submit" value="+1" class="greyButton"/>
+            </form>
+            <strong>{{ m.score1 }} : {{ m.score2 }}</strong>
+            <form style='display:inline;' method="POST" action="{{ path("insalan_tournament_admin_match_addround", {id: m.id}) }}">
+              <input type="hidden" value="0" name="score1"/>
+              <input type="hidden" value="1" name="score2"/>
+              <input type="submit" value="+1" class="greyButton"/>
+            </form>
           </td>
+          <td class="grid-2"><b>{{ m.part2 }}</b></td>
           <td class="grid-3">
+            <a href="{{ path("insalan_tournament_admin_match_setstate", {id: m.id, state: 2}) }}"><button>TERMINER</button></a>
+          </td>
+          {#<td class="grid-3">
             <form method="POST" action="{{ path("insalan_tournament_admin_match_addround", {id: m.id}) }}">
               Score : 
               <input class="scoreInput" type="number" name="score1"/> : 
@@ -25,7 +38,7 @@
               &nbsp; 
               <input type="submit" value="Ajouter round"/>
             </form>
-          </td>
+          </td>#}
         </tr>
       {% endif %}
     {% endfor %}
@@ -37,18 +50,18 @@
     {% for m in matches %}
       {% if m.state == 0 and m.part1 and m.part2 %}
         <tr>
-          <td class="grid-1">
+          <td class="grid-2">
             {% if m.group %}
               {{ m.group.name }}
             {% else %}
               {{ m.koMatch.frenchLevel }}
             {% endif %}
           </td>
-          <td class="grid-2">{{ m.part1 }}</td>
-          <td class="grid-2">{{ m.part2 }}</td>
+          <td class="grid-2"><b>{{ m.part1 }}</b></td>
           <td class="grid-1"><strong>{{ m.score1 }} : {{ m.score2 }}</strong></td>
-          <td class="grid-4">
-            <a href="{{ path("insalan_tournament_admin_match_setstate", {id: m.id, state: 1}) }}"><button>OUVRIR LE MATCH</button></a>
+          <td class="grid-2"><b>{{ m.part2 }}</b></td>
+          <td class="grid-3">
+            <a href="{{ path("insalan_tournament_admin_match_setstate", {id: m.id, state: 1}) }}"><button>LANCER !</button></a>
           </td>
         </tr>
       {% endif %}
@@ -61,20 +74,18 @@
     {% for m in matches %}
       {% if m.state == 2 and m.part1 and m.part2 %}
         <tr>
-          <td class="grid-1">
+          <td class="grid-2">
             {% if m.group %}
               {{ m.group.name }}
             {% else %}
               {{ m.koMatch.frenchLevel }}
             {% endif %}
           </td>
-          <td class="grid-2">{{ m.part1 }}</td>
-          <td class="grid-2">{{ m.part2 }}</td>
+          <td class="grid-2"><b>{{ m.part1 }}</b></td>
           <td class="grid-1"><strong>{{ m.score1 }} : {{ m.score2 }}</strong></td>
-          <td class="grid-4">
-            {% for r in m.rounds %}
-              {{ r }} 
-            {% endfor %}
+          <td class="grid-2"><b>{{ m.part2 }}</b></td>
+          <td class="grid-3">
+            <a href="{{ path("insalan_tournament_admin_match_setstate", {id: m.id, state: 1}) }}"><button>Modifier</button></a>
           </td>
         </tr>
       {% endif %}

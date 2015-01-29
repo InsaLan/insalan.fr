@@ -1,5 +1,16 @@
 {% extends 'InsaLanTournamentBundle::layout.html.twig' %}
 
+{#
+
+  WARNING
+
+  THIS FILE IS UGLY.
+  IT CAN PERVERT YOU. TAKE CARE.
+
+  (but it works.)
+
+#}
+
 {% block title %}
   {{ parent() }} - {{ t.name }}
 {% endblock %}
@@ -21,8 +32,7 @@
   </header>
 
   <div class="container">
-    {# TODO : SHOULD USE t.type IN THE FUTURE #}
-    <section class="results bg{% if t.name matches "/league/i" %}LoL{% endif %}{% if t.name matches "/starcraft/i" %}SC2{% endif %}{% if t.name matches "/dota/i" %}Dota2{% endif %}{% if t.name matches "/hearthstone/i" %}HS{% endif %}{% if t.name matches "/counter-strike/i" %}CSGO{% endif %}">
+    <section class="results bg{% if t.shortName == "lol" %}LoL{% elseif t.shortName == "st2" %}SC2{% elseif t.shortName == "dota" %}Dota2{% elseif t.shortName == "hs" %}HS{% elseif t.shortName == "csgo" %}CSGO{% endif %}">
       <section class="matchs">
         <h3>Matchs</h3>
         {% for s in stages %}
@@ -35,16 +45,7 @@
                 <tr data-mid="{{ m.id }}" class="match">
                   <td>{{ m.part1.name }}</td>
                   <td>
-                    {% set score1 = 0 %}
-                    {% set score2 = 0 %}
-                    {% for r in m.rounds %}
-                      {% if r.score1 > r.score2 %}
-                        {% set score1 = score1 + 1 %}
-                      {% elseif r.score1 < r.score2 %}
-                        {% set score2 = score2 + 1 %}
-                      {% endif %}
-                    {% endfor %}
-                    {{ score1 }}-{{ score2 }}
+                    {{ m.score1 }}-{{ m.score2 }}
                   </td>
                   <td>{{ m.part2.name }}</td>
                 </tr>
@@ -66,10 +67,10 @@
         <nav>
             <ul>
             {% for s in stages %}
-            <li><a href="#" class="tablink" data-target="stage{{ s.id }}">{{ s.name }}</a></li>
+            <li><a href="#" class="tablink" data-type="stage" data-target="{{ s.id }}">{{ s.name }}</a></li>
             {% endfor %}
             {% for k in knockouts %}
-              <li><a href="#" class="tablink" data-target="ko{{ k.id }}">{{ k.name }}</a></li>
+              <li><a href="#" class="tablink" data-type="knockout" data-target="{{ k.id }}">{{ k.name }}</a></li>
             {% endfor %}
 
           </ul>
@@ -98,7 +99,7 @@
         {% endfor %}
 
         {% for k in knockouts %}
-        <div class="groups" id="ko{{ k.id }}" style="display: none;">
+        <div class="groups" id="knockout{{ k.id }}" style="display: none;">
             <div id="bracketContainer_{{ k.id }}">
             </div>
 
@@ -226,23 +227,29 @@
 
     window.addEvent('domready', function() {
       var matches = $$('table.matchs');
-      var groups = $$('table.group');
+      var groups  = $$('table.group');
+      var tabs    = $$('section.tabs .groups');
+
+      if(tabs.length > 0)
+        tabs[0].show();
 
       if (matches.length > 0) {
         groups[0].addClass('active');
-        matches.setStyle('display', 'none');
-        matches[0].setStyle('display', '');
+        matches.hide();
+        matches[0].show();
 
         groups.addEvent('click', function() {
           var gid = parseInt(this.dataset.gid);
-          $$('table.matchs').setStyle('display', 'none');
+          $$('table.matchs').hide();
           $$('table.group').removeClass('active');
-          $('matchs' + gid).setStyle('display', '');
+          $('matchs' + gid).show();
           $(this).addClass('active');
         });
+      } else {
+        $$("section.matchs").hide();
       }
 
-      var target = $$('.match-details .container')[0];
+      {#var target = $$('.match-details .container')[0];
       matches = $$('table.matchs tr.match');
       matches.addEvent('click', function() {
         var mid = parseInt(this.dataset.mid);
@@ -258,7 +265,7 @@
         }
 
         loadRound(target, this);
-      });
+      });#}
 
     });
   </script>
@@ -280,9 +287,18 @@
       (function($) {
         $(".tablink").click(function() { 
             $(".groups").hide();
-            var target = $( this ).data('target');
-            $("#"+target).show();
-            buildTrees();
+            var targetId = $(this).data('target');
+            var targetType = $(this).data('type');
+            $("table.matchs").hide();
+            $("#"+targetType+targetId).show();
+            if(targetType === "stage") {
+              $("section.matchs").show();
+              $("#matchs"+targetId).show();
+            } else {
+              $("section.matchs").hide();
+              buildTrees();
+            }
+            return false;
         });
     })(jQuery);
   </script>
