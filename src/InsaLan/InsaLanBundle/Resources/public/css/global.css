@@ -849,3 +849,19 @@ li a:hover {
     margin:0; padding: 5px;
 
 }
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-justify {
+    text-align: justify; 
+}
+
+.text-center {
+    text-align: center;
+}
