@@ -38,14 +38,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/partner")
-     * @Template()
-     */
-    public function partnerAction()
-    {
-        return array();
-    }
-    /**
      * @Route("/contact")
      * @Template()
      */
