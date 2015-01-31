@@ -11,6 +11,10 @@ security:
             id: fos_user.user_provider.username
 
     firewalls:
+        api:
+            pattern: ^/api
+            http_basic:                
+                realm: "API"
         opening:
             request_matcher: insalan.opening_matcher
             anonymous: false

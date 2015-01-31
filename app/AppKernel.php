@@ -44,6 +44,7 @@ class AppKernel extends Kernel
             new InsaLan\StreamBundle\InsaLanStreamBundle(),
             
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new InsaLan\ApiBundle\InsaLanApiBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -1,3 +1,8 @@
+insalan_api:
+    resource: "@InsaLanApiBundle/Controller/"
+    type:     annotation
+    prefix:   /api
+
 insalan_news:
     resource: "@InsaLanNewsBundle/Controller/"
     type:     annotation
