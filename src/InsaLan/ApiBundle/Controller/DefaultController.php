@@ -24,7 +24,7 @@ class DefaultController extends Controller
         $t = explode(",", $traw);
 
         $res = array(
-            "user" => $usr->getUsername(),
+            "user" => array("username" => $usr->getUsername()),
             "err" => "registration_not_found"
             
         );
