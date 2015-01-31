@@ -78,4 +78,19 @@ class MatchRepository extends EntityRepository
 
         return $q->getQuery()->execute();
     }
+
+    public function getByTournament(Entity\Tournament $t)
+    {
+        $q = $this->getQueryBuilder()
+        ->leftJoin('m.koMatch', 'kom')
+        ->leftJoin('kom.knockout', 'ko')
+        ->leftJoin('ko.tournament', 't')
+        ->addSelect('ko')
+        ->addSelect('kom')
+        ->addSelect('r')
+        ->where('t = :tournament')
+        ->setParameter('tournament', $t);
+
+        return $q->getQuery()->execute();
+    }
 }

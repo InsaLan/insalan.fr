@@ -32,9 +32,16 @@
   </header>
 
   <div class="container">
+    {% if stages|length == 0 and knockouts|length == 0 %}
+    <section>
+      <p>Aucun match n'est disponible.</p>
+      {% if t.isPending() %}
+      <p>Ce tournoi débutera le {{ t.tournamentOpen | date("d/m à H:i") }}.</p>
+      {% endif %}
+    </section>
+    {% endif %}
     <section class="results bg{% if t.shortName == "lol" %}LoL{% elseif t.shortName == "st2" %}SC2{% elseif t.shortName == "dota" %}Dota2{% elseif t.shortName == "hs" %}HS{% elseif t.shortName == "csgo" %}CSGO{% endif %}">
       <section class="matchs">
-        <h3>Matchs</h3>
         {% for s in stages %}
           {% for g in s.groups %}
             <table class="matchs" id="matchs{{ g.id }}">
@@ -87,7 +94,7 @@
             </tr>
             {% for p in g.participants %}
             <tr>
-              <td><a href="{{ path('insalan_tournament_default_teampage', {id: p.id}) }}">{{ p.name }}</a></td>
+              <td><a href="{{ path('insalan_tournament_default_teamdetails', {id: p.id}) }}">{{ p.name }}</a></td>
               <td>{{ g.stats[p.id].won }}</td>
               <td>{{ g.stats[p.id].lost }}</td>
             </tr>
@@ -277,6 +284,9 @@
         $('#bracketContainer_{{ k.id }}').bracket({
           init:  {{ k.jsonData|raw }},
           skipConsolationRound: true,
+          {% if k.doubleElimination %}
+          skipSecondaryFinal: true
+          {% endif %}
         });
     })(jQuery);
   {% endfor %}

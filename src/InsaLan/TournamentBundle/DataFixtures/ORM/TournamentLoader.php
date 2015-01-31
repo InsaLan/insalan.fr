@@ -31,7 +31,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setTournamentClose((new \DateTime())->modify('+93 day'));
         $e->setType('manual');
         $e->setLogoPath('fixtures-1.png');
-        $e->setParticipantType('team');
+        $e->setParticipantType('player');
         $manager->persist($e);
         $this->addReference('tournament-1', $e);
 

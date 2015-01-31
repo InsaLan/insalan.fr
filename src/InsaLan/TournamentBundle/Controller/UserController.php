@@ -504,61 +504,6 @@ class UserController extends Controller
         return array('tournament' => $tournament, 'user' => $usr, 'player' => $player, 'error' => $details, 'form' => $form->createView());
     }
 
-    
-
-    /**
-     * @Route("/user/team/{id}", requirements={"id" = "\d+"})
-     * @Template()
-     */
-    public function teamDetailsAction(Entity\Participant $part)
-    {
-
-        // Get Knockout & Group Matches
-        
-        $em = $this->getDoctrine()->getManager();
-        $matches = $em->getRepository("InsaLanTournamentBundle:Match")->getByParticipant($part);
-
-        $kos = array();
-        $grs = array();
-
-        // Populate and sort arrays
-        foreach($matches as $m)
-        {
-            if($m->getGroup() !== null) {
-                $id = $m->getGroup()->getId();
-                if(!isset($grs[$id])) {
-                    $grs[$id] = array();
-                }
-                $grs[$id][] = $m;
-            }
-            elseif($m->getKoMatch() !== null) {
-                $id = $m->getKoMatch()->getKnockout()->getId();
-                if(!isset($kos[$id])) {
-                    $kos[$id] = array();
-                }
-                $kos[$id][] = $m;
-            }
-        }
-
-        foreach ($grs as $g)
-        {   
-            foreach($g as $m) 
-            {
-                $this->populateTournamentCode($m);
-            }
-        }
-
-        foreach ($kos as $g)
-        {   
-            foreach($g as $m) 
-            {
-                $this->populateTournamentCode($m);
-            }
-        }
-
-
-        return array("part" => $part, "groupMatches" => $grs, "knockoutMatches" => $kos, "authorized" => $this->isUserInTeam($part));
-    }
 
     /**
      * @Route("/user/public/team/{id}/validate/{match}", requirements={"id" = "\d+"})

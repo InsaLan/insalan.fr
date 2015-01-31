@@ -26,7 +26,7 @@ class KnockoutMatch
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Knockout")
+     * @ORM\ManyToOne(targetEntity="Knockout", inversedBy="matches")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $knockout;

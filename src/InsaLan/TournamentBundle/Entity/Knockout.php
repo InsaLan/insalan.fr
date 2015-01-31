@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\KnockoutRepository")
  */
 class Knockout
 {
@@ -32,6 +32,11 @@ class Knockout
      * @ORM\Column(type="boolean")
      */
     protected $doubleElimination;
+
+    /**
+     * @ORM\OneToMany(targetEntity="KnockoutMatch", mappedBy="knockout")
+     */
+    protected $matches;
 
     /** For Bracket Generation **/
 

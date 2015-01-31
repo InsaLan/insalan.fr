@@ -51,8 +51,10 @@
 
     $('#bracketContainer').bracket({
       init: data,
-      skipSecondaryFinal: true,
       skipConsolationRound: true,
+      {% if k.doubleElimination %}
+      skipSecondaryFinal: true
+      {% endif %}
     });
 })(jQuery);
 

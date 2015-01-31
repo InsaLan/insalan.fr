@@ -17,18 +17,18 @@
             <form style='display:inline;' method="POST" action="{{ path("insalan_tournament_admin_match_addround", {id: m.id}) }}">
               <input type="hidden" value="1" name="score1"/>
               <input type="hidden" value="0" name="score2"/>
-              <input type="submit" value="+1" class="greyButton"/>
+              <input type="submit" value="+1" class="darkButton"/>
             </form>
             <strong>{{ m.score1 }} : {{ m.score2 }}</strong>
             <form style='display:inline;' method="POST" action="{{ path("insalan_tournament_admin_match_addround", {id: m.id}) }}">
               <input type="hidden" value="0" name="score1"/>
               <input type="hidden" value="1" name="score2"/>
-              <input type="submit" value="+1" class="greyButton"/>
+              <input type="submit" value="+1" class="darkButton"/>
             </form>
           </td>
           <td class="grid-2"><b>{{ m.part2 }}</b></td>
           <td class="grid-3">
-            <a href="{{ path("insalan_tournament_admin_match_setstate", {id: m.id, state: 2}) }}"><button>TERMINER</button></a>
+            <a href="{{ path("insalan_tournament_admin_match_setstate", {id: m.id, state: 2}) }}"><button>TERMINER</button></a> <a href="{{ path("insalan_tournament_admin_match_reset", {id: m.id}) }}" onclick="return confirm('Confirmer le reset des points ?')"><button class="darkButton">Reset</button></a>
           </td>
           {#<td class="grid-3">
             <form method="POST" action="{{ path("insalan_tournament_admin_match_addround", {id: m.id}) }}">

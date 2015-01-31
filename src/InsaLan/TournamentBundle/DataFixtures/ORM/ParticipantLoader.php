@@ -55,6 +55,7 @@ class ParticipantLoader extends AbstractFixture implements OrderedFixtureInterfa
 
         for ($i = 3; $i <= 303; ++$i) {
             $e = new Player();
+            $e->setValidated(2);
             $e->setGameName('Part '.$i);
             //$e->setTournament($this->getReference('tournament-1'));
             $teamId = (int)(($i-3)/5);

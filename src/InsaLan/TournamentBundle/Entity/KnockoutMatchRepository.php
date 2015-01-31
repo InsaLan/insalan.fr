@@ -15,7 +15,7 @@ namespace InsaLan\TournamentBundle\Entity;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
 class KnockoutMatchRepository extends NestedTreeRepository
-{
+{   
 
     /**
      * Generate a correct sized tree based on players number.

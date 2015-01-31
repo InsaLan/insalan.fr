@@ -32,8 +32,9 @@ class DefaultController extends Controller
     public function tournamentAction(Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
+
         $stages = $em->getRepository('InsaLanTournamentBundle:GroupStage')->getByTournament($tournament);
-        $KOs = $em->getRepository('InsaLanTournamentBundle:Knockout')->findByTournament($tournament);
+        $KOs = $em->getRepository('InsaLanTournamentBundle:Knockout')->getByTournament($tournament);
 
         foreach ($stages as $s) {
             foreach ($s->getGroups() as $g) {
@@ -111,20 +112,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/public/team/{id}")
-     * @Method({"GET"})
-     * @Template
-     */
-    public function teamPageAction($id) {
-        $em = $this->getDoctrine()->getManager();
-        $team = $em->getRepository('InsaLanTournamentBundle:Team')->findOneById($id);
-        if ($team === null) {
-            return $this->createNotFoundException('Cette équipe est introuvable');
-        }
-        return array('team' => $team);
-    }
-
-    /**
      * @Route("/public/match/{id}")
      * @Method({"GET"})
      */
@@ -189,6 +176,60 @@ class DefaultController extends Controller
 
         return array("tournament" => $t, "knockouts" => $output);
         
+
+    }
+
+    /**
+     * @Route("/public/team/{id}", requirements={"id" = "\d+"})
+     * @Template()
+     */
+    public function teamDetailsAction(Entity\Participant $part)
+    {
+
+        // Get Knockout & Group Matches
+        
+        $em = $this->getDoctrine()->getManager();
+        $matches = $em->getRepository("InsaLanTournamentBundle:Match")->getByParticipant($part);
+
+        $kos = array();
+        $grs = array();
+
+        // Populate and sort arrays
+        foreach($matches as $m)
+        {
+            if($m->getGroup() !== null) {
+                $id = $m->getGroup()->getId();
+                if(!isset($grs[$id])) {
+                    $grs[$id] = array();
+                }
+                $grs[$id][] = $m;
+            }
+            elseif($m->getKoMatch() !== null) {
+                $id = $m->getKoMatch()->getKnockout()->getId();
+                if(!isset($kos[$id])) {
+                    $kos[$id] = array();
+                }
+                $kos[$id][] = $m;
+            }
+        }
+
+        return array("part" => $part, "groupMatches" => $grs, "knockoutMatches" => $kos, "authorized" => $this->isUserInTeam($part));
+    }
+
+    private function isUserInTeam(Entity\Participant $part) {
+
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        if($part instanceof Entity\Team) {
+
+            foreach ($part->getPlayers() as $p) {
+                if($p->getUser() !== null && $p->getUser()->getId() === $user->getId())
+                    return true;
+            }
+            return false;
+        }
+
+        return $part->getUser() === $user && $user !== null;
 
     }
 }

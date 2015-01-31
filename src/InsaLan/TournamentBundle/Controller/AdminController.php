@@ -174,6 +174,23 @@ class AdminController extends Controller
     }
 
     /**
+     * @Route("/admin/match/{id}/reset")
+     */
+    public function match_resetAction(Entity\Match $m)
+    {   
+        $em = $this->getDoctrine()->getManager();
+
+        foreach($m->getRounds() as $r) {
+            $m->removeRound($r);
+            $em->remove($r);
+        }
+
+        $em->persist($m);
+        $em->flush();
+        return $this->getReturnRedirect($m);
+    }
+
+    /**
      * @Route("/{id}/admin/create/ko")
      */
     public function create_koAction(Entity\Tournament $tournament)

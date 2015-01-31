@@ -26,7 +26,7 @@
     <div class="frame frame-active grid-5 pull-left">
         <header class="full">
             <div class="title pull-left">
-                {{count + 1}}. {{ t.name }}
+                {{count + 1}}. <a href="{{ path('insalan_tournament_default_teamdetails', {id: t.id}) }}">{{ t.name }}</a>
             </div>
             <br class="clear">
         </header>

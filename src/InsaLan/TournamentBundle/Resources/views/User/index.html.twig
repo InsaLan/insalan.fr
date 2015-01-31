@@ -71,7 +71,7 @@
     {% if participant.validated == 2  %}
 
       {% if participant.tournament.isPlaying %}
-        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_teamdetails', {id: participant.id }) }}">Jouer mes matchs</a>
+        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_default_teamdetails', {id: participant.id }) }}">Jouer mes matchs</a>
       {% elseif participant.tournament.placement  %}
         <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_placement', {tournament: participant.tournament.id }) }}">Choisir une place</a>
       {% endif %}
