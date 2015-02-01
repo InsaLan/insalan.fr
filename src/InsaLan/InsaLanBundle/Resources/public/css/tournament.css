@@ -282,3 +282,21 @@ section.infos td, section.infos th {
   padding: 5px;
   text-align: center
 }
+
+.list {
+    width: 100%;
+}
+
+.list h1 {
+    font-family: OpenSansCond;
+    font-size: 30px;
+}
+
+.list, .list tr, .list td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.list img {
+    height: 100px;
+}

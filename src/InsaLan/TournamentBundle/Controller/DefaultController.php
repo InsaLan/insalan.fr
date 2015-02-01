@@ -52,6 +52,15 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/{id}/public/rules", requirements={"id" = "\d+"})
+     * @Template()
+     */
+    public function rulesAction(Entity\Tournament $tournament)
+    {
+        return array('t' => $tournament);
+    }
+
+    /**
      * @Route("/{id}/public/team", requirements={"id" = "\d+"})
      * @Template()
      */
