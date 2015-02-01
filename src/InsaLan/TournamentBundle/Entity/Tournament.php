@@ -34,7 +34,12 @@ class Tournament
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $description;
+    protected $description; 
+ 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $rules;
 
     /**
      * @ORM\OneToMany(targetEntity="Participant", mappedBy="tournament")
@@ -756,5 +761,28 @@ class Tournament
     public function getPlayerInfos()
     {
         return $this->playerInfos;
+    }
+
+    /**
+     * Set rules
+     *
+     * @param string $rules
+     * @return Tournament
+     */
+    public function setRules($rules)
+    {
+        $this->rules = $rules;
+
+        return $this;
+    }
+
+    /**
+     * Get rules
+     *
+     * @return string 
+     */
+    public function getRules()
+    {
+        return $this->rules;
     }
 }
