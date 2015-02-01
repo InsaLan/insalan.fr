@@ -15,37 +15,83 @@
     <h2>Tournois</h2>
   </header>
 
-  <section class="tournaments">
-    <ul>
-      {% for t in tournaments %}
-        {% spaceless %}
-        <li style="text-align:center">
-              <h2>{{ t.name }}</h2>  
-              <strong>
-                  {% if t.participantType == "team" %}
-                      <a href="{{ path("insalan_tournament_default_teamlist", {"id":t.id}) }}">
-                  {% else %}
-                      <a href="{{ path("insalan_tournament_default_playerlist", {"id":t.id}) }}">
-                  {% endif %}
+  <section>
+      <table class="list">
 
+      {% for t in tournaments %}
+          <tr>
+              <td>
+                <a href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}">
+                    <img src="{{ asset(t.getUploadDir() ~ t.logoPath)  }}" alt="{{ t.name }}"/>
+                 </a>
+              </td>
+              <td>
+                  <a href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}" >
+                    <div>
+                      <h1>
+                        {{ t.name }}
+                      </h1>
+                      Du {{ t.tournamentOpen|date('m/d/y') }} au {{ t.tournamentClose|date('m/d/y') }}
+                    </div>
+                  </a>
+              </td>
+              <td>
+                  <br><br>
+                  {% if t.participantType == "team" %}
+                      <a class="btn2 btn2-nocolor" href="{{ path("insalan_tournament_default_teamlist", {"id":t.id}) }}">
+                  {% else %}
+                      <a class="btn2 btn2-nocolor" href="{{ path("insalan_tournament_default_playerlist", {"id":t.id}) }}">
+                  {% endif %}
+                    Participants
+                  </a>
+                  <br><br>
                   {% if t.isFull() %}
                     COMPLET
                   {% else %}
                     {{ t.validatedSlots }} / {{ t.registrationLimit }} participants
                   {% endif %}
-                  </a>
-              </strong>
-
-            <a class="imga" href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}">
-              <img src="{{ asset(t.getUploadDir() ~ t.logoPath)  }}" alt="{{ t.name }}"/>
-            </a>
-          </li>
-        {% endspaceless %}
+              </td>
+              <td>
+                <a class="btn2 btn2-nocolor" href="{{ path('insalan_tournament_default_rules', {id: t.id}) }}" >
+                    Règlement
+                </a>
+              </td>
+          </tr>
       {% endfor %}
-    </ul>
-    <div class="clear"></div>
-    <div class="space"></div>
+      </table>
   </section>
+
+<!--  <section class="tournaments">-->
+    <!--<ul>-->
+      <!--{% for t in tournaments %}-->
+        <!--{% spaceless %}-->
+        <!--<li style="text-align:center">-->
+              <!--<h2>{{ t.name }}</h2>  -->
+              <!--<strong>-->
+                  <!--{% if t.participantType == "team" %}-->
+                      <!--<a href="{{ path("insalan_tournament_default_teamlist", {"id":t.id}) }}">-->
+                  <!--{% else %}-->
+                      <!--<a href="{{ path("insalan_tournament_default_playerlist", {"id":t.id}) }}">-->
+                  <!--{% endif %}-->
+
+                  <!--{% if t.isFull() %}-->
+                    <!--COMPLET-->
+                  <!--{% else %}-->
+                    <!--{{ t.validatedSlots }} / {{ t.registrationLimit }} participants-->
+                  <!--{% endif %}-->
+                  <!--</a>-->
+              <!--</strong>-->
+
+            <!--<a class="imga" href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}">-->
+              <!--<img src="{{ asset(t.getUploadDir() ~ t.logoPath)  }}" alt="{{ t.name }}"/>-->
+            <!--</a>-->
+          <!--</li>-->
+        <!--{% endspaceless %}-->
+      <!--{% endfor %}-->
+    <!--</ul>-->
+    <!--<div class="clear"></div>-->
+    <!--<div class="space"></div>-->
+  <!--</section>-->
 </article>
 
 {% endblock %}

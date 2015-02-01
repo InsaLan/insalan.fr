@@ -16,6 +16,7 @@ class TournamentAdmin extends Admin
             ->add('name')
             ->add('shortName')
             ->add('description')
+            ->add('rules')
             ->add('playerInfos')
             ->add('registrationOpen')
             ->add('registrationClose')
