@@ -44,6 +44,16 @@ class UserOrder
     protected $delivered = false;
 
     /**
+     * @ORM\Column(type="datetime") 
+     */
+    protected $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime") 
+     */
+    protected $updatedAt;
+    
+    /**
      * Get id
      *
      * @return integer
@@ -144,15 +154,6 @@ class UserOrder
     {
         return $this->pizza;
     }
-    /**
-     * @var \DateTime
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     */
-    private $updatedAt;
 
 
     /**

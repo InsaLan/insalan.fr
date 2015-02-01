@@ -6,20 +6,18 @@ use Doctrine\ORM\EntityRepository;
 
 class OrderRepository extends EntityRepository
 {
-    public function getCurrent()
+    public function getAvailable()
     {
         $now = new \Datetime();
 
         $q = $this->createQueryBuilder('o')
-            ->where('o.createdAt >= :now')
-            ->andWhere('o.expiration > :now')
+            ->where('o.expiration > :now')
             ->setParameter(':now', $now)
-            ->setMaxResults(1)
+            ->orderBy('o.expiration')
         ;
 
-        $orders = $q->getQuery()->execute();
-        if ($orders) return $orders[0];
-        return null;
+        return $q->getQuery()->execute();
+        
     }
 
     public function getAll()

@@ -18,10 +18,10 @@ insalan_tournament:
     type:     annotation
     prefix:   /tournament
 
-#insalan_pizza:
-    #resource: "@InsaLanPizzaBundle/Controller/"
-    #type:     annotation
-    #prefix:   /pizza
+insalan_pizza:
+    resource: "@InsaLanPizzaBundle/Controller/"
+    type:     annotation
+    prefix:   /pizza
 
 insalan_information:
     resource: "@InsaLanInformationBundle/Controller/"

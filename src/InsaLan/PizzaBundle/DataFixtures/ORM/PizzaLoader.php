@@ -24,4 +24,3 @@ class PizzaLoader implements FixtureInterface
         $manager->flush();
     }
 }
-

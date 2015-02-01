@@ -42,6 +42,26 @@ class Order
     protected $capacity;
 
     /**
+     * @ORM\Column(type="datetime") 
+     */
+    protected $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime") 
+     */
+    protected $updatedAt;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \Datetime();
+        $this->updatedAt = new \Datetime();
+    }
+    
+    /**
      * Get id
      *
      * @return integer
@@ -144,14 +164,6 @@ class Order
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Add orders
      *
      * @param \InsaLan\PizzaBundle\Entity\UserOrder $orders
@@ -183,15 +195,6 @@ class Order
     {
         return $this->orders;
     }
-    /**
-     * @var \DateTime
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     */
-    private $updatedAt;
 
 
     /**

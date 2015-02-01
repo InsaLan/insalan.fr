@@ -8,7 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use InsaLan\PizzaBundle\Entity;
 
 class DefaultController extends Controller
-{
+{   
+
     /**
      * @Route("/")
      * @Template()
@@ -18,39 +19,38 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $user = $this->get('security.context')->getToken()->getUser();
-        $order = $em->getRepository('InsaLanPizzaBundle:Order')->getCurrent();
-
-        if ($this->get('request')->getMethod() == 'POST' &&
-            ($pizzaId = $this->get('request')->request->get('pizza', false)))
-        {
-            $pizzaId = (int)$pizzaId;
-            $pizza = $em->getRepository('InsaLanPizzaBundle:Pizza')->find($pizzaId);
-            if ($pizza)
-            {
-                $em->getConnection()->beginTransaction();
-
-                $e = new Entity\UserOrder();
-                $e->setUser($user);
-                $e->setOrder($order);
-                $e->setPizza($pizza);
-                $e->setDelivered(false);
-                $em->persist($e);
-
-                $user->setCredit($user->getCredit() - 1);
-                $em->persist($user);
-
-                $em->flush();
-                $em->getConnection()->commit();
-
-                $this->get('session')->getFlashBag()->add('info', 'Votre commande a été enregistrée.');
-                return $this->redirect($this->generateUrl('insalan_pizza_default_order'));
-            }
-        }
-
+        $orders = $em->getRepository('InsaLanPizzaBundle:Order')->getAvailable();
         $pizzas = $em->getRepository('InsaLanPizzaBundle:Pizza')->findAll();
         $myOrders = $em->getRepository('InsaLanPizzaBundle:UserOrder')->findByUser($user);
 
-        return compact('myOrders', 'pizzas', 'order');
+        $ordersChoices = array();
+
+        foreach($orders as $order) {
+            $ordersChoices[$order->getId()] = "Le " . $order->getDelivery()->format("d/m à H \h i"); 
+        }
+        
+        $pizzasChoices = array();
+
+        foreach($pizzas as $pizza) {
+            $pizzasChoices[$pizza->getId()] = $pizza->getName() . " (" . $pizza->getPrice() . " €)"; 
+        }
+
+        $form = $this->createFormBuilder()
+                    ->add('order', 'choice', array('choices' => $ordersChoices, 'label' => 'Heure de livraison'))
+                    ->add('pizza', 'choice', array('choices' => $pizzasChoices, 'label' => 'Pizza choisie'))
+                    ->setAction($this->generateUrl('insalan_pizza_default_index'))
+                    ->getForm();
+
+        $form->handleRequest($this->getRequest());
+        if($form->isValid()) {
+            // Payment generation
+            // TODO
+            
+            die("Not Yet Implemented");
+        }
+
+
+        return array('myOrders' => $myOrders, 'pizzas' => $pizzas, 'orders' => $orders, 'form' => $form->createView());
     }
 
     /**

@@ -37,6 +37,16 @@ class News
      */
     protected $text;
 
+    /**
+     * @ORM\Column(type="datetime") 
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime") 
+     */
+    private $updatedAt;
+
 
     /**
      * Get id
@@ -116,17 +126,6 @@ class News
     {
         return $this->category;
     }
-    
-    /**
-     * @ORM\Column(type="datetime") 
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\Column(type="datetime") 
-     */
-    private $updatedAt;
-
 
     /**
      * Set createdAt

@@ -13,12 +13,12 @@
     <div class="square">
       <a href="#body"><span></span></a>
     </div>
-    {% if order %}
+    {% if orders %}
       <ul>
         <li>Prochaine <br/> Livraison</li>
-        <li>{{ order.delivery | date('H\\hi') }}</li>
+        <li>{{ orders[0].delivery | date('H\\hi') }}</li>
         <li>Heure <br/> limite</li>
-        <li>{{ order.expiration | date('H\\hi') }}</li>
+        <li>{{ orders[0].expiration | date('H\\hi') }}</li>
       </ul>
     {% endif %}
   </aside>
@@ -39,38 +39,16 @@
     <p>Pour la liste des pizzas, allez voir ci-dessous pour un bref aperçu,
     ou venez demander un prospectus plus détaillé !</p>
 
+    {% if orders %}
     <fieldset class="form-frame">
-      <form style="margin-top: 20px" action="" method="post">
-        <div class="input left">
-          <label>Mon crédit</label>
-          <input type="text" disabled
-            value="{% if app.user %}{{ app.user.credit }} pizza{% if
-              app.user.credit > 1 %}s{% endif %}{% else %}Non connecté{% endif %}"
-            style="background: transparent; border: none;color: white"/>
-        </div>
-        {% if order %}
-          <div class="input left">
-            <label for="pizza">Pizza</label>
-            <select id="pizza" name="pizza">
-              {% for p in pizzas %}
-                <option value="{{ p.id }}">{{ p.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
-        {% endif %}
-        <div class="input left">
-          {% if order %}
-            {% if app.user and app.user.credit > 0 %}
-              <input type="submit" value="J'ai faim!">
-            {% else %}
-              Crédit insuffisant
-            {% endif %}
-          {% else %}
-            Aucune commande de pizza n'est possible pour l'instant.
-          {% endif %}
-        </div>
-      </form>
+      {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.order) }}
+        {{ form_row(form.pizza) }}
+        <input type="submit" value="Commander"/>
+      {{ form_end(form) }}
     </fieldset>
+    {% endif %}
 
     <h3> Pizzas disponibles </h3>
     <dl>
@@ -93,7 +71,6 @@
           <td>{{ order.createdAt | date('d/m H\\hi') }}</td>
           <td>{{ order.pizza.name }}</td>
           <td>{{ order.order.delivery | date('d/m H\\hi') }}</td>
-          {#<td>{% if order.delivered %}Livrée{% else %}En attente{% endif %}</td>#}
         </tr>
       {% endfor %}
     </table>
