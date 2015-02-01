@@ -21,7 +21,7 @@ class DefaultController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         $orders = $em->getRepository('InsaLanPizzaBundle:Order')->getAvailable();
         $pizzas = $em->getRepository('InsaLanPizzaBundle:Pizza')->findAll();
-        $myOrders = $em->getRepository('InsaLanPizzaBundle:UserOrder')->findByUser($user);
+        $myOrders = $em->getRepository('InsaLanPizzaBundle:UserOrder')->findBy(array("user" => $user, "paymentDone" => true));
 
         $ordersChoices = array();
 
@@ -43,14 +43,54 @@ class DefaultController extends Controller
 
         $form->handleRequest($this->getRequest());
         if($form->isValid()) {
-            // Payment generation
-            // TODO
-            
-            die("Not Yet Implemented");
+
+            $data = $form->getData();
+
+            $order = $em->getRepository('InsaLanPizzaBundle:Order')->findOneById($data["order"]);
+            $pizza = $em->getRepository('InsaLanPizzaBundle:Pizza')->findOneById($data["pizza"]);
+
+            $userOrder = new Entity\UserOrder();
+            $userOrder->setUser($user);
+            $userOrder->setPizza($pizza);
+            $userOrder->setOrder($order);
+            $userOrder->setType(Entity\UserOrder::TYPE_PAYPAL);
+            $em->persist($userOrder);
+            $em->flush();
+
+            $payment = $this->get("insalan.user.payment");
+            $paymentOrder = $payment->getOrder('EUR', $pizza->getPrice());
+            $paymentOrder->setUser($user);
+            $paymentOrder->addPaymentDetail('Commande Pizza InsaLan', 8, 'Pizza ' . $pizza->getName());
+
+            return $this->redirect($payment->getTargetUrl($paymentOrder, 'insalan_pizza_default_validate', array("id" => $userOrder->getId())));
         }
 
 
         return array('myOrders' => $myOrders, 'pizzas' => $pizzas, 'orders' => $orders, 'form' => $form->createView());
+    }
+
+    /**
+     * @Route("/validate/{id}")
+     */
+    public function validateAction(Entity\UserOrder $userOrder) {
+
+        $em = $this->getDoctrine()->getManager();
+        $payment = $this->get("insalan.user.payment");
+
+        if($payment->check($this->getRequest(), true)) {
+            $userOrder->setPaymentDone(true);
+            $em->persist($userOrder);
+            $hour = $userOrder->getOrder()->getDelivery()->format("H \h i");
+            $this->get('session')->getFlashBag()->add('info', "Commande réalisée avec succès ! Votre pizza sera livrée vers $hour." );
+        } else {
+            $em->remove($userOrder);
+            $this->get('session')->getFlashBag()->add('error', "Erreur de paiement. En cas de problème, veuillez contacter un membre du staff rapidement.");
+        }
+
+        $em->flush();
+
+        return $this->redirect($this->generateUrl("insalan_pizza_default_index"));
+
     }
 
     /**
@@ -65,6 +105,8 @@ class DefaultController extends Controller
         foreach($orders as &$order) {
             $pizzas = array();
             foreach ($order->getOrders() as $uo) {
+                if(!$uo->getPaymentDone(true))
+                    continue;
                 if (!isset($pizzas[$uo->getPizza()->getName()]))
                     $pizzas[$uo->getPizza()->getName()] = 0;
                 ++$pizzas[$uo->getPizza()->getName()];

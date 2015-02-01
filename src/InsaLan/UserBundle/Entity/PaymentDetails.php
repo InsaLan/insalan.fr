@@ -23,6 +23,16 @@ class PaymentDetails extends ArrayObject
      */
     protected $user;
 
+    private $detailId = 0;
+
+    public function addPaymentDetail($name, $price, $description) {
+        $i = $this->detailId++;
+        $this["L_PAYMENTREQUEST_0_NAME$i"] = $name;
+        $this["L_PAYMENTREQUEST_0_AMT$i"] = $price;
+        $this["L_PAYMENTREQUEST_0_DESC$i"] = $description;
+        $this["L_PAYMENTREQUEST_0_NUMBER$i"] = 1;
+    }
+
     /**
      * Get id
      *
@@ -42,6 +52,7 @@ class PaymentDetails extends ArrayObject
     public function setUser(\InsaLan\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
+        $this["INVNUM"] = $user->getId();
 
         return $this;
     }

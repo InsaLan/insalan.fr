@@ -5,6 +5,10 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    insalan.user.payment:
+        class: InsaLan\UserBundle\Service\Payment
+        arguments: ["@payum", "@payum.security.http_request_verifier", "@payum.security.token_factory"]
+
     sonata.admin.tournament.user:
         class: InsaLan\UserBundle\Admin\UserAdmin
         tags:

@@ -11,7 +11,10 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * @ORM\Entity(repositoryClass="InsaLan\PizzaBundle\Entity\UserOrderRepository")
  */
 class UserOrder
-{
+{   
+
+    const TYPE_MANUAL = 0;
+    const TYPE_PAYPAL = 1;
 
     /**
      * @ORM\Id
@@ -44,6 +47,16 @@ class UserOrder
     protected $delivered = false;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $type;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $paymentDone;
+
+    /**
      * @ORM\Column(type="datetime") 
      */
     protected $createdAt;
@@ -52,7 +65,12 @@ class UserOrder
      * @ORM\Column(type="datetime") 
      */
     protected $updatedAt;
-    
+        
+    public function __construct() {
+        $this->paymentDone = false;
+        $this->createdAt = $this->updatedAt = new \DateTime();
+    }
+
     /**
      * Get id
      *
@@ -200,5 +218,51 @@ class UserOrder
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     * @return UserOrder
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set paymentDone
+     *
+     * @param boolean $paymentDone
+     * @return UserOrder
+     */
+    public function setPaymentDone($paymentDone)
+    {
+        $this->paymentDone = $paymentDone;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentDone
+     *
+     * @return boolean 
+     */
+    public function getPaymentDone()
+    {
+        return $this->paymentDone;
     }
 }
