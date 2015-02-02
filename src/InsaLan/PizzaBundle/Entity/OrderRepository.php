@@ -11,12 +11,22 @@ class OrderRepository extends EntityRepository
         $now = new \Datetime();
 
         $q = $this->createQueryBuilder('o')
+            ->leftJoin('o.orders', 'uo')
+            ->addSelect('uo')
             ->where('o.expiration > :now')
+            ->andWhere('o.closed = false')
             ->setParameter(':now', $now)
             ->orderBy('o.expiration')
         ;
 
-        return $q->getQuery()->execute();
+        // It would be better to use HAVING COUNT expression, but I'm not sure it's really possible in that case.
+
+        $out = array();
+        foreach($q->getQuery()->execute() as $order) {
+            if($order->getAvailableOrders() > 0) $out[] = $order;
+        }
+
+        return $out;
         
     }
 

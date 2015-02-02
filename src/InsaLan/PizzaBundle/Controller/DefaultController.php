@@ -26,7 +26,8 @@ class DefaultController extends Controller
         $ordersChoices = array();
 
         foreach($orders as $order) {
-            $ordersChoices[$order->getId()] = "Le " . $order->getDelivery()->format("d/m à H \h i"); 
+            $ordersChoices[$order->getId()] = "Le " . $order->getDelivery()->format("d/m à H \h i") . " (moins de " .
+                                              10*ceil($order->getAvailableOrders() / 10) . " pizzas disponibles)"; 
         }
         
         $pizzasChoices = array();

@@ -1,12 +1,19 @@
 <?php
 namespace InsaLan\NewsBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use InsaLan\PizzaBundle\Entity\Order;
 
-class OrderLoader implements FixtureInterface
-{
+class OrderLoader extends AbstractFixture implements OrderedFixtureInterface
+{   
+
+    public function getOrder()
+    {
+        return 1;
+    }
+
     public function load(ObjectManager $manager)
     {   
 
@@ -20,13 +27,15 @@ class OrderLoader implements FixtureInterface
         $e = new Order();
         $e->setExpiration($h1);
         $e->setDelivery($h2);
-        $e->setCapacity(10);
+        $e->setCapacity(60);
+        $this->addReference('order-1', $e);
         $manager->persist($e);
 
         $e = new Order();
         $e->setExpiration($h2);
         $e->setDelivery($h3);
-        $e->setCapacity(20);
+        $e->setCapacity(2);
+        $this->addReference('order-2', $e);
         $manager->persist($e);
 
         $manager->flush();

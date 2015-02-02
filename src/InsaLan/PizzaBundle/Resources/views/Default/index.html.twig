@@ -36,8 +36,8 @@
     </p>
 
     <h3> Commander </h3>
-    <p>Pour la liste des pizzas, allez voir ci-dessous pour un bref aperçu,
-    ou venez demander un prospectus plus détaillé !</p>
+    <p>Pour la liste des pizzas, allez voir ci-dessous pour un bref aperçu, ou venez demander un prospectus plus détaillé !</p>
+    <p>Si vous souhaitez commander en liquide, merci de venir effectuer votre commande à la buvette.</p>
 
     {% if orders %}
     <fieldset class="form-frame">
@@ -45,16 +45,28 @@
         {{ form_errors(form) }}
         {{ form_row(form.order) }}
         {{ form_row(form.pizza) }}
-        <input type="submit" value="Commander"/>
+        <input type="submit" value="Commander (PayPal)"/>
       {{ form_end(form) }}
+    </fieldset>
+    {% else %}
+    <fieldset class="form-frame">
+      <form>
+        <strong>Aucune livraison n'est disponible pour le moment.</strong>
+      </form>
     </fieldset>
     {% endif %}
 
     <h3> Pizzas disponibles </h3>
     <dl>
         {% for p in pizzas %}
-        <dt>{{ p.name }}</dt>
-            <dd>{{ p.description }}</dd>
+        <dt>{{ p.name }} ({{ p.price }} €)</dt>
+            <dd>
+              {% if p.description %}
+              {{ p.description }}
+              {% else %}
+              (pas de description)
+              {% endif %}
+            </dd>
         {% endfor %}
     </dl>
 

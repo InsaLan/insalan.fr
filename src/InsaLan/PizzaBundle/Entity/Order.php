@@ -52,6 +52,11 @@ class Order
     protected $updatedAt;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $closed;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -59,6 +64,20 @@ class Order
         $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \Datetime();
         $this->updatedAt = new \Datetime();
+        $this->closed = false;
+    }
+
+    /**
+     * Get available number of pizzas (virtual)
+     *      
+     */
+    public function getAvailableOrders() {
+        $qty = 0;
+        foreach($this->getOrders() as $uo) {
+            if($uo->getPaymentDone())
+                $qty++;
+        }
+        return $this->getCapacity() - $qty;
     }
     
     /**
