@@ -17,8 +17,8 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $news = $em->getRepository('InsaLanNewsBundle:News')->getLatest(5);
-        $sliders = $em->getRepository('InsaLanNewsBundle:Slider')->getLatest(5);
+        $news = $em->getRepository('InsaLanNewsBundle:News')->getLatest(20);
+        $sliders = $em->getRepository('InsaLanNewsBundle:Slider')->getLatest(20);
         //$this->get('session')->getFlashBag()->add('info', 'Hey!');
 
         return array('news' => $news, 'sliders' => $sliders);
