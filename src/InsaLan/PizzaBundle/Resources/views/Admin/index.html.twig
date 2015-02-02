@@ -1,0 +1,113 @@
+{% extends 'InsaLanPizzaBundle::Admin/layout.html.twig' %}
+
+{% block title %}
+  {{ parent() }} - Récapitulatif
+{% endblock %}
+
+{% block body %}
+  {{ parent() }}
+
+  <article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Liste des commandes</h2>
+  </header>
+
+  <section>
+    <h3>Accès rapide</h3>
+    <ul>
+      {% for order in orders %}
+        <li style="margin-left: 20px"><a href="#c{{ order.id }}">
+          {{ order.delivery | date('d/m, H\\hi') }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  {% for order in orders %}
+  <section id="c{{ order.id }}">
+    <h3>Commande de {{ order.delivery | date('H\\hi') }}</h3>
+
+    <p>Dernières commandes à {{ order.expiration | date('H\\hi') }}, <strong>{{ order.pizzas | length }}</strong> / {{ order.capacity }} pizzas</p>
+
+    <ul>
+    {% for name, quantity in order.pizzas %}
+      <li style="margin-left: 20px">{{ name }} : {{ quantity }}</li>
+    {% endfor %}
+    </ul>
+
+    <table class="grid-10">
+      <tr>
+          <th class="grid-1">Heure</th>
+          <th class="grid-2">Nom</th>
+          <th class="grid-2">Pseudo</th>
+          <th class="grid-2">Pizza</th>
+          <th class="grid-1">&Eacute;tat</th>
+          <th class="grid-2">Actions</th>
+      </tr>
+      {% for uo in order.orders %}
+        <tr>
+          <td>{{ uo.createdAt | date("d/m H:i") }}</td>
+          <td>{{ uo.user.firstName }} {{ uo.user.lastName }}</td>
+          <td><strong>{{ uo.user.username | upper }}</strong></td>
+          <td><strong>{{ uo.pizza.name | upper }}</strong></td>
+          <td>
+                <div class="order_status_{{ uo.id }}">
+                    <span class="order_delivered" {% if not uo.delivered %}style="display:none"{% endif %}>Livrée</span>
+                    <span class="order_not_delivered" {% if uo.delivered %}style="display:none"{% endif %}>
+                    {% if uo.type is constant("InsaLan\\PizzaBundle\\Entity\\UserOrder::TYPE_MANUAL") %}
+                        Payée cash
+                    {% elseif uo.type is constant("InsaLan\\PizzaBundle\\Entity\\UserOrder::TYPE_PAYPAL") %}
+                        Payée web
+                    {% endif %}
+                    </span>
+                </div>
+          </td>
+          <td>
+                <span class="order_status_{{ uo.id }}">
+                    <button class="order_delivered" data-url="{{ path("insalan_pizza_admin_order_status", {id: uo.id, status: 0}) }}" data-id="{{ uo.id }}" onclick="changeOrderStatus(this)" {% if not uo.delivered %}style="display:none"{% endif %} >> Non Livrée</button>
+                    <button class="order_not_delivered" data-url="{{ path("insalan_pizza_admin_order_status", {id: uo.id, status: 1}) }}" data-id="{{ uo.id }}" onclick="changeOrderStatus(this)" {% if uo.delivered %}style="display:none"{% endif %}>> Livrée</button>
+                </span>
+                <form method="POST" action="{{ path('insalan_pizza_admin_order_remove', {id: uo.id}) }}">
+                    <input type="submit" value="Supprimer" onclick="return confirm('Confirmer la suppression ?');"/>
+                </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </section>
+  {% endfor %}
+
+</article>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+(function($) {
+    window.changeOrderStatus = function(e) {
+
+        (function(e) {
+            $.post($(e).data('url'), function(res) {
+                if(!res.err) {
+                    var uoId = $(e).data('id');
+                    if(!$(e).hasClass('order_delivered')) {
+                        $(".order_status_" + uoId + " .order_delivered").show();
+                        $(".order_status_" + uoId + " .order_not_delivered").hide();
+                    } else {
+                        $(".order_status_" + uoId + " .order_delivered").hide();
+                        $(".order_status_" + uoId + " .order_not_delivered").show();
+                    }
+                }
+            });
+        })(e);
+
+    };
+})(jQuery);
+</script>
+{% endblock %}

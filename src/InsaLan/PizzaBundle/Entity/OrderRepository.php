@@ -39,6 +39,7 @@ class OrderRepository extends EntityRepository
             ->addSelect('uo')
             ->addSelect('u')
             ->addSelect('p')
+            ->where('uo.paymentDone = true')
             ->orderBy('o.id', 'desc')
             ->orderBy('u.username', 'asc')
         ;

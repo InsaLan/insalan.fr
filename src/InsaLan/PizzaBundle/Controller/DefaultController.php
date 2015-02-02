@@ -93,29 +93,4 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl("insalan_pizza_default_index"));
 
     }
-
-    /**
-     * @Route("/summary")
-     * @Template()
-     */
-    public function summaryAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $orders = $em->getRepository('InsaLanPizzaBundle:Order')->getAll();
-        foreach($orders as &$order) {
-            $pizzas = array();
-            foreach ($order->getOrders() as $uo) {
-                if(!$uo->getPaymentDone(true))
-                    continue;
-                if (!isset($pizzas[$uo->getPizza()->getName()]))
-                    $pizzas[$uo->getPizza()->getName()] = 0;
-                ++$pizzas[$uo->getPizza()->getName()];
-            }
-            $order->pizzas = $pizzas;
-        }
-
-        //$this->get('session')->getFlashBag()->add('info', 'Hey!');
-        return array('orders' => $orders);
-    }
 }

@@ -22,15 +22,9 @@ class User extends BaseUser
      */
     protected $credit = 0;
 
-    /**
-     * @ORM\Column(name="table_id", type="integer", nullable=true)
-     */
-    protected $table;
-
     public function __construct()
     {
         parent::__construct();
-        // your own logic
     }
     
     /**
@@ -84,29 +78,6 @@ class User extends BaseUser
     public function getCredit()
     {
         return $this->credit;
-    }
-
-    /**
-     * Set table
-     *
-     * @param integer $table
-     * @return User
-     */
-    public function setTable($table)
-    {
-        $this->table = $table;
-
-        return $this;
-    }
-
-    /**
-     * Get table
-     *
-     * @return integer
-     */
-    public function getTable()
-    {
-        return $this->table;
     }
 
     /**
