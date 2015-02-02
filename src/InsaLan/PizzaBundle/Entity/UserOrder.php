@@ -16,6 +16,11 @@ class UserOrder
     const TYPE_MANUAL = 0;
     const TYPE_PAYPAL = 1;
 
+    public static function cmp($a, $b)
+    {
+        return strcasecmp($a->getUsername(), $b->getUsername());
+    }
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -28,6 +33,16 @@ class UserOrder
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $fullnameCanonical; // for manual orders
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $usernameCanonical; // for manual orders
 
     /**
      * @ORM\ManyToOne(targetEntity="Order", inversedBy="orders")
@@ -69,6 +84,20 @@ class UserOrder
     public function __construct() {
         $this->paymentDone = false;
         $this->createdAt = $this->updatedAt = new \DateTime();
+    }
+
+    public function getUsername() {
+        if($this->user)
+            return $this->user->getUsername();
+        else
+            return $this->usernameCanonical;
+    }
+
+    public function getFullname() {
+        if($this->user)
+            return $this->user->getFirstName() . " " . $this->user->getLastName();
+        else
+            return $this->fullnameCanonical;
     }
 
     /**
@@ -264,5 +293,51 @@ class UserOrder
     public function getPaymentDone()
     {
         return $this->paymentDone;
+    }
+
+    /**
+     * Set fullnameCanonical
+     *
+     * @param string $fullnameCanonical
+     * @return UserOrder
+     */
+    public function setFullnameCanonical($fullnameCanonical)
+    {
+        $this->fullnameCanonical = $fullnameCanonical;
+
+        return $this;
+    }
+
+    /**
+     * Get fullnameCanonical
+     *
+     * @return string 
+     */
+    public function getFullnameCanonical()
+    {
+        return $this->fullnameCanonical;
+    }
+
+    /**
+     * Set usernameCanonical
+     *
+     * @param string $usernameCanonical
+     * @return UserOrder
+     */
+    public function setUsernameCanonical($usernameCanonical)
+    {
+        $this->usernameCanonical = $usernameCanonical;
+
+        return $this;
+    }
+
+    /**
+     * Get usernameCanonical
+     *
+     * @return string 
+     */
+    public function getUsernameCanonical()
+    {
+        return $this->usernameCanonical;
     }
 }

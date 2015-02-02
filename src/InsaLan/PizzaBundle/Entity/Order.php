@@ -69,7 +69,6 @@ class Order
 
     /**
      * Get available number of pizzas (virtual)
-     *      
      */
     public function getAvailableOrders() {
         $qty = 0;
@@ -78,6 +77,27 @@ class Order
                 $qty++;
         }
         return $this->getCapacity() - $qty;
+    }
+
+    /**
+     * Get an ordered array of userOrders
+     */
+    public function getOrdersOrdered() {
+        $userOrders = $this->orders->toArray();
+        usort($userOrders, array('InsaLan\PizzaBundle\Entity\UserOrder','cmp'));
+        return $userOrders;
+    }
+
+    /**
+     * Date utils
+     */
+    
+    public function isDelivered() {
+        return new \Datetime() > $this->delivery;
+    }
+
+    public function isExpired() {
+        return new \Datetime() > $this->expiration;
     }
     
     /**
@@ -260,5 +280,29 @@ class Order
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+
+    /**
+     * Set closed
+     *
+     * @param boolean $closed
+     * @return Order
+     */
+    public function setClosed($closed)
+    {
+        $this->closed = $closed;
+
+        return $this;
+    }
+
+    /**
+     * Get closed
+     *
+     * @return boolean 
+     */
+    public function getClosed()
+    {
+        return $this->closed;
     }
 }

@@ -28,16 +28,15 @@
   </header>
 
   <section>
-    <p> Cette année encore, nous vous proposons de commander de délicieuses
-    pizzas qui vont seront livrées par notre staff !
+    <p> <img src="http://www.pizzasprint.com/sites/all/themes/pizzasprint/logo.png" style="margin:20px; float: right" width="121" height="144"/> Cette année encore, nous vous proposons de commander de délicieuses
+    pizzas, livrée à la buvette à différents horaires.
     Vous pouvez commander ces disques de pur bonheur <a href="http://www.pizzasprint.com/">PizzaSprint</a>
-    de votre place, sur cette page. <br/>
-    <img src="http://www.pizzasprint.com/sites/all/themes/pizzasprint/logo.png" style="display: block; margin: auto; margin-top: 20px" width="121" height="144"/>
+    <strong>de votre place</strong>, sur cette page. <br/>
     </p>
 
-    <h3> Commander </h3>
-    <p>Pour la liste des pizzas, allez voir ci-dessous pour un bref aperçu, ou venez demander un prospectus plus détaillé !</p>
-    <p>Si vous souhaitez commander en liquide, merci de venir effectuer votre commande à la buvette.</p>
+    <p>Si vous souhaitez commander en <strong>liquide</strong>, merci de venir effectuer votre commande à <strong>la buvette</strong>.</p>
+
+    <div class="clear"></div>
 
     {% if orders %}
     <fieldset class="form-frame">
@@ -71,18 +70,30 @@
     </dl>
 
     <h3>Mes commandes</h3>
-    <table style="width:700px">
+    <table class="grid-10">
       <tr>
-          <th>Date</th>
-          <th>Pizza</th>
-          <th>Livraison</th>
+          <th class="grid-2">Date</th>
+          <th class="grid-12">Pizza</th>
+          <th class="grid-2">Livraison</th>
+          <th class="grid-2">Etat</th>
       </tr>
 
       {% for order in myOrders %}
         <tr>
           <td>{{ order.createdAt | date('d/m H\\hi') }}</td>
-          <td>{{ order.pizza.name }}</td>
+          <td>{{ order.pizza.name }} - {{ order.pizza.price }} €</td>
           <td>{{ order.order.delivery | date('d/m H\\hi') }}</td>
+          <td>
+            {% if not order.order.isExpired %}
+              1/4 : Commande reçue et payée
+            {% elseif not order.order.isDelivered %}
+              2/4 : En fabrication
+            {% elseif not order.delivered %}
+              3/4 : <strong>DISPONIBLE !</strong>
+            {% else %}
+              4/4 : Livrée
+            {% endif %}
+          </td>
         </tr>
       {% endfor %}
     </table>

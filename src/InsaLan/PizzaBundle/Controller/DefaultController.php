@@ -27,7 +27,7 @@ class DefaultController extends Controller
 
         foreach($orders as $order) {
             $ordersChoices[$order->getId()] = "Le " . $order->getDelivery()->format("d/m à H \h i") . " (moins de " .
-                                              10*ceil($order->getAvailableOrders() / 10) . " pizzas disponibles)"; 
+                                              10*round($order->getAvailableOrders() / 10) . " pizzas disponibles)"; 
         }
         
         $pizzasChoices = array();
@@ -61,7 +61,7 @@ class DefaultController extends Controller
             $payment = $this->get("insalan.user.payment");
             $paymentOrder = $payment->getOrder('EUR', $pizza->getPrice());
             $paymentOrder->setUser($user);
-            $paymentOrder->addPaymentDetail('Commande Pizza InsaLan', 8, 'Pizza ' . $pizza->getName());
+            $paymentOrder->addPaymentDetail('Commande Pizza InsaLan #' . $userOrder->getId(), $pizza->getPrice(), 'Pizza ' . $pizza->getName());
 
             return $this->redirect($payment->getTargetUrl($paymentOrder, 'insalan_pizza_default_validate', array("id" => $userOrder->getId())));
         }

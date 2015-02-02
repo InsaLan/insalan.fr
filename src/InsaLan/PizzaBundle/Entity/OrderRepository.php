@@ -5,7 +5,26 @@ namespace InsaLan\PizzaBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 
 class OrderRepository extends EntityRepository
-{
+{   
+
+    public function getOneById($id) {
+
+        $q = $this->createQueryBuilder('o')
+            ->leftJoin('o.orders', 'uo')
+            ->leftJoin('uo.user', 'u')
+            ->leftJoin('uo.pizza', 'p')
+            ->addSelect('p')
+            ->addSelect('uo')
+            ->addSelect('u')
+            ->where('o.id = :id')
+            ->orderBy('uo.usernameCanonical', 'asc')
+            ->setParameter('id', $id)
+        ;
+
+        return $q->getQuery()->getSingleResult();
+
+    }
+
     public function getAvailable()
     {
         $now = new \Datetime();
@@ -35,13 +54,10 @@ class OrderRepository extends EntityRepository
         $q = $this->createQueryBuilder('o')
             ->leftJoin('o.orders', 'uo')
             ->leftJoin('uo.user', 'u')
-            ->leftJoin('uo.pizza', 'p')
             ->addSelect('uo')
             ->addSelect('u')
-            ->addSelect('p')
-            ->where('uo.paymentDone = true')
-            ->orderBy('o.id', 'desc')
-            ->orderBy('u.username', 'asc')
+            //->where('uo.paymentDone = true')
+            ->orderBy('o.expiration', 'asc')
         ;
 
         return $q->getQuery()->execute();
