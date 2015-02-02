@@ -13,10 +13,21 @@ services:
     sonata.admin.pizza.order:
         class: InsaLan\PizzaBundle\Admin\OrderAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Restauration", label: "Commande" }
+            - { name: sonata.admin, manager_type: orm, group: "Restauration", label: "Créneau" }
         arguments:
             - ~
             - InsaLan\PizzaBundle\Entity\Order
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanPizzaBundle]]
+
+    sonata.admin.pizza.userorder:
+        class: InsaLan\PizzaBundle\Admin\UserOrderAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Restauration", label: "Commande" }
+        arguments:
+            - ~
+            - InsaLan\PizzaBundle\Entity\UserOrder
             - ~
         calls:
             - [ setTranslationDomain, [InsaLanPizzaBundle]]

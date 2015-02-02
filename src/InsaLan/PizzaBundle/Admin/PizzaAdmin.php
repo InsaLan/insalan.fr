@@ -13,9 +13,9 @@ class PizzaAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name')
-            ->add('price')
-            ->add('description')
+            ->add('name', null, array("label" => "Nom"))
+            ->add('price', null, array("label" => "Prix"))
+            ->add('description', null, array("label" => "Description", "required" => false))
         ;
     }
 
@@ -23,8 +23,8 @@ class PizzaAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name')
-            ->add('price')
+            ->add('name', null, array("label" => "Nom"))
+            ->add('price', null, array("label" => "Prix"))
         ;
     }
 
@@ -32,8 +32,8 @@ class PizzaAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('name')
-            ->addIdentifier('price')
+            ->addIdentifier('name', null, array("label" => "Nom"))
+            ->addIdentifier('price', null, array("label" => "Prix"))
         ;
     }
 }

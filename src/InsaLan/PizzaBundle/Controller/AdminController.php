@@ -95,6 +95,10 @@ class AdminController extends Controller
             $uo->setPaymentDone(true);
             $uo->setType(Entity\UserOrder::TYPE_MANUAL);
 
+            $user = $em->getRepository("InsaLanUserBundle:User")->findOneByUsername($data['username']);
+            if($user)
+                $uo->setUser($user);
+
             $em->persist($uo);
             $em->flush();
         }
@@ -176,7 +180,7 @@ class AdminController extends Controller
 
         return $this->createFormBuilder()
                     ->add('username', 'text', array('label' => 'Pseudonyme'))
-                    ->add('fullname', 'text', array('label' => 'Prénom NOM'))
+                    ->add('fullname', 'text', array('label' => 'Prénom NOM', 'required' => false))
                     ->add('pizza', 'choice', array('choices' => $pizzasChoices, 'label' => 'Pizza'))
                     ->setAction($this->generateUrl('insalan_pizza_admin_add', array('id' => $o->getId())))
                     ->getForm();

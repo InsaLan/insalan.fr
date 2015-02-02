@@ -29,7 +29,7 @@
 
   <section>
     <p> <img src="http://www.pizzasprint.com/sites/all/themes/pizzasprint/logo.png" style="margin:20px; float: right" width="121" height="144"/> Cette année encore, nous vous proposons de commander de délicieuses
-    pizzas, livrée à la buvette à différents horaires.
+    pizzas, livrées à la buvette à différents horaires.
     Vous pouvez commander ces disques de pur bonheur <a href="http://www.pizzasprint.com/">PizzaSprint</a>
     <strong>de votre place</strong>, sur cette page. <br/>
     </p>
@@ -85,7 +85,7 @@
           <td>{{ order.order.delivery | date('d/m H\\hi') }}</td>
           <td>
             {% if not order.order.isExpired %}
-              1/4 : Commande reçue et payée
+              1/4 : Commande payée
             {% elseif not order.order.isDelivered %}
               2/4 : En fabrication
             {% elseif not order.delivered %}

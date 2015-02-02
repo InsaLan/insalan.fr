@@ -100,6 +100,10 @@ class UserOrder
             return $this->fullnameCanonical;
     }
 
+    public function __toString() {
+        return "Commande #" . $this->getId();
+    }
+
     /**
      * Get id
      *

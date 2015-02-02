@@ -19,15 +19,27 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $user = $this->get('security.context')->getToken()->getUser();
+
+        if ($user->getFirstname() == null || $user->getFirstname() == "" || $user->getLastname() == null || $user->getLastname() == "" || $user->getBirthdate() == null) {
+            $this->get('session')->getFlashBag()->add(
+                'info',
+                'Merci de remplir ces informations avant toute commande...'
+            );
+            return $this->redirect($this->generateUrl('insalan_user_default_index'));
+        }
+
         $orders = $em->getRepository('InsaLanPizzaBundle:Order')->getAvailable();
         $pizzas = $em->getRepository('InsaLanPizzaBundle:Pizza')->findAll();
-        $myOrders = $em->getRepository('InsaLanPizzaBundle:UserOrder')->findBy(array("user" => $user, "paymentDone" => true));
+        $myOrders = $em->getRepository('InsaLanPizzaBundle:UserOrder')->getByUser($user);
 
         $ordersChoices = array();
 
         foreach($orders as $order) {
+            $a = 10*round($order->getAvailableOrders() / 10);
+            if($a <= 0)
+                $a = 10;
             $ordersChoices[$order->getId()] = "Le " . $order->getDelivery()->format("d/m à H \h i") . " (moins de " .
-                                              10*round($order->getAvailableOrders() / 10) . " pizzas disponibles)"; 
+                                              $a . " pizzas disponibles)"; 
         }
         
         $pizzasChoices = array();

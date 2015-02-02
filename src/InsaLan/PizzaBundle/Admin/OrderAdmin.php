@@ -13,19 +13,10 @@ class OrderAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('expiration')
-            ->add('delivery')
-            ->add('capacity')
-        ;
-    }
-
-    // Fields to be shown on filter forms
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-        $datagridMapper
-            ->add('delivery')
-            ->add('expiration')
-            ->add('capacity')
+            ->add('expiration', null, array('label' => "Horaire limite"))
+            ->add('delivery', null, array('label' => "Horaire de livraison"))
+            ->add('capacity', null, array('label' => "Nombre de pizzas max"))
+            ->add('closed', null, array('required' => false, 'label' => "Verrouillé"));
         ;
     }
 
@@ -33,8 +24,9 @@ class OrderAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('delivery')
-            ->addIdentifier('capacity')
+            ->addIdentifier('delivery', null, array('label' => "Horaire de livraison"))
+            ->addIdentifier('capacity', null, array('label' => "Capacité"))
+            ->addIdentifier('closed', null, array('required' => false, 'label' => "Verrouillé"));
         ;
     }
 }
