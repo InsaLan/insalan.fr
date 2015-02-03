@@ -16,6 +16,7 @@ class OrderAdmin extends Admin
             ->add('expiration', null, array('label' => "Horaire limite"))
             ->add('delivery', null, array('label' => "Horaire de livraison"))
             ->add('capacity', null, array('label' => "Nombre de pizzas max"))
+            ->add('foreignCapacity', null, array('label' => "Limite de commandes pour non joueurs"))
             ->add('closed', null, array('required' => false, 'label' => "Verrouillé"));
         ;
     }

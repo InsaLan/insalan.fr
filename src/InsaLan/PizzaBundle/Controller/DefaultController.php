@@ -28,7 +28,7 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('insalan_user_default_index'));
         }
 
-        $orders = $em->getRepository('InsaLanPizzaBundle:Order')->getAvailable();
+        $orders = $em->getRepository('InsaLanPizzaBundle:Order')->getAvailable($user);
         $pizzas = $em->getRepository('InsaLanPizzaBundle:Pizza')->findAll();
         $myOrders = $em->getRepository('InsaLanPizzaBundle:UserOrder')->getByUser($user);
 
@@ -61,12 +61,14 @@ class DefaultController extends Controller
 
             $order = $em->getRepository('InsaLanPizzaBundle:Order')->findOneById($data["order"]);
             $pizza = $em->getRepository('InsaLanPizzaBundle:Pizza')->findOneById($data["pizza"]);
+            $foreign = $em->getRepository('InsaLanPizzaBundle:Order')->isForeignUser($user);
 
             $userOrder = new Entity\UserOrder();
             $userOrder->setUser($user);
             $userOrder->setPizza($pizza);
             $userOrder->setOrder($order);
             $userOrder->setType(Entity\UserOrder::TYPE_PAYPAL);
+            $userOrder->setForeign($foreign);
             $em->persist($userOrder);
             $em->flush();
 

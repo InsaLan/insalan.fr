@@ -42,6 +42,11 @@ class Order
     protected $capacity;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $foreignCapacity;
+
+    /**
      * @ORM\Column(type="datetime") 
      */
     protected $createdAt;
@@ -70,13 +75,25 @@ class Order
     /**
      * Get available number of pizzas (virtual)
      */
-    public function getAvailableOrders() {
+    public function getAvailableOrders($foreign = false, $noNegative = true) {
         $qty = 0;
+        $qtyForeign = 0;
         foreach($this->getOrders() as $uo) {
-            if($uo->getPaymentDone())
+            if($uo->getPaymentDone()) {
                 $qty++;
+                if($uo->getForeign())
+                    $qtyForeign++;
+            }
         }
-        return $this->getCapacity() - $qty;
+        $globalCapacity = $this->getCapacity() - $qty;
+        $foreignCapacity = $this->getForeignCapacity() - $qtyForeign;
+
+        if($foreign)
+            $capacity = min($globalCapacity, $foreignCapacity);
+        else
+            $capacity = $globalCapacity;
+
+        return $capacity < 0 && $noNegative ? 0 : $capacity;
     }
 
     /**
@@ -156,7 +173,7 @@ class Order
         return $this->expiration;
     }
 
-    /**
+    /**cmp
      * Set delivery
      *
      * @param \DateTime $delivery
@@ -304,5 +321,28 @@ class Order
     public function getClosed()
     {
         return $this->closed;
+    }
+
+    /**
+     * Set foreignCapacity
+     *
+     * @param integer $foreignCapacity
+     * @return Order
+     */
+    public function setForeignCapacity($foreignCapacity)
+    {
+        $this->foreignCapacity = $foreignCapacity;
+
+        return $this;
+    }
+
+    /**
+     * Get foreignCapacity
+     *
+     * @return integer 
+     */
+    public function getForeignCapacity()
+    {
+        return $this->foreignCapacity;
     }
 }

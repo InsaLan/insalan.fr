@@ -22,7 +22,11 @@ class UserOrder
 
     public static function cmp($a, $b)
     {
-        return strcasecmp($a->getUsername(), $b->getUsername());
+        $c = strcasecmp($a->getUsername(), $b->getUsername());
+        if($c === 0) {
+            $c = strcasecmp($a->getFullname(), $b->getFullname());
+        }   
+        return $c;
     }
 
     /**
@@ -81,6 +85,11 @@ class UserOrder
     protected $paymentDone;
 
     /**
+     * @ORM\Column(type="boolean", name="foreign_user")
+     */
+    protected $foreign;
+
+    /**
      * @ORM\Column(type="datetime") 
      */
     protected $createdAt;
@@ -93,7 +102,8 @@ class UserOrder
     public function __construct() {
         $this->paymentDone = false;
         $this->createdAt = $this->updatedAt = new \DateTime();
-        $this->type = self::FULL_PRICE;
+        $this->price = self::FULL_PRICE;
+        $this->foreign = false;
     }
 
     public function getUsername() {
@@ -376,5 +386,29 @@ class UserOrder
     public function getPrice()
     {
         return $this->price;
+    }
+
+
+    /**
+     * Set foreign
+     *
+     * @param boolean $foreign
+     * @return UserOrder
+     */
+    public function setForeign($foreign)
+    {
+        $this->foreign = $foreign;
+
+        return $this;
+    }
+
+    /**
+     * Get foreign
+     *
+     * @return boolean 
+     */
+    public function getForeign()
+    {
+        return $this->foreign;
     }
 }

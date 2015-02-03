@@ -19,6 +19,7 @@ class UserOrderAdmin extends Admin
             ->add('pizza', null, array("label" => "Pizza"))
             ->add('paymentDone', null, array("label" => "Paiement effectué", "required" => false))
             ->add('delivered', null, array("label" => "Livrée", "required" => false))
+            ->add('foreign', null, array("label" => "Visiteur", "required" => false))
             ->add('type', 'choice', array(
                 'choices' => array(
                     0 => 'Manuel',

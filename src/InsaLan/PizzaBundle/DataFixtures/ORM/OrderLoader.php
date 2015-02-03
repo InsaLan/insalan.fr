@@ -28,13 +28,15 @@ class OrderLoader extends AbstractFixture implements OrderedFixtureInterface
         $e->setExpiration($h1);
         $e->setDelivery($h2);
         $e->setCapacity(60);
+        $e->setForeignCapacity(5);
         $this->addReference('order-1', $e);
         $manager->persist($e);
 
         $e = new Order();
         $e->setExpiration($h2);
         $e->setDelivery($h3);
-        $e->setCapacity(2);
+        $e->setCapacity(3);
+        $e->setForeignCapacity(1);
         $this->addReference('order-2', $e);
         $manager->persist($e);
 

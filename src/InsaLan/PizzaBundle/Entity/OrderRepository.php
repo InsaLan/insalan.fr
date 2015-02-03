@@ -3,6 +3,7 @@
 namespace InsaLan\PizzaBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use InsaLan\UserBundle\Entity\User;
 
 class OrderRepository extends EntityRepository
 {   
@@ -25,7 +26,7 @@ class OrderRepository extends EntityRepository
 
     }
 
-    public function getAvailable()
+    public function getAvailable(User $user)
     {
         $now = new \Datetime();
 
@@ -40,9 +41,11 @@ class OrderRepository extends EntityRepository
 
         // It would be better to use HAVING COUNT expression, but I'm not sure it's really possible in that case.
 
+        $foreign = $this->isForeignUser($user);
+
         $out = array();
         foreach($q->getQuery()->execute() as $order) {
-            if($order->getAvailableOrders() > 0) $out[] = $order;
+            if($order->getAvailableOrders($foreign) > 0) $out[] = $order;
         }
 
         return $out;
@@ -61,5 +64,17 @@ class OrderRepository extends EntityRepository
         ;
 
         return $q->getQuery()->execute();
+    }
+
+    public function isForeignUser(User $user)
+    {
+
+        $players = $this->getEntityManager()->getRepository("InsaLanTournamentBundle:Player")
+                                            ->findBy(array(
+                                                "user" => $user,
+                                                "paymentDone" => true
+                                            ));
+
+        return (sizeof($players) === 0);
     }
 }

@@ -28,7 +28,7 @@
 
   <section style="margin-top:20px">
   {{ form_start(formAdd, {attr:{'class':'oneline'}}) }}
-    Ajout : 
+    <strong>AJOUT MANUEL</strong>
     {{ form_widget(formAdd.username, {'attr': {'placeholder': formAdd.username.vars.label, 'class': 'addInput' }}) }}
     {{ form_widget(formAdd.fullname, {'attr': {'placeholder': formAdd.fullname.vars.label, 'class': 'addInput' }}) }}
     {{ form_widget(formAdd.pizza, {'attr': {'class': 'addInput'}}) }}
@@ -41,30 +41,30 @@
 
   <section id="c{{ order.id }}">
 
-  <div>Dernières commandes à {{ order.expiration | date('H\\hi') }}, <strong>{{ order.capacity - order.availableOrders }}</strong> / {{ order.capacity }} pizzas.
-
+  <div>
   {% if order.isDelivered() %}
     <b style="color:red">Attention</b> : cette commande doit être livrée !
   {% elseif order.isExpired() %}
     <strong>Attention : la commande doit être passée !</strong>
   {% elseif order.closed %}
-    <strong>Les commandes via le site sont bloquées 
-      <form method="POST" action="{{ path('insalan_pizza_admin_unlock', {id: order.id}) }}"><input type="submit" value="Débloquer"/></form>
+    <strong>Les commandes via le site sont bloquées. 
+      {#<form method="POST" action="{{ path('insalan_pizza_admin_unlock', {id: order.id}) }}"><input type="submit" value="Débloquer"/></form>#}
     </strong>
-  {% elseif order.availableOrders <= 0 %}
+  {% elseif order.availableOrders(false) == 0 %}
     Le stock est <strong>épuisé</strong>. Il est encore possible de rajouter des commandes à la main.
   {% else %}
-    Les commandes via le site sont <strong>autorisées</strong>
-    <form method="POST" action="{{ path('insalan_pizza_admin_lock', {id: order.id}) }}"><input type="submit" value="Bloquer" onclick="return confirm('Confirmer le blocage ? Cette opération est automatique lorsque la limite horaire est atteinte.')"/></form>
+    Les commandes via le site sont <strong>autorisées</strong> jusqu'à {{ order.expiration | date('H\\hi') }}
+    {% if order.availableOrders(true) == 0 %}, mais les non-joueurs <strong>ne peuvent plus commander</strong>{% endif %}.
+    {#<form method="POST" action="{{ path('insalan_pizza_admin_lock', {id: order.id}) }}"><input type="submit" value="Bloquer" onclick="return confirm('Confirmer le blocage ? Cette opération est automatique lorsque la limite horaire est atteinte.')"/></form>#}
   {% endif %}
 
   </div>
   
-  <ul>
+  <ul style="margin: 20px">
   {% for name, quantity in order.pizzas %}
     <li style="margin-left: 20px"><b>{{ name }}</b> : <strong>{{ quantity }}</strong></li>
   {% endfor %}
-    <li style="margin-left: 20px"><strong>TOTAL : {{ order.sum }} €</strong></li>
+    {#<li style="margin-left: 20px"><strong>TOTAL : {{ order.sum }} €</strong></li>#}
   </ul>
 
   <table class="grid-10" style="margin-top:20px">
@@ -74,14 +74,25 @@
       <th class="grid-2">Pseudo</th>
       <th class="grid-2">Pizza</th>
       <th class="grid-1">&Eacute;tat</th>
-      <th class="grid-2">Actions</th>
+      <th class="grid-2"></th>
     </tr>
     {% for uo in order.ordersOrdered if uo.paymentDone %}
     <tr>
       <td>{{ uo.createdAt | date("d/m H:i") }}</td>
-      <td>{{ uo.fullname }}</td>
+      <td>{{ uo.fullname }}{% if uo.foreign %}<strong>*</strong>{% endif %}</td>
       <td><strong>{{ uo.username | upper }}</strong></td>
-      <td><strong>{{ uo.pizza.name | upper }}</strong></td>
+      <td>
+        <strong>{{ uo.pizza.name | upper }}</strong>
+        <span style="font-size:10px">
+          {% if uo.price is constant("InsaLan\\PizzaBundle\\Entity\\UserOrder::FULL_PRICE") %}
+            Plein tarif
+          {% elseif uo.price is constant("InsaLan\\PizzaBundle\\Entity\\UserOrder::STAFF_PRICE") %}
+            Tarif staff
+          {% elseif uo.price is constant("InsaLan\\PizzaBundle\\Entity\\UserOrder::FREE_PRICE") %}
+            Offerte
+          {% endif %}
+        </span>
+      </td>
       <td>
         <div class="order_status_{{ uo.id }}">
           <span class="order_delivered" style="color: red{% if not uo.delivered %};display:none{% endif %}">Livrée</span>

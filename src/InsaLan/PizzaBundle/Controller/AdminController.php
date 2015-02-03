@@ -25,9 +25,8 @@ class AdminController extends Controller
         $ordersChoices = array(null => "");
         foreach($orders as $o) {
             $ordersChoices[$o->getId()] = "Le " . $o->getDelivery()->format("d/m à H:i") . " ~ "
-                                            . ($o->getCapacity() - $o->getAvailableOrders())  . "/"
-                                            . $o->getCapacity()
-                                            . " commandes";
+                                            . ($o->getCapacity() - $o->getAvailableOrders(false, false))  . " commandes sur "
+                                            . $o->getCapacity();
         }
 
         $form = $this->createFormBuilder()
