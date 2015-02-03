@@ -16,6 +16,10 @@ class UserOrder
     const TYPE_MANUAL = 0;
     const TYPE_PAYPAL = 1;
 
+    const FULL_PRICE  = 0;
+    const STAFF_PRICE = 1;
+    const FREE_PRICE  = 2;
+
     public static function cmp($a, $b)
     {
         return strcasecmp($a->getUsername(), $b->getUsername());
@@ -67,6 +71,11 @@ class UserOrder
     protected $type;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $price;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $paymentDone;
@@ -84,6 +93,7 @@ class UserOrder
     public function __construct() {
         $this->paymentDone = false;
         $this->createdAt = $this->updatedAt = new \DateTime();
+        $this->type = self::FULL_PRICE;
     }
 
     public function getUsername() {
@@ -343,5 +353,28 @@ class UserOrder
     public function getUsernameCanonical()
     {
         return $this->usernameCanonical;
+    }
+
+    /**
+     * Set price
+     *
+     * @param integer $price
+     * @return UserOrder
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return integer 
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 }

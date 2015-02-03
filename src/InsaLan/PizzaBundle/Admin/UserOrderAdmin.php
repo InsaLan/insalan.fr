@@ -27,6 +27,15 @@ class UserOrderAdmin extends Admin
                 'label' => "Type de paiement",
                 'required' => true
             ))
+            ->add('price', 'choice', array(
+                'choices' => array(
+                    0 => 'Plein tarif',
+                    1 => 'Tarif staff',
+                    2 => 'Offert'
+                ),
+                'label' => "Tarif",
+                'required' => true
+            ))
         ;
     }
 
@@ -41,6 +50,7 @@ class UserOrderAdmin extends Admin
             ->add('paymentDone', null, array("label" => "Paiement effectué"))
             ->add('delivered', null, array("label" => "Pizza livrée"))
             ->add('type', null, array('label' => "Type"))
+            ->add('price', null, array('label' => "Tarif"))
         ;
     }
 
@@ -54,6 +64,7 @@ class UserOrderAdmin extends Admin
             ->add('paymentDone', null, array("label" => "Paiement"))
             ->add('delivered', null, array("label" => "Livraison"))
             ->add('type', null, array('label' => "Type"))
+            ->add('price', null, array('label' => "Tarif"))
         ;
     }
 }
