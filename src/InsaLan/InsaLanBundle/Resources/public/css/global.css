@@ -870,3 +870,33 @@ li a:hover {
 .text-center {
     text-align: center;
 }
+
+.markdown h2 {
+    font-family: OpenSansCond;
+    text-transform: uppercase;
+    color: #00BFF3;
+    letter-spacing: 0px;
+    margin-bottom: 15px;
+    margin-top: 30px;
+    font-size: 2.1em;
+    line-height: 27px;
+}
+
+.markdown h4 {
+    font-family: OpenSansCond;
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: 0px;
+    margin-bottom: 5px;
+    margin-top: 15px;
+    font-size: 1.5em;
+}
+
+.markdown p {
+    font-size: 1em;
+    margin: 15px 0px 15px 0px;
+}
+
+.markdown ul, .markdown ol {
+    margin-left: 60px;
+}
