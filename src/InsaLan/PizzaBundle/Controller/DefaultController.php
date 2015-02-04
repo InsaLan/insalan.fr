@@ -45,7 +45,7 @@ class DefaultController extends Controller
         $pizzasChoices = array();
 
         foreach($pizzas as $pizza) {
-            $pizzasChoices[$pizza->getId()] = $pizza->getName() . " (" . $pizza->getPrice() . " €)"; 
+            $pizzasChoices[$pizza->getId()] = $pizza->getName() . " (" . $pizza->getPrice() . " € + 0.50 €)"; 
         }
 
         $form = $this->createFormBuilder()
@@ -73,9 +73,10 @@ class DefaultController extends Controller
             $em->flush();
 
             $payment = $this->get("insalan.user.payment");
-            $paymentOrder = $payment->getOrder('EUR', $pizza->getPrice());
+            $paymentOrder = $payment->getOrder('EUR', $pizza->getPrice() + 0.5);
             $paymentOrder->setUser($user);
             $paymentOrder->addPaymentDetail('Commande Pizza InsaLan #' . $userOrder->getId(), $pizza->getPrice(), 'Pizza ' . $pizza->getName());
+            $paymentOrder->addPaymentDetail('Majoration paiement en ligne', 0.5, 'Frais de gestion du paiement');
 
             return $this->redirect($payment->getTargetUrl($paymentOrder, 'insalan_pizza_default_validate', array("id" => $userOrder->getId())));
         }
