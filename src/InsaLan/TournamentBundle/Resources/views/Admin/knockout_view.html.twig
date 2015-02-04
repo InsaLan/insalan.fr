@@ -52,7 +52,7 @@
     $('#bracketContainer').bracket({
       init: data,
       skipConsolationRound: true,
-      {% if k.doubleElimination %}
+      {% if knockout.doubleElimination %}
       skipSecondaryFinal: true
       {% endif %}
     });

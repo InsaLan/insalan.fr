@@ -1,5 +1,5 @@
 .streams {
-  width: 1000px;
+  width: 100%;
   margin-top: 30px;
   margin-bottom: 50px;
   border-bottom: 1px solid #0E0E0E;
@@ -8,11 +8,10 @@
 .streams li {
   list-style-type: none;
   display: inline-block;
-  width: 215px;
   height: 40px;
-  margin-right: 40px;
   text-align: center;
   color: white;
+  width: 19.5%;
 }
 
 .streams a {
@@ -25,10 +24,6 @@
 .streams li:hover {
   background: #0E0E0E;
   color: #00bff3;
-}
-
-.streams li:last-child {
-  margin-right: 0;
 }
 
 .video {
