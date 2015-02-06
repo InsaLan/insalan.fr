@@ -23,6 +23,7 @@ class PlayerAdmin extends Admin
             ->add('paymentDone', null, array('required'=>false))
             ->add('arrived', null, array('required'=>false))
             ->add('placement')
+            ->add('pendingTournament', null, array('required' => false))
 
         ;
     }

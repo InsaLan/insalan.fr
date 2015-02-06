@@ -59,17 +59,23 @@
   <section class="grid-5 pull-left">
     <table style="width:100%">
       <tr>
-        <th class="grid-3">Pseudo</th>
-        <th class="grid-3">Nom</th>
+        <th class="grid-3">Pseudo / Nom</th>
+        <th class="grid-3">Equipe</th>
         <th class="grid-2">Payé</th>
         <th class="grid-2">Arrivé</th>
       </tr>
       {% for player in players %}
         <tr>
-          <td>{{ player.gameName }}</td>
-          <td>
+          <td>{{ player.gameName }}
             {% if player.user %}
-            {{ player.user.firstname }} {{ player.user.lastname}}
+            <br /><span style="font-size:10px; color: grey;">{{ player.user.firstname }} {{ player.user.lastname}}</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if player.team | length > 0 %}
+              {{ player.team[0].name }}
+            {% else %}
+              (solo)
             {% endif %}
           </td>
           <td>
