@@ -38,4 +38,16 @@ window.addEvent('domready', function() {
       }
     });
   }
+
+  // Streams actions
+  
+  $$(".hideMask").addEvent("click", function() {
+    $$(".maskContent").hide();
+    $$("#mask").hide();
+  });
+
+  $$(".showMask").addEvent("click", function() {
+    $$("#" + this.dataset.target).show();
+    $$("#mask").show();
+  });
 });

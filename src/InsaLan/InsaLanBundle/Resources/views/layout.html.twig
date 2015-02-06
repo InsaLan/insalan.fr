@@ -22,8 +22,28 @@
   </head>
 
   <body id="body">
+
+    <div id="mask">
+      <div class="maskContent" id="stream1">
+        <iframe frameborder="0" width="480" height="270" src="//www.dailymotion.com/embed/video/xi7yny" allowfullscreen></iframe><br /><a href="#" class="hideMask">Cacher</a>
+      </div>
+      <div class="maskContent" id="stream2">
+        COUCOU<br /><a href="#" class="hideMask">Cacher</a>
+      </div>
+    </div>
+
+    
+
     {% block main_header %}
+      <div class="streamsHeader">
+        <div class="grid-2 stream" style="text-align: left"><div class="rec"></div><p style="padding-left:30px">EN DIRECT :</p></div>
+        <div class="grid-1 streamLink stream showMask" data-target="stream1"><p>Millenium</p></div>
+        <div class="grid-1 streamLink stream showMask" data-target="stream2"><p>Vakarm</p></div>
+        <div class="grid-1 streamLink stream"><p>Bidule</p></div>
+        <div class="grid-1 streamLink stream"><p>InsaLan</p></div>
+      </div>
     <header>
+      
       <div class="container">
         <div class="logo">
           <div class="pattern"></div>
