@@ -68,7 +68,7 @@ class DefaultController extends Controller
     public function teamListAction(Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $teams =  $em->getRepository('InsaLanTournamentBundle:Team')->getTeamsForTournament($tournament->getId());
+        $teams =  $em->getRepository('InsaLanTournamentBundle:Team')->getTeamsForTournament($tournament);
 
         return array('teams' => $teams);
     }
@@ -80,7 +80,7 @@ class DefaultController extends Controller
     public function playerListAction(Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $players =  $em->getRepository('InsaLanTournamentBundle:Player')->getPlayersForTournament($tournament->getId());
+        $players =  $em->getRepository('InsaLanTournamentBundle:Player')->getPlayersForTournament($tournament);
 
         return array('players' => $players);
     }

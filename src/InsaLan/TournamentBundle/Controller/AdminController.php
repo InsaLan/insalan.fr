@@ -34,9 +34,11 @@ class AdminController extends Controller
             ->setAction($this->generateUrl('insalan_tournament_admin_index'))
             ->getForm();
 
+
         $tournament = $data = $formKo = null;
         $stages = array();
         $ko = array();
+        $players = array();
 
         $form->handleRequest($this->getRequest());
 
@@ -73,6 +75,9 @@ class AdminController extends Controller
             $ko = $em->getRepository('InsaLanTournamentBundle:Knockout')
                      ->findByTournament($tournament);
 
+            $players = $em->getRepository('InsaLanTournamentBundle:Player')
+                          ->getAllPlayersForTournament($tournament);
+
 
             foreach ($stages as $s) {
                 foreach ($s->getGroups() as $g) {
@@ -89,7 +94,8 @@ class AdminController extends Controller
             'form'       => $form->createView(),
             'tournament' => $tournament,
             'stages'     => $stages,
-            'knockouts'  => $ko
+            'knockouts'  => $ko,
+            'players'    => $players
         );
 
         if($formKo) {
@@ -98,6 +104,37 @@ class AdminController extends Controller
 
         return $output;
     }
+
+    /**
+     * @Route("/{t}/admin/player/{p}/tooglePayment")
+     */
+    public function player_tooglePaymentAction(Entity\Tournament $t, Entity\Player $p)
+    {   
+        $em = $this->getDoctrine()->getManager();
+        $p->setPaymentDone(!$p->getPaymentDone());
+        $em->persist($p);
+        $em->flush();
+
+       return $this->redirect($this->generateUrl(
+                'insalan_tournament_admin_index_1',
+                array('id' => $t->getId())));
+    }
+
+    /**
+     * @Route("/{t}/admin/player/{p}/toogleArrived")
+     */
+    public function player_toogleArrivedAction(Entity\Tournament $t, Entity\Player $p)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $p->setArrived(!$p->getArrived());
+        $em->persist($p);
+        $em->flush();
+
+       return $this->redirect($this->generateUrl(
+                'insalan_tournament_admin_index_1',
+                array('id' => $t->getId())));
+    }
+
 
     /**
      * @Route("/admin/stage/{id}")

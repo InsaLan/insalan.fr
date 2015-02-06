@@ -22,37 +22,69 @@
 
 {% if tournament %}
   <hr style="margin: 20px 0px;"/>
-  <section class="groups">
-    <h2>Poules</h2>
-    <ul style="margin-left: 30px">
-    {% for s in stages %}
-      <li><a href="{{ path('insalan_tournament_admin_stage', {id: s.id}) }}">{{ s.name }}</a></li>
-    {% endfor %}
-    </ul>
+  <section class="grid-5 pull-left">
+    <section class="groups">
+      <h2>Poules</h2>
+      <ul style="margin-left: 30px">
+      {% for s in stages %}
+        <li><a href="{{ path('insalan_tournament_admin_stage', {id: s.id}) }}">{{ s.name }}</a></li>
+      {% endfor %}
+      </ul>
+    </section>
+
+    <div class="clear"></div>
+
+    <section class="knockouts">
+      <h2>Arbres</h2>
+      <ul style="margin-left: 30px">
+      {% for ko in knockouts %}
+        <li><a href="{{ path('insalan_tournament_admin_knockout', {id: ko.id}) }}">{{ ko.name }}</a></li>
+      {% endfor %}
+      </ul>
+
+      <h2 style="margin-top:20px">Nouvel arbre</h2>
+
+      {{ form_start(formKo) }}
+        {{ form_errors(formKo) }}
+        {{ form_row(formKo.name) }}
+        {{ form_row(formKo.size) }}
+        {{ form_row(formKo.double) }}
+        <div class="input left">
+          <input type="submit" id="_submit" name="_submit" value="Ajouter" />
+        </div>
+      {{ form_end(formKo) }}
+
+    </section>
   </section>
-
-  <div class="clear"></div>
-
-  <section class="knockouts">
-    <h2>Arbres</h2>
-    <ul style="margin-left: 30px">
-    {% for ko in knockouts %}
-      <li><a href="{{ path('insalan_tournament_admin_knockout', {id: ko.id}) }}">{{ ko.name }}</a></li>
-    {% endfor %}
-    </ul>
-
-    <h2 style="margin-top:20px">Nouvel arbre</h2>
-
-    {{ form_start(formKo) }}
-      {{ form_errors(formKo) }}
-      {{ form_row(formKo.name) }}
-      {{ form_row(formKo.size) }}
-      {{ form_row(formKo.double) }}
-      <div class="input left">
-        <input type="submit" id="_submit" name="_submit" value="Ajouter" />
-      </div>
-    {{ form_end(formKo) }}
-
+  <section class="grid-5 pull-left">
+    <table style="width:100%">
+      <tr>
+        <th class="grid-3">Pseudo</th>
+        <th class="grid-3">Nom</th>
+        <th class="grid-2">Payé</th>
+        <th class="grid-2">Arrivé</th>
+      </tr>
+      {% for player in players %}
+        <tr>
+          <td>{{ player.gameName }}</td>
+          <td>
+            {% if player.user %}
+            {{ player.user.firstname }} {{ player.user.lastname}}
+            {% endif %}
+          </td>
+          <td>
+            <form method="POST" action="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id }) }}">
+              <input {% if not player.paymentDone %}class="darkButton"{% endif %} type="submit" value="{% if player.paymentDone %}OUI{% else %}NON{% endif %}"/>
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="{{ path('insalan_tournament_admin_player_tooglearrived', { t: tournament.id, p: player.id }) }}">
+              <input {% if not player.arrived %}class="darkButton"{% endif %} type="submit" value="{% if player.arrived %}OUI{% else %}NON{% endif %}"/>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
   </section>
 {% endif %}
 

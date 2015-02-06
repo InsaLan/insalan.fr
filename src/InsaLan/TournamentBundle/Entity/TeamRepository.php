@@ -22,20 +22,20 @@ class TeamRepository extends EntityRepository
         return $query->getResult();
     }
  
-    public function getTeamsForTournament($id) {
+    public function getTeamsForTournament(Tournament $t) {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("
             SELECT partial t.{id,name,validated}, partial p.{id,gameName,gameId} 
             FROM InsaLanTournamentBundle:Team t
             JOIN t.players p
-            WHERE t.tournament = :tournamentId
+            WHERE t.tournament = :tournament
             ");
-        $query->setParameter('tournamentId', $id);
+        $query->setParameter('tournament', $t);
         $query->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true);
         $query->execute();
         return $query->getResult();
-    } 
+    }
  
     public function getWaitingTeam(Tournament $t) {
 
@@ -54,6 +54,7 @@ class TeamRepository extends EntityRepository
         }
 
     }
+
 
     /*public function getWaitingTeams() {
         $em = $this->getEntityManager();

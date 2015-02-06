@@ -61,4 +61,5 @@ class TournamentRepository extends EntityRepository
         }
         return $out;
     }
+
 }

@@ -26,18 +26,49 @@ class PlayerRepository extends EntityRepository
 
     }
 
-    public function getPlayersForTournament($id) {
+    public function getPlayersForTournament(Tournament $tournament) {
         $em = $this->getEntityManager();
 
-        $query = $em->createQuery("
-            SELECT partial p.{id,gameName,gameId,validated} 
-            FROM InsaLanTournamentBundle:Player p
-            WHERE p.tournament = :tournamentId
-            ");
-        $query->setParameter('tournamentId', $id);
-        $query->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true);
-        $query->execute();
-        return $query->getResult();
+        $q = $this->createQueryBuilder('p')
+                    ->where('p.tournament = :tournament')
+                    ->setParameter('tournament', $tournament);
+
+        return $q->getQuery()->execute();
+    }
+
+    public function getAllPlayersForTournament(Tournament $tournament) {
+        
+        // TODO REFACTOR FOR OPTIM (1 req per user...!)
+
+        $em = $this->getEntityManager();
+
+       // Execute player research
+
+        $q = $this->createQueryBuilder('p')
+                    ->leftJoin('p.user', 'u')
+                    ->addSelect('u')
+                    ->where('p.tournament = :tournament')
+                    ->orWhere('p.pendingTournament = :tournament')
+                    ->orderBy('p.gameName')
+                    ->setParameter('tournament', $tournament);
+
+        $players = $q->getQuery()->execute();
+        $out = array();
+        foreach($players as $player) {
+            if($player->getValidated() === Participant::STATUS_VALIDATED) {
+                $out[] = $player;
+                continue;
+            }
+
+            foreach($player->getTeam() as $team) {
+                if($team->getValidated() === Participant::STATUS_VALIDATED) {
+                    $out[] = $player;
+                    break;
+                }
+            }
+        }
+
+        return $out;
     } 
 
     public function getWaitingPlayer(Tournament $t) {
