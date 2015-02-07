@@ -374,8 +374,9 @@ class KnockoutMatchRepository extends NestedTreeRepository
             $round   = array();
             $i = 0;
             foreach($children as $child) {
-                if($i++ % 2 === 0 || $lvl === $depth)
-                    $parents[] = $child->getParent();
+                $parent = $child->getParent();
+                if($parent && !in_array($parent, $parents))
+                    $parents[] = $parent;
                 $round[] = $this->getMatchJson($child);
             }
             $losers[] = $round;
