@@ -68,7 +68,7 @@ class DefaultController extends Controller
     public function teamListAction(Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $teams =  $em->getRepository('InsaLanTournamentBundle:Team')->getTeamsForTournament($tournament->getId());
+        $teams =  $em->getRepository('InsaLanTournamentBundle:Team')->getTeamsForTournament($tournament);
 
         return array('teams' => $teams);
     }
@@ -80,7 +80,7 @@ class DefaultController extends Controller
     public function playerListAction(Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $players =  $em->getRepository('InsaLanTournamentBundle:Player')->getPlayersForTournament($tournament->getId());
+        $players =  $em->getRepository('InsaLanTournamentBundle:Player')->getPlayersForTournament($tournament);
 
         return array('players' => $players);
     }
@@ -228,17 +228,18 @@ class DefaultController extends Controller
     private function isUserInTeam(Entity\Participant $part) {
 
         $user = $this->get('security.context')->getToken()->getUser();
+        if(!$user || $user === "anon.") return false;
 
         if($part instanceof Entity\Team) {
 
             foreach ($part->getPlayers() as $p) {
-                if($p->getUser() !== null && $p->getUser()->getId() === $user->getId())
+                if($p->getUser() && $p->getUser()->getId() === $user->getId())
                     return true;
             }
             return false;
         }
 
-        return $part->getUser() === $user && $user !== null;
+        return $part->getUser() === $user;
 
     }
 }

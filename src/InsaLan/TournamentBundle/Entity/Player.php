@@ -44,6 +44,11 @@ class Player extends Participant
     protected $paymentDone;
 
     /**
+     * @ORM\Column(name="arrived", type="boolean")
+     */
+    protected $arrived;
+
+    /**
      * @ORM\Column(name="game_avatar", type="integer", nullable=true)
      */
     protected $gameAvatar;
@@ -74,6 +79,7 @@ class Player extends Participant
         $this->team = new \Doctrine\Common\Collections\ArrayCollection();
         $this->gameValidated = false;
         $this->paymentDone = false;
+        $this->arrived = false;
     }
     /**
      * Get id
@@ -472,4 +478,28 @@ class Player extends Participant
     public function isOk() {
         return $this->paymentDone && $this->gameValidated;
     }
+
+    /**
+     * Set arrived
+     *
+     * @param boolean $arrived
+     * @return Player
+     */
+    public function setArrived($arrived)
+    {
+        $this->arrived = $arrived;
+
+        return $this;
+    }
+
+    /**
+     * Get arrived
+     *
+     * @return boolean 
+     */
+    public function getArrived()
+    {
+        return $this->arrived;
+    }
+
 }

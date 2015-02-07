@@ -15,6 +15,9 @@ class UserAdmin extends Admin
         $formMapper
             ->add('email', 'email')
             ->add('username')
+            ->add('firstname', null, array("required" => false))
+            ->add('lastname', null, array("required" => false))
+            ->add('phoneNumber', null, array("required" => false))
             ->add('roles')
             ->add('plainPassword', 'repeated', array(
                 'required' => false,
@@ -33,6 +36,9 @@ class UserAdmin extends Admin
     {
         $datagridMapper
             ->add('username')
+            ->add('firstname')
+            ->add('lastname')
+            ->add('phoneNumber')
             ->add('email')
             ->add('enabled')
             ;
@@ -46,6 +52,9 @@ class UserAdmin extends Admin
             ->add('email')
             ->add('lastLogin')
             ->add('enabled')
+            ->add('firstname')
+            ->add('lastname')
+            ->add('phoneNumber')
             ;
     }
 

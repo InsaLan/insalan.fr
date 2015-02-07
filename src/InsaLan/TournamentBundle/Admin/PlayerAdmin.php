@@ -21,7 +21,10 @@ class PlayerAdmin extends Admin
             ->add('gameId')
             ->add('tournament')
             ->add('paymentDone', null, array('required'=>false))
+            ->add('arrived', null, array('required'=>false))
             ->add('placement')
+            ->add('pendingTournament', null, array('required' => false))
+
         ;
     }
 
@@ -34,6 +37,7 @@ class PlayerAdmin extends Admin
             ->add('user.email')
             ->add('team')
             ->add('tournament')
+            ->add('arrived')
         ;
     }
 
@@ -48,6 +52,7 @@ class PlayerAdmin extends Admin
             ->add('team.name')
             ->add('paymentDone')
             ->add('placement')
+            ->add('arrived')
         ;
     }
 

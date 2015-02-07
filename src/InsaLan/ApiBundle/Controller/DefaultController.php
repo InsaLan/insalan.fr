@@ -29,10 +29,25 @@ class DefaultController extends Controller
             
         );
         foreach($player as $p) {
-            if (in_array($p->getTournament()->getShortname(),$t))
-                $res["err"] = "no_paid_place";
-                if($p->getPaymentDone())
+
+            $res["err"] = "no_paid_place";
+
+            if ($p->getTournament()) {
+                if (in_array($p->getTournament()->getShortname(),$t))
+                if($p->getPaymentDone()) {
                     $res["err"] = null;
+                    continue;
+                }
+            }
+
+            elseif ($p->getPendingTournament()) {
+                if (in_array($p->getPendingTournament()->getShortname(),$t))
+                if($p->getPaymentDone()) {
+                    $res["err"] = null;
+                    continue;
+                }
+            }
+            
 
         }
 
