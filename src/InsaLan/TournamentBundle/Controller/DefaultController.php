@@ -228,18 +228,18 @@ class DefaultController extends Controller
     private function isUserInTeam(Entity\Participant $part) {
 
         $user = $this->get('security.context')->getToken()->getUser();
-        if(!$user) return false;
+        if(!$user || $user === "anon.") return false;
 
         if($part instanceof Entity\Team) {
 
             foreach ($part->getPlayers() as $p) {
-                if($p->getUser()->getId() === $user->getId())
+                if($p->getUser() && $p->getUser()->getId() === $user->getId())
                     return true;
             }
             return false;
         }
 
-        return $part->getUser() === $user && $user !== null;
+        return $part->getUser() === $user;
 
     }
 }
