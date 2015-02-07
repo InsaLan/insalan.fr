@@ -122,7 +122,7 @@ class KnockoutMatchRepository extends NestedTreeRepository
 
         if($allChildrenEnded && // if children are ok
             (!$koMatch->getOddNode() || $koMatch->cancelWait || // we are not waiting for somebody in winner bracket
-                ($koMatch->getMatch() && $koMatch->getMatch()->getPart2()))) {
+                (sizeof($koMatch->getChildren()) > 0 && $koMatch->getMatch() && $koMatch->getMatch()->getPart2()))) {
 
             //echo " (candidate) ";
 

@@ -23,15 +23,10 @@
 
   <body id="body">
 
+    {% block main_header %}
+
     <div id="mask">
-      {#<div class="maskContent" id="stream1">
-        <iframe id="embedPlayer" data-provider="dailymotion" data-code="x15gjhi" data-irc="tcg" src="http://millenium-tv-tcg.nexus.mnium.org/player.html?volume=1&amp;autoplay=0&amp;quality=480&amp;syndication=166969" width="750" height="422" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-        <br /><a href="#" class="hideMask">Cacher</a>
-      </div>
-      <div class="maskContent" id="stream2">
-        <iframe id="embedPlayer" data-irc="millenium_tv" src="http://millenium-tv1.nexus.mnium.org/player.html?volume=1&amp;autoplay=0&amp;quality=240&amp;syndication=166969" width="640" height="360" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-        <br /><a href="#" class="hideMask">Cacher</a>
-      </div>#}
+      
       <div class="maskContent" id="stream3">
         <iframe frameborder="0" src="https://www.dailymotion.com/embed/video/x1uf24n?logo=0&amp;hideInfos=1&amp;autoPlay=0" allowfullscreen="" width="480" height="270"></iframe>
         <br /><a href="#" class="hideMask">Cacher</a>
@@ -42,9 +37,6 @@
       </div>
     </div>
 
-    
-
-    {% block main_header %}
       <div class="streamsHeader">
         <div class="grid-2 stream" style="text-align: left"><div class="rec"></div><p style="padding-left:30px">EN DIRECT :</p></div>
         <div class="grid-1 streamLink stream" data-target="stream1" onclick="document.location='http://www.millenium.org/home/milleniumtv/streaming/?chaine=hearthstone'"><p>HearthStone</p></div>
