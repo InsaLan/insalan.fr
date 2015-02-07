@@ -116,6 +116,7 @@ body > header {
   height: 200px;
   background: #0e0e0e;
   border-bottom: 1px solid #2d2d2d;
+  border-top: 1px solid #2d2d2d;
 }
 
 body > header .logo {
@@ -133,11 +134,11 @@ body > header .logo img {
 
 body > header .logo .pattern {
   background: url('../img/header_pattern1.png') repeat-y;
-  bottom: 3px;
-  left: 0px;
-  position: absolute;
+  /*bottom: 3px;*/
+  /*left: 0px;*/
+  /*position: absolute;*/
   width: 185px;
-  height: 250px;
+  height: 100%;
 }
 
 body > header .logo a {
@@ -899,4 +900,63 @@ li a:hover {
 
 .markdown ul, .markdown ol {
     margin-left: 60px;
+}
+
+
+/** FOR STREAMS ONLY, TEMPORARY */
+
+.streamsHeader {
+  top: 0px; 
+  width: 100%; 
+  height: 40px;
+  font-family: Oswald, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  margin: auto;
+}
+
+.streamsHeader .stream {
+  height: 100%;
+  display: inline-block;
+  position: relative;
+}
+
+.streamsHeader .streamLink {
+  cursor: pointer;
+}
+
+.streamsHeader .streamLink:hover {
+  background-color: #2d2d2d;
+}
+
+.streamsHeader .stream p {
+  vertical-align:middle;
+}
+
+.streamsHeader .stream .rec {
+  width: 15px;
+  height: 15px;
+  border-radius: 20px;
+  background-color: red;
+  position: absolute;
+  top: 15px;
+}
+
+#mask {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  background-color: rgba(0,0,0,0.8);
+  z-index: 100;
+  display: none;
+}
+
+.maskContent {
+  position: fixed;
+  top: 100px;
+  width: 100%;
+  text-align: center;
+  display: none;
 }

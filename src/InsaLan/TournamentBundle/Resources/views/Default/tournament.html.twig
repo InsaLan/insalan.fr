@@ -107,6 +107,7 @@
 
         {% for k in knockouts %}
         <div class="groups" id="knockout{{ k.id }}" style="display: none;">
+
             <div id="bracketContainer_{{ k.id }}">
             </div>
 
@@ -237,8 +238,10 @@
       var groups  = $$('table.group');
       var tabs    = $$('section.tabs .groups');
 
-      if(tabs.length > 0)
+      if(tabs.length > 0) {
         tabs[0].show();
+        buildTrees();
+      }
 
       if (matches.length > 0) {
         groups[0].addClass('active');
