@@ -26,7 +26,10 @@
     {% block main_header %}
 
     <div id="mask">
-      
+      <div class="maskContent" id="stream1">
+        <iframe frameborder="0" width="480" height="270" src="https://www.dailymotion.com/embed/video/x1zsoax?autoPlay=0" allowfullscreen></iframe>
+        <br /><a href="#" class="hideMask">Cacher</a>
+      </div>
       <div class="maskContent" id="stream3">
         <iframe frameborder="0" src="https://www.dailymotion.com/embed/video/x1uf24n?logo=0&amp;hideInfos=1&amp;autoPlay=0" allowfullscreen="" width="480" height="270"></iframe>
         <br /><a href="#" class="hideMask">Cacher</a>
@@ -46,7 +49,7 @@
 
       <div class="streamsHeader">
         <div class="grid-2 stream" style="text-align: left"><div class="rec"></div><p style="padding-left:30px">EN DIRECT :</p></div>
-        <div class="grid-1 streamLink stream" data-target="stream1" onclick="document.location='http://www.millenium.org/home/milleniumtv/streaming/?chaine=hearthstone'"><p>HearthStone</p></div>
+        <div class="grid-1 streamLink stream showMask" data-target="stream1"><p>CS:GO</p></div>
         <div class="grid-1 streamLink stream" data-target="stream2" onclick="document.location='http://www.millenium.org/home/milleniumtv/streaming/?chaine=millenium_tv'"><p>StarCraft 2</p></div>
         <div class="grid-1 streamLink stream showMask" data-target="stream3"><p>DotA 2</p></div>
         <div class="grid-2 streamLink stream showMask" data-target="stream4"><p>League Of Legends</p></div>
