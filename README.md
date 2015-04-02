@@ -1,6 +1,9 @@
 insalan.fr
 ==========
 
+[![Code Climate](https://codeclimate.com/github/superboum/insalan.fr/badges/gpa.svg)](https://codeclimate.com/github/superboum/insalan.fr)
+[![Test Coverage](https://codeclimate.com/github/superboum/insalan.fr/badges/coverage.svg)](https://codeclimate.com/github/superboum/insalan.fr)
+
 Website to handle esport tournament
 
 Installation
