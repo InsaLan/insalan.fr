@@ -90,4 +90,4 @@ Backup DB before deploy, update it locally and send it after deploy if you chang
 
 4) Contributing file
 
-If you wish to contribute to the insalan.fr project, refer to [this](https://github.com/insalan/insalan.fr/CONTRIBUTING.md) file.
+If you wish to contribute to the insalan.fr project, refer to [this](https://github.com/insalan/insalan.fr/blob/master/CONTRIBUTING.md) file.
