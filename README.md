@@ -87,3 +87,7 @@ cd deploy
 Use filezilla to clear cache, ie remove app/cache/prod folder content
 
 Backup DB before deploy, update it locally and send it after deploy if you changed the schema.
+
+4) Contributing file
+
+If you wish to contribute to the insalan.fr project, refer to [this](https://github.com/insalan/insalan.fr/blob/master/CONTRIBUTING.md) file.
