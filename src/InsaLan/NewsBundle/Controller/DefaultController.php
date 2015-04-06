@@ -23,4 +23,12 @@ class DefaultController extends Controller
 
         return array('news' => $news, 'sliders' => $sliders);
     }
+    
+     /**
+     * @Route("/forum")
+     */
+    public function forumAction()
+    {
+        return $this->redirect("http://old.insalan.fr/forum");
+    }
 }
