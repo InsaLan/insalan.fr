@@ -25,7 +25,7 @@ class DefaultController extends Controller
     }
     
      /**
-     * @Route("/forum")
+     * @Route("/forum/")
      */
     public function forumAction()
     {
