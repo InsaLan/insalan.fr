@@ -47,6 +47,15 @@ class News
      */
     private $updatedAt;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        // initialize createdAt & upatedAt to current server time
+        $this->createdAt = new \DateTime("now");
+        $this->updatedAt = new \DateTime("now");
+    }
 
     /**
      * Get id
