@@ -174,7 +174,6 @@ article > ul li:before {
   color: #fff;
 }
 
-
 .block:first-child { margin-left:none; }
 .block {
   width: 200px;
@@ -198,3 +197,21 @@ article > ul li:before {
   font-family: Oswald;
 }
 
+table {
+  height: auto;
+  width: auto;
+  background-color: rgba(22, 22, 22, 0.8);
+  border: 1px solid #393939;
+  border-collapse: collapse;
+  margin: 10px;
+}
+
+td th{
+  border: 1px solid #393939;
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  font-weight: bold;
+}
