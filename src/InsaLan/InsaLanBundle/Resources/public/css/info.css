@@ -206,12 +206,15 @@ table {
   margin: 10px;
 }
 
-td th{
+td {
   border: 1px solid #393939;
   padding: 10px;
   text-align: center;
 }
 
 th {
-  font-weight: bold;
+  border: 1px solid #393939;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold !important;
 }
