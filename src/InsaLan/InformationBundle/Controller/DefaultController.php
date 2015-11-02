@@ -11,7 +11,7 @@ class DefaultController extends Controller
     const OPENING_DATE = '2014/10/03 00:00:00';
 
     /**
-     * @Route("/")
+     * @Route("/qualifications")
      * @Template()
      */
     public function homeAction()
