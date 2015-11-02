@@ -20,7 +20,8 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findAll();
+        // TODO: Manage tournaments with yearview
+        $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments();
 
         return array('tournaments' => $tournaments);
     }

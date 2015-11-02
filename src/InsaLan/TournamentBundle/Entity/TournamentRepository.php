@@ -9,6 +9,13 @@ use InsaLan\TournamentBundle\Entity\Participant;
 
 class TournamentRepository extends EntityRepository
 {
+    public function findThisYearTournaments() {
+        $query = $this->createQueryBuilder('t')
+            ->where('t.registrationOpen <= :lastyear')
+            ->setParameter('lastyear', (new \DateTime('now'))->modify('-6 month'))
+            ->getQuery();
+        return $query->getResult();
+    }
     public function findOpened() {
         $query = $this->createQueryBuilder('t')
             ->where('t.registrationOpen <= :now AND t.registrationClose >= :now')
