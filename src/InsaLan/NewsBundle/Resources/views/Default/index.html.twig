@@ -72,6 +72,12 @@
 #}
 
 <div class="container">
+
+  <img style="position: absolute; right: 90px; top: 200px" src="{{ asset('bundles/insalan/img/aftermovie.png') }}">
+  <div style="">
+    <iframe width="700" height="387" src="//www.youtube.com/embed/2J6dFro2Bno?showinfo=0" frameborder="0" allowfullscreen></iframe>
+  </div>
+
   <article id="horaire" class="info">
       <aside>
           <div class="square">
@@ -89,11 +95,14 @@
           </div>
       </header>
   </article>
-  
-  <img style="position: absolute; right: 90px; top: 250x" src="{{ asset('bundles/insalan/img/aftermovie.png') }}">
-  <div style="">
-    <iframe width="700" height="387" src="//www.youtube.com/embed/2J6dFro2Bno?showinfo=0" frameborder="0" allowfullscreen></iframe>
-  </div>
+
+  <article id="qualif" class="info">
+    <div class="container grid-3-3" style="text-align: center">
+      <p>
+        <a type="button" class="btn btn-primary" href="{{ path('insalan_information_default_home') }}">Accès aux qualifications League of Legends</a>
+      </p>
+    </div>
+  </article>
 
 </section>
 
