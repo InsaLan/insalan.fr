@@ -50,7 +50,7 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_user_default_index'));
         }
 
-        $rawTournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findAll();
+        $rawTournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments();
         $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($usr);
 
         $tournaments = array();
