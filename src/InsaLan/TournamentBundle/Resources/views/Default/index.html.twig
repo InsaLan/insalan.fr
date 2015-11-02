@@ -31,7 +31,8 @@
                       <h1>
                         {{ t.name }}
                       </h1>
-                      Du {{ t.tournamentOpen|date('d/m/y H:i') }} au {{ t.tournamentClose|date('d/m/y H:i') }}
+                      Horaires : du {{ t.tournamentOpen|date('d/m/y H:i') }} au {{ t.tournamentClose|date('d/m/y H:i') }}<br>
+                      <em>Inscription du {{ t.registrationOpen|date('d/m/y H:i') }} au {{ t.registrationClose|date('d/m/y H:i') }}</em>
                     </div>
                   </a>
               </td>
