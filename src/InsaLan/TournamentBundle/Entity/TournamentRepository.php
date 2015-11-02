@@ -11,7 +11,7 @@ class TournamentRepository extends EntityRepository
 {
     public function findThisYearTournaments() {
         $query = $this->createQueryBuilder('t')
-            ->where('t.registrationOpen <= :lastyear')
+            ->where('t.registrationOpen >= :lastyear')
             ->setParameter('lastyear', (new \DateTime('now'))->modify('-6 month'))
             ->getQuery();
         return $query->getResult();
