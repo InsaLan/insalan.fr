@@ -5,18 +5,20 @@
 
 <article>
   <header>
-      <h2><span class="pull-left">Bienvenue {{ app.user.username }} </span><span class="pull-right"><a href="{{ path('insalan_user_default_index') }}">&#x2699;</a></span><br class="clear"></h2>
+      <h2><span class="pull-left">Inscriptions aux tournois</span><span class="pull-right"><a href="{{ path('insalan_user_default_index') }}">&#x2699;</a></span><br class="clear"></h2>
   </header>
 
   {% for participant in participants %}
 
-  <div class="frame {% if participant.validated == 2 %} frame-success {% endif %}">
+  <div class="frame {% if participant.validated == 2 %} frame-success
+                    {% else %} frame-warning {% endif %}">
     <header class="full">
       <div class="step pull-left">
         {% if participant.validated == 2 %} &#10003; {% else %} ! {% endif %}
       </div>
       <div class="title pull-left">
-        {% if participant.participantType == 'team' %} Equipe {% endif %}
+        {{ participant.tournament.name }} - 
+        {% if participant.participantType == 'team' %} Équipe {% endif %}
         {{ participant.name }}
       </div>
       <div class="title pull-right">
