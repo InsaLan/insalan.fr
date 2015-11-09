@@ -111,6 +111,9 @@
       <p class="pull-left">
         {{ t.teamMinPlayer }} joueur(s) 
       </p><br class="clear">
+      <br>
+      <hr style="width:960px">
+      <br>
       {% elseif t.isOpenedNow and not t.getLocked %}
       
         <a class="list-choice" href="{{ path('insalan_tournament_user_enroll', {tournament: t.id}) }}">
@@ -130,18 +133,20 @@
         {% endif %}
         </p>
         </a>
+      <br>
+      <hr style="width:960px">
+      <br>
       {% elseif t.isOpenedNow and t.getLocked %}
       <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
       <h2>{{ t.name }} (ce tournoi n'est accessible que sur invitation)</h2>
       <p class="pull-left">
         {{ t.teamMinPlayer }} joueur(s) 
       </p><br class="clear">
-
-      {% endif %}
-      {% endspaceless %}
       <br>
       <hr style="width:960px">
       <br>
+      {% endif %}
+      {% endspaceless %}
       {% endfor %}
         <div class="clear"></div>
       </div>
