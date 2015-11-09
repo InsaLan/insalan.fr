@@ -8,7 +8,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.5.6",
+        "symfony/symfony": "^2.7",
         "doctrine/orm": "2.4.6",
         "doctrine/annotations": "1.2.1",
         "doctrine/doctrine-cache-bundle": "1.0.0",
@@ -28,7 +28,7 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "knplabs/knp-markdown-bundle": "dev-master",
         "sonata-project/admin-bundle": "~2.3",
-        "sonata-project/doctrine-orm-admin-bundle": "dev-master",
+        "sonata-project/doctrine-orm-admin-bundle": "2.3.*",
         "paquettg/leaguewrap": "dev-master",
         "payum/payum-bundle": "*@stable",
         "payum/offline": "*@stable",
