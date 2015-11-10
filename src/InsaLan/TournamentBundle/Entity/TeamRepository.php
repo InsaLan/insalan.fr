@@ -37,6 +37,27 @@ class TeamRepository extends EntityRepository
         return $query->getResult();
     }
  
+    /**
+     * Find a team of $team_name in the specified $tournament
+     * @param  string     $team_name Name of the team to find
+     * @param  Tournament $t         Tournament to look into
+     * @return Team                  The matched team, if any
+     */
+    public function findOneByNameAndTournament($team_name, Tournament $t) {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery("
+            SELECT t 
+            FROM InsaLanTournamentBundle:Team t
+            WHERE t.name = :team_name AND t.tournament = :tournament
+            ")
+        ->setParameter('team_name', $team_name)
+        ->setParameter('tournament', $t)
+        ->setMaxResults(1);;
+        $query->execute();
+        return $query->getSingleResult();
+    }
+
     public function getWaitingTeam(Tournament $t) {
 
         $q = $this->createQueryBuilder('t')

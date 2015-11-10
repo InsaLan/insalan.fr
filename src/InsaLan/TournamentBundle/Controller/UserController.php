@@ -459,7 +459,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         if($tournament->getParticipantType() !== "team")
-            throw new ControllerException("Not Allowed");
+            throw new ControllerException("Équipes non acceptées dans ce tournois");
 
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em
@@ -479,12 +479,10 @@ class UserController extends Controller
                 $team->setPassword($encoder->encodePassword($team->getPlainPassword(), sha1('pleaseHashPasswords'.$team->getName())));
                 $team2 = $em
                     ->getRepository('InsaLanTournamentBundle:Team')
-                    ->findOneByName($team->getName());
-
+                    ->findOneByNameAndTournament($team->getName(), $tournament);
 
                 if($team2 === null || $team2->getTournament()->getId() !== $tournament->getId())
-                    throw new ControllerException("Equipe invalide");
-
+                    throw new ControllerException("Équipe invalide");
 
                 if ($team2->getPassword() === $team->getPassword()) {
                     $player->joinTeam($team2);
