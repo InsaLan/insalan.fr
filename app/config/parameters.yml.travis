@@ -2,8 +2,8 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     insalan.fr
-    database_user:     insalan.fr
+    database_name:     insalanfr
+    database_user:     travis
     database_password: ~
 
     mailer_transport:  smtp
@@ -24,7 +24,7 @@ parameters:
     fos_user_email_sender_name: webmaster
     ga_tracking: UA-xxxxx
 
-    paypal_express_checkout_username: ~
-    paypal_express_checkout_password: ~
-    paypal_express_checkout_signature: ~
+    paypal_express_checkout_username: reglement-facilitator_api1.insalan.fr
+    paypal_express_checkout_password: AAAAAAAAAAAAAAAA
+    paypal_express_checkout_signature: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     paypal_express_checkout_sandbox: true

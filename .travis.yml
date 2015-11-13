@@ -1,0 +1,15 @@
+php:
+  - 5.5
+
+before_script:
+  - cp app/config/parameters.yml.travis app/config/parameters.yml
+  - composer install
+  - bash load_fixtures.sh
+
+#script:
+  #- phpunit -c app
+
+notifications:
+  email:
+    -  quentin@dufour.io
+    -  mricher@insa-rennes.fr
