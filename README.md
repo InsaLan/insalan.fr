@@ -10,7 +10,7 @@ Installation
 ------------
 
 Download vendors
-Consideing you have composer.phar installed and in your PATH :
+Considering you have composer.phar installed and in your PATH :
 
 ```bash
 composer.phar install
