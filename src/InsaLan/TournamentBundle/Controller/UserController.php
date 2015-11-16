@@ -4,7 +4,7 @@
  * TODO
  *
  * Clean this ugly file, simplify it and remove qualifications own logic.
- * 
+ *
  */
 
 namespace InsaLan\TournamentBundle\Controller;
@@ -32,9 +32,13 @@ use InsaLan\TournamentBundle\Entity\Player;
 use InsaLan\TournamentBundle\Entity\Team;
 use InsaLan\TournamentBundle\Entity;
 
+/**
+ * User tournament registering and management interface
+ */
 class UserController extends Controller
 {
     /**
+     * User's homepage indexing all registered and available tournaments
      * @Route("/user")
      * @Template()
      */
@@ -62,7 +66,7 @@ class UserController extends Controller
                     break;
                 }
             }
-            if(!$in) 
+            if(!$in)
                 $tournaments[] = $t;
         }
 
@@ -71,6 +75,7 @@ class UserController extends Controller
 
 
     /**
+     * Allow the user to chose where he want to be placed at the event
      * @Route("/{tournament}/user/placement")
      * @Template()
      */
@@ -113,19 +118,19 @@ class UserController extends Controller
         $structure = $this->get('insalan.tournament.placement')->getStructure();
 
         // Getting unavailable placements for interface
-        
         $unavailable = $em->getRepository("InsaLanTournamentBundle:Tournament")->getUnavailablePlacements($tournament);
         return array('structure' => $structure, 'tournament' => $tournament, 'participant' => $participant, 'unavailable' => $unavailable);
     }
 
     /**
+     * Manage all steps for registering into a tournament
      * @Route("/{tournament}/user/enroll")
      */
     public function enrollAction(Request $request, Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
-        
+
         $usr = $this->get('security.context')->getToken()->getUser();
-        
+
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingTournament($usr, $tournament);
@@ -140,11 +145,10 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_pay',array('tournament' => $tournament->getId())));
         else
             return $this->redirect($this->generateUrl('insalan_tournament_user_paydone',array('tournament' => $tournament->getId())));
-
-
     }
 
     /**
+     * Create new player for this tournament from user account
      * @Route("/{tournament}/user/player/set")
      * @Template()
      */
@@ -161,10 +165,10 @@ class UserController extends Controller
         }
 
         return $this->usernameSet($em, $usr, $player, $request, $tournament);
-
     }
 
     /**
+     * Manage validation of player registration into a tournament
      * @Route("/{tournament}/user/player/validate")
      */
     public function validatePlayerAction(Request $request, Entity\Tournament $tournament) {
@@ -183,7 +187,7 @@ class UserController extends Controller
             $em->persist($player);
             $em->flush();
 
-            if ($tournament->getParticipantType() === "team") { 
+            if ($tournament->getParticipantType() === "team") {
                 return $this->redirect(
                     $this->generateUrl('insalan_tournament_user_jointeam', array('tournament' => $tournament->getId()))
                 );
@@ -193,7 +197,7 @@ class UserController extends Controller
                 );
             }
 
-        } 
+        }
     }
 
     private function finalizePlayerAfterValidation($player, $tournament) {
@@ -203,32 +207,34 @@ class UserController extends Controller
     }
 
     /**
+     * Allow a player to drop a pending tournament registration if not managed by team
      * @Route("/{tournament}/user/leave")
      */
     public function leaveAction(Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
-        
+
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
         if($player->getTournament()->getParticipantType() !== "player")
-            throw new ControllerException("Not Allowed");
+            throw new ControllerException("Not Allowed"); // must be a player only tournament
 
         $em->remove($player);
         $em->flush();
 
         return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
     }
-   
+
     /**
+     * Payement doing and details
      * @Route("/{tournament}/user/pay/details")
      * @Template()
      */
     public function payAction(Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
-        
+
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
@@ -245,11 +251,12 @@ class UserController extends Controller
     }
 
     /**
+     * Paypal stuff
      * @Route("/{tournament}/user/pay/paypal_ec")
      */
     public function payPaypalECAction(Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
-        
+
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
@@ -265,12 +272,12 @@ class UserController extends Controller
 
         $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $tournament->getCurrency();
         $order['PAYMENTREQUEST_0_AMT'] = $price;
-        
+
         $order['L_PAYMENTREQUEST_0_NAME0'] = 'Place pour le tournoi '.$tournament->getName();
         $order['L_PAYMENTREQUEST_0_AMT0'] = $tournament->getWebPrice();
         $order['L_PAYMENTREQUEST_0_DESC0'] = $tournament->getDescription();
         $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;
-        
+
         $order['L_PAYMENTREQUEST_0_NAME1'] = 'Majoration paiement en ligne';
         $order['L_PAYMENTREQUEST_0_AMT1'] = $tournament->getOnlineIncreaseInPrice();
         $order['L_PAYMENTREQUEST_0_DESC1'] = 'Frais de gestion du paiement';
@@ -292,8 +299,9 @@ class UserController extends Controller
         $storage->updateModel($order);
         return $this->redirect($captureToken->getTargetUrl());
     }
-    
+
     /**
+     * Payment sum up
      * @Route("/{tournament}/user/pay/done")
      * @Template()
      */
@@ -320,21 +328,22 @@ class UserController extends Controller
 
         $token = $this->get('payum.security.http_request_verifier')->verify($request);
         $payment = $this->get('payum')->getPayment($token->getPaymentName());
-        
+
         //$this->get('payum.security.http_request_verifier')->invalidate($token);
 
         $payment->execute($status = new GetHumanStatus($token));
 
 
         if ($status->isCaptured()) {
-            $player->setPaymentDone(true); 
+            $player->setPaymentDone(true);
             $em->persist($player);
             $em->flush();
         }
-        return $this->redirect($this->generateUrl('insalan_tournament_user_paydone', array('tournament' => $tournament->getId()))); 
+        return $this->redirect($this->generateUrl('insalan_tournament_user_paydone', array('tournament' => $tournament->getId())));
     }
-    
+
     /**
+     * Offer offline payment choices
      * @Route("/{tournament}/user/pay/offline")
      * @Template()
      */
@@ -344,11 +353,12 @@ class UserController extends Controller
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingTournament($usr, $tournament);
-        
+
         return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
     }
 
     /**
+     * Allow a user to join a team in a tournament
      * @Route("{tournament}/user/join/team")
      * @Template()
      */
@@ -383,6 +393,8 @@ class UserController extends Controller
     }
 
     /**
+     * Allow a player to drop a pending tournament registration managed by teams
+     * The user's registration to this tournament is cancelled !
      * @Route("/user/leave/team/{teamId}")
      * @Template()
      */
@@ -395,7 +407,6 @@ class UserController extends Controller
         if($team === null)
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
-
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
@@ -407,7 +418,7 @@ class UserController extends Controller
         $em->persist($team);
 
         if($team->getPlayers()->count() === 0)
-            $em->remove($team);            
+            $em->remove($team);
 
         $em->remove($player);
         $em->flush();
@@ -416,6 +427,7 @@ class UserController extends Controller
     }
 
     /**
+     * Create a team when joining a tournament
      * @Route("{tournament}/user/join/team/create")
      * @Template()
      */
@@ -452,6 +464,7 @@ class UserController extends Controller
     }
 
     /**
+     * Allow a player to join an existing team with credencials
      * @Route("{tournament}/user/join/team/existing")
      * @Template()
      */
@@ -504,11 +517,13 @@ class UserController extends Controller
 
 
     /**
+     * Automated match validation using Riot API
+     * TODO: Unsupported at the moment
      * @Route("/user/public/team/{id}/validate/{match}", requirements={"id" = "\d+"})
      * @Template()
      */
     public function teamValidateMatchAction(Entity\Participant $team, Entity\Match $match)
-    {   
+    {
 
         throw new ControllerException("Not supported");
 
@@ -572,6 +587,8 @@ class UserController extends Controller
     }
 
     /**
+     * Add a replay to a round of the tournament
+     * The replay is an uploaded file
      * @Route("/user/team/{id}/addReplay/{round}", requirements={"id" = "\d+"})
      * @Template()
      */
@@ -681,6 +698,11 @@ class UserController extends Controller
 
     }
 
+    /**
+     * LoL API : fetch player info to check the masteries pages for requirements
+     * @param  User $user   targeted user
+     * @param  Player $player player associated with user for the tournament to check
+     */
     protected function fetchInfo($user, $player) {
         $apiLol = $this->container->get('insalan.lol');
         $apiSummoner = $apiLol->getApi()->summoner();
@@ -698,8 +720,13 @@ class UserController extends Controller
         throw $this->createNotFoundException('La page de maîtrise n\'existe pas');
     }
 
+    /**
+     * LoL API : tournament code provider
+     * Fills the provided match pvpNetURL with data provided
+     * @param  Entity\Match $m Targeted match
+     */
     private function populateTournamentCode(Entity\Match $m)
-    {   
+    {
         $pvpService = $this->get('insalan.tournament.pvp_net');
         $round = 1;
         $name = "InsaLan Match " . $m->getId() ." G".$round;

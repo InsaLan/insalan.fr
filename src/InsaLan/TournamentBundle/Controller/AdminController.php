@@ -12,9 +12,10 @@ use InsaLan\TournamentBundle\Entity;
 use InsaLan\TournamentBundle\Exception\ControllerException;
 
 class AdminController extends Controller
-{   
+{
 
     /**
+     * Main page for tournament admins
      * @Route("/admin")
      * @Route("/{id}/admin", requirements={"id" = "\d+"})
      * @Template()
@@ -109,7 +110,7 @@ class AdminController extends Controller
      * @Route("/{t}/admin/player/{p}/tooglePayment")
      */
     public function player_tooglePaymentAction(Entity\Tournament $t, Entity\Player $p)
-    {   
+    {
         $em = $this->getDoctrine()->getManager();
         $p->setPaymentDone(!$p->getPaymentDone());
         $em->persist($p);
@@ -188,7 +189,7 @@ class AdminController extends Controller
      * @Route("/admin/match/{id}/addRound")
      */
     public function match_addRoundAction(Entity\Match $m)
-    {   
+    {
         $request = $this->get('request');
         if($request->getMethod() !== "POST")
             throw new ControllerException("Bad method");
@@ -214,7 +215,7 @@ class AdminController extends Controller
      * @Route("/admin/match/{id}/reset")
      */
     public function match_resetAction(Entity\Match $m)
-    {   
+    {
         $em = $this->getDoctrine()->getManager();
 
         foreach($m->getRounds() as $r) {
@@ -234,7 +235,7 @@ class AdminController extends Controller
     {
         $form = $this->getFormKo($tournament->getId());
         $form->handleRequest($this->getRequest());
-        
+
         if(!$form->isValid())
             throw new ControllerException("Not allowed");
 
@@ -264,9 +265,9 @@ class AdminController extends Controller
      * @Template()
      */
     public function knockout_viewAction(Entity\Knockout $ko)
-    {   
+    {
         $em = $this->getDoctrine()->getManager();
-        
+
         $depth    = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getLeftDepth($ko);
         $children = pow(2, $depth + ($ko->getDoubleElimination() ? 0 : 1));
 
@@ -298,7 +299,7 @@ class AdminController extends Controller
                     $km->setMatch($match);
                     $match->setKoMatch($km);
                 }
-                
+
                 $match->setPart1($part1);
                 $match->setPart2($part2);
 
@@ -311,7 +312,7 @@ class AdminController extends Controller
 
             $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->propagateVictoryAll($ko);
             $em->flush();
-            
+
         }
 
         $ko->jsonData = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getJson($ko);
