@@ -11,8 +11,8 @@ before_script:
   - php app/console doctrine:schema:create --env=test
   - php app/console doctrine:fixtures:load -n --env=test
 
-#script:
-  #- phpunit -c app
+script:
+  - phpunit -c app/
 
 notifications:
   email:
