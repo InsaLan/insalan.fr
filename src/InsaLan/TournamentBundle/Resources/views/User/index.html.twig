@@ -42,7 +42,7 @@
               {% if participant.captain == p %}
                 &#x1f451;
               {% elseif participant.captain.user == app.user %}
-              <a href="{{ path('insalan_tournament_user_banplayer', {teamId: participant.id, playerId: p.id}) }}" class="btn2">
+              <a href="{{ path('insalan_tournament_user_banplayer', {teamId: participant.id, playerId: p.id}) }}" class="btn2" style="font-size: 0.8em">
                 Retirer de l'équipe
               </a>
             {% endif %}
