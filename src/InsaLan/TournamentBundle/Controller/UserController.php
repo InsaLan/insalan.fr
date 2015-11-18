@@ -55,6 +55,7 @@ class UserController extends Controller
         }
 
         $rawTournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments();
+        // participants can be either a single player of a team
         $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($usr);
 
         $tournaments = array();

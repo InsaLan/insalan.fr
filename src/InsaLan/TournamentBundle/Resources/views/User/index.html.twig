@@ -28,6 +28,7 @@
     </header>
     <div class="text">
       {% if participant.participantType == 'team' %}
+      {# List team players #}
       <ul class="shift" style="list-style-type:none">
         {% for p in participant.players %}
         <li>
@@ -37,7 +38,8 @@
             {% else %}
                &#x2718;
             {% endif %}
-            <span>{{ p.gameName }}</span>
+            <span>{{ p.gameName }} {% if participant.captain == p %}&#x1f451;{% endif %}
+            </span>
           </div>
           <br class="clear">
         </li>
