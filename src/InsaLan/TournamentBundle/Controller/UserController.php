@@ -428,6 +428,58 @@ class UserController extends Controller
     }
 
     /**
+     * Allow a captain to ban another player from a team
+     * Only possible if the player didn't pay anything yet OR if this is a free tournament
+     * @Route("/user/ban/team/{teamId}/{playerId}")
+     */
+    public function banPlayerAction($teamId, $playerId) {
+        $em =$this->getDoctrine()->getManager();
+        $team = $em
+            ->getRepository('InsaLanTournamentBundle:Team')
+            ->findOneById($teamId);
+
+        // does the team exist ?
+        if($team === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        // get current logged user corresponding player
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $captain = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUserAndPendingTournament($usr, $team->getTournament());
+
+        // is he really the captain ? (also check for null)
+        if($team->getCaptain() !== $captain)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        $playerToBan = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneById($playerId);
+
+        // does this player exist ?
+        if($playerToBan === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        // not possible if the player payed something ! (paid tournament + payement done)
+        if(!$team->getTournament()->isFree() && $player->getPaymentDone())
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        // captain cannot ban himself !
+        if($playerToBan !== $captain) {
+
+            $playerToBan->leaveTeam($team);
+            $team->removePlayer($playerToBan);
+
+            $em->persist($team);
+
+            $em->remove($playerToBan);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+    }
+
+    /**
      * Create a team when joining a tournament
      * @Route("{tournament}/user/join/team/create")
      * @Template()
