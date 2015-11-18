@@ -10,9 +10,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use InsaLan\TournamentBundle\Entity;
 
+/**
+ * Public display for tournaments
+ */
 class DefaultController extends Controller
 {
     /**
+     * Public page indexing all tounaments
      * @Route("/public")
      * @Template()
      */
@@ -27,6 +31,7 @@ class DefaultController extends Controller
     }
 
     /**
+     * Display tournament's match tree
      * @Route("/{id}/public", requirements={"id" = "\d+"})
      * @Template()
      */
@@ -54,6 +59,7 @@ class DefaultController extends Controller
     }
 
     /**
+     * Display tournament's rules
      * @Route("/{id}/public/rules", requirements={"id" = "\d+"})
      * @Template()
      */
@@ -63,6 +69,7 @@ class DefaultController extends Controller
     }
 
     /**
+     * Display the teams currently registered or pending for this tournament
      * @Route("/{id}/public/team", requirements={"id" = "\d+"})
      * @Template()
      */
@@ -75,6 +82,7 @@ class DefaultController extends Controller
     }
  
     /**
+     * Display the players currently registered or pending for this tournament
      * @Route("/{id}/public/player", requirements={"id" = "\d+"})
      * @Template()
      */
@@ -88,6 +96,7 @@ class DefaultController extends Controller
 
 
     /**
+     * Allow to change a team capitain
      * @Route("/public/team/captain")
      * @Method({"POST"})
      */
@@ -122,6 +131,7 @@ class DefaultController extends Controller
     }
 
     /**
+     * API call : get JSON info for a specific match
      * @Route("/public/match/{id}")
      * @Method({"GET"})
      */
@@ -167,6 +177,7 @@ class DefaultController extends Controller
     }
 
     /**
+     * Display the tournament knockout tree
      * @Route("/public/knockout/{id}")
      * @Method({"GET"})
      * @Template
@@ -190,6 +201,7 @@ class DefaultController extends Controller
     }
 
     /**
+     * Get match details (used in pool view)
      * @Route("/public/team/{id}", requirements={"id" = "\d+"})
      * @Template()
      */
