@@ -1,5 +1,6 @@
 /bin/
 /app/bootstrap.php.cache
+/app/build/
 /app/cache/
 /app/check.php
 /app/config/parameters.yml
