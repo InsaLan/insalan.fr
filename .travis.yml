@@ -11,8 +11,11 @@ before_script:
   - php app/console doctrine:schema:create --env=test
   - php app/console doctrine:fixtures:load -n --env=test
 
-#script:
-  #- phpunit -c app
+script:
+  - phpunit -c app/
+
+after_script:
+  - ./vendor/codeclimate/php-test-reporter/composer/bin/test-reporter --coverage-report app/build/logs/clover.xml
 
 notifications:
   email:
