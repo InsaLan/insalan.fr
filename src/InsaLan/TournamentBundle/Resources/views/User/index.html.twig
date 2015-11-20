@@ -41,7 +41,7 @@
             <span>{{ p.gameName }}
               {% if participant.captain == p %}
                <span style="color: #FFB300">&#x1f451;</span>
-              {% elseif participant.captain.user == app.user %}
+              {% elseif participant.captain.user == app.user and not participant.tournament.isPlaying %}
               <a href="{{ path('insalan_tournament_user_banplayer', {teamId: participant.id, playerId: p.id}) }}" class="btn2" style="font-size: 0.8em">
                 Retirer de l'équipe
               </a>
@@ -84,14 +84,19 @@
 
     {% if participant.validated == 2  %}
 
-      {% if true or participant.tournament.isPlaying %} {# TODO remove true #}
+      {# 2-button layout #}{% if participant.tournament.isPlaying %}
         <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_default_teamdetails', {id: participant.id }) }}">Jouer mes matchs</a>
-      
-      {% elseif participant.tournament.placement  %}
-        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_placement', {tournament: participant.tournament.id }) }}">Choisir une place</a>
-      {% endif %}
+        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
 
-      <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
+      {# 3-button layout #}{% elseif participant.tournament.placement  %}
+        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Annuler</a>
+        <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_placement', {tournament: participant.tournament.id }) }}">Choisir une place</a>
+        <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
+
+        {# 2-button layout #}{% else %}
+        <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Annuler</a>
+        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
+      {% endif %}
 
     {% else %}
 

@@ -408,14 +408,31 @@ class UserController extends Controller
         if($team === null)
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
+        // get targeted player
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingTournament($usr, $team->getTournament());
 
+        // is he part of the team roster ?
+        if(!$team->haveInPlayers($player))
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        // not allowed if he paid something
+        if(!$team->getTournament()->isFree() && $player->getPaymentDone()){
+            $this->get('session')->getFlashBag()->add('error', "Vous avez payé votre place, merci de contacter l'équipe si vous souhaitez vous désistez.");
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
+        // not allowed either if registration are closed
+        if(!$team->getTournament()->isOpenedNow())
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
         $player->leaveTeam($team);
         $team->removePlayer($player);
 
+        // if he was captain and not the last member, we need to chose another one
+        if($team->getCaptain() === $player && $team->getPlayers()->count() === 0)
+            $team->setCaptain($team->getPlayers()->first());
         $em->persist($team);
 
         if($team->getPlayers()->count() === 0)
@@ -424,7 +441,6 @@ class UserController extends Controller
         $em->remove($player);
         $em->flush();
         return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
-
     }
 
     /**
@@ -440,6 +456,10 @@ class UserController extends Controller
 
         // does the team exist ?
         if($team === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        // not allowed if registration are closed
+        if(!$team->getTournament()->isOpenedNow())
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
         // get current logged user corresponding player
