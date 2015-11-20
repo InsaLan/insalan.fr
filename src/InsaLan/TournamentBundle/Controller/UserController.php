@@ -493,6 +493,49 @@ class UserController extends Controller
     }
 
     /**
+     * Change team captain
+     * @Route("/user/promote/{teamId}/{playerId}")
+     */
+    public function promoteCaptainAction($teamId, $playerId){
+        $em =$this->getDoctrine()->getManager();
+        $team = $em
+            ->getRepository('InsaLanTournamentBundle:Team')
+            ->findOneById($teamId);
+
+        // does the team exist ?
+        if($team === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        // get current logged user corresponding player
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $captain = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUserAndPendingTournament($usr, $team->getTournament());
+
+        // is he really the captain ? (also check for null)
+        if($team->getCaptain() !== $captain)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        $playerToPromote = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneById($playerId);
+
+        // does this player exist ?
+        if($playerToPromote === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        // is he part of the team roster ?
+        if(!$team->haveInPlayers($playerToPromote))
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        $team->setCaptain($playerToPromote);
+        $em->persist($team);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+    }
+
+    /**
      * Create a team when joining a tournament
      * @Route("{tournament}/user/join/team/create")
      * @Template()

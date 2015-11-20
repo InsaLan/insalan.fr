@@ -168,6 +168,19 @@ class Team extends Participant
         return $this->players;
     }
 
+    /**
+     * Check if a player is part of the team roster
+     *
+     * @return boolean
+     */
+    public function haveInPlayers(\InsaLan\TournamentBundle\Entity\Player $player)
+    {
+        foreach ($this->players as $teamPlayer) {
+            if($teamPlayer === $player)
+                return true;
+        }
+        return false;
+    }
 
     /**
      * Set captain

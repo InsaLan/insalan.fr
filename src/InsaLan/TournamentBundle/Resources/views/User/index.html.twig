@@ -40,10 +40,13 @@
             {% endif %}
             <span>{{ p.gameName }}
               {% if participant.captain == p %}
-                &#x1f451;
+               <span style="color: #FFB300">&#x1f451;</span>
               {% elseif participant.captain.user == app.user %}
               <a href="{{ path('insalan_tournament_user_banplayer', {teamId: participant.id, playerId: p.id}) }}" class="btn2" style="font-size: 0.8em">
                 Retirer de l'équipe
+              </a>
+              <a href="{{ path('insalan_tournament_user_promotecaptain', {teamId: participant.id, playerId: p.id}) }}" class="btn2" style="font-size: 0.8em">
+                &#x1f451; Passer capitaine
               </a>
             {% endif %}
             </span>
