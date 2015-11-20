@@ -464,11 +464,24 @@ class UserController extends Controller
         if(!$team->getTournament()->isFree() && $player->getPaymentDone())
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
+        /**
+         * Manage team validation state
+         * A the moment :
+         * - A validated team roster cannot be modified in paid tournaments
+         * - Bans invalidates the team (see below)
+         */
+        if(!$team->getTournament()->isFree() && $team->getValidated())
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
         // captain cannot ban himself !
         if($playerToBan !== $captain) {
 
             $playerToBan->leaveTeam($team);
             $team->removePlayer($playerToBan);
+
+            if($team->getValidated() === Entity\Participant::STATUS_WAITING
+            || $team->getValidated() === Entity\Participant::STATUS_VALIDATED)
+                $team->setValidated(Entity\Participant::STATUS_PENDING); // reset to waiting state
 
             $em->persist($team);
 
