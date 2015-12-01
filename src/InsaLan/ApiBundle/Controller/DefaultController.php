@@ -25,9 +25,11 @@ class DefaultController extends Controller
 
         $res = array(
             "user" => array("username" => $usr->getUsername()),
-            "err" => "registration_not_found"
+            "err" => "registration_not_found",
+            "tournament" => null
             
         );
+
         foreach($player as $p) {
 
             $res["err"] = "no_paid_place";
@@ -36,6 +38,7 @@ class DefaultController extends Controller
                 if (in_array($p->getTournament()->getShortname(),$t))
                 if($p->getPaymentDone()) {
                     $res["err"] = null;
+                    $res["tournament"] = $p->getTournament()->getShortname();
                     continue;
                 }
             }
@@ -44,6 +47,7 @@ class DefaultController extends Controller
                 if (in_array($p->getPendingTournament()->getShortname(),$t))
                 if($p->getPaymentDone()) {
                     $res["err"] = null;
+                    $res["tournament"] = $p->getPendingTournament()->getShortname();
                     continue;
                 }
             }
