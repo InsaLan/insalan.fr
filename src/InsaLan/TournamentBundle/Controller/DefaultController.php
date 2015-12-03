@@ -27,7 +27,23 @@ class DefaultController extends Controller
         // TODO: Manage tournaments with yearview
         $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments();
 
-        return array('tournaments' => $tournaments);
+        // separate opened tournaments and old ones
+        $old_tournaments = array();
+        $opened_tournaments = array();
+        $registration_closed_tournaments = array();
+
+        foreach ($tournaments as $t) {
+            if($t->isOpenedNow()) // I can register !
+                $opened_tournaments[] = $t;
+            elseif ($t->isClosed()) // tournament is past and closed
+                $old_tournaments[] = $t;
+            else // tournament is not completed yet, but I cannot register
+                $registration_closed_tournaments[] = $t;
+        }
+
+        return array('old_tournaments' => $old_tournaments,
+                     'registration_closed_tournaments' => $registration_closed_tournaments,
+                     'opened_tournaments' => $opened_tournaments);
     }
 
     /**

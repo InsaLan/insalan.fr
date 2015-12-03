@@ -13,6 +13,7 @@ class TournamentRepository extends EntityRepository
         $query = $this->createQueryBuilder('t')
             ->where('t.registrationOpen >= :lastyear')
             ->setParameter('lastyear', (new \DateTime('now'))->modify('-6 month'))
+            ->orderBy('t.tournamentOpen', 'ASC')
             ->getQuery();
         return $query->getResult();
     }
@@ -34,7 +35,7 @@ class TournamentRepository extends EntityRepository
         }
         return $freeSlots;
     }
-    
+
     public function selectWaitingParticipant($tournamentId) {
         $tournament = $this->findOneById($tournamentId);
         $participants = array();
@@ -50,7 +51,7 @@ class TournamentRepository extends EntityRepository
      * Get an associative array of unavailable placements for fast determination.
      * Only keys where placement is unavailable are set, because we cannot determine
      * the number of places.
-     * 
+     *
      * @param  Tournament $t
      * @return Associative array (integer=>true)
      */

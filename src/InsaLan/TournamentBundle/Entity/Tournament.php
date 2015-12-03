@@ -154,6 +154,11 @@ class Tournament
         return $this->tournamentOpen <= $now && $this->tournamentClose >= $now;
     }
 
+    public function isClosed() {
+        $now = new \DateTime();
+        return $this->tournamentClose < $now;
+    }
+
     public function isFull() {
         return $this->getFreeSlots() === 0;
     }

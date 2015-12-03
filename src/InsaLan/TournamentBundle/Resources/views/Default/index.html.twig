@@ -12,87 +12,24 @@
 
 <article>
   <header>
-    <h2>Tournois</h2>
+    <h2>Tournois ouverts aux inscription</h2>
   </header>
+  {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': opened_tournaments} %}
+</article>
 
-  <section>
-      <table class="list">
 
-      {% for t in tournaments %}
-          <tr>
-              <td>
-                <a href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}">
-                    <img src="{{ asset(t.getUploadDir() ~ t.logoPath)  }}" alt="{{ t.name }}"/>
-                 </a>
-              </td>
-              <td>
-                  <a href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}" >
-                    <div>
-                      <h1>
-                        {{ t.name }}
-                      </h1>
-                      Horaires : du {{ t.tournamentOpen|date('d/m/y H:i') }} au {{ t.tournamentClose|date('d/m/y H:i') }}<br>
-                      <em>Inscription du {{ t.registrationOpen|date('d/m/y H:i') }} au {{ t.registrationClose|date('d/m/y H:i') }}</em>
-                    </div>
-                  </a>
-              </td>
-              <td>
-                  <br><br>
-                  {% if t.participantType == "team" %}
-                      <a class="btn2 btn2-nocolor" href="{{ path("insalan_tournament_default_teamlist", {"id":t.id}) }}">
-                  {% else %}
-                      <a class="btn2 btn2-nocolor" href="{{ path("insalan_tournament_default_playerlist", {"id":t.id}) }}">
-                  {% endif %}
-                    Participants
-                  </a>
-                  <br><br>
-                  {% if t.isFull() %}
-                    COMPLET
-                  {% else %}
-                    {{ t.validatedSlots }} / {{ t.registrationLimit }} participants
-                  {% endif %}
-              </td>
-              <td>
-                <a class="btn2 btn2-nocolor" href="{{ path('insalan_tournament_default_rules', {id: t.id}) }}" >
-                    Règlement
-                </a>
-              </td>
-          </tr>
-      {% endfor %}
-      </table>
-  </section>
+<article>
+  <header>
+    <h2>Tournois en cours</h2>
+  </header>
+  {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': registration_closed_tournaments} %}
+</article>
 
-<!--  <section class="tournaments">-->
-    <!--<ul>-->
-      <!--{% for t in tournaments %}-->
-        <!--{% spaceless %}-->
-        <!--<li style="text-align:center">-->
-              <!--<h2>{{ t.name }}</h2>  -->
-              <!--<strong>-->
-                  <!--{% if t.participantType == "team" %}-->
-                      <!--<a href="{{ path("insalan_tournament_default_teamlist", {"id":t.id}) }}">-->
-                  <!--{% else %}-->
-                      <!--<a href="{{ path("insalan_tournament_default_playerlist", {"id":t.id}) }}">-->
-                  <!--{% endif %}-->
-
-                  <!--{% if t.isFull() %}-->
-                    <!--COMPLET-->
-                  <!--{% else %}-->
-                    <!--{{ t.validatedSlots }} / {{ t.registrationLimit }} participants-->
-                  <!--{% endif %}-->
-                  <!--</a>-->
-              <!--</strong>-->
-
-            <!--<a class="imga" href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}">-->
-              <!--<img src="{{ asset(t.getUploadDir() ~ t.logoPath)  }}" alt="{{ t.name }}"/>-->
-            <!--</a>-->
-          <!--</li>-->
-        <!--{% endspaceless %}-->
-      <!--{% endfor %}-->
-    <!--</ul>-->
-    <!--<div class="clear"></div>-->
-    <!--<div class="space"></div>-->
-  <!--</section>-->
+<article>
+  <header>
+    <h2>Tournois terminés</h2>
+  </header>
+  {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': old_tournaments} %}
 </article>
 
 {% endblock %}
