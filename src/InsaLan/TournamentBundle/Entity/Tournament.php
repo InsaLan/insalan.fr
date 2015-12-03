@@ -34,8 +34,8 @@ class Tournament
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $description; 
- 
+    protected $description;
+
     /**
      * @ORM\Column(type="text", nullable=true)
      */
@@ -56,7 +56,7 @@ class Tournament
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $registrationClose;
-  
+
     /**
      * @ORM\Column(type="datetime", nullable=false)
      */
@@ -464,10 +464,17 @@ class Tournament
      * Constructor
      */
     public function __construct()
-    {   
+    {
         $this->webPrice = 0;
         $this->participants = new \Doctrine\Common\Collections\ArrayCollection();
         $this->placement = false;
+
+        // default values for Symphony
+        $this->registrationOpen = new \DateTime("now");
+        $this->registrationClose = (new \DateTime("now"))->modify("+1 week");
+        $this->tournamentOpen = (new \DateTime("now"))->modify("+1 week");
+        $this->tournamentClose = (new \DateTime("now"))->modify("+1 week")->modify("+10 hour");
+        $this->currency = "EUR";
     }
 
     /**
@@ -566,7 +573,7 @@ class Tournament
     /**
      * Get webPrice
      *
-     * @return integer 
+     * @return integer
      */
     public function getWebPrice()
     {
@@ -589,7 +596,7 @@ class Tournament
     /**
      * Get tournamentOpen
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getTournamentOpen()
     {
@@ -612,7 +619,7 @@ class Tournament
     /**
      * Get tournamentClose
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getTournamentClose()
     {
@@ -635,7 +642,7 @@ class Tournament
     /**
      * Get onlineIncreaseInPrice
      *
-     * @return integer 
+     * @return integer
      */
     public function getOnlineIncreaseInPrice()
     {
@@ -658,7 +665,7 @@ class Tournament
     /**
      * Get currency
      *
-     * @return string 
+     * @return string
      */
     public function getCurrency()
     {
@@ -681,7 +688,7 @@ class Tournament
     /**
      * Get locked
      *
-     * @return string 
+     * @return string
      */
     public function getLocked()
     {
@@ -705,7 +712,7 @@ class Tournament
     /**
      * Get placement
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPlacement()
     {
@@ -728,7 +735,7 @@ class Tournament
     /**
      * Get shortName
      *
-     * @return string 
+     * @return string
      */
     public function getShortName()
     {
@@ -756,7 +763,7 @@ class Tournament
     /**
      * Get playerInfos
      *
-     * @return string 
+     * @return string
      */
     public function getPlayerInfos()
     {
@@ -779,7 +786,7 @@ class Tournament
     /**
      * Get rules
      *
-     * @return string 
+     * @return string
      */
     public function getRules()
     {
