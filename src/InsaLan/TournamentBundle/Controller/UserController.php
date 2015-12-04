@@ -433,6 +433,12 @@ class UserController extends Controller
         // if he was captain and not the last member, we need to chose another one
         if($team->getCaptain() === $player && $team->getPlayers()->count() === 0)
             $team->setCaptain($team->getPlayers()->first());
+
+        // team cannot stay validated if someone leave and there is not enought players
+        // TODO: Should be handled by the model ?
+        if($team->getPlayers()->count() < $team->getTournament()->getTeamMinPlayer())
+            $team->setValidated(Entity\Participant::STATUS_PENDING); // reset to waiting state
+
         $em->persist($team);
 
         if($team->getPlayers()->count() === 0)
