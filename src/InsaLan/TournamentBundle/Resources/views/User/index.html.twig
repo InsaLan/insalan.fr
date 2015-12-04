@@ -102,6 +102,10 @@
         <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Inscription archivée</a>
         {% endif %}
 
+    {% else %}
+        {# 2-button layout #}{% elseif participant.tournament.isOpenedNow %}
+        <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Annuler</a>
+        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
     {% endif %}{# endif validated == 2 #}
 
 
