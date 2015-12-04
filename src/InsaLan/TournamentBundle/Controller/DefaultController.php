@@ -31,10 +31,13 @@ class DefaultController extends Controller
         $old_tournaments = array();
         $opened_tournaments = array();
         $registration_closed_tournaments = array();
+        $future_tournaments = array();
 
         foreach ($tournaments as $t) {
             if($t->isOpenedNow()) // I can register !
                 $opened_tournaments[] = $t;
+            elseif ($t->isOpenedInFuture()) // tournament is not opened yet
+                $future_tournaments[] = $t;
             elseif ($t->isClosed()) // tournament is past and closed
                 $old_tournaments[] = $t;
             else // tournament is not completed yet, but I cannot register
@@ -43,6 +46,7 @@ class DefaultController extends Controller
 
         return array('old_tournaments' => $old_tournaments,
                      'registration_closed_tournaments' => $registration_closed_tournaments,
+                      'future_tournaments' => $future_tournaments,
                      'opened_tournaments' => $opened_tournaments);
     }
 

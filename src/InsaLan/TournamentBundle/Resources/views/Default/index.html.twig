@@ -12,7 +12,14 @@
 
 <article>
   <header>
-    <h2>Tournois ouverts aux inscription</h2>
+    <h2>Tournois futures</h2>
+  </header>
+  {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': future_tournaments} %}
+</article>
+
+<article>
+  <header>
+    <h2>Tournois ouverts</h2>
   </header>
   {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': opened_tournaments} %}
 </article>
