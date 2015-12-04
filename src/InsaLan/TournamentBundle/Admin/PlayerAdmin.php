@@ -51,6 +51,7 @@ class PlayerAdmin extends Admin
             ->add('user.email')
             ->add('team.name')
             ->add('paymentDone')
+            ->add('validationDate')
             ->add('placement')
             ->add('arrived')
         ;

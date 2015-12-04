@@ -41,6 +41,11 @@ abstract class Participant
     protected $validated;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $validationDate;
+
+    /**
      * @ORM\Column(type="integer",nullable=true)
      */
     protected $placement;
@@ -138,9 +143,28 @@ abstract class Participant
     public function setValidated($validated)
     {
         $this->validated = $validated;
+
+        if($validated === $this::STATUS_VALIDATED)
+            setValidationDate(new \DateTime("now"));
+
         return $this;
     }
 
+    /**
+     * Get validation date
+     *
+     * @return DateTime
+     */
+    public function getValidationDate()
+    {
+        return $this->validationDate;
+    }
+
+    public function setValidationDate($validationDate)
+    {
+        $this->validationDate = $validationDate;
+        return $this;
+    }
 
     /**
      * Set placement

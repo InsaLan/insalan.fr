@@ -54,6 +54,7 @@ class TeamAdmin extends Admin
             ->add('tournament.name')
             ->add('captain.name')
             ->add('validated')
+            ->add('validationDate')
             ->add('placement')
         ;
     }
