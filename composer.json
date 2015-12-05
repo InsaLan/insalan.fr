@@ -32,7 +32,8 @@
         "paquettg/leaguewrap": "dev-master",
         "payum/payum-bundle": "*@stable",
         "payum/offline": "*@stable",
-        "payum/paypal-express-checkout-nvp": "0.12.*"
+        "payum/paypal-express-checkout-nvp": "0.12.*",
+        "lexik/maintenance-bundle": "^2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

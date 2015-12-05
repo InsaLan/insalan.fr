@@ -34,6 +34,9 @@ class AppKernel extends Kernel
             //Payum
             new Payum\Bundle\PayumBundle\PayumBundle(),
 
+            // Maintenance
+            new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),
+
             // InsaLan
             new InsaLan\InsaLanBundle\InsaLanBundle(),
             new InsaLan\UserBundle\InsaLanUserBundle(),
@@ -42,7 +45,7 @@ class AppKernel extends Kernel
             new InsaLan\PizzaBundle\InsaLanPizzaBundle(),
             new InsaLan\InformationBundle\InsaLanInformationBundle(),
             new InsaLan\StreamBundle\InsaLanStreamBundle(),
-            
+
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new InsaLan\ApiBundle\InsaLanApiBundle(),
         );
