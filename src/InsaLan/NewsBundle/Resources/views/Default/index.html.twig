@@ -6,54 +6,56 @@
 
 {% block body %}
   {{ parent() }}
-{# 
+  <div class="grid-7 pull-left">
+    <iframe width="700" height="394" src="//www.youtube.com/embed/2J6dFro2Bno?showinfo=0" frameborder="0" allowfullscreen></iframe>
+  </div>
   <div class="grid-3 pull-left">
       <div class="frame frame-active">
           <header class="full">
               <div class="title pull-left">LoL</div>
               <small class="pull-right">
                   32 slots
-                  <br/>
-                  <strong>2 400€</strong>
+                  <br>
+                  <strong>2 300€</strong>
               </small>
-            <br class="clear"/>
+            <br class="clear">
           </header>
           <header class="full">
               <div class="title pull-left">CS:GO</div>
 
               <small class="pull-right">
                   24 slots
-                  <br/>
-                  <strong>2 000€</strong>
+                  <br>
+                  <strong>1800€</strong>
               </small>
-              <br class="clear"/>
+              <br class="clear">
           </header>
           <header class="full">
               <div class="title pull-left">StarCraft II</div>
               <small class="pull-right">
-                  48 slots
-                  <br/>
-                  <strong>800€</strong>
+                  32 slots
+                  <br>
+                  <strong>500€</strong>
               </small>
-              <br class="clear"/>
+              <br class="clear">
           </header>
           <header class="full">
               <div class="title pull-left">Dota 2</div>
               <small class="pull-right">
                   16 slots
-                  <br/>
-                  <strong>1 400€</strong>
+                  <br>
+                  <strong>1 200€</strong>
               </small>
-              <br class="clear"/>
+              <br class="clear">
           </header>
           <header class="full">
               <div class="title pull-left">Hearthstone</div>
               <small class="pull-right">
                   32 slots
-                  <br/>
+                  <br>
                   <strong>500€</strong>
               </small>
-              <br class="clear"/>
+              <br class="clear">
           </header>
           <header class="huge-button">
               <div class="title pull-left">
@@ -63,21 +65,13 @@
                   <a href="{{path('fos_user_registration_register') }}" style="display:block">INSCRIPTION</a>
                   {% endif %}
               </div>
-              <br class="clear"/>
+              <br class="clear">
           </header>
           <section class="tournaments">
           </section>
       </div>
   </div>
-#}
-
-<div class="container">
-
-  <img style="position: absolute; right: 90px; top: 200px" src="{{ asset('bundles/insalan/img/aftermovie.png') }}" alt="Aftermovie" />
-  <div>
-    <iframe width="700" height="387" src="//www.youtube.com/embed/2J6dFro2Bno?showinfo=0" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
-  </div>
-
+  <br class="clear">
   <article id="horaire" class="info">
       <aside>
           <div class="square">
@@ -90,20 +84,11 @@
           <h2>Du 4 au 7 février 2016 à l'INSA Rennes</h2>
           <div style="font-size: 19px; margin-top: -18px">
             <span>
-              20 avenue des buttes de Coësmes, 35708 Rennes - Arrêt Beaulieu Restau U (ligne de bus C4, 31 et 32)
+              20 avenue des buttes de Coësmes, 35708 Rennes - Arrêt Beaulieu Restau U (ligne 4, 31 et 32)
             </span>
           </div>
       </header>
   </article>
-
-  <article id="qualif" class="info">
-    <div class="container grid-3-3" style="text-align: center">
-      <p>
-        <a type="button" class="btn btn-primary" href="{{ path('insalan_information_default_home') }}">Accès aux qualifications League of Legends</a>
-      </p>
-    </div>
-  </article>
-</div>
 </section>
 
 <section class="highlightBox">
@@ -123,7 +108,7 @@
                 <br/>Bornes d'arcade, jeux, quizz
             </div>
         </div>
-        
+
         <div class="grid-3-3 pull-left">
             <h1>SAMEDI</h1>
             <div style="text-align: center">
@@ -134,7 +119,7 @@
                 <br/>Bornes d'arcade, jeux, quizz
             </div>
         </div>
-        
+
         <div class="grid-3-3 pull-left">
             <h1>DIMANCHE</h1>
             <div style="text-align: center">
