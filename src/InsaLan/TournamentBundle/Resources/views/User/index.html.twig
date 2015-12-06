@@ -34,21 +34,23 @@
         <li>
           <div style="margin: 8px 0px 0px 10px; font-size:20px" class="pull-left">
             {% if p.ok %}
-               &#10003; 
+               <span style="color: #00FF80">&#10003;</span>
             {% else %}
-               &#x2718;
+               <span style="color: #BF0000">&#x2718;</span>
             {% endif %}
             <span>{{ p.gameName }}
               {% if participant.captain == p %}
-               <span style="color: #FFB300">&#x1f451;</span>
-              {% elseif participant.captain.user == app.user and participant.tournament.isOpenedNow %}
-              <a href="{{ path('insalan_tournament_user_banplayer', {teamId: participant.id, playerId: p.id}) }}" class="btn2" style="font-size: 0.8em">
-                Retirer de l'équipe
-              </a>
-              <a href="{{ path('insalan_tournament_user_promotecaptain', {teamId: participant.id, playerId: p.id}) }}" class="btn2" style="font-size: 0.8em">
-                &#x1f451; Passer capitaine
-              </a>
-            {% endif %}
+                <span style="color: #FFB300">&#x1f451;</span>
+                {% elseif participant.captain.user == app.user and participant.tournament.isOpenedNow %}
+                <a href="{{ path('insalan_tournament_user_promotecaptain', {teamId: participant.id, playerId: p.id}) }}" class="btn2" style="font-size: 0.8em">
+                  &#x1f451; Passer capitaine
+                </a>
+                {% if not p.ok %}
+                  <a href="{{ path('insalan_tournament_user_banplayer', {teamId: participant.id, playerId: p.id}) }}" class="btn2" style="font-size: 0.8em">
+                    Retirer de l'équipe
+                  </a>
+                {% endif %}
+              {% endif %}
             </span>
           </div>
           <br class="clear">
