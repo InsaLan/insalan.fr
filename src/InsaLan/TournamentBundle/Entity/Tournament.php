@@ -163,6 +163,14 @@ class Tournament
         return $this->getFreeSlots() === 0;
     }
 
+    public function isLocked() {
+        return $this->locked != null;
+    }
+
+    public function checkLocked($authToken) {
+        return $this->locked === $authToken;
+    }
+
     public function getValidatedSlots() {
         $nb = 0;
         foreach($this->getParticipants() as $p) {

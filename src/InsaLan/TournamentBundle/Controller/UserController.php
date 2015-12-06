@@ -136,7 +136,41 @@ class UserController extends Controller
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
-        if ($player === null)
+        if ($player === null && $tournament->isLocked()) {
+            $this->get('session')->getFlashBag()->add('error', "Ce tournois n'est accessible que sur invitation.");
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
+        else if ($player === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer',array('tournament' => $tournament->getId())));
+        else if (!$player->getGameValidated())
+            return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer',array('tournament' => $tournament->getId())));
+        else if ($tournament->getParticipantType() === 'team' && $player->getTeamForTournament($tournament) === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_jointeam',array('tournament' => $tournament->getId())));
+        else if (!$player->getPaymentDone())
+            return $this->redirect($this->generateUrl('insalan_tournament_user_pay',array('tournament' => $tournament->getId())));
+        else
+            return $this->redirect($this->generateUrl('insalan_tournament_user_paydone',array('tournament' => $tournament->getId())));
+    }
+
+    /**
+     * Manage all steps for registering into a LOCKED tournament
+     * @Route("/{tournament}/user/enroll/{authToken}")
+     */
+    public function enrollLockedAction(Request $request, Entity\Tournament $tournament, $authToken) {
+        $em = $this->getDoctrine()->getManager();
+
+        $usr = $this->get('security.context')->getToken()->getUser();
+
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        // check provided token
+        if ($player === null && !$tournament->checkLocked($authToken)) {
+            $this->get('session')->getFlashBag()->add('error', "Ce tournois n'est accessible que sur invitation.");
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        } // from here we are authentificated
+        else if ($player === null)
             return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer',array('tournament' => $tournament->getId())));
         else if (!$player->getGameValidated())
             return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer',array('tournament' => $tournament->getId())));
