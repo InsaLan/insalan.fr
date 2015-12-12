@@ -3,9 +3,9 @@
 {% block body %}
 {{ parent() }}
 
-{# <img src="{{ asset('bundles/insalan/img/cosplay.png') }}" width="1000"/> #}
+<img src="{{ asset('bundles/insalan/img/cosplay.png') }}" width="1000"/>
 
-<article id="asso" class="info">
+<article id="cosplay" class="info">
     <aside>
         <div class="square">
             <a href="#body"><span></span></a>
@@ -17,48 +17,51 @@
     </header>
 
     <section>
-        <p>
-            Le concours se déroulera à partir de <em>15h30, le samedi 6 février 2016.</em> Pour toute question, vous pouvez nous contacter via Facebook ou par mail à l’adresse <a href="mailto:cosplay@insalan.fr">cosplay@insalan.fr</a>.
-        </p>
+        <em style="text-align: center">Préparez vos pinceaux, armez les ciseaux, partez vous faire tout beau ! En effet, le Japanim Concours Cosplay revient cette année à l'InsaLan. Alors venez costumé en votre personnage préféré et montez sur scène pour faire part de votre prestation devant un jury, qui choisira qui possède le costume le plus fidèle, le plus impressionnant, le plus touchant. </em>
 
-        <h3 style="text-align: center">Les inscriptions ouvriront bientôt !</h3>
+        <h2 style="padding-top: 15px"> Le concours c'est quoi ? </h2>
+
+        <p style="line-height: 1.1em">
+            Le concours se déroulera à partir de <em>15h30, le samedi 6 février 2016</em> à l'INSA Rennes. Chaque participant ou groupe de participants devra faire une prestation sur scène devant le public et le jury. Ce jury, composé de trois membres, notera chaque prestation sur les critères suivants :
+            <ul class="shift">
+                <li>ressemblance avec l'image de référence</li>
+                <li>qualité générale de la fabrication du costume</li>
+                <li>originalité de la prestation</li>
+                <li>qualité de la prestation</li>
+                <li>coup de cœur</li>
+            </ul>
+            <p><em>Des vestiaires seront mis à disposition pour déposer les costumes avant l'événement.</em></p>
+        </p>
     </section>
 </article>
-
-{#
-<article id="asso" class="info">
+<hr></hr>
+<article id="horaire" class="info">
     <aside>
         <div class="square">
-            <a href="#body"><span></span></a>
+          <a href="#body"><span></span></a>
         </div>
     </aside>
-
     <header>
-        <h2>Comment participer ?</h2>
+        <h2>Inscriptions</h2>
     </header>
-
     <section>
         <p>
             <ol class="shift">
-                <li>Lire et accepter le <strong><a href="{{ asset('bundles/insalan/pdf/reglement.pdf') }}" target="_blank" >[règlement &#x25BE;]</a></strong></li>
-                <li>Télécharger et remplir la fiche d'inscription adaptée : 
-                    <strong><a href="{{ asset('bundles/insalan/pdf/inscription-cosplay.pdf') }}" target="_blank" >[individuelle &#x25BE;]</a></strong> 
-                    <strong><a href="{{ asset('bundles/insalan/pdf/inscription-cosplay-groupe.pdf') }}" target="_blank" >[groupe &#x25BE;]</a></strong>
+                <li>Lire et accepter le <strong><a href="{{ asset('bundles/insalan/pdf/reglement.pdf') }}" target="_blank" >[règlement &#x25BE;]</a></strong>.</li>
+                <li>Télécharger et remplir la fiche d'inscription adaptée :
+                    <strong><a href="{{ asset('bundles/insalan/pdf/inscription-cosplay.pdf') }}" target="_blank" >[individuelle &#x25BE;]</a></strong>
+                    <strong><a href="{{ asset('bundles/insalan/pdf/inscription-cosplay-groupe.pdf') }}" target="_blank" >[groupe &#x25BE;]</a></strong>.
                 </li>
-                <li>Pour les mineurs : télécharger et remplir <strong><a href="{{ asset('bundles/insalan/pdf/autorisation-parental.pdf') }}" target="_blank" >[l'autorisation parentale &#x25BE;]</a></strong></li>
-                <li>Joindre une image du personnage cosplayé correspondant exactement au cosplay réalisé, ainsi que le fichier mp3 ou mp4 de sa prestation</li>
-                <li>Signer le ou les documents (imprimer, signer, scanner ou via une tablette graphique ou directement le jour de l'évènement)</li>
-                <li>Envoyer votre dossier (si possible en PDF) à <a href="mailto:cosplay@insalan.fr">cosplay@insalan.fr</a></li>
+                <li>Pour les mineurs : télécharger et remplir <strong><a href="{{ asset('bundles/insalan/pdf/autorisation-parental.pdf') }}" target="_blank" >[l'autorisation parentale &#x25BE;]</a></strong>.</li>
+                <li>Joindre une image du personnage cosplayé correspondant exactement au cosplay réalisé, ainsi que le fichier mp3 ou mp4 de sa prestation.</li>
+                <li>Signer le ou les document(s) nécessaire(s) (imprimer, signer, scanner ou via une tablette graphique ou directement le jour de l'événement).</li>
+                <li>Envoyer votre dossier (si possible en PDF) à <a href="mailto:cosplay@insalan.fr">cosplay@insalan.fr</a> <strong>avant le 3 février</strong>.</li>
             </ol>
         </p>
         <p>
-            <em>Un problème ? Une question ? Envoyez nous un mail à <a href="mailto:cosplay@insalan.fr">cosplay@insalan.fr</a></em>
+            <em>Un problème ? Une question ? Envoyez-nous un mail à <a href="mailto:cosplay@insalan.fr">cosplay@insalan.fr</a> ou contactez-nous via Facebook !</em>
         </p>
     </section>
 </article>
-<hr/>
-#}
-
-
 
 {% endblock %}
