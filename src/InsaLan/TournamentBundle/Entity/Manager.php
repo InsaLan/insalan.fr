@@ -33,7 +33,7 @@ class Manager
      * The associated player or team
      * @ORM\OneToOne(targetEntity="Participant", inversedBy="manager")
      */
-    protected $paticipant;
+    protected $participant;
 
     /**
      * In-game name of the manager
@@ -112,7 +112,7 @@ class Manager
      */
     public function setParticipant(\InsaLan\TournamentBundle\Entity\Participant $participant = null)
     {
-        $this->participant->setManager($this); // One-to-one relationship
+        $participant->setManager($this); // One-to-one relationship
         $this->participant = $participant;
         return $this;
     }
