@@ -14,6 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Manager
 {
+    // Define the price payed by managers
+    const ONLINE_PRICE = 5;  // price to be paid online in EUR
+    const ONSITE_PRICE = 10; // price to be paid onsite in EUR
+
     /**
      * @var integer
      *
