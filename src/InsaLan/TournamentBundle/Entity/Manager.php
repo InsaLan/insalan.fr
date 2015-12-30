@@ -34,6 +34,12 @@ class Manager
     protected $user;
 
     /**
+     * The related tournament, used for team filtering
+     * @var \InsaLan\TournamentBundle\Entity\Tournament
+     */
+    protected $tournament;
+
+    /**
      * The associated player or team
      * @ORM\OneToOne(targetEntity="Participant", inversedBy="manager")
      */
@@ -61,7 +67,6 @@ class Manager
      */
     public function __construct()
     {
-        parent::__construct();
         $this->paymentDone = false;
         $this->arrived = false;
     }
@@ -95,6 +100,28 @@ class Manager
     public function setUser(\InsaLan\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * Get tournament
+     *
+     * @return \InsaLan\TournamentBundle\Entity\Tournament
+     */
+    public function getTournament()
+    {
+        return $this->tournament;
+    }
+
+    /**
+     * Set tournament
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Tournament $tournament
+     * @return Manager
+     */
+    public function setTournament(\InsaLan\TournamentBundle\Entity\Tournament $tournament = null)
+    {
+        $this->tournament = $tournament;
         return $this;
     }
 

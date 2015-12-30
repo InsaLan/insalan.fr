@@ -13,25 +13,27 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use InsaLan\TournamentBundle\Form\TeamType;
+use InsaLan\TournamentBundle\Form\SetManagerName;
 use InsaLan\TournamentBundle\Form\TeamLoginType;
 use InsaLan\TournamentBundle\Exception\ControllerException;
 
 use InsaLan\TournamentBundle\Entity\Manager;
 use InsaLan\TournamentBundle\Entity\Participant;
 use InsaLan\TournamentBundle\Entity\Tournament;
+use InsaLan\TournamentBundle\Entity;
 
 /**
 * ManagerController
 * All the stuff realted to managers management
 * @Route("/manager")
 */
-class ManagerController
+class ManagerController extends Controller
 {
 
     /**
      * Create a new manager related to a tournament
      * @Route("/{tournament}/user/set")
+     * @Template()
      */
     public function setNameAction(Request $request, Entity\Tournament $tournament)
     {
@@ -43,7 +45,7 @@ class ManagerController
         if ($manager === null) {
             $manager = new Manager();
             $manager->setUser($usr);
-            $manager->setPendingTournament($tournament);
+            $manager->setTournament($tournament);
         }
 
         $form = $this->createForm(new SetManagerName(), $manager);
@@ -64,6 +66,7 @@ class ManagerController
     /**
      * Allow a new manager to join a team with name and password
      * @Route("/{tournament}/user/enroll")
+     * @Template()
      */
     public function joinTeamWithPassword(Request $request, Entity\Tournament $tournament)
     {
