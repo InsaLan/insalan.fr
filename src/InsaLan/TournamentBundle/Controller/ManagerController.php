@@ -17,6 +17,7 @@ use InsaLan\TournamentBundle\Form\TeamType;
 use InsaLan\TournamentBundle\Form\TeamLoginType;
 use InsaLan\TournamentBundle\Exception\ControllerException;
 
+use InsaLan\TournamentBundle\Entity\Manager;
 use InsaLan\TournamentBundle\Entity\Participant;
 use InsaLan\TournamentBundle\Entity\Tournament;
 
@@ -30,14 +31,39 @@ class ManagerController
 
     /**
      * Create a new manager related to a tournament
+     * @Route("/{tournament}/user/set")
      */
-    public function createManagerAction() {
+    public function setNameAction(Request $request, Entity\Tournament $tournament)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usr = $this->get('security.context')->getToken()->getUser();
 
+        $manager = $em->getRepository('InsaLanTournamentBundle:Manager')->findOneByUserAndPendingTournament($usr, $tournament);
+
+        if ($manager === null) {
+            $manager = new Manager();
+            $manager->setUser($usr);
+            $manager->setPendingTournament($tournament);
+        }
+
+        $form = $this->createForm(new SetManagerName(), $manager);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em->persist($manager);
+            $em->flush();
+
+            return $this->redirect(
+                $this->generateUrl('insalan_tournament_manager_jointeamwithpassword', array('tournament' => $tournament->getId()))
+            );
+        }
+
+        return array('form' => $form->createView(), 'selectedGame' => $tournament->getType(), 'tournamentId' => $tournament->getId());
     }
 
     /**
      * Allow a new manager to join a team with name and password
-     * @Route("/tournament/{tournament}/enroll")
+     * @Route("/{tournament}/user/enroll")
      */
     public function joinTeamWithPassword(Request $request, Entity\Tournament $tournament)
     {
@@ -94,7 +120,7 @@ class ManagerController
             }
 
         }
-        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player, 'error' => $error_details, 'form' => $form->createView());
+        return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager, 'error' => $error_details, 'form' => $form->createView());
     }
 
     /**
@@ -109,7 +135,10 @@ class ManagerController
     /**
      * Payment for managers
      */
-    
+    public function payAction()
+    {
+        # code ...
+    }
 
 }
 
