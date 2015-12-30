@@ -20,6 +20,7 @@ use InsaLan\TournamentBundle\Exception\ControllerException;
 use InsaLan\TournamentBundle\Entity\Manager;
 use InsaLan\TournamentBundle\Entity\Participant;
 use InsaLan\TournamentBundle\Entity\Tournament;
+use InsaLan\TournamentBundle\Entity\Team;
 use InsaLan\TournamentBundle\Entity;
 
 /**
@@ -68,7 +69,7 @@ class ManagerController extends Controller
      * @Route("/{tournament}/user/enroll")
      * @Template()
      */
-    public function joinTeamWithPassword(Request $request, Entity\Tournament $tournament)
+    public function joinTeamWithPasswordAction(Request $request, Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -79,13 +80,13 @@ class ManagerController extends Controller
 
         // check if there is already a pending manager for this user and tournament
         $manager = $em->getRepository('InsaLanTournamentBundle:Manager')
-            ->findOneByUserAndPendingTournament($usr, $tournaments);
+            ->findOneByUserAndPendingTournament($usr, $tournament);
 
         if($manager === null)
-            return $this->redirect($this->generateUrl('insalan_tournament_manager_create', array('tournament' => $tournament->getId())));
+            return $this->redirect($this->generateUrl('insalan_tournament_manager_setname', array('tournament' => $tournament->getId())));
 
         $form_team = new Team();
-        $form = $this->createForm(new TeamLoginType(), $team); // fill name and plainPassword
+        $form = $this->createForm(new TeamLoginType(), $form_team); // fill name and plainPassword
         $form->handleRequest($request);
 
         // inspired by UserController::joinExistingTeam
