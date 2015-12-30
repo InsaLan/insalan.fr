@@ -35,7 +35,7 @@ class Manager
 
     /**
      * The related tournament, used for team filtering
-     * @var \InsaLan\TournamentBundle\Entity\Tournament
+     * @ORM\ManyToOne(targetEntity="Tournament")
      */
     protected $tournament;
 
