@@ -21,7 +21,7 @@
       </header>
 {% endif %}
 
-        <form action="{{ path('insalan_tournament_user_existingteam', {tournament: tournament.id}) }}" id="step4" method="post" {{ form_enctype(form) }}>
+        <form action="{{ path('insalan_tournament_manager_jointeamwithpassword', {tournament: tournament.id}) }}" id="step4" method="post" {{ form_enctype(form) }}>
 
           {{ form_widget(form._token) }}
           {{ form_errors(form) }}

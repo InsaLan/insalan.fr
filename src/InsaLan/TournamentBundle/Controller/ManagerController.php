@@ -99,7 +99,7 @@ class ManagerController extends Controller
                 $encoder = $factory->getEncoder($usr);
                 $form_team->setPassword($encoder->encodePassword($form_team->getPlainPassword(), sha1('pleaseHashPasswords'.$form_team->getName())));
                 $team = $em
-                    ->getRepository('InsaLanTournamentBundle:Manager')
+                    ->getRepository('InsaLanTournamentBundle:Team')
                     ->findOneByNameAndTournament($form_team->getName(), $tournament);
 
                 if ($team === null || $team->getTournament()->getId() !== $tournament->getId())
@@ -137,11 +137,26 @@ class ManagerController extends Controller
     }
 
     /**
-     * Payment for managers
+     * Payement doing and details for managers
+     * @Route("/{tournament}/user/pay/details")
+     * @Template()
      */
-    public function payAction()
-    {
-        # code ...
+    public function payAction(Entity\Tournament $tournament) {
+        $em = $this->getDoctrine()->getManager();
+
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $manager = $em
+            ->getRepository('InsaLanTournamentBundle:Manager')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        if($tournament->isFree()) {
+            $manager->setPaymentDone(true);
+            $em->persist($manager);
+            $em->flush();
+            return $this->redirect($this->generateUrl('insalan_tournament_manager_paydone', array("tournament" => $tournament->getId())));
+        }
+
+        return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager);
     }
 
 }
