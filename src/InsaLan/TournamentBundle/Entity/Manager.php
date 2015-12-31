@@ -143,7 +143,6 @@ class Manager
      */
     public function setParticipant(\InsaLan\TournamentBundle\Entity\Participant $participant = null)
     {
-        $participant->setManager($this); // One-to-one relationship
         $this->participant = $participant;
         return $this;
     }

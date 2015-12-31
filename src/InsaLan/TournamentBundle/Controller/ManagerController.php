@@ -110,11 +110,16 @@ class ManagerController extends Controller
                     if ($team->getManager() != null)
                         throw new ControllerException("L'équipe a déjà un manager");
 
-                    $manager->setParticipant($team);
+                    // Because PHP don't support polymorphism, we must get the corresponding Participant object
+                    $team_participant = $em
+                        ->getRepository('InsaLanTournamentBundle:Participant')->
+                        findOneById($team->getId());
+                    $manager->setParticipant($team_participant);
                     $team->setManager($manager);
                     $em->persist($manager);
                     $em->persist($team);
                     $em->flush();
+
                     return $this->redirect($this->generateUrl('insalan_tournament_manager_pay', array('tournament' => $tournament->getId())));
 
                 } else

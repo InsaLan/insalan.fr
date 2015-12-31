@@ -202,7 +202,6 @@ abstract class Participant
      */
     public function setManager($manager)
     {
-        $manager->setParticipant($this); // One-to-one relationship
         $this->manager = $manager;
         return $this;
     }
