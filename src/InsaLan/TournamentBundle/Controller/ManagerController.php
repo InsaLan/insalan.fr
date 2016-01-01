@@ -164,6 +164,111 @@ class ManagerController extends Controller
         return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager);
     }
 
+    /**
+     * Paypal stuff
+     * @Route("/{tournament}/user/pay/paypal_ec")
+     */
+    public function payPaypalECAction(Entity\Tournament $tournament) {
+        $em = $this->getDoctrine()->getManager();
+
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $manager = $em
+            ->getRepository('InsaLanTournamentBundle:Manager')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        $paymentName = 'paypal_express_checkout_and_doctrine_orm';
+
+        $price = ($manager::ONLINE_PRICE + $tournament->getOnlineIncreaseInPrice());
+
+        $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
+        $order = $storage->createModel();
+        $order->setUser($usr);
+
+        $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $tournament->getCurrency();
+        $order['PAYMENTREQUEST_0_AMT'] = $price;
+
+        $order['L_PAYMENTREQUEST_0_NAME0'] = 'Place manager pour le tournoi '.$tournament->getName();
+        $order['L_PAYMENTREQUEST_0_AMT0'] = $manager::ONLINE_PRICE;
+        $order['L_PAYMENTREQUEST_0_DESC0'] = $tournament->getDescription();
+        $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;
+
+        $order['L_PAYMENTREQUEST_0_NAME1'] = 'Majoration paiement en ligne';
+        $order['L_PAYMENTREQUEST_0_AMT1'] = $tournament->getOnlineIncreaseInPrice();
+        $order['L_PAYMENTREQUEST_0_DESC1'] = 'Frais de gestion du paiement';
+        $order['L_PAYMENTREQUEST_0_NUMBER1'] = 1;
+
+        $storage->updateModel($order);
+
+        $payment = $this->get('payum')->getPayment('paypal_express_checkout_and_doctrine_orm');
+        $captureToken = $this->get('payum.security.token_factory')->createCaptureToken(
+            $paymentName,
+            $order,
+            'insalan_tournament_manager_paydonetemp',
+            array('tournament' => $tournament->getId())
+        );
+
+        $order['RETURNURL'] = $captureToken->getTargetUrl();
+        $order['CANCELURL'] = $captureToken->getTargetUrl();
+        $order['INVNUM'] = $usr->getId();
+        $storage->updateModel($order);
+        return $this->redirect($captureToken->getTargetUrl());
+    }
+
+    /**
+     * Payment sum up
+     * @Route("/{tournament}/user/pay/done")
+     * @Template()
+     */
+    public function payDoneAction(Request $request, Entity\Tournament $tournament) {
+        $em = $this->getDoctrine()->getManager();
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $manager = $em
+            ->getRepository('InsaLanTournamentBundle:Manager')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager);
+    }
+
+    /**
+     * @Route("/{tournament}/user/pay/done_temp")
+     */
+    public function payDoneTempAction(Request $request, Entity\Tournament $tournament) {
+        $em = $this->getDoctrine()->getManager();
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Manager')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        $token = $this->get('payum.security.http_request_verifier')->verify($request);
+        $payment = $this->get('payum')->getPayment($token->getPaymentName());
+
+        //$this->get('payum.security.http_request_verifier')->invalidate($token);
+
+        $payment->execute($status = new GetHumanStatus($token));
+
+        if ($status->isCaptured()) {
+            $player->setPaymentDone(true);
+            $em->persist($player);
+            $em->flush();
+        }
+        return $this->redirect($this->generateUrl('insalan_tournament_manager_paydone', array('tournament' => $tournament->getId())));
+    }
+
+    /**
+     * Offer offline payment choices
+     * @Route("/{tournament}/user/pay/offline")
+     * @Template()
+     */
+    public function payOfflineAction(Request $request, Entity\Tournament $tournament) {
+        $em = $this->getDoctrine()->getManager();
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $player = $em
+            ->getRepository('InsaLanTournamentBundle:Manager')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager);
+    }
+
 }
 
 ?>
