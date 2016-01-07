@@ -13,6 +13,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Payum\Core\Model\Order;
+use Payum\Core\Reply\HttpRedirect;
+use Payum\Core\Reply\HttpResponse;
+use Payum\Core\Request\Capture;
+use Payum\Core\Request\GetHumanStatus;
+use Payum\Offline\PaymentFactory as OfflinePaymentFactory;
+use Payum\Paypal\ExpressCheckout\Nvp\Api;
+
 use InsaLan\TournamentBundle\Form\SetManagerName;
 use InsaLan\TournamentBundle\Form\TeamLoginType;
 use InsaLan\TournamentBundle\Exception\ControllerException;
@@ -262,11 +270,76 @@ class ManagerController extends Controller
     public function payOfflineAction(Request $request, Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
-        $player = $em
+        $manager = $em
             ->getRepository('InsaLanTournamentBundle:Manager')
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
         return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager);
+    }
+    
+    /**
+     * Allow a manager to drop a pending tournament registration if not managed by team
+     * @Route("/{tournament}/user/leave")
+     */
+    public function leaveAction(Entity\Tournament $tournament) {
+        $em = $this->getDoctrine()->getManager();
+
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $manager = $em
+            ->getRepository('InsaLanTournamentBundle:Manager')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        if($manager->getTournament()->getParticipantType() !== "player")
+            throw new ControllerException("Not Allowed"); // must be a player only tournament
+
+        $em->remove($manager);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+    }
+
+    /**
+     * Allow a manager to drop a pending tournament registration managed by teams
+     * @Route("/user/leave/team/{teamId}")
+     * @Template()
+     */
+    public function leaveTeamAction($teamId) {
+        $em = $this->getDoctrine()->getManager();
+        $team = $em
+            ->getRepository('InsaLanTournamentBundle:Team')
+            ->findOneById($teamId);
+
+        if($team === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        // get targeted manager
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $manager = $em
+            ->getRepository('InsaLanTournamentBundle:Manager')
+            ->findOneByUserAndPendingTournament($usr, $team->getTournament());
+
+        // is he part of the team roster ?
+        if($team->getManager() != $manager)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        // not allowed if he paid something
+        if(!$team->getTournament()->isFree() && $manager->getPaymentDone()){
+            $this->get('session')->getFlashBag()->add('error', "Vous avez payé votre place, merci de contacter l'équipe si vous souhaitez vous désistez.");
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
+        // not allowed either if registration are closed
+        if(!$team->getTournament()->isOpenedNow())
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+    
+        // TODO
+        // $manager->setParticipant(null);
+        // $team->setManager(null);
+
+        $em->persist($team);
+
+        $em->remove($player);
+        $em->flush();
+        return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
     }
 
 }
