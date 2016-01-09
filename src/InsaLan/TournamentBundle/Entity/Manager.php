@@ -62,6 +62,10 @@ class Manager
      */
     protected $arrived;
 
+    public function getParticipantType() {
+        return "manager";
+    }
+
     /**
      * Constructor
      */

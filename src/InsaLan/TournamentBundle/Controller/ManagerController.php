@@ -40,6 +40,29 @@ class ManagerController extends Controller
 {
 
     /**
+     * Manage all steps for registering into a tournament as manager
+     * @Route("/{tournament}/user/enroll")
+     */
+    public function enrollAction(Request $request, Entity\Tournament $tournament) {
+        $em = $this->getDoctrine()->getManager();
+
+        $usr = $this->get('security.context')->getToken()->getUser();
+
+        $manager = $em
+            ->getRepository('InsaLanTournamentBundle:Manager')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        if ($manager === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_manager_setname',array('tournament' => $tournament->getId())));
+        else if ($tournament->getParticipantType() === 'team' && $manager->getParticipant() === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_manager_jointeamwithpassword',array('tournament' => $tournament->getId())));
+        else if (!$manager->getPaymentDone())
+            return $this->redirect($this->generateUrl('insalan_tournament_manager_pay',array('tournament' => $tournament->getId())));
+        else
+            return $this->redirect($this->generateUrl('insalan_tournament_manager_paydone',array('tournament' => $tournament->getId())));
+    }
+
+    /**
      * Create a new manager related to a tournament
      * @Route("/{tournament}/user/set")
      * @Template()
@@ -74,7 +97,7 @@ class ManagerController extends Controller
 
     /**
      * Allow a new manager to join a team with name and password
-     * @Route("/{tournament}/user/enroll")
+     * @Route("/{tournament}/user/setname")
      * @Template()
      */
     public function joinTeamWithPasswordAction(Request $request, Entity\Tournament $tournament)
@@ -238,6 +261,7 @@ class ManagerController extends Controller
     }
 
     /**
+     * Perform payment validation
      * @Route("/{tournament}/user/pay/done_temp")
      */
     public function payDoneTempAction(Request $request, Entity\Tournament $tournament) {
@@ -324,20 +348,18 @@ class ManagerController extends Controller
 
         // not allowed if he paid something
         if(!$team->getTournament()->isFree() && $manager->getPaymentDone()){
-            $this->get('session')->getFlashBag()->add('error', "Vous avez payé votre place, merci de contacter l'équipe si vous souhaitez vous désistez.");
+            $this->get('session')->getFlashBag()->add('error', "Vous avez payé votre place, merci de contacter l'InsaLan si vous souhaitez vous désister.");
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
         }
         // not allowed either if registration are closed
         if(!$team->getTournament()->isOpenedNow())
-            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
-    
-        // TODO
-        // $manager->setParticipant(null);
-        // $team->setManager(null);
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index')); 
+
+        $manager->setParticipant(null);
+        $team->setManager(null);
 
         $em->persist($team);
-
-        $em->remove($player);
+        $em->remove($manager);
         $em->flush();
         return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
     }
