@@ -57,13 +57,13 @@
         </li>
         {% endfor %}
         {% if participant.manager is not null %}
-        <li style="padding-top:10px"><div style="margin: 8px 0px 0px 10px; font-size:20px" class="pull-left">
+        <li><div style="margin: 8px 10px 10px 10px; font-size:20px" class="pull-left">
             {% if participant.manager.ok %}
                <span style="color: #00FF80">&#10003;</span>
             {% else %}
                <span style="color: #BF0000">&#x2718;</span>
             {% endif %}
-            <span>{{ participant.manager.gameName }} [Manager]<span>
+            <span><em>{{ participant.manager.gameName }}</em> [Manager]<span>
         </div></li>
         {% endif %}
       </ul>
