@@ -56,6 +56,16 @@
           <br class="clear">
         </li>
         {% endfor %}
+        {% if participant.manager is not null %}
+        <li><div style="margin: 8px 10px 10px 10px; font-size:20px" class="pull-left">
+            {% if participant.manager.ok %}
+               <span style="color: #00FF80">&#10003;</span>
+            {% else %}
+               <span style="color: #BF0000">&#x2718;</span>
+            {% endif %}
+            <span><em>{{ participant.manager.gameName }}</em> [Manager]<span>
+        </div></li>
+        {% endif %}
       </ul>
       {% endif %}
 
@@ -85,8 +95,16 @@
       {% endif %}
     </div>
 
-    {% if participant.validated == 2  %}
+    {% if participant.participantType == 'team' and participant.manager is not null and participant.manager.user == app.user %}
+        {# 2-button layout #}{% if participant.tournament.isOpenedNow %}
+        <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leaveteam', {teamId: participant.id}) }}">Annuler</a>
+        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
 
+        {# tournament is closed #}{% else %}
+        <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_manager_enroll', {tournament: participant.tournament.id}) }}">Inscription archivée</a>
+        {% endif %}
+    {% else %}
+      {% if participant.validated == 2  %}
         {# 2-button layout #}{% if participant.tournament.isPlaying %}
         <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_default_teamdetails', {id: participant.id }) }}">Jouer mes matchs</a>
         <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
@@ -104,14 +122,14 @@
         <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Inscription archivée</a>
         {% endif %}
 
-    {% else %}
-        {# 2-button layout #}{% if participant.tournament.isOpenedNow %}
-        <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Annuler</a>
-        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
-        {% endif %}
-    {% endif %}{# endif validated == 2 #}
-
-
+      {# endif validated == 2 #}
+      {% else %} {# over validation status #}
+          {# 2-button layout #}{% if participant.tournament.isOpenedNow %}
+          <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Annuler</a>
+          <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
+          {% endif %}
+      {% endif %}
+    {% endif %}{# endif not a manager #}
     <br class="clear">
   </div>
 
@@ -143,6 +161,8 @@
         <a class="list-choice" href="{{ path('insalan_tournament_user_enroll', {tournament: t.id}) }}">
         <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
         <h2>{{ t.name }}{% if t.isFull %} - COMPLET {% endif %}</h2>
+        <a href="{{ path('insalan_tournament_manager_setname', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription manager</a>
+        {% if not t.isFull %}<a href="{{ path('insalan_tournament_user_enroll', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription joueur</a>{% endif %}
         <p>
         {{ t.teamMinPlayer }} joueur(s) 
         - 

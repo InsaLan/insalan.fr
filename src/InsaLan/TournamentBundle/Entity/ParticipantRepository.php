@@ -37,8 +37,25 @@ class ParticipantRepository extends EntityRepository
         $query->execute();
         
         $result2 = $query->getResult();
+        
+        $query = $em->createQuery("
+            SELECT pa
+            FROM InsaLanTournamentBundle:Participant pa,
+                 InsaLanTournamentBundle:Manager ma
 
-        return new ArrayCollection(array_merge($result1, $result2));
+            JOIN ma.participant t
+
+            WHERE ma.user = :user
+              AND pa.id = t.id
+              AND pa.tournament IS NOT NULL
+        ")->setParameter('user', $u);
+
+        $query->execute();
+        
+        $result3 = $query->getResult();
+
+
+        return new ArrayCollection(array_merge($result1, $result2, $result3));
 
     }
 

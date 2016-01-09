@@ -1,0 +1,35 @@
+<div class="frame frame-active">
+    <header class="full">
+        <div class="step pull-left">
+            {{ counter }}
+        </div>
+        <div class="title pull-left">Paiement en attente</div>
+        <br class="clear">
+    </header>
+    <div class="text">
+
+        <strong>Paiement par chèque</strong><br>
+        Vous devez envoyer un chèque de {{ constant('ONLINE_PRICE', manager) }}€ à l'ordre de <strong>"AEIR InsaLan"</strong> par la poste à l'adresse suivante : 
+        <br>
+        Vincent Giraud<br>
+        DB104 INSA Rennes<br>
+        20 avenue des Buttes de Coësmes CS 70839<br>
+        35708 Rennes CEDEX 7<br>
+        <br>
+        Votre inscription sera validé par le staff à la réception du chèque.
+
+        <strong>Paiement sur place</strong><br>
+        Le tarif manager sur place s'élève à {{ constant('ONSITE_PRICE', manager) }}€.<br/>
+        Vous pourrez régler sur place en liquide, par chèque ou par carte bancaire (avec une majoration de 1€ pour la CB).<br>
+        <br/></br>
+
+        <strong>Points importants</strong><br/>
+        <ul>
+            <li>Si vous coachez une équipe, celle-ci ne doit pas comporter de remplaçant afin que vous ayez la place de vous installer.</li>
+        </ul>
+        </br>
+    </div>
+    <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_index') }}">Ok</a>
+    <br class="clear">
+</div>
+

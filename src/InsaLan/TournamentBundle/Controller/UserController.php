@@ -55,7 +55,7 @@ class UserController extends Controller
         }
 
         $rawTournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments();
-        // participants can be either a single player of a team
+        // participants can be either a single player, a team or a manager
         $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($usr);
 
         $tournaments = array();
@@ -454,7 +454,7 @@ class UserController extends Controller
 
         // not allowed if he paid something
         if(!$team->getTournament()->isFree() && $player->getPaymentDone()){
-            $this->get('session')->getFlashBag()->add('error', "Vous avez payé votre place, merci de contacter l'équipe si vous souhaitez vous désistez.");
+            $this->get('session')->getFlashBag()->add('error', "Vous avez payé votre place, merci de contacter l'InsaLan si vous souhaitez vous désister.");
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
         }
         // not allowed either if registration are closed

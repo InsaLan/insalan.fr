@@ -50,6 +50,11 @@ abstract class Participant
      */
     protected $placement;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Manager", mappedBy="participant")
+     */
+    protected $manager;
+
     public function getParticipantType() {
         return "participant";
     }
@@ -187,5 +192,27 @@ abstract class Participant
     public function getPlacement()
     {
         return $this->placement;
+    }
+
+    /**
+     * Set manager
+     *
+     * @param integer manager
+     * @return Participant
+     */
+    public function setManager($manager)
+    {
+        $this->manager = $manager;
+        return $this;
+    }
+
+    /**
+     * Get Manager
+     *
+     * @return integer 
+     */
+    public function getManager()
+    {
+        return $this->manager;
     }
 }

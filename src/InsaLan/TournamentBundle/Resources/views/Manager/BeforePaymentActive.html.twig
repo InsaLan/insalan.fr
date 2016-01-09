@@ -1,0 +1,42 @@
+<div class="frame frame-active">
+  <header class="full">
+    <div class="step pull-left">
+        {{ counter }}
+    </div>
+    <div class="title pull-left">Récapitulatif avant paiement</div>
+    <br class="clear">
+  </header>
+  <div class="text">
+      <table class="order">
+          <tr>
+              <td>Prix de la place</td>
+              <td>{{ constant('ONLINE_PRICE', manager) }} {{ tournament.currency }}</td> 
+           </tr>
+           <tr>
+               <td>Majoration si paiement en ligne</td>
+               <td>{{ tournament.onlineIncreaseInPrice }} {{ tournament.currency }}</td>
+           </tr>
+        </table>
+           <br>
+
+  </div>
+
+  {% if tournament.participantType == 'team' %}
+  <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_manager_leaveteam', {tournament: tournament.id, teamId: manager.participant.id}) }}">Annuler</a>
+  {% else %}
+  <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_manager_leave', {tournament: tournament.id}) }}">Annuler</a>
+  {% endif %}
+
+  {% if manager.participant.validated %}
+
+  <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_manager_payoffline', {tournament: tournament.id}) }}">Chèque/Sur place</a>
+  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_paypaypalec', {tournament: tournament.id}) }}">Paiement en ligne</a>
+
+  {% else %}
+
+  <span class="btn ctrl grid-8 pull-left">L'équipe choisie n'est pas validée !</span>
+
+  {% endif %}
+
+  <br class="clear">
+</div>
