@@ -95,7 +95,7 @@
       {% endif %}
     </div>
 
-    {% if participant.participantType == 'team' and participant.manager.user == app.user %}
+    {% if participant.participantType == 'team' and participant.manager is not null and participant.manager.user == app.user %}
         {# 2-button layout #}{% if participant.tournament.isOpenedNow %}
         <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leaveteam', {teamId: participant.id}) }}">Annuler</a>
         <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
