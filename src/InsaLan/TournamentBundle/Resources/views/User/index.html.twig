@@ -110,9 +110,12 @@
 
     {% if participant.manager is not null and participant.manager.user == app.user %}
         {# 2-button layout #}{% if participant.tournament.isOpenedNow %}
-        <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leaveteam', {teamId: participant.id}) }}">Annuler</a>
-        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
-
+        {% if participant.participantType == 'team' %}
+          <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leaveteam', {teamId: participant.id}) }}">Annuler</a>
+        {% elseif participant.participantType == 'player' %}
+          <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leave', {tournament: participant.tournament.id}) }}">Annuler</a>
+        {% endif %}
+          <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
         {# tournament is closed #}{% else %}
         <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_manager_enroll', {tournament: participant.tournament.id}) }}">Inscription archivée</a>
         {% endif %}

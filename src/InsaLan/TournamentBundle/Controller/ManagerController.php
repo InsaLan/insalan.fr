@@ -366,6 +366,7 @@ class ManagerController extends Controller
 
     /**
      * Allow a manager to drop a pending tournament registration if not managed by team
+     * TODO add flashbag confirmation
      * @Route("/{tournament}/user/leave")
      */
     public function leaveAction(Entity\Tournament $tournament) {
@@ -379,6 +380,17 @@ class ManagerController extends Controller
         if($manager->getTournament()->getParticipantType() !== "player")
             throw new ControllerException("Not Allowed"); // must be a player only tournament
 
+        // not allowed if he paid something
+        if(!$tournament->isFree() && $manager->getPaymentDone()){
+            $this->get('session')->getFlashBag()->add('error', "Vous avez payé votre place, merci de contacter l'InsaLan si vous souhaitez vous désister.");
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
+        // not allowed either if registration are closed
+        if($tournament->isOpenedNow())
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        $manager->getParticipant()->setManager(null);
+        $manager->setParticipant(null);
         $em->remove($manager);
         $em->flush();
 
@@ -387,8 +399,8 @@ class ManagerController extends Controller
 
     /**
      * Allow a manager to drop a pending tournament registration managed by teams
+     * TODO add flashbag confirmation
      * @Route("/user/leave/team/{teamId}")
-     * @Template()
      */
     public function leaveTeamAction($teamId) {
         $em = $this->getDoctrine()->getManager();
@@ -416,7 +428,7 @@ class ManagerController extends Controller
         }
         // not allowed either if registration are closed
         if(!$team->getTournament()->isOpenedNow())
-            return $this->redirect($this->generateUrl('insalan_tournament_user_index')); 
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
         $manager->setParticipant(null);
         $team->setManager(null);
@@ -424,6 +436,7 @@ class ManagerController extends Controller
         $em->persist($team);
         $em->remove($manager);
         $em->flush();
+
         return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
     }
 
