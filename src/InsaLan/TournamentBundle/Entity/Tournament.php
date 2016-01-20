@@ -105,6 +105,14 @@ class Tournament
     protected $teamMaxPlayer;
 
     /**
+     * Maximum number of manager allowed on the tournament.
+     * Only for solo tournaments at the moment.
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $maxManager;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      */
     protected $logoPath;
@@ -450,6 +458,27 @@ class Tournament
     {
         return $this->teamMaxPlayer;
     }
+
+    /**
+     * Get the maximum allowed number of manager
+     *
+     * @return integer
+     */
+    public function getMaxManager()
+    {
+        return $this->maxManager;
+    }
+
+    /**
+     * Set the maximum allowed number of manager
+     */
+    public function setMaxManager($maxManager)
+    {
+        $this->maxManager = $maxManager;
+
+        return $this;
+    }
+
 
     /**
      * Set participantType

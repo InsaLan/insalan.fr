@@ -19,6 +19,7 @@ class TeamAdmin extends Admin
             ->add('name')
             ->add('tournament')
             ->add('captain')
+            ->add('manager')
             ->add('validated', 'choice', array(
                 'required' => true,
                 'choices' => array(

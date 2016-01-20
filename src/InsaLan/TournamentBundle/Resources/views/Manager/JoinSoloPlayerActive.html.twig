@@ -1,0 +1,31 @@
+{% if error %}
+    <div class="frame frame-danger">
+      <header class="full">
+        <div class="step pull-left">
+            {{ counter }}
+        </div>
+        <div class="title pull-left">Coacher un joueur inscrit</div>
+        <br class="clear">
+      </header>
+      <div class="text">
+        <p>{{ error }}</p>
+      </div>
+{% else %}
+    <div class="frame frame-active">
+      <header class="full">
+        <div class="step pull-left">
+            {{ counter }}
+        </div>
+        <div class="title pull-left">Coacher un joueur inscrit</div>
+        <br class="clear">
+      </header>
+{% endif %}
+
+<form action="{{ path('insalan_tournament_manager_joinsoloplayer', {tournament: tournament.id}) }}" id="step3" method="post" {{ form_enctype(form) }}>
+    <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
+    <div class="input field">
+      <input type="text" placeholder="Nom en jeu du joueur à coacher" name="{{ form.gameName.vars.full_name }}" value="{{ form.vars.value.gameName }}"/>
+    </div>
+    <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step3').submit();">Ok</a>
+  </form>
+    </div>
