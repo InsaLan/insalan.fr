@@ -67,6 +67,19 @@
         </div></li>
         {% endif %}
       </ul>
+      {% endif %}{# paticipantType == 'team' #}
+      {% if participant.participantType == 'player' and participant.manager is not null %}
+        <ul class="shift" style="list-style-type:none">
+          <li>
+            <div style="margin: 8px 10px 10px 10px; font-size:20px" class="pull-left">
+            {% if participant.manager.ok %}
+               <span style="color: #00FF80">&#10003;</span>
+            {% else %}
+               <span style="color: #BF0000">&#x2718;</span>
+            {% endif %}
+            <span><em>{{ participant.manager.gameName }}</em> [Manager]<span>
+          </div></li>
+        </ul>
       {% endif %}
 
       <br class="clear">
@@ -95,7 +108,7 @@
       {% endif %}
     </div>
 
-    {% if participant.participantType == 'team' and participant.manager is not null and participant.manager.user == app.user %}
+    {% if participant.manager is not null and participant.manager.user == app.user %}
         {# 2-button layout #}{% if participant.tournament.isOpenedNow %}
         <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leaveteam', {teamId: participant.id}) }}">Annuler</a>
         <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
