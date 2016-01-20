@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class SetPlayerName extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -18,7 +18,7 @@ class SetPlayerName extends AbstractType
             ->add('gameName')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

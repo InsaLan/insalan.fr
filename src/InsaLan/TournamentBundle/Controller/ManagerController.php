@@ -97,7 +97,7 @@ class ManagerController extends Controller
 
     /**
      * Allow a new manager to join a team with name and password
-     * @Route("/{tournament}/user/setname")
+     * @Route("/{tournament}/user/jointeam")
      * @Template()
      */
     public function joinTeamWithPasswordAction(Request $request, Entity\Tournament $tournament)
@@ -300,7 +300,7 @@ class ManagerController extends Controller
 
         return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager);
     }
-    
+
     /**
      * Allow a manager to drop a pending tournament registration if not managed by team
      * @Route("/{tournament}/user/leave")
