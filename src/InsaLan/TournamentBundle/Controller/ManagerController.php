@@ -386,7 +386,7 @@ class ManagerController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
         }
         // not allowed either if registration are closed
-        if($tournament->isOpenedNow())
+        if(!$tournament->isOpenedNow())
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
         $manager->getParticipant()->setManager(null);
