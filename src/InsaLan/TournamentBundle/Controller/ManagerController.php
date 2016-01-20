@@ -22,11 +22,13 @@ use Payum\Offline\PaymentFactory as OfflinePaymentFactory;
 use Payum\Paypal\ExpressCheckout\Nvp\Api;
 
 use InsaLan\TournamentBundle\Form\SetManagerName;
+use InsaLan\TournamentBundle\Form\SetPlayerName;
 use InsaLan\TournamentBundle\Form\TeamLoginType;
 use InsaLan\TournamentBundle\Exception\ControllerException;
 
 use InsaLan\TournamentBundle\Entity\Manager;
 use InsaLan\TournamentBundle\Entity\Participant;
+use InsaLan\TournamentBundle\Entity\Player;
 use InsaLan\TournamentBundle\Entity\Tournament;
 use InsaLan\TournamentBundle\Entity\Team;
 use InsaLan\TournamentBundle\Entity;
@@ -87,12 +89,73 @@ class ManagerController extends Controller
             $em->persist($manager);
             $em->flush();
 
-            return $this->redirect(
-                $this->generateUrl('insalan_tournament_manager_jointeamwithpassword', array('tournament' => $tournament->getId()))
-            );
+            if($tournament->getParticipantType() === "team")
+                return $this->redirect(
+                    $this->generateUrl('insalan_tournament_manager_jointeamwithpassword', array('tournament' => $tournament->getId()))
+                );
+            else // solo tournaments
+                return $this->redirect(
+                    $this->generateUrl('insalan_tournament_manager_joinsoloplayer', array('tournament' => $tournament->getId()))
+                );
         }
 
         return array('form' => $form->createView(), 'selectedGame' => $tournament->getType(), 'tournamentId' => $tournament->getId());
+    }
+
+    /**
+     * Allow a manager to join a player in a solo tournament
+     * @Route("/{tournament}/user/joinplayer")
+     * @Template()
+     */
+    public function joinSoloPlayerAction(Request $request, Entity\Tournament $tournament)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usr = $this->get('security.context')->getToken()->getUser();
+
+        // handle only solo tournaments
+        if($tournament->getParticipantType() !== "player")
+            throw new ControllerException("Joueurs solo non acceptées dans ce tournois");
+
+        // check if there is already a pending manager for this user and tournament
+        $manager = $em->getRepository('InsaLanTournamentBundle:Manager')
+            ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        if($manager === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_manager_setname', array('tournament' => $tournament->getId())));
+
+        $form_player = new Player();
+        $form = $this->createForm(new SetPlayerName(), $form_player); // fill player gamename
+        $form->handleRequest($request);
+
+        $error_details = null;
+        if ($form->isValid()) {
+            try {
+                // find the targeted player related to the manager
+                $player = $em
+                    ->getRepository('InsaLanTournamentBundle:Player')
+                    ->findOneBy(array(
+                        'gameName' => $form_player->getGameName(),
+                        'tournament' => $tournament));
+
+                if ($player === null)
+                    throw new ControllerException("Joueur introuvable !");
+                if ($player->getManager() != null)
+                    throw new ControllerException("Le joueur possède déjà un manager !");
+
+                $manager->setParticipant($player);
+                $player->setManager($manager);
+                $em->persist($manager);
+                $em->persist($player);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('insalan_tournament_manager_pay', array('tournament' => $tournament->getId())));
+
+            } catch (ControllerException $e) {
+                $error_details = $e->getMessage();
+            }
+
+        }
+        return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager, 'error' => $error_details, 'form' => $form->createView());
     }
 
     /**
