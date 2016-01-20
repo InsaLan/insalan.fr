@@ -7,25 +7,18 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class PlayerAdmin extends Admin
+class ManagerAdmin extends Admin
 {
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
             ->add('user')
-            ->add('team')
-            ->add('manager')
             ->add('gameName')
-            ->add('gameValidated', null, array('required'=>false))
-            ->add('gameAvatar')
-            ->add('gameId')
             ->add('tournament')
+            ->add('participant')
             ->add('paymentDone', null, array('required'=>false))
             ->add('arrived', null, array('required'=>false))
-            ->add('placement')
-            ->add('pendingTournament', null, array('required' => false))
-
         ;
     }
 
@@ -36,7 +29,6 @@ class PlayerAdmin extends Admin
             ->add('gameName')
             ->add('user.username')
             ->add('user.email')
-            ->add('team')
             ->add('tournament')
             ->add('arrived')
         ;
@@ -50,10 +42,7 @@ class PlayerAdmin extends Admin
             ->addIdentifier('gameName')
             ->add('tournament')
             ->add('user.email')
-            ->add('team.name')
             ->add('paymentDone')
-            ->add('validationDate')
-            ->add('placement')
             ->add('arrived')
         ;
     }

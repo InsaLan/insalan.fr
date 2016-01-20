@@ -43,6 +43,17 @@ services:
         calls:
             - [ setTranslationDomain, [InsaLanTournamentBundle]]
 
+    sonata.admin.tournament.manager:
+        class: InsaLan\TournamentBundle\Admin\ManagerAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Manager" }
+        arguments:
+            - ~
+            - InsaLan\TournamentBundle\Entity\Manager
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanTournamentBundle]]
+
     sonata.admin.tournament.team:
         class: InsaLan\TournamentBundle\Admin\TeamAdmin
         tags:
