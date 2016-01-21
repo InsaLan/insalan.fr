@@ -76,6 +76,13 @@ class ManagerController extends Controller
 
         $manager = $em->getRepository('InsaLanTournamentBundle:Manager')->findOneByUserAndPendingTournament($usr, $tournament);
 
+        // TODO Map managers like players into the tournament entity ? This will make counting easier
+        $countManagers = count($em->getRepository('InsaLanTournamentBundle:Manager')->findByTournament($tournament));
+        if($tournament->getMaxManager() != null && $countManagers >= $tournament->getMaxManager()) {
+            $this->get('session')->getFlashBag()->add('error', "Il ne reste plus de places manager sur ce tournois !");
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
+
         if ($manager === null) {
             $manager = new Manager();
             $manager->setUser($usr);
