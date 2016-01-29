@@ -19,19 +19,35 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
-        $player = $em->getRepository('InsaLanTournamentBundle:Player')->findByUser($usr);
-        $traw = $request->query->get('tournaments');
-        $t = explode(",", $traw);
+
+        $tournamentRaw = $request->query->get('tournaments');
+        $t = explode(",", $tournamentRaw);
 
         $res = array(
             "user" => array("username" => $usr->getUsername()),
             "err" => "registration_not_found",
-            "tournament" => null
-            
+            "tournament" => null,
         );
 
-        foreach($player as $p) {
+        // look for a manager corresponding to user and provieded tournaments
+        $manager = $em->getRepository('InsaLanTournamentBundle:Manager')->findByUser($usr);
+        foreach ($manager as $m) {
+            if ($m->getTournament())
+                if (in_array($m->getTournament()->getShortname(),$t))
+                    if($m->getPaymentDone()) {
+                        $res["err"] = null;
+                        $res["tournament"] = "manager";
 
+                        return new JsonResponse($res);
+                    } else {
+                        $res["err"] = "no_paid_place";
+                        // no return because we need to check if there is a player timezone_offset_get()
+                    }
+        }
+
+        $player = $em->getRepository('InsaLanTournamentBundle:Player')->findByUser($usr);
+
+        foreach($player as $p) {
             $res["err"] = "no_paid_place";
 
             if ($p->getTournament()) {
@@ -39,7 +55,7 @@ class DefaultController extends Controller
                 if($p->getPaymentDone()) {
                     $res["err"] = null;
                     $res["tournament"] = $p->getTournament()->getShortname();
-                    continue;
+                    return new JsonResponse($res);
                 }
             }
 
@@ -48,11 +64,9 @@ class DefaultController extends Controller
                 if($p->getPaymentDone()) {
                     $res["err"] = null;
                     $res["tournament"] = $p->getPendingTournament()->getShortname();
-                    continue;
+                    return new JsonResponse($res);
                 }
             }
-            
-
         }
 
         return new JsonResponse($res);
