@@ -100,7 +100,7 @@ class DefaultController extends Controller
 
         return array('teams' => $teams);
     }
- 
+
     /**
      * Display the players currently registered or pending for this tournament
      * @Route("/{id}/public/player", requirements={"id" = "\d+"})
@@ -203,7 +203,7 @@ class DefaultController extends Controller
      * @Template
      */
     public function knockoutAction(Entity\Tournament $t)
-    {   
+    {
         $em = $this->getDoctrine()->getManager();
 
         $KOs = $em->getRepository('InsaLanTournamentBundle:Knockout')->findByTournament($t);
@@ -216,7 +216,7 @@ class DefaultController extends Controller
         }
 
         return array("tournament" => $t, "knockouts" => $output);
-        
+
 
     }
 
@@ -229,7 +229,7 @@ class DefaultController extends Controller
     {
 
         // Get Knockout & Group Matches
-        
+
         $em = $this->getDoctrine()->getManager();
         $matches = $em->getRepository("InsaLanTournamentBundle:Match")->getByParticipant($part);
 

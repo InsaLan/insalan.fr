@@ -136,6 +136,36 @@ class AdminController extends Controller
                 array('id' => $t->getId())));
     }
 
+    /**
+     * @Route("/{t}/admin/manager/{m}/tooglePayment")
+     */
+    public function manager_tooglePaymentAction(Entity\Tournament $t, Entity\Manager $m)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $m->setPaymentDone(!$m->getPaymentDone());
+        $em->persist($m);
+        $em->flush();
+
+       return $this->redirect($this->generateUrl(
+                'insalan_tournament_admin_index_1',
+                array('id' => $t->getId())));
+    }
+
+    /**
+     * @Route("/{t}/admin/manager/{m}/toogleArrived")
+     */
+    public function manager_toogleArrivedAction(Entity\Tournament $t, Entity\Manager $m)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $m->setArrived(!$m->getArrived());
+        $em->persist($m);
+        $em->flush();
+
+       return $this->redirect($this->generateUrl(
+                'insalan_tournament_admin_index_1',
+                array('id' => $t->getId())));
+    }
+
 
     /**
      * @Route("/admin/stage/{id}")

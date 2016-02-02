@@ -11,7 +11,7 @@ class PlayerRepository extends EntityRepository
 {
 
     public function findOneByUserAndPendingTournament(\InsaLan\UserBundle\Entity\User $u, Tournament $t) {
-        
+
         $q = $this->createQueryBuilder('p')
             ->where('p.user = :user AND p.pendingTournament = :tournament')
             ->setParameter('user', $u)
@@ -37,19 +37,28 @@ class PlayerRepository extends EntityRepository
     }
 
     public function getAllPlayersForTournament(Tournament $tournament) {
-        
-        // TODO REFACTOR FOR OPTIM (1 req per user...!)
 
         $em = $this->getEntityManager();
 
        // Execute player research
 
         $q = $this->createQueryBuilder('p')
-                    ->leftJoin('p.user', 'u')
-                    ->addSelect('u')
+                    ->innerJoin('p.user', 'u1')
+                    ->addSelect('u1')
+                    ->leftJoin('p.team', 't')
+                    ->addSelect('t')
+                    ->leftJoin('p.manager', 'm1')
+                    ->addSelect('m1')
+                    ->leftJoin('t.manager', 'm2')
+                    ->addSelect('m2')
+                    ->leftJoin('m1.user', 'u2')
+                    ->addSelect('u2')
+                    ->leftJoin('m2.user', 'u3')
+                    ->addSelect('u3')
                     ->where('p.tournament = :tournament')
                     ->orWhere('p.pendingTournament = :tournament')
-                    ->orderBy('p.gameName')
+                    ->addOrderBy('t.name')
+                    ->addOrderBy('p.gameName')
                     ->setParameter('tournament', $tournament);
 
         $players = $q->getQuery()->execute();
@@ -69,7 +78,7 @@ class PlayerRepository extends EntityRepository
         }
 
         return $out;
-    } 
+    }
 
     public function getWaitingPlayer(Tournament $t) {
 

@@ -59,20 +59,21 @@
   <section class="grid-5 pull-left">
     <table style="width:100%">
       <tr>
-        <th class="grid-3">Pseudo / Nom</th>
+        <th colspan="2" class="grid-3">Pseudo / Nom</th>
         <th class="grid-3">Equipe</th>
         <th class="grid-2">Payé</th>
         <th class="grid-2">Arrivé</th>
       </tr>
       {% for player in players %}
         <tr>
-          <td>{{ player.gameName }}
-            {% if player.user %}
-            <br /><span style="font-size:10px; color: grey;">{{ player.user.firstname }} {{ player.user.lastname}}</span>
-            {% endif %}
+          <td colspan="2">
+            {{ player.gameName }}
+            <br />
+            <span style="font-size:10px; color: grey;">{{ player.user.firstname }} {{ player.user.lastname}}</span>
           </td>
           <td>
-            {% if player.team | length > 0 %}
+            {% set solo = not (player.team | length > 0) %}
+            {% if not solo %}
               {{ player.team[0].name }}
             {% else %}
               (solo)
@@ -89,6 +90,28 @@
             </form>
           </td>
         </tr>
+        {% set manager = solo ? player.manager : player.team[0].manager %}
+        {% set next = (solo or loop.last) ? none : players[loop.index0 + 1] %}
+        {% set nextTeamId = next and (next.team | length > 0) ? next.team[0].id : none %}
+        {% if manager and (not next or player.team[0].id != nextTeamId) %}
+        <tr>
+          <td style="background-color: silver; width: 1%"></td>
+          <td colspan="2">
+            Manager : {{ manager.gameName }}
+            <span style="color: grey;">({{ manager.user.firstname }} {{ manager.user.lastname}})</span>
+          </td>
+          <td>
+            <form method="POST" action="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id }) }}">
+              <input {% if not manager.paymentDone %}class="darkButton"{% endif %} type="submit" value="{% if manager.paymentDone %}OUI{% else %}NON{% endif %}"/>
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="{{ path('insalan_tournament_admin_manager_tooglearrived', { t: tournament.id, m: manager.id }) }}">
+              <input {% if not manager.arrived %}class="darkButton"{% endif %} type="submit" value="{% if manager.arrived %}OUI{% else %}NON{% endif %}"/>
+            </form>
+          </td>
+        </tr>
+        {% endif %}
       {% endfor %}
     </table>
   </section>
