@@ -8,7 +8,8 @@
     </header>
     <div class="text">
 
-        <strong>Paiement par chèque</strong><br>
+{% if tournament.isOpenedNow %}
+        <h2><strong>Paiement par chèque</strong></h2><br>
         Vous devez envoyer un chèque de {{ tournament.webPrice }}€ à l'ordre de <strong>"AEIR InsaLan"</strong> par la poste à l'adresse suivante : 
         <br>
         Vincent Giraud<br>
@@ -17,14 +18,16 @@
         35708 Rennes CEDEX 7<br>
         <br>
         Votre inscription sera validé par le staff à la réception du chèque.
+        <br><br>
+{% endif %}
 
-        <strong>Paiement sur place</strong><br>
-        Le tarif joueur sur place s'élève à 30€.<br/>
+        <h2><strong>Paiement sur place</strong></h2><br>
+        <h3>Le tarif joueur sur place s'élève à 30€.</h3>
         Vous pourrez régler sur place en liquide, par chèque ou par carte bancaire (avec une majoration de 1€ pour la CB).<br>
         <br/></br>
 
-        <strong>Points importants</strong><br/>
-        <ul>
+        <h2><strong>Points importants</strong></h2><br/>
+        <ul class="shift">
             <li>Si vous jouez en équipe (CS:GO, Dota, LoL), <strong>votre équipe ne sera validée qu'après le paiement (en ligne ou par chèque) d'au moins 3 des membres</strong>.</li>
             <li>Si vous jouez seul (SC2, HS), votre inscription sera validée dès que vous aurez payé.</li>
             <li>Si vous choisissez l'envoi par chèque, <strong>nous ne pouvons pas vous assurer qu'il restera des places lors de a réception de ce dernier</strong>, sauf si 3 de vos coéquipiers ont déjà payé en ligne (cf ci-dessus).</li>

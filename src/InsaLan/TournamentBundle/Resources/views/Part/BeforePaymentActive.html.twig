@@ -30,7 +30,11 @@
   {% if tournament.freeSlots > 0 or (tournament.participantType == 'team' and player.teamForTournament(tournament).validated) %}
 
   <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_user_payoffline', {tournament: tournament.id}) }}">Chèque/Sur place</a>
-  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_paypaypalec', {tournament: tournament.id}) }}">Paiement en ligne</a>
+    {% if tournament.isOpenedNow %}
+      <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_paypaypalec', {tournament: tournament.id}) }}">Paiement en ligne</a>
+    {% else %}
+      <span class="btn ctrl grid-5 pull-left">Paiment en ligne indisponible</span>
+    {% endif %}
 
   {% else %}
 
