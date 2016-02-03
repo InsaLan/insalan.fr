@@ -11,7 +11,9 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * @ORM\Entity(repositoryClass="InsaLan\PizzaBundle\Entity\UserOrderRepository")
  */
 class UserOrder
-{   
+{
+
+    const PAYPAL_INCREASE = 1; // EUR
 
     const TYPE_MANUAL = 0;
     const TYPE_PAYPAL = 1;
@@ -25,7 +27,7 @@ class UserOrder
         $c = strcasecmp($a->getUsername(), $b->getUsername());
         if($c === 0) {
             $c = strcasecmp($a->getFullname(), $b->getFullname());
-        }   
+        }
         return $c;
     }
 
@@ -90,15 +92,15 @@ class UserOrder
     protected $foreign;
 
     /**
-     * @ORM\Column(type="datetime") 
+     * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
     /**
-     * @ORM\Column(type="datetime") 
+     * @ORM\Column(type="datetime")
      */
     protected $updatedAt;
-        
+
     public function __construct() {
         $this->paymentDone = false;
         $this->createdAt = $this->updatedAt = new \DateTime();
@@ -243,7 +245,7 @@ class UserOrder
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -266,7 +268,7 @@ class UserOrder
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -289,7 +291,7 @@ class UserOrder
     /**
      * Get type
      *
-     * @return integer 
+     * @return integer
      */
     public function getType()
     {
@@ -312,7 +314,7 @@ class UserOrder
     /**
      * Get paymentDone
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPaymentDone()
     {
@@ -335,7 +337,7 @@ class UserOrder
     /**
      * Get fullnameCanonical
      *
-     * @return string 
+     * @return string
      */
     public function getFullnameCanonical()
     {
@@ -358,7 +360,7 @@ class UserOrder
     /**
      * Get usernameCanonical
      *
-     * @return string 
+     * @return string
      */
     public function getUsernameCanonical()
     {
@@ -381,7 +383,7 @@ class UserOrder
     /**
      * Get price
      *
-     * @return integer 
+     * @return integer
      */
     public function getPrice()
     {
@@ -405,7 +407,7 @@ class UserOrder
     /**
      * Get foreign
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getForeign()
     {
