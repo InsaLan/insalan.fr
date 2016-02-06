@@ -10,33 +10,40 @@
 {% block body %}
 {{ parent() }}
 
+{% if future_tournaments | length > 0 %}
 <article>
   <header>
     <h2>Tournois futurs</h2>
   </header>
   {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': future_tournaments} %}
 </article>
+{% endif %}
 
+{% if opened_tournaments | length > 0 %}
 <article>
   <header>
     <h2>Tournois ouverts</h2>
   </header>
   {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': opened_tournaments} %}
 </article>
+{% endif %}
 
-
+{% if registration_closed_tournaments | length > 0 %}
 <article>
   <header>
     <h2>Tournois en cours</h2>
   </header>
   {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': registration_closed_tournaments} %}
 </article>
+{% endif %}
 
+{% if old_tournaments | length > 0 %}
 <article>
   <header>
     <h2>Tournois terminés</h2>
   </header>
   {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': old_tournaments} %}
 </article>
+{% endif %}
 
 {% endblock %}

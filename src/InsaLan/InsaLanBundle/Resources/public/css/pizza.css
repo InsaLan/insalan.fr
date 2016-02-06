@@ -76,9 +76,3 @@ tr:hover {
     background: rgb(14, 14, 14);
     color: rgb(0, 191, 243);
 }
-
-td {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border: 1px groove rgb(0, 191, 243);
-}
