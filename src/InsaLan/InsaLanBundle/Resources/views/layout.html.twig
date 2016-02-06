@@ -25,38 +25,34 @@
 
     {% block main_header %}
 
-    {#<div id="mask">
+    <div id="mask">
+      <div class="maskContent" id="stream0">
+        <iframe src="http://player.twitch.tv/?channel=mastersjeuvideo" frameborder="0" scrolling="no" height="378" width="620"></iframe>
+        <br /><a href="#" class="hideMask">Cacher</a>
+      </div>
       <div class="maskContent" id="stream1">
-        <iframe frameborder="0" width="480" height="270" src="//www.dailymotion.com/embed/video/x1zsoax?autoPlay=0" allowfullscreen></iframe>
+        <iframe src="http://player.twitch.tv/?channel=docteuryogo" frameborder="0" scrolling="no" height="378" width="620"></iframe>
+        <br /><a href="#" class="hideMask">Cacher</a>
+      </div>
+      <div class="maskContent" id="stream2">
+        <iframe src="http://player.twitch.tv/?channel=milleniumtvhs" frameborder="0" scrolling="no" height="378" width="620"></iframe>
         <br /><a href="#" class="hideMask">Cacher</a>
       </div>
       <div class="maskContent" id="stream3">
-        <iframe frameborder="0" src="//www.dailymotion.com/embed/video/x1uf24n?logo=0&amp;hideInfos=1&amp;autoPlay=0" allowfullscreen="" width="480" height="270"></iframe>
-        <br /><a href="#" class="hideMask">Cacher</a>
-      </div>
-      <div class="maskContent" id="stream4">
-        <iframe frameborder="0" width="480" height="270" src="//www.dailymotion.com/embed/video/x1zsofq?logo=0&amp;hideInfos=1&amp;autoPlay=0" allowfullscreen></iframe>
-        <br /><a href="#" class="hideMask">Cacher</a>
-      </div>
-      <div class="maskContent" id="stream5">
-        <iframe frameborder="0" width="480" height="270" src="//fpdownload.adobe.com/strobe/FlashMediaPlayback_101.swf?src=rtmp://212.47.228.183:1935/live/fluxLOL" allowfullscreen></iframe>
-        <iframe frameborder="0" width="480" height="270" src="//fpdownload.adobe.com/strobe/FlashMediaPlayback_101.swf?src=rtmp://212.47.228.183:1935/live/fluxDOTA2" allowfullscreen></iframe>
-        <iframe frameborder="0" width="480" height="270" src="//fpdownload.adobe.com/strobe/FlashMediaPlayback_101.swf?src=rtmp://212.47.228.183:1935/live/fluxCSGO" allowfullscreen></iframe>
-        <iframe frameborder="0" width="480" height="270" src="//fpdownload.adobe.com/strobe/FlashMediaPlayback_101.swf?src=rtmp://212.47.228.183:1935/live/fluxScene" allowfullscreen></iframe>
+        <iframe src="http://player.twitch.tv/?channel=gaminglive_dota2" frameborder="0" scrolling="no" height="378" width="620"></iframe>
         <br /><a href="#" class="hideMask">Cacher</a>
       </div>
     </div>
 
-      <div class="streamsHeader">
-        <div class="grid-2 stream" style="text-align: left"><div class="rec"></div><p style="padding-left:30px">EN DIRECT :</p></div>
-        <div class="grid-1 streamLink stream showMask" data-target="stream1"><p>CS:GO</p></div>
-        <div class="grid-1 streamLink stream" data-target="stream2" onclick="document.location='http://www.millenium.org/home/milleniumtv/streaming/?chaine=millenium_tv'"><p>StarCraft 2</p></div>
-        <div class="grid-1 streamLink stream showMask" data-target="stream3"><p>DotA 2</p></div>
-        <div class="grid-2 streamLink stream showMask" data-target="stream4"><p>League Of Legends</p></div>
-        <div class="grid-1 streamLink stream showMask" data-target="stream5"><p><strong>InsaLan</strong></p></div>
-      </div>#}
+    <div class="streamsHeader">
+      <div class="grid-2 stream" style="text-align: left"><div class="rec"></div><p style="padding-left:30px">EN DIRECT</p></div>
+      <div class="grid-1 btn-primary streamLink stream showMask" data-target="stream0"><p>LoL</p></div>
+      <div class="grid-1 btn-primary streamLink stream showMask" data-target="stream1"><p>StarCraft II</p></div>
+      <div class="grid-1 btn-primary streamLink stream showMask" data-target="stream2"><p>Hearthstone</p></div>
+      <div class="grid-1 btn-primary streamLink stream showMask" data-target="stream3"><p>DotA 2</p></div>
+    </div>
     <header>
-      
+
       <div class="container">
         <div class="logo">
           <div class="pattern"></div>
@@ -158,8 +154,8 @@
               <header><a href="{{ path('insalan_news_default_index') }}">InsaLan.fr</a></header>
               <ul>
                 <li><a href="{{ path('insalan_news_default_index') }}">News</a></li>
-                <!-- <li><a href="http://www.insalan.fr/gallery/">Galerie</a></li> -->
-                <li><a href="{{ path('insalan_stream_default_index') }}">Stream</a></li>
+                {#<li><a href="http://www.insalan.fr/gallery/">Galerie</a></li>
+                <li><a href="{{ path('insalan_stream_default_index') }}">Stream</a></li>#}
                 <li><a href="http://old.insalan.fr/forum/">Forum</a></li>
                 <li><a href="{{ path('insalan_information_default_faq') }}#contact">Contact</a></li>
               </ul>
