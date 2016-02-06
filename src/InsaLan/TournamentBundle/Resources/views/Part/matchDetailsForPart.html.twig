@@ -8,25 +8,24 @@
           <caption>Match {{i}}</caption>
         {% endif %}
         <thead>
-          <th style="width:45%">{{ m.part1.name }}</th>
-          <th style="width:45%">{{ m.part2.name }}</th>
-          <th style="width:10%"></th>
+          <th style="width:50%">{{ m.part1.name }}</th>
+          <th style="width:50%">{{ m.part2.name }}</th>
         </thead>
         {% for r in m.rounds %}
         <tr>
-          <td class="{% if r.score1 > r.score2 %}won{% elseif r.score1 < r.score2 %}lost{% endif %}">
+          <td class="{% if r.score1 > r.score2 %}won{% elseif r.score1 < r.score2 %}lost{% endif %}" style="padding: 0px;">
             {{r.score1}}
           </td>
-          <td class="{% if r.score1 < r.score2 %}won{% elseif r.score1 > r.score2 %}lost{% endif %}">
+          <td class="{% if r.score1 < r.score2 %}won{% elseif r.score1 > r.score2 %}lost{% endif %}" style="padding: 0px;">
             {{r.score2}}
           </td>
-          <td>
+          {#<td>
             {% if r.replay == null and authorized %}
               <a href="{{ path('insalan_tournament_user_roundaddreplay', {id: part.id, round: r.id }) }}">replay</a>
             {% elseif r.replay != null %}
               <a href="{{ asset('uploads/tournament/replays/' ~ r.replay) }}">voir</a>
             {% endif %}
-          </td>
+          </td>#}
         </tr>
         {% endfor %}
       </table>
@@ -54,7 +53,11 @@
         {% endif %}
 
       {% else %}
+        {% if m.getWinner() %}
         <p>Remporté par <strong>{{ m.getWinner().name }}</strong></p>
+        {% else %}
+        <p>Match nul</p>
+        {% endif %}
       {% endif %}
 
     </div>
