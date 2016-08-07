@@ -46,7 +46,7 @@ class AdminController extends Controller
         if($id) {
 
             $order = $em->getRepository('InsaLanPizzaBundle:Order')->getOneById($id);
-            
+
             if(!$order)
                 throw new \Exception("Not Available");
 
@@ -118,7 +118,7 @@ class AdminController extends Controller
         $em->flush();
         return $this->redirect($this->generateUrl("insalan_pizza_admin_index_1", array("id" => $order->getId())));
     }
-    
+
     /**
      * @Route("/admin/{id}/unlock")
      * @Method({"POST"})
@@ -146,7 +146,7 @@ class AdminController extends Controller
 
         return $this->redirect($this->generateUrl("insalan_pizza_admin_index_1", array("id" => $id)));
     }
-    
+
     /**
      * @Route("/admin/order/{id}/status/{status}")
      * @Method({"POST"})
@@ -169,13 +169,13 @@ class AdminController extends Controller
 
     private function getAddUserOrderForm(Entity\Order $o) {
 
-        $em = $this->getDoctrine()->getManager();   
+        $em = $this->getDoctrine()->getManager();
 
         $pizzas = $em->getRepository('InsaLanPizzaBundle:Pizza')->findAll();
         $pizzasChoices = array();
 
         foreach($pizzas as $pizza) {
-            $pizzasChoices[$pizza->getId()] = $pizza->getName() . " (" . $pizza->getPrice() . " €)"; 
+            $pizzasChoices[$pizza->getId()] = $pizza->getName() . " (" . $pizza->getPrice() . " €)";
         }
 
         return $this->createFormBuilder()
