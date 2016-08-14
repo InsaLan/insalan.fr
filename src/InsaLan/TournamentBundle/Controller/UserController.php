@@ -619,7 +619,8 @@ class UserController extends Controller
         if ($form->isValid()) {
             $factory = $this->get('security.encoder_factory');
             $encoder = $factory->getEncoder($usr);
-            $team->setPassword($encoder->encodePassword($team->getPlainPassword(), sha1('pleaseHashPasswords'.$team->getName())));
+            $team->generatePasswordSalt();
+            $team->setPassword($encoder->encodePassword($team->getPlainPassword(), $team->getPasswordSalt()));
             $team->setTournament($tournament);
             $player->joinTeam($team);
             $team->addPlayer($player);
@@ -658,13 +659,14 @@ class UserController extends Controller
             try {
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($usr);
-                $team->setPassword($encoder->encodePassword($team->getPlainPassword(), sha1('pleaseHashPasswords'.$team->getName())));
                 $team2 = $em
                     ->getRepository('InsaLanTournamentBundle:Team')
                     ->findOneByNameAndTournament($team->getName(), $tournament);
 
                 if($team2 === null || $team2->getTournament()->getId() !== $tournament->getId())
                     throw new ControllerException("Équipe invalide");
+
+                $team->setPassword($encoder->encodePassword($team->getPlainPassword(), $team2->getPasswordSalt()));
 
                 if ($team2->getPassword() === $team->getPassword()) {
                     $player->joinTeam($team2);

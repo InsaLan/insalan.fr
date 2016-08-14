@@ -24,6 +24,11 @@ class Team extends Participant
     protected $password;
 
     /**
+     * @ORM\Column(type="string", length=40)
+     */
+    protected $passwordSalt;
+
+    /**
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      */
@@ -103,6 +108,41 @@ class Team extends Participant
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * Set password salt
+     *
+     * @param string $passwordSalt
+     * @return Team
+     */
+    public function setPasswordSalt($passwordSalt)
+    {
+        $this->passwordSalt = $passwordSalt;
+
+        return $this;
+    }
+
+    /**
+     * Get password salt
+     *
+     * @return string
+     */
+    public function getPasswordSalt()
+    {
+        return $this->passwordSalt;
+    }
+
+    /**
+     * Generate password salt
+     *
+     * @return Team
+     */
+    public function generatePasswordSalt()
+    {
+        $this->setPasswordSalt(sha1(uniqid($this->getName(), true)));
+
+        return $this;
     }
 
     /**
