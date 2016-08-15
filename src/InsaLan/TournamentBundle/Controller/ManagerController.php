@@ -198,13 +198,14 @@ class ManagerController extends Controller
                 // hash password
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($usr);
-                $form_team->setPassword($encoder->encodePassword($form_team->getPlainPassword(), sha1('pleaseHashPasswords'.$form_team->getName())));
                 $team = $em
                     ->getRepository('InsaLanTournamentBundle:Team')
                     ->findOneByNameAndTournament($form_team->getName(), $tournament);
 
                 if ($team === null || $team->getTournament()->getId() !== $tournament->getId())
                     throw new ControllerException("Équipe invalide");
+
+                $form_team->setPassword($encoder->encodePassword($form_team->getPlainPassword(), $team->getPasswordSalt()));
 
                 if ($team->getPassword() === $form_team->getPassword()) {
                     // denied if there is already a manager in the team

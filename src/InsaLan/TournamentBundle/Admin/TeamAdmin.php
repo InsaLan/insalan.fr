@@ -75,7 +75,7 @@ class TeamAdmin extends Admin
             $container = $this->getConfigurationPool()->getContainer();
             $factory = $container->get('security.encoder_factory');
             $encoder = $factory->getEncoder(new User());
-            $e->setPassword($encoder->encodePassword($e->getPlainPassword(), sha1('pleaseHashPasswords'.$e->getName())));
+            $e->setPassword($encoder->encodePassword($e->getPlainPassword(), $e->getPasswordSalt()));
         }
     }
 }
