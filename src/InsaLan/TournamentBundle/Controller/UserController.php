@@ -484,6 +484,55 @@ class UserController extends Controller
     }
 
     /**
+     * Allow a captain to edit his team's name and password
+     * @Route("/user/edit/team/{teamId}")
+     * @Template()
+     */
+
+    public function editTeamAction(Request $request, $teamId) {
+        $em = $this->getDoctrine()->getManager();
+
+        $team = $em
+            ->getRepository('InsaLanTournamentBundle:Team')
+            ->findOneById($teamId);
+
+        // does the team exist ?
+        if($team === null)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        // get current logged user corresponding player
+        $usr = $this->get('security.context')->getToken()->getUser();
+        $captain = $em
+            ->getRepository('InsaLanTournamentBundle:Player')
+            ->findOneByUserAndPendingTournament($usr, $team->getTournament());
+
+        // is he really the captain ? (also check for null)
+        if($team->getCaptain() !== $captain)
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
+        $form = $this->createForm(new TeamType(), $team);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // update password if not empty
+            if ($team->getPlainPassword() != ""){
+                $factory = $this->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($usr);
+                $team->setPassword($encoder->encodePassword($team->getPlainPassword(), $team->getPasswordSalt()));
+            }
+
+            $em->persist($team);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
+
+        $tournament = $team->getTournament();
+
+        return array('team' => $team, 'tournament' => $tournament, 'form' => $form->createView());
+    }
+
+    /**
      * Allow a captain to ban another player from a team
      * Only possible if the player didn't pay anything yet OR if this is a free tournament
      * @Route("/user/ban/team/{teamId}/{playerId}")
