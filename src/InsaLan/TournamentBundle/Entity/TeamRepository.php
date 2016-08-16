@@ -53,9 +53,15 @@ class TeamRepository extends EntityRepository
             ")
         ->setParameter('team_name', $team_name)
         ->setParameter('tournament', $t)
-        ->setMaxResults(1);;
+        ->setMaxResults(1);
         $query->execute();
-        return $query->getSingleResult();
+
+        try {
+            return $q->getQuery()->getSingleResult();
+        }
+        catch(\Exception $e) {
+            return null;
+        }
     }
 
     public function getWaitingTeam(Tournament $t) {
