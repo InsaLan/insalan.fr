@@ -17,6 +17,9 @@
         {% if participant.validated == 2 %} &#10003; {% else %} ! {% endif %}
       </div>
       <div class="title pull-left">
+        {% if participant.participantType == 'team' %}
+          {% if participant.captain.user == app.user %} <a href="{{ path('insalan_tournament_user_editteam', {teamId: participant.id}) }}">&#x2699;</a> {% endif %}
+        {% endif %}
         {{ participant.tournament.name }} - 
         {% if participant.participantType == 'team' %} Équipe {% endif %}
         {{ participant.name }}
