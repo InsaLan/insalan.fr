@@ -521,7 +521,7 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
         // not possible if the player payed something ! (paid tournament + payement done)
-        if(!$team->getTournament()->isFree() && $player->getPaymentDone())
+        if(!$team->getTournament()->isFree() && $playerToBan->getPaymentDone())
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
         /**
