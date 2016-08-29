@@ -26,6 +26,9 @@ input[type=submit], input[type=button], button, .btn2 {
 .darkButton {
     background-color: #00475B !important;
 }
+.payment_not_ok {
+    background-color: #00475B !important;
+}
 .scoreInput {
     color: black;
     height: 25px;
@@ -38,4 +41,14 @@ input[type=submit], input[type=button], button, .btn2 {
 {% block main_header %}
 {% endblock %}
 {% block main_bottom %}
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts 'bundles/insalan/js/jquery.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript">
+        jQuery.noConflict();
+    </script>
+    {{ parent() }}
 {% endblock %}

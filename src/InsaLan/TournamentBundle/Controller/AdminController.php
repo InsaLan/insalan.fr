@@ -6,10 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use InsaLan\TournamentBundle\Entity;
 use InsaLan\TournamentBundle\Exception\ControllerException;
+
+use InsaLan\ApiBundle\Http\JsonResponse;
 
 class AdminController extends Controller
 {
@@ -107,18 +110,19 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/{t}/admin/player/{p}/tooglePayment")
+     * @Route("/{t}/admin/player/{p}/tooglePayment/{status}")
+     * @Method({"POST"})
      */
-    public function player_tooglePaymentAction(Entity\Tournament $t, Entity\Player $p)
+    public function player_tooglePaymentAction(Entity\Tournament $t, Entity\Player $p, $status)
     {
         $em = $this->getDoctrine()->getManager();
-        $p->setPaymentDone(!$p->getPaymentDone());
+        $status = intval($status);
+
+        $p->setPaymentDone($status === 1);
         $em->persist($p);
         $em->flush();
 
-       return $this->redirect($this->generateUrl(
-                'insalan_tournament_admin_index_1',
-                array('id' => $t->getId())));
+       return new JsonResponse(array("err" => null));
     }
 
     /**
@@ -139,16 +143,14 @@ class AdminController extends Controller
     /**
      * @Route("/{t}/admin/manager/{m}/tooglePayment")
      */
-    public function manager_tooglePaymentAction(Entity\Tournament $t, Entity\Manager $m)
+    public function manager_tooglePaymentAction(Entity\Tournament $t, Entity\Manager $m, $status)
     {
         $em = $this->getDoctrine()->getManager();
         $m->setPaymentDone(!$m->getPaymentDone());
         $em->persist($m);
         $em->flush();
 
-       return $this->redirect($this->generateUrl(
-                'insalan_tournament_admin_index_1',
-                array('id' => $t->getId())));
+       return new JsonResponse(array("err" => null));
     }
 
     /**

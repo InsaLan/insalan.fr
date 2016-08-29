@@ -80,9 +80,10 @@
             {% endif %}
           </td>
           <td>
-            <form method="POST" action="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id }) }}">
-              <input {% if not player.paymentDone %}class="darkButton"{% endif %} type="submit" value="{% if player.paymentDone %}OUI{% else %}NON{% endif %}"/>
-            </form>
+            <span class="payment_status_{{ player.id }}">
+              <button class="payment_ok" data-url="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id, status: true }) }}" data-id="{{ player.id }}" onclick="changePaymentStatus(this)" {% if not player.paymentDone %}style="display:none"{% endif %}>OUI</button>
+              <button class="payment_not_ok" data-url="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id, status: true }) }}" data-id="{{ player.id }}" onclick="changePaymentStatus(this)" {% if player.paymentDone %}style="display:none"{% endif %}>NON</button>
+            </span>
           </td>
           <td>
             <form method="POST" action="{{ path('insalan_tournament_admin_player_tooglearrived', { t: tournament.id, p: player.id }) }}">
@@ -117,4 +118,30 @@
   </section>
 {% endif %}
 
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+(function($) {
+  window.changePaymentStatus = function(e) {
+
+    (function(e) {
+      $.post($(e).data('url'), function(res) {
+        if(!res.err) {
+          var playerID = $(e).data('id');
+          if(!$(e).hasClass('payment_ok')) {
+            $(".payment_status_" + playerID + " .payment_ok").show();
+            $(".payment_status_" + playerID + " .payment_not_ok").hide();
+          } else {
+            $(".payment_status_" + playerID + " .payment_ok").hide();
+            $(".payment_status_" + playerID + " .payment_not_ok").show();
+          }
+        }
+      });
+    })(e);
+
+  };
+})(jQuery);
+</script>
 {% endblock %}
