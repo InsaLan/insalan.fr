@@ -142,12 +142,15 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/{t}/admin/manager/{m}/tooglePayment")
+     * @Route("/{t}/admin/manager/{m}/tooglePayment/{status}")
+     * @Method({"POST"})
      */
     public function manager_tooglePaymentAction(Entity\Tournament $t, Entity\Manager $m, $status)
     {
         $em = $this->getDoctrine()->getManager();
-        $m->setPaymentDone(!$m->getPaymentDone());
+        $status = intval($status);
+
+        $m->setPaymentDone($status === 1);
         $em->persist($m);
         $em->flush();
 
@@ -155,18 +158,19 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/{t}/admin/manager/{m}/toogleArrived")
+     * @Route("/{t}/admin/manager/{m}/toogleArrived/{status}")
+     * @Method({"POST"})
      */
-    public function manager_toogleArrivedAction(Entity\Tournament $t, Entity\Manager $m)
+    public function manager_toogleArrivedAction(Entity\Tournament $t, Entity\Manager $m, $status)
     {
         $em = $this->getDoctrine()->getManager();
-        $m->setArrived(!$m->getArrived());
+        $status = intval($status);
+
+        $m->setArrived($status === 1);
         $em->persist($m);
         $em->flush();
 
-       return $this->redirect($this->generateUrl(
-                'insalan_tournament_admin_index_1',
-                array('id' => $t->getId())));
+        return new JsonResponse(array("err" => null));
     }
 
 

@@ -103,14 +103,16 @@
             <span style="color: grey;">({{ manager.user.firstname }} {{ manager.user.lastname}})</span>
           </td>
           <td>
-            <form method="POST" action="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id }) }}">
-              <input {% if not manager.paymentDone %}class="darkButton"{% endif %} type="submit" value="{% if manager.paymentDone %}OUI{% else %}NON{% endif %}"/>
-            </form>
+            <span class="payment_status_m{{ manager.id }}">
+                <button class="payment_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if not manager.arrived %}style="display:none"{% endif %}>OUI</button>
+              <button class="payment_not_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 0 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if manager.arrived %}style="display:none"{% endif %}>NON</button>
+            </span>
           </td>
           <td>
-            <form method="POST" action="{{ path('insalan_tournament_admin_manager_tooglearrived', { t: tournament.id, m: manager.id }) }}">
-              <input {% if not manager.arrived %}class="darkButton"{% endif %} type="submit" value="{% if manager.arrived %}OUI{% else %}NON{% endif %}"/>
-            </form>
+            <span class="arrived_status_m{{ manager.id }}">
+                <button class="arrived" data-url="{{ path('insalan_tournament_admin_manager_tooglearrived', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changeArrivedStatus(this)" {% if not manager.arrived %}style="display:none"{% endif %}>OUI</button>
+              <button class="not_arrived" data-url="{{ path('insalan_tournament_admin_manager_tooglearrived', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changeArrivedStatus(this)" {% if manager.arrived %}style="display:none"{% endif %}>NON</button>
+            </span>
           </td>
         </tr>
         {% endif %}
