@@ -126,18 +126,19 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/{t}/admin/player/{p}/toogleArrived")
+     * @Route("/{t}/admin/player/{p}/toogleArrived/{status}")
+     * @Method({"POST"})
      */
-    public function player_toogleArrivedAction(Entity\Tournament $t, Entity\Player $p)
+    public function player_toogleArrivedAction(Entity\Tournament $t, Entity\Player $p, $status)
     {
         $em = $this->getDoctrine()->getManager();
-        $p->setArrived(!$p->getArrived());
+        $status = intval($status);
+
+        $p->setArrived($status === 1);
         $em->persist($p);
         $em->flush();
 
-       return $this->redirect($this->generateUrl(
-                'insalan_tournament_admin_index_1',
-                array('id' => $t->getId())));
+       return new JsonResponse(array("err" => null));
     }
 
     /**
