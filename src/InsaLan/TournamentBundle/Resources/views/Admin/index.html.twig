@@ -80,14 +80,16 @@
             {% endif %}
           </td>
           <td>
-            <form method="POST" action="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id }) }}">
-              <input {% if not player.paymentDone %}class="darkButton"{% endif %} type="submit" value="{% if player.paymentDone %}OUI{% else %}NON{% endif %}"/>
-            </form>
+            <span class="payment_status_{{ player.id }}">
+              <button class="payment_ok" data-url="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id, status: 1 }) }}" data-id="{{ player.id }}" onclick="changePaymentStatus(this)" {% if not player.paymentDone %}style="display:none"{% endif %}>OUI</button>
+              <button class="payment_not_ok" data-url="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id, status: 0 }) }}" data-id="{{ player.id }}" onclick="changePaymentStatus(this)" {% if player.paymentDone %}style="display:none"{% endif %}>NON</button>
+            </span>
           </td>
           <td>
-            <form method="POST" action="{{ path('insalan_tournament_admin_player_tooglearrived', { t: tournament.id, p: player.id }) }}">
-              <input {% if not player.arrived %}class="darkButton"{% endif %} type="submit" value="{% if player.arrived %}OUI{% else %}NON{% endif %}"/>
-            </form>
+            <span class="arrived_status_{{ player.id }}">
+                <button class="arrived" data-url="{{ path('insalan_tournament_admin_player_tooglearrived', { t: tournament.id, p: player.id, status: 1 }) }}" data-id="{{ player.id }}" onclick="changeArrivedStatus(this)" {% if not player.arrived %}style="display:none"{% endif %}>OUI</button>
+              <button class="not_arrived" data-url="{{ path('insalan_tournament_admin_player_tooglearrived', { t: tournament.id, p: player.id, status: 0 }) }}" data-id="{{ player.id }}" onclick="changeArrivedStatus(this)" {% if player.arrived %}style="display:none"{% endif %}>NON</button>
+            </span>
           </td>
         </tr>
         {% set manager = solo ? player.manager : player.team[0].manager %}
@@ -101,14 +103,16 @@
             <span style="color: grey;">({{ manager.user.firstname }} {{ manager.user.lastname}})</span>
           </td>
           <td>
-            <form method="POST" action="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id }) }}">
-              <input {% if not manager.paymentDone %}class="darkButton"{% endif %} type="submit" value="{% if manager.paymentDone %}OUI{% else %}NON{% endif %}"/>
-            </form>
+            <span class="payment_status_m{{ manager.id }}">
+                <button class="payment_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if not manager.arrived %}style="display:none"{% endif %}>OUI</button>
+              <button class="payment_not_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 0 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if manager.arrived %}style="display:none"{% endif %}>NON</button>
+            </span>
           </td>
           <td>
-            <form method="POST" action="{{ path('insalan_tournament_admin_manager_tooglearrived', { t: tournament.id, m: manager.id }) }}">
-              <input {% if not manager.arrived %}class="darkButton"{% endif %} type="submit" value="{% if manager.arrived %}OUI{% else %}NON{% endif %}"/>
-            </form>
+            <span class="arrived_status_m{{ manager.id }}">
+                <button class="arrived" data-url="{{ path('insalan_tournament_admin_manager_tooglearrived', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changeArrivedStatus(this)" {% if not manager.arrived %}style="display:none"{% endif %}>OUI</button>
+              <button class="not_arrived" data-url="{{ path('insalan_tournament_admin_manager_tooglearrived', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changeArrivedStatus(this)" {% if manager.arrived %}style="display:none"{% endif %}>NON</button>
+            </span>
           </td>
         </tr>
         {% endif %}
@@ -117,4 +121,47 @@
   </section>
 {% endif %}
 
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+(function($) {
+  window.changePaymentStatus = function(e) {
+    (function(e) {
+      $.post($(e).data('url'), function(res) {
+        if(!res.err) {
+          var playerID = $(e).data('id');
+          if(!$(e).hasClass('payment_ok')) {
+            $(".payment_status_" + playerID + " .payment_ok").show();
+            $(".payment_status_" + playerID + " .payment_not_ok").hide();
+          } else {
+            $(".payment_status_" + playerID + " .payment_ok").hide();
+            $(".payment_status_" + playerID + " .payment_not_ok").show();
+          }
+        }
+      });
+    })(e);
+  };
+})(jQuery);
+</script><script type="text/javascript">
+(function($) {
+    window.changeArrivedStatus = function(e) {
+      (function(e) {
+        $.post($(e).data('url'), function(res) {
+          if(!res.err) {
+            var playerID = $(e).data('id');
+            if(!$(e).hasClass('arrived')) {
+              $(".arrived_status_" + playerID + " .arrived").show();
+              $(".arrived_status_" + playerID + " .not_arrived").hide();
+            } else {
+              $(".arrived_status_" + playerID + " .arrived").hide();
+              $(".arrived_status_" + playerID + " .not_arrived").show();
+            }
+          }
+        });
+      })(e);
+    };
+})(jQuery);
+</script>
 {% endblock %}
