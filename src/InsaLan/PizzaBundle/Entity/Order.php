@@ -128,29 +128,6 @@ class Order
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return Order
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * Set expiration
      *
      * @param \DateTime $expiration
