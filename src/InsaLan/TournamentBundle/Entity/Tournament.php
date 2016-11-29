@@ -131,6 +131,11 @@ class Tournament
      * @ORM\Column(type="string", nullable=false)
      */
     protected $currency;
+	
+	/**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $loginType;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -833,5 +838,27 @@ class Tournament
     public function getRules()
     {
         return $this->rules;
+    }
+	/**
+     * Set rules
+     *
+     * @param string $rules
+     * @return Tournament
+     */
+    public function setLoginType($loginType)
+    {
+        $this->loginType = $loginType;
+
+        return $this;
+    }
+
+    /**
+     * Get rules
+     *
+     * @return string
+     */
+    public function getLoginType()
+    {
+        return $this->loginType;
     }
 }
