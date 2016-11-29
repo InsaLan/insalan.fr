@@ -17,7 +17,7 @@ class UserType extends AbstractType
         $builder
             ->add('firstname', null, array('required' => true, 'label' => 'Prénom*'))
             ->add('lastname', null, array('required' => true, 'label' => 'Nom*'))
-            ->add('phoneNumber', null, array('required' => false, 'label' => 'Portable'))
+            ->add('phoneNumber', null, array('required' => true, 'label' => 'Portable*'))
             ->add('birthdate', 'birthday', array('required' => true, 'label' => 'Date de naissance*'))
         ;
     }
