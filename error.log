@@ -1,0 +1,129 @@
+[Tue Dec 06 16:59:05.880367 2016] [ssl:warn] [pid 10260:tid 520] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 16:59:05.880367 2016] [ssl:warn] [pid 10260:tid 520] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 16:59:06.076469 2016] [ssl:warn] [pid 10260:tid 520] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 16:59:06.076469 2016] [ssl:warn] [pid 10260:tid 520] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 16:59:06.829880 2016] [ssl:warn] [pid 10368:tid 532] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 16:59:06.829880 2016] [ssl:warn] [pid 10368:tid 532] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 16:59:06.999115 2016] [ssl:warn] [pid 10368:tid 532] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 16:59:06.999115 2016] [ssl:warn] [pid 10368:tid 532] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 16:59:20.452102 2016] [ssl:warn] [pid 12672:tid 644] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 16:59:20.452102 2016] [ssl:warn] [pid 12672:tid 644] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 16:59:20.668371 2016] [ssl:warn] [pid 12672:tid 644] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 16:59:20.668371 2016] [ssl:warn] [pid 12672:tid 644] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 16:59:21.383090 2016] [ssl:warn] [pid 8948:tid 516] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 16:59:21.383090 2016] [ssl:warn] [pid 8948:tid 516] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 16:59:21.530226 2016] [ssl:warn] [pid 8948:tid 516] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 16:59:21.530226 2016] [ssl:warn] [pid 8948:tid 516] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:01:38.076197 2016] [ssl:warn] [pid 10760:tid 628] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:01:38.077198 2016] [ssl:warn] [pid 10760:tid 628] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:01:38.254824 2016] [ssl:warn] [pid 10760:tid 628] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:01:38.254824 2016] [ssl:warn] [pid 10760:tid 628] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:01:39.018879 2016] [ssl:warn] [pid 10172:tid 536] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:01:39.019367 2016] [ssl:warn] [pid 10172:tid 536] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:01:39.173977 2016] [ssl:warn] [pid 10172:tid 536] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:01:39.173977 2016] [ssl:warn] [pid 10172:tid 536] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:03:58.019275 2016] [ssl:warn] [pid 4776:tid 604] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:03:58.020280 2016] [ssl:warn] [pid 4776:tid 604] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:03:58.249437 2016] [ssl:warn] [pid 4776:tid 604] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:03:58.249437 2016] [ssl:warn] [pid 4776:tid 604] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:03:59.036996 2016] [ssl:warn] [pid 12600:tid 464] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:03:59.037496 2016] [ssl:warn] [pid 12600:tid 464] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:03:59.208616 2016] [ssl:warn] [pid 12600:tid 464] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:03:59.208616 2016] [ssl:warn] [pid 12600:tid 464] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:06:35.420969 2016] [ssl:warn] [pid 7804:tid 596] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:06:35.421967 2016] [ssl:warn] [pid 7804:tid 596] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:06:35.608602 2016] [ssl:warn] [pid 7804:tid 596] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:06:35.608602 2016] [ssl:warn] [pid 7804:tid 596] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:06:36.377663 2016] [ssl:warn] [pid 7784:tid 456] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:06:36.378664 2016] [ssl:warn] [pid 7784:tid 456] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:06:36.581318 2016] [ssl:warn] [pid 7784:tid 456] AH01906: www.insalan.fr:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:06:36.581318 2016] [ssl:warn] [pid 7784:tid 456] AH01909: www.insalan.fr:443:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:07:23.555435 2016] [ssl:warn] [pid 12236:tid 620] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:07:23.556435 2016] [ssl:warn] [pid 12236:tid 620] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:07:23.797668 2016] [ssl:warn] [pid 12236:tid 620] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:07:23.797668 2016] [ssl:warn] [pid 12236:tid 620] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:07:24.533726 2016] [ssl:warn] [pid 2164:tid 508] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:07:24.534720 2016] [ssl:warn] [pid 2164:tid 508] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:07:24.695333 2016] [ssl:warn] [pid 2164:tid 508] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:07:24.695333 2016] [ssl:warn] [pid 2164:tid 508] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:09:14.046236 2016] [ssl:warn] [pid 5656:tid 612] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:09:14.046737 2016] [ssl:warn] [pid 5656:tid 612] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:09:14.212867 2016] [ssl:warn] [pid 5656:tid 612] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:09:14.212867 2016] [ssl:warn] [pid 5656:tid 612] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:09:15.091857 2016] [ssl:warn] [pid 8532:tid 496] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:09:15.092844 2016] [ssl:warn] [pid 8532:tid 496] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:09:15.241963 2016] [ssl:warn] [pid 8532:tid 496] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:09:15.241963 2016] [ssl:warn] [pid 8532:tid 496] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:11:19.831871 2016] [ssl:warn] [pid 3040:tid 608] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:11:19.832371 2016] [ssl:warn] [pid 3040:tid 608] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:11:20.040019 2016] [ssl:warn] [pid 3040:tid 608] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:11:20.040019 2016] [ssl:warn] [pid 3040:tid 608] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:11:20.814110 2016] [ssl:warn] [pid 11208:tid 536] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:11:20.815111 2016] [ssl:warn] [pid 11208:tid 536] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 17:11:20.993235 2016] [ssl:warn] [pid 11208:tid 536] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 17:11:20.993235 2016] [ssl:warn] [pid 11208:tid 536] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 20:16:46.399530 2016] [ssl:warn] [pid 7872:tid 648] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 20:16:46.400531 2016] [ssl:warn] [pid 7872:tid 648] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 20:16:46.565726 2016] [ssl:warn] [pid 7872:tid 648] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 20:16:46.565726 2016] [ssl:warn] [pid 7872:tid 648] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 20:16:47.387826 2016] [ssl:warn] [pid 6588:tid 488] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 20:16:47.388827 2016] [ssl:warn] [pid 6588:tid 488] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 20:16:47.546941 2016] [ssl:warn] [pid 6588:tid 488] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 20:16:47.546941 2016] [ssl:warn] [pid 6588:tid 488] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 20:17:59.130054 2016] [:error] [pid 6588:tid 1240] [client ::1:2176] script 'E:/wamp/www/InsaLan/app_dev.php' not found or unable to stat, referer: https://localhost:8001/app_dev.php/tournament/user
+[Tue Dec 06 20:18:42.081146 2016] [ssl:warn] [pid 13668:tid 588] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 20:18:42.082147 2016] [ssl:warn] [pid 13668:tid 588] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 20:18:42.273801 2016] [ssl:warn] [pid 13668:tid 588] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 20:18:42.273801 2016] [ssl:warn] [pid 13668:tid 588] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 20:18:43.041347 2016] [ssl:warn] [pid 7540:tid 500] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 20:18:43.042347 2016] [ssl:warn] [pid 7540:tid 500] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 20:18:43.206479 2016] [ssl:warn] [pid 7540:tid 500] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 20:18:43.206479 2016] [ssl:warn] [pid 7540:tid 500] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 20:21:43.746123 2016] [ssl:warn] [pid 13584:tid 592] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 20:21:43.746123 2016] [ssl:warn] [pid 13584:tid 592] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 20:21:43.947606 2016] [ssl:warn] [pid 13584:tid 592] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 20:21:43.947606 2016] [ssl:warn] [pid 13584:tid 592] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 20:21:44.815065 2016] [ssl:warn] [pid 10376:tid 544] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 20:21:44.815566 2016] [ssl:warn] [pid 10376:tid 544] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 06 20:21:44.968675 2016] [ssl:warn] [pid 10376:tid 544] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 06 20:21:44.968675 2016] [ssl:warn] [pid 10376:tid 544] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Wed Dec 07 18:02:20.822342 2016] [ssl:warn] [pid 1708:tid 604] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Wed Dec 07 18:02:20.823340 2016] [ssl:warn] [pid 1708:tid 604] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Wed Dec 07 18:02:21.573049 2016] [ssl:warn] [pid 1708:tid 604] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Wed Dec 07 18:02:21.573049 2016] [ssl:warn] [pid 1708:tid 604] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Wed Dec 07 18:02:22.421015 2016] [ssl:warn] [pid 11464:tid 560] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Wed Dec 07 18:02:22.421614 2016] [ssl:warn] [pid 11464:tid 560] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Wed Dec 07 18:02:22.586352 2016] [ssl:warn] [pid 11464:tid 560] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Wed Dec 07 18:02:22.586352 2016] [ssl:warn] [pid 11464:tid 560] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Thu Dec 08 16:44:11.265253 2016] [ssl:warn] [pid 12372:tid 628] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Thu Dec 08 16:44:11.284766 2016] [ssl:warn] [pid 12372:tid 628] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Thu Dec 08 16:44:11.596786 2016] [ssl:warn] [pid 12372:tid 628] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Thu Dec 08 16:44:11.596786 2016] [ssl:warn] [pid 12372:tid 628] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Thu Dec 08 16:44:12.929862 2016] [ssl:warn] [pid 5216:tid 544] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Thu Dec 08 16:44:12.930486 2016] [ssl:warn] [pid 5216:tid 544] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Thu Dec 08 16:44:13.139972 2016] [ssl:warn] [pid 5216:tid 544] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Thu Dec 08 16:44:13.140473 2016] [ssl:warn] [pid 5216:tid 544] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Fri Dec 09 00:07:09.793338 2016] [ssl:warn] [pid 10196:tid 616] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Dec 09 00:07:09.794257 2016] [ssl:warn] [pid 10196:tid 616] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Fri Dec 09 00:07:10.040617 2016] [ssl:warn] [pid 10196:tid 616] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Dec 09 00:07:10.040617 2016] [ssl:warn] [pid 10196:tid 616] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Fri Dec 09 00:07:10.813201 2016] [ssl:warn] [pid 12080:tid 504] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Dec 09 00:07:10.814192 2016] [ssl:warn] [pid 12080:tid 504] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Fri Dec 09 00:07:11.000523 2016] [ssl:warn] [pid 12080:tid 504] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Fri Dec 09 00:07:11.000523 2016] [ssl:warn] [pid 12080:tid 504] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Sun Dec 11 20:34:30.790900 2016] [ssl:warn] [pid 7412:tid 596] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Sun Dec 11 20:34:30.818269 2016] [ssl:warn] [pid 7412:tid 596] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Sun Dec 11 20:34:31.092545 2016] [ssl:warn] [pid 7412:tid 596] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Sun Dec 11 20:34:31.093031 2016] [ssl:warn] [pid 7412:tid 596] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Sun Dec 11 20:34:32.466400 2016] [ssl:warn] [pid 10392:tid 496] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Sun Dec 11 20:34:32.467387 2016] [ssl:warn] [pid 10392:tid 496] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Sun Dec 11 20:34:32.739103 2016] [ssl:warn] [pid 10392:tid 496] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Sun Dec 11 20:34:32.739103 2016] [ssl:warn] [pid 10392:tid 496] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 13 20:09:35.618142 2016] [ssl:warn] [pid 3744:tid 600] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 13 20:09:35.619143 2016] [ssl:warn] [pid 3744:tid 600] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 13 20:09:35.886655 2016] [ssl:warn] [pid 3744:tid 600] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 13 20:09:35.887140 2016] [ssl:warn] [pid 3744:tid 600] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 13 20:09:37.050975 2016] [ssl:warn] [pid 5664:tid 528] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 13 20:09:37.052398 2016] [ssl:warn] [pid 5664:tid 528] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name
+[Tue Dec 13 20:09:37.295971 2016] [ssl:warn] [pid 5664:tid 528] AH01906: www.insalan.fr:8000:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
+[Tue Dec 13 20:09:37.296482 2016] [ssl:warn] [pid 5664:tid 528] AH01909: www.insalan.fr:8000:0 server certificate does NOT include an ID which matches the server name

@@ -1,0 +1,31 @@
+{% extends 'InsaLanTournamentBundle:User:layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Inscription à &laquo; {{ tournament.name }} &raquo;</h2>
+    {{ tournament.description }}
+  </header>
+
+  <section>
+
+    {% if api is defined %}
+        <div class="text">
+          Vous devez renseigner votre identifiant {{api}} pour participer à ce tournoi.
+          <div>
+             <a href="{{registerUri}}" class="btn btn-primary">renseigner votre identifiant</a>
+          </div>
+        </div>
+    {% endif %}
+
+  </section>
+</article>
+{% endblock %}
