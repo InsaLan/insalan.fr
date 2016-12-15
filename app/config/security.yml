@@ -3,8 +3,9 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN]
+        ROLE_MERCHANT:    ROLE_USER
+        ROLE_ADMIN:       [ROLE_USER, ROLE_MERCHANT]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_MERCHANT]
 
     providers:
         fos_userbundle:
@@ -42,6 +43,6 @@ security:
         - { path: ^/user/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/, role: ROLE_USER }
         - { path: ^/tournament/.*/?user, role: ROLE_USER }
-        - { path: ^/pizza, role: ROLE_USER }
         - { path: /admin, role: ROLE_ADMIN }
-
+        - { path: /merchant, role: ROLE_MERCHANT } 
+        - { path: ^/pizza, role: ROLE_USER }
