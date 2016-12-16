@@ -60,7 +60,9 @@ class DefaultController extends Controller
             $usr->setSteamId(null);
             $em->persist($usr);
             $em->flush();
+            return $this->redirect($this->generateUrl('insalan_user_default_registersteamid'));
         }
+
         if($connectedAccount != null) {
             $routeDelete = $this->generateUrl('insalan_user_default_registersteamid');
             $routeDelete = $routeDelete.'?action=remove';
