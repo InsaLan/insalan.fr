@@ -188,20 +188,72 @@ class UserController extends Controller
      * @Template()
      */
     public function setPlayerAction(Request $request, Entity\Tournament $tournament) {
+        $autre = 'Autre';
+        $battleNet = 'BattleNet';
+        $steam = 'Steam';
+        
+        
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByUserAndPendingTournament($usr, $tournament);
         $game = $tournament->getType();
-
+        $platform = $tournament->getLoginType();
+        $this->get('session')->set('callbackRegisterApiRoute','insalan_tournament_user_setplayer');
+        $this->get('session')->set('callbackRegisterApiParams',array('tournament' => $tournament->getId()));
+        
         if ($player === null) {
             $player = new Player();
             $player->setUser($usr);
             $player->setPendingTournament($tournament);
         }
+        if($platform == $autre) {
+            return $this->usernameSet($em, $usr, $player, $request, $tournament);
+        } else if ($platform == $steam) {
+            if($usr->getSteamId() == null) {
+                return $this->redirect($this->generateUrl('insalan_tournament_user_redirecttoapilogin',
+                                                            array('tournament' => $tournament->getId())).'?api='.$steam);
+            } else {
+                $steamKey = $this->getParameter('steam_api_key');
+                $steamDetails = $usr->getSteamDetails($steamKey);
+                
+                $player->setGameName($steamDetails->personaname);
+                $em->persist($player);
+                $em->flush();
+                return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer', 
+                                                            array('tournament' => $tournament->getId())));
+            }
+        } else if($platform == $battleNet) {
+            if($usr->getBattleTag() == null) {
+                
+                return $this->redirect($this->generateUrl('insalan_tournament_user_redirecttoapilogin',
+                                                            array('tournament' => $tournament->getId())).'?api='.$battleNet);
 
-        return $this->usernameSet($em, $usr, $player, $request, $tournament);
+            } else {
+                $name = explode('#',$usr->getBattleTag())[0];
+                $player->setGameName($name);
+                $em->persist($player);
+                $em->flush();
+                return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer', 
+                                                            array('tournament' => $tournament->getId())));
+            }
+        }
     }
-
+    /**
+     * 
+     * @Route("/{tournament}/user/player/registerOtherPlatform/")
+     * @Template("InsaLanTournamentBundle:User:redirectToAPiLogin.html.twig")
+     */
+    public function redirectToApiLoginAction(Request $request, Entity\Tournament $tournament) {
+        
+        $link = null;
+        $api = $request->query->get('api');
+        if($api == 'Steam') {
+            $link = $this->generateUrl('insalan_user_default_registersteamid');
+        } else if ($api == 'BattleNet') {
+            $link = $this->generateUrl('insalan_user_default_registerbattlenet');
+        }
+        return array('api' => $api, 'registerUri' => $link, 'tournament' => $tournament);
+    }
     /**
      * Manage validation of player registration into a tournament
      * @Route("/{tournament}/user/player/validate")
@@ -214,7 +266,7 @@ class UserController extends Controller
         $check = $request->query->get('check') === "yes";
 
         if ($player === null) {
-            return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer'));
+            return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer',array('tournament' => $tournament->getId())));
         } else {
 
             $player->setGameValidated(true);

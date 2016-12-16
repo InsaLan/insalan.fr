@@ -1,0 +1,22 @@
+{% extends 'InsaLanUserBundle::layout.html.twig' %}
+{% block body %}
+{{ parent() }}
+
+<div class="frame frame-active">
+    <header class="full">
+        <div class="step pull-left">
+            &#x2699;
+        </div>
+        <h2 class="title pull-left">Mon profil</h2>
+        <br class="clear">
+    </header>
+    <div class="text">
+        {% if connectedAccount != null %}
+            <div>Vous êtes connecté en tant que : {{connectedAccount}} <img src="{{avatarSteamSrc}}"/></div>
+            <div><a class="btn btn-primary" href="{{deleteLink}}">Supprimer le lien avec ce compte steam</a>
+        {% else %}
+        En cliquant sur le bouton ci-dessous, vous serez redirigé vers le site steam afin de vous connecter. Nous pourrons ainsi vérifier votre identifiant pour les tournois nécessitant Steam
+        <a href="{{url}}"><img src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_01.png" alt="Se connecter"></a>
+        {% endif %}
+    </div>
+{% endblock %}

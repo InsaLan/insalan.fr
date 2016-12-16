@@ -50,6 +50,14 @@ class TournamentAdmin extends Admin
                     'manual' => 'Autre/Manuel'),
                 'required'  => true))
             ->add('file', 'file', array('required' => false))
+			->add('loginType','choice', array(
+				'choices' => array(
+					'other' => 'Autre',
+					'Steam' => 'Steam',
+					'battlenet' => 'BattleNet'					
+				),
+				'required' => true
+			))
         ;
     }
 

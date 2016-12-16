@@ -28,3 +28,8 @@ parameters:
     paypal_express_checkout_password: ~
     paypal_express_checkout_signature: ~
     paypal_express_checkout_sandbox: true
+
+    steam_api_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    battlenet_api_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    battlenet_api_secret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    battlenet_api_redirect_uri: https://insalan.fr/user/battleNetSignIn
