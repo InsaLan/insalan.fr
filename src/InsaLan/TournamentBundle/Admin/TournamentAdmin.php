@@ -45,6 +45,8 @@ class TournamentAdmin extends Admin
                     'hs' => 'HearthStone',
                     'dota2' => 'Dota 2',
                     'sc2' => 'StarCraft 2',
+                    'ow' => 'Overwatch',
+                    'sfv' => 'Street Fighter V',
                     'manual' => 'Autre/Manuel'),
                 'required'  => true))
             ->add('file', 'file', array('required' => false))
