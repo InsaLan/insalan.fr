@@ -241,7 +241,7 @@ class UserController extends Controller
     /**
      * 
      * @Route("/{tournament}/user/player/registerOtherPlatform/")
-     * @Template("InsaLanTournamentBundle:User:redirectToAPiLogin.html.twig")
+     * @Template("InsaLanTournamentBundle:User:redirectToApiLogin.html.twig")
      */
     public function redirectToApiLoginAction(Request $request, Entity\Tournament $tournament) {
         
