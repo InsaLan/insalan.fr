@@ -25,4 +25,38 @@
     <style>select { float:left; } .input.left select {margin-left: 0px;}</style>
     <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('profile').submit();">Ok</a>
 </div>
+
+<div class="frame frame-active">
+    <header class="full">
+        <div class="step pull-left">
+            &#x2699;
+        </div>
+        <h2 class="title pull-left">Connexion à Steam</h2>
+        <br class="clear">
+    </header>
+    <div class="text">
+        <br/>
+        <a class="btn2" href="{{ path('insalan_user_default_registersteamid') }}">Lier un compte Steam</a>
+        <br/>
+        <br/>
+    </div>
+</div>
+
+<div class="frame frame-active">
+    <header class="full">
+        <div class="step pull-left">
+            &#x2699;
+        </div>
+        <h2 class="title pull-left">Connexion à Battle.net</h2>
+        <br class="clear">
+    </header>
+    <div class="text">
+        <br/>
+        <a class="btn2" href="{{ path('insalan_user_default_registerbattlenet') }}">Lier un compte BattleNet</a>
+        <br/>
+        <br/>
+    </div>
+</div>
+
+
 {% endblock %}
