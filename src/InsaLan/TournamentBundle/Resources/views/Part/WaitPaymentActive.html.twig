@@ -7,17 +7,28 @@
         <br class="clear">
     </header>
     <div class="text">
+        <br />
 
 {% if tournament.isOpenedNow %}
         <h2><strong>Paiement par chèque</strong></h2><br>
         Vous devez envoyer un chèque de {{ tournament.webPrice }}€ à l'ordre de <strong>"AEIR InsaLan"</strong> par la poste à l'adresse suivante : 
         <br>
-        Vincent Giraud<br>
-        DB104 INSA Rennes<br>
-        20 avenue des Buttes de Coësmes CS 70839<br>
-        35708 Rennes CEDEX 7<br>
+        Maxime Leclerc<br>
+        51 rue de la Forge<br>
+        35830 Betton<br>
         <br>
-        Votre inscription sera validé par le staff à la réception du chèque.
+        Votre inscription sera validée par le staff à la réception du chèque.
+        <br><br>
+
+        <h2><strong>Paiement au WarpZone</strong></h2>
+        <div style="float: right">
+            <iframe style="border: 0;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2664.027321343604!2d-1.6946511452301016!3d48.10970867201523!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xcc09232560ffd4ec!2sWarpZone!5e0!3m2!1sen!2sfr!4v1445516841323" frameborder="0" width="200" height="120"></iframe>
+        </div>
+        <br>
+        Vous devez vous rendre au <strong>WarpZone, 92 Mail François Mitterrand, 35000 Rennes</strong>.<br>
+        Vous pourrez effectuer le paiement de votre place ({{ tournament.webPrice }}€) en liquide, par chèque ou par carte bancaire.<br>
+        <br/>
+        Votre inscription sera validée à la réception de votre paiement par le partenaire.
         <br><br>
 {% endif %}
 
@@ -28,14 +39,14 @@
 
         <h2><strong>Points importants</strong></h2><br/>
         <ul class="shift">
-            <li>Si vous jouez en équipe (CS:GO, Dota, LoL), <strong>votre équipe ne sera validée qu'après le paiement (en ligne ou par chèque) d'au moins 3 des membres</strong>.</li>
-            <li>Si vous jouez seul (SC2, HS), votre inscription sera validée dès que vous aurez payé.</li>
-            <li>Si vous choisissez l'envoi par chèque, <strong>nous ne pouvons pas vous assurer qu'il restera des places lors de a réception de ce dernier</strong>, sauf si 3 de vos coéquipiers ont déjà payé en ligne (cf ci-dessus).</li>
+            <li>Si vous jouez en équipe (CS:GO, Dota, LoL, OW), <strong>votre équipe ne sera validée qu'après le paiement (en ligne ou par chèque) d'au moins 3 des membres</strong>.</li>
+            <li>Si vous jouez seul (HS, SFV), votre inscription sera validée dès la réception de votre paiement.</li>
+            <li>Si vous choisissez l'envoi par chèque, <strong>nous ne pouvons pas vous assurer qu'il restera des places lors de la réception de ce dernier</strong>, sauf si 3 de vos coéquipiers ont déjà payé en ligne (cf ci-dessus).</li>
             <li>Si vous payez sur place, 3 membres de votre équipe doivent avoir payé en ligne ou par chèque (cf. point 1).</li>
         </ul>
         </br>
     </div>
-    <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_index') }}">Ok</a>
+    <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_index') }}">Valider</a>
     <br class="clear">
 </div>
 

@@ -7,6 +7,7 @@
     <br class="clear">
   </header>
   <div class="text">
+      <br />
       <table class="order">
           <tr>
               <td>Prix de la place</td>
@@ -16,9 +17,26 @@
                <td>Majoration si paiement en ligne</td>
                <td>{{ tournament.onlineIncreaseInPrice }} {{ tournament.currency }}</td>
            </tr>
-        </table>
-           <br>
+      </table>
+      <br>
+      <h2><strong>Moyens de paiement disponibles</strong></h2><br>
+      <ul class="shift">
+          <li>En ligne : Paypal</li>
+          <li>Sur place : Chèque, Espèces, CB</li>
+          <li>Point de vente partenaire (Le WarpZone - Rennes) : Chèque, Espèces, CB</li>
+      </ul>
+      <br/></br>
 
+      <h2><strong>Points importants</strong></h2><br/>
+      <ul class="shift">
+          <li>Le tarifs indiqué est valable jusqu'au {{ tournament.registrationClose|date('d/m/Y à H:i') }}. Passée cette date, seul le plein tarif (sur place) sera disponible.</li>
+          <br />
+          <li>Si vous jouez en équipe (CS:GO, Dota, LoL, OW), <strong>votre équipe ne sera validée qu'après réception du paiement d'au moins 3 des membres</strong>.</li>
+          <li>Si vous jouez seul (HS, SFV), votre inscription sera validée dès la réception de votre paiement.</li>
+          <li>Si vous choisissez l'envoi par chèque, <strong>nous ne pouvons pas vous assurer qu'il restera des places lors de la réception de ce dernier</strong>, sauf si 3 de vos coéquipiers ont déjà payé en ligne (cf ci-dessus).</li>
+          <li>Si vous payez sur place, 3 membres de votre équipe doivent avoir payé en ligne ou par chèque (cf. point 1).</li>
+      </ul>
+      <br/><br/>
   </div>
 
   {% if tournament.participantType == 'team' %}
@@ -29,11 +47,11 @@
 
   {% if tournament.freeSlots > 0 or (tournament.participantType == 'team' and player.teamForTournament(tournament).validated) %}
 
-  <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_user_payoffline', {tournament: tournament.id}) }}">Chèque/Sur place</a>
+  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline', {tournament: tournament.id}) }}">Chèque/Partenaire/Sur place</a>
     {% if tournament.isOpenedNow %}
-      <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_paypaypalec', {tournament: tournament.id}) }}">Paiement en ligne</a>
+      <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_user_paypaypalec', {tournament: tournament.id}) }}">Paiement en ligne</a>
     {% else %}
-      <span class="btn ctrl grid-5 pull-left">Paiment en ligne indisponible</span>
+      <span class="btn ctrl grid-3 pull-left">Paiement en ligne indisponible</span>
     {% endif %}
 
   {% else %}

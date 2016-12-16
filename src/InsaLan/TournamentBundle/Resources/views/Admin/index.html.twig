@@ -81,14 +81,14 @@
           </td>
           <td>
             <span class="payment_status_{{ player.id }}">
-              <button class="payment_ok" data-url="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id, status: 1 }) }}" data-id="{{ player.id }}" onclick="changePaymentStatus(this)" {% if not player.paymentDone %}style="display:none"{% endif %}>OUI</button>
-              <button class="payment_not_ok" data-url="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id, status: 0 }) }}" data-id="{{ player.id }}" onclick="changePaymentStatus(this)" {% if player.paymentDone %}style="display:none"{% endif %}>NON</button>
+              <button class="payment_ok" data-url="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id, status: 0 }) }}" data-id="{{ player.id }}" onclick="changePaymentStatus(this)" {% if not player.paymentDone %}style="display:none"{% endif %}>OUI</button>
+              <button class="payment_not_ok" data-url="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id, status: 1 }) }}" data-id="{{ player.id }}" onclick="changePaymentStatus(this)" {% if player.paymentDone %}style="display:none"{% endif %}>NON</button>
             </span>
           </td>
           <td>
             <span class="arrived_status_{{ player.id }}">
-                <button class="arrived" data-url="{{ path('insalan_tournament_admin_player_tooglearrived', { t: tournament.id, p: player.id, status: 1 }) }}" data-id="{{ player.id }}" onclick="changeArrivedStatus(this)" {% if not player.arrived %}style="display:none"{% endif %}>OUI</button>
-              <button class="not_arrived" data-url="{{ path('insalan_tournament_admin_player_tooglearrived', { t: tournament.id, p: player.id, status: 0 }) }}" data-id="{{ player.id }}" onclick="changeArrivedStatus(this)" {% if player.arrived %}style="display:none"{% endif %}>NON</button>
+                <button class="arrived" data-url="{{ path('insalan_tournament_admin_player_tooglearrived', { t: tournament.id, p: player.id, status: 0 }) }}" data-id="{{ player.id }}" onclick="changeArrivedStatus(this)" {% if not player.arrived %}style="display:none"{% endif %}>OUI</button>
+              <button class="not_arrived" data-url="{{ path('insalan_tournament_admin_player_tooglearrived', { t: tournament.id, p: player.id, status: 1 }) }}" data-id="{{ player.id }}" onclick="changeArrivedStatus(this)" {% if player.arrived %}style="display:none"{% endif %}>NON</button>
             </span>
           </td>
         </tr>
@@ -104,13 +104,13 @@
           </td>
           <td>
             <span class="payment_status_m{{ manager.id }}">
-                <button class="payment_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if not manager.arrived %}style="display:none"{% endif %}>OUI</button>
-              <button class="payment_not_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 0 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if manager.arrived %}style="display:none"{% endif %}>NON</button>
+                <button class="payment_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 0 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if not manager.arrived %}style="display:none"{% endif %}>OUI</button>
+              <button class="payment_not_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if manager.arrived %}style="display:none"{% endif %}>NON</button>
             </span>
           </td>
           <td>
             <span class="arrived_status_m{{ manager.id }}">
-                <button class="arrived" data-url="{{ path('insalan_tournament_admin_manager_tooglearrived', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changeArrivedStatus(this)" {% if not manager.arrived %}style="display:none"{% endif %}>OUI</button>
+                <button class="arrived" data-url="{{ path('insalan_tournament_admin_manager_tooglearrived', { t: tournament.id, m: manager.id, status: 0 }) }}" data-id="m{{ manager.id }}" onclick="changeArrivedStatus(this)" {% if not manager.arrived %}style="display:none"{% endif %}>OUI</button>
               <button class="not_arrived" data-url="{{ path('insalan_tournament_admin_manager_tooglearrived', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changeArrivedStatus(this)" {% if manager.arrived %}style="display:none"{% endif %}>NON</button>
             </span>
           </td>
