@@ -20,3 +20,13 @@ services:
         calls:
             - [ setTranslationDomain, [InsaLanUserBundle]]
 
+    sonata.admin.tournament.merchantorder:
+        class: InsaLan\UserBundle\Admin\MerchantOrderAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Compte", label: "Paiments hors ligne" }
+        arguments:
+            - ~
+            - InsaLan\UserBundle\Entity\MerchantOrder
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanUserBundle]]
