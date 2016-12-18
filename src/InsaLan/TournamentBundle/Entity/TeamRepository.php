@@ -57,7 +57,7 @@ class TeamRepository extends EntityRepository
         $query->execute();
 
         try {
-            return $q->getQuery()->getSingleResult();
+            return $query->getSingleResult();
         }
         catch(\Exception $e) {
             return null;

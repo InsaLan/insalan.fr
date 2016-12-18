@@ -188,8 +188,8 @@ class UserController extends Controller
      * @Template()
      */
     public function setPlayerAction(Request $request, Entity\Tournament $tournament) {
-        $autre = 'Autre';
-        $battleNet = 'BattleNet';
+        $autre = 'other';
+        $battleNet = 'battlenet';
         $steam = 'Steam';
         
         

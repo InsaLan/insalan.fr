@@ -53,6 +53,7 @@ class DefaultController extends Controller
         $routeDelete = null;
         $login = new SteamLogin();
         $url = $this->generateUrl('insalan_user_default_savesteamid', array('slug' => ''),UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = str_replace("http://", "https://", $url);
         $url = $login->url($url);
         
         if($request->query->get('action') == 'remove') {
