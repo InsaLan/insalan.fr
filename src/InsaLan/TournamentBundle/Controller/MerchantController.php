@@ -69,12 +69,18 @@ class MerchantController extends Controller
                 throw new NotFoundHttpException('InsaLan\\TournamentBundle\\Entity\\Tournament object not found.');;
             }
 
-            $players = $em->getRepository('InsaLanTournamentBundle:Player')
-                          ->getPlayersForTournament($tournament);
+            $players = $em->getRepository('InsaLanTournamentBundle:Participant')
+                          ->findByTournament($tournament);
 
             foreach ($players as &$p) {
-                if (!$p->getPaymentDone()){
-                    $pendingPlayers[] = $p;
+                if ($p->getParticipantType() == "team"){
+                    foreach ($p->getPlayers() as &$player) {
+                        if (!$player->getPaymentDone())
+                            $pendingPlayers[] = $player;
+                    }
+                }else{
+                    if (!$p->getPaymentDone())
+                        $pendingPlayers[] = $p;
                 }
             }
         }
@@ -83,7 +89,22 @@ class MerchantController extends Controller
                         ->findByMerchant($user);
 
         foreach ($paidPlayers as &$order) {
-            $total += $order->getPayment()["L_PAYMENTREQUEST_0_AMT0"]; 
+            $total += $order->getPayment()["L_PAYMENTREQUEST_0_AMT0"];
+
+            $paidParticipant = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($order->getPlayer()->getUser());
+
+            foreach ($paidParticipant as &$p) {
+                if (!$p->getTournament()->isOpenedNow()) continue;
+
+                if ($p->getParticipantType() == "team"){
+                    foreach ($p->getPlayers() as &$player) {
+                        if ($player->getId() == $order->getPlayer()->getId()){
+                            $order->getPlayer()->setTournament($p->getTournament());
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         $output = array(
