@@ -40,7 +40,7 @@
       {% endif %}
     </section>
     {% endif %}
-    <section class="results bg{% if t.shortName == "lol" %}LoL{% elseif t.shortName == "st2" %}SC2{% elseif t.shortName == "dota" %}Dota2{% elseif t.shortName == "hs" %}HS{% elseif t.shortName == "csgo" %}CSGO{% endif %}">
+    <section class="results bg-{{ t.type }}">
       <section class="matchs">
         {% for s in stages %}
           {% for g in s.groups %}
