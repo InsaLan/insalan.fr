@@ -128,6 +128,11 @@ class Tournament
     protected $onlineIncreaseInPrice;
 
     /**
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
+     */
+    protected $onSitePrice;
+
+    /**
      * @ORM\Column(type="string", nullable=false)
      */
     protected $currency;
@@ -717,6 +722,29 @@ class Tournament
     public function getCurrency()
     {
         return $this->currency;
+    }
+
+    /**
+     * Set onSitePrice
+     *
+     * @param integer $onSitePrice
+     * @return Tournament
+     */
+    public function setOnSitePrice($onSitePrice)
+    {
+        $this->onSitePrice = $onSitePrice;
+
+        return $this;
+    }
+
+    /**
+     * Get onSitePrice
+     *
+     * @return integer
+     */
+    public function getOnSitePrice()
+    {
+        return $this->onSitePrice;
     }
 
     /**

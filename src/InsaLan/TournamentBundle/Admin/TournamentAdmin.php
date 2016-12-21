@@ -26,6 +26,7 @@ class TournamentAdmin extends Admin
             ->add('webPrice')
             ->add('currency')
             ->add('onlineIncreaseInPrice')
+            ->add('onSitePrice')
             ->add('teamMaxPlayer')
             ->add('teamMinPlayer')
             ->add('maxManager')
