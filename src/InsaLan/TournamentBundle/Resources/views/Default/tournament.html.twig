@@ -40,7 +40,8 @@
       {% endif %}
     </section>
     {% endif %}
-    <section class="results bg-{{ t.type }}">
+    {# TODO: manage games in database and avoid this dirty thing #}
+    <section class="results" style="background: #0e0e0e url('/bundles/insalan/img/bg-{{ t.shortName | upper }}.png') no-repeat top;">
       <section class="matchs">
         {% for s in stages %}
           {% for g in s.groups %}

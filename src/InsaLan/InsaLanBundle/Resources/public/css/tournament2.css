@@ -52,34 +52,6 @@ body > footer {
   min-height: 500px;
 }
 
-.bg-lol {
-  background: #0e0e0e url('../img/bg-LoL.png') no-repeat top;
-}
-
-.bg-sc2 {
-  background: #0e0e0e url('../img/bg-SC2.png') no-repeat top;
-}
-
-.bg-csgo {
-  background: #0e0e0e url('../img/bg-CSGO.png') no-repeat top;
-}
-
-.bg-hs {
-  background: #0e0e0e url('../img/bg-HS.png') no-repeat top;
-}
-
-.bg-dota2 {
-  background: #0e0e0e url('../img/bg-Dota2.png') no-repeat top;
-}
-
-.bg-ow {
-  background: #0e0e0e url('../img/bg-OW.png') no-repeat top;
-}
-
-.bg-sfv {
-  background: #0e0e0e url('../img/bg-SFV.png') no-repeat top;
-}
-
 .results section.matchs {
   width: 260px;
   float: left;
