@@ -30,3 +30,14 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [InsaLanUserBundle]]
+
+    sonata.admin.tournament.discount:
+        class: InsaLan\UserBundle\Admin\DiscountAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Compte", label: "Tarifs réduits" }
+        arguments:
+            - ~
+            - InsaLan\UserBundle\Entity\Discount
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanUserBundle]]

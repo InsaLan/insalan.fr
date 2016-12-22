@@ -317,15 +317,27 @@ class UserController extends Controller
     /**
      * Payement doing and details
      * @Route("/{tournament}/user/pay/details")
+     * @Route("/{tournament}/user/discount/{discount}/details", requirements={"discount" = "\d+"})
      * @Template()
      */
-    public function payAction(Entity\Tournament $tournament) {
+    public function payAction(Entity\Tournament $tournament, $discount = null) {
         $em = $this->getDoctrine()->getManager();
 
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingTournament($usr, $tournament);
+
+        $discount = $em->getRepository('InsaLanUserBundle:Discount')
+                       ->findOneById($discount);
+            
+        $discounts = $em
+            ->getRepository('InsaLanUserBundle:Discount')
+            ->findByTournament($tournament);
+
+        if ($discount !== null && $discount->getTournament()->getId() !== $tournament->getId()){
+            return $this->redirect($this->generateUrl('insalan_tournament_user_pay', array("tournament" => $tournament->getId())));
+        }
 
         if($tournament->isFree()) {
             $player->setPaymentDone(true);
@@ -334,14 +346,15 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_paydone', array("tournament" => $tournament->getId())));
         }
 
-        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
+        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player, 'discounts' => $discounts, 'selectedDiscount' => $discount);
     }
 
     /**
      * Paypal stuff
      * @Route("/{tournament}/user/pay/paypal_ec")
+     * @Route("/{tournament}/user/discount/{discount}/paypal_ec", requirements={"discount" = "\d+"})
      */
-    public function payPaypalECAction(Entity\Tournament $tournament) {
+    public function payPaypalECAction(Entity\Tournament $tournament, $discount = null) {
         $em = $this->getDoctrine()->getManager();
 
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -349,19 +362,33 @@ class UserController extends Controller
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
+        $discount = $em->getRepository('InsaLanUserBundle:Discount')
+                       ->findOneById($discount);
+
+        if ($discount !== null && $discount->getTournament()->getId() !== $tournament->getId()){
+            return $this->redirect($this->generateUrl('insalan_tournament_user_pay', array("tournament" => $tournament->getId())));
+        }
+
         $paymentName = 'paypal_express_checkout_and_doctrine_orm';
 
-        $price = ($tournament->getWebPrice() + $tournament->getOnlineIncreaseInPrice());
+        $price = $tournament->getWebPrice();
+        $title = 'Place pour le tournoi '.$tournament->getName();
+
+        if ($discount !== null){
+            $price -= $discount->getAmount();
+            $title += " (" + $discount->getName() + ")";
+        }
 
         $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
         $order = $storage->createModel();
         $order->setUser($usr);
+        $order->setDiscount($discount);
 
         $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $tournament->getCurrency();
-        $order['PAYMENTREQUEST_0_AMT'] = $price;
+        $order['PAYMENTREQUEST_0_AMT'] = $price + $tournament->getOnlineIncreaseInPrice();
 
-        $order['L_PAYMENTREQUEST_0_NAME0'] = 'Place pour le tournoi '.$tournament->getName();
-        $order['L_PAYMENTREQUEST_0_AMT0'] = $tournament->getWebPrice();
+        $order['L_PAYMENTREQUEST_0_NAME0'] = $title;
+        $order['L_PAYMENTREQUEST_0_AMT0'] = $price;
         $order['L_PAYMENTREQUEST_0_DESC0'] = $tournament->getDescription();
         $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;
 
@@ -432,16 +459,24 @@ class UserController extends Controller
     /**
      * Offer offline payment choices
      * @Route("/{tournament}/user/pay/offline")
+     * @Route("/{tournament}/user/discount/{discount}/offline", requirements={"discount" = "\d+"})
      * @Template()
      */
-    public function payOfflineAction(Request $request, Entity\Tournament $tournament) {
+    public function payOfflineAction(Request $request, Entity\Tournament $tournament, $discount = null) {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
-        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
+        $discount = $em->getRepository('InsaLanUserBundle:Discount')
+                       ->findOneById($discount);
+
+        if ($discount !== null && $discount->getTournament()->getId() !== $tournament->getId()){
+            return $this->redirect($this->generateUrl('insalan_tournament_user_pay', array("tournament" => $tournament->getId())));
+        }
+
+        return array('tournament' => $tournament, 'user' => $usr, 'player' => $player, 'discount' => $discount);
     }
 
     /**

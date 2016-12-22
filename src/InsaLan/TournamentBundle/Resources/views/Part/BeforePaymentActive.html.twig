@@ -10,8 +10,8 @@
       <br />
       <table class="order">
           <tr>
-              <td>Prix de la place</td>
-              <td>{{ tournament.webprice }} {{ tournament.currency }}</td> 
+              <td>Prix de la place {% if selectedDiscount %}(Tarif {{ selectedDiscount.name }}){% endif %}</td>
+              <td>{{ tournament.webprice - (selectedDiscount.amount | default(0)) }} {{ tournament.currency }}</td>
            </tr>
            <tr>
                <td>Majoration si paiement en ligne</td>
@@ -19,6 +19,23 @@
            </tr>
       </table>
       <br>
+      {% if selectedDiscount %}
+      <h2>
+        <strong>Tarif réduit {{ selectedDiscount.name }}</strong>
+        <a href="{{ path('insalan_tournament_user_pay', {tournament: tournament.id}) }}"><button class="btn2 btn2-nocolor" style="font-size: 0.6em">Retour tarif normal</button></a>
+      </h2><br>
+      Vous avez sélectionné le tarif réduit &laquo; {{ selectedDiscount.name }} &raquo;. <strong>Un justificatif vous sera demandé</strong> à votre arrivé à l'InsaLan.<br/>
+      A défaut, vous devrez vous acquitter de la différence au plein tarif sur place ({{ tournament.onSitePrice }} {{ tournament.currency }}).<br/>
+      <br/>
+      {% elseif discounts %}
+        Tarifs réduit disponibles :
+        {% for discount in discounts %}
+            <a href="{{ path('insalan_tournament_user_pay_1', {tournament: tournament.id, discount: discount.id}) }}">
+                <button class="btn2" style="font-size: 0.8em">{{ discount.name }} ({{ tournament.webprice - discount.amount }} {{ tournament.currency }})</button>
+            </a>
+        {% endfor %}
+        <br/><br/>
+      {% endif %}
       <h2><strong>Moyens de paiement disponibles</strong></h2><br>
       <ul class="shift">
           <li>En ligne : Paypal</li>
@@ -29,7 +46,7 @@
 
       <h2><strong>Points importants</strong></h2><br/>
       <ul class="shift">
-          <li>Le tarifs indiqué est valable jusqu'au {{ tournament.registrationClose|date('d/m/Y à H:i') }}. Passée cette date, seul le plein tarif (sur place) sera disponible.</li>
+          <li>Le tarif indiqué est valable jusqu'au {{ tournament.registrationClose|date('d/m/Y à H:i') }}. Passée cette date, seul le plein tarif (sur place) sera disponible.</li>
           <br />
           <li>Si vous jouez en équipe (CS:GO, Dota, LoL, OW), <strong>votre équipe ne sera validée qu'après réception du paiement d'au moins 3 des membres</strong>.</li>
           <li>Si vous jouez seul (HS, SFV), votre inscription sera validée dès la réception de votre paiement.</li>
@@ -47,9 +64,17 @@
 
   {% if tournament.freeSlots > 0 or (tournament.participantType == 'team' and player.teamForTournament(tournament).validated) %}
 
+  {% if selectedDiscount %}
+  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline_1', {tournament: tournament.id, discount: selectedDiscount.id}) }}">Chèque/Partenaire/Sur place</a>
+  {% else %}
   <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline', {tournament: tournament.id}) }}">Chèque/Partenaire/Sur place</a>
+  {% endif %}
     {% if tournament.isOpenedNow %}
+      {% if selectedDiscount %}
+      <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_user_paypaypalec_1', {tournament: tournament.id, discount: selectedDiscount.id}) }}">Paiement en ligne</a>
+      {% else %}
       <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_user_paypaypalec', {tournament: tournament.id}) }}">Paiement en ligne</a>
+      {% endif %}
     {% else %}
       <span class="btn ctrl grid-3 pull-left">Paiement en ligne indisponible</span>
     {% endif %}
