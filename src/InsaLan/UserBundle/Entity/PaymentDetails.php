@@ -23,6 +23,11 @@ class PaymentDetails extends ArrayObject
      */
     protected $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="InsaLan\UserBundle\Entity\Discount")
+     */
+    protected $discount;
+
     private $detailId = 0;
 
     public function addPaymentDetail($name, $price, $description) {
@@ -65,5 +70,28 @@ class PaymentDetails extends ArrayObject
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set discount
+     *
+     * @param \InsaLan\UserBundle\Entity\Discount $discount
+     * @return PaymentDetails
+     */
+    public function setDiscount(\InsaLan\UserBundle\Entity\Discount $discount = null)
+    {
+        $this->discount = $discount;
+
+        return $this;
+    }
+
+    /**
+     * Get discount
+     *
+     * @return \InsaLan\UserBundle\Entity\Discount 
+     */
+    public function getDiscount()
+    {
+        return $this->discount;
     }
 }

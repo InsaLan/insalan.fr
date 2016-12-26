@@ -44,7 +44,7 @@ class MerchantController extends Controller
 
 
         $tournament = $data = null;
-        $players = $pendingPlayers = $paidPlayers = array();
+        $players = $pendingPlayers = $paidPlayers = $discounts = array();
         $total = 0;
 
         $form->handleRequest($this->getRequest());
@@ -83,6 +83,9 @@ class MerchantController extends Controller
                         $pendingPlayers[] = $p;
                 }
             }
+
+            $discounts = $em->getRepository('InsaLanUserBundle:Discount')
+                            ->findByTournament($tournament);
         }
 
         $paidPlayers = $em->getRepository('InsaLanUserBundle:MerchantOrder')
@@ -112,6 +115,7 @@ class MerchantController extends Controller
             'tournament'  => $tournament,
             'players'     => $pendingPlayers,
             'paidPlayers' => $paidPlayers,
+            'discounts'   => $discounts,
             'user'        => $user,
             'total'      => $total,
         );
@@ -121,22 +125,15 @@ class MerchantController extends Controller
 
     /**
      * @Route("/{id}/merchant/{player}/validate", requirements={"id" = "\d+"})
+     * @Route("/{id}/merchant/{player}/discount/{discount}/validate", requirements={"id" = "\d+"})
      */
-    public function validateAction($id, $player){
+    public function validateAction(Entity\Tournament $tournament, Entity\Player $player, $discount = null){
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $tournament = $em->getRepository('InsaLanTournamentBundle:Tournament')->findOneById($id);
-        $player = $em->getRepository('InsaLanTournamentBundle:Player')->findOneById($player);
-
-        if ($tournament == null || $player == null){
-            $this->get('session')->getFlashBag()->add('error', "Impossible de valider cette place (paramètres invalides)");
-            return $this->redirect($this->generateUrl('insalan_tournament_merchant_index_1', array('id' => $id)));
-        }
-
         if ($player->getUser() == null){
             $this->get('session')->getFlashBag()->add('error', "Impossible de valider cette place (aucun utilisateur associé à la commande)");
-            return $this->redirect($this->generateUrl('insalan_tournament_merchant_index_1', array('id' => $id)));
+            return $this->redirect($this->generateUrl('insalan_tournament_merchant_index_1', array('id' => $tournament->getId())));
         }
 
         $player->setPaymentDone(true);
@@ -144,13 +141,25 @@ class MerchantController extends Controller
         $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
         $order = $storage->createModel();
         $order->setUser($player->getUser());
+        $order->setDiscount($discount);
 
         $price = $tournament->getWebPrice();
+        $title = 'Place pour le tournoi '.$tournament->getName();
+
+        if ($discount !== null){
+            if ($discount->getTournament()->getId() !== $tournament->getId()){
+                $this->get('session')->getFlashBag()->add('error', "discount not allowed");
+                return $this->redirect($this->generateUrl('insalan_tournament_merchant_index_1', array('id' => $tournament->getId())));
+            }
+
+            $price -= $discount->getAmount();
+            $title += " (" + $discount->getName() + ")";
+        }
 
         $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $tournament->getCurrency();
         $order['PAYMENTREQUEST_0_AMT'] = $price;
 
-        $order['L_PAYMENTREQUEST_0_NAME0'] = 'Place pour le tournoi '.$tournament->getName();
+        $order['L_PAYMENTREQUEST_0_NAME0'] = $title;
         $order['L_PAYMENTREQUEST_0_AMT0'] = $price;
         $order['L_PAYMENTREQUEST_0_DESC0'] = $tournament->getDescription();
         $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;

@@ -26,6 +26,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setTeamMinPlayer(5);
         $e->setWebPrice(22);
         $e->setOnlineIncreaseInPrice(1);
+        $e->setOnSitePrice(30);
         $e->setCurrency('EUR');
         $e->setTournamentOpen((new \DateTime())->modify('+90 day'));
         $e->setTournamentClose((new \DateTime())->modify('+93 day'));
@@ -47,6 +48,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setTeamMinPlayer(5);
         $e->setWebPrice(22);
         $e->setOnlineIncreaseInPrice(1);
+        $e->setOnSitePrice(30);
         $e->setCurrency('EUR');
         $e->setTournamentOpen((new \DateTime())->modify('+90 day'));
         $e->setTournamentClose((new \DateTime())->modify('+93 day'));
@@ -69,6 +71,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setTeamMinPlayer(1);
         $e->setWebPrice(22);
         $e->setOnlineIncreaseInPrice(1);
+        $e->setOnSitePrice(30);
         $e->setCurrency('EUR');
         $e->setTournamentOpen((new \DateTime())->modify('+90 day'));
         $e->setTournamentClose((new \DateTime())->modify('+93 day'));
@@ -89,6 +92,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setTeamMinPlayer(1);
         $e->setWebPrice(22);
         $e->setOnlineIncreaseInPrice(1);
+        $e->setOnSitePrice(30);
         $e->setCurrency('EUR');
         $e->setLocked('ItCouldBeAPassKey');
         $e->setTournamentOpen((new \DateTime())->modify('+90 day'));

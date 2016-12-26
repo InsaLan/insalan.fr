@@ -52,6 +52,11 @@
                 <a href="{{ path('insalan_tournament_merchant_validate', { id: tournament.id, player: player.id }) }}">
                     <button class="payment_ok">Plein tarif ({{ tournament.webPrice }} {{ tournament.currency }})</button>
                 </a>
+                {% for discount in discounts %}
+                    <a href="{{ path('insalan_tournament_merchant_validate_1', { id: tournament.id, player: player.id, discount: discount.id }) }}">
+                        <button class="payment_ok">{{ discount.name }} ({{ tournament.webPrice - discount.amount }} {{ tournament.currency }})</button>
+                    </a>
+                {% endfor %}
             </span>
             </td>
         </tr>
@@ -97,10 +102,10 @@
             {{ order.payment["L_PAYMENTREQUEST_0_AMT0"] }} {{ order.player.tournament.currency }}
             <br />
             <span style="font-size:10px; color: grey;">
-            {% if order.payment["L_PAYMENTREQUEST_0_AMT0"] == order.player.tournament.webPrice %}
-                Plein tarif
+            {% if order.payment.discount %}
+                {{ order.payment.discount.name }}
             {% else %}
-                Tarif réduit
+                Plein tarif
             {% endif %}
             </span>
         </td>
