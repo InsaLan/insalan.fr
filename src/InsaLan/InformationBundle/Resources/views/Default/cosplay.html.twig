@@ -1,5 +1,12 @@
 {% extends 'InsaLanInformationBundle::layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/insalan/css/news.css' %}
+      <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block body %}
 {{ parent() }}
 
@@ -33,6 +40,30 @@
             <p><em>Des vestiaires seront mis à disposition pour déposer les costumes avant l'événement.</em></p>
         </p>
     </section>
+
+    <br /><br />
+    <div class="partner-list">
+        <div class="partner partner-big">
+            <a href="http://www.otaku-planete.com/">
+            <img src="{{ asset('bundles/insalan/img/partenaires/otaku-planet.png') }}" alt="Otaku Planète" />
+            </a>
+        </div>
+        <div class="partner partner-big">
+            <a href="https://www.facebook.com/pages/JAPANIM-RENNES/107800482584960">
+            <img src="{{ asset('bundles/insalan/img/partenaires/japanim.jpg') }}" alt="Jap'Anim" />
+            </a>
+        </div>
+        <div class="partner partner-big">
+            <a href="http://www.cosplay-craft.fr/">
+            <img src="{{ asset('bundles/insalan/img/partenaires/cosplay-craft.png') }}" alt="Cosplay Craft" />
+            </a>
+        </div>
+        <div class="partner partner-big">
+            <a href="http://www.japanspiritevent.fr/">
+            <img src="{{ asset('bundles/insalan/img/partenaires/japan-spirit-event.png') }}" alt="Japan Spirit Event" />
+            </a>
+        </div>
+    </div>
 </article>
 <hr></hr>
 <article id="horaire" class="info">

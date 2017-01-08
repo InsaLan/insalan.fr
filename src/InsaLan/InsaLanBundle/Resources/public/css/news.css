@@ -357,6 +357,10 @@ section.news nav .next a {
   height: 60px;
 }
 
+.partner-big > a > img {
+  height: 150px;
+}
+
 .partner-xsmall > a > img {
   height: 35px;
 }
