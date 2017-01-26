@@ -141,12 +141,14 @@ class MerchantController extends Controller
         $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
         $order = $storage->createModel();
         $order->setUser($player->getUser());
-        $order->setDiscount($discount);
 
         $price = $tournament->getWebPrice();
         $title = 'Place pour le tournoi '.$tournament->getName();
 
         if ($discount !== null){
+            $discount = $em->getRepository('InsaLanUserBundle:Discount')
+                            ->findOneById($discount);
+
             if ($discount->getTournament()->getId() !== $tournament->getId()){
                 $this->get('session')->getFlashBag()->add('error', "discount not allowed");
                 return $this->redirect($this->generateUrl('insalan_tournament_merchant_index_1', array('id' => $tournament->getId())));
@@ -155,6 +157,8 @@ class MerchantController extends Controller
             $price -= $discount->getAmount();
             $title += " (" + $discount->getName() + ")";
         }
+
+        $order->setDiscount($discount);
 
         $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $tournament->getCurrency();
         $order['PAYMENTREQUEST_0_AMT'] = $price;
