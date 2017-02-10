@@ -1,9 +1,16 @@
 {% extends 'InsaLanInformationBundle::layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/insalan/css/news.css' %}
+      <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block body %}
 {{ parent() }}
 
-{#<img src="{{ asset('bundles/insalan/img/cosplay.png') }}" width="1000"/>#}
+<img src="{{ asset('bundles/insalan/img/cosplay.png') }}" width="1000"/>
 
 <article id="cosplay" class="info">
     <aside>
@@ -33,8 +40,32 @@
             <p><em>Des vestiaires seront mis à disposition pour déposer les costumes avant l'événement.</em></p>
         </p>
     </section>
+
+    <br /><br />
+    <div class="partner-list">
+        <div class="partner partner-big">
+            <a href="http://www.otaku-planete.com/">
+            <img src="{{ asset('bundles/insalan/img/partenaires/otaku-planet.png') }}" alt="Otaku Planète" />
+            </a>
+        </div>
+        <div class="partner partner-big">
+            <a href="https://www.facebook.com/pages/JAPANIM-RENNES/107800482584960">
+            <img src="{{ asset('bundles/insalan/img/partenaires/japanim.jpg') }}" alt="Jap'Anim" />
+            </a>
+        </div>
+        <div class="partner partner-big">
+            <a href="http://www.cosplay-craft.fr/">
+            <img src="{{ asset('bundles/insalan/img/partenaires/cosplay-craft.png') }}" alt="Cosplay Craft" />
+            </a>
+        </div>
+        <div class="partner partner-big">
+            <a href="http://www.japanspiritevent.fr/">
+            <img src="{{ asset('bundles/insalan/img/partenaires/japan-spirit-event.png') }}" alt="Japan Spirit Event" />
+            </a>
+        </div>
+    </div>
 </article>
-{#<hr></hr>
+<hr></hr>
 <article id="horaire" class="info">
     <aside>
         <div class="square">
@@ -52,7 +83,7 @@
                     <strong><a href="{{ asset('bundles/insalan/pdf/inscription-cosplay.pdf') }}" target="_blank" >[individuelle &#x25BE;]</a></strong>
                     <strong><a href="{{ asset('bundles/insalan/pdf/inscription-cosplay-groupe.pdf') }}" target="_blank" >[groupe &#x25BE;]</a></strong>.
                 </li>
-                <li>Pour les mineurs : télécharger et remplir <strong><a href="{{ asset('bundles/insalan/pdf/autorisation-parental.pdf') }}" target="_blank" >[l'autorisation parentale &#x25BE;]</a></strong>.</li>
+                <li>Pour les mineurs : télécharger et remplir <strong><a href="{{ asset('bundles/insalan/pdf/autorisation-parental-cosplay.pdf') }}" target="_blank" >[l'autorisation parentale &#x25BE;]</a></strong>.</li>
                 <li>Joindre une image du personnage cosplayé correspondant exactement au cosplay réalisé, ainsi que le fichier mp3 ou mp4 de sa prestation.</li>
                 <li>Signer le ou les document(s) nécessaire(s) (imprimer, signer, scanner ou via une tablette graphique ou directement le jour de l'événement).</li>
                 <li>Envoyer votre dossier (si possible en PDF) à <a href="mailto:cosplay@insalan.fr">cosplay@insalan.fr</a> <strong>avant le 8 février</strong>.</li>
@@ -62,6 +93,6 @@
             <em>Un problème ? Une question ? Envoyez-nous un mail à <a href="mailto:cosplay@insalan.fr">cosplay@insalan.fr</a> ou contactez-nous via Facebook !</em>
         </p>
     </section>
-</article>#}
+</article>
 
 {% endblock %}

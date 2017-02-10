@@ -84,7 +84,7 @@ class Tournament
 
     /**
      * @ORM\Column(type="enum", type="string", nullable=false)
-     * ORM\Column(type="enum", type="string", nullable=false, columnDefinition="enum('lol', 'dota2', 'sc2', 'hs', 'csgo', 'manual')")
+     * ORM\Column(type="enum", type="string", nullable=false, columnDefinition="enum('lol', 'dota2', 'sc2', 'hs', 'csgo', 'ow', 'sfv', 'manual')")
      */
     protected $type;
 
@@ -126,6 +126,11 @@ class Tournament
      * @ORM\Column(type="decimal", scale=2, nullable=false)
      */
     protected $onlineIncreaseInPrice;
+
+    /**
+     * @ORM\Column(type="decimal", scale=2, nullable=false)
+     */
+    protected $onSitePrice;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -717,6 +722,29 @@ class Tournament
     public function getCurrency()
     {
         return $this->currency;
+    }
+
+    /**
+     * Set onSitePrice
+     *
+     * @param integer $onSitePrice
+     * @return Tournament
+     */
+    public function setOnSitePrice($onSitePrice)
+    {
+        $this->onSitePrice = $onSitePrice;
+
+        return $this;
+    }
+
+    /**
+     * Get onSitePrice
+     *
+     * @return integer
+     */
+    public function getOnSitePrice()
+    {
+        return $this->onSitePrice;
     }
 
     /**

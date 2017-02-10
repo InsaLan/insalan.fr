@@ -13,21 +13,20 @@
     {% if erreur is defined %}
 
         <div class="text">
-            <div>
-                Une erreur est survenue lors de la validation du compte. Veuillez réessayer.
-            </div>
-            <div>
-                    <a class="btn btn-primary" href="{{path('insalan_user_default_registersteamid')}}">Réessayer</a>
-            </div>
+            <br />
+            <p style="text-align: center;">Une erreur est survenue lors de la validation du compte. Veuillez réessayer.</p>
+            <br />
+            <br />
+            <a class="btn btn-primary" href="{{path('insalan_user_default_registersteamid')}}">Réessayer</a>
         </div>
     {% else %}
         <div class="text">
-            <div>
-                Votre id steam a été sauvegardé !
-            </div>
-            <div>
-                    <a class="btn btn-primary" href="{{path('insalan_user_default_index')}}">Retour au profil</a>
-            </div>
+            <br />
+            <p style="text-align: center;">Votre id steam a été sauvegardé !</p>
+            <br />
+            <br />
+            <a class="btn btn-primary ctrl grid-5 pull-left" href="{{path('insalan_user_default_index')}}">Retour au profil</a>
+            <a class="btn btn-primary ctrl grid-5 pull-left" href="{{path('insalan_tournament_user_index')}}">Inscription aux tournois</a>
         </div>
 
             

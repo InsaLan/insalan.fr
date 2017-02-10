@@ -98,7 +98,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $teams =  $em->getRepository('InsaLanTournamentBundle:Team')->getTeamsForTournament($tournament);
 
-        return array('teams' => $teams);
+        return array('teams' => $teams, 'tournament' => $tournament);
     }
 
     /**
@@ -111,7 +111,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $players =  $em->getRepository('InsaLanTournamentBundle:Player')->getPlayersForTournament($tournament);
 
-        return array('players' => $players);
+        return array('players' => $players, 'tournament' => $tournament);
     }
 
 

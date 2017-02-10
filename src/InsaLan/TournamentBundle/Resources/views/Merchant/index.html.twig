@@ -1,0 +1,123 @@
+{% extends 'InsaLanTournamentBundle::Admin/layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+    <header>
+        <h2>Validation des paiements</h2>
+    </header>
+
+    <section>
+        {{ form_start(form, {attr:{'class':'oneline'}}) }}
+            {{ form_errors(form) }}
+            {{ form_row(form.tournament) }}
+            <div class="input left">
+                <input type="submit" value="&rarr;"/>
+            </div>
+        {{ form_end(form) }}
+    </section>
+
+</article>
+
+{% if tournament %}
+    <hr style="margin: 20px 0px;"/>
+    <h2>Places en attente de paiement pour {{ tournament.name }}</h2>
+    <br />
+    <table style="width:100%">
+        <tr>
+            <th colspan="2" class="grid-3">Pseudo / Nom</th>
+            <th class="grid-3">Equipe</th>
+            <th class="grid-4">Paiement</th>
+        </tr>
+        {% for player in players %}
+        <tr>
+            <td colspan="2">
+            {{ player.gameName }}
+            <br />
+            {% if player.user %}
+                <span style="font-size:10px; color: grey;">{{ player.user.username }} / {{ player.user.firstname }} {{ player.user.lastname}}</span>
+            {% endif %}
+            </td>
+            <td>
+            {% set solo = not (player.team | length > 0) %}
+            {% if not solo %}
+                {{ player.team[0].name }}
+            {% else %}
+                (solo)
+            {% endif %}
+            </td>
+            <td>
+            <span>
+                <a href="{{ path('insalan_tournament_merchant_validate', { id: tournament.id, player: player.id }) }}">
+                    <button class="payment_ok">Plein tarif ({{ tournament.webPrice }} {{ tournament.currency }})</button>
+                </a>
+                {% for discount in discounts %}
+                    <a href="{{ path('insalan_tournament_merchant_validate_1', { id: tournament.id, player: player.id, discount: discount.id }) }}">
+                        <button class="payment_ok">{{ discount.name }} ({{ tournament.webPrice - discount.amount }} {{ tournament.currency }})</button>
+                    </a>
+                {% endfor %}
+            </span>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endif %}
+
+<hr style="margin: 20px 0px;"/>
+<h2>Places validées par &laquo; {{ user.firstname }} {{ user.lastname }} &raquo;</h2>
+<br />
+
+<table style="width:100%">
+    <tr>
+        <th colspan="2" class="grid-2">Pseudo / Nom</th>
+        <th class="grid-2">Tournoi</th>
+        <th class="grid-2">Equipe</th>
+        <th class="grid-2">Date validation</th>
+        <th class="grid-2">Tarifs</th>
+    </tr>
+    {% for order in paidPlayers %}
+    <tr>
+        <td colspan="2">
+            {{ order.player.gameName }}
+            <br />
+            <span style="font-size:10px; color: grey;">{{ order.player.user.firstname }} {{ order.player.user.lastname}}</span>
+        </td>
+        <td>
+            {{ order.player.tournament.name }}
+        </td>
+        <td>
+            {% set solo = not (order.player.team | length > 0) %}
+            {% if not solo %}
+                {{ order.player.team[0].name }}
+            {% else %}
+                (solo)
+            {% endif %}
+        </td>
+        <td>
+            {{ order.player.validationDate | date('d/m/Y à H:i') }}
+        </td>
+        <td>
+            {{ order.payment["L_PAYMENTREQUEST_0_AMT0"] }} {{ order.player.tournament.currency }}
+            <br />
+            <span style="font-size:10px; color: grey;">
+            {% if order.payment.discount %}
+                {{ order.payment.discount.name }}
+            {% else %}
+                Plein tarif
+            {% endif %}
+            </span>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<br />
+<table style="width:100%">
+    <tr>
+        <th colspan="2" class="grid-8" style="text-align: right; padding-right: 50px">Total :</th>
+        <th class="grid-2">{{ total }} EUR</th>
+    </tr>
+</table>
+
+{% endblock %}

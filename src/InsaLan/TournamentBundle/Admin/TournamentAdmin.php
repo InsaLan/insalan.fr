@@ -26,6 +26,7 @@ class TournamentAdmin extends Admin
             ->add('webPrice')
             ->add('currency')
             ->add('onlineIncreaseInPrice')
+            ->add('onSitePrice')
             ->add('teamMaxPlayer')
             ->add('teamMinPlayer')
             ->add('maxManager')
@@ -45,6 +46,8 @@ class TournamentAdmin extends Admin
                     'hs' => 'HearthStone',
                     'dota2' => 'Dota 2',
                     'sc2' => 'StarCraft 2',
+                    'ow' => 'Overwatch',
+                    'sfv' => 'Street Fighter V',
                     'manual' => 'Autre/Manuel'),
                 'required'  => true))
             ->add('file', 'file', array('required' => false))

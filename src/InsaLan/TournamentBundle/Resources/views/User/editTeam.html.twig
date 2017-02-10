@@ -1,0 +1,52 @@
+{% extends 'InsaLanTournamentBundle:User:layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Inscription à &laquo; {{ tournament.name }} &raquo;</h2>
+    {{ tournament.description }}
+  </header>
+
+  <section>
+
+    <div class="frame frame-active">
+      <header class="full">
+        <div class="step pull-left">&#x2699;</div>
+        <div class="title pull-left">Modifier une équipe</div>
+        <br class="clear">
+      </header>
+
+        <form action="{{ path('insalan_tournament_user_editteam', {teamId: team.id}) }}" id="step1" method="post" {{ form_enctype(form) }}>
+
+          {{ form_widget(form._token) }}
+          {{ form_errors(form) }}
+
+          <div class="input field">
+            {{ form_widget(form.name, {'attr': {'placeholder': 'Nom de votre équipe'}}) }}
+          </div>
+
+          <div class="input field">
+            {{ form_widget(form.plainPassword.first, {'attr': {'placeholder': 'Nouveau mot de passe (Laissez vide pour ne pas modifier)'}}) }}
+          </div>
+
+          <div class="input field">
+            {{ form_widget(form.plainPassword.second, {'attr': {'placeholder': 'Confirmation de mot de passe'}}) }}
+          </div>
+
+          <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_index') }}">Annuler</a>
+          <a class="btn btn-primary ctrl grid-8 pull-left" href="javascript:{}" onclick="document.getElementById('step1').submit();">Modifier mon équipe</a>
+          <br class="clear">
+        </form>
+    </div>
+
+  </section>
+</article>
+{% endblock %}

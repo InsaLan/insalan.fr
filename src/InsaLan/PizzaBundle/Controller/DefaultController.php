@@ -21,7 +21,7 @@ class DefaultController extends Controller
 
         $user = $this->get('security.context')->getToken()->getUser();
 
-        if ($user->getFirstname() == null || $user->getFirstname() == "" || $user->getLastname() == null || $user->getLastname() == "" || $user->getBirthdate() == null) {
+        if ($user->getFirstname() == null || $user->getFirstname() == "" || $user->getLastname() == null || $user->getLastname() == "" || $user->getPhoneNumber() == null || $user->getPhoneNumber() == "" || $user->getBirthdate() == null) {
             $this->get('session')->getFlashBag()->add(
                 'info',
                 'Merci de remplir ces informations avant toute commande...'

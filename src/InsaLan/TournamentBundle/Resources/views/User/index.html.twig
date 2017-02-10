@@ -5,7 +5,7 @@
 
 <article>
   <header>
-      <h2><span class="pull-left">Inscriptions aux tournois</span><span class="pull-right"><a href="{{ path('insalan_user_default_index') }}">&#x2699;</a></span><br class="clear"></h2>
+      <h2><span class="pull-left">Inscriptions aux tournois</span><span class="pull-right"><a href="{{ path('insalan_user_default_index') }}" class="btn2" style="font-size: 0.5em">&#x2699;Mon profil</a></span><br class="clear"></h2>
   </header>
 
   {% for participant in participants %}
@@ -20,6 +20,9 @@
         {{ participant.tournament.name }} - 
         {% if participant.participantType == 'team' %} Équipe {% endif %}
         {{ participant.name }}
+        {% if participant.participantType == 'team' %}
+          {% if participant.captain.user == app.user %} <a href="{{ path('insalan_tournament_user_editteam', {teamId: participant.id}) }}"><small style="font-size: 50%">[Modifier mon équipe]</small></a> {% endif %}
+        {% endif %}
       </div>
       <div class="title pull-right">
         <img style="margin-right:0px;max-height:60px;display:block;" src="{{ asset(participant.tournament.getUploadDir() ~ participant.tournament.logoPath) }}" alt=""/>

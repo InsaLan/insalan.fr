@@ -18,8 +18,8 @@ class Version20161215212759 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE intra_user ADD steamId VARCHAR(255) DEFAULT NULL, ADD battleTag VARCHAR(255) DEFAULT NULL');
-        $this->addSql('ALTER TABLE intra_tournament ADD loginType VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE intra_User ADD steamId VARCHAR(255) DEFAULT NULL, ADD battleTag VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE intra_Tournament ADD loginType VARCHAR(255) NOT NULL');
     }
 
     /**

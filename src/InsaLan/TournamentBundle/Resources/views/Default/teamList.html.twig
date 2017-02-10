@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
+    {% stylesheets 'bundles/insalan/css/tournament2.css' filter='cssrewrite' %}
       <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
@@ -14,6 +14,15 @@
 {% block body %}
 {{ parent() }}
 
+<div class="bg-{{ tournament.type }}">
+
+<header class="game">
+<div class="container">
+    <img style="height:100px" src="{{ asset(tournament.getUploadDir() ~ tournament.logoPath) }}" alt="Logo"/>
+    {{ tournament.name }}
+</div>
+</header>
+
 <article>
   <header>
     <h2>Équipes validées</h2>
@@ -23,7 +32,7 @@
     {% set count=0 %}
     {% for t in teams %}
     {% if t.validated == 2 %}
-    <div class="frame frame-active grid-5 pull-left">
+    <div class="frame frame-active grid-5 pull-left" style="background-color: rgba(0,0,0,.5)">
         <header class="full">
             <div class="title pull-left">
                 {{count + 1}}. <a href="{{ path('insalan_tournament_default_teamdetails', {id: t.id}) }}">{{ t.name }}</a>
@@ -57,7 +66,7 @@
     {% set count=0 %}
     {% for t in teams %}
     {% if t.validated == 0 %}
-    <div class="frame frame-active grid-5 pull-left">
+    <div class="frame frame-active grid-5 pull-left" style="background-color: rgba(0,0,0,.5)">
         <header class="full">
             <div class="title pull-left">
                 {{count+1}}. {{ t.name }}
@@ -81,6 +90,7 @@
     <br class="clear">
   </section>
 </article>
+</div>
 
 {% endblock %}
 
