@@ -30,7 +30,11 @@ class AdminController extends Controller
         $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findAll();
         $a = array(null => '');
         foreach ($tournaments as $t) {
-            $a[$t->getId()] = $t->getName();
+            
+            if($t->getTournamentOpen()->format("Y") == date("Y")) {
+                $a[$t->getId()] = $t->getName();
+            }
+            
         }
 
         $form = $this->createFormBuilder()
