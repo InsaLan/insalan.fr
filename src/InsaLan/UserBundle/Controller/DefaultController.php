@@ -18,7 +18,7 @@ use OAuth2\GrantType\IGrantType;
 use OAuth2\GrantType\AuthorizationCode;
 
 class DefaultController extends Controller
-{   
+{
 
     /**
      * @Route("/")

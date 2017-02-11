@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "668e06fc279563871fb30e8b34afdc2f",
-    "content-hash": "b601f9840b26ff0a74e339c38eff3277",
+    "hash": "7d0c0f7f821d3ce155721943059ae312",
+    "content-hash": "771275d92c115e03dc2745dc5b65b7cf",
     "packages": [
         {
             "name": "adoy/oauth2",
@@ -2669,6 +2669,54 @@
             "time": "2012-12-21 11:40:51"
         },
         {
+            "name": "sensio/buzz-bundle",
+            "version": "dev-master",
+            "target-dir": "Sensio/Bundle/BuzzBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sensiolabs/SensioBuzzBundle.git",
+                "reference": "ad7c722f755471b80f5c9c7dd703b2975f8a518b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sensiolabs/SensioBuzzBundle/zipball/ad7c722f755471b80f5c9c7dd703b2975f8a518b",
+                "reference": "ad7c722f755471b80f5c9c7dd703b2975f8a518b",
+                "shasum": ""
+            },
+            "require": {
+                "kriswallsmith/buzz": "> 0.6",
+                "php": ">=5.3.2"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Sensio\\Bundle\\BuzzBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marc Weistroff",
+                    "email": "marc.weistroff@sensio.com"
+                }
+            ],
+            "description": "Bundle around the Buzz HTTP client",
+            "homepage": "https://github.com/sensio/SensioBuzzBundle",
+            "keywords": [
+                "buzz",
+                "http client"
+            ],
+            "time": "2016-03-15 10:06:41"
+        },
+        {
             "name": "sensio/distribution-bundle",
             "version": "v3.0.36",
             "target-dir": "Sensio/Bundle/DistributionBundle",
@@ -4713,7 +4761,8 @@
         "knplabs/knp-markdown-bundle": 20,
         "paquettg/leaguewrap": 20,
         "payum/payum-bundle": 0,
-        "payum/offline": 0
+        "payum/offline": 0,
+        "sensio/buzz-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
