@@ -86,10 +86,13 @@ class UserController extends Controller
                     }
                 }
                 if($canAddMumble) {
+                    try {
+                        $r = $buzz->get($this->container->getParameter('voip_service_adress').'container/'.$p->getId());
+                        $voipData[$p->getId()] = $r->getContent();
+                        $voipData[$p->getId()] = json_decode($voipData[$p->getId()]);
+                    } catch(Exception $e) {
 
-                    $r = $buzz->get($this->container->getParameter('voip_service_adress').'container/'.$p->getId());
-                    $voipData[$p->getId()] = $r->getContent();
-                    $voipData[$p->getId()] = json_decode($voipData[$p->getId()]);
+                    }
                     
                     $validatedTeams[$p->getId()] = true;
                 }
