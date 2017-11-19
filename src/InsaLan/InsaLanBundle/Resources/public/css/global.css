@@ -356,7 +356,17 @@ footer aside #facebook {
   left: 0px;
 }
 
-footer aside #facebook:hover {
+.social #facebook {
+  width: 40px;
+  height: 40px;
+  background-color: #3b5998;
+  background-image: url('../img/facebook.png');
+  background-size: 40px 40px;
+  opacity: 0.8;
+  display: inline-block;
+}
+
+footer aside #facebook:hover, .social #facebook:hover {
   opacity: 1;
 }
 
@@ -365,6 +375,7 @@ footer aside #twitter {
   height: 27px;
   background-color: #00aced;
   background-image: url('../img/twitter.png');
+  background-size: 27px 27px;
   opacity: 0.5;
   display: inline-block;
   position: absolute;
@@ -372,7 +383,17 @@ footer aside #twitter {
   left: 31px;
 }
 
-footer aside #twitter:hover {
+.social #twitter {
+  width: 40px;
+  height: 40px;
+  background-color: #00aced;
+  background-image: url('../img/twitter.png');
+  background-size: 40px 40px;
+  opacity: 0.8;
+  display: inline-block;
+}
+
+footer aside #twitter:hover, .social #twitter:hover {
   opacity: 1;
 }
 
@@ -395,8 +416,35 @@ footer aside #mail a {
   line-height: 27px;
 }
 
-footer aside #mail:hover {
+.social #mail {
+  width: 40px;
+  height: 40px;
+  background-color: #00bff3;
+  background-size: 40px 40px;
+  opacity: 0.8;
+  display: inline-block;
+}
+
+.social #mail span {
+  padding-top: 4px;
+  padding-left: 3px;
+  font-size: 26px;
+  color: white;
+}
+
+footer aside #mail:hover, .social #mail:hover {
   opacity: 1;
+}
+
+div.social {
+  background: none repeat scroll 0 0 transparent;
+  left: 0px;
+  top: 206px;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 12;
 }
 
 /* NAVIGATION ------------------------------------------------------ */
