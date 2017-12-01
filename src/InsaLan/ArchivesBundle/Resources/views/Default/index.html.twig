@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
+    {% stylesheets 'bundles/insalan/css/archives.css' %}
       <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
@@ -11,7 +11,13 @@
 {{ parent() }}
 
 
-
+<div class="previous-years-list">
+          <div class=previous-years">
+            <a href="{{ path('insalan_archives_default_index') }}">
+              <img src="{{ asset('bundles/insalan/img/logo_insalan_XII.jpg') }}" alt="InsaLan XII" />
+            </a>
+          </div>
+</div>
 
 
 {% endblock %}
