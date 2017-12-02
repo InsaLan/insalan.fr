@@ -13,11 +13,15 @@
 
 <div class="previous-years-list">
           <div class=previous-years">
-            <a href="{{ path('insalan_archives_default_previousyear', {year: 2018}) }}">
-              <img src="{{ asset('bundles/insalan/img/logo_insalan_XII.jpg') }}" alt="InsaLan XII" />
-            </a>
+		 	année {{year}}
+
           </div>
 </div>
 
-
+<article>
+  <header>
+    <h2>Tournois</h2>
+  </header>
+  {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': old_tournaments} %}
+</article>
 {% endblock %}
