@@ -25,8 +25,8 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        // TODO: Manage tournaments with yearview
-        $old_tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findPreviousYearTournaments($year);    	
-        return array('old_tournaments' => $old_tournaments,"year" => $year);
+        $old_tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findPreviousYearTournaments($year);    
+        $pictures = $em->getRepository('InsaLanArchivesBundle:Picture')->findPreviousYearPictures($year);    
+        return array('old_tournaments' => $old_tournaments,'pictures' => $pictures,"year" => $year);
     }
 }

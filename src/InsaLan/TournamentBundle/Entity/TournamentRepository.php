@@ -80,8 +80,9 @@ class TournamentRepository extends EntityRepository
             ->addSelect('p')
             ->leftJoin('p.manager', 'm')
             ->addSelect('partial m.{id}') // TODO : find why doctrine needs to populate managers...
-            ->where('t.tournamentOpen = :year')  
-            ->setParameter('year', $year)
+            ->Where('t.tournamentOpen BETWEEN :start AND :end')
+            ->setParameter('start', new \Datetime($year.'-01-01'))  
+            ->setParameter('end',   new \Datetime($year.'-12-31'))  
             ->orderBy('t.tournamentOpen', 'ASC')
             ->getQuery();
         return $query->getResult();

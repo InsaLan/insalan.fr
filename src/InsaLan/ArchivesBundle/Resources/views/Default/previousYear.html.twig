@@ -5,23 +5,37 @@
     {% stylesheets 'bundles/insalan/css/archives.css' %}
       <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
+    {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
+      <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 {% endblock %}
 
 {% block body %}
 {{ parent() }}
 
 
-<div class="previous-years-list">
-          <div class=previous-years">
-		 	année {{year}}
-
-          </div>
-</div>
+<h1 style="font-size:40px; text-align: center">Année {{year}}</h1>
 
 <article>
   <header>
     <h2>Tournois</h2>
   </header>
   {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': old_tournaments} %}
+</article>
+
+<article>
+  <header>
+    <h2>Photos</h2>
+  </header>
+<section><p>photo</p>
+</section>
+
+</article>
+
+<article>
+  <header>
+    <h2>Streams</h2>
+  </header>
+
 </article>
 {% endblock %}
