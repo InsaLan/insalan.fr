@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Picture
 {
+   const UPLOAD_PATH = 'uploads/archives/pictures/';
+
     /**
      * @var integer
      *
@@ -38,9 +40,9 @@ class Picture
     /**
      * @var string
      *
-     * @ORM\Column(name="alt", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $alt;
+    private $name;
 
 
     /**
@@ -100,25 +102,30 @@ class Picture
     }
 
     /**
-     * Set alt
+     * Set name
      *
-     * @param string $alt
+     * @param string $name
      * @return Picture
      */
-    public function setAlt($alt)
+    public function setName($name)
     {
-        $this->alt = $alt;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get alt
+     * Get name
      *
      * @return string 
      */
-    public function getAlt()
+    public function getName()
     {
-        return $this->alt;
+        return $this->name;
+    }
+
+     public function getUploadDir()
+    {
+        return 'uploads/archives/pictures/'; //TODO change dir
     }
 }

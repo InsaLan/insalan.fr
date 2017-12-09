@@ -14,7 +14,7 @@
 {{ parent() }}
 
 
-<h1 style="font-size:40px; text-align: center">Année {{year}}</h1>
+<h1>Année {{year}}</h1>
 
 <article>
   <header>
@@ -27,8 +27,12 @@
   <header>
     <h2>Photos</h2>
   </header>
-<section><p>photo</p>
-</section>
+    <section>
+
+    {% include 'InsaLanArchivesBundle:Part:pictureList.html.twig' with {'picture': pictures} %}
+    
+    </section>
+
 
 </article>
 
