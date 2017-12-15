@@ -24,6 +24,8 @@ class AdminController extends Controller
         $orders = $em->getRepository('InsaLanPizzaBundle:Order')->getAll();
         $ordersChoices = array(null => "");
         foreach($orders as $o) {
+            if ($o->getDelivery()->getTimestamp() < mktime() - 3600*24*7) continue;
+
             $ordersChoices[$o->getId()] = "Le " . $o->getDelivery()->format("d/m à H:i") . " ~ "
                                             . ($o->getCapacity() - $o->getAvailableOrders(false, false))  . " commandes sur "
                                             . $o->getCapacity();
