@@ -244,12 +244,12 @@ class UserController extends Controller
      * @Template("InsaLanTournamentBundle:User:redirectToApiLogin.html.twig")
      */
     public function redirectToApiLoginAction(Request $request, Entity\Tournament $tournament) {
-        
+
         $link = null;
         $api = $request->query->get('api');
         if($api == 'Steam') {
             $link = $this->generateUrl('insalan_user_default_registersteamid');
-        } else if ($api == 'BattleNet') {
+        } else if ($api == 'battlenet') {
             $link = $this->generateUrl('insalan_user_default_registerbattlenet');
         }
         return array('api' => $api, 'registerUri' => $link, 'tournament' => $tournament);

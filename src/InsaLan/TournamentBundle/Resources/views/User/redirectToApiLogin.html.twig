@@ -18,10 +18,19 @@
   <section>
 
     {% if api is defined %}
-        <div class="text">
-          Vous devez renseigner votre identifiant {{api}} pour participer à ce tournoi.
+        <div class="text" style="text-align: center">
+          <br />
+          <p>
+            Vous devez renseigner votre identifiant
+            <strong>
+              {% if api == 'battlenet' %} Battle.net {% endif %}
+              {% if api == 'Steam' %} Steam {% endif %}
+            </strong>
+            pour participer à ce tournoi.
+          </p>
+          <br />
           <div>
-             <a href="{{registerUri}}" class="btn btn-primary">renseigner votre identifiant</a>
+             <a href="{{registerUri}}" class="btn btn-primary">Renseigner votre identifiant</a>
           </div>
         </div>
     {% endif %}

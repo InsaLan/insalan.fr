@@ -13,13 +13,16 @@
 {% if future_tournaments | length > 0 %}
 <article>
   <header>
-    <h2>Tournois futurs</h2>
+    <h2>Tournois de la prochaine édition</h2>
   </header>
   {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': future_tournaments} %}
 </article>
 {% endif %}
 
 {% if opened_tournaments | length > 0 %}
+
+<a href="{{ path('insalan_tournament_user_index') }}" class="btn2 pull-right">Inscription aux tournois</a>
+
 <article>
   <header>
     <h2>Tournois ouverts</h2>
