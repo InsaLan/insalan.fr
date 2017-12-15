@@ -11,18 +11,18 @@
 {{ parent() }}
 
 
-<div class="previous-years-list">
-          <div class="previous-years">
-            <a href="{{ path('insalan_archives_default_previousyear', {year: 2018}) }}">
-              <img src="{{ asset('bundles/insalan/img/InsaLan_12.jpg') }}" alt="InsaLan XII" />
-            </a>
-          </div>
-          <div class="previous-years">
-            <a href="{{ path('insalan_archives_default_previousyear', {year: 2016}) }}">
-              <img src="{{ asset('bundles/insalan/img/InsaLan_11.jpg') }}" alt="InsaLan XI" />
-            </a>
-          </div>
-</div>
 
+<div class="previous-years-list">
+    {% for e in editions %}
+          <div class="previous-years">
+            <a href="{{ path('insalan_archives_default_previousyear', {year: e.year}) }}">
+              <img src="{{ asset('bundles/insalan/img/')  ~ e.image}}" alt="InsaLan {{e.year}}" />
+            </a>
+          </div>
+    {% endfor %}
+
+
+
+</div>
 
 {% endblock %}

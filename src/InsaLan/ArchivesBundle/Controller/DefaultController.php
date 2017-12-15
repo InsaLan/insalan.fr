@@ -14,7 +14,10 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $em = $this->getDoctrine()->getManager();
+        $editions = $em->getRepository('InsaLanArchivesBundle:Edition')->getEditions();    
+
+        return array('editions' => $editions);
     }
 
     /**
