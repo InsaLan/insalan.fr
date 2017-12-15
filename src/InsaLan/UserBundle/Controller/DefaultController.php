@@ -18,7 +18,7 @@ use OAuth2\GrantType\IGrantType;
 use OAuth2\GrantType\AuthorizationCode;
 
 class DefaultController extends Controller
-{   
+{
 
     /**
      * @Route("/")
@@ -38,7 +38,19 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
         }
 
-        return array('form' => $form->createView());
+        $battletag = $usr->getBattleTag();
+        $steam = null;
+
+        if ($usr->getSteamId() != null) {
+            $steamDetails = $usr->getSteamDetails($this->getParameter('steam_api_key'));
+            $steam = $steamDetails;
+        }
+
+        return array(
+            'form' => $form->createView(),
+            'steam' => $steam,
+            'battletag' => $battletag,
+        );
     }
     /**
      * @Route("/steamSignin",)
@@ -55,7 +67,7 @@ class DefaultController extends Controller
         $url = $this->generateUrl('insalan_user_default_savesteamid', array('slug' => ''),UrlGeneratorInterface::ABSOLUTE_URL);
         $url = str_replace("http://", "https://", $url);
         $url = $login->url($url);
-        
+
         if($request->query->get('action') == 'remove') {
             $em = $this->getDoctrine()->getManager();
             $usr->setSteamId(null);
@@ -70,12 +82,11 @@ class DefaultController extends Controller
             $steamDetails = $usr->getSteamDetails($steamKey);
             $connectedAccount = $steamDetails->personaname;
             $imageSrc = $steamDetails->avatar;
-            
         }
+
         return array('url' => $url, 'connectedAccount' => $connectedAccount, 'avatarSteamSrc' => $imageSrc,"deleteLink" => $routeDelete);
-        
     }
-    
+
     /**
      * @Route("/steamSignin/sent",)
      * @Template("InsaLanUserBundle:Default:steamRegistrationSent.html.twig")
@@ -92,6 +103,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $callbackRoute = $this->get('session')->get('callbackRegisterApiRoute');
         $callbackParams = $this->get('session')->get('callbackRegisterApiParams');
+
         if(isset($id)) {
             $usr->setSteamId($id);
             $em->persist($usr);
@@ -99,13 +111,19 @@ class DefaultController extends Controller
             if($callbackRoute != null) {
                 $this->get('session')->set('callbackRegisterApiRoute', null);
                 $this->get('session')->set('callbackRegisterApiParams', null);
-                
+
                 return $this->redirect($this->generateUrl($callbackRoute,$callbackParams));
             }
-            return;
-        }
-        return array('erreur' => true);
 
+            $steamKey = $this->getParameter('steam_api_key');
+            $steamDetails = $usr->getSteamDetails($steamKey);
+            $connectedAccount = $steamDetails->personaname;
+            $imageSrc = $steamDetails->avatarmedium;
+
+            return array('connectedAccount' => $connectedAccount, 'avatarSteamSrc' => $imageSrc);
+        }
+
+        return array('erreur' => true);
     }
 
     /**
@@ -115,7 +133,6 @@ class DefaultController extends Controller
     public function registerBattleNetAction(Request $request)
     {
         $usr = $this->get('security.context')->getToken()->getUser();
-        
 
         $client_id       = $this->getParameter('battlenet_api_key');
         $client_secret   = $this->getParameter('battlenet_api_secret');
@@ -161,8 +178,6 @@ class DefaultController extends Controller
             }
         }
         return null;
-        //return array('url' => $url, 'connectedAccount' => $connectedAccount, 'avatarSteamSrc' => $imageSrc,"deleteLink" => $routeDelete);
-        
     }
-    
+
 }
