@@ -30,6 +30,7 @@ class DefaultController extends Controller
 
         $old_tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findPreviousYearTournaments($year);    
         $pictures = $em->getRepository('InsaLanArchivesBundle:Picture')->findPreviousYearPictures($year);    
-        return array('old_tournaments' => $old_tournaments,'pictures' => $pictures,"year" => $year);
+        $streams = $em->getRepository('InsaLanArchivesBundle:Stream')->findPreviousYearStreams($year);    
+        return array('old_tournaments' => $old_tournaments,'pictures' => $pictures,'streams' => $streams, "year" => $year);
     }
 }

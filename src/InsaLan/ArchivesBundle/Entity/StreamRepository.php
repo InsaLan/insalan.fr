@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class StreamRepository extends EntityRepository
 {
+	    public function findPreviousYearStreams($year) {
+        $query = $this->createQueryBuilder('s')
+            ->Where('s.date BETWEEN :start AND :end')
+            ->setParameter('start', new \Datetime($year.'-01-01'))  
+            ->setParameter('end',   new \Datetime($year.'-12-31'))  
+            ->orderBy('s.date', 'ASC')
+            ->getQuery();
+        return $query->getResult();
+    }
 }
