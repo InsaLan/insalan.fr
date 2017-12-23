@@ -40,7 +40,7 @@
       <ul class="shift">
           <li>En ligne : Paypal, Chèque</li>
           <li>Sur place : Chèque, Espèces, CB</li>
-          {#<li>Point de vente partenaire (Le WarpZone - Rennes) : Chèque, Espèces, CB</li>#}
+          <li>Point de vente partenaire (Le WarpZone - Rennes) : Chèque, Espèces, CB</li>
       </ul>
       <br/></br>
 
@@ -65,9 +65,9 @@
   {% if tournament.freeSlots > 0 or (tournament.participantType == 'team' and player.teamForTournament(tournament).validated) %}
 
   {% if selectedDiscount %}
-  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline_1', {tournament: tournament.id, discount: selectedDiscount.id}) }}">Chèque/Sur place</a>
+  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline_1', {tournament: tournament.id, discount: selectedDiscount.id}) }}">Chèque/Partenaire/Sur place</a>
   {% else %}
-  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline', {tournament: tournament.id}) }}">Chèque/Sur place</a>
+  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline', {tournament: tournament.id}) }}">Chèque/Partenaire/Sur place</a>
   {% endif %}
     {% if tournament.isOpenedNow %}
       {% if selectedDiscount %}
