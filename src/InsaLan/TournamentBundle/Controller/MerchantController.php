@@ -88,12 +88,10 @@ class MerchantController extends Controller
                             ->findByTournament($tournament);
         }
 
-        $paidPlayers = $em->getRepository('InsaLanUserBundle:MerchantOrder')
+        $allPaidPlayers = $em->getRepository('InsaLanUserBundle:MerchantOrder')
                         ->findByMerchant($user);
 
-        foreach ($paidPlayers as &$order) {
-            $total += $order->getPayment()["L_PAYMENTREQUEST_0_AMT0"];
-
+        foreach ($allPaidPlayers as &$order) {
             $paidParticipant = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($order->getPlayer()->getUser());
 
             foreach ($paidParticipant as &$p) {
@@ -107,6 +105,11 @@ class MerchantController extends Controller
                         }
                     }
                 }
+            }
+
+            if ($order->getPlayer()->getTournament()->isOpenedNow() || $order->getPlayer()->getTournament()->isPending()) {
+                $total += $order->getPayment()["L_PAYMENTREQUEST_0_AMT0"];
+                $paidPlayers[] = $order;
             }
         }
 
