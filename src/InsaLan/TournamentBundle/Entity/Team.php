@@ -50,11 +50,6 @@ class Team extends Participant
     protected $lastUpdated; // for callback lifecycle...
 
     /**
-     * @var integer
-     */
-    protected $validated;
-
-    /**
      * @var \InsaLan\TournamentBundle\Entity\Tournament
      */
     protected $tournament;
@@ -243,29 +238,6 @@ class Team extends Participant
     public function getCaptain()
     {
         return $this->captain;
-    }
-
-    /**
-     * Set validated
-     *
-     * @param integer $validated
-     * @return Team
-     */
-    public function setValidated($validated)
-    {
-        $this->validated = $validated;
-
-        return $this;
-    }
-
-    /**
-     * Get validated
-     *
-     * @return integer 
-     */
-    public function getValidated()
-    {
-        return $this->validated;
     }
 
     /**

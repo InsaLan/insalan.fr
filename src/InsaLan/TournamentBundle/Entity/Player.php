@@ -158,11 +158,6 @@ class Player extends Participant
     }
 
     /**
-     * @var integer
-     */
-    protected $validated;
-
-    /**
      * @var \InsaLan\TournamentBundle\Entity\Tournament
      */
     protected $tournament;
@@ -171,30 +166,6 @@ class Player extends Participant
      * @var \Doctrine\Common\Collections\Collection
      */
     protected $groups;
-
-
-    /**
-     * Set validated
-     *
-     * @param integer $validated
-     * @return Player
-     */
-    public function setValidated($validated)
-    {
-        $this->validated = $validated;
-
-        return $this;
-    }
-
-    /**
-     * Get validated
-     *
-     * @return integer 
-     */
-    public function getValidated()
-    {
-        return $this->validated;
-    }
 
     /**
      * Set tournament
