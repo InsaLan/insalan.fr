@@ -44,7 +44,7 @@ class MerchantController extends Controller
 
 
         $tournament = $data = null;
-        $players = $pendingPlayers = $paidPlayers = $discounts = array();
+        $players = $pendingPlayers = $paidPlayers = $previousPaidPlayers = $discounts = array();
         $total = 0;
 
         $form->handleRequest($this->getRequest());
@@ -95,12 +95,11 @@ class MerchantController extends Controller
             $paidParticipant = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($order->getPlayer()->getUser());
 
             foreach ($paidParticipant as &$p) {
-                if (!$p->getTournament()->isOpenedNow()) continue;
-
                 if ($p->getParticipantType() == "team"){
                     foreach ($p->getPlayers() as &$player) {
                         if ($player->getId() == $order->getPlayer()->getId()){
                             $order->getPlayer()->setTournament($p->getTournament());
+                            $order->getPlayer()->setValidationDate($p->getValidationDate());
                             break;
                         }
                     }
@@ -111,6 +110,9 @@ class MerchantController extends Controller
                 $total += $order->getPayment()["L_PAYMENTREQUEST_0_AMT0"];
                 $paidPlayers[] = $order;
             }
+            else {
+                $previousPaidPlayers[] = $order;
+            }
         }
 
         $output = array(
@@ -118,6 +120,7 @@ class MerchantController extends Controller
             'tournament'  => $tournament,
             'players'     => $pendingPlayers,
             'paidPlayers' => $paidPlayers,
+            'previousPaidPlayers' => $previousPaidPlayers,
             'discounts'   => $discounts,
             'user'        => $user,
             'total'      => $total,
