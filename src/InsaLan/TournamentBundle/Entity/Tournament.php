@@ -84,7 +84,7 @@ class Tournament
 
     /**
      * @ORM\Column(type="enum", type="string", nullable=false)
-     * ORM\Column(type="enum", type="string", nullable=false, columnDefinition="enum('lol', 'dota2', 'sc2', 'hs', 'csgo', 'ow', 'sfv', 'manual')")
+     * ORM\Column(type="enum", type="string", nullable=false, columnDefinition="enum('lol', 'dota2', 'sc2', 'hs', 'csgo', 'ow', 'sfv', 'dbfz', 'manual')")
      */
     protected $type;
 

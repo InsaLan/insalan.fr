@@ -48,6 +48,7 @@ class TournamentAdmin extends Admin
                     'sc2' => 'StarCraft 2',
                     'ow' => 'Overwatch',
                     'sfv' => 'Street Fighter V',
+                    'dbfz' => 'Dragon Ball FighterZ',
                     'manual' => 'Autre/Manuel'),
                 'required'  => true))
             ->add('file', 'file', array('required' => false))

@@ -80,6 +80,10 @@ body > footer {
   background: #0e0e0e url('../img/bg-SFV.png') no-repeat top;
 }
 
+.bg-dbfz {
+  background: #0e0e0e url('../img/bg-DBF.png') no-repeat top;
+}
+
 .results section.matchs {
   width: 260px;
   float: left;
