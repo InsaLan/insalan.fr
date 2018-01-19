@@ -31,16 +31,32 @@
     </div>
   </header>
 
-  <div class="container">
+  <div class="container bg-{{ t.type }}">
     {% if stages|length == 0 and knockouts|length == 0 %}
+    <br /><br />
     <section>
-      <p>Aucun match n'est disponible.</p>
-      {% if t.isPending() %}
-      <p>Ce tournoi débutera le {{ t.tournamentOpen | date("d/m à H:i") }}.</p>
-      {% endif %}
+      <div class="frame frame-active grid-10" style="background-color: rgba(0,0,0,.5)">
+          <section class="full">
+              <div style="text-align: center">
+                <p>Aucun match n'est disponible.</p>
+                {% if t.isPending() %}
+                <p>Ce tournoi débutera le {{ t.tournamentOpen | date("d/m à H:i") }}.</p>
+                {% endif %}
+                <br />
+                {% if t.participantType == "team" %}
+                    <a class="btn2" href="{{ path("insalan_tournament_default_teamlist", {"id":t.id}) }}">
+                {% else %}
+                    <a class="btn2" href="{{ path("insalan_tournament_default_playerlist", {"id":t.id}) }}">
+                {% endif %}
+                Participants</a>
+                <a href="{{ path('insalan_tournament_default_rules', {id: t.id}) }}" class="btn2">Règlement</a>
+              </div>
+              <br class="clear">
+          </section>
+      </div>
     </section>
     {% endif %}
-    <section class="results bg-{{ t.type }}">
+    <section class="results">
       <section class="matchs">
         {% for s in stages %}
           {% for g in s.groups %}
