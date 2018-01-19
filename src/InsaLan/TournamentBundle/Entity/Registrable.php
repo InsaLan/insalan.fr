@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\RegistrableRepository")
  * @ORM\HasLifecycleCallbacks
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="kind", type="string")
@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 abstract class Registrable
 {
+    const TYPE = 'registrable';
     const UPLOAD_PATH = 'uploads/tournament/';
 
     /**
@@ -107,8 +108,10 @@ abstract class Registrable
     }
 
     public function getFreeSlots() {
-        return $this->registrationLimit - $this->getValidatedSlots();
+        return $this->getRegistrationLimit() - $this->getValidatedSlots();
     }
+
+    abstract function getValidatedSlots();
 
     /**
      * Get id
@@ -118,6 +121,17 @@ abstract class Registrable
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get kind
+     *
+     * @return string
+     */
+    public function getKind()
+    {
+        $c = get_called_class();
+        return $c::TYPE;
     }
 
     /**

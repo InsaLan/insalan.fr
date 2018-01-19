@@ -164,13 +164,13 @@
     </header>
     <div class="text">
       <br>
-      {% for t in tournaments %}
+      {% for t in registrables %}
       {% spaceless %}
       {% if t.isOpenedInFuture  %}
       <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
       <h2>{{ t.name }} (ouverture le {{ t.registrationOpen|date('d/m/Y H:i') }})</h2>
       <p class="pull-left">
-        {{ t.teamMinPlayer }} joueur(s) 
+        {% if t.kind == "tournament"  %}{{ t.teamMinPlayer }} joueur(s){% endif %}
       </p><br class="clear">
       <br>
       <hr style="width:960px">
@@ -179,17 +179,23 @@
 
         <a class="list-choice" href="{{ path('insalan_tournament_user_enroll', {tournament: t.id}) }}">
         <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
-        <h2>{{ t.name }}{% if t.isFull %} - COMPLET {% endif %}</h2>
+        <h2>{{ t.name }}{% if t.kind == "bundle" %} ({{ t.tournamentsString }}) {% endif %}{% if t.isFull %} - COMPLET {% endif %}</h2>
 
-        <a href="{{ path('insalan_tournament_manager_setname', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription manager</a>
-        {% if t.isFull and t.participantType == 'team' %}
+        {% if t.kind == "tournament" %}
+          <a href="{{ path('insalan_tournament_manager_setname', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription manager</a>
+        {% endif %}
+        {% if t.isFull and t.kind == 'tournament' and t.participantType == 'team' %}
           <a href="{{ path('insalan_tournament_user_enroll', {tournament: t.id}) }}" class="btn2" style="float: right">Rejoindre une équipe</a>
         {% endif %}
-        {% if not t.isFull %}<a href="{{ path('insalan_tournament_user_enroll', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription joueur</a>{% endif %}
+        {% if not t.isFull %}
+          <a href="{{ path('insalan_tournament_user_enroll', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription joueur</a>
+        {% endif %}
 
         <p>
-        {{ t.teamMinPlayer }} joueur(s) 
-        - 
+        {% if t.kind == "tournament" %}
+        {{ t.teamMinPlayer }} joueur{{ t.teamMinPlayer > 1 ? "s" : ""}}
+          -
+        {% endif %}
         Inscriptions jusqu'au {{ t.registrationClose|date('d/m/Y') }}
         {% if not t.isFull %}
           - 
@@ -201,9 +207,9 @@
         {% endif %}
         </p>
         </a>
-      <br>
-      <hr style="width:960px">
-      <br>
+        <br>
+        <hr style="width:960px">
+        <br>
       {% elseif t.isOpenedNow and t.getLocked %}
       <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
       <h2>{{ t.name }} (ce tournoi n'est accessible que sur invitation)</h2>
@@ -211,7 +217,7 @@
         <a href="{{ path('insalan_tournament_manager_setname', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription manager</a>
       {% endif %}
       <p class="pull-left">
-        {{ t.teamMinPlayer }} joueur(s) 
+        {{ t.teamMinPlayer }} joueur{{ t.teamMinPlayer > 1 ? "s" : ""}}
       </p><br class="clear">
       <br>
       <hr style="width:960px">

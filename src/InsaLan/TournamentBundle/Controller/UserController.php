@@ -54,12 +54,12 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_user_default_index'));
         }
 
-        $rawTournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments();
+        $rawRegistrables = $em->getRepository('InsaLanTournamentBundle:Registrable')->findThisYearRegistrables();
         // participants can be either a single player, a team or a manager
         $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($usr);
 
-        $tournaments = array();
-        foreach($rawTournaments as $t) {
+        $registrables = array();
+        foreach($rawRegistrables as $t) {
             $in = false;
             foreach($participants as $p) {
                 if($p->getTournament()->getId() === $t->getId()) {
@@ -68,10 +68,10 @@ class UserController extends Controller
                 }
             }
             if(!$in)
-                $tournaments[] = $t;
+                $registrables[] = $t;
         }
 
-        return array('tournaments' => $tournaments, 'participants' => $participants);
+        return array('registrables' => $registrables, 'participants' => $participants);
     }
 
 

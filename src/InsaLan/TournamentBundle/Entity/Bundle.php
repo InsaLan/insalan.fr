@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Bundle extends Registrable
 {
+    const TYPE = 'bundle';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -86,6 +88,54 @@ class Bundle extends Registrable
     public function getTournamentsString()
     {
         return implode(', ', array_map(function($t) { return $t->getName(); }, $this->tournaments->toArray()));
+    }
+
+    /**
+     * Get registration_limit : min of limit for each tournaments
+     *
+     * @return \integer
+     */
+    public function getRegistrationLimit()
+    {
+        $min = PHP_INT_MAX;
+
+        foreach ($this->tournaments as $t)
+            $min = min($min, $t->getRegistrationLimit());
+
+        if ($this->registrationLimit > 0)
+            $min = min($min, $this->registrationLimit);
+
+        return $min;
+    }
+
+    /**
+     * Get free slots : min of remaining slots on each tournaments
+     *
+     * @return \integer
+     */
+    public function getFreeSlots() {
+        $min = PHP_INT_MAX;
+
+        foreach ($this->tournaments as $t)
+            $min = min($min, $t->getFreeSlots());
+
+        if ($this->registrationLimit > 0)
+            $min = min($min, $this->registrationLimit);
+
+        return $min;
+    }
+
+    /**
+     * Get validated slots : sum of validated slots on each tournaments
+     *
+     * @return \integer
+     */
+    public function getValidatedSlots()
+    {
+        $slots = 0;
+
+        foreach ($this->tournaments as $t)
+            $slots += $t->getValidatedSlots();
     }
 
 }

@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Tournament extends Registrable
 {
+    const TYPE = 'tournament';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
