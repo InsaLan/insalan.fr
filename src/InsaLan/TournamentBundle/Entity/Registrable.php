@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\HasLifecycleCallbacks
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="kind", type="string")
- * @ORM\DiscriminatorMap({"tournament" = "Tournament"})
+ * @ORM\DiscriminatorMap({"tournament" = "Tournament", "bundle" = "Bundle"})
  */
 abstract class Registrable
 {

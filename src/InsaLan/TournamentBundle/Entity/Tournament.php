@@ -89,6 +89,11 @@ class Tournament extends Registrable
      */
     protected $playerInfos;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Bundle", mappedBy="tournaments")
+     */
+    protected $bundles;
+
     public function isPending() {
         $now = new \DateTime();
         return $this->tournamentOpen > $now;
