@@ -98,7 +98,14 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $teams =  $em->getRepository('InsaLanTournamentBundle:Team')->getTeamsForTournament($tournament);
 
-        return array('teams' => $teams, 'tournament' => $tournament);
+        $nbPendingTeams = $nbWaitingTeams = 0;
+
+        foreach($teams as $t) {
+            if ($t->getValidated() == Entity\Participant::STATUS_PENDING) $nbPendingTeams++;
+            if ($t->getValidated() == Entity\Participant::STATUS_WAITING) $nbWaitingTeams++;
+        }
+
+        return array('teams' => $teams, 'tournament' => $tournament, 'nbPendingTeams' => $nbPendingTeams, 'nbWaitingTeams' => $nbWaitingTeams);
     }
 
     /**
@@ -111,7 +118,14 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $players =  $em->getRepository('InsaLanTournamentBundle:Player')->getPlayersForTournament($tournament);
 
-        return array('players' => $players, 'tournament' => $tournament);
+        $nbPendingPlayers = $nbWaitingPlayers = 0;
+
+        foreach($players as $p) {
+            if ($p->getValidated() == Entity\Participant::STATUS_PENDING) $nbPendingPlayers++;
+            if ($p->getValidated() == Entity\Participant::STATUS_WAITING) $nbWaitingPlayers++;
+        }
+
+        return array('players' => $players, 'tournament' => $tournament, 'nbPendingPlayers' => $nbPendingPlayers, 'nbWaitingPlayers' => $nbWaitingPlayers);
     }
 
 

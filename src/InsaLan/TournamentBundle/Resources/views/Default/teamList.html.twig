@@ -54,9 +54,56 @@
     {% endif %}
     {% endfor %}
     <br class="clear">
+    {% if count == 0 %}
+    <div class="frame frame-active grid-10" style="background-color: rgba(0,0,0,.5)">
+        <header class="full">
+            <div class="title" style="text-align: center">
+                Il n'y a pas encore d'équipes inscrites sur ce tournoi !<br />
+                <a href="{{ path('insalan_tournament_user_index') }}" class="btn2">Inscription</a>
+            </div>
+        </header>
+    </div>
+    {% endif %}
   </section>
 </article>
 
+{% if nbWaitingTeams %}
+<article>
+  <header>
+    <h2>Équipes sur liste d'attente</h2>
+  </header>
+
+  <section>
+    {% set count=0 %}
+    {% for t in teams %}
+    {% if t.validated == 1 %}
+    <div class="frame frame-active grid-5 pull-left" style="background-color: rgba(0,0,0,.5)">
+        <header class="full">
+            <div class="title pull-left">
+                {{count+1}}. {{ t.name }}
+            </div>
+            <br class="clear">
+        </header>
+        <section>
+            <ul class="shift">
+                {% for p in t.players %}
+                <li>{{ p.name }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+    {% set count=count+1 %}
+        {% if count % 2 == 0%}
+        <br class="clear">
+        {% endif %}
+    {% endif %}
+    {% endfor %}
+    <br class="clear">
+  </section>
+</article>
+{% endif %}
+
+{% if nbPendingTeams %}
 <article>
   <header>
     <h2>Équipes en cours de création</h2>
@@ -90,6 +137,8 @@
     <br class="clear">
   </section>
 </article>
+{% endif %}
+
 </div>
 
 {% endblock %}
