@@ -13,51 +13,49 @@
 {% block body %}
 {{ parent() }}
 
-
-<h1>Année {{year}}</h1>
-
 <article>
-  <header>
-    <h2>Tournois</h2>
-  </header>
-  {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': old_tournaments} %}
-</article>
+  <h1>Année {{year}}</h1>
 
-<article>
-  <header>
-    <h2>Photos</h2>
-  </header>
-    
-<div class="picture-list">
+  <section>
+    <header>
+      <h2>Tournois</h2>
+    </header>
+    {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': old_tournaments} %}
+  </section>
 
-    {% for p in pictures %}
-          <div class="picture">
+  <section>
+    <header>
+      <h2>Photos</h2>
+    </header>
+    <div class="picture-list "> 
+      {% for p in pictures %}
+   
+              <div class="picture">
+               <a href="{{ asset(p.getUploadDir() ~ p.path)  }}" target="_blank">
+               <img src="{{ asset(p.getUploadDir() ~ p.path)  }}" alt="{{ p.name }}"/>
+              </div>
+      {% endfor %}
+    </div>
 
-                  <img src="{{ asset(p.getUploadDir() ~ p.path)  }}" alt="{{ p.name }}"/>
-                    </div>
-
-    {% endfor %}
-</div>
 
 
+  </section>
 
-</article>
+  <section>
+    <header>
+      <h2>Streams</h2>
+    </header>
 
-<article>
-  <header>
-    <h2>Streams</h2>
-  </header>
+  <div class="picture-list ">
 
-<div class="picture-list">
+      {% for s in streams %}
+            <div class="picture">
+              <iframe width="854" height="480" src="{{ s.url }}" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+            </div>
 
-    {% for s in streams %}
-          <div class="picture">
+      {% endfor %}
+  </div>
 
-                  <iframe width="854" height="480" src="{{ s.url }}" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-                    </div>
-
-    {% endfor %}
-</div>
-
+  </section>
 </article>
 {% endblock %}
