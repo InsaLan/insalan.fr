@@ -136,8 +136,8 @@ class Tournament
      * @ORM\Column(type="string", nullable=false)
      */
     protected $currency;
-	
-	/**
+    
+    /**
      * @ORM\Column(type="string", nullable=false)
      */
     protected $loginType;
@@ -147,57 +147,68 @@ class Tournament
      */
     protected $playerInfos;
 
-    public function isOpenedInFuture() {
+    public function isOpenedInFuture()
+    {
         $now = new \DateTime();
         return $this->registrationOpen > $now;
     }
 
-    public function isOpenedNow() {
+    public function isOpenedNow()
+    {
         $now = new \DateTime();
         return $this->registrationOpen <= $now && $this->registrationClose >= $now;
     }
 
-    public function isOpenedInPast() {
+    public function isOpenedInPast()
+    {
         $now = new \DateTime();
         return $this->registrationClose < $now;
     }
 
-    public function isPending() {
+    public function isPending()
+    {
         $now = new \DateTime();
         return $this->tournamentOpen > $now;
     }
 
-    public function isPlaying() {
+    public function isPlaying()
+    {
         $now = new \DateTime();
         return $this->tournamentOpen <= $now && $this->tournamentClose >= $now;
     }
 
-    public function isClosed() {
+    public function isClosed()
+    {
         $now = new \DateTime();
         return $this->tournamentClose < $now;
     }
 
-    public function isFull() {
+    public function isFull()
+    {
         return $this->getFreeSlots() === 0;
     }
 
-    public function isLocked() {
+    public function isLocked()
+    {
         return $this->locked != null;
     }
 
-    public function checkLocked($authToken) {
+    public function checkLocked($authToken)
+    {
         return $this->locked === $authToken;
     }
 
-    public function getValidatedSlots() {
+    public function getValidatedSlots()
+    {
         $nb = 0;
-        foreach($this->getParticipants() as $p) {
+        foreach ($this->getParticipants() as $p) {
             $nb += ($p->getValidated() === Participant::STATUS_VALIDATED ? 1 : 0);
         }
         return $nb;
     }
 
-    public function getFreeSlots() {
+    public function getFreeSlots()
+    {
         return $this->registrationLimit - $this->getValidatedSlots();
     }
 
@@ -281,8 +292,7 @@ class Tournament
     public function onPreRemove()
     {
         $name = self::UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->getId().'.png';
-        if (file_exists($name))
-        {
+        if (file_exists($name)) {
             unlink($name);
         }
     }
@@ -573,11 +583,13 @@ class Tournament
         return __DIR__.'/../../../../web/'.$this->getUploadDir();
     }
 
-    public function setFileName() {
+    public function setFileName()
+    {
         $this->logoPath = sha1(uniqid(mt_rand(), true)).'.'.$this->file->guessExtension();
     }
 
-    public function upload() {
+    public function upload()
+    {
         if (null === $this->file) {
             return;
         }
@@ -867,7 +879,7 @@ class Tournament
     {
         return $this->rules;
     }
-	/**
+    /**
      * Set rules
      *
      * @param string $rules

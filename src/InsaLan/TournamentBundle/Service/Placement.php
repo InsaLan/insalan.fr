@@ -17,7 +17,8 @@ use InsaLan\TournamentBundle\Entity\Team;
 
 class Placement
 {
-    public function getStructure() {
+    public function getStructure()
+    {
         $structure = array();
         //                      game    id  x  y  w  h
         $structure[] = array("lol2017", 1, 0, 0, 5, 1);
@@ -119,7 +120,7 @@ class Placement
         $hs = 1;
 
         // rightmost table
-        for($j = 0; $j < 16; $j++) {
+        for ($j = 0; $j < 16; $j++) {
             $structure[] = array("hs2017", $hs++, 33, $j, 1, 1);
             $structure[] = array("hs2017", $hs++, 34, $j, 1, 1);
         }

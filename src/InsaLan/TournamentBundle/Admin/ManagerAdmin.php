@@ -46,5 +46,4 @@ class ManagerAdmin extends Admin
             ->add('arrived')
         ;
     }
-
 }

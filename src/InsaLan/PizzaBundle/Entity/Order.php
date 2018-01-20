@@ -47,12 +47,12 @@ class Order
     protected $foreignCapacity;
 
     /**
-     * @ORM\Column(type="datetime") 
+     * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
     /**
-     * @ORM\Column(type="datetime") 
+     * @ORM\Column(type="datetime")
      */
     protected $updatedAt;
 
@@ -75,23 +75,26 @@ class Order
     /**
      * Get available number of pizzas (virtual)
      */
-    public function getAvailableOrders($foreign = false, $noNegative = true) {
+    public function getAvailableOrders($foreign = false, $noNegative = true)
+    {
         $qty = 0;
         $qtyForeign = 0;
-        foreach($this->getOrders() as $uo) {
-            if($uo->getPaymentDone()) {
+        foreach ($this->getOrders() as $uo) {
+            if ($uo->getPaymentDone()) {
                 $qty++;
-                if($uo->getForeign())
+                if ($uo->getForeign()) {
                     $qtyForeign++;
+                }
             }
         }
         $globalCapacity = $this->getCapacity() - $qty;
         $foreignCapacity = $this->getForeignCapacity() - $qtyForeign;
 
-        if($foreign)
+        if ($foreign) {
             $capacity = min($globalCapacity, $foreignCapacity);
-        else
+        } else {
             $capacity = $globalCapacity;
+        }
 
         return $capacity < 0 && $noNegative ? 0 : $capacity;
     }
@@ -99,7 +102,8 @@ class Order
     /**
      * Get an ordered array of userOrders
      */
-    public function getOrdersOrdered() {
+    public function getOrdersOrdered()
+    {
         $userOrders = $this->orders->toArray();
         usort($userOrders, array('InsaLan\PizzaBundle\Entity\UserOrder','cmp'));
         return $userOrders;
@@ -109,11 +113,13 @@ class Order
      * Date utils
      */
     
-    public function isDelivered() {
+    public function isDelivered()
+    {
         return new \Datetime() > $this->delivery;
     }
 
-    public function isExpired() {
+    public function isExpired()
+    {
         return new \Datetime() > $this->expiration;
     }
     
@@ -246,7 +252,7 @@ class Order
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -269,7 +275,7 @@ class Order
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -293,7 +299,7 @@ class Order
     /**
      * Get closed
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getClosed()
     {
@@ -316,7 +322,7 @@ class Order
     /**
      * Get foreignCapacity
      *
-     * @return integer 
+     * @return integer
      */
     public function getForeignCapacity()
     {

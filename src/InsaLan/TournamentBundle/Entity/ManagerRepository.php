@@ -6,7 +6,8 @@ use Doctrine\ORM\EntityRepository;
 
 class ManagerRepository extends EntityRepository
 {
-    public function findOneByUserAndPendingTournament(\InsaLan\UserBundle\Entity\User $u, Tournament $t) {
+    public function findOneByUserAndPendingTournament(\InsaLan\UserBundle\Entity\User $u, Tournament $t)
+    {
 
         $q = $this->createQueryBuilder('m')
             ->where('m.user = :user AND m.tournament = :tournament')
@@ -15,7 +16,7 @@ class ManagerRepository extends EntityRepository
 
         try {
             return $q->getQuery()->getSingleResult();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return null;
         }
     }

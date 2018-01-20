@@ -33,14 +33,15 @@ class Pizza
     protected $description;
 
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getName();
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -63,7 +64,7 @@ class Pizza
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -86,7 +87,7 @@ class Pizza
     /**
      * Get price
      *
-     * @return float 
+     * @return float
      */
     public function getPrice()
     {
@@ -109,7 +110,7 @@ class Pizza
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

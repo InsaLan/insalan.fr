@@ -61,70 +61,73 @@ class Match
     }
 
     public function getTournament()
-    {   
-        if($this->getGroup())
+    {
+        if ($this->getGroup()) {
             return $this->getGroup()->getTournament();
-        elseif($this->getKoMatch())
+        } elseif ($this->getKoMatch()) {
             return $this->getKoMatch()->getKnockout()->getTournament();
-        else
+        } else {
             return null;
+        }
     }
 
     public function getGroupStage()
-    {   
-        if($this->getGroup())
+    {
+        if ($this->getGroup()) {
             return $this->getGroup()->getStage();
-        else
+        } else {
             return null;
+        }
     }
 
     public function getExtraInfos()
-    {   
+    {
 
-        if($this->getGroup())
-        {
+        if ($this->getGroup()) {
             return $this->getGroup()->__toString();
-        }
-
-        elseif($this->getKoMatch())
-        {
+        } elseif ($this->getKoMatch()) {
             return $this->getKoMatch()->__toString();
+        } else {
+            return "?";
         }
-
-        else return "?";
-    }   
+    }
 
     public function getWinner()
-    {   
+    {
 
-        if($this->getPart1() === null && $this->getPart2() !== null)
+        if ($this->getPart1() === null && $this->getPart2() !== null) {
             return $this->getPart2();
+        }
 
-        if($this->getPart2() === null && $this->getPart1() !== null)
+        if ($this->getPart2() === null && $this->getPart1() !== null) {
             return $this->getPart1();
+        }
 
         $won1 = $this->getScore1();
         $won2 = $this->getScore2();
 
-        if($won1 === $won2) return null;
+        if ($won1 === $won2) {
+            return null;
+        }
         return ($won1 > $won2 ? $this->getPart1() : $this->getPart2());
     }
 
     public function getLoser()
     {
         $winner = $this->getWinner();
-        if(!$winner) return null;
+        if (!$winner) {
+            return null;
+        }
         return ($this->getPart1() === $winner ? $this->getPart2() : $this->getPart1());
-
     }
 
     public function getScore1()
-    {   
+    {
         $won = 0;
-        foreach($this->getRounds() as $r)
-        {
-            if($r->getScore1() > $r->getScore2())
+        foreach ($this->getRounds() as $r) {
+            if ($r->getScore1() > $r->getScore2()) {
                 $won++;
+            }
         }
         return $won;
     }
@@ -132,10 +135,10 @@ class Match
     public function getScore2()
     {
         $won = 0;
-        foreach($this->getRounds() as $r)
-        {
-            if($r->getScore2() > $r->getScore1())
+        foreach ($this->getRounds() as $r) {
+            if ($r->getScore2() > $r->getScore1()) {
                 $won++;
+            }
         }
         return $won;
     }

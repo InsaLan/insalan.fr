@@ -35,17 +35,18 @@ class DefaultController extends Controller
 
         $ordersChoices = array();
 
-        foreach($orders as $order) {
+        foreach ($orders as $order) {
             $a = 10*round($order->getAvailableOrders() / 10);
-            if($a <= 0)
+            if ($a <= 0) {
                 $a = 10;
+            }
             $ordersChoices[$order->getId()] = "Le " . $order->getDelivery()->format("d/m à H \h i") . " (moins de " .
                                               $a . " pizzas disponibles)";
         }
 
         $pizzasChoices = array();
 
-        foreach($pizzas as $pizza) {
+        foreach ($pizzas as $pizza) {
             $pizzasChoices[$pizza->getId()] = $pizza->getName() . " (" . $pizza->getPrice() . " € + " . $paypalIncrease . " €)";
         }
 
@@ -56,8 +57,7 @@ class DefaultController extends Controller
                     ->getForm();
 
         $form->handleRequest($this->getRequest());
-        if($form->isValid()) {
-
+        if ($form->isValid()) {
             $data = $form->getData();
 
             $order = $em->getRepository('InsaLanPizzaBundle:Order')->findOneById($data["order"]);
@@ -89,16 +89,17 @@ class DefaultController extends Controller
     /**
      * @Route("/validate/{id}")
      */
-    public function validateAction(Entity\UserOrder $userOrder) {
+    public function validateAction(Entity\UserOrder $userOrder)
+    {
 
         $em = $this->getDoctrine()->getManager();
         $payment = $this->get("insalan.user.payment");
 
-        if($payment->check($this->getRequest(), true)) {
+        if ($payment->check($this->getRequest(), true)) {
             $userOrder->setPaymentDone(true);
             $em->persist($userOrder);
             $hour = $userOrder->getOrder()->getDelivery()->format("H \h i");
-            $this->get('session')->getFlashBag()->add('info', "Commande réalisée avec succès ! Votre pizza sera livrée vers $hour." );
+            $this->get('session')->getFlashBag()->add('info', "Commande réalisée avec succès ! Votre pizza sera livrée vers $hour.");
         } else {
             $em->remove($userOrder);
             $this->get('session')->getFlashBag()->add('error', "Erreur de paiement. En cas de problème, veuillez contacter un membre du staff rapidement.");
@@ -107,6 +108,5 @@ class DefaultController extends Controller
         $em->flush();
 
         return $this->redirect($this->generateUrl("insalan_pizza_default_index"));
-
     }
 }

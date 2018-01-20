@@ -42,7 +42,8 @@ class UserController extends Controller
      * @Route("/user")
      * @Template()
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
 
@@ -59,16 +60,17 @@ class UserController extends Controller
         $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($usr);
 
         $tournaments = array();
-        foreach($rawTournaments as $t) {
+        foreach ($rawTournaments as $t) {
             $in = false;
-            foreach($participants as $p) {
-                if($p->getTournament()->getId() === $t->getId()) {
+            foreach ($participants as $p) {
+                if ($p->getTournament()->getId() === $t->getId()) {
                     $in = true;
                     break;
                 }
             }
-            if(!$in)
+            if (!$in) {
                 $tournaments[] = $t;
+            }
         }
 
         return array('tournaments' => $tournaments, 'participants' => $participants);
@@ -80,11 +82,12 @@ class UserController extends Controller
      * @Route("/{tournament}/user/placement")
      * @Template()
      */
-    public function placementAction(Request $request, Entity\Tournament $tournament) {
+    public function placementAction(Request $request, Entity\Tournament $tournament)
+    {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
 
-        if(!$tournament->isPending() || !$tournament->getPlacement()) {
+        if (!$tournament->isPending() || !$tournament->getPlacement()) {
             $this->get('session')->getFlashBag()->add('error', "Le tournoi ne permet pas de choisir de places actuellement.");
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
         }
@@ -92,7 +95,7 @@ class UserController extends Controller
         $participant = $em->getRepository('InsaLanTournamentBundle:Participant')
                           ->findOneByUserAndTournament($usr, $tournament);
 
-        if(!$participant ||
+        if (!$participant ||
             $participant->getValidated() !== Entity\Participant::STATUS_VALIDATED ||
             $participant instanceof Entity\Team &&
             $participant->getCaptain()->getUser() !== $usr) {
@@ -100,12 +103,12 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
         }
 
-        if(null !== ($placement = $request->query->get("placement"))) {
+        if (null !== ($placement = $request->query->get("placement"))) {
             $placement = intval($placement);
             $registered = $em->getRepository('InsaLanTournamentBundle:Participant')
                              ->findOneBy(array("placement" => $placement, "tournament" => $tournament));
 
-            if($registered === null || $registered === $participant) {
+            if ($registered === null || $registered === $participant) {
                 $participant->setPlacement(intval($placement));
                 $this->get('session')->getFlashBag()->add('info', "La place vous a bien été attribuée !");
                 $em->persist($participant);
@@ -127,7 +130,8 @@ class UserController extends Controller
      * Manage all steps for registering into a tournament
      * @Route("/{tournament}/user/enroll")
      */
-    public function enrollAction(Request $request, Entity\Tournament $tournament) {
+    public function enrollAction(Request $request, Entity\Tournament $tournament)
+    {
         $em = $this->getDoctrine()->getManager();
 
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -139,24 +143,25 @@ class UserController extends Controller
         if ($player === null && $tournament->isLocked()) {
             $this->get('session')->getFlashBag()->add('error', "Ce tournois n'est accessible que sur invitation.");
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        } elseif ($player === null) {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer', array('tournament' => $tournament->getId())));
+        } elseif (!$player->getGameValidated()) {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer', array('tournament' => $tournament->getId())));
+        } elseif ($tournament->getParticipantType() === 'team' && $player->getTeamForTournament($tournament) === null) {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_jointeam', array('tournament' => $tournament->getId())));
+        } elseif (!$player->getPaymentDone()) {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_pay', array('tournament' => $tournament->getId())));
+        } else {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_paydone', array('tournament' => $tournament->getId())));
         }
-        else if ($player === null)
-            return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer',array('tournament' => $tournament->getId())));
-        else if (!$player->getGameValidated())
-            return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer',array('tournament' => $tournament->getId())));
-        else if ($tournament->getParticipantType() === 'team' && $player->getTeamForTournament($tournament) === null)
-            return $this->redirect($this->generateUrl('insalan_tournament_user_jointeam',array('tournament' => $tournament->getId())));
-        else if (!$player->getPaymentDone())
-            return $this->redirect($this->generateUrl('insalan_tournament_user_pay',array('tournament' => $tournament->getId())));
-        else
-            return $this->redirect($this->generateUrl('insalan_tournament_user_paydone',array('tournament' => $tournament->getId())));
     }
 
     /**
      * Manage all steps for registering into a LOCKED tournament
      * @Route("/{tournament}/user/enroll/{authToken}")
      */
-    public function enrollLockedAction(Request $request, Entity\Tournament $tournament, $authToken) {
+    public function enrollLockedAction(Request $request, Entity\Tournament $tournament, $authToken)
+    {
         $em = $this->getDoctrine()->getManager();
 
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -170,16 +175,17 @@ class UserController extends Controller
             $this->get('session')->getFlashBag()->add('error', "Ce tournois n'est accessible que sur invitation.");
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
         } // from here we are authentificated
-        else if ($player === null)
-            return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer',array('tournament' => $tournament->getId())));
-        else if (!$player->getGameValidated())
-            return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer',array('tournament' => $tournament->getId())));
-        else if ($tournament->getParticipantType() === 'team' && $player->getTeamForTournament($tournament) === null)
-            return $this->redirect($this->generateUrl('insalan_tournament_user_jointeam',array('tournament' => $tournament->getId())));
-        else if (!$player->getPaymentDone())
-            return $this->redirect($this->generateUrl('insalan_tournament_user_pay',array('tournament' => $tournament->getId())));
-        else
-            return $this->redirect($this->generateUrl('insalan_tournament_user_paydone',array('tournament' => $tournament->getId())));
+        elseif ($player === null) {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer', array('tournament' => $tournament->getId())));
+        } elseif (!$player->getGameValidated()) {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer', array('tournament' => $tournament->getId())));
+        } elseif ($tournament->getParticipantType() === 'team' && $player->getTeamForTournament($tournament) === null) {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_jointeam', array('tournament' => $tournament->getId())));
+        } elseif (!$player->getPaymentDone()) {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_pay', array('tournament' => $tournament->getId())));
+        } else {
+            return $this->redirect($this->generateUrl('insalan_tournament_user_paydone', array('tournament' => $tournament->getId())));
+        }
     }
 
     /**
@@ -187,7 +193,8 @@ class UserController extends Controller
      * @Route("/{tournament}/user/player/set")
      * @Template()
      */
-    public function setPlayerAction(Request $request, Entity\Tournament $tournament) {
+    public function setPlayerAction(Request $request, Entity\Tournament $tournament)
+    {
         $autre = 'other';
         $battleNet = 'battlenet';
         $steam = 'Steam';
@@ -198,20 +205,22 @@ class UserController extends Controller
         $player = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByUserAndPendingTournament($usr, $tournament);
         $game = $tournament->getType();
         $platform = $tournament->getLoginType();
-        $this->get('session')->set('callbackRegisterApiRoute','insalan_tournament_user_setplayer');
-        $this->get('session')->set('callbackRegisterApiParams',array('tournament' => $tournament->getId()));
+        $this->get('session')->set('callbackRegisterApiRoute', 'insalan_tournament_user_setplayer');
+        $this->get('session')->set('callbackRegisterApiParams', array('tournament' => $tournament->getId()));
         
         if ($player === null) {
             $player = new Player();
             $player->setUser($usr);
             $player->setPendingTournament($tournament);
         }
-        if($platform == $autre) {
+        if ($platform == $autre) {
             return $this->usernameSet($em, $usr, $player, $request, $tournament);
-        } else if ($platform == $steam) {
-            if($usr->getSteamId() == null) {
-                return $this->redirect($this->generateUrl('insalan_tournament_user_redirecttoapilogin',
-                                                            array('tournament' => $tournament->getId())).'?api='.$steam);
+        } elseif ($platform == $steam) {
+            if ($usr->getSteamId() == null) {
+                return $this->redirect($this->generateUrl(
+                    'insalan_tournament_user_redirecttoapilogin',
+                    array('tournament' => $tournament->getId())
+                ).'?api='.$steam);
             } else {
                 $steamKey = $this->getParameter('steam_api_key');
                 $steamDetails = $usr->getSteamDetails($steamKey);
@@ -219,37 +228,42 @@ class UserController extends Controller
                 $player->setGameName($steamDetails->personaname);
                 $em->persist($player);
                 $em->flush();
-                return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer', 
-                                                            array('tournament' => $tournament->getId())));
+                return $this->redirect($this->generateUrl(
+                    'insalan_tournament_user_validateplayer',
+                    array('tournament' => $tournament->getId())
+                ));
             }
-        } else if($platform == $battleNet) {
-            if($usr->getBattleTag() == null) {
-                
-                return $this->redirect($this->generateUrl('insalan_tournament_user_redirecttoapilogin',
-                                                            array('tournament' => $tournament->getId())).'?api='.$battleNet);
-
+        } elseif ($platform == $battleNet) {
+            if ($usr->getBattleTag() == null) {
+                return $this->redirect($this->generateUrl(
+                    'insalan_tournament_user_redirecttoapilogin',
+                    array('tournament' => $tournament->getId())
+                ).'?api='.$battleNet);
             } else {
-                $name = explode('#',$usr->getBattleTag())[0];
+                $name = explode('#', $usr->getBattleTag())[0];
                 $player->setGameName($name);
                 $em->persist($player);
                 $em->flush();
-                return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer', 
-                                                            array('tournament' => $tournament->getId())));
+                return $this->redirect($this->generateUrl(
+                    'insalan_tournament_user_validateplayer',
+                    array('tournament' => $tournament->getId())
+                ));
             }
         }
     }
     /**
-     * 
+     *
      * @Route("/{tournament}/user/player/registerOtherPlatform/")
      * @Template("InsaLanTournamentBundle:User:redirectToApiLogin.html.twig")
      */
-    public function redirectToApiLoginAction(Request $request, Entity\Tournament $tournament) {
+    public function redirectToApiLoginAction(Request $request, Entity\Tournament $tournament)
+    {
 
         $link = null;
         $api = $request->query->get('api');
-        if($api == 'Steam') {
+        if ($api == 'Steam') {
             $link = $this->generateUrl('insalan_user_default_registersteamid');
-        } else if ($api == 'battlenet') {
+        } elseif ($api == 'battlenet') {
             $link = $this->generateUrl('insalan_user_default_registerbattlenet');
         }
         return array('api' => $api, 'registerUri' => $link, 'tournament' => $tournament);
@@ -258,7 +272,8 @@ class UserController extends Controller
      * Manage validation of player registration into a tournament
      * @Route("/{tournament}/user/player/validate")
      */
-    public function validatePlayerAction(Request $request, Entity\Tournament $tournament) {
+    public function validatePlayerAction(Request $request, Entity\Tournament $tournament)
+    {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByUserAndPendingTournament($usr, $tournament);
@@ -266,9 +281,8 @@ class UserController extends Controller
         $check = $request->query->get('check') === "yes";
 
         if ($player === null) {
-            return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer',array('tournament' => $tournament->getId())));
+            return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer', array('tournament' => $tournament->getId())));
         } else {
-
             $player->setGameValidated(true);
             $this->finalizePlayerAfterValidation($player, $tournament);
             $em->persist($player);
@@ -283,12 +297,12 @@ class UserController extends Controller
                     $this->generateUrl('insalan_tournament_user_pay', array('tournament' => $tournament->getId()))
                 );
             }
-
         }
     }
 
-    private function finalizePlayerAfterValidation($player, $tournament) {
-        if($tournament->getParticipantType() === "player") {
+    private function finalizePlayerAfterValidation($player, $tournament)
+    {
+        if ($tournament->getParticipantType() === "player") {
             $player->setTournament($tournament);
         }
     }
@@ -297,7 +311,8 @@ class UserController extends Controller
      * Allow a player to drop a pending tournament registration if not managed by team
      * @Route("/{tournament}/user/leave")
      */
-    public function leaveAction(Entity\Tournament $tournament) {
+    public function leaveAction(Entity\Tournament $tournament)
+    {
         $em = $this->getDoctrine()->getManager();
 
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -305,8 +320,9 @@ class UserController extends Controller
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
-        if($player->getTournament()->getParticipantType() !== "player")
+        if ($player->getTournament()->getParticipantType() !== "player") {
             throw new ControllerException("Not Allowed"); // must be a player only tournament
+        }
 
         $em->remove($player);
         $em->flush();
@@ -320,7 +336,8 @@ class UserController extends Controller
      * @Route("/{tournament}/user/discount/{discount}/details", requirements={"discount" = "\d+"})
      * @Template()
      */
-    public function payAction(Entity\Tournament $tournament, $discount = null) {
+    public function payAction(Entity\Tournament $tournament, $discount = null)
+    {
         $em = $this->getDoctrine()->getManager();
 
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -335,11 +352,11 @@ class UserController extends Controller
             ->getRepository('InsaLanUserBundle:Discount')
             ->findByTournament($tournament);
 
-        if ($discount !== null && $discount->getTournament()->getId() !== $tournament->getId()){
+        if ($discount !== null && $discount->getTournament()->getId() !== $tournament->getId()) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_pay', array("tournament" => $tournament->getId())));
         }
 
-        if($tournament->isFree()) {
+        if ($tournament->isFree()) {
             $player->setPaymentDone(true);
             $em->persist($player);
             $em->flush();
@@ -354,7 +371,8 @@ class UserController extends Controller
      * @Route("/{tournament}/user/pay/paypal_ec")
      * @Route("/{tournament}/user/discount/{discount}/paypal_ec", requirements={"discount" = "\d+"})
      */
-    public function payPaypalECAction(Entity\Tournament $tournament, $discount = null) {
+    public function payPaypalECAction(Entity\Tournament $tournament, $discount = null)
+    {
         $em = $this->getDoctrine()->getManager();
 
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -365,7 +383,7 @@ class UserController extends Controller
         $discount = $em->getRepository('InsaLanUserBundle:Discount')
                        ->findOneById($discount);
 
-        if ($discount !== null && $discount->getTournament()->getId() !== $tournament->getId()){
+        if ($discount !== null && $discount->getTournament()->getId() !== $tournament->getId()) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_pay', array("tournament" => $tournament->getId())));
         }
 
@@ -374,7 +392,7 @@ class UserController extends Controller
         $price = $tournament->getWebPrice();
         $title = 'Place pour le tournoi '.$tournament->getName();
 
-        if ($discount !== null){
+        if ($discount !== null) {
             $price -= $discount->getAmount();
             $title += " (" + $discount->getName() + ")";
         }
@@ -419,7 +437,8 @@ class UserController extends Controller
      * @Route("/{tournament}/user/pay/done")
      * @Template()
      */
-    public function payDoneAction(Request $request, Entity\Tournament $tournament) {
+    public function payDoneAction(Request $request, Entity\Tournament $tournament)
+    {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em
@@ -432,7 +451,8 @@ class UserController extends Controller
     /**
      * @Route("/{tournament}/user/pay/done_temp")
      */
-    public function payDoneTempAction(Request $request, Entity\Tournament $tournament) {
+    public function payDoneTempAction(Request $request, Entity\Tournament $tournament)
+    {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em
@@ -462,7 +482,8 @@ class UserController extends Controller
      * @Route("/{tournament}/user/discount/{discount}/offline", requirements={"discount" = "\d+"})
      * @Template()
      */
-    public function payOfflineAction(Request $request, Entity\Tournament $tournament, $discount = null) {
+    public function payOfflineAction(Request $request, Entity\Tournament $tournament, $discount = null)
+    {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em
@@ -472,7 +493,7 @@ class UserController extends Controller
         $discount = $em->getRepository('InsaLanUserBundle:Discount')
                        ->findOneById($discount);
 
-        if ($discount !== null && $discount->getTournament()->getId() !== $tournament->getId()){
+        if ($discount !== null && $discount->getTournament()->getId() !== $tournament->getId()) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_pay', array("tournament" => $tournament->getId())));
         }
 
@@ -499,16 +520,19 @@ class UserController extends Controller
                     'insalan_tournament_user_setplayer',
                     array(
                         'tournament' => $tournament->getId()
-                    )));
-        }
-        // Check if this player is validated for the game
-        else if (!$player->isValidated($tournament->getType())) {
+                    )
+                )
+            );
+        } // Check if this player is validated for the game
+        elseif (!$player->isValidated($tournament->getType())) {
             return $this->redirect(
                 $this->generateUrl(
                     'insalan_tournament_user_validateplayer',
                     array(
                         'tournament' => $tournament->getId()
-                    )));
+                    )
+                )
+            );
         }
 
         return array('tournament' => $tournament, 'user' => $usr, 'player' => $player);
@@ -520,14 +544,16 @@ class UserController extends Controller
      * @Route("/user/leave/team/{teamId}")
      * @Template()
      */
-    public function leaveTeamAction($teamId) {
+    public function leaveTeamAction($teamId)
+    {
         $em = $this->getDoctrine()->getManager();
         $team = $em
             ->getRepository('InsaLanTournamentBundle:Team')
             ->findOneById($teamId);
 
-        if($team === null)
+        if ($team === null) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         // get targeted player
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -536,34 +562,39 @@ class UserController extends Controller
             ->findOneByUserAndPendingTournament($usr, $team->getTournament());
 
         // is he part of the team roster ?
-        if(!$team->haveInPlayers($player))
+        if (!$team->haveInPlayers($player)) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         // not allowed if he paid something
-        if(!$team->getTournament()->isFree() && $player->getPaymentDone()){
+        if (!$team->getTournament()->isFree() && $player->getPaymentDone()) {
             $this->get('session')->getFlashBag()->add('error', "Vous avez payé votre place, merci de contacter l'InsaLan si vous souhaitez vous désister.");
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
         }
         // not allowed either if registration are closed
-        if(!$team->getTournament()->isOpenedNow())
+        if (!$team->getTournament()->isOpenedNow()) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         $player->leaveTeam($team);
         $team->removePlayer($player);
 
         // if he was captain and not the last member, we need to chose another one
-        if($team->getCaptain() === $player && $team->getPlayers()->count() === 0)
+        if ($team->getCaptain() === $player && $team->getPlayers()->count() === 0) {
             $team->setCaptain($team->getPlayers()->first());
+        }
 
         // team cannot stay validated if someone leave and there is not enought players
         // TODO: Should be handled by the model ?
-        if($team->getPlayers()->count() < $team->getTournament()->getTeamMinPlayer())
+        if ($team->getPlayers()->count() < $team->getTournament()->getTeamMinPlayer()) {
             $team->setValidated(Entity\Participant::STATUS_PENDING); // reset to waiting state
+        }
 
         $em->persist($team);
 
-        if($team->getPlayers()->count() === 0)
+        if ($team->getPlayers()->count() === 0) {
             $em->remove($team);
+        }
 
         $em->remove($player);
         $em->flush();
@@ -576,7 +607,8 @@ class UserController extends Controller
      * @Template()
      */
 
-    public function editTeamAction(Request $request, $teamId) {
+    public function editTeamAction(Request $request, $teamId)
+    {
         $em = $this->getDoctrine()->getManager();
 
         $team = $em
@@ -584,8 +616,9 @@ class UserController extends Controller
             ->findOneById($teamId);
 
         // does the team exist ?
-        if($team === null)
+        if ($team === null) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         // get current logged user corresponding player
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -594,15 +627,16 @@ class UserController extends Controller
             ->findOneByUserAndPendingTournament($usr, $team->getTournament());
 
         // is he really the captain ? (also check for null)
-        if($team->getCaptain() !== $captain)
+        if ($team->getCaptain() !== $captain) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         $form = $this->createForm(new TeamType(), $team);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             // update password if not empty
-            if ($team->getPlainPassword() != ""){
+            if ($team->getPlainPassword() != "") {
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($usr);
                 $team->setPassword($encoder->encodePassword($team->getPlainPassword(), $team->getPasswordSalt()));
@@ -624,19 +658,22 @@ class UserController extends Controller
      * Only possible if the player didn't pay anything yet OR if this is a free tournament
      * @Route("/user/ban/team/{teamId}/{playerId}")
      */
-    public function banPlayerAction($teamId, $playerId) {
+    public function banPlayerAction($teamId, $playerId)
+    {
         $em =$this->getDoctrine()->getManager();
         $team = $em
             ->getRepository('InsaLanTournamentBundle:Team')
             ->findOneById($teamId);
 
         // does the team exist ?
-        if($team === null)
+        if ($team === null) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         // not allowed if registration are closed
-        if(!$team->getTournament()->isOpenedNow())
+        if (!$team->getTournament()->isOpenedNow()) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         // get current logged user corresponding player
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -645,20 +682,23 @@ class UserController extends Controller
             ->findOneByUserAndPendingTournament($usr, $team->getTournament());
 
         // is he really the captain ? (also check for null)
-        if($team->getCaptain() !== $captain)
+        if ($team->getCaptain() !== $captain) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         $playerToBan = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneById($playerId);
 
         // does this player exist ?
-        if($playerToBan === null)
+        if ($playerToBan === null) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         // not possible if the player payed something ! (paid tournament + payement done)
-        if(!$team->getTournament()->isFree() && $playerToBan->getPaymentDone())
+        if (!$team->getTournament()->isFree() && $playerToBan->getPaymentDone()) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         /**
          * Manage team validation state
@@ -666,18 +706,19 @@ class UserController extends Controller
          * - A validated team roster cannot be modified in paid tournaments
          * - Bans invalidates the team (see below)
          */
-        if(!$team->getTournament()->isFree() && $team->getValidated())
+        if (!$team->getTournament()->isFree() && $team->getValidated()) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         // captain cannot ban himself !
-        if($playerToBan !== $captain) {
-
+        if ($playerToBan !== $captain) {
             $playerToBan->leaveTeam($team);
             $team->removePlayer($playerToBan);
 
-            if($team->getValidated() === Entity\Participant::STATUS_WAITING
-            || $team->getValidated() === Entity\Participant::STATUS_VALIDATED)
+            if ($team->getValidated() === Entity\Participant::STATUS_WAITING
+            || $team->getValidated() === Entity\Participant::STATUS_VALIDATED) {
                 $team->setValidated(Entity\Participant::STATUS_PENDING); // reset to waiting state
+            }
 
             $em->persist($team);
 
@@ -692,15 +733,17 @@ class UserController extends Controller
      * Change team captain
      * @Route("/user/promote/{teamId}/{playerId}")
      */
-    public function promoteCaptainAction($teamId, $playerId){
+    public function promoteCaptainAction($teamId, $playerId)
+    {
         $em =$this->getDoctrine()->getManager();
         $team = $em
             ->getRepository('InsaLanTournamentBundle:Team')
             ->findOneById($teamId);
 
         // does the team exist ?
-        if($team === null)
+        if ($team === null) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         // get current logged user corresponding player
         $usr = $this->get('security.context')->getToken()->getUser();
@@ -709,20 +752,23 @@ class UserController extends Controller
             ->findOneByUserAndPendingTournament($usr, $team->getTournament());
 
         // is he really the captain ? (also check for null)
-        if($team->getCaptain() !== $captain)
+        if ($team->getCaptain() !== $captain) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         $playerToPromote = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneById($playerId);
 
         // does this player exist ?
-        if($playerToPromote === null)
+        if ($playerToPromote === null) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         // is he part of the team roster ?
-        if(!$team->haveInPlayers($playerToPromote))
+        if (!$team->haveInPlayers($playerToPromote)) {
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         $team->setCaptain($playerToPromote);
         $em->persist($team);
@@ -736,11 +782,13 @@ class UserController extends Controller
      * @Route("{tournament}/user/join/team/create")
      * @Template()
      */
-    public function createTeamAction(Request $request, Entity\Tournament $tournament) {
+    public function createTeamAction(Request $request, Entity\Tournament $tournament)
+    {
         $em = $this->getDoctrine()->getManager();
 
-        if($tournament->getParticipantType() !== "team")
+        if ($tournament->getParticipantType() !== "team") {
             throw new ControllerException("Not Allowed");
+        }
 
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em
@@ -774,11 +822,13 @@ class UserController extends Controller
      * @Route("{tournament}/user/join/team/existing")
      * @Template()
      */
-    public function existingTeamAction(Request $request, Entity\Tournament $tournament) {
+    public function existingTeamAction(Request $request, Entity\Tournament $tournament)
+    {
         $em = $this->getDoctrine()->getManager();
 
-        if($tournament->getParticipantType() !== "team")
+        if ($tournament->getParticipantType() !== "team") {
             throw new ControllerException("Équipes non acceptées dans ce tournois");
+        }
 
         $usr = $this->get('security.context')->getToken()->getUser();
         $player = $em
@@ -799,8 +849,9 @@ class UserController extends Controller
                     ->getRepository('InsaLanTournamentBundle:Team')
                     ->findOneByNameAndTournament($team->getName(), $tournament);
 
-                if($team2 === null || $team2->getTournament()->getId() !== $tournament->getId())
+                if ($team2 === null || $team2->getTournament()->getId() !== $tournament->getId()) {
                     throw new ControllerException("Équipe invalide");
+                }
 
                 $team->setPassword($encoder->encodePassword($team->getPlainPassword(), $team2->getPasswordSalt()));
 
@@ -817,7 +868,6 @@ class UserController extends Controller
             } catch (ControllerException $e) {
                 $details = $e->getMessage();
             }
-
         }
         return array('tournament' => $tournament, 'user' => $usr, 'player' => $player, 'error' => $details, 'form' => $form->createView());
     }
@@ -837,14 +887,17 @@ class UserController extends Controller
         try {
             $pvpService = $this->get('insalan.tournament.pvp_net');
 
-            if($match->getPart1() !== $team && $match->getPart2() !== $team)
+            if ($match->getPart1() !== $team && $match->getPart2() !== $team) {
                 throw new ControllerException("Invalid team");
+            }
 
-            if(!$this->isUserInTeam($team))
+            if (!$this->isUserInTeam($team)) {
                 throw new ControllerException("Invalid user");
+            }
 
-            if($match->getState() != Entity\Match::STATE_ONGOING)
+            if ($match->getState() != Entity\Match::STATE_ONGOING) {
                 throw new ControllerException("Invalid match: not in ongoing state");
+            }
 
             try {
                 $matchResult = $pvpService->getGameResult($match->getPart1(), $match->getPart2());
@@ -853,8 +906,7 @@ class UserController extends Controller
             } catch (\Exception $e) {
                 throw new ControllerException($e->getMessage());
             }
-        }
-        catch (ControllerException $e) {
+        } catch (ControllerException $e) {
             $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             return $this->redirect($this->generateUrl('insalan_tournament_user_teamdetails', array('id' => $team->getId())));
         }
@@ -867,10 +919,9 @@ class UserController extends Controller
 
         $round->setData($data);
 
-        if($matchResult) {
+        if ($matchResult) {
             $round->setScore1(1);
-        }
-        else {
+        } else {
             $round->setScore2(1);
         }
 
@@ -884,13 +935,12 @@ class UserController extends Controller
 
         $em->flush();
 
-        if($match->getKoMatch()) {
+        if ($match->getKoMatch()) {
             $em->getRepository("InsaLanTournamentBundle:KnockoutMatch")->propagateVictory($match->getKoMatch());
             $em->flush();
         }
 
         return $this->redirect($this->generateUrl('insalan_tournament_user_teamdetails', array('id' => $team->getId())));
-
     }
 
     /**
@@ -903,15 +953,18 @@ class UserController extends Controller
     {
         try {
             // Check security
-            if(!$this->isUserInTeam($team))
+            if (!$this->isUserInTeam($team)) {
                 throw new ControllerException("Invalid user");
+            }
 
-            if($round->getMatch()->getPart1()->getId() !== $team->getId()
-                && $round->getMatch()->getPart2()->getId() !== $team->getId())
+            if ($round->getMatch()->getPart1()->getId() !== $team->getId()
+                && $round->getMatch()->getPart2()->getId() !== $team->getId()) {
                 throw new ControllerException("Invalid round");
+            }
 
-            if($round->getReplay() !== null)
+            if ($round->getReplay() !== null) {
                 throw new ControllerException("Le fichier a déjà été envoyé !");
+            }
         } catch (ControllerException $e) {
             $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             return $this->redirect($this->generateUrl('insalan_tournament_user_teamdetails', array('id' => $team->getId())));
@@ -924,8 +977,7 @@ class UserController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($round);
             $em->flush();
@@ -938,7 +990,8 @@ class UserController extends Controller
 
     /** PRIVATE **/
 
-    protected function usernameSet($em, $usr, $player, $request, $tournament) {
+    protected function usernameSet($em, $usr, $player, $request, $tournament)
+    {
         $form = $this->createForm(new SetPlayerName(), $player);
         $form->handleRequest($request);
 
@@ -955,15 +1008,18 @@ class UserController extends Controller
         return array('form' => $form->createView(), 'selectedGame' => $tournament->getType(), 'tournamentId' => $tournament->getId());
     }
 
-    protected function lolValidation($em, $usr, $player, $tournamentId, $check) {
+    protected function lolValidation($em, $usr, $player, $tournamentId, $check)
+    {
         if ($player->getGameValidated()) {
             return $this->redirect(
                 $this->generateUrl(
                     'insalan_tournament_user_jointeam',
                     array(
                         'id' => $tournamentId
-                    )));
-        } else if (!$check) {
+                    )
+                )
+            );
+        } elseif (!$check) {
             return array('player' => $player, 'error' => null, 'selectedGame' => 'lol', 'tournamentId' => $tournamentId);
         } else {
             $details = null;
@@ -971,13 +1027,12 @@ class UserController extends Controller
                 $this->fetchInfo($usr, $player);
                 $em->persist($player);
                 $em->flush();
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $className = get_class($e);
 
                 if ('GuzzleHttp\\Exception\\ClientException' === $className && 404 == $e->getResponse()->getStatusCode()) {
                     $details = 'Invocateur introuvable sur EUW';
-                }
-                else if (0 === strpos($className, 'GuzzleHttp')) {
+                } elseif (0 === strpos($className, 'GuzzleHttp')) {
                     $details = 'Erreur de l\'API. Veuillez réessayer.';
                 } else {
                     $details = 'Une erreur inconnue est survenue';
@@ -985,24 +1040,23 @@ class UserController extends Controller
             }
             return array('player' => $player, 'error' => $details, 'selectedGame' => 'lol', 'tournamentId' => $tournamentId);
         }
-
     }
 
-    private function isUserInTeam(Entity\Participant $part) {
+    private function isUserInTeam(Entity\Participant $part)
+    {
 
         $user = $this->get('security.context')->getToken()->getUser();
 
-        if($part instanceof Entity\Team) {
-
+        if ($part instanceof Entity\Team) {
             foreach ($part->getPlayers() as $p) {
-                if($p->getUser() !== null && $p->getUser()->getId() === $user->getId())
+                if ($p->getUser() !== null && $p->getUser()->getId() === $user->getId()) {
                     return true;
+                }
             }
             return false;
         }
 
         return $part->getUser() === $user && $user !== null;
-
     }
 
     /**
@@ -1010,7 +1064,8 @@ class UserController extends Controller
      * @param  User $user   targeted user
      * @param  Player $player player associated with user for the tournament to check
      */
-    protected function fetchInfo($user, $player) {
+    protected function fetchInfo($user, $player)
+    {
         $apiLol = $this->container->get('insalan.lol');
         $apiSummoner = $apiLol->getApi()->summoner();
         $rSummoner = $apiSummoner->info($player->getGameName());

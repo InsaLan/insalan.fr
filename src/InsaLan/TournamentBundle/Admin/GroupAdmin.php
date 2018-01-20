@@ -39,7 +39,7 @@ class GroupAdmin extends Admin
             ->addIdentifier('name')
             ->add('stage')
             ->add("Participants", null, array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
-            ->add('_action','actions',array('actions'  => array('edit' => array(),'show' => array())));
+            ->add('_action', 'actions', array('actions'  => array('edit' => array(),'show' => array())));
         ;
     }
 
@@ -80,36 +80,30 @@ class GroupAdmin extends Admin
     }
 
     private function autoManageMatches($group)
-    {   
+    {
 
         $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
 
         // Clean up deprecated matches
         
-        foreach($group->getMatches()->toArray() as $match) {
-
-            if(!$group->hasParticipant($match->getPart1()) ||
+        foreach ($group->getMatches()->toArray() as $match) {
+            if (!$group->hasParticipant($match->getPart1()) ||
                !$group->hasParticipant($match->getPart2())) {
-
                 $group->removeMatch($match);
                 $em->remove($match);
-
             }
         }
 
-        // Create missing matches 
+        // Create missing matches
         
         $participants = $group->getParticipants()->getValues();
 
-        for($i = 0; $i < count($participants); $i++)
-        {
-            for($j = $i+1; $j < count($participants); $j++)
-            {
-
+        for ($i = 0; $i < count($participants); $i++) {
+            for ($j = $i+1; $j < count($participants); $j++) {
                 $a = $participants[$i];
                 $b = $participants[$j];
 
-                if(!$group->getMatchBetween($a, $b)) {
+                if (!$group->getMatchBetween($a, $b)) {
                     $match = new Match();
                     $match->setPart1($a);
                     $match->setPart2($b);
@@ -118,9 +112,7 @@ class GroupAdmin extends Admin
                     $group->addMatch($match);
                     $em->persist($match);
                 }
-
             }
         }
-
     }
 }

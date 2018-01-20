@@ -30,7 +30,8 @@ class PaymentDetails extends ArrayObject
 
     private $detailId = 0;
 
-    public function addPaymentDetail($name, $price, $description) {
+    public function addPaymentDetail($name, $price, $description)
+    {
         $i = $this->detailId++;
         $this["L_PAYMENTREQUEST_0_NAME$i"] = $name;
         $this["L_PAYMENTREQUEST_0_AMT$i"] = $price;
@@ -41,7 +42,7 @@ class PaymentDetails extends ArrayObject
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -65,7 +66,7 @@ class PaymentDetails extends ArrayObject
     /**
      * Get user
      *
-     * @return \InsaLan\UserBundle\Entity\User 
+     * @return \InsaLan\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -88,7 +89,7 @@ class PaymentDetails extends ArrayObject
     /**
      * Get discount
      *
-     * @return \InsaLan\UserBundle\Entity\Discount 
+     * @return \InsaLan\UserBundle\Entity\Discount
      */
     public function getDiscount()
     {

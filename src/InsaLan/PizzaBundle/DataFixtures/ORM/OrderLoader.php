@@ -7,7 +7,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use InsaLan\PizzaBundle\Entity\Order;
 
 class OrderLoader extends AbstractFixture implements OrderedFixtureInterface
-{   
+{
+
 
     public function getOrder()
     {
@@ -15,7 +16,7 @@ class OrderLoader extends AbstractFixture implements OrderedFixtureInterface
     }
 
     public function load(ObjectManager $manager)
-    {   
+    {
 
         $h1 = new \Datetime();
         $h2 = new \Datetime();

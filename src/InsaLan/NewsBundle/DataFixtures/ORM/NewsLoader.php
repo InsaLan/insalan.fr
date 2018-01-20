@@ -32,4 +32,3 @@ class NewsLoader implements FixtureInterface
         $manager->flush();
     }
 }
-

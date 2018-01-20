@@ -1,5 +1,6 @@
 <?php
 namespace InsaLan\InsaLanBundle\Subscriber;
+
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 
@@ -35,5 +36,4 @@ class TablePrefixSubscriber implements EventSubscriber
             }
         }
     }
-
 }

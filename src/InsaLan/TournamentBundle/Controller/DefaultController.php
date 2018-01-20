@@ -34,14 +34,15 @@ class DefaultController extends Controller
         $future_tournaments = array();
 
         foreach ($tournaments as $t) {
-            if($t->isOpenedNow()) // I can register !
+            if ($t->isOpenedNow()) { // I can register !
                 $opened_tournaments[] = $t;
-            elseif ($t->isOpenedInFuture()) // tournament is not opened yet
+            } elseif ($t->isOpenedInFuture()) { // tournament is not opened yet
                 $future_tournaments[] = $t;
-            elseif ($t->isClosed()) // tournament is past and closed
+            } elseif ($t->isClosed()) { // tournament is past and closed
                 $old_tournaments[] = $t;
-            else // tournament is not completed yet, but I cannot register
+            } else { // tournament is not completed yet, but I cannot register
                 $registration_closed_tournaments[] = $t;
+            }
         }
 
         return array('old_tournaments' => $old_tournaments,
@@ -70,7 +71,7 @@ class DefaultController extends Controller
 
         $output = array();
 
-        foreach($KOs as $ko) {
+        foreach ($KOs as $ko) {
             $ko->jsonData = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getJson($ko);
             $output[] = $ko;
         }
@@ -136,7 +137,7 @@ class DefaultController extends Controller
             );
         }
 
-        foreach($team->getPlayers() as $player) {
+        foreach ($team->getPlayers() as $player) {
             if ($player->getId() == $player_id) {
                 $team->setCaptain($player);
                 $em->flush();
@@ -147,7 +148,6 @@ class DefaultController extends Controller
         throw $this->createNotFoundException(
             'No user found for this id : '.$player_id
         );
-
     }
 
     /**
@@ -163,7 +163,7 @@ class DefaultController extends Controller
         $group = $em->getRepository('InsaLanTournamentBundle:Group')->getById($match->getGroup()->getId(), false);
         $group->countWins();
 
-        $scores = array_map(function($a) {
+        $scores = array_map(function ($a) {
             return $a['won'] * 3 + $a['draw'] * 2 + $a['lost'];
         }, $group->stats);
 
@@ -210,14 +210,12 @@ class DefaultController extends Controller
 
         $output = array();
 
-        foreach($KOs as $ko) {
+        foreach ($KOs as $ko) {
             $ko->jsonData = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getJson($ko);
             $output[] = $ko;
         }
 
         return array("tournament" => $t, "knockouts" => $output);
-
-
     }
 
     /**
@@ -237,18 +235,16 @@ class DefaultController extends Controller
         $grs = array();
 
         // Populate and sort arrays
-        foreach($matches as $m)
-        {
-            if($m->getGroup() !== null) {
+        foreach ($matches as $m) {
+            if ($m->getGroup() !== null) {
                 $id = $m->getGroup()->getId();
-                if(!isset($grs[$id])) {
+                if (!isset($grs[$id])) {
                     $grs[$id] = array();
                 }
                 $grs[$id][] = $m;
-            }
-            elseif($m->getKoMatch() !== null) {
+            } elseif ($m->getKoMatch() !== null) {
                 $id = $m->getKoMatch()->getKnockout()->getId();
-                if(!isset($kos[$id])) {
+                if (!isset($kos[$id])) {
                     $kos[$id] = array();
                 }
                 $kos[$id][] = $m;
@@ -258,21 +254,23 @@ class DefaultController extends Controller
         return array("part" => $part, "groupMatches" => $grs, "knockoutMatches" => $kos, "authorized" => $this->isUserInTeam($part));
     }
 
-    private function isUserInTeam(Entity\Participant $part) {
+    private function isUserInTeam(Entity\Participant $part)
+    {
 
         $user = $this->get('security.context')->getToken()->getUser();
-        if(!$user || $user === "anon.") return false;
+        if (!$user || $user === "anon.") {
+            return false;
+        }
 
-        if($part instanceof Entity\Team) {
-
+        if ($part instanceof Entity\Team) {
             foreach ($part->getPlayers() as $p) {
-                if($p->getUser() && $p->getUser()->getId() === $user->getId())
+                if ($p->getUser() && $p->getUser()->getId() === $user->getId()) {
                     return true;
+                }
             }
             return false;
         }
 
         return $part->getUser() === $user;
-
     }
 }

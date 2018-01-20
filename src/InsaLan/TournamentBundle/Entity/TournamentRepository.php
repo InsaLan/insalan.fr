@@ -9,7 +9,8 @@ use InsaLan\TournamentBundle\Entity\Participant;
 
 class TournamentRepository extends EntityRepository
 {
-    public function findThisYearTournaments() {
+    public function findThisYearTournaments()
+    {
         $query = $this->createQueryBuilder('t')
             ->leftJoin('t.participants', 'p')
             ->addSelect('p')
@@ -21,7 +22,8 @@ class TournamentRepository extends EntityRepository
             ->getQuery();
         return $query->getResult();
     }
-    public function findOpened() {
+    public function findOpened()
+    {
         $query = $this->createQueryBuilder('t')
             ->where('t.registrationOpen <= :now AND t.registrationClose >= :now')
             ->setParameter('now', new \DateTime())
@@ -29,10 +31,11 @@ class TournamentRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function getFreeSlots($tournamentId) {
+    public function getFreeSlots($tournamentId)
+    {
         $tournament = $this->findOneById($tournamentId);
         $freeSlots = $tournament->getRegistrationLimit();
-        foreach($tournament->getParticipants() as $participant) {
+        foreach ($tournament->getParticipants() as $participant) {
             if ($participant->getValidated() === Participant::STATUS_VALIDATED) {
                 $freeSlots--;
             }
@@ -40,10 +43,11 @@ class TournamentRepository extends EntityRepository
         return $freeSlots;
     }
 
-    public function selectWaitingParticipant($tournamentId) {
+    public function selectWaitingParticipant($tournamentId)
+    {
         $tournament = $this->findOneById($tournamentId);
         $participants = array();
-        foreach($tournament->getParticipants() as $participant) {
+        foreach ($tournament->getParticipants() as $participant) {
             if ($participant->getValidated() === Participant::STATUS_WAITING) {
                 $participants[] = $participant;
             }
@@ -59,7 +63,8 @@ class TournamentRepository extends EntityRepository
      * @param  Tournament $t
      * @return Associative array (integer=>true)
      */
-    public function getUnavailablePlacements(Tournament $t) {
+    public function getUnavailablePlacements(Tournament $t)
+    {
         $em = $this->getEntityManager();
         $res = $em->createQuery("
             SELECT DISTINCT p.placement FROM InsaLanTournamentBundle:Participant p
@@ -68,10 +73,9 @@ class TournamentRepository extends EntityRepository
                 ->getResult();
 
         $out = array();
-        foreach($res as $p) {
+        foreach ($res as $p) {
             $out[$p["placement"]] = true;
         }
         return $out;
     }
-
 }

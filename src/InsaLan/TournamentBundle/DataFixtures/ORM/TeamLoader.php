@@ -18,7 +18,7 @@ class TeamLoader extends AbstractFixture implements OrderedFixtureInterface, Con
 
     /**
      *       {@inheritDoc}
-     */           
+     */
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;

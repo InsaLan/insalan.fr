@@ -51,7 +51,7 @@ class User extends BaseUser
     protected $battleTag;
 
     /**
-     * @ORM\Column(type="date", nullable=true) 
+     * @ORM\Column(type="date", nullable=true)
      */
     private $birthdate;
 
@@ -104,7 +104,7 @@ class User extends BaseUser
     /**
      * Get firstname
      *
-     * @return string 
+     * @return string
      */
     public function getFirstname()
     {
@@ -127,7 +127,7 @@ class User extends BaseUser
     /**
      * Get lastname
      *
-     * @return string 
+     * @return string
      */
     public function getLastname()
     {
@@ -150,7 +150,7 @@ class User extends BaseUser
     /**
      * Get phoneNumber
      *
-     * @return string 
+     * @return string
      */
     public function getPhoneNumber()
     {
@@ -172,7 +172,7 @@ class User extends BaseUser
     /**
      * Get steam id
      *
-     * @return string 
+     * @return string
      */
     public function getSteamId()
     {
@@ -194,7 +194,7 @@ class User extends BaseUser
     /**
      * Get battle tag (battle.net)
      *
-     * @return string 
+     * @return string
      */
     public function getBattleTag()
     {
@@ -215,21 +215,22 @@ class User extends BaseUser
     /**
      * Get birthdate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getBirthdate()
     {
         return $this->birthdate;
     }
-    public function getSteamDetails($steamKey) {
-        if($this->steamId == null)
+    public function getSteamDetails($steamKey)
+    {
+        if ($this->steamId == null) {
             return null;
+        }
 
         $json = file_get_contents('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key='.$steamKey.'&steamids='.$this->steamId);
-        if($json != null) {
+        if ($json != null) {
             $obj = json_decode($json);
             return $obj->response->players[0];
-            
         }
         return null;
     }

@@ -2,7 +2,7 @@
 
 /**
  * Uses Tree extension for Doctrine (Nested Set)
- * 
+ *
  * https://github.com/Atlantic18/DoctrineExtensions/blob/master/doc/tree.md
  */
 
@@ -81,7 +81,7 @@ class KnockoutMatch
 
 
     /**
-     * @ORM\Column(type="boolean") 
+     * @ORM\Column(type="boolean")
      */
     private $oddNode; // if true, this node is waiting for a player from winner bracket
 
@@ -103,36 +103,54 @@ class KnockoutMatch
      * @return String A french description of this match level in the tree
      */
     public function getFrenchLevel()
-    {   
-        if(!$this->getKnockout()->getDoubleElimination()) {
+    {
+        if (!$this->getKnockout()->getDoubleElimination()) {
             switch ($this->getLevel()) {
-                case 0: return "Finale";
-                case 1: return "Demi-finale";
-                case 2: return "1/4 de finale";
-                case 3: return "1/8 de finale";
-                case 4: return "1/16 de finale";
-                case 5: return "1/32 de finale";
-                case 6: return "1/64 de finale";
-                default: return "?";
+                case 0:
+                    return "Finale";
+                case 1:
+                    return "Demi-finale";
+                case 2:
+                    return "1/4 de finale";
+                case 3:
+                    return "1/8 de finale";
+                case 4:
+                    return "1/16 de finale";
+                case 5:
+                    return "1/32 de finale";
+                case 6:
+                    return "1/64 de finale";
+                default:
+                    return "?";
             }
         } else {
-            if($this->getLevel() === 0) return "GRANDE FINALE";
+            if ($this->getLevel() === 0) {
+                return "GRANDE FINALE";
+            }
             $p = "W.B.";
-            if(!$this->getLoserDestination())
+            if (!$this->getLoserDestination()) {
                 $p = "L.B.";
+            }
 
             switch ($this->getLevel()) {
-                case 1: return "Finale " . $p;
-                case 2: return "Demi-finale " . $p;
-                case 3: return "1/4 de finale " . $p;
-                case 4: return "1/8 de finale " . $p;
-                case 5: return "1/16 de finale " . $p;
-                case 6: return "1/32 de finale " . $p;
-                case 7: return "1/64 de finale " . $p;
-                default: return "?";
+                case 1:
+                    return "Finale " . $p;
+                case 2:
+                    return "Demi-finale " . $p;
+                case 3:
+                    return "1/4 de finale " . $p;
+                case 4:
+                    return "1/8 de finale " . $p;
+                case 5:
+                    return "1/16 de finale " . $p;
+                case 6:
+                    return "1/32 de finale " . $p;
+                case 7:
+                    return "1/64 de finale " . $p;
+                default:
+                    return "?";
             }
         }
-
     }
 
     public function __toString()
@@ -383,7 +401,7 @@ class KnockoutMatch
     /**
      * Get loserDestination
      *
-     * @return \InsaLan\TournamentBundle\Entity\KnockoutMatch 
+     * @return \InsaLan\TournamentBundle\Entity\KnockoutMatch
      */
     public function getLoserDestination()
     {
@@ -406,11 +424,10 @@ class KnockoutMatch
     /**
      * Get oddNode
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getOddNode()
     {
         return $this->oddNode;
     }
-
 }

@@ -24,8 +24,8 @@ class TeamAdmin extends Admin
                 'required' => true,
                 'choices' => array(
                     0 => 'Équipe incomplète',
-                    1 => 'Dans la liste d\'attente', 
-                    2 => 'Validée' 
+                    1 => 'Dans la liste d\'attente',
+                    2 => 'Validée'
                 )
             ))
             ->add('plainPassword', 'repeated', array(

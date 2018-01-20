@@ -131,8 +131,11 @@ class GroupStage
     }
 
     public function __toString()
-    {   
-        if(!$this->getTournament()) return '';
-        else return $this->getName() . ' ' . $this->getTournament()->__toString() ;
+    {
+        if (!$this->getTournament()) {
+            return '';
+        } else {
+            return $this->getName() . ' ' . $this->getTournament()->__toString() ;
+        }
     }
 }

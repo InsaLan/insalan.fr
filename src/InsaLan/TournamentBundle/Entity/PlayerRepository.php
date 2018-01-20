@@ -6,11 +6,11 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Common\Collections\ArrayCollection;
 
-
 class PlayerRepository extends EntityRepository
 {
 
-    public function findOneByUserAndPendingTournament(\InsaLan\UserBundle\Entity\User $u, Tournament $t) {
+    public function findOneByUserAndPendingTournament(\InsaLan\UserBundle\Entity\User $u, Tournament $t)
+    {
 
         $q = $this->createQueryBuilder('p')
             ->where('p.user = :user AND p.pendingTournament = :tournament')
@@ -19,14 +19,13 @@ class PlayerRepository extends EntityRepository
 
         try {
             return $q->getQuery()->getSingleResult();
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             return null;
         }
-
     }
 
-    public function getPlayersForTournament(Tournament $tournament) {
+    public function getPlayersForTournament(Tournament $tournament)
+    {
         $em = $this->getEntityManager();
 
         $q = $this->createQueryBuilder('p')
@@ -36,7 +35,8 @@ class PlayerRepository extends EntityRepository
         return $q->getQuery()->execute();
     }
 
-    public function getAllPlayersForTournament(Tournament $tournament) {
+    public function getAllPlayersForTournament(Tournament $tournament)
+    {
 
         $em = $this->getEntityManager();
 
@@ -63,14 +63,14 @@ class PlayerRepository extends EntityRepository
 
         $players = $q->getQuery()->execute();
         $out = array();
-        foreach($players as $player) {
-            if($player->getValidated() === Participant::STATUS_VALIDATED) {
+        foreach ($players as $player) {
+            if ($player->getValidated() === Participant::STATUS_VALIDATED) {
                 $out[] = $player;
                 continue;
             }
 
-            foreach($player->getTeam() as $team) {
-                if($team->getValidated() === Participant::STATUS_VALIDATED) {
+            foreach ($player->getTeam() as $team) {
+                if ($team->getValidated() === Participant::STATUS_VALIDATED) {
                     $out[] = $player;
                     break;
                 }
@@ -80,7 +80,8 @@ class PlayerRepository extends EntityRepository
         return $out;
     }
 
-    public function getWaitingPlayer(Tournament $t) {
+    public function getWaitingPlayer(Tournament $t)
+    {
 
         $q = $this->createQueryBuilder('p')
              ->where('p.tournament = :tournament AND p.validated = :state')
@@ -91,11 +92,8 @@ class PlayerRepository extends EntityRepository
 
         try {
             return $q->getQuery()->getSingleResult();
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             return null;
         }
-
     }
-
 }

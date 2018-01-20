@@ -55,7 +55,8 @@ abstract class Participant
      */
     protected $manager;
 
-    public function getParticipantType() {
+    public function getParticipantType()
+    {
         return "participant";
     }
 
@@ -76,7 +77,7 @@ abstract class Participant
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public abstract function getName();
+    abstract public function getName();
 
     /**
      * Set tournament
@@ -149,8 +150,9 @@ abstract class Participant
     {
         $this->validated = $validated;
 
-        if($validated === $this::STATUS_VALIDATED)
+        if ($validated === $this::STATUS_VALIDATED) {
             $this->setValidationDate(new \DateTime("now"));
+        }
 
         return $this;
     }
@@ -187,7 +189,7 @@ abstract class Participant
     /**
      * Get placement
      *
-     * @return integer 
+     * @return integer
      */
     public function getPlacement()
     {
@@ -209,7 +211,7 @@ abstract class Participant
     /**
      * Get Manager
      *
-     * @return integer 
+     * @return integer
      */
     public function getManager()
     {

@@ -7,7 +7,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use InsaLan\PizzaBundle\Entity\Pizza;
 
 class PizzaLoader extends AbstractFixture implements OrderedFixtureInterface
-{   
+{
+
 
     public function getOrder()
     {

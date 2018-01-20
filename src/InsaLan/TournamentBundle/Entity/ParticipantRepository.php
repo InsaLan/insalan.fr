@@ -6,11 +6,11 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Common\Collections\ArrayCollection;
 
-
 class ParticipantRepository extends EntityRepository
 {
 
-    public function findByUser(\InsaLan\UserBundle\Entity\User $u) {
+    public function findByUser(\InsaLan\UserBundle\Entity\User $u)
+    {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("
@@ -56,18 +56,18 @@ class ParticipantRepository extends EntityRepository
 
 
         return new ArrayCollection(array_merge($result1, $result2, $result3));
-
     }
 
-    public function findOneByUserAndTournament(\InsaLan\UserBundle\Entity\User $u, Tournament $t) {
+    public function findOneByUserAndTournament(\InsaLan\UserBundle\Entity\User $u, Tournament $t)
+    {
         $participants = $this->findByUser($u);
         // TODO : do this is SQL only (when stable)
-        foreach($participants as $p) {
-            if($p->getTournament()->getId() === $t->getId())
+        foreach ($participants as $p) {
+            if ($p->getTournament()->getId() === $t->getId()) {
                 return $p;
+            }
         }
 
         return null;
     }
-
 }

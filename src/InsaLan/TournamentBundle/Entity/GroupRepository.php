@@ -23,7 +23,7 @@ class GroupRepository extends EntityRepository
             ->addSelect('p2');
 
         if ($gs) {
-          $qb
+            $qb
             ->leftJoin('g.stage', 'gs')
             ->addSelect('partial gs.{id, name}')
             ->orderBy('gs.name, g.name');
@@ -32,7 +32,7 @@ class GroupRepository extends EntityRepository
         return $qb;
     }
 
-    public function getByStages(Array $stages)
+    public function getByStages(array $stages)
     {
         $q = $this->getQueryBuilder();
         $s = array();

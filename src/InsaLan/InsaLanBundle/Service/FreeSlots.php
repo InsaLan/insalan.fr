@@ -14,7 +14,8 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use InsaLan\TournamentBundle\Entity\Participant;
 
 class FreeSlots
-{ 
+{
+
     const TOTAL_SLOTS = 64;
 
     protected $doctrine;
@@ -28,7 +29,7 @@ class FreeSlots
      * @return int Number of free slots currently available.
      */
     public function get()
-    {   
+    {
         return self::TOTAL_SLOTS - count($this->doctrine
                                               ->getRepository('InsaLanTournamentBundle:Participant')
                                               ->findByValidated(Participant::STATUS_VALIDATED));
@@ -37,14 +38,20 @@ class FreeSlots
     /**
      * @return Participant The next participant to send to validated state, or null if not available.
      */
-    public function selectWaitingTeam() {
+    public function selectWaitingTeam()
+    {
         $participant = $this->doctrine
                             ->getRepository('InsaLanTournamentBundle:Participant')
-                            ->findBy(array("validated" => Participant::STATUS_WAITING), //select
-                                     array("id"        => "ASC"),                       //order by
-                                     1);                                                //limit
-        if(count($participant) === 1) return $participant[0];
-        else return null;
+                            ->findBy(
+                                array("validated" => Participant::STATUS_WAITING), //select
+                                array("id"        => "ASC"),                       //order by
+                                1
+                            );                                                //limit
+        if (count($participant) === 1) {
+            return $participant[0];
+        } else {
+            return null;
+        }
     }
 
     public function opened()
@@ -53,4 +60,3 @@ class FreeSlots
         return (time() >= $date);
     }
 }
-?>

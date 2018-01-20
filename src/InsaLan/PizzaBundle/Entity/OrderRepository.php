@@ -6,9 +6,11 @@ use Doctrine\ORM\EntityRepository;
 use InsaLan\UserBundle\Entity\User;
 
 class OrderRepository extends EntityRepository
-{   
+{
 
-    public function getOneById($id) {
+
+    public function getOneById($id)
+    {
 
         $q = $this->createQueryBuilder('o')
             ->leftJoin('o.orders', 'uo')
@@ -23,7 +25,6 @@ class OrderRepository extends EntityRepository
         ;
 
         return $q->getQuery()->getSingleResult();
-
     }
 
     public function getAvailable(User $user)
@@ -44,12 +45,13 @@ class OrderRepository extends EntityRepository
         $foreign = $this->isForeignUser($user);
 
         $out = array();
-        foreach($q->getQuery()->execute() as $order) {
-            if($order->getAvailableOrders($foreign) > 0) $out[] = $order;
+        foreach ($q->getQuery()->execute() as $order) {
+            if ($order->getAvailableOrders($foreign) > 0) {
+                $out[] = $order;
+            }
         }
 
         return $out;
-        
     }
 
     public function getAll()
