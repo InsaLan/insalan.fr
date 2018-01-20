@@ -70,8 +70,38 @@ class UserController extends Controller
             if(!$in)
                 $tournaments[] = $t;
         }
+        $validatedTeams = [];
+        $voipData = [];
+        $buzz = $this->container->get('buzz');
+        $buzz->getClient()->setVerifyPeer(false);
+        $buzz->getClient()->setVerifyHost(false);
+        
+        foreach($participants as $p) {
+            if($p->getParticipantType() == 'team') {
+                $canAddMumble = true;
+                foreach($p->getPlayers() as $player) {
+                    if(!$player->isOk()) {
+                        $canAddMumble = true;
+                        break;
+                    }
+                }
+                if($canAddMumble) {
+                    try {
+                        $r = $buzz->get($this->container->getParameter('voip_service_adress').'container/'.$p->getId());
+                        $voipData[$p->getId()] = $r->getContent();
+                        $voipData[$p->getId()] = json_decode($voipData[$p->getId()]);
+                    } catch(Exception $e) {
 
-        return array('tournaments' => $tournaments, 'participants' => $participants);
+                    }
+                    
+                    $validatedTeams[$p->getId()] = true;
+                }
+            }
+        }
+        
+        
+
+        return array('tournaments' => $tournaments, 'participants' => $participants, 'validatedTeams' => $validatedTeams, 'voipData' => $voipData, 'voip_ip' => $this->container->getParameter('voip_service_ip_adress'));
     }
 
 
@@ -936,6 +966,32 @@ class UserController extends Controller
         return array("form" => $form->createView());
     }
 
+
+    /**
+     * Add a replay to a round of the tournament
+     * The replay is an uploaded file
+     * @Route("/tournament/team/{id}/voip")
+     * @Template()
+     */
+    public function addVOIPAction(Request $request, Entity\Participant $team)
+    {
+        $type = 'MUMBLE';
+        if($request->query->get('voip') == 'mumble') {
+            $type = 'MUMBLE';
+
+        }
+        else if($request->query->get('voip') == 'teamspeak') {
+            $type = 'TEAMSPEAK';
+
+        }
+        $buzz = $this->container->get('buzz');
+        $buzz->getClient()->setVerifyPeer(false);
+        $buzz->getClient()->setVerifyHost(false);
+        $params = array('team' => $team->getId(), 'type' => $type);
+        $r = $buzz->put('https://localhost:8000/create',  array('Content-Type' => 'application/json'),json_encode($params));
+       
+        return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+    }
     /** PRIVATE **/
 
     protected function usernameSet($em, $usr, $player, $request, $tournament) {
@@ -1042,4 +1098,6 @@ class UserController extends Controller
             "extra" => $m->getId(),
             "pass" => md5('insalan_match_#'.$m->getId().'_'.$round)));
     }
+
+
 }

@@ -7,9 +7,8 @@
   <header>
       <h2><span class="pull-left">Inscriptions aux tournois</span><span class="pull-right"><a href="{{ path('insalan_user_default_index') }}" class="btn2" style="font-size: 0.5em">&#x2699;Mon profil</a></span><br class="clear"></h2>
   </header>
-
   {% for participant in participants %}
-
+  
   <div class="frame {% if participant.validated == 2 %} frame-success
                     {% else %} frame-warning {% endif %}">
     <header class="full">
@@ -20,7 +19,7 @@
         {{ participant.tournament.name }} - 
         {% if participant.participantType == 'team' %} Équipe {% endif %}
         {{ participant.name }}
-        {% if participant.participantType == 'team' %}
+        {% if participant.participantType == 'team' and participant.captain.user is defined%}
           {% if participant.captain.user == app.user %} <a href="{{ path('insalan_tournament_user_editteam', {teamId: participant.id}) }}"><small style="font-size: 50%">[Modifier mon équipe]</small></a> {% endif %}
         {% endif %}
       </div>
@@ -44,7 +43,7 @@
             <span>{{ p.gameName }}
               {% if participant.captain == p %}
                 <span style="color: #FFB300">&#x1f451;</span>
-                {% elseif participant.captain.user == app.user and participant.tournament.isOpenedNow %}
+              {% elseif participant.captain is not null and participant.captain.user == app.user and participant.tournament.isOpenedNow %}
                 <a href="{{ path('insalan_tournament_user_promotecaptain', {teamId: participant.id, playerId: p.id}) }}" class="btn2" style="font-size: 0.8em">
                   &#x1f451; Passer capitaine
                 </a>
@@ -70,6 +69,7 @@
         </div></li>
         {% endif %}
       </ul>
+      
       {% endif %}{# paticipantType == 'team' #}
       {% if participant.participantType == 'player' and participant.manager is not null %}
         <ul class="shift" style="list-style-type:none">
@@ -84,7 +84,7 @@
           </div></li>
         </ul>
       {% endif %}
-
+      
       <br class="clear">
 
       {% if participant.validated == 1 %}
@@ -102,6 +102,8 @@
         {% if participant.participantType == 'player' %}
         Votre participation sera validée après paiement.
         {% endif %}
+        
+        
         <br />
         {% if participant.tournament.isFull() %}
           <strong>Attention, ce tournoi est complet.</strong>
@@ -110,10 +112,37 @@
         {% endif %}
       {% endif %}
     </div>
-
+    {% if participant.participantType == 'team' and validatedTeams[participant.id] is defined %}
+            {% if voipData[participant.id] is null or voipData[participant.id] is not defined  or voipData[participant.id].notFound is defined%}
+            <a class="btn btn-primary" href="{{ path('insalan_tournament_user_addvoip', {id: participant.id,voip: 'mumble'}) }}">Demander un serveur Mumble</a>
+            <a class="btn btn-primary" href="{{ path('insalan_tournament_user_addvoip', {id: participant.id,voip: 'teamspeak'}) }}">Demander un serveur Teamspeak</a>
+            {% else %}
+              <div>
+                {% if voipData[participant.id].adminPassword is defined %}
+                  Un serveur Mumble est disponible pour votre équipe !
+                  <ul class="shift" style="list-style-type:none">
+                    <li>Adresse ip : {{voip_ip}}</li>
+                    <li>Mot de passe : {{voipData[participant.id].serverPassword}}</li>
+                    {% if participant.captain is defined and participant.captain.user == app.user %}
+                      <li> Mot de passe admin : {{voipData[participant.id].adminPassword}} </li>
+                    {% endif %}
+                  </ul>
+                {% else %}
+                  Un serveur Teamspeak est disponible pour votre équipe !
+                  <ul class="shift" style="list-style-type:none">
+                    <li>Adresse ip : {{voip_ip}}</li>
+                    <li>Port : {{voipData[participant.id].port}}</li>
+                    <li>Token : {{voipData[participant.id].token}}</li>
+                  </ul>
+                {% endif %}
+              </div>
+            {% endif %}
+    {% endif %}
     {% if participant.manager is not null and participant.manager.user == app.user %}
         {# 2-button layout #}{% if participant.tournament.isOpenedNow %}
         {% if participant.participantType == 'team' %}
+          
+          
           <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leaveteam', {teamId: participant.id}) }}">Annuler</a>
         {% elseif participant.participantType == 'player' %}
           <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leave', {tournament: participant.tournament.id}) }}">Annuler</a>
@@ -151,7 +180,7 @@
     {% endif %}{# endif not a manager #}
     <br class="clear">
   </div>
-
+  
   {% endfor %}
 
   <div class="frame frame-active">
