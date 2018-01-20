@@ -57,5 +57,4 @@ class UserAdmin extends Admin
             ->add('phoneNumber')
             ;
     }
-
 }

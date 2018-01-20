@@ -50,9 +50,9 @@ class AdminController extends Controller
             $data = $form->getData();
             return $this->redirect($this->generateUrl(
                 'insalan_tournament_admin_index_1',
-                array('id' => $data['tournament'])));
-        }
-        else if (null !== $id) {
+                array('id' => $data['tournament'])
+            ));
+        } elseif (null !== $id) {
 
             /** Print Tournament informations **/
 
@@ -67,7 +67,8 @@ class AdminController extends Controller
             }
 
             if (null === $tournament) {
-                throw new NotFoundHttpException('InsaLan\\TournamentBundle\\Entity\\Tournament object not found.');;
+                throw new NotFoundHttpException('InsaLan\\TournamentBundle\\Entity\\Tournament object not found.');
+                ;
             }
 
 
@@ -90,7 +91,6 @@ class AdminController extends Controller
             }
 
             $formKo = $this->getFormKo($data['tournament']);
-
         }
 
 
@@ -102,7 +102,7 @@ class AdminController extends Controller
             'players'    => $players
         );
 
-        if($formKo) {
+        if ($formKo) {
             $output['formKo'] = $formKo->createView();
         }
 
@@ -122,7 +122,7 @@ class AdminController extends Controller
         $em->persist($p);
         $em->flush();
 
-       return new JsonResponse(array("err" => null));
+        return new JsonResponse(array("err" => null));
     }
 
     /**
@@ -138,7 +138,7 @@ class AdminController extends Controller
         $em->persist($p);
         $em->flush();
 
-       return new JsonResponse(array("err" => null));
+        return new JsonResponse(array("err" => null));
     }
 
     /**
@@ -154,7 +154,7 @@ class AdminController extends Controller
         $em->persist($m);
         $em->flush();
 
-       return new JsonResponse(array("err" => null));
+        return new JsonResponse(array("err" => null));
     }
 
     /**
@@ -184,7 +184,6 @@ class AdminController extends Controller
         $matches = $em->getRepository("InsaLanTournamentBundle:Match")->getByGroupStage($g);
 
         return array("stage" => $g, "matches" => $matches);
-
     }
 
     /**
@@ -197,7 +196,6 @@ class AdminController extends Controller
         $matches = $em->getRepository("InsaLanTournamentBundle:Match")->getByKnockout($k);
 
         return array("knockout" => $k, "matches" => $matches);
-
     }
 
     /**
@@ -208,10 +206,11 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $state = intval($state);
 
-        if($state !== Entity\Match::STATE_UPCOMING &&
+        if ($state !== Entity\Match::STATE_UPCOMING &&
            $state !== Entity\Match::STATE_ONGOING &&
-           $state !== Entity\Match::STATE_FINISHED)
+           $state !== Entity\Match::STATE_FINISHED) {
             throw new ControllerException("Unexpected argument state");
+        }
 
         $m->setState($state);
         $this->updateMatch($m);
@@ -219,7 +218,6 @@ class AdminController extends Controller
         $em->flush();
 
         return $this->getReturnRedirect($m);
-
     }
 
     /**
@@ -228,8 +226,9 @@ class AdminController extends Controller
     public function match_addRoundAction(Entity\Match $m)
     {
         $request = $this->get('request');
-        if($request->getMethod() !== "POST")
+        if ($request->getMethod() !== "POST") {
             throw new ControllerException("Bad method");
+        }
 
         $score1 = intval($request->get('score1'));
         $score2 = intval($request->get('score2'));
@@ -255,7 +254,7 @@ class AdminController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        foreach($m->getRounds() as $r) {
+        foreach ($m->getRounds() as $r) {
             $m->removeRound($r);
             $em->remove($r);
         }
@@ -273,13 +272,15 @@ class AdminController extends Controller
         $form = $this->getFormKo($tournament->getId());
         $form->handleRequest($this->getRequest());
 
-        if(!$form->isValid())
+        if (!$form->isValid()) {
             throw new ControllerException("Not allowed");
+        }
 
         $data = $form->getData();
 
-        if($data['size'] <= 1)
+        if ($data['size'] <= 1) {
             throw new ControllerException("Not allowed");
+        }
 
         $em = $this->getDoctrine()->getManager();
 
@@ -293,8 +294,9 @@ class AdminController extends Controller
            ->generateMatches($ko, $data['size'], $data['double']);
 
         return $this->redirect($this->generateUrl(
-                'insalan_tournament_admin_knockout_view',
-                array('id' => $ko->getId())));
+            'insalan_tournament_admin_knockout_view',
+            array('id' => $ko->getId())
+        ));
     }
 
     /**
@@ -308,16 +310,14 @@ class AdminController extends Controller
         $depth    = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getLeftDepth($ko);
         $children = pow(2, $depth + ($ko->getDoubleElimination() ? 0 : 1));
 
-        if($this->get('request')->getMethod() === "POST") {
-
+        if ($this->get('request')->getMethod() === "POST") {
             $root = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getRoot($ko);
-            if($ko->getDoubleElimination()) {
+            if ($ko->getDoubleElimination()) {
                 $root = $root->getChildren()->get(0);
             }
             $koMatches = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getLvlChildren($root, $depth);
 
-            for($i = 0; $i < $children / 2; $i++) {
-
+            for ($i = 0; $i < $children / 2; $i++) {
                 $part1 = $this->get('request')->request->get("participant_".($i*2+1));
                 $part2 = $this->get('request')->request->get("participant_".($i*2+2));
 
@@ -327,10 +327,9 @@ class AdminController extends Controller
                 // Is there any previous match ?
                 $km = $koMatches[$i];
 
-                if($km->getMatch()) {
+                if ($km->getMatch()) {
                     $match = $km->getMatch();
-                }
-                else {
+                } else {
                     $match = new Entity\Match();
                     $match->setState(Entity\Match::STATE_UPCOMING);
                     $km->setMatch($match);
@@ -342,14 +341,12 @@ class AdminController extends Controller
 
                 $em->persist($km);
                 $em->persist($match);
-
             }
 
             // Propagate for potential empty matches
 
             $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->propagateVictoryAll($ko);
             $em->flush();
-
         }
 
         $ko->jsonData = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getJson($ko);
@@ -369,10 +366,12 @@ class AdminController extends Controller
     }
 
 
-    private function updateMatch(Entity\Match $match) {
+    private function updateMatch(Entity\Match $match)
+    {
 
-        if($match->getState() !== Entity\Match::STATE_FINISHED || !$match->getKoMatch())
+        if ($match->getState() !== Entity\Match::STATE_FINISHED || !$match->getKoMatch()) {
             return;
+        }
 
         $em = $this->getDoctrine()->getManager();
 
@@ -381,36 +380,42 @@ class AdminController extends Controller
 
         $ko = $match->getKoMatch()->getKnockout();
 
-        if($ko->getDoubleElimination()) {
+        if ($ko->getDoubleElimination()) {
             // deal with it.
             $repository->propagateFromNode(
                 $repository
                 ->getRoot($ko)
                 ->getChildren()
-                ->get(1)); // only update the hard part of the tree
+                ->get(1)
+            ); // only update the hard part of the tree
         }
-
     }
 
-    private function getFormKo($tournament) {
+    private function getFormKo($tournament)
+    {
         return $this->createFormBuilder()
                     ->add('name', 'text', array("label" => "Nom"))
                     ->add('size', 'integer', array("label" => "Taille", "precision" => 0))
                     ->add('double', 'checkbox', array("label" => "Double Elimination", "required" => false))
-                    ->setAction($this->generateUrl('insalan_tournament_admin_create_ko',
-                                                  array('id' => $tournament)))
+                    ->setAction($this->generateUrl(
+                        'insalan_tournament_admin_create_ko',
+                        array('id' => $tournament)
+                    ))
                     ->getForm();
     }
 
-    private function getReturnRedirect(Entity\Match $m) {
-        if($m->getKoMatch()) {
+    private function getReturnRedirect(Entity\Match $m)
+    {
+        if ($m->getKoMatch()) {
             return $this->redirect($this->generateUrl(
                 'insalan_tournament_admin_knockout',
-                array('id' => $m->getKoMatch()->getKnockout()->getId())));
+                array('id' => $m->getKoMatch()->getKnockout()->getId())
+            ));
         }
 
         return $this->redirect($this->generateUrl(
-                'insalan_tournament_admin_stage',
-                array('id' => $m->getGroup()->getStage()->getId())));
+            'insalan_tournament_admin_stage',
+            array('id' => $m->getGroup()->getStage()->getId())
+        ));
     }
 }

@@ -25,7 +25,7 @@ class UserOrder
     public static function cmp($a, $b)
     {
         $c = strcasecmp($a->getUsername(), $b->getUsername());
-        if($c === 0) {
+        if ($c === 0) {
             $c = strcasecmp($a->getFullname(), $b->getFullname());
         }
         return $c;
@@ -101,28 +101,34 @@ class UserOrder
      */
     protected $updatedAt;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->paymentDone = false;
         $this->createdAt = $this->updatedAt = new \DateTime();
         $this->price = self::FULL_PRICE;
         $this->foreign = false;
     }
 
-    public function getUsername() {
-        if($this->user)
+    public function getUsername()
+    {
+        if ($this->user) {
             return $this->user->getUsername();
-        else
+        } else {
             return $this->usernameCanonical;
+        }
     }
 
-    public function getFullname() {
-        if($this->user)
+    public function getFullname()
+    {
+        if ($this->user) {
             return $this->user->getFirstName() . " " . $this->user->getLastName();
-        else
+        } else {
             return $this->fullnameCanonical;
+        }
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return "Commande #" . $this->getId();
     }
 

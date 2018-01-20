@@ -17,14 +17,17 @@ class AdminController extends Controller
      * @Route("/admin/{id}")
      * @Template()
      */
-    public function indexAction($id = null) {
+    public function indexAction($id = null)
+    {
         $em = $this->getDoctrine()->getManager();
         $order = $formAdd = null;
 
         $orders = $em->getRepository('InsaLanPizzaBundle:Order')->getAll();
         $ordersChoices = array(null => "");
-        foreach($orders as $o) {
-            if ($o->getDelivery()->getTimestamp() < mktime() - 3600*24*7) continue;
+        foreach ($orders as $o) {
+            if ($o->getDelivery()->getTimestamp() < mktime() - 3600*24*7) {
+                continue;
+            }
 
             $ordersChoices[$o->getId()] = "Le " . $o->getDelivery()->format("d/m à H:i") . " ~ "
                                             . ($o->getCapacity() - $o->getAvailableOrders(false, false))  . " commandes sur "
@@ -42,25 +45,28 @@ class AdminController extends Controller
             $data = $form->getData();
             return $this->redirect($this->generateUrl(
                 'insalan_pizza_admin_index_1',
-                array('id' => $data['order'])));
+                array('id' => $data['order'])
+            ));
         }
 
-        if($id) {
-
+        if ($id) {
             $order = $em->getRepository('InsaLanPizzaBundle:Order')->getOneById($id);
 
-            if(!$order)
+            if (!$order) {
                 throw new \Exception("Not Available");
+            }
 
             $form->get('order')->submit($order->getId());
 
             $pizzas = array();
             $sum    = 0;
             foreach ($order->getOrders() as $uo) {
-                if(!$uo->getPaymentDone(true))
+                if (!$uo->getPaymentDone(true)) {
                     continue;
-                if (!isset($pizzas[$uo->getPizza()->getName()]))
+                }
+                if (!isset($pizzas[$uo->getPizza()->getName()])) {
                     $pizzas[$uo->getPizza()->getName()] = 0;
+                }
                 $pizzas[$uo->getPizza()->getName()]++;
                 $sum += $uo->getPizza()->getPrice();
             }
@@ -68,7 +74,6 @@ class AdminController extends Controller
             $order->sum    = $sum;
 
             $formAdd = $this->getAddUserOrderForm($order)->createView();
-
         }
 
         return array('order' => $order, 'form' => $form->createView(), 'formAdd' => $formAdd);
@@ -78,7 +83,8 @@ class AdminController extends Controller
      * @Route("/admin/{id}/add")
      * @Method({"POST"})
      */
-    public function addAction(Entity\Order $order) {
+    public function addAction(Entity\Order $order)
+    {
 
         $em = $this->getDoctrine()->getManager();
 
@@ -98,22 +104,23 @@ class AdminController extends Controller
             $uo->setPrice($data['price']);
 
             $user = $em->getRepository("InsaLanUserBundle:User")->findOneByUsername($data['username']);
-            if($user)
+            if ($user) {
                 $uo->setUser($user);
+            }
 
             $em->persist($uo);
             $em->flush();
         }
 
         return $this->redirect($this->generateUrl("insalan_pizza_admin_index_1", array("id" => $order->getId())));
-
     }
 
     /**
      * @Route("/admin/{id}/lock")
      * @Method({"POST"})
      */
-    public function lockAction(Entity\Order $order) {
+    public function lockAction(Entity\Order $order)
+    {
         $em = $this->getDoctrine()->getManager();
         $order->setClosed(true);
         $em->persist($order);
@@ -125,7 +132,8 @@ class AdminController extends Controller
      * @Route("/admin/{id}/unlock")
      * @Method({"POST"})
      */
-    public function unlockAction(Entity\Order $order) {
+    public function unlockAction(Entity\Order $order)
+    {
         $em = $this->getDoctrine()->getManager();
         $order->setClosed(false);
         $em->persist($order);
@@ -137,7 +145,8 @@ class AdminController extends Controller
      * @Route("/admin/order/{id}/remove")
      * @Method({"POST"})
      */
-    public function order_removeAction(Entity\UserOrder $uo) {
+    public function order_removeAction(Entity\UserOrder $uo)
+    {
 
         $em = $this->getDoctrine()->getManager();
 
@@ -153,7 +162,8 @@ class AdminController extends Controller
      * @Route("/admin/order/{id}/status/{status}")
      * @Method({"POST"})
      */
-    public function order_statusAction(Entity\UserOrder $uo, $status) {
+    public function order_statusAction(Entity\UserOrder $uo, $status)
+    {
 
         $em = $this->getDoctrine()->getManager();
 
@@ -164,19 +174,19 @@ class AdminController extends Controller
         $em->flush();
 
         return new JsonResponse(array("err" => null));
-
     }
 
     /////////////// PRIVATE //////////
 
-    private function getAddUserOrderForm(Entity\Order $o) {
+    private function getAddUserOrderForm(Entity\Order $o)
+    {
 
         $em = $this->getDoctrine()->getManager();
 
         $pizzas = $em->getRepository('InsaLanPizzaBundle:Pizza')->findAll();
         $pizzasChoices = array();
 
-        foreach($pizzas as $pizza) {
+        foreach ($pizzas as $pizza) {
             $pizzasChoices[$pizza->getId()] = $pizza->getName() . " (" . $pizza->getPrice() . " €)";
         }
 
@@ -193,5 +203,4 @@ class AdminController extends Controller
                     ->setAction($this->generateUrl('insalan_pizza_admin_add', array('id' => $o->getId())))
                     ->getForm();
     }
-
 }

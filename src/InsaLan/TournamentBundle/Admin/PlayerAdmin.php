@@ -57,5 +57,4 @@ class PlayerAdmin extends Admin
             ->add('arrived')
         ;
     }
-
 }

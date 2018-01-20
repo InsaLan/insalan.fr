@@ -76,7 +76,7 @@ class Round
     }
 
     public function getExtraInfos()
-    {   
+    {
 
         return $this->getMatch()->getExtraInfos();
     }
@@ -95,10 +95,11 @@ class Round
     public function setReplayFile(UploadedFile $file = null)
     {
         $this->replayFile = $file;
-        if($file === null)
+        if ($file === null) {
             $this->setReplay(null);
-        else
+        } else {
             $this->setReplay($this->getFileName());
+        }
     }
 
     /**
@@ -132,7 +133,7 @@ class Round
 
     public function getFullReplay()
     {
-        if(!$this->getReplay()) {
+        if (!$this->getReplay()) {
             return null;
         }
 
@@ -146,10 +147,13 @@ class Round
 
     private function removeReplayFile($name)
     {
-        if(!$name) return;
+        if (!$name) {
+            return;
+        }
         $name = self::UPLOAD_PATH.DIRECTORY_SEPARATOR.$name;
-        if (file_exists($name))
+        if (file_exists($name)) {
             unlink($name);
+        }
     }
     // End of Replay Upload managemet
 

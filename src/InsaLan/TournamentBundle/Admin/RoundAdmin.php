@@ -24,12 +24,12 @@ class RoundAdmin extends Admin
     }
 
     protected function configureShowFields(ShowMapper $showMapper)
-    {   
+    {
         $showMapper
             ->add("Détails", null, array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
-            ->add('match',   null, array('route' => array('name' => 'show')))
-            ->add('score1',  null, array('label' => "Score 1"))
-            ->add('score2',  null, array('label' => "Score 2"))
+            ->add('match', null, array('route' => array('name' => 'show')))
+            ->add('score1', null, array('label' => "Score 1"))
+            ->add('score2', null, array('label' => "Score 2"))
             ->add('fullReplay', "string", array('label' => "Replay"))
         ;
     }
@@ -49,24 +49,21 @@ class RoundAdmin extends Admin
         $listMapper
             ->add('match.part1', null, array('label' => "Participant 1"))
             ->add('match.part2', null, array('label' => "Participant 2"))
-            ->add('score1',      null, array('label' => "Score 1"))
-            ->add('score2',      null, array('label' => "Score 2"))
-            ->add('_action','actions',array('actions'  => array('edit' => array())));
+            ->add('score1', null, array('label' => "Score 1"))
+            ->add('score2', null, array('label' => "Score 2"))
+            ->add('_action', 'actions', array('actions'  => array('edit' => array())));
         ;
     }
 
     public function postUpdate($round)
-    {   
+    {
 
         $match = $round->getMatch();
-        if($match->getState() === Match::STATE_FINISHED && $match->getKoMatch())
-        {
+        if ($match->getState() === Match::STATE_FINISHED && $match->getKoMatch()) {
             $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
             $repository = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch');
             $repository->propagateVictory($match->getKoMatch());
             $em->flush();
         }
     }
-
-
 }

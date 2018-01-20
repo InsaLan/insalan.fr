@@ -65,7 +65,8 @@ class Player extends Participant
     protected $pendingTournament;
     // this is a temporary variable when a player has not validated its account, and/or is waiting for a team.
 
-    public function getParticipantType() {
+    public function getParticipantType()
+    {
         return "player";
     }
 
@@ -84,7 +85,7 @@ class Player extends Participant
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -95,9 +96,10 @@ class Player extends Participant
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         if (isset($this->gameName)) {
             return $this->gameName;
         } else {
@@ -122,7 +124,7 @@ class Player extends Participant
     /**
      * Get user
      *
-     * @return \InsaLan\UserBundle\Entity\User 
+     * @return \InsaLan\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -183,7 +185,7 @@ class Player extends Participant
     /**
      * Get tournament
      *
-     * @return \InsaLan\TournamentBundle\Entity\Tournament 
+     * @return \InsaLan\TournamentBundle\Entity\Tournament
      */
     public function getTournament()
     {
@@ -216,7 +218,7 @@ class Player extends Participant
     /**
      * Get groups
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroups()
     {
@@ -228,21 +230,24 @@ class Player extends Participant
      *
      * @return String
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getName();
     }
 
     /**
      * is set
      */
-    public function isNamed($type) {
+    public function isNamed($type)
+    {
         return $this->gameName !== null;
     }
 
     /**
      * is validated
      */
-    public function isValidated($type) {
+    public function isValidated($type)
+    {
         return $this->gameValidated;
     }
 
@@ -272,7 +277,7 @@ class Player extends Participant
     /**
      * Get team
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTeam()
     {
@@ -282,14 +287,16 @@ class Player extends Participant
     /**
      * Is Registered For Tournament
      */
-    public function isRegisteredForTournament($id) {
+    public function isRegisteredForTournament($id)
+    {
         return $this->getTeamByTournamentId($id) !== null;
     }
 
     /**
      * Get team by tournament id
      */
-    public function getTeamByTournamentId($id) {
+    public function getTeamByTournamentId($id)
+    {
         foreach ($this->team as $team) {
             if ($team->getTournament()->getId() == $id) {
                 return $team;
@@ -314,7 +321,7 @@ class Player extends Participant
     /**
      * Get gameName
      *
-     * @return string 
+     * @return string
      */
     public function getGameName()
     {
@@ -337,7 +344,7 @@ class Player extends Participant
     /**
      * Get gameId
      *
-     * @return integer 
+     * @return integer
      */
     public function getGameId()
     {
@@ -360,7 +367,7 @@ class Player extends Participant
     /**
      * Get gameValidated
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getGameValidated()
     {
@@ -383,7 +390,7 @@ class Player extends Participant
     /**
      * Get gameAvatar
      *
-     * @return integer 
+     * @return integer
      */
     public function getGameAvatar()
     {
@@ -407,7 +414,7 @@ class Player extends Participant
     /**
      * Get pendingTournament
      *
-     * @return \InsaLan\TournamentBundle\Entity\Tournament 
+     * @return \InsaLan\TournamentBundle\Entity\Tournament
      */
     public function getPendingTournament()
     {
@@ -430,7 +437,7 @@ class Player extends Participant
     /**
      * Get paymentDone
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPaymentDone()
     {
@@ -440,13 +447,15 @@ class Player extends Participant
     public function getTeamForTournament(Tournament $tournament)
     {
         foreach ($this->team as $t) {
-            if ($t->getTournament()->getId() == $tournament->getId())
+            if ($t->getTournament()->getId() == $tournament->getId()) {
                 return $t;
+            }
         }
         return null;
     }
 
-    public function isOk() {
+    public function isOk()
+    {
         return $this->paymentDone && $this->gameValidated;
     }
 
@@ -466,11 +475,10 @@ class Player extends Participant
     /**
      * Get arrived
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getArrived()
     {
         return $this->arrived;
     }
-
 }

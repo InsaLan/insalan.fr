@@ -43,5 +43,4 @@ class MerchantOrderAdmin extends Admin
     {
         $collection->remove('create');
     }
-
 }

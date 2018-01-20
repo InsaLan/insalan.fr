@@ -7,7 +7,8 @@ use Doctrine\ORM\EntityRepository;
 class UserOrderRepository extends EntityRepository
 {
 
-    public function getByUser(\InsaLan\UserBundle\Entity\User $user) {
+    public function getByUser(\InsaLan\UserBundle\Entity\User $user)
+    {
 
         $q = $this->createQueryBuilder('uo')
             ->leftJoin('uo.order', 'o')
@@ -24,5 +25,4 @@ class UserOrderRepository extends EntityRepository
 
         return $q->getQuery()->execute();
     }
-
 }

@@ -14,7 +14,9 @@ class NewsRepository extends EntityRepository
 {
     public function getLatest($nb)
     {
-        if ($nb < 1) $nb = 1;
+        if ($nb < 1) {
+            $nb = 1;
+        }
 
         $q = $this->createQueryBuilder('n')
             ->orderBy('n.id', 'DESC')

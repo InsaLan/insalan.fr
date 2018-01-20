@@ -152,12 +152,10 @@ class Group
             if ($score1 < $score2) {
                 ++$p1['lost'];
                 ++$p2['won'];
-            }
-            else if ($score1 > $score2) {
+            } elseif ($score1 > $score2) {
                 ++$p1['won'];
                 ++$p2['lost'];
-            }
-            else {
+            } else {
                 ++$p1['draw'];
                 ++$p2['draw'];
             }
@@ -190,8 +188,10 @@ class Group
     }
 
     public function __toString()
-    {   
-        if($this->getStage() === null) return "";
+    {
+        if ($this->getStage() === null) {
+            return "";
+        }
         return $this->getName() . " " . $this->getStage()->__toString();
     }
 
@@ -216,7 +216,6 @@ class Group
     public function removeParticipant(\InsaLan\TournamentBundle\Entity\Participant $participants)
     {
         return $this->participants->removeElement($participants);
-
     }
 
     /**
@@ -245,11 +244,11 @@ class Group
     {
         $matches = $this->getMatches()->toArray();
 
-        foreach($matches as $match)
-        {
-            if(($match->getPart1() === $A && $match->getPart2() === $B) ||
-               ($match->getPart1() === $B && $match->getPart2() === $A))
+        foreach ($matches as $match) {
+            if (($match->getPart1() === $A && $match->getPart2() === $B) ||
+               ($match->getPart1() === $B && $match->getPart2() === $A)) {
                 return $match;
+            }
         }
 
         return null;

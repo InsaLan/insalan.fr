@@ -38,5 +38,4 @@ class DiscountAdmin extends Admin
             ->add('amount')
             ;
     }
-
 }

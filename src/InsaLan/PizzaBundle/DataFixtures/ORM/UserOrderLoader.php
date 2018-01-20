@@ -7,7 +7,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use InsaLan\PizzaBundle\Entity\UserOrder;
 
 class UserOrderLoader extends AbstractFixture implements OrderedFixtureInterface
-{   
+{
+
 
     public function getOrder()
     {
@@ -15,7 +16,7 @@ class UserOrderLoader extends AbstractFixture implements OrderedFixtureInterface
     }
 
     public function load(ObjectManager $manager)
-    {   
+    {
 
         // Web Users
 

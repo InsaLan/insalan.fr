@@ -51,14 +51,14 @@ class TournamentAdmin extends Admin
                     'manual' => 'Autre/Manuel'),
                 'required'  => true))
             ->add('file', 'file', array('required' => false))
-			->add('loginType','choice', array(
-				'choices' => array(
-					'other' => 'Autre',
-					'Steam' => 'Steam',
-					'battlenet' => 'BattleNet'					
-				),
-				'required' => true
-			))
+            ->add('loginType', 'choice', array(
+                'choices' => array(
+                    'other' => 'Autre',
+                    'Steam' => 'Steam',
+                    'battlenet' => 'BattleNet'
+                ),
+                'required' => true
+            ))
         ;
     }
 
@@ -84,11 +84,13 @@ class TournamentAdmin extends Admin
         ;
     }
     
-    public function prePersist($e) {
+    public function prePersist($e)
+    {
         $e->upload();
     }
     
-    public function preUpdate($e) {
+    public function preUpdate($e)
+    {
         $this->prePersist($e);
     }
 }

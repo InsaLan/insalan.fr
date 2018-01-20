@@ -41,10 +41,12 @@ class Knockout
     /** For Bracket Generation **/
 
     protected $size;
-    public function getSize() {
+    public function getSize()
+    {
         return $this->size;
     }
-    public function setSize($s) {
+    public function setSize($s)
+    {
         $this->size = intval($s);
     }
 
@@ -58,12 +60,12 @@ class Knockout
     }
 
     public function __toString()
-    {   
-        if($this->tournament)
+    {
+        if ($this->tournament) {
             return $this->name . " " . $this->tournament->getName();
-
-        else
+        } else {
             return $this->name;
+        }
     }
 
     /**
@@ -138,7 +140,7 @@ class Knockout
     /**
      * Get doubleElimination
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDoubleElimination()
     {

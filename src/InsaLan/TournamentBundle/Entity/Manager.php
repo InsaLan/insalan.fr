@@ -62,7 +62,8 @@ class Manager
      */
     protected $arrived;
 
-    public function getParticipantType() {
+    public function getParticipantType()
+    {
         return "manager";
     }
 
@@ -197,7 +198,8 @@ class Manager
         return $this;
     }
 
-    public function isOk() {
+    public function isOk()
+    {
         return $this->paymentDone;
     }
 
@@ -229,14 +231,16 @@ class Manager
      *
      * @return String
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getName();
     }
 
     /**
      * is set
      */
-    public function isNamed($type) {
+    public function isNamed($type)
+    {
         return $this->gameName !== null;
     }
 
@@ -245,7 +249,8 @@ class Manager
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         if (isset($this->gameName)) {
             return $this->gameName;
         } else {

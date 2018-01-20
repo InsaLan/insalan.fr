@@ -162,8 +162,7 @@ class Slider
     public function onPreRemove()
     {
         $name = Slider::UPLOAD_PATH.DIRECTORY_SEPARATOR.$this->getId().'.png';
-        if (file_exists($name))
-        {
+        if (file_exists($name)) {
             unlink($name);
         }
     }

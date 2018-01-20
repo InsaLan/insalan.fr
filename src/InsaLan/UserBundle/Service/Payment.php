@@ -13,20 +13,23 @@ use Payum\Offline\PaymentFactory as OfflinePaymentFactory;
 use Payum\Paypal\ExpressCheckout\Nvp\Api;
 
 class Payment
-{   
+{
+
 
     private $payum;
     private $payumCheck;
     private $payumToken;
     private $paymentName = 'paypal_express_checkout_and_doctrine_orm';
 
-    public function __construct($p, $pp, $ppp) {
+    public function __construct($p, $pp, $ppp)
+    {
         $this->payum = $p;
         $this->payumCheck = $pp;
         $this->payumToken = $ppp;
     }
 
-    public function getOrder($currency, $price) {
+    public function getOrder($currency, $price)
+    {
 
         $storage =  $this->payum->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
 
@@ -38,7 +41,8 @@ class Payment
         return $order;
     }
 
-    public function getTargetUrl($order, $callbackRoute, $callbackParameters = null) {
+    public function getTargetUrl($order, $callbackRoute, $callbackParameters = null)
+    {
         
 
         $storage =  $this->payum->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
@@ -57,21 +61,19 @@ class Payment
         $storage->updateModel($order);
 
         return $captureToken->getTargetUrl();
-
     }
 
-    public function check($request, $invalidate = false) {
+    public function check($request, $invalidate = false)
+    {
         $token = $this->payumCheck->verify($request);
         $payment = $this->payum->getPayment($token->getPaymentName());
         
-        if($invalidate)
+        if ($invalidate) {
             $this->payumCheck->invalidate($token);
+        }
 
         $payment->execute($status = new GetHumanStatus($token));
 
         return $status->isCaptured();
-
     }
-
-
 }

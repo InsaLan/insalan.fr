@@ -28,16 +28,19 @@ class PvpNet
     public function getGameResult(Team $teamA, Team $teamB, $dateLimit = null)
     {
 
-        if($dateLimit === null)
+        if ($dateLimit === null) {
             $dateLimit = time() - 3600 * 24; //One day
+        }
 
-        foreach($teamA->getPlayers()->toArray() as $summoner)
-        {
+        foreach ($teamA->getPlayers()->toArray() as $summoner) {
             $games = $this->API->game()->recent($summoner->getGameId());
-            foreach($games as $game)
-            {
-                if($game->invalid) continue;
-                if(intval($game->createDate / 1000) < $dateLimit) continue;
+            foreach ($games as $game) {
+                if ($game->invalid) {
+                    continue;
+                }
+                if (intval($game->createDate / 1000) < $dateLimit) {
+                    continue;
+                }
 
                 $teamACode = intval($game->stats->team);
                 $teamBCode = ($teamACode === 100 ? 200 : 100);
@@ -54,16 +57,14 @@ class PvpNet
 
                     if ($player->teamId === $teamACode && $this->isSummonerInTeam($player->summonerId, $teamA)) {
                         $teamAChecked++;
-                    }
-                    elseif ($player->teamId === $teamBCode && $this->isSummonerInTeam($player->summonerId, $teamB)) {
+                    } elseif ($player->teamId === $teamBCode && $this->isSummonerInTeam($player->summonerId, $teamB)) {
                         $teamBChecked++;
-                    }
-                    else {
+                    } else {
                         break;
                     }
                 }
 
-                if($teamAChecked === 5 && $teamBChecked === 5) {
+                if ($teamAChecked === 5 && $teamBChecked === 5) {
                     // We have found the right game, and it's correct :)
                     $data = $this->API->match()->match($game->gameId, false)->raw();
 
@@ -82,7 +83,6 @@ class PvpNet
                     return array($winner, json_encode($data));
                 }
             }
-
         }
 
         // Not found
@@ -127,12 +127,12 @@ class PvpNet
 
     private function isSummonerInTeam($summonerId, Team $team)
     {
-        foreach($team->getPlayers()->toArray() as $player) {
-            if($player->getGameId() === $summonerId) return true;
+        foreach ($team->getPlayers()->toArray() as $player) {
+            if ($player->getGameId() === $summonerId) {
+                return true;
+            }
         }
 
         return false;
     }
-
 }
-?>

@@ -22,7 +22,8 @@ class ExistingLolId extends Constraint
     }
 }
 
-class ExistingLolIdValidator extends ConstraintValidator {
+class ExistingLolIdValidator extends ConstraintValidator
+{
     protected $apiLol;
     
     public function validate($value, Constraint $constraint)
@@ -30,12 +31,12 @@ class ExistingLolIdValidator extends ConstraintValidator {
         try {
             $apiSummoner = $this->apiLol->getApi()->summoner();
             $rSummoner = $apiSummoner->info($value);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $className = get_class($e);
             if ('GuzzleHttp\\Exception\\ClientException' === $className
                 && 404 == $e->getResponse()->getStatusCode()) {
                 $this->context->addViolation($constraint->message_not_found, array('%string%' => $value));
-            } else if (0 === strpos($className, 'GuzzleHttp')) {
+            } elseif (0 === strpos($className, 'GuzzleHttp')) {
                 $this->context->addViolation($constraint->message_api_error, array('%string%' => $value));
             } else {
                 throw $e;
@@ -43,7 +44,8 @@ class ExistingLolIdValidator extends ConstraintValidator {
         }
     }
     
-    public function setLolApi(Lol $apiLol) {
+    public function setLolApi(Lol $apiLol)
+    {
         $this->apiLol = $apiLol;
     }
 }

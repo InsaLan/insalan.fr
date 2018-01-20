@@ -33,7 +33,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setType('manual');
         $e->setLogoPath('fixtures-1.png');
         $e->setParticipantType('player');
-		$e->setLoginType('Steam');
+        $e->setLoginType('Steam');
         $manager->persist($e);
         $this->addReference('tournament-1', $e);
 
@@ -55,7 +55,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setType('lol');
         $e->setLogoPath('fixtures-2.png');
         $e->setParticipantType('team');
-		$e->setLoginType('Autre');
+        $e->setLoginType('Autre');
 
         $manager->persist($e);
         $this->addReference('tournament-2', $e);
@@ -78,7 +78,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setType('manual');
         $e->setLogoPath('fixtures-3.png');
         $e->setParticipantType('player');
-		$e->setLoginType('BattleNet');
+        $e->setLoginType('BattleNet');
 
         $manager->persist($e);
         $this->addReference('tournament-3', $e);
@@ -100,7 +100,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setType('manual');
         $e->setLogoPath('fixtures-4.png');
         $e->setParticipantType('team');
-		$e->setLoginType('Steam');
+        $e->setLoginType('Steam');
 
         $manager->persist($e);
         $this->addReference('tournament-4', $e);

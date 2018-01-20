@@ -9,7 +9,8 @@ use InsaLan\TournamentBundle\Entity\Participant;
 
 class TeamRepository extends EntityRepository
 {
-    public function getAllTeams() {
+    public function getAllTeams()
+    {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("
@@ -22,7 +23,8 @@ class TeamRepository extends EntityRepository
         return $query->getResult();
     }
  
-    public function getTeamsForTournament(Tournament $t) {
+    public function getTeamsForTournament(Tournament $t)
+    {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("
@@ -43,7 +45,8 @@ class TeamRepository extends EntityRepository
      * @param  Tournament $t         Tournament to look into
      * @return Team                  The matched team, if any
      */
-    public function findOneByNameAndTournament($team_name, Tournament $t) {
+    public function findOneByNameAndTournament($team_name, Tournament $t)
+    {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("
@@ -58,13 +61,13 @@ class TeamRepository extends EntityRepository
 
         try {
             return $query->getSingleResult();
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             return null;
         }
     }
 
-    public function getWaitingTeam(Tournament $t) {
+    public function getWaitingTeam(Tournament $t)
+    {
 
         $q = $this->createQueryBuilder('t')
              ->where('t.tournament = :tournament AND t.validated = :state')
@@ -75,11 +78,9 @@ class TeamRepository extends EntityRepository
 
         try {
             return $q->getQuery()->getSingleResult();
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             return null;
         }
-
     }
 
 

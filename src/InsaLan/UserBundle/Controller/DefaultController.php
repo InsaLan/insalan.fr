@@ -64,11 +64,11 @@ class DefaultController extends Controller
         $imageSrc = null;
         $routeDelete = null;
         $login = new SteamLogin();
-        $url = $this->generateUrl('insalan_user_default_savesteamid', array('slug' => ''),UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->generateUrl('insalan_user_default_savesteamid', array('slug' => ''), UrlGeneratorInterface::ABSOLUTE_URL);
         $url = str_replace("http://", "https://", $url);
         $url = $login->url($url);
 
-        if($request->query->get('action') == 'remove') {
+        if ($request->query->get('action') == 'remove') {
             $em = $this->getDoctrine()->getManager();
             $usr->setSteamId(null);
             $em->persist($usr);
@@ -76,7 +76,7 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('insalan_user_default_registersteamid'));
         }
 
-        if($connectedAccount != null) {
+        if ($connectedAccount != null) {
             $routeDelete = $this->generateUrl('insalan_user_default_registersteamid');
             $routeDelete = $routeDelete.'?action=remove';
             $steamDetails = $usr->getSteamDetails($steamKey);
@@ -104,15 +104,15 @@ class DefaultController extends Controller
         $callbackRoute = $this->get('session')->get('callbackRegisterApiRoute');
         $callbackParams = $this->get('session')->get('callbackRegisterApiParams');
 
-        if(isset($id)) {
+        if (isset($id)) {
             $usr->setSteamId($id);
             $em->persist($usr);
             $em->flush();
-            if($callbackRoute != null) {
+            if ($callbackRoute != null) {
                 $this->get('session')->set('callbackRegisterApiRoute', null);
                 $this->get('session')->set('callbackRegisterApiParams', null);
 
-                return $this->redirect($this->generateUrl($callbackRoute,$callbackParams));
+                return $this->redirect($this->generateUrl($callbackRoute, $callbackParams));
             }
 
             $steamKey = $this->getParameter('steam_api_key');
@@ -142,7 +142,7 @@ class DefaultController extends Controller
         $authorize_uri   = 'https://eu.battle.net/oauth/authorize';
         $token_uri       = 'https://eu.battle.net/oauth/token';
 
-        if(isset($_GET['action']) && $_GET['action'] == 'remove') {
+        if (isset($_GET['action']) && $_GET['action'] == 'remove') {
             $em = $this->getDoctrine()->getManager();
             $usr->setBattleTag(null);
             $em->persist($usr);
@@ -150,7 +150,7 @@ class DefaultController extends Controller
             unset($_GET['code']); // just to be sure
         }
         $client = new Client($client_id, $client_secret);
-        if($usr->getBattleTag() != null) {
+        if ($usr->getBattleTag() != null) {
             return array('enregistre' => true, 'battletag' => $usr->getBattleTag());
         }
         if (!isset($_GET['code'])) {
@@ -162,7 +162,7 @@ class DefaultController extends Controller
             try {
                 $response = $client->getAccessToken($token_uri, 'authorization_code', $params);
                 $info = $response['result'];
-                if(isset($info) && isset($info['access_token'])) {
+                if (isset($info) && isset($info['access_token'])) {
                     $client->setAccessToken($info['access_token']);
                     $response = $client->fetch('https://eu.api.battle.net/account/user');
                     $em = $this->getDoctrine()->getManager();
@@ -173,11 +173,10 @@ class DefaultController extends Controller
                 } else {
                     return array('erreur' => true);
                 }
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 return array('erreur' => true);
             }
         }
         return null;
     }
-
 }

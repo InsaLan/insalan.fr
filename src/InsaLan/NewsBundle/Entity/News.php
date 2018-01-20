@@ -38,12 +38,12 @@ class News
     protected $text;
 
     /**
-     * @ORM\Column(type="datetime") 
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime") 
+     * @ORM\Column(type="datetime")
      */
     private $updatedAt;
 
@@ -152,7 +152,7 @@ class News
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -175,7 +175,7 @@ class News
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {

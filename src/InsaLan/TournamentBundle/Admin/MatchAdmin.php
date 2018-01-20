@@ -12,7 +12,8 @@ use Sonata\AdminBundle\Route\RouteCollection;
 use InsaLan\TournamentBundle\Entity\Match;
 
 class MatchAdmin extends Admin
-{   
+{
+
 
     protected $stateDef = array(
                             Match::STATE_UPCOMING => 'En attente',
@@ -69,12 +70,15 @@ class MatchAdmin extends Admin
             ->add('part1', null, array('label' => "Participant 1"))
             ->add('part2', null, array('label' => "Participant 2"))
             ->add('extraInfos', null, array('label' => "Conteneur"))
-            ->add('_action','actions',
+            ->add(
+                '_action',
+                'actions',
                 array('actions'  => array('view' => array(),
                       'edit' => array(),
                       'createRound' => array(
                         'template' => 'InsaLanTournamentBundle:Admin:list__action_create_round.html.twig'
-                      ))))
+                )))
+            )
         ;
     }
 
@@ -85,25 +89,24 @@ class MatchAdmin extends Admin
 
     public function postUpdate($match)
     {
-        if($match->getState() === Match::STATE_FINISHED && $match->getKoMatch())
-        {
+        if ($match->getState() === Match::STATE_FINISHED && $match->getKoMatch()) {
             $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
             $repository = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch');
             $repository->propagateVictory($match->getKoMatch());
 
             $ko = $match->getKoMatch()->getKnockout();
 
-            if($ko->getDoubleElimination()) {
+            if ($ko->getDoubleElimination()) {
                 // deal with it.
                 $repository->propagateFromNode(
                     $repository
                     ->getRoot($ko)
                     ->getChildren()
-                    ->get(1)); // only update the hard part of the tree
+                    ->get(1)
+                ); // only update the hard part of the tree
             }
 
             $em->flush();
         }
     }
-
 }
