@@ -21,7 +21,7 @@ class Discount
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @ORM\Column(type="string")
      */
@@ -33,9 +33,9 @@ class Discount
     private $amount = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="InsaLan\TournamentBundle\Entity\Tournament")
+     * @ORM\ManyToOne(targetEntity="InsaLan\TournamentBundle\Entity\Registrable")
      */
-    private $tournament;
+    private $registrable;
 
 
     /**
@@ -95,25 +95,25 @@ class Discount
     }
 
     /**
-     * Set tournament
+     * Set registrable
      *
-     * @param \InsaLan\TournamentBundle\Entity\Tournament $tournament
+     * @param \InsaLan\TournamentBundle\Entity\Registrable $registrable
      * @return Discount
      */
-    public function setTournament(\InsaLan\TournamentBundle\Entity\Tournament $tournament = null)
+    public function setRegistrable(\InsaLan\TournamentBundle\Entity\Registrable $registrable = null)
     {
-        $this->tournament = $tournament;
+        $this->registrable = $registrable;
 
         return $this;
     }
 
     /**
-     * Get tournament
+     * Get registrable
      *
-     * @return \InsaLan\TournamentBundle\Entity\Tournament
+     * @return \InsaLan\TournamentBundle\Entity\Registrable
      */
-    public function getTournament()
+    public function getRegistrable()
     {
-        return $this->tournament;
+        return $this->registrable;
     }
 }

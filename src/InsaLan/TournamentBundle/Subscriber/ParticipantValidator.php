@@ -2,21 +2,24 @@
 
 namespace InsaLan\TournamentBundle\Subscriber;
 
-use Doctrine\Common\EventSubscriber; 
+use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use InsaLan\TournamentBundle\Entity\Team;
 use InsaLan\TournamentBundle\Entity\Participant;
 use InsaLan\TournamentBundle\Entity\Player;
+use InsaLan\TournamentBundle\Entity\Bundle;
 use InsaLan\InsaLanBundle\Service\FreeSlots;
 
 class ParticipantValidator implements EventSubscriber
-{   
+{
     private $updated_participants;
+    private $removed_participants;
 
     public function __construct()
     {
         $this->updated_participants = [];
+        $this->removed_participants = [];
     }
 
     public function getSubscribedEvents()
@@ -42,7 +45,7 @@ class ParticipantValidator implements EventSubscriber
 
         if($entity instanceof Player) {
 
-            if($entity->getTournament() !== null && $entity->getValidated() !== Participant::STATUS_VALIDATED) {
+            if($entity->getRegistrable() !== null && $entity->getValidated() !== Participant::STATUS_VALIDATED) {
                 $this->validatePlayer($entity,$em);
             }
 
@@ -108,30 +111,65 @@ class ParticipantValidator implements EventSubscriber
 
     public function postFlush(PostFlushEventArgs $args)
     {
-        if($this->updated_participants) { //execute the save if needed.
+        if($this->updated_participants || $this->removed_participants) { //execute the save if needed.
             $em = $args->getEntityManager();
+
             foreach($this->updated_participants as $team) {
                 $em->persist($team);
             }
+
+            foreach($this->removed_participants as $p) {
+                $em->remove($p);
+            }
+
             $this->updated_participants = []; //put this ABSOLUTELY BEFORE the flush.
+            $this->removed_participants = [];
+
             $em->flush();
         }
     }
 
     protected function validatePlayer($player,$em) {
 
-        if(!$player->getPaymentDone() && $player->getTournament()->getWebPrice() > 0) return;
+        if(!$player->getPaymentDone() && $player->getRegistrable()->getWebPrice() > 0) return;
 
-        $freeSlots = $em
-                ->getRepository('InsaLanTournamentBundle:Tournament')
-                ->getFreeSlots($player->getTournament()->getId());
+        $freeSlots = $player->getRegistrable()->getFreeSlots();
 
         if($freeSlots > 0)
             $player->setValidated(Participant::STATUS_VALIDATED);
         else
             $player->setValidated(Participant::STATUS_WAITING);
 
-        $this->updated_participants[] = $player; //register for further save
+        if ($player->getValidated() === Participant::STATUS_VALIDATED && $player->getRegistrable() instanceof Bundle) {
+            $orders = $em->getRepository('InsaLanUserBundle:MerchantOrder')->findByPlayer($player);
+
+            foreach ($player->getRegistrable()->getTournaments() as $t) {
+                $p = new Player();
+
+                $p->setUser($player->getUser());
+                $p->setGameName($player->getGameName());
+                $p->setPendingRegistrable($t);
+                $p->setTournament($t);
+                $p->setGameValidated($player->getGameValidated());
+                $p->setPaymentDone($player->getPaymentDone());
+
+                $p->setValidated(Participant::STATUS_VALIDATED);
+
+                $this->updated_participants[] = $p;
+
+                foreach ($orders as $o)
+                    $o->addPlayer($p);
+            }
+
+            foreach ($orders as $o)
+                $o->removePlayer($player);
+
+            $this->removed_participants[] = $player;
+        }
+        else {
+            $this->updated_participants[] = $player; //register for further save
+        }
+
     }
 
     protected function validateTeam($team, $em) {                

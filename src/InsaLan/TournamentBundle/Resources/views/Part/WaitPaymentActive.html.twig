@@ -9,9 +9,9 @@
     <div class="text">
         <br />
 
-{% if tournament.isOpenedNow %}
+{% if registrable.isOpenedNow %}
         <h2><strong>Paiement par chèque</strong></h2><br>
-        Vous devez envoyer un chèque de {{ tournament.webPrice - (discount.amount | default(0)) }} {{ tournament.currency }} à l'ordre de <strong>"AEIR InsaLan"</strong> par la poste à l'adresse suivante : 
+        Vous devez envoyer un chèque de {{ registrable.webPrice - (discount.amount | default(0)) }} {{ registrable.currency }} à l'ordre de <strong>"AEIR InsaLan"</strong> par la poste à l'adresse suivante : 
         <br>
         Thomas Colonna<br>
         5 rue Jean Brulelou dit Brito<br>
@@ -26,14 +26,14 @@
         </div>
         <br>
         Vous devez vous rendre au <strong>WarpZone, 92 Mail François Mitterrand, 35000 Rennes</strong>.<br>
-        Vous pourrez effectuer le paiement de votre place ({{ tournament.webPrice - (discount.amount | default(0)) }} {{ tournament.currency }}) en liquide, par chèque ou par carte bancaire.<br>
+        Vous pourrez effectuer le paiement de votre place ({{ registrable.webPrice - (discount.amount | default(0)) }} {{ registrable.currency }}) en liquide, par chèque ou par carte bancaire.<br>
         <br/>
         Votre inscription sera validée à la réception de votre paiement par le partenaire.
         <br><br>
 {% endif %}
 
         <h2><strong>Paiement sur place</strong></h2><br>
-        <h3>Le tarif joueur sur place s'élève à {{ tournament.onSitePrice - (discount.amount | default(0)) }} {{ tournament.currency }}.</h3>
+        <h3>Le tarif joueur sur place s'élève à {{ registrable.onSitePrice - (discount.amount | default(0)) }} {{ registrable.currency }}.</h3>
         Vous pourrez régler sur place en liquide, par chèque ou par carte bancaire (avec une majoration de 1€ pour la CB).<br>
         <br/></br>
 

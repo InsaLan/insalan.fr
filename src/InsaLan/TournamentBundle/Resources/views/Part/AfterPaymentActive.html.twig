@@ -89,6 +89,6 @@
     <div class="text">
         Une erreur est survenue. Vous pouvez contacter un administrateur via contact@insalan.fr ou au 06 95 51 66 63.
     </div>
-          <a class="btn btn-danger ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: tournament.id}) }}">Réessayer</a>
+          <a class="btn btn-danger ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_enroll', {registrable: tournament.id}) }}">Réessayer</a>
 </div>
 {% endif %}

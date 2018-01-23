@@ -17,7 +17,7 @@
         {% if participant.validated == 2 %} &#10003; {% else %} ! {% endif %}
       </div>
       <div class="title pull-left">
-        {{ participant.tournament.name }} - 
+        {{ participant.registrable.name }} -
         {% if participant.participantType == 'team' %} Équipe {% endif %}
         {{ participant.name }}
         {% if participant.participantType == 'team' %}
@@ -25,7 +25,7 @@
         {% endif %}
       </div>
       <div class="title pull-right">
-        <img style="margin-right:0px;max-height:60px;display:block;" src="{{ asset(participant.tournament.getUploadDir() ~ participant.tournament.logoPath) }}" alt=""/>
+        <img style="margin-right:0px;max-height:60px;display:block;" src="{{ asset(participant.registrable.getUploadDir() ~ participant.registrable.logoPath) }}" alt=""/>
       </div>
       <br class="clear">
     </header>
@@ -88,12 +88,12 @@
       <br class="clear">
 
       {% if participant.validated == 1 %}
-        Le tournoi {{ participant.tournament.name }} est complet ! En cas de désistement, vous serez automatiquement validé.
+        Le tournoi {{ participant.registrable.name }} est complet ! En cas de désistement, vous serez automatiquement validé.
       {% endif %}
 
       {% if participant.validated == 0 %}
         {% if participant.participantType == 'team' %}
-          {% if participant.tournament.free %}
+          {% if participant.registrable.free %}
         L'équipe sera validée quand {{ participant.tournament.teamMinPlayer }} joueurs seront inscrits.
           {% else %}
         L'équipe sera validée quand {{ participant.tournament.teamMinPlayer }} joueurs seront inscrits et que plus de la moitié aura payé sa place.
@@ -103,49 +103,49 @@
         Votre participation sera validée après paiement.
         {% endif %}
         <br />
-        {% if participant.tournament.isFull() %}
+        {% if participant.registrable.isFull() %}
           <strong>Attention, ce tournoi est complet.</strong>
         {% else %}
-          Il reste actuellement <strong>{{ participant.tournament.freeSlots }}</strong> slot(s) libre(s) dans votre tournoi.
+          Il reste actuellement <strong>{{ participant.registrable.freeSlots }}</strong> slot(s) libre(s) dans votre tournoi.
         {% endif %}
       {% endif %}
     </div>
 
     {% if participant.manager is not null and participant.manager.user == app.user %}
-        {# 2-button layout #}{% if participant.tournament.isOpenedNow %}
+        {# 2-button layout #}{% if participant.registrable.isOpenedNow %}
         {% if participant.participantType == 'team' %}
           <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leaveteam', {teamId: participant.id}) }}">Annuler</a>
         {% elseif participant.participantType == 'player' %}
-          <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leave', {tournament: participant.tournament.id}) }}">Annuler</a>
+          <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leave', {tournament: participant.registrable.id}) }}">Annuler</a>
         {% endif %}
-          <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
+          <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_enroll', {registrable: participant.registrable.id}) }}">Mon inscription</a>
         {# tournament is closed #}{% else %}
-        <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_manager_enroll', {tournament: participant.tournament.id}) }}">Inscription archivée</a>
+        <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_manager_enroll', {registrable: participant.registrable.id}) }}">Inscription archivée</a>
         {% endif %}
     {% else %}
       {% if participant.validated == 2  %}
-        {# 2-button layout #}{% if participant.tournament.isPlaying %}
+        {# 2-button layout #}{% if participant.registrable.kind == 'tournament' and participant.registrable.isPlaying %}
         <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_default_teamdetails', {id: participant.id }) }}">Jouer mes matchs</a>
-        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
+        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {registrable: participant.registrable.id}) }}">Mon inscription</a>
 
-        {# 3-button layout #}{% elseif participant.tournament.placement %}
+        {# 3-button layout #}{% elseif participant.registrable.kind == 'tournament' and participant.registrable.placement %}
         <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Annuler</a>
-        <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_placement', {tournament: participant.tournament.id }) }}">Choisir une place</a>
-        <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
+        <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_placement', {tournament: participant.registrable.id }) }}">Choisir une place</a>
+        <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_enroll', {registrable: participant.registrable.id}) }}">Mon inscription</a>
 
-        {# 2-button layout #}{% elseif participant.tournament.isOpenedNow %}
+        {# 2-button layout #}{% elseif participant.registrable.isOpenedNow %}
         <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Annuler</a>
-        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
+        <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {registrable: participant.registrable.id}) }}">Mon inscription</a>
 
         {# tournament is closed #}{% else %}
-        <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Inscription archivée</a>
+        <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_enroll', {registrable: participant.registrable.id}) }}">Inscription archivée</a>
         {% endif %}
 
       {# endif validated == 2 #}
       {% else %} {# over validation status #}
-          {# 2-button layout #}{% if participant.tournament.isOpenedNow %}
+          {# 2-button layout #}{% if participant.registrable.isOpenedNow %}
           <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Annuler</a>
-          <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {tournament: participant.tournament.id}) }}">Mon inscription</a>
+          <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {registrable: participant.registrable.id}) }}">Mon inscription</a>
           {% endif %}
       {% endif %}
     {% endif %}{# endif not a manager #}
@@ -177,7 +177,7 @@
       <br>
       {% elseif t.isOpenedNow and not t.getLocked %}
 
-        <a class="list-choice" href="{{ path('insalan_tournament_user_enroll', {tournament: t.id}) }}">
+        <a class="list-choice" href="{{ path('insalan_tournament_user_enroll', {registrable: t.id}) }}">
         <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
         <h2>{{ t.name }}{% if t.kind == "bundle" %} ({{ t.tournamentsString }}) {% endif %}{% if t.isFull %} - COMPLET {% endif %}</h2>
 
@@ -185,10 +185,10 @@
           <a href="{{ path('insalan_tournament_manager_setname', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription manager</a>
         {% endif %}
         {% if t.isFull and t.kind == 'tournament' and t.participantType == 'team' %}
-          <a href="{{ path('insalan_tournament_user_enroll', {tournament: t.id}) }}" class="btn2" style="float: right">Rejoindre une équipe</a>
+          <a href="{{ path('insalan_tournament_user_enroll', {registrable: t.id}) }}" class="btn2" style="float: right">Rejoindre une équipe</a>
         {% endif %}
         {% if not t.isFull %}
-          <a href="{{ path('insalan_tournament_user_enroll', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription joueur</a>
+          <a href="{{ path('insalan_tournament_user_enroll', {registrable: t.id}) }}" class="btn2" style="float: right">Inscription joueur</a>
         {% endif %}
 
         <p>

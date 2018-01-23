@@ -10,12 +10,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 class PlayerRepository extends EntityRepository
 {
 
-    public function findOneByUserAndPendingTournament(\InsaLan\UserBundle\Entity\User $u, Tournament $t) {
+    public function findOneByUserAndPendingRegistrable(\InsaLan\UserBundle\Entity\User $u, Registrable $r) {
 
         $q = $this->createQueryBuilder('p')
-            ->where('p.user = :user AND p.pendingTournament = :tournament')
+            ->where('p.user = :user AND p.pendingRegistrable = :registrable')
             ->setParameter('user', $u)
-            ->setParameter('tournament', $t);
+            ->setParameter('registrable', $r);
 
         try {
             return $q->getQuery()->getSingleResult();
@@ -56,7 +56,7 @@ class PlayerRepository extends EntityRepository
                     ->leftJoin('m2.user', 'u3')
                     ->addSelect('u3')
                     ->where('p.tournament = :tournament')
-                    ->orWhere('p.pendingTournament = :tournament')
+                    ->orWhere('p.pendingRegistrable = :tournament')
                     ->addOrderBy('t.name')
                     ->addOrderBy('p.gameName')
                     ->setParameter('tournament', $tournament);

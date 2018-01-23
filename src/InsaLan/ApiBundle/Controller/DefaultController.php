@@ -59,11 +59,11 @@ class DefaultController extends Controller
                 }
             }
 
-            elseif ($p->getPendingTournament()) {
-                if (in_array($p->getPendingTournament()->getShortname(),$t))
+            elseif ($p->getPendingRegistrable()) {
+                if (in_array($p->getPendingRegistrable()->getShortname(),$t))
                 if($p->getPaymentDone()) {
                     $res["err"] = null;
-                    $res["tournament"] = $p->getPendingTournament()->getShortname();
+                    $res["tournament"] = $p->getPendingRegistrable()->getShortname();
                     return new JsonResponse($res);
                 }
             }

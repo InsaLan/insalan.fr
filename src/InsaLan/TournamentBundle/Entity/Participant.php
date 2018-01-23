@@ -215,4 +215,14 @@ abstract class Participant
     {
         return $this->manager;
     }
+
+    /**
+     * Get Registrable
+     *
+     * @return Registrable
+     */
+    public function getRegistrable()
+    {
+        return $this->tournament;
+    }
 }
