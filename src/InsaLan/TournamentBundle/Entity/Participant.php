@@ -149,7 +149,7 @@ abstract class Participant
     {
         $this->validated = $validated;
 
-        if($validated === $this::STATUS_VALIDATED)
+        if($validated === $this::STATUS_VALIDATED || $validated === $this::STATUS_WAITING)
             $this->setValidationDate(new \DateTime("now"));
 
         return $this;

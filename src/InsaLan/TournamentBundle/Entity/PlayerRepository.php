@@ -31,6 +31,7 @@ class PlayerRepository extends EntityRepository
 
         $q = $this->createQueryBuilder('p')
                     ->where('p.tournament = :tournament')
+                    ->orderBy('p.validationDate')
                     ->setParameter('tournament', $tournament);
 
         return $q->getQuery()->execute();
@@ -84,7 +85,7 @@ class PlayerRepository extends EntityRepository
 
         $q = $this->createQueryBuilder('p')
              ->where('p.tournament = :tournament AND p.validated = :state')
-             ->orderBy('p.id')
+             ->orderBy('p.validationDate')
              ->setParameter('tournament', $t)
              ->setParameter('state', Participant::STATUS_WAITING)
              ->setMaxResults(1);

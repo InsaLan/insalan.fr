@@ -30,6 +30,7 @@ class TeamRepository extends EntityRepository
             FROM InsaLanTournamentBundle:Team t
             JOIN t.players p
             WHERE t.tournament = :tournament
+            ORDER BY t.validationDate
             ");
         $query->setParameter('tournament', $t);
         $query->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true);
@@ -68,7 +69,7 @@ class TeamRepository extends EntityRepository
 
         $q = $this->createQueryBuilder('t')
              ->where('t.tournament = :tournament AND t.validated = :state')
-             ->orderBy('t.id')
+             ->orderBy('t.validationDate')
              ->setParameter('tournament', $t)
              ->setParameter('state', Participant::STATUS_WAITING)
              ->setMaxResults(1);
