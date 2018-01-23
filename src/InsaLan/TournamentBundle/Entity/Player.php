@@ -65,6 +65,11 @@ class Player extends Participant
     protected $pendingRegistrable;
     // this is a temporary variable when a player has not validated its account, and/or is waiting for a team.
 
+    /**
+     * @ORM\ManyToMany(targetEntity="InsaLan\UserBundle\Entity\MerchantOrder", mappedBy="players")
+     */
+    protected $merchantOrders;
+
     public function getParticipantType() {
         return "player";
     }

@@ -30,20 +30,19 @@ class MerchantController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findAll();
+        $registrables = $em->getRepository('InsaLanTournamentBundle:Registrable')->findAll();
         $a = array(null => '');
-        foreach ($tournaments as $t) {
+        foreach ($registrables as $t) {
             if ($t->isOpenedNow())
                 $a[$t->getId()] = $t->getName();
         }
 
         $form = $this->createFormBuilder()
-            ->add('tournament', 'choice', array('label' => 'Tournoi', 'choices' => $a))
+            ->add('registrable', 'choice', array('label' => 'Tournoi', 'choices' => $a))
             ->setAction($this->generateUrl('insalan_tournament_merchant_index'))
             ->getForm();
 
-
-        $tournament = $data = null;
+        $registrable = $data = null;
         $players = $pendingPlayers = $paidPlayers = $previousPaidPlayers = $discounts = array();
         $total = 0;
 
@@ -53,24 +52,24 @@ class MerchantController extends Controller
             $data = $form->getData();
             return $this->redirect($this->generateUrl(
                 'insalan_tournament_merchant_index_1',
-                array('id' => $data['tournament'])));
+                array('id' => $data['registrable'])));
         }
         else if (null !== $id) {
-            $data = array('tournament' => $id);
-            $form->get('tournament')->submit($id);
+            $data = array('registrable' => $id);
+            $form->get('registrable')->submit($id);
 
-            foreach ($tournaments as &$t) {
-                if ($t->getId() == $data['tournament']) {
-                    $tournament = $t;
+            foreach ($registrables as &$t) {
+                if ($t->getId() == $data['registrable']) {
+                    $registrable = $t;
                 }
             }
 
-            if (null === $tournament) {
-                throw new NotFoundHttpException('InsaLan\\TournamentBundle\\Entity\\Tournament object not found.');;
+            if (null === $registrable) {
+                throw new NotFoundHttpException('InsaLan\\TournamentBundle\\Entity\\Registrable object not found.');;
             }
 
             $players = $em->getRepository('InsaLanTournamentBundle:Participant')
-                          ->findByTournament($tournament);
+                          ->findByRegistrable($registrable);
 
             foreach ($players as &$p) {
                 if ($p->getParticipantType() == "team"){
@@ -85,39 +84,45 @@ class MerchantController extends Controller
             }
 
             $discounts = $em->getRepository('InsaLanUserBundle:Discount')
-                            ->findByTournament($tournament);
+                            ->findByRegistrable($registrable);
         }
 
         $allPaidPlayers = $em->getRepository('InsaLanUserBundle:MerchantOrder')
                         ->findByMerchant($user);
 
         foreach ($allPaidPlayers as &$order) {
-            $paidParticipant = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($order->getPlayer()->getUser());
+            $paidParticipant = [];
+            foreach ($order->getPlayers() as $p) {
+                foreach ($em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($p->getUser()) as $pp)
+                    $paidParticipant[] = $pp;
+            }
 
             foreach ($paidParticipant as &$p) {
                 if ($p->getParticipantType() == "team"){
                     foreach ($p->getPlayers() as &$player) {
-                        if ($player->getId() == $order->getPlayer()->getId()){
-                            $order->getPlayer()->setTournament($p->getTournament());
-                            $order->getPlayer()->setValidationDate($p->getValidationDate());
+                        if ($order->hasPlayer($player)){
+                            $player->setTournament($p->getTournament());
+                            $player->setValidationDate($p->getValidationDate());
                             break;
                         }
                     }
                 }
             }
 
-            if ($order->getPlayer()->getTournament()->isOpenedNow() || $order->getPlayer()->getTournament()->isPending()) {
-                $total += $order->getPayment()["L_PAYMENTREQUEST_0_AMT0"];
-                $paidPlayers[] = $order;
-            }
-            else {
-                $previousPaidPlayers[] = $order;
+            foreach ($order->getPlayers() as $p) {
+                if ($p->getRegistrable()->isOpenedNow() || $p->getRegistrable()->isPending()) {
+                    $total += $order->getPayment()["L_PAYMENTREQUEST_0_AMT0"];
+                    $paidPlayers[] = $order;
+                }
+                else {
+                    $previousPaidPlayers[] = $order;
+                }
             }
         }
 
         $output = array(
             'form'        => $form->createView(),
-            'tournament'  => $tournament,
+            'registrable'  => $registrable,
             'players'     => $pendingPlayers,
             'paidPlayers' => $paidPlayers,
             'previousPaidPlayers' => $previousPaidPlayers,
@@ -133,31 +138,29 @@ class MerchantController extends Controller
      * @Route("/{id}/merchant/{player}/validate", requirements={"id" = "\d+"})
      * @Route("/{id}/merchant/{player}/discount/{discount}/validate", requirements={"id" = "\d+"})
      */
-    public function validateAction(Entity\Tournament $tournament, Entity\Player $player, $discount = null){
+    public function validateAction(Entity\Registrable $registrable, Entity\Player $player, $discount = null){
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
 
         if ($player->getUser() == null){
             $this->get('session')->getFlashBag()->add('error', "Impossible de valider cette place (aucun utilisateur associé à la commande)");
-            return $this->redirect($this->generateUrl('insalan_tournament_merchant_index_1', array('id' => $tournament->getId())));
+            return $this->redirect($this->generateUrl('insalan_tournament_merchant_index_1', array('id' => $registrable->getId())));
         }
-
-        $player->setPaymentDone(true);
 
         $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
         $order = $storage->createModel();
         $order->setUser($player->getUser());
 
-        $price = $tournament->getWebPrice();
-        $title = 'Place pour le tournoi '.$tournament->getName();
+        $price = $registrable->getWebPrice();
+        $title = 'Place pour le tournoi '.$registrable->getName();
 
         if ($discount !== null){
             $discount = $em->getRepository('InsaLanUserBundle:Discount')
                             ->findOneById($discount);
 
-            if ($discount->getTournament()->getId() !== $tournament->getId()){
+            if ($discount->getRegistrable()->getId() !== $registrable->getId()){
                 $this->get('session')->getFlashBag()->add('error', "discount not allowed");
-                return $this->redirect($this->generateUrl('insalan_tournament_merchant_index_1', array('id' => $tournament->getId())));
+                return $this->redirect($this->generateUrl('insalan_tournament_merchant_index_1', array('id' => $registrable->getId())));
             }
 
             $price -= $discount->getAmount();
@@ -166,12 +169,12 @@ class MerchantController extends Controller
 
         $order->setDiscount($discount);
 
-        $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $tournament->getCurrency();
+        $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $registrable->getCurrency();
         $order['PAYMENTREQUEST_0_AMT'] = $price;
 
         $order['L_PAYMENTREQUEST_0_NAME0'] = $title;
         $order['L_PAYMENTREQUEST_0_AMT0'] = $price;
-        $order['L_PAYMENTREQUEST_0_DESC0'] = $tournament->getDescription();
+        $order['L_PAYMENTREQUEST_0_DESC0'] = $registrable->getDescription();
         $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;
 
         $order['L_PAYMENTREQUEST_0_NAME1'] = 'Paiement dans un point de vente partenaire';
@@ -183,15 +186,21 @@ class MerchantController extends Controller
 
         $merchantOrder = new MerchantOrder();
         $merchantOrder->setMerchant($user);
-        $merchantOrder->setPlayer($player);
+        $merchantOrder->addPlayer($player);
         $merchantOrder->setPayment($order);
 
-        $em->persist($player);
+        // MerchantOrder need to be persisted before Player's payment validation
         $em->persist($merchantOrder);
+        $em->persist($player);
+        $em->flush();
+
+        $player->setPaymentDone(true);
+
+        $em->persist($player);
         $em->flush();
 
         return $this->redirect($this->generateUrl(
             'insalan_tournament_merchant_index_1',
-            array('id' => $tournament->getId())));
+            array('id' => $registrable->getId())));
     }
 }

@@ -11,7 +11,7 @@
     <section>
         {{ form_start(form, {attr:{'class':'oneline'}}) }}
             {{ form_errors(form) }}
-            {{ form_row(form.tournament) }}
+            {{ form_row(form.registrable) }}
             <div class="input left">
                 <input type="submit" value="&rarr;"/>
             </div>
@@ -20,9 +20,9 @@
 
 </article>
 
-{% if tournament %}
+{% if registrable %}
     <hr style="margin: 20px 0px;"/>
-    <h2>Places en attente de paiement pour {{ tournament.name }}</h2>
+    <h2>Places en attente de paiement pour {{ registrable.name }}</h2>
     <br />
     <table style="width:100%">
         <tr>
@@ -49,12 +49,12 @@
             </td>
             <td>
             <span>
-                <a href="{{ path('insalan_tournament_merchant_validate', { id: tournament.id, player: player.id }) }}">
-                    <button class="payment_ok">Plein tarif ({{ tournament.webPrice }} {{ tournament.currency }})</button>
+                <a href="{{ path('insalan_tournament_merchant_validate', { id: registrable.id, player: player.id }) }}">
+                    <button class="payment_ok">Plein tarif ({{ registrable.webPrice }} {{ registrable.currency }})</button>
                 </a>
                 {% for discount in discounts %}
-                    <a href="{{ path('insalan_tournament_merchant_validate_1', { id: tournament.id, player: player.id, discount: discount.id }) }}">
-                        <button class="payment_ok">{{ discount.name }} ({{ tournament.webPrice - discount.amount }} {{ tournament.currency }})</button>
+                    <a href="{{ path('insalan_tournament_merchant_validate_1', { id: registrable.id, player: player.id, discount: discount.id }) }}">
+                        <button class="payment_ok">{{ discount.name }} ({{ registrable.webPrice - discount.amount }} {{ registrable.currency }})</button>
                     </a>
                 {% endfor %}
             </span>
@@ -80,26 +80,26 @@
     {% for order in paidPlayers %}
     <tr>
         <td colspan="2">
-            {{ order.player.gameName }}
+            {{ order.players[0].gameName }}
             <br />
-            <span style="font-size:10px; color: grey;">{{ order.player.user.firstname }} {{ order.player.user.lastname}}</span>
+            <span style="font-size:10px; color: grey;">{{ order.players[0].user.firstname }} {{ order.players[0].user.lastname}}</span>
         </td>
         <td>
-            {{ order.player.tournament.name }}
+            {{ order.players[0].registrable.name }}
         </td>
         <td>
-            {% set solo = not (order.player.team | length > 0) %}
+            {% set solo = not (order.players[0].team | length > 0) %}
             {% if not solo %}
-                {{ order.player.team[0].name }}
+                {{ order.players[0].team[0].name }}
             {% else %}
                 (solo)
             {% endif %}
         </td>
         <td>
-            {% if order.player.validationDate %} {{ order.player.validationDate | date('d/m/Y à H:i') }} {% endif %}
+            {% if order.players[0].validationDate %} {{ order.players[0].validationDate | date('d/m/Y à H:i') }} {% endif %}
         </td>
         <td>
-            {{ order.payment["L_PAYMENTREQUEST_0_AMT0"] }} {{ order.player.tournament.currency }}
+            {{ order.payment["L_PAYMENTREQUEST_0_AMT0"] }} {{ order.players[0].registrable.currency }}
             <br />
             <span style="font-size:10px; color: grey;">
             {% if order.payment.discount %}
@@ -136,26 +136,26 @@
     {% for order in previousPaidPlayers %}
     <tr>
         <td colspan="2">
-            {{ order.player.gameName }}
+            {{ order.players[0].gameName }}
             <br />
-            <span style="font-size:10px; color: grey;">{{ order.player.user.firstname }} {{ order.player.user.lastname}}</span>
+            <span style="font-size:10px; color: grey;">{{ order.players[0].user.firstname }} {{ order.players[0].user.lastname}}</span>
         </td>
         <td>
-            {{ order.player.tournament.name }}
+            {{ order.players[0].registrable.name }}
         </td>
         <td>
-            {% set solo = not (order.player.team | length > 0) %}
+            {% set solo = not (order.players[0].team | length > 0) %}
             {% if not solo %}
-                {{ order.player.team[0].name }}
+                {{ order.players[0].team[0].name }}
             {% else %}
                 (solo)
             {% endif %}
         </td>
         <td>
-            {% if order.player.validationDate %} {{ order.player.validationDate | date('d/m/Y à H:i') }} {% endif %}
+            {% if order.players[0].validationDate %} {{ order.players[0].validationDate | date('d/m/Y à H:i') }} {% endif %}
         </td>
         <td>
-            {{ order.payment["L_PAYMENTREQUEST_0_AMT0"] }} {{ order.player.tournament.currency }}
+            {{ order.payment["L_PAYMENTREQUEST_0_AMT0"] }} {{ order.players[0].registrable.currency }}
             <br />
             <span style="font-size:10px; color: grey;">
             {% if order.payment.discount %}

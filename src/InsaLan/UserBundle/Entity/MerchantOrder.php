@@ -11,7 +11,6 @@ use InsaLan\TournamentBundle\Entity\Player;
  *
  * @ORM\Entity(repositoryClass="InsaLan\UserBundle\Entity\MerchantOrderRepository")
  * @ORM\Table()
- * @ORM\Entity
  */
 class MerchantOrder
 {
@@ -28,14 +27,14 @@ class MerchantOrder
     private $merchant;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PaymentDetails")
+     * @ORM\ManyToOne(targetEntity="PaymentDetails",cascade={"persist"})
      */
     private $payment;
 
     /**
-     * @ORM\ManyToOne(targetEntity="InsaLan\TournamentBundle\Entity\Player")
+     * @ORM\ManyToMany(targetEntity="InsaLan\TournamentBundle\Entity\Player", inversedBy="merchantOrders")
      */
-    private $player;
+    private $players;
 
 
     /**
@@ -95,25 +94,47 @@ class MerchantOrder
     }
 
     /**
-     * Set player
+     * Add players
      *
-     * @param \InsaLan\TournamentBundle\Entity\Player $player
-     * @return MerchantOrder
+     * @param \InsaLan\TournamentBundle\Entity\Player $players
+     * @return Group
      */
-    public function setPlayer(\InsaLan\TournamentBundle\Entity\Player $player = null)
+    public function addPlayer(\InsaLan\TournamentBundle\Entity\Player $players)
     {
-        $this->player = $player;
+        $this->players[] = $players;
 
         return $this;
     }
 
     /**
-     * Get player
+     * Remove players
      *
-     * @return \InsaLan\TournamentBundle\Entity\Player
+     * @param \InsaLan\TournamentBundle\Entity\Player $players
      */
-    public function getPlayer()
+    public function removePlayer(\InsaLan\TournamentBundle\Entity\Player $players)
     {
-        return $this->player;
+        return $this->players->removeElement($players);
+
+    }
+
+    /**
+     * Get players
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlayers()
+    {
+        return $this->players;
+    }
+
+    /**
+     * Check if has player
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Player $players
+     * @return bool
+     */
+    public function hasPlayer(\InsaLan\TournamentBundle\Entity\Player $player)
+    {
+        return $this->players->contains($player);
     }
 }
