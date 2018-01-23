@@ -7,6 +7,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
+use InsaLan\UserBundle\Service\LoginPlatform;
+
 class TournamentAdmin extends Admin
 {
     // Fields to be shown on create/edit forms
@@ -54,9 +56,9 @@ class TournamentAdmin extends Admin
             ->add('file', 'file', array('required' => false))
 			->add('loginType','choice', array(
 				'choices' => array(
-					'other' => 'Autre',
-					'Steam' => 'Steam',
-					'battlenet' => 'BattleNet'					
+					LoginPlatform::PLATFORM_OTHER => 'Autre',
+					LoginPlatform::PLATFORM_STEAM => 'Steam',
+					LoginPlatform::PLATFORM_BATTLENET => 'BattleNet',
 				),
 				'required' => true
 			))

@@ -26,7 +26,7 @@ class User extends BaseUser
     {
         parent::__construct();
     }
-    
+
     /**
      * @ORM\Column(type="string", nullable=true)
      */
@@ -215,22 +215,10 @@ class User extends BaseUser
     /**
      * Get birthdate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getBirthdate()
     {
         return $this->birthdate;
-    }
-    public function getSteamDetails($steamKey) {
-        if($this->steamId == null)
-            return null;
-
-        $json = file_get_contents('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key='.$steamKey.'&steamids='.$this->steamId);
-        if($json != null) {
-            $obj = json_decode($json);
-            return $obj->response->players[0];
-            
-        }
-        return null;
     }
 }
