@@ -64,8 +64,7 @@ class UserController extends Controller
         foreach($rawRegistrables as $t) {
             $in = false;
             foreach($participants as $p) {
-                if(($p->getPendingRegistrable() !== null && $p->getPendingRegistrable()->getKind() == 'bundle' && $p->getPendingRegistrable()->getId() === $t->getId())
-                    || ($p->getTournament() !== null && $p->getTournament()->getId() === $t->getId())) {
+                if(($p->getRegistrable() !== null && $p->getRegistrable()->getId() === $t->getId())) {
                     $in = true;
                     break;
                 }

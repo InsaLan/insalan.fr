@@ -4,7 +4,7 @@
     <div class="step pull-left">
         {{ counter }}
     </div>
-    {% if tournament.free %}
+    {% if registrable.free %}
         <div class="title pull-left">Inscription joueur terminée</div>
     {% else %}
         <div class="title pull-left">Paiement validé</div>
@@ -12,7 +12,7 @@
     <br class="clear">
   </header>
     <div class="text">
-    {% if tournament.free %}
+    {% if registrable.free %}
     Votre inscription en tant que joueur est validée. Si vous êtes en équipe, votre équipe sera validée quand plus de la moitié des joueurs auront validé leur inscription.
     {% else %}
     Votre paiement a été validé.
@@ -43,7 +43,7 @@
                   Tournoi
               </td>
               <td>
-                  {{ tournament.name }}
+                  {{ registrable.name }}
               </td>
           </tr>
           <tr>
@@ -55,12 +55,13 @@
               </td>
           </tr>
 
-                  <tr>
+          {% if registrable.kind == 'tournament' %}
+            <tr>
               <td>
                   Début du tournoi
               </td>
               <td>
-                  Le {{ tournament.tournamentOpen|date('d/m/Y à H:i') }}
+                  Le {{ registrable.tournamentOpen|date('d/m/Y à H:i') }}
               </td>
             </tr>
             <tr>
@@ -68,9 +69,10 @@
                   Fin du tournoi
               </td>
               <td>
-                  Le {{ tournament.tournamentClose|date('d/m/Y à H:i') }}
+                  Le {{ registrable.tournamentClose|date('d/m/Y à H:i') }}
               </td>
-          </tr>
+            </tr>
+          {% endif %}
       </table>
 
     </div>
@@ -89,6 +91,6 @@
     <div class="text">
         Une erreur est survenue. Vous pouvez contacter un administrateur via contact@insalan.fr ou au 06 95 51 66 63.
     </div>
-          <a class="btn btn-danger ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_enroll', {registrable: tournament.id}) }}">Réessayer</a>
+          <a class="btn btn-danger ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_enroll', {registrable: registrable.id}) }}">Réessayer</a>
 </div>
 {% endif %}

@@ -118,9 +118,9 @@
         {% elseif participant.participantType == 'player' %}
           <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leave', {tournament: participant.registrable.id}) }}">Annuler</a>
         {% endif %}
-          <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_enroll', {registrable: participant.registrable.id}) }}">Mon inscription</a>
+          <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_enroll', {tournament: participant.registrable.id}) }}">Mon inscription</a>
         {# tournament is closed #}{% else %}
-        <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_manager_enroll', {registrable: participant.registrable.id}) }}">Inscription archivée</a>
+        <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_manager_enroll', {tournament: participant.registrable.id}) }}">Inscription archivée</a>
         {% endif %}
     {% else %}
       {% if participant.validated == 2  %}
