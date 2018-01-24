@@ -15,7 +15,7 @@ class DiscountAdmin extends Admin
         $formMapper
             ->add('name')
             ->add('amount')
-            ->add('tournament')
+            ->add('registrable')
             ;
     }
 
@@ -25,7 +25,7 @@ class DiscountAdmin extends Admin
         $datagridMapper
             ->add('name')
             ->add('amount')
-            ->add('tournament')
+            ->add('registrable')
             ;
     }
 
@@ -34,7 +34,7 @@ class DiscountAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('name')
-            ->addIdentifier('tournament')
+            ->addIdentifier('registrable')
             ->add('amount')
             ;
     }

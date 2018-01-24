@@ -146,7 +146,7 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer',array('registrable' => $registrable->getId())));
         else if (!$player->getGameValidated())
             return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer',array('registrable' => $registrable->getId())));
-        else if ($registrable->getParticipantType() === 'team' && $player->getTeamForTournament($registrable) === null)
+        else if ($registrable instanceof Entity\Tournament && $registrable->getParticipantType() === 'team' && $player->getTeamForTournament($registrable) === null)
             return $this->redirect($this->generateUrl('insalan_tournament_user_jointeam',array('tournament' => $registrable->getId())));
         else if (!$player->getPaymentDone())
             return $this->redirect($this->generateUrl('insalan_tournament_user_pay',array('registrable' => $registrable->getId())));
@@ -376,7 +376,7 @@ class UserController extends Controller
             $paymentName,
             $order,
             'insalan_tournament_user_paydonetemp',
-            array('registrable' => $tournament->getId())
+            array('registrable' => $registrable->getId())
         );
 
         $order['RETURNURL'] = $captureToken->getTargetUrl();

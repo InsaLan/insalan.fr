@@ -164,7 +164,7 @@ class MerchantController extends Controller
             }
 
             $price -= $discount->getAmount();
-            $title += " (" + $discount->getName() + ")";
+            $title .= " (" . $discount->getName() . ")";
         }
 
         $order->setDiscount($discount);

@@ -2,6 +2,7 @@
 namespace InsaLan\TournamentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -24,6 +25,12 @@ class Bundle extends Registrable
      * @ORM\ManyToMany(targetEntity="Tournament", inversedBy="bundles")
      */
     protected $tournaments;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->tournaments = new ArrayCollection();
+    }
 
     /**
      * Get id
