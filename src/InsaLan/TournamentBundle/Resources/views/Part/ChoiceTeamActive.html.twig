@@ -15,13 +15,13 @@
     </p>
   </div>
 
-  {% if tournament.loginType == "Autre" %}
-  <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_setplayer', {tournament: tournament.id}) }}">Annuler</a>
+  {% if registrable.loginType == "Autre" %}
+  <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_setplayer', {registrable: registrable.id}) }}">Annuler</a>
   {% else %}
   <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_index') }}">Annuler</a>
   {% endif %}
-  
-  <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_createteam', {tournament: tournament.id}) }}">Créer</a>
-  <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_existingteam', {tournament: tournament.id}) }}">Rejoindre</a>
+
+  <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_createteam', {tournament: registrable.id}) }}">Créer</a>
+  <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_existingteam', {tournament: registrable.id}) }}">Rejoindre</a>
   <br class="clear">
 </div>

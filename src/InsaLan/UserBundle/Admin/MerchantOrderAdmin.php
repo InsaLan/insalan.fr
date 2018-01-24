@@ -15,7 +15,7 @@ class MerchantOrderAdmin extends Admin
     {
         $formMapper
             ->add('merchant')
-            ->add('player')
+            ->add('players')
             ;
     }
 
@@ -25,7 +25,7 @@ class MerchantOrderAdmin extends Admin
         $datagridMapper
             ->add('merchant')
             ->add('payment.user')
-            ->add('player')
+            ->add('players')
             ;
     }
 
@@ -35,7 +35,7 @@ class MerchantOrderAdmin extends Admin
         $listMapper
             ->addIdentifier('merchant')
             ->add('payment.user')
-            ->add('player')
+            ->add('players')
             ;
     }
 

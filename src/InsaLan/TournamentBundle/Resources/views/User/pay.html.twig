@@ -11,13 +11,13 @@
   </aside>
 
   <header>
-    <h2>Inscription à &laquo; {{ tournament.name }} &raquo;</h2>
-    {{ tournament.description }}
+    <h2>Inscription à &laquo; {{ registrable.name }} &raquo;</h2>
+    {{ registrable.description }}
   </header>
 
   <section>
 
-      {% if tournament.participantType == 'team' %}
+      {% if registrable.kind == "tournament" and registrable.participantType == 'team' %}
           {% include 'InsaLanTournamentBundle:Part:ChooseGameNameValidated.html.twig'  with {'counter': 1}%}
           {% include 'InsaLanTournamentBundle:Part:ChoiceTeamValidated.html.twig'  with {'counter': 2}%}
           {% include 'InsaLanTournamentBundle:Part:CreateJoinTeamValidated.html.twig'  with {'counter': 3}%}

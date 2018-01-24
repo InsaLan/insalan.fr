@@ -5,6 +5,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use InsaLan\TournamentBundle\Entity\Tournament;
+use InsaLan\UserBundle\Service\LoginPlatform;
 
 class TournamentLoader extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -33,7 +34,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setType('manual');
         $e->setLogoPath('fixtures-1.png');
         $e->setParticipantType('player');
-		$e->setLoginType('Steam');
+		$e->setLoginType(LoginPlatform::PLATFORM_STEAM);
         $manager->persist($e);
         $this->addReference('tournament-1', $e);
 
@@ -55,7 +56,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setType('lol');
         $e->setLogoPath('fixtures-2.png');
         $e->setParticipantType('team');
-		$e->setLoginType('Autre');
+		$e->setLoginType(LoginPlatform::PLATFORM_OTHER);
 
         $manager->persist($e);
         $this->addReference('tournament-2', $e);
@@ -78,7 +79,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setType('manual');
         $e->setLogoPath('fixtures-3.png');
         $e->setParticipantType('player');
-		$e->setLoginType('BattleNet');
+		$e->setLoginType(LoginPlatform::PLATFORM_BATTLENET);
 
         $manager->persist($e);
         $this->addReference('tournament-3', $e);
@@ -100,7 +101,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setType('manual');
         $e->setLogoPath('fixtures-4.png');
         $e->setParticipantType('team');
-		$e->setLoginType('Steam');
+		$e->setLoginType(LoginPlatform::PLATFORM_STEAM);
 
         $manager->persist($e);
         $this->addReference('tournament-4', $e);

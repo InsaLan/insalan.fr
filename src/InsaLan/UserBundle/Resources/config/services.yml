@@ -9,6 +9,10 @@ services:
         class: InsaLan\UserBundle\Service\Payment
         arguments: ["@payum", "@payum.security.http_request_verifier", "@payum.security.token_factory"]
 
+    insalan.user.login_platform:
+        class: InsaLan\UserBundle\Service\LoginPlatform
+        arguments: ["%steam_api_key%"]
+
     sonata.admin.tournament.user:
         class: InsaLan\UserBundle\Admin\UserAdmin
         tags:

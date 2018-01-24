@@ -99,6 +99,17 @@ services:
         calls:
             - [ setTranslationDomain, [InsaLanTournamentBundle]]
 
+    sonata.admin.tournament.bundle:
+        class: InsaLan\TournamentBundle\Admin\BundleAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Bundle" }
+        arguments:
+            - ~
+            - InsaLan\TournamentBundle\Entity\Bundle
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanTournamentBundle]]
+
 
     insalan.tournament.participant_validator:
         class: InsaLan\TournamentBundle\Subscriber\ParticipantValidator

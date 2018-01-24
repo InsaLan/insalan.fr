@@ -60,10 +60,15 @@ class Player extends Participant
     protected $team;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Tournament")
+     * @ORM\ManyToOne(targetEntity="Registrable")
      */
-    protected $pendingTournament;
+    protected $pendingRegistrable;
     // this is a temporary variable when a player has not validated its account, and/or is waiting for a team.
+
+    /**
+     * @ORM\ManyToMany(targetEntity="InsaLan\UserBundle\Entity\MerchantOrder", mappedBy="players")
+     */
+    protected $merchantOrders;
 
     public function getParticipantType() {
         return "player";
@@ -392,26 +397,26 @@ class Player extends Participant
 
 
     /**
-     * Set pendingTournament
+     * Set pendingRegistrable
      *
-     * @param \InsaLan\TournamentBundle\Entity\Tournament $pendingTournament
+     * @param \InsaLan\TournamentBundle\Entity\Tournament $pendingRegistrable
      * @return Player
      */
-    public function setPendingTournament(\InsaLan\TournamentBundle\Entity\Tournament $pendingTournament = null)
+    public function setPendingRegistrable(\InsaLan\TournamentBundle\Entity\Registrable $pendingRegistrable = null)
     {
-        $this->pendingTournament = $pendingTournament;
+        $this->pendingRegistrable = $pendingRegistrable;
 
         return $this;
     }
 
     /**
-     * Get pendingTournament
+     * Get pendingRegistrable
      *
-     * @return \InsaLan\TournamentBundle\Entity\Tournament 
+     * @return \InsaLan\TournamentBundle\Entity\Registrable
      */
-    public function getPendingTournament()
+    public function getPendingRegistrable()
     {
-        return $this->pendingTournament;
+        return $this->pendingRegistrable;
     }
 
     /**
@@ -473,4 +478,13 @@ class Player extends Participant
         return $this->arrived;
     }
 
+    /**
+     * Get Registrable
+     *
+     * @return Registrable
+     */
+    public function getRegistrable()
+    {
+        return $this->tournament !== null ? $this->tournament : $this->pendingRegistrable;
+    }
 }

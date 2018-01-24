@@ -54,8 +54,24 @@ class ParticipantRepository extends EntityRepository
         
         $result3 = $query->getResult();
 
+        $query = $em->createQuery("
+            SELECT pa
+            FROM InsaLanTournamentBundle:Participant pa,
+                 InsaLanTournamentBundle:Bundle bu,
+                 InsaLanTournamentBundle:Player pl
 
-        return new ArrayCollection(array_merge($result1, $result2, $result3));
+            JOIN pl.pendingRegistrable t
+
+            WHERE pl.user = :user
+              AND pa.id = pl.id
+              AND bu.id = t.id
+        ")->setParameter('user', $u);
+
+        $query->execute();
+
+        $result4 = $query->getResult();
+
+        return new ArrayCollection(array_merge($result1, $result2, $result3, $result4));
 
     }
 
@@ -68,6 +84,36 @@ class ParticipantRepository extends EntityRepository
         }
 
         return null;
+    }
+
+    public function findByRegistrable(Registrable $r) {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery("
+            SELECT pa
+            FROM InsaLanTournamentBundle:Participant pa
+            WHERE pa.tournament = :tournament
+        ")->setParameter('tournament', $r);
+
+        $query->execute();
+
+        $result1 = $query->getResult();
+
+        $query = $em->createQuery("
+            SELECT pa
+            FROM InsaLanTournamentBundle:Participant pa,
+                 InsaLanTournamentBundle:Player pl,
+                 InsaLanTournamentBundle:Bundle bu
+            WHERE pa.id = pl.id
+              AND pl.pendingRegistrable = :registrable
+              AND bu.id = :registrable
+        ")->setParameter('registrable', $r);
+
+        $query->execute();
+
+        $result2 = $query->getResult();
+
+        return new ArrayCollection(array_merge($result1, $result2));
     }
 
 }
