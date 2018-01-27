@@ -29,10 +29,22 @@ class PlayerRepository extends EntityRepository
     public function getPlayersForTournament(Tournament $tournament) {
         $em = $this->getEntityManager();
 
-        $q = $this->createQueryBuilder('p')
-                    ->where('p.tournament = :tournament')
-                    ->orderBy('p.validationDate')
-                    ->setParameter('tournament', $tournament);
+        $bundles = $this->_em->createQueryBuilder()
+                        ->select('bu.id')
+                        ->from('InsaLanTournamentBundle:Bundle', 'bu')
+                        ->innerJoin('bu.tournaments', 't')
+                        ->where('t.id = :tournament');
+
+        $q = $this->createQueryBuilder('p');
+        $q = $q->where('p.tournament = :tournament')
+               ->orWhere(
+                   $q->expr()->in(
+                       'p.pendingRegistrable',
+                        $bundles->getDql()
+                   )
+               )
+               ->orderBy('p.validationDate')
+               ->setParameter('tournament', $tournament);
 
         return $q->getQuery()->execute();
     }
