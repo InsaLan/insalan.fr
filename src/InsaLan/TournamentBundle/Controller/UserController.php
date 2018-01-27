@@ -293,6 +293,16 @@ class UserController extends Controller
         if($player->getTournament() !== null && $player->getTournament()->getParticipantType() !== "player")
             throw new ControllerException("Not Allowed"); // must be a player only tournament
 
+        // not allowed if he paid something
+        if(!$player->getRegistrable()->isFree() && $player->getPaymentDone()){
+            $this->get('session')->getFlashBag()->add('error', "Vous avez payé votre place, merci de contacter l'InsaLan si vous souhaitez vous désister.");
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
+
+        // not allowed either if registration are closed
+        if(!$player->getRegistrable()->isOpenedNow())
+            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+
         $em->remove($player);
         $em->flush();
 

@@ -114,9 +114,9 @@
     {% if participant.manager is not null and participant.manager.user == app.user %}
         {# 2-button layout #}{% if participant.registrable.isOpenedNow %}
         {% if participant.participantType == 'team' %}
-          <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leaveteam', {teamId: participant.id}) }}">Annuler</a>
+          <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leaveteam', {teamId: participant.id}) }}">Quitter l'équipe</a>
         {% elseif participant.participantType == 'player' %}
-          <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leave', {tournament: participant.registrable.id}) }}">Annuler</a>
+          <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_leave', {tournament: participant.registrable.id}) }}">Désinscription</a>
         {% endif %}
           <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_enroll', {tournament: participant.registrable.id}) }}">Mon inscription</a>
         {# tournament is closed #}{% else %}
@@ -129,12 +129,20 @@
         <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {registrable: participant.registrable.id}) }}">Mon inscription</a>
 
         {# 3-button layout #}{% elseif participant.registrable.kind == 'tournament' and participant.registrable.placement %}
-        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Annuler</a>
+        {% if participant.participantType == 'team' %}
+        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Quitter l'équipe</a>
+        {% else %}
+        <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leave', {registrable: participant.registrable.id}) }}">Désinscription</a>
+        {% endif %}
         <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_placement', {tournament: participant.registrable.id }) }}">Choisir une place</a>
         <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_enroll', {registrable: participant.registrable.id}) }}">Mon inscription</a>
 
         {# 2-button layout #}{% elseif participant.registrable.isOpenedNow %}
-        <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Annuler</a>
+        {% if participant.participantType == 'team' %}
+        <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Quitter l'équipe</a>
+        {% else %}
+        <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_leave', {registrable: participant.registrable.id}) }}">Désinscription</a>
+        {% endif %}
         <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {registrable: participant.registrable.id}) }}">Mon inscription</a>
 
         {# tournament is closed #}{% else %}
@@ -144,7 +152,11 @@
       {# endif validated == 2 #}
       {% else %} {# over validation status #}
           {# 2-button layout #}{% if participant.registrable.isOpenedNow %}
-          <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Annuler</a>
+        {% if participant.participantType == 'team' %}
+        <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {teamId: participant.id}) }}">Quitter l'équipe</a>
+        {% else %}
+        <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_leave', {registrable: participant.registrable.id}) }}">Désinscription</a>
+        {% endif %}
           <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_enroll', {registrable: participant.registrable.id}) }}">Mon inscription</a>
           {% endif %}
       {% endif %}
