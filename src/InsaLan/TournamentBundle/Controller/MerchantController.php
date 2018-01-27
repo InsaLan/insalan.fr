@@ -117,6 +117,7 @@ class MerchantController extends Controller
                 else {
                     $previousPaidPlayers[] = $order;
                 }
+                break;
             }
         }
 
