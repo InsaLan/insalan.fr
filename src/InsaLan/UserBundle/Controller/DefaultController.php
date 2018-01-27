@@ -42,8 +42,7 @@ class DefaultController extends Controller
         $steam = null;
 
         if ($usr->getSteamId() != null) {
-            $steamDetails = $usr->getSteamDetails($this->getParameter('steam_api_key'));
-            $steam = $steamDetails;
+            $steam = $this->get("insalan.user.login_platform")->getSteamDetails($usr);
         }
 
         return array(
@@ -58,7 +57,6 @@ class DefaultController extends Controller
      */
     public function registerSteamIdAction(Request $request)
     {
-        $steamKey = $this->getParameter('steam_api_key');
         $usr = $this->get('security.context')->getToken()->getUser();
         $connectedAccount = $usr->getSteamId();
         $imageSrc = null;
@@ -79,7 +77,7 @@ class DefaultController extends Controller
         if($connectedAccount != null) {
             $routeDelete = $this->generateUrl('insalan_user_default_registersteamid');
             $routeDelete = $routeDelete.'?action=remove';
-            $steamDetails = $usr->getSteamDetails($steamKey);
+            $steamDetails = $this->get("insalan.user.login_platform")->getSteamDetails($usr);
             $connectedAccount = $steamDetails->personaname;
             $imageSrc = $steamDetails->avatar;
         }
@@ -115,8 +113,7 @@ class DefaultController extends Controller
                 return $this->redirect($this->generateUrl($callbackRoute,$callbackParams));
             }
 
-            $steamKey = $this->getParameter('steam_api_key');
-            $steamDetails = $usr->getSteamDetails($steamKey);
+            $steamDetails = $this->get("insalan.user.login_platform")->getSteamDetails($usr);
             $connectedAccount = $steamDetails->personaname;
             $imageSrc = $steamDetails->avatarmedium;
 

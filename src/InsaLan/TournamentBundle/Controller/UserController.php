@@ -919,7 +919,7 @@ class UserController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
 
         $this->get('session')->set('callbackRegisterApiRoute','insalan_tournament_user_setplayer');
-        $this->get('session')->set('callbackRegisterApiParams',array('tournament' => $registrable->getId()));
+        $this->get('session')->set('callbackRegisterApiParams',array('registrable' => $registrable->getId()));
 
         if ($registrable instanceof Entity\Bundle) {
             foreach($registrable->getTournaments() as $t) {
