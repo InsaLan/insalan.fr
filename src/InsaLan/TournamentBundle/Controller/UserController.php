@@ -56,21 +56,34 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_user_default_index'));
         }
 
-        $rawRegistrables = $em->getRepository('InsaLanTournamentBundle:Registrable')->findThisYearRegistrables();
+        $registrables = $em->getRepository('InsaLanTournamentBundle:Registrable')->findThisYearRegistrables();
         // participants can be either a single player, a team or a manager
         $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($usr);
 
-        $registrables = array();
-        foreach($rawRegistrables as $t) {
-            $in = false;
-            foreach($participants as $p) {
-                if(($p->getRegistrable() !== null && $p->getRegistrable()->getId() === $t->getId())) {
-                    $in = true;
-                    break;
+        $registered = array();
+
+        foreach($participants as $p) {
+            $registered[] = $p->getRegistrable();
+
+            if ($p->getRegistrable() instanceof Entity\Bundle)
+                foreach($p->getRegistrable()->getTournaments() as $t)
+                    $registered[] = $t;
+        }
+
+        foreach($registrables as $r) {
+            if ($r instanceof Entity\Bundle) {
+                foreach($r->getTournaments() as $t) {
+                    if (array_search($t, $registered) !== false) {
+                        $registered[] = $r;
+                        break;
+                    }
                 }
             }
-            if(!$in)
-                $registrables[] = $t;
+        }
+
+        foreach($registered as $r) {
+            if (array_search($r, $registrables) !== false)
+                unset($registrables[array_search($r, $registrables)]);
         }
 
         return array('registrables' => $registrables, 'participants' => $participants);
