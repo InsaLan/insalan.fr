@@ -42,7 +42,16 @@
         <section>
             <ul class="shift">
                 {% for p in t.players %}
-                <li>{{ p.name }}</li>
+                <li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {% if p.paymentDone == 1 %}
+                            <b style="color: green">&#x2713; </b>
+                        {% else %}
+                            <b style="color: red">&#x274C; </b>
+                        {% endif %}
+                    {% endif %}
+                    {{ p.name }}
+                </li>
                 {% endfor %}
             </ul>
         </section>
@@ -87,7 +96,16 @@
         <section>
             <ul class="shift">
                 {% for p in t.players %}
-                <li>{{ p.name }}</li>
+                <li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {% if p.paymentDone == 1 %}
+                            <b style="color: green">&#x2713; </b>
+                        {% else %}
+                            <b style="color: red">&#x274C; </b>
+                        {% endif %}
+                    {% endif %}
+                    {{ p.name }}
+                </li>
                 {% endfor %}
             </ul>
         </section>
@@ -123,7 +141,16 @@
         <section>
             <ul class="shift">
                 {% for p in t.players %}
-                <li>{{ p.name }}</li>
+                <li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {% if p.paymentDone == 1 %}
+                            <b style="color: green">&#x2713; </b>
+                        {% else %}
+                            <b style="color: red">&#x274C; </b>
+                        {% endif %}
+                    {% endif %}
+                    {{ p.name }}
+                </li>
                 {% endfor %}
             </ul>
         </section>
