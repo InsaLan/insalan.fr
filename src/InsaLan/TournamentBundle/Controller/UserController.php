@@ -953,7 +953,7 @@ class UserController extends Controller
         else {
             if (($registrable->getLoginType() == UserBundle\Service\LoginPlatform::PLATFORM_STEAM && $user->getSteamId() == null)
                 || ($registrable->getLoginType() == UserBundle\Service\LoginPlatform::PLATFORM_BATTLENET && $user->getBattleTag() == null))
-                return $this->redirect($this->generateUrl('insalan_tournament_user_redirecttoapilogin', array('tournament' => $tournament)));
+                return $this->redirect($this->generateUrl('insalan_tournament_user_redirecttoapilogin', array('tournament' => $registrable->getId())));
         }
 
         return null;
