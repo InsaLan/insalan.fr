@@ -1,0 +1,21 @@
+{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+
+{% block main_header %}
+{% endblock %}
+{% block main_bottom %}
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <br />
+    <div>
+        <ul>
+            {% for email in emailList %}
+                <li>{{ email }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
