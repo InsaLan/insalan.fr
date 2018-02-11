@@ -17,6 +17,15 @@ abstract class Participant
     const STATUS_WAITING   = 1; // Ready for validation, but no slot free
     const STATUS_VALIDATED = 2; // Validated
 
+    public static function getStatuses()
+    {
+        return array (
+            self::STATUS_PENDING => 'pending',
+            self::STATUS_WAITING => 'waiting',
+            self::STATUS_VALIDATED => 'validated',
+        );
+    }
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

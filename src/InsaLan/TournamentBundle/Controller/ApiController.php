@@ -2,6 +2,7 @@
 
 namespace InsaLan\TournamentBundle\Controller;
 
+use InsaLan\TournamentBundle\Entity\Participant;
 use InsaLan\TournamentBundle\Entity\Player;
 use InsaLan\TournamentBundle\Entity\Team;
 use InsaLan\TournamentBundle\Entity\Tournament;
@@ -24,6 +25,14 @@ class ApiController extends Controller
         $form = $this->createFormBuilder()
             ->add('shortName', 'choice', array(
                 'choices' => $tournaments,
+                'label' => 'Nom du tournois',
+                'expanded' => false,
+                'multiple' => false,
+                'required' => true,
+            ))
+            ->add('playerStatus', 'choice', array(
+                'choices' => Participant::getStatuses(),
+                'label' => 'Status des joueurs',
                 'expanded' => false,
                 'multiple' => false,
                 'required' => true,
@@ -38,6 +47,7 @@ class ApiController extends Controller
         if ($form->isSubmitted() and $form->isValid()) {
             $formData = $form->getData();
             $indexTournament = $formData['shortName'];
+            $statusRequired = $formData['playerStatus'];
 
             /** @var Tournament $tournament */
             $tournament = $tournaments[$indexTournament];
@@ -47,6 +57,10 @@ class ApiController extends Controller
                     $players = $tournament->getParticipants()->toArray();
                     /** @var Player[] $players */
                     foreach ($players as $player) {
+                        if ($player->getValidated() !== $statusRequired) {
+                            continue;
+                        }
+
                         $user = $player->getUser();
                         $emailList[] = $user->getEmail();
                     }
@@ -58,6 +72,10 @@ class ApiController extends Controller
                         /** @var Player[] $players */
                         $players = $team->getPlayers()->toArray();
                         foreach ($players as $player) {
+                            if ($player->getValidated() !== $statusRequired) {
+                                continue;
+                            }
+
                             $user = $player->getUser();
                             $emailList[] = $user->getEmail();
                         }
