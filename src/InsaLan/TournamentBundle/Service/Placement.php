@@ -20,108 +20,108 @@ class Placement
     public function getStructure() {
         $structure = array();
         //                      game    id  x  y  w  h
-        $structure[] = array("lol2017", 1, 0, 0, 5, 1);
-        $structure[] = array("lol2017", 3, 0, 1, 5, 1);
-        $structure[] = array("lol2017", 5, 0, 3, 5, 1);
-        $structure[] = array("lol2017", 7, 0, 4, 5, 1);
-        $structure[] = array("lol2017", 9, 0, 6, 5, 1);
-        $structure[] = array("lol2017", 11, 0, 7, 5, 1);
+        $structure[] = array("lol2018", 1,  0, 0,  5, 1);
+        $structure[] = array("lol2018", 3,  0, 1,  5, 1);
+        $structure[] = array("lol2018", 5,  0, 3,  5, 1);
+        $structure[] = array("lol2018", 7,  0, 4,  5, 1);
+        $structure[] = array("lol2018", 9,  0, 6,  5, 1);
+        $structure[] = array("lol2018", 11, 0, 7,  5, 1);
+        $structure[] = array("lol2018", 13, 0, 9,  5, 1);
+        $structure[] = array("lol2018", 15, 0, 10, 5, 1);
+        $structure[] = array("lol2018", 17, 0, 12, 5, 1);
+        $structure[] = array("lol2018", 19, 0, 13, 5, 1);
 
-        $structure[] = array("lol2017", 2,  5, 0, 5, 1);
-        $structure[] = array("lol2017", 4,  5, 1, 5, 1);
-        $structure[] = array("lol2017", 6,  5, 3, 5, 1);
-        $structure[] = array("lol2017", 8,  5, 4, 5, 1);
-        $structure[] = array("lol2017", 10, 5, 6, 5, 1);
-        $structure[] = array("lol2017", 12, 5, 7, 5, 1);
+        $structure[] = array("lol2018", 2,  5, 0,  5, 1);
+        $structure[] = array("lol2018", 4,  5, 1,  5, 1);
+        $structure[] = array("lol2018", 6,  5, 3,  5, 1);
+        $structure[] = array("lol2018", 8,  5, 4,  5, 1);
+        $structure[] = array("lol2018", 10, 5, 6,  5, 1);
+        $structure[] = array("lol2018", 12, 5, 7,  5, 1);
+        $structure[] = array("lol2018", 14, 5, 9,  5, 1);
+        $structure[] = array("lol2018", 16, 5, 10, 5, 1);
+        $structure[] = array("lol2018", 18, 5, 12, 5, 1);
+        $structure[] = array("lol2018", 20, 5, 13, 5, 1);
 
-        $structure[] = array("lol2017", 13, 12, 0, 5, 1);
-        $structure[] = array("lol2017", 15, 12, 1, 5, 1);
-        $structure[] = array("lol2017", 17, 12, 3, 5, 1);
-        $structure[] = array("lol2017", 19, 12, 4, 5, 1);
+        $structure[] = array("lol2018", 21, 12, 0, 5, 1);
+        $structure[] = array("lol2018", 23, 12, 1, 5, 1);
 
-        $structure[] = array("lol2017", 14, 17, 0, 5, 1);
-        $structure[] = array("lol2017", 16, 17, 1, 5, 1);
-        $structure[] = array("lol2017", 18, 17, 3, 5, 1);
-        $structure[] = array("lol2017", 20, 17, 4, 5, 1);
+        $structure[] = array("lol2018", 22, 17, 0, 5, 1);
+        $structure[] = array("lol2018", 24, 17, 1, 5, 1);
 
         //                      game    id   x   y  w  h
-        $structure[] = array("csgo2017", 1,  0, 9, 5, 1);
-        $structure[] = array("csgo2017", 3,  0, 10, 5, 1);
-        $structure[] = array("csgo2017", 5,  0, 12, 5, 1);
-        $structure[] = array("csgo2017", 7,  0, 13, 5, 1);
-        $structure[] = array("csgo2017", 9,  0, 15, 5, 1);
-        $structure[] = array("csgo2017", 11,  0, 16, 5, 1);
-        $structure[] = array("csgo2017", 13,  0, 19, 5, 1);
-        $structure[] = array("csgo2017", 15,  0, 20, 5, 1);
-        $structure[] = array("csgo2017", 17, 0, 22, 5, 1);
-        $structure[] = array("csgo2017", 19, 0, 23, 5, 1);
-        $structure[] = array("csgo2017", 21, 0, 25, 5, 1);
-        $structure[] = array("csgo2017", 23, 0, 26, 5, 1);
-        $structure[] = array("csgo2017", 25, 0, 28, 5, 1);
-        $structure[] = array("csgo2017", 27, 0, 29, 5, 1);
-        $structure[] = array("csgo2017", 29, 0, 31, 5, 1);
-        $structure[] = array("csgo2017", 31, 0, 32, 5, 1);
-        
-        $structure[] = array("csgo2017", 2,  5, 9, 5, 1);
-        $structure[] = array("csgo2017", 4,  5, 10, 5, 1);
-        $structure[] = array("csgo2017", 6,  5, 12, 5, 1);
-        $structure[] = array("csgo2017", 8,  5, 13, 5, 1);
-        $structure[] = array("csgo2017", 10,  5, 15, 5, 1);
-        $structure[] = array("csgo2017", 12,  5, 16, 5, 1);
-        $structure[] = array("csgo2017", 14,  5, 19, 5, 1);
-        $structure[] = array("csgo2017", 16,  5, 20, 5, 1);
-        $structure[] = array("csgo2017", 18,  5, 22, 5, 1);
-        $structure[] = array("csgo2017", 20, 5, 23, 5, 1);
-        $structure[] = array("csgo2017", 22, 5, 25, 5, 1);
-        $structure[] = array("csgo2017", 24, 5, 26, 5, 1);
-        $structure[] = array("csgo2017", 26, 5, 28, 5, 1);
-        $structure[] = array("csgo2017", 28, 5, 29, 5, 1);
-        $structure[] = array("csgo2017", 30, 5, 31, 5, 1);
-        $structure[] = array("csgo2017", 32, 5, 32, 5, 1);
+        $structure[] = array("csgo2018", 1,  0, 15, 5, 1);
+        $structure[] = array("csgo2018", 3,  0, 16, 5, 1);
+        $structure[] = array("csgo2018", 5,  0, 19, 5, 1);
+        $structure[] = array("csgo2018", 7,  0, 20, 5, 1);
+        $structure[] = array("csgo2018", 9,  0, 22, 5, 1);
+        $structure[] = array("csgo2018", 11, 0, 23, 5, 1);
+        $structure[] = array("csgo2018", 13, 0, 25, 5, 1);
+        $structure[] = array("csgo2018", 15, 0, 26, 5, 1);
+        $structure[] = array("csgo2018", 17, 0, 28, 5, 1);
+        $structure[] = array("csgo2018", 19, 0, 29, 5, 1);
+        $structure[] = array("csgo2018", 21, 0, 31, 5, 1);
+        $structure[] = array("csgo2018", 23, 0, 32, 5, 1);
+
+        $structure[] = array("csgo2018", 2,  5, 15, 5, 1);
+        $structure[] = array("csgo2018", 4,  5, 16, 5, 1);
+        $structure[] = array("csgo2018", 6,  5, 19, 5, 1);
+        $structure[] = array("csgo2018", 8,  5, 20, 5, 1);
+        $structure[] = array("csgo2018", 10, 5, 22, 5, 1);
+        $structure[] = array("csgo2018", 12, 5, 23, 5, 1);
+        $structure[] = array("csgo2018", 14, 5, 25, 5, 1);
+        $structure[] = array("csgo2018", 16, 5, 26, 5, 1);
+        $structure[] = array("csgo2018", 18, 5, 28, 5, 1);
+        $structure[] = array("csgo2018", 20, 5, 29, 5, 1);
+        $structure[] = array("csgo2018", 22, 5, 31, 5, 1);
+        $structure[] = array("csgo2018", 24, 5, 32, 5, 1);
 
         //                      game     id   x  y  w  h
-        $structure[] = array("dota2017", 1, 12, 6, 5, 1);
-        $structure[] = array("dota2017", 3, 12, 7, 5, 1);
-        $structure[] = array("dota2017", 5, 12, 9, 5, 1);
-        $structure[] = array("dota2017", 7, 12, 10, 5, 1);
-        $structure[] = array("dota2017", 9, 12, 12, 5, 1);
-        $structure[] = array("dota2017", 11, 12, 13, 5, 1);
+        $structure[] = array("dota2018", 1,  12, 3,  5, 1);
+        $structure[] = array("dota2018", 3,  12, 4,  5, 1);
+        $structure[] = array("dota2018", 5,  12, 6,  5, 1);
+        $structure[] = array("dota2018", 7,  12, 7,  5, 1);
+        $structure[] = array("dota2018", 9,  12, 9,  5, 1);
+        $structure[] = array("dota2018", 11, 12, 10, 5, 1);
+        $structure[] = array("dota2018", 13, 12, 12, 5, 1);
+        $structure[] = array("dota2018", 15, 12, 13, 5, 1);
 
-        $structure[] = array("dota2017", 2, 17, 6, 5, 1);
-        $structure[] = array("dota2017", 4, 17, 7, 5, 1);
-        $structure[] = array("dota2017", 6, 17, 9, 5, 1);
-        $structure[] = array("dota2017", 8, 17, 10, 5, 1);
-        $structure[] = array("dota2017", 10, 17, 12, 5, 1);
-        $structure[] = array("dota2017", 12, 17, 13, 5, 1);
+        $structure[] = array("dota2018", 2,  17, 3,  5, 1);
+        $structure[] = array("dota2018", 4,  17, 4,  5, 1);
+        $structure[] = array("dota2018", 6,  17, 6,  5, 1);
+        $structure[] = array("dota2018", 8,  17, 7,  5, 1);
+        $structure[] = array("dota2018", 10, 17, 9,  5, 1);
+        $structure[] = array("dota2018", 12, 17, 10, 5, 1);
+        $structure[] = array("dota2018", 14, 17, 12, 5, 1);
+        $structure[] = array("dota2018", 16, 17, 13, 5, 1);
 
-        $structure[] = array("dota2017", 13, 24, 6, 1, 5);
-        $structure[] = array("dota2017", 14, 25, 6, 1, 5);
-        $structure[] = array("dota2017", 15, 24, 11, 1, 5);
-        $structure[] = array("dota2017", 16, 25, 11, 1, 5);
-        $structure[] = array("dota2017", 17, 27, 6, 1, 5);
-        $structure[] = array("dota2017", 18, 28, 6, 1, 5);
-        $structure[] = array("dota2017", 19, 27, 11, 1, 5);
-        $structure[] = array("dota2017", 20, 28, 11, 1, 5);
+        $structure[] = array("dota2018", 17, 24, 0,  1, 5);
+        $structure[] = array("dota2018", 18, 25, 0,  1, 5);
+        $structure[] = array("dota2018", 19, 24, 5,  1, 5);
+        $structure[] = array("dota2018", 20, 25, 5,  1, 5);
+        $structure[] = array("dota2018", 21, 24, 10, 1, 5);
+        $structure[] = array("dota2018", 22, 25, 10, 1, 5);
+        $structure[] = array("dota2018", 23, 27, 0,  1, 5);
+        $structure[] = array("dota2018", 24, 28, 0,  1, 5);
+        $structure[] = array("dota2018", 25, 27, 5,  1, 5);
+        $structure[] = array("dota2018", 26, 28, 5,  1, 5);
+        $structure[] = array("dota2018", 27, 27, 10, 1, 5);
+        $structure[] = array("dota2018", 28, 28, 10, 1, 5);
 
-        $structure[] = array("ow2017", 1, 24, 0, 1, 6);
-        $structure[] = array("ow2017", 2, 25, 0, 1, 6);
-        $structure[] = array("ow2017", 3, 27, 0, 1, 6);
-        $structure[] = array("ow2017", 4, 28, 0, 1, 6);
-        $structure[] = array("ow2017", 5, 30, 0, 1, 6);
-        $structure[] = array("ow2017", 6, 31, 0, 1, 6);
-        $structure[] = array("ow2017", 7, 30, 6, 1, 6);
-        $structure[] = array("ow2017", 8, 31, 6, 1, 6);
 
-        $structure[] = array("streamer", 0, 30, 12, 2, 2);
-        $structure[] = array("streamer", 1, 30, 14, 2, 2);
+        $structure[] = array("streamer", 0, 33, 8,  2, 4);
+        $structure[] = array("streamer", 1, 33, 12, 2, 4);
 
         // Initalize counters for HS
         $hs = 1;
 
         // rightmost table
         for($j = 0; $j < 16; $j++) {
-            $structure[] = array("hs2017", $hs++, 33, $j, 1, 1);
-            $structure[] = array("hs2017", $hs++, 34, $j, 1, 1);
+            $structure[] = array("hs2018", $hs++, 30, $j, 1, 1);
+            $structure[] = array("hs2018", $hs++, 31, $j, 1, 1);
+        }
+        for($j = 0; $j < 8; $j++) {
+            $structure[] = array("hs2018", $hs++, 33, $j, 1, 1);
+            $structure[] = array("hs2018", $hs++, 34, $j, 1, 1);
         }
 
         return $structure;
