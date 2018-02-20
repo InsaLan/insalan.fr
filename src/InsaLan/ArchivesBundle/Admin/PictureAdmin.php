@@ -38,12 +38,5 @@ class PictureAdmin extends Admin
             ->add('date')
         ;
     }
-    
-    public function prePersist($e) {
-        $e->upload();
-    }
-    
-    public function preUpdate($e) {
-        $this->prePersist($e);
-    }
+
 }
