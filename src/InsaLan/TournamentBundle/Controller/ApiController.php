@@ -69,13 +69,13 @@ class ApiController extends Controller
                     /** @var Team[] $teams */
                     $teams = $tournament->getParticipants()->toArray();
                     foreach ($teams as $team) {
+                        if ($team->getValidated() !== $statusRequired) {
+                            continue;
+                        }
+
                         /** @var Player[] $players */
                         $players = $team->getPlayers()->toArray();
                         foreach ($players as $player) {
-                            if ($player->getValidated() !== $statusRequired) {
-                                continue;
-                            }
-
                             $user = $player->getUser();
                             $emailList[] = $user->getEmail();
                         }
