@@ -348,19 +348,19 @@ section.news nav .next a {
 }
 
 .partner > a > img {
-  height: 70px;
+  height: 84px;
   display: inline;
   margin: auto;
 }
 
 .partner-small > a > img {
-  height: 60px;
+  height: 72px;
 }
 
 .partner-big > a > img {
-  height: 150px;
+  height: 180px;
 }
 
 .partner-xsmall > a > img {
-  height: 35px;
+  height: 42px;
 }
