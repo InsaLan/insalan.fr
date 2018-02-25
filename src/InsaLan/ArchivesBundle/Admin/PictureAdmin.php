@@ -14,8 +14,8 @@ class PictureAdmin extends Admin
     {
         $formMapper
             ->add('name')
-            ->add('path')
             ->add('date')
+            ->add('file', 'file', array())
         ;
     }
 
@@ -38,5 +38,12 @@ class PictureAdmin extends Admin
             ->add('date')
         ;
     }
-
+    
+    public function prePersist($e) {
+        $e->upload();
+    }
+    
+    public function preUpdate($e) {
+        $this->prePersist($e);
+    }
 }
