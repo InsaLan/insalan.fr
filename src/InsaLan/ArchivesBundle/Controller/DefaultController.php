@@ -24,7 +24,7 @@ class DefaultController extends Controller
      * @Route("/{year}", requirements={"year" = "\d+"})
      * @Template()
      */
-    public function previousYearAction(int $year)
+    public function previousYearAction($year)
     {
         $em = $this->getDoctrine()->getManager();
 
