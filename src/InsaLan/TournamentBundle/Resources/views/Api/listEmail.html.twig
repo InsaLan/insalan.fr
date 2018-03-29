@@ -11,6 +11,14 @@
     {{ form_end(form) }}
 
     <br />
+
+    {% if emailList is not empty %}
+        <a class="btn2" href="mailto:?{% for email in emailList %}{% if loop.index0 != 0 %}&{% endif %}bcc={{ email }}{% endfor %}">
+            Envoyer à la liste ci-dessous
+        </a>
+        <br />
+        <br />
+    {% endif %}
     <div>
         <ul>
             {% for email in emailList %}
