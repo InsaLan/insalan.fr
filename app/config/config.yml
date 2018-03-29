@@ -6,6 +6,7 @@ imports:
     - { resource: @InsaLanTournamentBundle/Resources/config/services.yml }
     - { resource: @InsaLanBundle/Resources/config/services.yml }
     - { resource: @InsaLanUserBundle/Resources/config/services.yml }
+    - { resource: @InsaLanArchivesBundle/Resources/config/services.yml }
 
 framework:
     #esi:             ~
@@ -52,6 +53,7 @@ assetic:
         - InsaLanTournamentBundle
         - InsaLanPizzaBundle
         - InsaLanInformationBundle
+        - InsaLanArchivesBundle
 
     #java: /usr/bin/java
     filters:

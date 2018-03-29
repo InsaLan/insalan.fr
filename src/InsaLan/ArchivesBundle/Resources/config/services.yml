@@ -1,0 +1,23 @@
+services:
+    sonata.admin.archives.picture:
+        class: InsaLan\ArchivesBundle\Admin\PictureAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Archives", label: "Photo" }
+        arguments:
+            - ~
+            - InsaLan\ArchivesBundle\Entity\Picture
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanArchivesBundle]]
+
+    sonata.admin.archives.stream:
+        class: InsaLan\ArchivesBundle\Admin\StreamAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Archives", label: "Stream" }
+        arguments:
+            - ~
+            - InsaLan\ArchivesBundle\Entity\Stream
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanArchivesBundle]]
+
