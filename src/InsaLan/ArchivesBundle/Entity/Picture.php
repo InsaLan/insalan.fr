@@ -49,7 +49,7 @@ class Picture
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -72,7 +72,7 @@ class Picture
     /**
      * Get path
      *
-     * @return string 
+     * @return string
      */
     public function getPath()
     {
@@ -95,7 +95,7 @@ class Picture
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -118,7 +118,7 @@ class Picture
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -127,7 +127,9 @@ class Picture
 
      public function getUploadDir()
     {
-        return 'uploads/archives/pictures/'; //TODO change dir
+      $dirYear = $this->date->format('Y');
+      $dir = 'uploads/archives/pictures/'.$dirYear.'/';
+        return $dir; 
     }
 
     protected function getUploadRootDir()

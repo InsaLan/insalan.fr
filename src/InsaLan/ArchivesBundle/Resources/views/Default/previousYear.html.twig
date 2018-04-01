@@ -18,6 +18,24 @@
       <h2>Année {{year}}</h2>
     </header>
 
+    {% if poster is defined %}
+      <section>
+        <div class="previous-years-list">
+          <div class="previous-years">
+              <img src="{{ asset('bundles/insalan/img/')  ~ poster}}" alt="InsaLan {{year}}" />
+          </div>
+        </div>
+      </section>
+    {% endif %}
+
+    {% if trailer is defined %}
+      <section>
+        <div>
+          <iframe width="700" height="437" src="{{ trailer }}" frameborder="0" allowfullscreen></iframe>
+          </div>
+      </section>
+    {% endif %}
+
   <section>
     <header>
       <h2>Tournois</h2>
@@ -29,9 +47,9 @@
     <header>
       <h2>Photos</h2>
     </header>
-    <div class="picture-list "> 
+    <div class="picture-list ">
       {% for p in pictures %}
-   
+
               <div class="picture">
                <a href="{{ asset(p.getUploadDir() ~ p.path)  }}" target="_blank">
                <img src="{{ asset(p.getUploadDir() ~ p.path)  }}" alt="{{ p.name }}"/>

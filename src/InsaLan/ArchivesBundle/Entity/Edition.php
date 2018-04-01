@@ -35,11 +35,22 @@ class Edition
      */
     private $image;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="trailer", type="string", nullable=true, length=255)
+     */
+    private $trailerUrl;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $trailerAvailable;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -62,7 +73,7 @@ class Edition
     /**
      * Get year
      *
-     * @return integer 
+     * @return integer
      */
     public function getYear()
     {
@@ -85,10 +96,56 @@ class Edition
     /**
      * Get image
      *
-     * @return string 
+     * @return string
      */
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set trailerUrl
+     *
+     * @param string $trailerUrl
+     * @return Edition
+     */
+    public function setTrailerUrl($trailerUrl)
+    {
+        $this->trailerUrl = $trailerUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get trailerUrl
+     *
+     * @return string 
+     */
+    public function getTrailerUrl()
+    {
+        return $this->trailerUrl;
+    }
+
+    /**
+     * Set trailerAvailable
+     *
+     * @param boolean $trailerAvailable
+     * @return Edition
+     */
+    public function setTrailerAvailable($trailerAvailable)
+    {
+        $this->trailerAvailable = $trailerAvailable;
+
+        return $this;
+    }
+
+    /**
+     * Get trailerAvailable
+     *
+     * @return boolean 
+     */
+    public function getTrailerAvailable()
+    {
+        return $this->trailerAvailable;
     }
 }

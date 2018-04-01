@@ -13,9 +13,11 @@ use Doctrine\ORM\EntityRepository;
 class EditionRepository extends EntityRepository
 {
 	    public function getEditions() {
-        $query = $this->createQueryBuilder('e') 
+        $query = $this->createQueryBuilder('e')
             ->orderBy('e.year', 'DESC')
             ->getQuery();
         return $query->getResult();
     }
+
+
 }

@@ -15,7 +15,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $editions = $em->getRepository('InsaLanArchivesBundle:Edition')->getEditions();    
+        $editions = $em->getRepository('InsaLanArchivesBundle:Edition')->getEditions();
 
         return array('editions' => $editions);
     }
@@ -28,9 +28,24 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $old_tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findPreviousYearTournaments($year);    
-        $pictures = $em->getRepository('InsaLanArchivesBundle:Picture')->findPreviousYearPictures($year);    
-        $streams = $em->getRepository('InsaLanArchivesBundle:Stream')->findPreviousYearStreams($year);    
-        return array('old_tournaments' => $old_tournaments,'pictures' => $pictures,'streams' => $streams, "year" => $year);
+        $old_tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findPreviousYearTournaments($year);
+        $pictures = $em->getRepository('InsaLanArchivesBundle:Picture')->findPreviousYearPictures($year);
+        $streams = $em->getRepository('InsaLanArchivesBundle:Stream')->findPreviousYearStreams($year);
+        $edition = $em->getRepository('InsaLanArchivesBundle:Edition')->findOneByYear($year);
+
+        $output = array(
+          'old_tournaments' => $old_tournaments,
+          'pictures' => $pictures,
+          'streams' => $streams,
+           'year' => $year
+         );
+        if ($edition !=  null && $edition->getTrailerAvailable() ) {
+          $trailer = $edition->getTrailerUrl();
+          $output['trailer'] = $trailer;
+        } elseif ($edition !=  null) {
+          $poster = $edition->getImage();
+          $output['poster'] = $poster;
+        }
+        return $output;
     }
 }
