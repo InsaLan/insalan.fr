@@ -119,7 +119,7 @@ class Edition
     /**
      * Get trailerUrl
      *
-     * @return string 
+     * @return string
      */
     public function getTrailerUrl()
     {
@@ -142,7 +142,7 @@ class Edition
     /**
      * Get trailerAvailable
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getTrailerAvailable()
     {
