@@ -1,40 +1,54 @@
 {% extends 'InsaLanArchivesBundle::layout.html.twig' %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets 'bundles/insalan/css/archives.css' %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-    {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
+{{ parent() }}
+{% stylesheets 'bundles/insalan/css/archives.css' %}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
 {% endblock %}
 
 {% block body %}
 {{ parent() }}
 
 <article>
+  <header>
+    <h2>Année {{year}}</h2>
+  </header>
+
+  {% if poster is defined %}
+  <section>
+    <div class="previous-years-list">
+      <div class="previous-years">
+        <img src="{{ asset('bundles/insalan/img/')  ~ poster}}" alt="InsaLan {{year}}" />
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if trailer is defined %}
+  <section>
     <header>
-      <h2>Année {{year}}</h2>
+      <h2>Trailer</h2>
     </header>
+    <div>
+      <iframe width="700" height="437" src="{{ trailer }}" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </section>
+  {% endif %}
 
-    {% if poster is defined %}
-      <section>
-        <div class="previous-years-list">
-          <div class="previous-years">
-              <img src="{{ asset('bundles/insalan/img/')  ~ poster}}" alt="InsaLan {{year}}" />
-          </div>
-        </div>
-      </section>
-    {% endif %}
-
-    {% if trailer is defined %}
-      <section>
-        <div>
-          <iframe width="700" height="437" src="{{ trailer }}" frameborder="0" allowfullscreen></iframe>
-          </div>
-      </section>
-    {% endif %}
+  {% if aftermovie is defined %}
+  <section>
+    <header>
+      <h2>Aftermovie</h2>
+    </header>
+    <div>
+      <iframe width="700" height="437" src="{{ aftermovie }}" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </section>
+  {% endif %}
 
   <section>
     <header>
@@ -43,6 +57,7 @@
     {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': old_tournaments} %}
   </section>
 
+  {% if pictures is not empty %}
   <section>
     <header>
       <h2>Photos</h2>
@@ -50,32 +65,33 @@
     <div class="picture-list ">
       {% for p in pictures %}
 
-              <div class="picture">
-               <a href="{{ asset(p.getUploadDir() ~ p.path)  }}" target="_blank">
-               <img src="{{ asset(p.getUploadDir() ~ p.path)  }}" alt="{{ p.name }}"/>
-              </div>
-      {% endfor %}
-    </div>
+      <div class="picture">
+        <a href="{{ asset(p.getUploadDir() ~ p.path)  }}" target="_blank">
+          <img src="{{ asset(p.getUploadDir() ~ p.path)  }}" alt="{{ p.name }}"/>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
 
+    {% if streams is not empty %}
+    <section>
+      <header>
+        <h2>Streams</h2>
+      </header>
 
+      <div class="picture-list ">
 
-  </section>
+        {% for s in streams %}
+        <div>
+          <iframe width="854" height="480" src="{{ s.url }}" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+        </div>
 
-  <section>
-    <header>
-      <h2>Streams</h2>
-    </header>
+        {% endfor %}
+      </div>
 
-  <div class="picture-list ">
+    </section>
+    {% endif %}
 
-      {% for s in streams %}
-            <div>
-              <iframe width="854" height="480" src="{{ s.url }}" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-            </div>
-
-      {% endfor %}
-  </div>
-
-  </section>
-</article>
+  </article>
 {% endblock %}

@@ -39,12 +39,18 @@ class DefaultController extends Controller
           'streams' => $streams,
            'year' => $year
          );
-        if ($edition !=  null && $edition->getTrailerAvailable() ) {
+
+         if ($edition !=  null && $edition->getTrailerAvailable() ) {
           $trailer = $edition->getTrailerUrl();
           $output['trailer'] = $trailer;
         } elseif ($edition !=  null) {
           $poster = $edition->getImage();
           $output['poster'] = $poster;
+        }
+
+        if ($edition !=  null && $edition->getAftermovieUrl() != null) {
+          $aftermovie = $edition->getAftermovieUrl();
+          $output['aftermovie'] = $aftermovie;
         }
         return $output;
     }

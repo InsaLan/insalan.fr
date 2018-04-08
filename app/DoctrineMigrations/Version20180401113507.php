@@ -18,7 +18,7 @@ class Version20180401113507 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE intra_Edition ADD trailer VARCHAR(255) DEFAULT NULL, ADD trailerAvailable TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE intra_Edition ADD trailer VARCHAR(255) DEFAULT NULL, ADD trailerAvailable TINYINT(1) NOT NULL, ADD aftermovie VARCHAR(255) DEFAULT NULL');
     }
 
     /**
@@ -29,6 +29,6 @@ class Version20180401113507 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE intra_Edition DROP trailer, DROP trailerAvailable');
+        $this->addSql('ALTER TABLE intra_Edition DROP trailer, DROP trailerAvailable, DROP aftermovie');
     }
 }

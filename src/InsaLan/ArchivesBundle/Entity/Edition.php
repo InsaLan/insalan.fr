@@ -48,6 +48,14 @@ class Edition
     private $trailerAvailable;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="aftermovie", type="string", nullable=true, length=255)
+     */
+    private $aftermovieUrl;
+
+
+    /**
      * Get id
      *
      * @return integer
@@ -147,5 +155,28 @@ class Edition
     public function getTrailerAvailable()
     {
         return $this->trailerAvailable;
+    }
+
+    /**
+     * Set aftermovieUrl
+     *
+     * @param string $aftermovieUrl
+     * @return Edition
+     */
+    public function setAftermovieUrl($aftermovieUrl)
+    {
+        $this->aftermovieUrl = $aftermovieUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get aftermovieUrl
+     *
+     * @return string 
+     */
+    public function getAftermovieUrl()
+    {
+        return $this->aftermovieUrl;
     }
 }
