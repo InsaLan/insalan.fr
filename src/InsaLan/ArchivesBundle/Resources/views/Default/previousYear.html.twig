@@ -50,12 +50,14 @@
   </section>
   {% endif %}
 
+  {% if old_tournaments is not empty %}
   <section>
     <header>
       <h2>Tournois</h2>
     </header>
     {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': old_tournaments} %}
   </section>
+  {% endif %}
 
   {% if pictures is not empty %}
   <section>
