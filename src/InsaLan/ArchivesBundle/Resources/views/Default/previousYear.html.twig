@@ -59,21 +59,21 @@
   </section>
   {% endif %}
 
-  {% if pictures is not empty %}
+  {% if picturesAlbum is not empty %}
   <section>
     <header>
       <h2>Photos</h2>
     </header>
-    <div class="picture-list ">
-      {% for p in pictures %}
+    <ul class="album-list ">
+      {% for a in picturesAlbum %}
+      {% if a.album != ""%}
+      <li><a href="{{ path('archives_pictures', {'year': year, 'album': a.album}) }}">{{ a.album }}</a></li>
+      {% endif %}
 
-      <div class="picture">
-        <a href="{{ asset(p.getUploadDir() ~ p.path)  }}" target="_blank">
-          <img src="{{ asset(p.getUploadDir() ~ p.path)  }}" alt="{{ p.name }}"/>
-        </div>
-        {% endfor %}
-      </div>
-    </section>
+      {% endfor %}
+    </ul>
+
+
     {% endif %}
 
     {% if streams is not empty %}

@@ -45,6 +45,12 @@ class Picture
      */
     private $name;
 
+        /**
+         * @var string
+         *
+         * @ORM\Column(name="album", type="string", length=255)
+         */
+        private $album;
 
     /**
      * Get id
@@ -129,7 +135,7 @@ class Picture
     {
       $dirYear = $this->date->format('Y');
       $dir = 'uploads/archives/pictures/'.$dirYear.'/';
-        return $dir; 
+        return $dir;
     }
 
     protected function getUploadRootDir()
@@ -223,4 +229,27 @@ class Picture
     }
 
     /* End of pasted section */
+
+    /**
+     * Set album
+     *
+     * @param string $album
+     * @return Picture
+     */
+    public function setAlbum($album)
+    {
+        $this->album = $album;
+
+        return $this;
+    }
+
+    /**
+     * Get album
+     *
+     * @return string 
+     */
+    public function getAlbum()
+    {
+        return $this->album;
+    }
 }

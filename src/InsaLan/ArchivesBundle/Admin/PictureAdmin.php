@@ -16,6 +16,7 @@ class PictureAdmin extends Admin
             ->add('name')
             ->add('date')
             ->add('file', 'file', array())
+            ->add('album')
         ;
     }
 
@@ -26,6 +27,7 @@ class PictureAdmin extends Admin
             ->add('name')
             ->add('path')
             ->add('date')
+            ->add('album')
         ;
     }
 
@@ -38,11 +40,11 @@ class PictureAdmin extends Admin
             ->add('date')
         ;
     }
-    
+
     public function prePersist($e) {
         $e->upload();
     }
-    
+
     public function preUpdate($e) {
         $this->prePersist($e);
     }

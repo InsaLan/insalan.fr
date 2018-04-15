@@ -41,12 +41,18 @@ class Stream
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="album", type="string", length=255)
+     */
+    private $album;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -69,7 +75,7 @@ class Stream
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -92,7 +98,7 @@ class Stream
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -115,10 +121,33 @@ class Stream
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set album
+     *
+     * @param string $album
+     * @return Stream
+     */
+    public function setAlbum($album)
+    {
+        $this->album = $album;
+
+        return $this;
+    }
+
+    /**
+     * Get album
+     *
+     * @return string 
+     */
+    public function getAlbum()
+    {
+        return $this->album;
     }
 }

@@ -1,0 +1,41 @@
+{% extends 'InsaLanArchivesBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+{% stylesheets 'bundles/insalan/css/archives.css' %}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <header>
+    <h2>Année {{year}}</h2>
+  </header>
+
+
+  {% if pictures is not empty %}
+  <section>
+    <header>
+      <h2>Photos</h2>
+    </header>
+
+    <div class="picture-list ">
+      {% for p in pictures %}
+
+      <div class="picture">
+        <a href="{{ asset(p.getUploadDir() ~ p.path)  }}" target="_blank">
+          <img src="{{ asset(p.getUploadDir() ~ p.path)  }}" alt="{{ p.name }}"/>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+  </article>
+{% endblock %}

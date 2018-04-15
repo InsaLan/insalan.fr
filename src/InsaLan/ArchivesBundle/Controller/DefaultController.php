@@ -29,15 +29,15 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $old_tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findPreviousYearTournaments($year);
-        $pictures = $em->getRepository('InsaLanArchivesBundle:Picture')->findPreviousYearPictures($year);
         $streams = $em->getRepository('InsaLanArchivesBundle:Stream')->findPreviousYearStreams($year);
         $edition = $em->getRepository('InsaLanArchivesBundle:Edition')->findOneByYear($year);
+        $picturesAlbum = $em->getRepository('InsaLanArchivesBundle:Picture')->findPreviousYearPicturesAlbum($year);
 
         $output = array(
           'old_tournaments' => $old_tournaments,
-          'pictures' => $pictures,
           'streams' => $streams,
-           'year' => $year
+           'year' => $year,
+           'picturesAlbum' => $picturesAlbum
          );
 
          if ($edition !=  null && $edition->getTrailerAvailable() ) {
@@ -54,4 +54,18 @@ class DefaultController extends Controller
         }
         return $output;
     }
+
+
+        /**
+         * @Route("/{year}/pictures/{album}", requirements={"year" = "\d+"}, name="archives_pictures")
+         * @Template()
+         */
+        public function previousYearPicturesAction($year, $album)
+        {
+          $em = $this->getDoctrine()->getManager();
+
+          $pictures = $em->getRepository('InsaLanArchivesBundle:Picture')->findPreviousYearPicturesByAlbum($year, $album);
+
+          return array('pictures' => $pictures, 'year' => $year);
+        }
 }
