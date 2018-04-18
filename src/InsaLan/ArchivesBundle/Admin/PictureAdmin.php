@@ -38,6 +38,7 @@ class PictureAdmin extends Admin
             ->addIdentifier('name')
             ->add('path')
             ->add('date')
+            ->add('album')            
         ;
     }
 

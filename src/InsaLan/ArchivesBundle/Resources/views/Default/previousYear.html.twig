@@ -64,31 +64,28 @@
     <header>
       <h2>Photos</h2>
     </header>
-    <ul class="album-list ">
+    <div class="album-list ">
       {% for a in picturesAlbum %}
       {% if a.album != ""%}
-      <li><a href="{{ path('archives_pictures', {'year': year, 'album': a.album}) }}">{{ a.album }}</a></li>
+      <a class="btn2 btn2-nocolor" href="{{ path('archives_pictures', {'year': year, 'album': a.album}) }}">{{ a.album }}</a>
       {% endif %}
-
       {% endfor %}
-    </ul>
+    </div>
 
+  </section>
 
     {% endif %}
 
-    {% if streams is not empty %}
+    {% if streamsAlbum is not empty %}
     <section>
       <header>
         <h2>Streams</h2>
       </header>
-
-      <div class="picture-list ">
-
-        {% for s in streams %}
-        <div>
-          <iframe width="854" height="480" src="{{ s.url }}" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-        </div>
-
+      <div class="album-list ">
+        {% for a in streamsAlbum %}
+        {% if a.album != ""%}
+        <a class="btn2 btn2-nocolor" href="{{ path('archives_streams', {'year': year, 'album': a.album}) }}">{{ a.album }}</a>
+        {% endif %}
         {% endfor %}
       </div>
 

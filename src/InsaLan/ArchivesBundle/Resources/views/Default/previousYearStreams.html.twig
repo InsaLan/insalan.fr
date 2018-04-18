@@ -1,0 +1,42 @@
+{% extends 'InsaLanArchivesBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+{% stylesheets 'bundles/insalan/css/archives.css' %}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <header>
+    <h2>Année {{year}}</h2>
+  </header>
+
+
+  {% if streams is not empty %}
+  <section>
+    <header>
+      <h2>Streams</h2>
+    </header>
+
+    <div class="picture-list ">
+
+      {% for s in streams %}
+      <div>
+        <iframe width="854" height="480" src="{{ s.url }}" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+      </div>
+
+      {% endfor %}
+    </div>
+
+  </section>
+    {% endif %}
+
+  </article>
+{% endblock %}

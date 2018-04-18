@@ -26,7 +26,7 @@ class PictureRepository extends EntityRepository
 		$query = $this->_em->createQuery('SELECT DISTINCT p.album FROM InsaLanArchivesBundle:Picture p WHERE p.date BETWEEN :start AND :end')
 		->setParameter('start', new \Datetime($year.'-01-01'))
 		->setParameter('end',   new \Datetime($year.'-12-31'));
-		return $query->getScalarResult();
+		return $query->getResult();
 	}
 
 	public function findPreviousYearPicturesByAlbum($year, $album) {

@@ -16,6 +16,7 @@ class StreamAdmin extends Admin
             ->add('name')
             ->add('url')
             ->add('date')
+            ->add('album')
         ;
     }
 
@@ -26,6 +27,7 @@ class StreamAdmin extends Admin
             ->add('name')
             ->add('url')
             ->add('date')
+            ->add('album')
         ;
     }
 
@@ -36,6 +38,7 @@ class StreamAdmin extends Admin
             ->addIdentifier('name')
             ->add('url')
             ->add('date')
+            ->add('album')
         ;
     }
 
