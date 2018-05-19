@@ -13,18 +13,28 @@
 {% block body %}
 {{ parent() }}
 
-<article>
+<header>
+  <h1 style="text-align:center; font-size:40px; margin-top: 18px">Année {{year}}</h1>
+</header>
+
+<br/><hr/><br/>
+
+
+
+{% if streams is not empty %}
+<article class="info">
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+
   <header>
-    <h2>Année {{year}}</h2>
+    <h2>Streams</h2>
   </header>
 
-
-  {% if streams is not empty %}
   <section>
-    <header>
-      <h2>Streams</h2>
-    </header>
-
     <div class="picture-list ">
 
       {% for s in streams %}
@@ -36,7 +46,7 @@
     </div>
 
   </section>
-    {% endif %}
+</article>
+{% endif %}
 
-  </article>
 {% endblock %}
