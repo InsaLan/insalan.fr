@@ -1,6 +1,7 @@
 insalan.fr
 ==========
 
+[![Build Status](https://travis-ci.org/InsaLan/insalan.fr.svg?branch=master)](https://travis-ci.org/InsaLan/insalan.fr)
 [![Code Climate](https://codeclimate.com/github/superboum/insalan.fr/badges/gpa.svg)](https://codeclimate.com/github/superboum/insalan.fr)
 [![Test Coverage](https://codeclimate.com/github/superboum/insalan.fr/badges/coverage.svg)](https://codeclimate.com/github/superboum/insalan.fr)
 
