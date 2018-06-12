@@ -23,17 +23,18 @@
 <article class="info">
   <aside>
     <div class="square">
-      <a href="#body"><span></span></a>
+      <a href="{{ path('insalan_archives_default_previousyear', {'year': year}) }}"><span></span></a>
     </div>
   </aside>
 
   <header>
-    <h2>Photos</h2>
+    <h2>Photos - {{ album }}</h2>
   </header>
 
   <section>
     <div class="picture-list ">
-      {% for p in pictures %}
+      {% set nbPictures = 50 %}
+      {% for p in pictures|slice((page - 1) * nbPictures, page * nbPictures)  %}
 
       <div class="picture">
         <a href="{{ asset(p.getUploadDir() ~ p.path)  }}" target="_blank">
@@ -44,5 +45,18 @@
     </section>
   </article>
   {% endif %}
+
+  <br/><hr/><br/>
+  {% set pageMax = ((pictures|length) / nbPictures)|round(0, 'ceil') %}
+  {% if pageMax > page %}
+    <a href="{{ path('archives_pictures', {'year': year, 'album': album, 'page': page + 1}) }}" class="btn2 pull-right" style="margin-left: 10px;">Suivant</a>
+  {% endif %}
+  {% for i in (min(pageMax, page + 5))..(max(1, (pageMax - 5))) %}
+    {% if i == page %}
+      <a href="{{ path('archives_pictures', {'year': year, 'album': album, 'page': i}) }}" class="btn2 pull-right" style="margin-left: 10px;">{{i}}</a>
+    {% else %}
+      <a href="{{ path('archives_pictures', {'year': year, 'album': album, 'page': i}) }}" class="btn2 btn2-nocolor pull-right" style="margin-left: 10px;">{{i}}</a>
+    {% endif %}
+  {% endfor %}
 
 {% endblock %}

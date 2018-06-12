@@ -6,6 +6,9 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
+use InsaLan\ArchivesBundle\Entity\Picture;
 
 class PictureAdmin extends Admin
 {
@@ -15,7 +18,7 @@ class PictureAdmin extends Admin
         $formMapper
             ->add('name')
             ->add('date')
-            ->add('file', 'file', array())
+            ->add('file', FileType::class, array())
             ->add('album')
         ;
     }
@@ -38,7 +41,7 @@ class PictureAdmin extends Admin
             ->addIdentifier('name')
             ->add('path')
             ->add('date')
-            ->add('album')            
+            ->add('album')
         ;
     }
 

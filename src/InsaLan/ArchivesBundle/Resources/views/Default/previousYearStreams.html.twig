@@ -25,28 +25,41 @@
 <article class="info">
   <aside>
     <div class="square">
-      <a href="#body"><span></span></a>
+      <a href="{{ path('insalan_archives_default_previousyear', {'year': year}) }}"><span></span></a>
     </div>
   </aside>
 
 
   <header>
-    <h2>Streams</h2>
+    <h2>Streams - {{ album }}</h2>
   </header>
 
   <section>
     <div class="picture-list ">
+      {% set nbStreams = 5 %}
+      {% for s in streams|slice((page - 1) * nbStreams, page * nbStreams)  %}
 
-      {% for s in streams %}
       <div>
         <iframe width="854" height="480" src="{{ s.url }}" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
       </div>
 
       {% endfor %}
     </div>
-
   </section>
 </article>
 {% endif %}
+
+  <br/><hr/><br/>
+  {% set pageMax = ((streams|length) / nbStreams)|round(0, 'ceil') %}
+  {% if pageMax > page %}
+    <a href="{{ path('archives_streams', {'year': year, 'album': album, 'page': page + 1}) }}" class="btn2 pull-right" style="margin-left: 10px;">Suivant</a>
+  {% endif %}
+  {% for i in (min(pageMax, page + 5))..(max(1, (pageMax - 5))) %}
+    {% if i == page %}
+      <a href="{{ path('archives_streams', {'year': year, 'album': album, 'page': i}) }}" class="btn2 pull-right" style="margin-left: 10px;">{{i}}</a>
+    {% else %}
+      <a href="{{ path('archives_streams', {'year': year, 'album': album, 'page': i}) }}" class="btn2 btn2-nocolor pull-right" style="margin-left: 10px;">{{i}}</a>
+    {% endif %}
+  {% endfor %}
 
 {% endblock %}

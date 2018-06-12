@@ -57,29 +57,29 @@ class DefaultController extends Controller
 
 
   /**
-  * @Route("/{year}/pictures/{album}", requirements={"year" = "\d+"}, name="archives_pictures")
+  * @Route("/{year}/pictures/{album}/{page}", requirements={"year" = "\d+", "page" = "\d+"}, name="archives_pictures")
   * @Template()
   */
-  public function previousYearPicturesAction($year, $album)
+  public function previousYearPicturesAction($year, $album, $page)
   {
     $em = $this->getDoctrine()->getManager();
 
     $pictures = $em->getRepository('InsaLanArchivesBundle:Picture')->findPreviousYearPicturesByAlbum($year, $album);
 
-    return array('pictures' => $pictures, 'year' => $year);
+    return array('pictures' => $pictures, 'year' => $year, 'album' => $album, 'page' => $page);
   }
 
 
   /**
-  * @Route("/{year}/streams/{album}", requirements={"year" = "\d+"}, name="archives_streams")
+  * @Route("/{year}/streams/{album}/{page}", requirements={"year" = "\d+", "page" = "\d+"}, name="archives_streams")
   * @Template()
   */
-  public function previousYearStreamsAction($year, $album)
+  public function previousYearStreamsAction($year, $album, $page)
   {
     $em = $this->getDoctrine()->getManager();
 
     $streams = $em->getRepository('InsaLanArchivesBundle:Stream')->findPreviousYearStreamsByAlbum($year, $album);
 
-    return array('streams' => $streams, 'year' => $year);
+    return array('streams' => $streams, 'year' => $year, 'album' => $album, 'page' => $page);
   }
 }

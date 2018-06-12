@@ -110,7 +110,7 @@
     <div class="album-list ">
       {% for a in picturesAlbum %}
       {% if a.album != ""%}
-      <a class="btn2 btn2-nocolor" href="{{ path('archives_pictures', {'year': year, 'album': a.album}) }}">{{ a.album }}</a>
+      <a class="btn2 btn2-nocolor" href="{{ path('archives_pictures', {'year': year, 'album': a.album, 'page': 1}) }}">{{ a.album }}</a>
       {% endif %}
       {% endfor %}
     </div>
@@ -138,7 +138,7 @@
     <div class="album-list ">
       {% for a in streamsAlbum %}
       {% if a.album != ""%}
-      <a class="btn2 btn2-nocolor" href="{{ path('archives_streams', {'year': year, 'album': a.album}) }}">{{ a.album }}</a>
+      <a class="btn2 btn2-nocolor" href="{{ path('archives_streams', {'year': year, 'album': a.album, 'page': 1}) }}">{{ a.album }}</a>
       {% endif %}
       {% endfor %}
     </div>

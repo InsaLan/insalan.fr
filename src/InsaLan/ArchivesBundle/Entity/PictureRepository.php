@@ -29,6 +29,7 @@ class PictureRepository extends EntityRepository
 		return $query->getResult();
 	}
 
+
 	public function findPreviousYearPicturesByAlbum($year, $album) {
 		$query = $this->createQueryBuilder('t')
 		->Where('t.date BETWEEN :start AND :end')
