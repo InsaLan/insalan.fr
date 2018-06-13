@@ -18,7 +18,9 @@ class PictureAdmin extends Admin
         $formMapper
             ->add('name')
             ->add('date')
-            ->add('file', FileType::class, array())
+            ->add('file', FileType::class, [
+                'required' => false
+            ])
             ->add('album')
         ;
     }
@@ -45,11 +47,21 @@ class PictureAdmin extends Admin
         ;
     }
 
-    public function prePersist($e) {
-        $e->upload();
-    }
+        public function prePersist($image)
+        {
+            $this->manageFileUpload($image);
+        }
 
-    public function preUpdate($e) {
-        $this->prePersist($e);
-    }
+        public function preUpdate($image)
+        {
+            $this->manageFileUpload($image);
+        }
+
+        private function manageFileUpload($image)
+        {
+            if ($image->getFile()) {
+                $image->upload();
+            }
+        }
+
 }
