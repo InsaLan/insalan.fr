@@ -1,8 +1,9 @@
 insalan.fr
 ==========
 
-[![Code Climate](https://codeclimate.com/github/superboum/insalan.fr/badges/gpa.svg)](https://codeclimate.com/github/superboum/insalan.fr)
-[![Test Coverage](https://codeclimate.com/github/superboum/insalan.fr/badges/coverage.svg)](https://codeclimate.com/github/superboum/insalan.fr)
+[![Build Status](https://travis-ci.org/InsaLan/insalan.fr.svg?branch=master)](https://travis-ci.org/InsaLan/insalan.fr)
+[![Maintainability](https://api.codeclimate.com/v1/badges/68707ca6cd1a2b332dc4/maintainability)](https://codeclimate.com/github/InsaLan/insalan.fr/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/68707ca6cd1a2b332dc4/test_coverage)](https://codeclimate.com/github/InsaLan/insalan.fr/test_coverage)
 
 Website to handle esport tournament
 
