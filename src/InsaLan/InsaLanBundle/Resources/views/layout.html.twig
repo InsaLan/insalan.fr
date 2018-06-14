@@ -69,7 +69,8 @@
                     {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right" style="margin-left: 10px;">Mon compte</a>
                     <!-- Change the route to user dashboard once set up -->
-                    <a href="{{ path('sonata_admin_dashboard') }}" class="btn2 bnt2-ncolor pull-right">Admin</a>
+                    <a href="{{ path('sonata_admin_dashboard') }}" class="btn2 bnt2-ncolor pull-right" style="margin-left: 10px;">Sonata</a>
+                    <a href="{{ path('insalan_tournament_admin_index') }}" class="btn2 bnt2-ncolor pull-right">Admin</a>
                     {% else %}
                     <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right">Mon compte</a>
                     {% endif %}
@@ -215,4 +216,3 @@
     {% endblock %}
   </body>
 </html>
-
