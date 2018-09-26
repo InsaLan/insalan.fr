@@ -11,15 +11,6 @@ class DefaultController extends Controller
     const OPENING_DATE = '2014/10/03 00:00:00';
 
     /**
-     * @Route("/qualifications")
-     * @Template()
-     */
-    public function homeAction()
-    {
-        return array();
-    }
-
-    /**
      * @Route("/faq")
      * @Template()
      */
@@ -33,24 +24,6 @@ class DefaultController extends Controller
      * @Template()
      */
     public function cosplayAction()
-    {
-        return array();
-    }
-
-    /**
-     * @Route("/contact")
-     * @Template()
-     */
-    public function contactAction()
-    {
-        return array();
-    }
-
-    /**
-     * @Route("/rules")
-     * @Template()
-     */
-    public function rulesAction()
     {
         return array();
     }

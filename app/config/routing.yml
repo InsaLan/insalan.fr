@@ -8,10 +8,10 @@ insalan_news:
     type:     annotation
     prefix:   /
 
-insalan_stream:
-    resource: "@InsaLanStreamBundle/Controller/"
-    type:     annotation
-    prefix:   /streams
+#insalan_stream:
+#    resource: "@InsaLanStreamBundle/Controller/"
+#    type:     annotation
+#    prefix:   /streams
 
 insalan_tournament:
     resource: "@InsaLanTournamentBundle/Controller/"
