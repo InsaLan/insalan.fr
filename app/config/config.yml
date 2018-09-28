@@ -52,6 +52,7 @@ assetic:
         - InsaLanTournamentBundle
         - InsaLanPizzaBundle
         - InsaLanInformationBundle
+        - InsaLanRSCBundle
 
     #java: /usr/bin/java
     filters:
@@ -103,7 +104,7 @@ doctrine:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                 enabled: true
 
-                   
+
 services:
     gedmo.listener.softdeleteable:
         class: Gedmo\SoftDeleteable\SoftDeleteableListener
@@ -210,7 +211,7 @@ lexik_maintenance:
         class: 'Lexik\Bundle\MaintenanceBundle\Drivers\DatabaseDriver' # class for database driver
 
         # Option 1 : for doctrine
-        # options: {connection: connection-name} 
+        # options: {connection: connection-name}
 
     # Optional. response code and status of the maintenance page
     response:
