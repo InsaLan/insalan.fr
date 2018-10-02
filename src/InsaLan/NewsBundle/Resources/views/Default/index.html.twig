@@ -6,15 +6,23 @@
 
 {% block body %}
   {{ parent() }}
+  <article>
+    <header>
+      <h2 style="text-align: center">>>><a href="{{ path('insalan_rsc_default_index') }}">Roazhon School Championship</a><<<</h2>
+    </header>
+  </article>
+  {#
   <div class="grid-7 pull-left">
     <iframe width="700" height="437" src="//www.youtube.com/embed/1air1jL6bVE?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
   </div>
-  {#
-  <div class="grid-7 pull-left"><br />
-    <img width="600" align-self="center" style="text-align: center" src="{{ asset('bundles/insalan/img/teaser.png') }}" width="1000"/>
-  </div>
   #}
 
+ <div class="img-center">
+  <br/>
+    <img width="437" align-self="center" src="{{ asset('bundles/insalan/img/logo-noyear.png') }}" />
+ </div>
+
+{#
 <div class="grid-3 pull-left">
       <div class="frame frame-active">
           <header class="full">
@@ -77,6 +85,7 @@
           </section>
       </div>
   </div>
+  #}
 
   <br class="clear">
   <article id="horaire" class="info">
@@ -317,10 +326,10 @@
       <aside class="twitter">
             <a class="twitter-timeline"  href="https://twitter.com/insalan" data-widget-id="300559677375258624">Tweets de @insalan</a>
             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-          
+
         </aside>
         <br class="clear"/>
-        
+
 {% endblock %}
 
 

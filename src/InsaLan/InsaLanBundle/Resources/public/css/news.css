@@ -364,3 +364,8 @@ section.news nav .next a {
 .partner-xsmall > a > img {
   height: 42px;
 }
+
+.img-center {
+  display: flex;
+  justify-content: center;
+}

@@ -2,8 +2,13 @@
 
 {% block body %}
   {{ parent() }}
- <div style="display: flex; justify-content: center">
-  <br />
+  <article>
+    <header>
+      <h2 style="text-align: center">Roazhon School Championship</h2>
+    </header>
+  </article>
+ <div class="img-center">
+  <br/>
     <img width="800" align-self="center" src="{{ asset('bundles/insalanrsc/img/RSC-banner.jpg') }}" />
  </div>
   <br class="clear">
@@ -30,8 +35,68 @@
     <div class="container" style="text-align:center">
         <h1 style="font-size:40px"> League of Legends --- Rocket League</h1>
         <br/><hr/><br/>
-        <p>Entrée gratuite pour les visiteurs le samedi et dimanche aux horaires indiqués. L'inscription aux tournois officiels est payante.</p>
-        <br/>
+
+        <article id="asso" class="info">
+          <aside>
+            <div class="square">
+              <a href="#body"><span></span></a>
+            </div>
+          </aside>
+
+          <header>
+            <h2>Présentation</h2>
+          </header>
+
+          <section>
+            <p>
+              Le projet <em>RSC</em> consiste à réunir les étudiants rennais adeptes du jeu vidéo. Souhaitant
+              offrir une expérience privilégiée à cette communauté, l’association étudiante <em>InsaLan</em> a
+              décidé d’organiser, le temps d’un week-end, un tournoi de jeux vidéos entièrement dédié
+              aux étudiants de Rennes.
+              <br/>
+              Pour sa première édition, le tournoi s'organise autour de deux jeux emblématiques :
+              <em>Rocket League</em> (3 vs 3) et <em>League of Legends</em> (5 vs 5). Durant 2 jours, <em>8 équipes étudiantes</em>
+              s’affronteront afin de déterminer laquelle des écoles est la meilleure, dans chacune de ces
+              catégories.
+              <br/>
+              Bien plus qu’une simple compétition, le RSC est une occasion formidable pour les
+              étudiants de tous les horizons de se rencontrer et d’échanger autour d’un centre d’intérêt
+              commun. La compétition se déroulera au <em>Foyer de l'INSA</em>, campus Beaulieu, le <em>17 et 18
+              novembre</em>.
+            </p>
+          </section>
+        </article>
+
+        <hr/>
+
+        <article id="tarif" class="info">
+          <aside>
+            <div class="square">
+              <a href="#body"><span></span></a>
+            </div>
+          </aside>
+
+          <header>
+            <h2>Inscriptions</h2>
+          </header>
+
+          <section>
+            <p>
+              Les inscriptions se font auprès de l'équipe RSC, via les représentants des étudiants de
+              chaque école, puis dans un second temps sur le site www.insalan.fr. Le prix d’inscription est
+              de <em>5€ par personne</em>.
+              <br/>
+              Chaque école peut inscrire <em>au maximum 8 étudiants</em> : 3 sur Rocket League et 5 sur League of
+              Legends. <em>Les premiers inscrits sont prioritaires</em>.
+              <br/>
+              Si une école se voit proposer plusieurs candidatures d’équipes pour participer au RSC, il
+              peut être envisagé d’organiser un match préalable (en ligne, avant l’événement), pour
+              départager les deux équipes et décider laquelle représentera l’école.
+            </p>
+          </section>
+        </article>
+
+        <hr/>        <br/>
 
         <br class="clear"/><br/><br/>
         La Roazhon School Championship n'est possible que grâce au soutien de nos partenaires :
