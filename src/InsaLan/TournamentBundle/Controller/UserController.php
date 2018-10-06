@@ -46,7 +46,7 @@ class UserController extends Controller
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($usr->getFirstname() == null || $usr->getFirstname() == "" || $usr->getLastname() == null || $usr->getLastname() == "" || $usr->getPhoneNumber() == null || $usr->getPhoneNumber() == "" || $usr->getBirthdate() == null) {
             $this->get('session')->getFlashBag()->add(
@@ -97,7 +97,7 @@ class UserController extends Controller
      */
     public function placementAction(Request $request, Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
 
         if(!$tournament->isPending() || !$tournament->getPlacement()) {
             $this->get('session')->getFlashBag()->add('error', "Le tournoi ne permet pas de choisir de places actuellement.");
@@ -145,7 +145,7 @@ class UserController extends Controller
     public function enrollAction(Request $request, Entity\Registrable $registrable) {
         $em = $this->getDoctrine()->getManager();
 
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
 
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
@@ -174,7 +174,7 @@ class UserController extends Controller
     public function enrollLockedAction(Request $request, Entity\Registrable $registrable, $authToken) {
         $em = $this->getDoctrine()->getManager();
 
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
 
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
@@ -204,7 +204,7 @@ class UserController extends Controller
      */
     public function setPlayerAction(Request $request, Entity\Registrable $registrable) {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
 
         $player = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByUserAndPendingRegistrable($usr, $registrable);
 
@@ -246,7 +246,7 @@ class UserController extends Controller
      */
     public function validatePlayerAction(Request $request, Entity\Registrable $registrable) {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
 
         $player = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByUserAndPendingRegistrable($usr, $registrable);
 
@@ -285,7 +285,7 @@ class UserController extends Controller
     public function leaveAction(Entity\Registrable $registrable) {
         $em = $this->getDoctrine()->getManager();
 
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $registrable);
@@ -318,7 +318,7 @@ class UserController extends Controller
     public function payAction(Entity\Registrable $registrable, $discount = null) {
         $em = $this->getDoctrine()->getManager();
 
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $registrable);
@@ -352,7 +352,7 @@ class UserController extends Controller
     public function payPaypalECAction(Entity\Registrable $registrable, $discount = null) {
         $em = $this->getDoctrine()->getManager();
 
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $registrable);
@@ -416,7 +416,7 @@ class UserController extends Controller
      */
     public function payDoneAction(Request $request, Entity\Registrable $registrable) {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $registrable);
@@ -429,7 +429,7 @@ class UserController extends Controller
      */
     public function payDoneTempAction(Request $request, Entity\Registrable $registrable) {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $registrable);
@@ -459,7 +459,7 @@ class UserController extends Controller
      */
     public function payOfflineAction(Request $request, Entity\Registrable $registrable, $discount = null) {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $registrable);
@@ -482,7 +482,7 @@ class UserController extends Controller
     public function joinTeamAction(Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $tournament);
@@ -525,7 +525,7 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
         // get targeted player
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $team->getTournament());
@@ -583,7 +583,7 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
         // get current logged user corresponding player
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $captain = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $team->getTournament());
@@ -634,7 +634,7 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
         // get current logged user corresponding player
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $captain = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $team->getTournament());
@@ -698,7 +698,7 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
         // get current logged user corresponding player
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $captain = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $team->getTournament());
@@ -737,7 +737,7 @@ class UserController extends Controller
         if($tournament->getParticipantType() !== "team")
             throw new ControllerException("Not Allowed");
 
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $tournament);
@@ -775,7 +775,7 @@ class UserController extends Controller
         if($tournament->getParticipantType() !== "team")
             throw new ControllerException("Équipes non acceptées dans ce tournois");
 
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $tournament);
@@ -939,7 +939,7 @@ class UserController extends Controller
      */
     protected function checkLoginPlatform(Entity\Registrable $registrable)
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $this->get('session')->set('callbackRegisterApiRoute','insalan_tournament_user_setplayer');
         $this->get('session')->set('callbackRegisterApiParams',array('registrable' => $registrable->getId()));
@@ -1011,7 +1011,7 @@ class UserController extends Controller
 
     private function isUserInTeam(Entity\Participant $part) {
 
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
         if($part instanceof Entity\Team) {
 

@@ -48,7 +48,7 @@ class ManagerController extends Controller
     public function enrollAction(Request $request, Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
 
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
 
         $manager = $em
             ->getRepository('InsaLanTournamentBundle:Manager')
@@ -72,7 +72,7 @@ class ManagerController extends Controller
     public function setNameAction(Request $request, Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
 
         $manager = $em->getRepository('InsaLanTournamentBundle:Manager')->findOneByUserAndPendingTournament($usr, $tournament);
 
@@ -117,7 +117,7 @@ class ManagerController extends Controller
     public function joinSoloPlayerAction(Request $request, Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
 
         // handle only solo tournaments
         if($tournament->getParticipantType() !== "player")
@@ -173,7 +173,7 @@ class ManagerController extends Controller
     public function joinTeamWithPasswordAction(Request $request, Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
 
         // handle only team tournaments
         if($tournament->getParticipantType() !== "team")
@@ -251,7 +251,7 @@ class ManagerController extends Controller
     public function payAction(Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
 
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $manager = $em
             ->getRepository('InsaLanTournamentBundle:Manager')
             ->findOneByUserAndPendingTournament($usr, $tournament);
@@ -273,7 +273,7 @@ class ManagerController extends Controller
     public function payPaypalECAction(Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
 
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $manager = $em
             ->getRepository('InsaLanTournamentBundle:Manager')
             ->findOneByUserAndPendingTournament($usr, $tournament);
@@ -323,7 +323,7 @@ class ManagerController extends Controller
      */
     public function payDoneAction(Request $request, Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $manager = $em
             ->getRepository('InsaLanTournamentBundle:Manager')
             ->findOneByUserAndPendingTournament($usr, $tournament);
@@ -337,7 +337,7 @@ class ManagerController extends Controller
      */
     public function payDoneTempAction(Request $request, Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Manager')
             ->findOneByUserAndPendingTournament($usr, $tournament);
@@ -364,7 +364,7 @@ class ManagerController extends Controller
      */
     public function payOfflineAction(Request $request, Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $manager = $em
             ->getRepository('InsaLanTournamentBundle:Manager')
             ->findOneByUserAndPendingTournament($usr, $tournament);
@@ -380,7 +380,7 @@ class ManagerController extends Controller
     public function leaveAction(Entity\Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
 
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $manager = $em
             ->getRepository('InsaLanTournamentBundle:Manager')
             ->findOneByUserAndPendingTournament($usr, $tournament);
@@ -420,7 +420,7 @@ class ManagerController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
         // get targeted manager
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $manager = $em
             ->getRepository('InsaLanTournamentBundle:Manager')
             ->findOneByUserAndPendingTournament($usr, $team->getTournament());

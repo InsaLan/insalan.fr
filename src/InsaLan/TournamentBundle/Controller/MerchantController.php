@@ -28,7 +28,7 @@ class MerchantController extends Controller
     public function indexAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $registrables = $em->getRepository('InsaLanTournamentBundle:Registrable')->findAll();
         $a = array(null => '');
@@ -141,7 +141,7 @@ class MerchantController extends Controller
      */
     public function validateAction(Entity\Registrable $registrable, Entity\Player $player, $discount = null){
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($player->getUser() == null){
             $this->get('session')->getFlashBag()->add('error', "Impossible de valider cette place (aucun utilisateur associé à la commande)");

@@ -18,7 +18,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
 
         $tournamentRaw = $request->query->get('tournaments');
         $t = explode(",", $tournamentRaw);

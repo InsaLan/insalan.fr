@@ -19,7 +19,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $paypalIncrease = Entity\UserOrder::PAYPAL_INCREASE;
 
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($user->getFirstname() == null || $user->getFirstname() == "" || $user->getLastname() == null || $user->getLastname() == "" || $user->getPhoneNumber() == null || $user->getPhoneNumber() == "" || $user->getBirthdate() == null) {
             $this->get('session')->getFlashBag()->add(
