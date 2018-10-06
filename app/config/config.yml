@@ -1,11 +1,11 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: @InsaLanNewsBundle/Resources/config/admin.yml }
-    - { resource: @InsaLanPizzaBundle/Resources/config/admin.yml }
-    - { resource: @InsaLanTournamentBundle/Resources/config/services.yml }
-    - { resource: @InsaLanBundle/Resources/config/services.yml }
-    - { resource: @InsaLanUserBundle/Resources/config/services.yml }
+    - { resource: "@InsaLanNewsBundle/Resources/config/admin.yml" }
+    - { resource: "@InsaLanPizzaBundle/Resources/config/admin.yml" }
+    - { resource: "@InsaLanTournamentBundle/Resources/config/services.yml" }
+    - { resource: "@InsaLanBundle/Resources/config/services.yml" }
+    - { resource: "@InsaLanUserBundle/Resources/config/services.yml" }
 
 framework:
     #esi:             ~
@@ -111,25 +111,25 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
-            - [ setAnnotationReader, [ @annotation_reader ] ]
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
     gedmo.listener.timestampable:
         class: Gedmo\Timestampable\TimestampableListener
         tags:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
-            - [ setAnnotationReader, [ @annotation_reader ] ]
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
     gedmo.listener.tree:
         class: Gedmo\Tree\TreeListener
         tags:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
-            - [ setAnnotationReader, [ @annotation_reader ] ]
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
     gedmo.listener.loggable:
         class: Gedmo\Loggable\LoggableListener
         tags:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
-            - [ setAnnotationReader, [ @annotation_reader ] ]
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
 
     payum.buzz.client:
         class: %payum.buzz.client.class%

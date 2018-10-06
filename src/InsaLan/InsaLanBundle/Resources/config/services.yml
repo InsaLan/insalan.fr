@@ -12,6 +12,6 @@ services:
         arguments: [%lol_api_key%]
     insalan.free_slots:
         class: InsaLan\InsaLanBundle\Service\FreeSlots
-        arguments: [@doctrine]
+        arguments: ["@doctrine"]
     insalan.opening_matcher:
         class: InsaLan\InsaLanBundle\Security\OpeningRequestMatcher
