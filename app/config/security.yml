@@ -14,19 +14,19 @@ security:
     firewalls:
         api:
             pattern: ^/api
-            http_basic:                
+            http_basic:
                 realm: "API"
         opening:
             request_matcher: insalan.opening_matcher
             anonymous: false
             form_login:
                 provider: fos_userbundle
-                csrf_provider: form.csrf_provider
+                csrf_token_generator: security.csrf.token_manager
         main:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
-                csrf_provider: form.csrf_provider
+                csrf_token_generator: security.csrf.token_manager
             logout:       true
             anonymous:    true
             switch_user: { role: ROLE_ADMIN, parameter: _want_to_be }
@@ -45,5 +45,5 @@ security:
         - { path: ^/tournament/admin, role: ROLE_ADMIN }
         - { path: ^/tournament/.*/?user, role: ROLE_USER }
         - { path: /admin, role: ROLE_ADMIN }
-        - { path: /merchant, role: ROLE_MERCHANT } 
+        - { path: /merchant, role: ROLE_MERCHANT }
         - { path: ^/pizza, role: ROLE_USER }

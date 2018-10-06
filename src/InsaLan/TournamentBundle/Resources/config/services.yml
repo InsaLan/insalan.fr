@@ -125,7 +125,7 @@ services:
 
     insalan.tournament.pvp_net:
         class: InsaLan\TournamentBundle\Service\PvpNet
-        arguments: [@insalan.lol]
+        arguments: ["@insalan.lol"]
 
     insalan.tournament.placement:
         class: InsaLan\TournamentBundle\Service\Placement
