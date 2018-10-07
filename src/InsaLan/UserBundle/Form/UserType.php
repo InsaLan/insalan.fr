@@ -4,7 +4,8 @@ namespace InsaLan\UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
 class UserType extends AbstractType
 {
@@ -18,14 +19,14 @@ class UserType extends AbstractType
             ->add('firstname', null, array('required' => true, 'label' => 'Prénom*'))
             ->add('lastname', null, array('required' => true, 'label' => 'Nom*'))
             ->add('phoneNumber', null, array('required' => true, 'label' => 'Portable*'))
-            ->add('birthdate', 'birthday', array('required' => true, 'label' => 'Date de naissance*'))
+            ->add('birthdate', BirthdayType::class, array('required' => true, 'label' => 'Date de naissance*'))
         ;
     }
-    
+
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'InsaLan\UserBundle\Entity\User'
@@ -35,7 +36,7 @@ class UserType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'insalan_userbundle_user';
     }

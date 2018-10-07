@@ -592,7 +592,7 @@ class UserController extends Controller
         if($team->getCaptain() !== $captain)
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
-        $form = $this->createForm(new TeamType(), $team);
+        $form = $this->createForm('InsaLan\TournamentBundle\Form\TeamType', $team);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -744,7 +744,7 @@ class UserController extends Controller
 
         $team = new Team();
 
-        $form = $this->createForm(new TeamType(), $team);
+        $form = $this->createForm('InsaLan\TournamentBundle\Form\TeamType', $team);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

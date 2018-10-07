@@ -27,7 +27,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $usr = $this->get('security.token_storage')->getToken()->getUser();
-        $form = $this->createForm(new UserType(), $usr);
+        $form = $this->createForm('InsaLan\UserBundle\Form\UserType', $usr);
         $em = $this->getDoctrine()->getManager();
 
         $form->handleRequest($request);

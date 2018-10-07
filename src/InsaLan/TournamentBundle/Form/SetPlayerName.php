@@ -4,7 +4,7 @@ namespace InsaLan\TournamentBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SetPlayerName extends AbstractType
 {
@@ -20,9 +20,9 @@ class SetPlayerName extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'InsaLan\TournamentBundle\Entity\Player'
@@ -32,7 +32,7 @@ class SetPlayerName extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'insalan_tournamentbundle_player';
     }

@@ -4,7 +4,8 @@ namespace InsaLan\TournamentBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class TeamLoginType extends AbstractType
 {
@@ -16,16 +17,16 @@ class TeamLoginType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('plainPassword', 'password', array(
+            ->add('plainPassword', PasswordType::class, array(
                 'required' => true,
             ))
         ;
     }
-    
+
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'InsaLan\TournamentBundle\Entity\Team'
@@ -35,7 +36,7 @@ class TeamLoginType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'insalan_tournamentbundle_team';
     }
