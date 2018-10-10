@@ -151,7 +151,7 @@ class UserController extends Controller
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $registrable);
 
-        if ($player === null && $registrable->isLocked()) {
+        if ($player === null && $registrable->isLocked() && !$registrable->checkLocked($this->get('session')->get($registrable->getId() . ".authToken", ''))) {
             $this->get('session')->getFlashBag()->add('error', "Ce tournois n'est accessible que sur invitation.");
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
         }
@@ -172,29 +172,16 @@ class UserController extends Controller
      * @Route("/{registrable}/user/enroll/{authToken}")
      */
     public function enrollLockedAction(Request $request, Entity\Registrable $registrable, $authToken) {
-        $em = $this->getDoctrine()->getManager();
-
-        $usr = $this->get('security.context')->getToken()->getUser();
-
-        $player = $em
-            ->getRepository('InsaLanTournamentBundle:Player')
-            ->findOneByUserAndPendingRegistrable($usr, $registrable);
-
         // check provided token
-        if ($player === null && !$registrable->checkLocked($authToken)) {
+        if (!$registrable->checkLocked($authToken)) {
             $this->get('session')->getFlashBag()->add('error', "Ce tournois n'est accessible que sur invitation.");
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
-        } // from here we are authentificated
-        else if ($player === null)
-            return $this->redirect($this->generateUrl('insalan_tournament_user_setplayer',array('registrable' => $registrable->getId())));
-        else if (!$player->getGameValidated())
-            return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer',array('registrable' => $registrable->getId())));
-        else if ($registrable->getParticipantType() === 'team' && $player->getTeamForTournament($registrable) === null)
-            return $this->redirect($this->generateUrl('insalan_tournament_user_jointeam',array('tournament' => $registrable->getId())));
-        else if (!$player->getPaymentDone())
-            return $this->redirect($this->generateUrl('insalan_tournament_user_pay',array('registrable' => $registrable->getId())));
-        else
-            return $this->redirect($this->generateUrl('insalan_tournament_user_paydone',array('registrable' => $registrable->getId())));
+        } else { // from here we are authentificated
+            $this->get('session')->set($registrable->getId() . ".authToken", $authToken);
+            $this->get('session')->getMetadataBag()->stampNew(0);
+        }
+
+        return $this->redirect($this->generateUrl('insalan_tournament_user_enroll', array('registrable' => $registrable->getId())));
     }
 
     /**
