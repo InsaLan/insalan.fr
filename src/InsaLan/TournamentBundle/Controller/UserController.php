@@ -86,7 +86,11 @@ class UserController extends Controller
                 unset($registrables[array_search($r, $registrables)]);
         }
 
-        return array('registrables' => $registrables, 'participants' => $participants);
+        return array(
+            'registrables' => $registrables,
+            'participants' => $participants,
+            'session' => $this->get('session'),
+        );
     }
 
 
