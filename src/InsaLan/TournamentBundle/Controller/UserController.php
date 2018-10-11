@@ -48,13 +48,8 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
 
-        if ($usr->getFirstname() == null || $usr->getFirstname() == "" || $usr->getLastname() == null || $usr->getLastname() == "" || $usr->getPhoneNumber() == null || $usr->getPhoneNumber() == "" || $usr->getBirthdate() == null) {
-            $this->get('session')->getFlashBag()->add(
-                'info',
-                'Il nous manque encore quelques informations...'
-            );
+        if (!userProfileCompleted($usr))
             return $this->redirect($this->generateUrl('insalan_user_default_index'));
-        }
 
         $registrables = $em->getRepository('InsaLanTournamentBundle:Registrable')->findThisYearRegistrables();
         // participants can be either a single player, a team or a manager
@@ -151,6 +146,9 @@ class UserController extends Controller
 
         $usr = $this->get('security.context')->getToken()->getUser();
 
+        if (!userProfileCompleted($usr))
+            return $this->redirect($this->generateUrl('insalan_user_default_index'));
+
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $registrable);
@@ -203,6 +201,12 @@ class UserController extends Controller
             return $res;
 
         if ($player === null) {
+            // make sure we are allowed to register
+            if ($registrable->isLocked() && !$registrable->checkLocked($this->get('session')->get($registrable->getId() . ".authToken", ''))) {
+                $this->get('session')->getFlashBag()->add('error', "Ce tournois n'est accessible que sur invitation.");
+                return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+            }
+
             $player = new Player();
             $player->setUser($usr);
             $player->setPendingRegistrable($registrable);
@@ -965,6 +969,18 @@ class UserController extends Controller
         }
 
         return array('form' => $form->createView(), 'registrable' => $registrable);
+    }
+
+    protected function userProfileCompleted($usr) {
+        if ($usr->getFirstname() == null || $usr->getFirstname() == "" || $usr->getLastname() == null || $usr->getLastname() == "" || $usr->getPhoneNumber() == null || $usr->getPhoneNumber() == "" || $usr->getBirthdate() == null) {
+            $this->get('session')->getFlashBag()->add(
+                'info',
+                'Il nous manque encore quelques informations...'
+            );
+            return false;
+        }
+
+        return true;
     }
 
     protected function lolValidation($em, $usr, $player, $tournamentId, $check) {
