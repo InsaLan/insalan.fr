@@ -7,20 +7,23 @@
 {% block body %}
   {{ parent() }}
   <article>
-    <header>
-      <h2>>>><a href="{{ path('insalan_rsc_default_index') }}">Roazhon School Championship</a><<<</h2>
-    </header>
+    {#<header style="margin-left: 0px">
+      <h2 style="text-align: center"><a href="{{ path('insalan_rsc_default_index') }}">>>>Roazhon School Championship<<<</a></h2>
+    </header>#}
+     <div class="img-center">
+       <a href="{{ path('insalan_rsc_default_index') }}">
+         <img width="400" align-self="center" src="{{ asset('bundles/insalanrsc/img/home-banner.png') }}" />
+       </a>
+      <br/>
+      <br/>
+        <img width="820" align-self="center" src="{{ asset('bundles/insalan/img/banner-2019.png') }}" />
+     </div>
   </article>
   {#
   <div class="grid-7 pull-left">
     <iframe width="700" height="437" src="//www.youtube.com/embed/1air1jL6bVE?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
   </div>
   #}
-
- <div class="img-center">
-  <br/>
-    <img width="820" align-self="center" src="{{ asset('bundles/insalan/img/banner-2019.png') }}" />
- </div>
 
 {#
 <div class="grid-3 pull-left">
