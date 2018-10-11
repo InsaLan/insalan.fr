@@ -38,20 +38,26 @@
       {% endif %}
       <h2><strong>Moyens de paiement disponibles</strong></h2><br>
       <ul class="shift">
-          <li>En ligne : Paypal, Chèque</li>
+          <li>En ligne : Paypal{# , Chèque #}</li>
           <li>Sur place : Chèque, Espèces, CB</li>
-          <li>Point de vente partenaire (Le WarpZone - Rennes) : Chèque, Espèces, CB</li>
+          {# <li>Point de vente partenaire (Le WarpZone - Rennes) : Chèque, Espèces, CB</li> #}
       </ul>
       <br/></br>
 
       <h2><strong>Points importants</strong></h2><br/>
       <ul class="shift">
+          <li><strong>Attention</strong> : si vous n'avez pas été officiellement désigné pour représenter votre école, ne vous inscrivez pas. Aucun remboursement ne sera effectué dans ce cas.</li>
+          <br />
+          {#
           <li>Le tarif indiqué est valable jusqu'au {{ registrable.registrationClose|date('d/m/Y à H:i') }}. Passée cette date, seul le plein tarif (sur place) sera disponible.</li>
           <br />
-          <li>Si vous jouez en équipe (CS:GO, Dota, LoL, OW), <strong>votre équipe ne sera validée qu'après réception du paiement d'au moins 3 des membres</strong>.</li>
+          #}
+          <li>{# Si vous jouez en équipe (CS:GO, Dota, LoL, OW), #}<strong>Votre équipe ne sera validée qu'après réception du paiement d'au moins la moitié des membres</strong>.</li>
+          {#
           <li>Si vous jouez seul (HS, SFV, DBFz), votre inscription sera validée dès la réception de votre paiement.</li>
           <li>Si vous choisissez l'envoi par chèque, <strong>nous ne pouvons pas vous assurer qu'il restera des places lors de la réception de ce dernier</strong>, sauf si 3 de vos coéquipiers ont déjà payé en ligne (cf ci-dessus).</li>
-          <li>Si vous payez sur place, 3 membres de votre équipe doivent avoir payé en ligne ou par chèque (cf. point 1).</li>
+          #}
+          <li>Si vous payez sur place, la moitié des membres de votre équipe doivent avoir payé en ligne{# ou par chèque (cf. point 1) #}.</li>
       </ul>
       <br/><br/>
   </div>
@@ -65,9 +71,9 @@
   {% if registrable.freeSlots > 0 or (registrable.kind == "tournament" and registrable.participantType == 'team' and player.teamForTournament(registrable).validated) %}
 
   {% if selectedDiscount %}
-  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline_1', {registrable: registrable.id, discount: selectedDiscount.id}) }}">Chèque/Partenaire/Sur place</a>
+  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline_1', {registrable: registrable.id, discount: selectedDiscount.id}) }}">{# Chèque/Partenaire/ #}Sur place</a>
   {% else %}
-  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline', {registrable: registrable.id}) }}">Chèque/Partenaire/Sur place</a>
+  <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline', {registrable: registrable.id}) }}">{# Chèque/Partenaire/ #}Sur place</a>
   {% endif %}
     {% if registrable.isOpenedNow %}
       {% if selectedDiscount %}

@@ -10,6 +10,7 @@
         <br />
 
 {% if registrable.isOpenedNow %}
+        {#
         <h2><strong>Paiement par chèque</strong></h2><br>
         Vous devez envoyer un chèque de {{ registrable.webPrice - (discount.amount | default(0)) }} {{ registrable.currency }} à l'ordre de <strong>"AEIR InsaLan"</strong> par la poste à l'adresse suivante : 
         <br>
@@ -30,6 +31,7 @@
         <br/>
         Votre inscription sera validée à la réception de votre paiement par le partenaire.
         <br><br>
+        #}
 {% endif %}
 
         <h2><strong>Paiement sur place</strong></h2><br>
@@ -39,10 +41,14 @@
 
         <h2><strong>Points importants</strong></h2><br/>
         <ul class="shift">
-            <li>Si vous jouez en équipe (CS:GO, Dota, LoL, OW), <strong>votre équipe ne sera validée qu'après le paiement (en ligne ou par chèque) d'au moins 3 des membres</strong>.</li>
+            <li><strong>Attention</strong> : si vous n'avez pas été officiellement désigné pour représenter votre école, ne vous inscrivez pas. Aucun remboursement ne sera effectué dans ce cas.</li>
+            <br />
+            <li>{# Si vous jouez en équipe (CS:GO, Dota, LoL, OW), #}<strong>Votre équipe ne sera validée qu'après réception du paiement d'au moins la moitié des membres</strong>.</li>
+            {#
             <li>Si vous jouez seul (HS, SFV, DBFz), votre inscription sera validée dès la réception de votre paiement.</li>
             <li>Si vous choisissez l'envoi par chèque, <strong>nous ne pouvons pas vous assurer qu'il restera des places lors de la réception de ce dernier</strong>, sauf si 3 de vos coéquipiers ont déjà payé en ligne (cf ci-dessus).</li>
-            <li>Si vous payez sur place, 3 membres de votre équipe doivent avoir payé en ligne ou par chèque (cf. point 1).</li>
+            #}
+            <li>Si vous payez sur place, la moitié des membres de votre équipe doivent avoir payé en ligne{# ou par chèque (cf. point 1) #}.</li>
         </ul>
         </br>
     </div>
