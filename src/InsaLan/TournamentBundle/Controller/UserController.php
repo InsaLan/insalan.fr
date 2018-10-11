@@ -48,7 +48,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.context')->getToken()->getUser();
 
-        if (!userProfileCompleted($usr))
+        if (!$this->userProfileCompleted($usr))
             return $this->redirect($this->generateUrl('insalan_user_default_index'));
 
         $registrables = $em->getRepository('InsaLanTournamentBundle:Registrable')->findThisYearRegistrables();
@@ -146,7 +146,7 @@ class UserController extends Controller
 
         $usr = $this->get('security.context')->getToken()->getUser();
 
-        if (!userProfileCompleted($usr))
+        if (!$this->userProfileCompleted($usr))
             return $this->redirect($this->generateUrl('insalan_user_default_index'));
 
         $player = $em
