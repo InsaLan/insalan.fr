@@ -20,6 +20,12 @@
     {{ form_row(form.order) }}
     <div class="input left">
     <input type="submit" value="&rarr;"/>
+    &nbsp;&nbsp;&nbsp;
+    <small>
+      <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | merge({'showAll': not showAll})) }}">
+        {{ showAll ? "Masquer" : "Afficher" }} les anciennes commandes
+      </a>
+    </small>
     </div>
   {{ form_end(form) }}
   </section>

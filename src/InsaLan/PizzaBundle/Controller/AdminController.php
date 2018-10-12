@@ -3,6 +3,7 @@
 namespace InsaLan\PizzaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -17,14 +18,16 @@ class AdminController extends Controller
      * @Route("/admin/{id}")
      * @Template()
      */
-    public function indexAction($id = null) {
+    public function indexAction(Request $request, $id = null) {
         $em = $this->getDoctrine()->getManager();
         $order = $formAdd = null;
+
+        $showAll = $request->query->get("showAll", false);
 
         $orders = $em->getRepository('InsaLanPizzaBundle:Order')->getAll();
         $ordersChoices = array(null => "");
         foreach($orders as $o) {
-            if ($o->getDelivery()->getTimestamp() < mktime() - 3600*24*7) continue;
+            if (!$showAll && $o->getDelivery()->getTimestamp() < mktime() - 3600*24*7) continue;
 
             $ordersChoices[$o->getId()] = "Le " . $o->getDelivery()->format("d/m à H:i") . " ~ "
                                             . ($o->getCapacity() - $o->getAvailableOrders(false, false))  . " commandes sur "
@@ -33,7 +36,7 @@ class AdminController extends Controller
 
         $form = $this->createFormBuilder()
             ->add('order', 'choice', array('label' => 'Créneau', 'choices' => $ordersChoices))
-            ->setAction($this->generateUrl('insalan_pizza_admin_index'))
+            ->setAction($this->generateUrl('insalan_pizza_admin_index', ['showAll' => $showAll]))
             ->getForm();
 
         $form->handleRequest($this->getRequest());
@@ -42,7 +45,7 @@ class AdminController extends Controller
             $data = $form->getData();
             return $this->redirect($this->generateUrl(
                 'insalan_pizza_admin_index_1',
-                array('id' => $data['order'])));
+                array('id' => $data['order'], 'showAll' => $showAll)));
         }
 
         if($id) {
@@ -71,7 +74,12 @@ class AdminController extends Controller
 
         }
 
-        return array('order' => $order, 'form' => $form->createView(), 'formAdd' => $formAdd);
+        return array(
+            'order' => $order,
+            'form' => $form->createView(),
+            'formAdd' => $formAdd,
+            'showAll' => $showAll,
+        );
     }
 
     /**

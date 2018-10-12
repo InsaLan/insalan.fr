@@ -4,6 +4,7 @@ namespace InsaLan\TournamentBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -23,19 +24,23 @@ class AdminController extends Controller
      * @Route("/{id}/admin", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function indexAction($id = null)
+    public function indexAction(Request $request, $id = null)
     {
         $em = $this->getDoctrine()->getManager();
+
+        $showAll = $request->query->get("showAll", false);
 
         $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findAll();
         $a = array(null => '');
         foreach ($tournaments as $t) {
-            $a[$t->getId()] = $t->getName();
+            if (!$showAll && $t->getTournamentClose()->getTimestamp() < mktime() - 3600*24*7) continue;
+
+            $a[$t->getId()] = $t->getTournamentOpen()->format('Y - ') . $t->getName();
         }
 
         $form = $this->createFormBuilder()
             ->add('tournament', 'choice', array('label' => 'Tournoi', 'choices' => $a))
-            ->setAction($this->generateUrl('insalan_tournament_admin_index'))
+            ->setAction($this->generateUrl('insalan_tournament_admin_index', ['showAll' => $showAll]))
             ->getForm();
 
 
@@ -50,7 +55,7 @@ class AdminController extends Controller
             $data = $form->getData();
             return $this->redirect($this->generateUrl(
                 'insalan_tournament_admin_index_1',
-                array('id' => $data['tournament'])));
+                array('id' => $data['tournament'], 'showAll' => $showAll)));
         }
         else if (null !== $id) {
 
@@ -99,7 +104,8 @@ class AdminController extends Controller
             'tournament' => $tournament,
             'stages'     => $stages,
             'knockouts'  => $ko,
-            'players'    => $players
+            'players'    => $players,
+            'showAll'    => $showAll,
         );
 
         if($formKo) {
