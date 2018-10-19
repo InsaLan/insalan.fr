@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\ActionType;
 
 use InsaLan\TournamentBundle\Entity\Match;
 
@@ -39,7 +40,7 @@ class GroupAdmin extends Admin
             ->addIdentifier('name')
             ->add('stage')
             ->add("Participants", null, array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
-            ->add('_action','actions',array('actions'  => array('edit' => array(),'show' => array())));
+            ->add('_action', ActionType::class,array('actions'  => array('edit' => array(),'show' => array())));
         ;
     }
 
@@ -80,12 +81,12 @@ class GroupAdmin extends Admin
     }
 
     private function autoManageMatches($group)
-    {   
+    {
 
         $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
 
         // Clean up deprecated matches
-        
+
         foreach($group->getMatches()->toArray() as $match) {
 
             if(!$group->hasParticipant($match->getPart1()) ||
@@ -97,8 +98,8 @@ class GroupAdmin extends Admin
             }
         }
 
-        // Create missing matches 
-        
+        // Create missing matches
+
         $participants = $group->getParticipants()->getValues();
 
         for($i = 0; $i < count($participants); $i++)

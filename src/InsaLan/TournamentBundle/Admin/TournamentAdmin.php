@@ -6,6 +6,8 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 use InsaLan\UserBundle\Service\LoginPlatform;
 
@@ -34,35 +36,38 @@ class TournamentAdmin extends Admin
             ->add('maxManager')
             ->add('locked', null, array('required'=>false))
             ->add('placement', null, array('required' => false))
-            ->add('participantType', 'choice', array(
+            ->add('participantType', ChoiceType::class, array(
+                'choices_as_values' => true,
                 'choices' => array(
-                    'team' => 'Par équipe',
-                    'player' => 'Joueur seul'
+                    'Par équipe' => 'team',
+                    'Joueur seul' => 'player'
                 ),
                 'required' => true
-            ))
-            ->add('type', 'choice', array(
-                'choices'   => array(
-                    'lol' => 'League of Legends',
-                    'csgo' => 'Counter Strike Global Offensive',
-                    'hs' => 'HearthStone',
-                    'dota2' => 'Dota 2',
-                    'sc2' => 'StarCraft 2',
-                    'ow' => 'Overwatch',
-                    'sfv' => 'Street Fighter V',
-                    'dbfz' => 'Dragon Ball FighterZ',
-                    'manual' => 'Autre/Manuel'),
+             ))
+             ->add('type', ChoiceType::class, array(
+                 'choices_as_values' => true,
+                 'choices'   => array(
+                     'League of Legends' => 'lol',
+                     'Counter Strike Global Offensive' => 'csgo',
+                     'HearthStone' => 'hs',
+                     'Dota 2' => 'dota2',
+                     'StarCraft 2' => 'sc2',
+                     'Overwatch' => 'ow',
+                     'Street Fighter V' => 'sfv',
+                     'Dragon Ball FighterZ' => 'dbfz',
+                     'Autre/Manuel' => 'manual'),
                 'required'  => true))
-            ->add('file', 'file', array('required' => false))
-			->add('loginType','choice', array(
-				'choices' => array(
-					LoginPlatform::PLATFORM_OTHER => 'Autre',
-					LoginPlatform::PLATFORM_STEAM => 'Steam',
-					LoginPlatform::PLATFORM_BATTLENET => 'BattleNet',
-				),
-				'required' => true
-			))
-        ;
+            ->add('file', FileType::class, array('required' => false))
+      			->add('loginType', ChoiceType::class, array(
+              'choices_as_values' => true,
+      				'choices' => array(
+      					  'Autre' => LoginPlatform::PLATFORM_OTHER,
+      					  'Steam' => LoginPlatform::PLATFORM_STEAM,
+      					  'BattleNet' => LoginPlatform::PLATFORM_BATTLENET,
+      				),
+      				'required' => true
+      			))
+              ;
     }
 
     // Fields to be shown on filter forms
@@ -86,11 +91,11 @@ class TournamentAdmin extends Admin
             ->add('type')
         ;
     }
-    
+
     public function prePersist($e) {
         $e->upload();
     }
-    
+
     public function preUpdate($e) {
         $this->prePersist($e);
     }

@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 use InsaLan\TournamentBundle\Entity;
 use InsaLan\TournamentBundle\Exception\ControllerException;
 
@@ -28,13 +30,18 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findAll();
+
+        // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
         $a = array(null => '');
         foreach ($tournaments as $t) {
-            $a[$t->getId()] = $t->getName();
+            $a[$t->getName()] = $t->getId();
         }
 
         $form = $this->createFormBuilder()
-            ->add('tournament', 'choice', array('label' => 'Tournoi', 'choices' => $a))
+            ->add('tournament', ChoiceType::class, array(
+                  'label' => 'Tournoi',
+                  'choices_as_values' => true,
+                  'choices' => $a))
             ->setAction($this->generateUrl('insalan_tournament_admin_index'))
             ->getForm();
 

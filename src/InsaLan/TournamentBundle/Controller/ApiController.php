@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 class ApiController extends Controller
 {
 
@@ -22,16 +24,27 @@ class ApiController extends Controller
     {
         $tournaments = $this->getDoctrine()->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments();
 
+        // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
+        $playerStatusChoices = array_flip(Participant::getStatuses());
+        $tournamentsChoices = array();
+
+        foreach ($tournaments as $t) {
+            $tournamentsChoices[$t->getName()] = array_keys($tournaments, $t, true)[0];// Close your eyes, it works.
+        }
+
+
         $form = $this->createFormBuilder()
-            ->add('shortName', 'choice', array(
-                'choices' => $tournaments,
+            ->add('shortName', ChoiceType::class, array(
+                'choices' => $tournamentsChoices,
+                'choices_as_values' => true,
                 'label' => 'Nom du tournois',
                 'expanded' => false,
                 'multiple' => false,
                 'required' => true,
             ))
-            ->add('playerStatus', 'choice', array(
-                'choices' => Participant::getStatuses(),
+            ->add('playerStatus', ChoiceType::class, array(
+                'choices' => $playerStatusChoices,
+                'choices_as_values' => true,
                 'label' => 'Status des joueurs',
                 'expanded' => false,
                 'multiple' => false,

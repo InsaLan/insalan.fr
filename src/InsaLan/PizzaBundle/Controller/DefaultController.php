@@ -5,6 +5,7 @@ namespace InsaLan\PizzaBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use InsaLan\PizzaBundle\Entity;
 
 class DefaultController extends Controller
@@ -39,19 +40,28 @@ class DefaultController extends Controller
             $a = 10*round($order->getAvailableOrders() / 10);
             if($a <= 0)
                 $a = 10;
-            $ordersChoices[$order->getId()] = "Le " . $order->getDelivery()->format("d/m à H \h i") . " (moins de " .
+            // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
+            $ordersKey = "Le " . $order->getDelivery()->format("d/m à H \h i") . " (moins de " .
                                               $a . " pizzas disponibles)";
+            $ordersChoices[$ordersKey] = $order->getId();
         }
 
         $pizzasChoices = array();
 
         foreach($pizzas as $pizza) {
-            $pizzasChoices[$pizza->getId()] = $pizza->getName() . " (" . $pizza->getPrice() . " € + " . $paypalIncrease . " €)";
+            $pizzaKey = $pizza->getName() . " (" . $pizza->getPrice() . " € + " . $paypalIncrease . " €)";
+            $pizzasChoices[$pizzaKey] = $pizza->getId();
         }
 
         $form = $this->createFormBuilder()
-                    ->add('order', 'choice', array('choices' => $ordersChoices, 'label' => 'Heure de livraison'))
-                    ->add('pizza', 'choice', array('choices' => $pizzasChoices, 'label' => 'Pizza choisie'))
+                    ->add('order', ChoiceType::class, array(
+                          'choices_as_values' => true,
+                          'choices' => $ordersChoices,
+                          'label' => 'Heure de livraison'))
+                    ->add('pizza', ChoiceType::class, array(
+                          'choices_as_values' => true,
+                          'choices' => $pizzasChoices,
+                          'label' => 'Pizza choisie'))
                     ->setAction($this->generateUrl('insalan_pizza_default_index'))
                     ->getForm();
 

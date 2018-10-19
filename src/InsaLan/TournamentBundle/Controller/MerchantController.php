@@ -13,6 +13,8 @@ use InsaLan\TournamentBundle\Entity;
 use InsaLan\TournamentBundle\Entity\Player;
 use InsaLan\TournamentBundle\Exception\ControllerException;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 use InsaLan\UserBundle\Entity\MerchantOrder;
 
 use InsaLan\ApiBundle\Http\JsonResponse;
@@ -31,14 +33,19 @@ class MerchantController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $registrables = $em->getRepository('InsaLanTournamentBundle:Registrable')->findAll();
+
+        // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
         $a = array(null => '');
         foreach ($registrables as $t) {
             if ($t->isOpenedNow())
-                $a[$t->getId()] = $t->getName();
+                $a[$t->getName()] = $t->getId();
         }
 
         $form = $this->createFormBuilder()
-            ->add('registrable', 'choice', array('label' => 'Tournoi', 'choices' => $a))
+            ->add('registrable', ChoiceType::class, array(
+                  'label' => 'Tournoi',
+                  'choices_as_values' => true,
+                  'choices' => $a))
             ->setAction($this->generateUrl('insalan_tournament_merchant_index'))
             ->getForm();
 

@@ -8,16 +8,18 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\StringType;
 
 use InsaLan\TournamentBundle\Entity\Match;
 
 class MatchAdmin extends Admin
-{   
-
+{
+    // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
     protected $stateDef = array(
-                            Match::STATE_UPCOMING => 'En attente',
-                            Match::STATE_ONGOING  => 'En cours',
-                            Match::STATE_FINISHED => 'Terminé'
+                             'En attente' => Match::STATE_UPCOMING,
+                             'En cours' => Match::STATE_ONGOING,
+                             'Terminé' => Match::STATE_FINISHED
                         );
 
     // Fields to be shown on create/edit forms
@@ -30,7 +32,8 @@ class MatchAdmin extends Admin
                 array('read_only' => true, 'disabled' => true, 'class' => 'InsaLan\TournamentBundle\Entity\Participant'))
             ->add('group', 'entity',
                 array('read_only' => true, 'disabled' => true, 'class' => 'InsaLan\TournamentBundle\Entity\Group'))*/
-            ->add('state', 'choice', array(
+            ->add('state', ChoiceType::class, array(
+                'choices_as_values' => true,
                 'choices'   => $this->stateDef,
                 'required'  => true))
         ;
@@ -39,12 +42,13 @@ class MatchAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add("Tournois", "string", array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
+            ->add("Tournois", StringType::class, array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
             ->add('part1', null, array('label' => "Participant 1"))
             ->add('part2', null, array('label' => "Participant 2"))
             ->add('group', null, array('label' => "Poule"))
             ->add('koMatch.knockout', null, array('label' => "Arbre"))
-            ->add('state', 'choice', array(
+            ->add('state', ChoiceType::class, array(
+                'choices_as_values' => true,
                 'choices'   => $this->stateDef,
                 'label'     => "Statut"))
             ->add('rounds', null, array('route' => array('name' => 'show')));
@@ -56,7 +60,8 @@ class MatchAdmin extends Admin
         $datagridMapper
             ->add('group', null, array('label' => "Poule"))
             ->add('koMatch.knockout', null, array('label' => "Arbre"))
-            ->add('state', 'doctrine_orm_string', array(), 'choice', array('choices' => $this->stateDef))
+            ->add('state', 'doctrine_orm_string', array(), ChoiceType::class, array('choices_as_values' => true,
+                                                                                    'choices' => $this->stateDef))
             ->add('part1', null, array('label' => "Participant 1"))
             ->add('part2', null, array('label' => "Participant 2"))
         ;
@@ -69,8 +74,8 @@ class MatchAdmin extends Admin
             ->add('part1', null, array('label' => "Participant 1"))
             ->add('part2', null, array('label' => "Participant 2"))
             ->add('extraInfos', null, array('label' => "Conteneur"))
-            ->add('_action','actions',
-                array('actions'  => array('view' => array(),
+            ->add('_action', ActionType::class,
+                array('actions'  => array('show' => array(),
                       'edit' => array(),
                       'createRound' => array(
                         'template' => 'InsaLanTournamentBundle:Admin:list__action_create_round.html.twig'

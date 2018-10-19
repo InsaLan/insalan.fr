@@ -6,6 +6,9 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class UserAdmin extends Admin
 {
@@ -13,15 +16,15 @@ class UserAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('email', 'email')
+            ->add('email', EmailType::class)
             ->add('username')
             ->add('firstname', null, array("required" => false))
             ->add('lastname', null, array("required" => false))
             ->add('phoneNumber', null, array("required" => false))
             ->add('roles')
-            ->add('plainPassword', 'repeated', array(
+            ->add('plainPassword', RepeatedType::class, array(
                 'required' => false,
-                'type' => 'password',
+                'type' => PasswordType::class,
                 'options' => array('translation_domain' => 'FOSUserBundle'),
                 'first_options' => array('label' => 'form.password'),
                 'second_options' => array('label' => 'form.password_confirmation'),
