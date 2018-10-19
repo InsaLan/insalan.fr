@@ -12,7 +12,7 @@
 {% if registrable.isOpenedNow %}
         {#
         <h2><strong>Paiement par chèque</strong></h2><br>
-        Vous devez envoyer un chèque de {{ registrable.webPrice - (discount.amount | default(0)) }} {{ registrable.currency }} à l'ordre de <strong>"AEIR InsaLan"</strong> par la poste à l'adresse suivante : 
+        Vous devez envoyer un chèque de {{ registrable.webPrice - (discount.amount | default(0)) }} {{ registrable.currency }} à l'ordre de <strong>"AEIR InsaLan"</strong> par la poste à l'adresse suivante :
         <br>
         Thomas Colonna<br>
         5 rue Jean Brulelou dit Brito<br>
@@ -36,7 +36,7 @@
 
         <h2><strong>Paiement sur place</strong></h2><br>
         <h3>Le tarif joueur sur place s'élève à {{ registrable.onSitePrice - (discount.amount | default(0)) }} {{ registrable.currency }}.</h3>
-        Vous pourrez régler sur place en liquide, par chèque ou par carte bancaire (avec une majoration de 1€ pour la CB).<br>
+        Vous pourrez régler sur place en liquide, par chèque ou par carte bancaire {#(avec une majoration de 1€ pour la CB)#}.<br>
         <br/></br>
 
         <h2><strong>Points importants</strong></h2><br/>
@@ -55,4 +55,3 @@
     <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_index') }}">Valider</a>
     <br class="clear">
 </div>
-
