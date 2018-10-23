@@ -2,6 +2,7 @@
 
 namespace InsaLan\TournamentBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -28,7 +29,7 @@ class AdminController extends Controller
      * @Route("/{id}/admin", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function indexAction($id = null)
+    public function indexAction($id = null, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -54,7 +55,7 @@ class AdminController extends Controller
         $ko = array();
         $players = array();
 
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -278,10 +279,10 @@ class AdminController extends Controller
     /**
      * @Route("/{id}/admin/create/ko")
      */
-    public function create_koAction(Entity\Tournament $tournament)
+    public function create_koAction(Entity\Tournament $tournament, Request $request)
     {
         $form = $this->getFormKo($tournament->getId());
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
 
         if(!$form->isValid())
             throw new ControllerException("Not allowed");

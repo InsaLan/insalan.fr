@@ -2,6 +2,7 @@
 
 namespace InsaLan\PizzaBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -15,7 +16,7 @@ class DefaultController extends Controller
      * @Route("/")
      * @Template()
     */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $paypalIncrease = Entity\UserOrder::PAYPAL_INCREASE;
@@ -65,7 +66,7 @@ class DefaultController extends Controller
                     ->setAction($this->generateUrl('insalan_pizza_default_index'))
                     ->getForm();
 
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
         if($form->isValid()) {
 
             $data = $form->getData();
@@ -99,12 +100,12 @@ class DefaultController extends Controller
     /**
      * @Route("/validate/{id}")
      */
-    public function validateAction(Entity\UserOrder $userOrder) {
+    public function validateAction(Entity\UserOrder $userOrder, Request $request) {
 
         $em = $this->getDoctrine()->getManager();
         $payment = $this->get("insalan.user.payment");
 
-        if($payment->check($this->getRequest(), true)) {
+        if($payment->check($request, true)) {
             $userOrder->setPaymentDone(true);
             $em->persist($userOrder);
             $hour = $userOrder->getOrder()->getDelivery()->format("H \h i");

@@ -3,6 +3,7 @@
 namespace InsaLan\PizzaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -20,14 +21,14 @@ class AdminController extends Controller
      * @Route("/admin/{id}")
      * @Template()
      */
-    public function indexAction($id = null) {
+    public function indexAction($id = null, Request $request) {
         $em = $this->getDoctrine()->getManager();
         $order = $formAdd = null;
 
         $orders = $em->getRepository('InsaLanPizzaBundle:Order')->getAll();
         $ordersChoices = array(null => "");
         foreach($orders as $o) {
-            if ($o->getDelivery()->getTimestamp() < mktime() - 3600*24*7) continue;
+            if ($o->getDelivery()->getTimestamp() < time() - 3600*24*7) continue;
 
             // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
             $key = "Le " . $o->getDelivery()->format("d/m à H:i") . " ~ "
@@ -44,7 +45,7 @@ class AdminController extends Controller
             ->setAction($this->generateUrl('insalan_pizza_admin_index'))
             ->getForm();
 
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -86,12 +87,12 @@ class AdminController extends Controller
      * @Route("/admin/{id}/add")
      * @Method({"POST"})
      */
-    public function addAction(Entity\Order $order) {
+    public function addAction(Entity\Order $order, Request $request) {
 
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->getAddUserOrderForm($order);
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();

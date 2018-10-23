@@ -2,6 +2,7 @@
 
 namespace InsaLan\TournamentBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,7 +28,7 @@ class MerchantController extends Controller
      * @Route("/{id}/merchant", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function indexAction($id = null)
+    public function indexAction($id = null, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -53,7 +54,7 @@ class MerchantController extends Controller
         $players = $pendingPlayers = $paidPlayers = $previousPaidPlayers = $discounts = array();
         $total = 0;
 
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
