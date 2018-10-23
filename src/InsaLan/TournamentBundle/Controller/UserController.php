@@ -15,6 +15,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 use Payum\Core\Model\Order;
 use Payum\Core\Reply\HttpRedirect;
 use Payum\Core\Reply\HttpResponse;
@@ -913,8 +916,8 @@ class UserController extends Controller
         }
 
         $form = $this->createFormBuilder($round)
-            ->add('replayFile', 'file', array("label" => "Fichier"))
-            ->add('save', 'submit', array("label" => "Ajouter le fichier"))
+            ->add('replayFile', FileType::class, array("label" => "Fichier"))
+            ->add('save', SubmitType::class, array("label" => "Ajouter le fichier"))
             ->getForm();
 
         $form->handleRequest($request);

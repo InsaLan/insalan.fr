@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ApiController extends Controller
 {
@@ -50,7 +51,7 @@ class ApiController extends Controller
                 'multiple' => false,
                 'required' => true,
             ))
-            ->add('Give me', 'submit')
+            ->add('Give me', SubmitType::class)
             ->getForm()
         ;
 

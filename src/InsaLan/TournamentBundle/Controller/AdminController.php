@@ -10,6 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 use InsaLan\TournamentBundle\Entity;
 use InsaLan\TournamentBundle\Exception\ControllerException;
@@ -401,9 +404,9 @@ class AdminController extends Controller
 
     private function getFormKo($tournament) {
         return $this->createFormBuilder()
-                    ->add('name', 'text', array("label" => "Nom"))
-                    ->add('size', 'integer', array("label" => "Taille", "precision" => 0))
-                    ->add('double', 'checkbox', array("label" => "Double Elimination", "required" => false))
+                    ->add('name', TextType::class, array("label" => "Nom"))
+                    ->add('size', IntegerType::class, array("label" => "Taille", "precision" => 0))
+                    ->add('double', CheckboxType::class, array("label" => "Double Elimination", "required" => false))
                     ->setAction($this->generateUrl('insalan_tournament_admin_create_ko',
                                                   array('id' => $tournament)))
                     ->getForm();
