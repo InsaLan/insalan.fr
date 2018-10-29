@@ -31,6 +31,7 @@ use InsaLan\TournamentBundle\Exception\ControllerException;
 use InsaLan\TournamentBundle\Entity\Player;
 use InsaLan\TournamentBundle\Entity\Team;
 use InsaLan\TournamentBundle\Entity;
+use InsaLan\InsaLanBundle\GlobalVars;
 
 use InsaLan\UserBundle;
 
@@ -461,12 +462,16 @@ class UserController extends Controller
 
         $discount = $em->getRepository('InsaLanUserBundle:Discount')
                        ->findOneById($discount);
+        // Get global variables
+        $globalVars = array();
+        $globalKeys = ['payCheckAddress'];
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
 
         if ($discount !== null && $discount->getRegistrable()->getId() !== $registrable->getId()){
             return $this->redirect($this->generateUrl('insalan_tournament_user_pay', array("registrable" => $registrable->getId())));
         }
 
-        return array('registrable' => $registrable, 'user' => $usr, 'player' => $player, 'discount' => $discount);
+        return array('registrable' => $registrable, 'user' => $usr, 'player' => $player, 'discount' => $discount, 'globalVars' => $globalVars);
     }
 
     /**

@@ -5,6 +5,7 @@ imports:
     - { resource: @InsaLanPizzaBundle/Resources/config/admin.yml }
     - { resource: @InsaLanTournamentBundle/Resources/config/services.yml }
     - { resource: @InsaLanBundle/Resources/config/services.yml }
+    - { resource: "@InsaLanBundle/Resources/config/admin.yml" }
     - { resource: @InsaLanUserBundle/Resources/config/services.yml }
 
 framework:
