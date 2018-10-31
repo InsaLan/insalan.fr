@@ -14,7 +14,7 @@ security:
     firewalls:
         api:
             pattern: ^/api
-            http_basic:                
+            http_basic:
                 realm: "API"
         opening:
             request_matcher: insalan.opening_matcher
@@ -45,5 +45,6 @@ security:
         - { path: ^/tournament/admin, role: ROLE_ADMIN }
         - { path: ^/tournament/.*/?user, role: ROLE_USER }
         - { path: /admin, role: ROLE_ADMIN }
-        - { path: /merchant, role: ROLE_MERCHANT } 
+        - { path: /adminSonata, role: ROLE_ADMIN }
+        - { path: /merchant, role: ROLE_MERCHANT }
         - { path: ^/pizza, role: ROLE_USER }
