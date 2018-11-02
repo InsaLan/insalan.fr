@@ -264,7 +264,9 @@
       <span class="emphase">{{ s.firstName }} {{ s.lastName }}</span>
 
       <strong>{{ s.role }}</strong><br>
-      Tel : {{ s.phone }}<br>
+      {% if s.phone|length > 4 %}
+        Tel : {{ s.phone }}<br>
+      {% endif %}
       Email : {{ s.email }}
 
       </p>
