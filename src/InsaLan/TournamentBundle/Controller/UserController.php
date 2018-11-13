@@ -150,6 +150,12 @@ class UserController extends Controller
         if (!$this->userProfileCompleted($usr))
             return $this->redirect($this->generateUrl('insalan_user_default_index'));
 
+            // Check if registrations have started
+        if ($registrable->isOpenedInFuture()) {
+          $this->get('session')->getFlashBag()->add('error', "Les inscriptions ne sont pas encore ouvertes pour ce tournoi.");
+          return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
+
         $player = $em
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $registrable);
@@ -202,6 +208,12 @@ class UserController extends Controller
             return $res;
 
         if ($player === null) {
+            // Check if registrations have started
+            if ($registrable->isOpenedInFuture()) {
+              $this->get('session')->getFlashBag()->add('error', "Les inscriptions ne sont pas encore ouvertes pour ce tournoi.");
+              return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+            }
+
             // make sure we are allowed to register
             if ($registrable->isLocked() && !$registrable->checkLocked($this->get('session')->get($registrable->getId() . ".authToken", ''))) {
                 $this->get('session')->getFlashBag()->add('error', "Ce tournois n'est accessible que sur invitation.");
