@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    {% block stylesheets %}
+      {% stylesheets
+        'bundles/insalan/css/global.css'
+        filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+      {% endstylesheets %}
+    {% endblock %}
+
+    <link href="{{ asset('bundles/insalan/img/favicon.png') }}" rel="icon" type="image/png"/>
+    <link href="//fonts.googleapis.com/css?family=PT+Sans%7COpen+Sans:300%7COswald" rel="stylesheet" type="text/css"/>
+
+    <title>{% block title %}InsaLan{% endblock %}</title>
+
+    <!--[if lt IE 9]>
+      <script src="{{ asset('bundles/insalan/js/html5shiv.js') }}"></script>
+    <![endif]-->
+  </head>
+
+  <body id="body">
+
+    {% block main_header %}
+
+    <header>
+      <div class="container">
+        <div class="logo">
+          <div class="pattern"></div>
+          <a href="{{ path('insalan_news_default_index') }}">
+            <img src="{{ asset('bundles/insalan/img/logo-noyear.png') }}" alt="InsaLan"/></a>
+        </div>
+
+        {% block top_infos %}
+        <aside>
+            <div class="input">
+                <!-- TODO Choose which buttons need to be here -->
+                <a href="{{ path('fos_user_security_logout') }}" class="btn2 pull-right" style="margin-left: 10px;">Déconnexion</a>
+                <a href="{{ path('sonata_admin_dashboard') }}" class="btn2 bnt2-ncolor pull-right" style="margin-left: 10px;">Sonata</a>
+            </div>
+        </aside>
+
+        <nav>
+          <h1 style="text-align: center; font-size: 40px; font-weight: bold; color: #FFF; font-family: OpenSansCond">Admin</h1>
+          <ul>
+            <li><a href="{{ path('insalan_admin_default_index') }}">Accueil</a></li>
+            <li><a href="{{ path('insalan_admin_default_tournament') }}">Tournois</a></li>
+            <li><a href="{{ path('insalan_admin_default_pizza') }}">Pizzas</a></li>
+            <li><a href="{{ path('insalan_admin_default_web') }}">Web</a></li>
+          </ul>
+        </nav>
+        {% endblock %}
+      </div>
+    </header>
+    {% endblock %}
+
+    <section class="container">
+      {% for message in app.session.flashbag.get('info') %}
+        <p class="alert-info">{{ message }}</p>
+      {% endfor %}
+
+      {% for message in app.session.flashbag.get('error') %}
+        <p class="alert-error">{{ message }}</p>
+      {% endfor %}
+
+      {% block body %}{% endblock %}
+
+
+      <div class="clear"></div>
+    </section>
+
+    {% block rawbody %}{% endblock %}
+
+    {% block main_bottom %}{% endblock %}
+
+    {% block javascripts %}
+      {% javascripts
+        'bundles/insalan/js/mootools-core-1.4.5.js'
+        'bundles/insalan/js/global.js' %}
+          <script type="text/javascript" src="{{ asset_url }}"></script>
+      {% endjavascripts %}
+    {% endblock %}
+  </body>
+</html>

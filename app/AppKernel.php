@@ -49,6 +49,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new InsaLan\ApiBundle\InsaLanApiBundle(),
             new InsaLan\RSCBundle\InsaLanRSCBundle(),
+            new InsaLan\AdminBundle\InsaLanAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

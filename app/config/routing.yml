@@ -1,3 +1,8 @@
+insa_lan_admin:
+    resource: "@InsaLanAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
 insa_lan_rsc:
     resource: "@InsaLanRSCBundle/Controller/"
     type:     annotation
@@ -59,7 +64,7 @@ fos_user_change_password:
 
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
-    prefix: /admin
+    prefix: /adminSonata
 
 #sonata_user:
 #    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
@@ -68,7 +73,7 @@ admin:
 _sonata_admin:
     resource: .
     type: sonata_admin
-    prefix: /admin
+    prefix: /adminSonata
 
 payum_capture:
     resource: "@PayumBundle/Resources/config/routing/capture.xml"
