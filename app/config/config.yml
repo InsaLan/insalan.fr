@@ -54,6 +54,7 @@ assetic:
         - InsaLanPizzaBundle
         - InsaLanInformationBundle
         - InsaLanRSCBundle
+        - InsaLanAdminBundle
 
     #java: /usr/bin/java
     filters:
