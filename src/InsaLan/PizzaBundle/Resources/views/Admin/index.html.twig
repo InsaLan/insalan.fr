@@ -22,7 +22,7 @@
     <input type="submit" value="&rarr;"/>
     &nbsp;&nbsp;&nbsp;
     <small>
-      <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | merge({'showAll': not showAll})) }}">
+      <a id="hideShowCommand" href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | merge({'showAll': not showAll})) }}">
         {{ showAll ? "Masquer" : "Afficher" }} les anciennes commandes
       </a>
     </small>
@@ -68,7 +68,7 @@
 
   <ul style="margin: 20px">
   {% for name, quantity in order.pizzas %}
-    <li style="margin-left: 20px"><b>{{ name }}</b> : <strong>{{ quantity }}</strong></li>
+    <li style="margin-left: 20px"><b>{{ name }}</b> : <strong style="margin-left: 5px">{{ quantity }}</strong></li>
   {% endfor %}
     {#<li style="margin-left: 20px"><strong>TOTAL : {{ order.sum }} €</strong></li>#}
   </ul>
