@@ -1,12 +1,9 @@
-{% extends 'InsaLanPizzaBundle::layout.html.twig' %}
+{% extends 'InsaLanAdminBundle::layout.html.twig' %}
 
 {% block stylesheets %}
 {{ parent() }}
 <style type="text/css">
-.container {
-    width: 98%;
-}
-input[type=submit], input[type=button], button, .btn2 {
+input[type=submit], input[type=button], button {
     font-size: 0.8em;
     cursor: pointer;
 }
@@ -28,10 +25,11 @@ form {
 </style>
 {% endblock %}
 
-{% block main_header %}
-{% endblock %}
-{% block main_bottom %}
-{% endblock %}
+{% block main_header %} {{ parent() }} {% endblock %}
+
+{% block rawbody %}{% endblock %}
+
+{% block main_bottom %}{% endblock %}
 
 {% block javascripts %}
     {% javascripts 'bundles/insalan/js/jquery.js' %}
