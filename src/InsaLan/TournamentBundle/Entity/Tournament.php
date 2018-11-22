@@ -53,7 +53,7 @@ class Tournament extends Registrable
 
     /**
      * @ORM\Column(type="enum", type="string", nullable=false)
-     * ORM\Column(type="enum", type="string", nullable=false, columnDefinition="enum('lol', 'dota2', 'sc2', 'hs', 'csgo', 'ow', 'sfv', 'dbfz', 'manual')")
+     * ORM\Column(type="enum", type="string", nullable=false, columnDefinition="enum('lol', 'dota2', 'sc2', 'hs', 'csgo', 'ow', 'sfv', 'dbfz', 'fbr', 'manual')")
      */
     protected $type;
 
