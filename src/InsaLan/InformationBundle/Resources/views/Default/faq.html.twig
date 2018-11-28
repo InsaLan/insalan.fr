@@ -24,7 +24,7 @@
     <p>
       L'InsaLan est un évènement de jeux en réseau d'envergure nationale organisé par un groupe d'étudiants de l'association <em>AEIR</em> (Amicale des Elèves de l'INSA Rennes) à but non lucratif de loi 1901. Cette association étudiante est issue de l'<em>INSA Rennes</em> (Institut National des Sciences Appliquées), une des écoles d'ingénieurs du Groupe INSA. L'InsaLan se compose cette année d'une équipe d'environ {{ globalVars.staffNumber }} étudiants, passionnés de jeux vidéo et de compétition électronique.
       <br/>
-      Cette année, la {{ globalVars.lettersNumber }} édition de l'InsaLan accueillera plus de <em>{{ globalVars.playersNumber }} joueurs</em> le temps d'un week-end. Les compétitions se dérouleront dans la zone tournois de l'évènement tandis que des animations gratuites seront proposées à tout le monde. L'équipe de l'InsaLan est ravie de vous présenter le résultat d'une année de travail et l'expérience de ses {{ globalVars.number - 1}} autres éditions.
+      Cette année, la {{ globalVars.lettersNumber }} édition de l'InsaLan accueillera <em>{{ globalVars.playersNumber }} joueurs</em> le temps d'un week-end. Les compétitions se dérouleront dans la zone tournois de l'évènement tandis que des animations gratuites seront proposées à tout le monde. L'équipe de l'InsaLan est ravie de vous présenter le résultat d'une année de travail et l'expérience de ses {{ globalVars.number - 1}} autres éditions.
     </p>
   </section>
 </article>
@@ -117,7 +117,9 @@
         <li>Votre clavier et votre souris ;</li>
         <li>Tout autre périphérique que vous utilisez habituellement ;</li>
         <li>Un sac de couchage et matelas si vous dormez sur place ;</li>
-          <li>Tout participant mineur doit apporter une <strong><a href="{{ asset('bundles/insalan/pdf/autorisation-parental-joueur.pdf') }}" target="_blank" >[autorisation parentale &#x25BE;]</a></strong> signée par son responsable légal ;</li>
+        <li>Tout participant mineur doit apporter une <strong><a href="{{ asset('bundles/insalan/pdf/autorisation-parental-joueur.pdf') }}" target="_blank" >[autorisation parentale &#x25BE;]</a></strong> signée par son responsable légal ;
+            <br/>
+            L'âge minimum est de 16 ans pour participer au tournoi CS:GO et 12 ans pour les autres tournois ;</li>
         <li>Un coussin de chaise pour votre confort.</li>
     </ul>
     </p>
@@ -185,7 +187,7 @@
 
 <hr/>
 
-{#
+
 <article id="tournoi" class="info">
   <aside>
     <div class="square">
@@ -193,9 +195,9 @@
     </div>
     <ul>
       <li>Nombre</li>
-      <li>5</li>
+      <li>4</li>
       <li>Joueurs</li>
-      <li>440</li>
+      <li>{{ globalVars.playersNumber }}</li>
     </ul>
   </aside>
 
@@ -204,17 +206,16 @@
   </header>
 
   <section>
-    <p>L'InsaLan accueille cette année 5 tournois officiels :</p>
+    <p>L'InsaLan accueille cette année 4 tournois officiels :</p>
     <ul>
       <li><span>Counter-Strike: Global Offensive</span> </li>
       <li><span>League of Legends</span> </li>
       <li><span>Hearthstone</span> </li>
-      <li><span>Dota 2</span> </li>
-      <li><span>Overwatch</span> </li>
+      <li><span>Fortnite Battle Royale</span> </li>
     </ul>
   </section>
 </article>
-#}
+
 
 <hr>
 
@@ -228,8 +229,6 @@
     <ul>
       <li>Email</li>
       <li>contact@insalan.fr</li>
-      <li>Quakenet</li>
-      <li>#insalan</li>
     </ul>
   </aside>
 
@@ -246,9 +245,6 @@
     </a>
     <a href="https://twitter.com/insalan">
         <span class="emphase">Twitter</span>
-    </a>
-    <a href="http://webchat.quakenet.org/?channels=insalan">
-        <span class="emphase">#insalan sur Quakenet</span>
     </a>
 </p>
 <br>
