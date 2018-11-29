@@ -76,3 +76,36 @@ tr:hover {
     background: rgb(14, 14, 14);
     color: rgb(0, 191, 243);
 }
+
+#hideShowCommand:hover { text-decoration: underline; }
+
+input[type=submit], input[type=button], button {
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+table { border-collapse: collapse; }
+
+th {
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+td, th {
+  border: 1px solid grey;
+  padding: 5px !important;
+}
+
+form { display: inline; }
+
+.addInput {
+    color: black;
+    height: 25px;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.addInput[type=text] {
+    height: 21px;
+    padding: 2px;
+}

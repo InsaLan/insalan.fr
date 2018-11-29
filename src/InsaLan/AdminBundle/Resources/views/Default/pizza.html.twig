@@ -1,0 +1,30 @@
+{% extends 'InsaLanAdminBundle::layout.html.twig' %}
+
+{% block title %}
+  {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  {{ parent() }}
+
+<div class="pizzaOnglets">
+    <a href="{{ path('insalan_pizza_admin_commande') }}">
+      <div class="pizzaOnglet">
+        Gestion des commandes
+      </div>
+    </a>
+    <a href="{{ path('insalan_pizza_admin_creneau') }}">
+      <div class="pizzaOnglet">
+        Gestion des créneaux
+      </div>
+    </a>
+    <a href="{{ path('insalan_pizza_admin_pizza') }}">
+      <div class="pizzaOnglet">
+        Gestion des pizzas
+      </div>
+    </a>
+
+</div>
+
+
+{% endblock %}

@@ -2,40 +2,11 @@
 
 {% block stylesheets %}
 {{ parent() }}
-<style type="text/css">
-#hideShowCommand:hover { text-decoration: underline; }
-
-input[type=submit], input[type=button], button {
-    font-size: 0.8em;
-    cursor: pointer;
-}
-
-table { border-collapse: collapse; }
-
-th {
-  font-size: 1.2em;
-  font-weight: 500;
-}
-
-td, th {
-  border: 1px solid grey;
-  padding: 5px !important;
-}
-
-form { display: inline; }
-
-.addInput {
-    color: black;
-    height: 25px;
-    font-size: 18px;
-    margin-left: 10px;
-}
-
-.addInput[type=text] {
-    height: 21px;
-    padding: 2px;
-}
-</style>
+{% stylesheets
+  'bundles/insalan/css/pizza.css'
+  filter='cssrewrite' %}
+  <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
 {% endblock %}
 
 {% block main_header %} {{ parent() }} {% endblock %}

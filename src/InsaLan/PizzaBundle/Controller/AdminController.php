@@ -13,12 +13,29 @@ use InsaLan\ApiBundle\Http\JsonResponse;
 
 class AdminController extends Controller
 {
+
+  /**
+   * @Route("/admin/pizza")
+   * @Template()
+   */
+  public function pizzaAction() {
+    return array();
+  }
+
+  /**
+   * @Route("/admin/creneau")
+   * @Template()
+   */
+  public function creneauAction() {
+    return array();
+  }
+
     /**
-     * @Route("/admin")
-     * @Route("/admin/{id}")
+     * @Route("/admin/commande")
+     * @Route("/admin/commande/{id}")
      * @Template()
      */
-    public function indexAction(Request $request, $id = null) {
+    public function commandeAction(Request $request, $id = null) {
         $em = $this->getDoctrine()->getManager();
         $order = $formAdd = null;
 
@@ -36,7 +53,7 @@ class AdminController extends Controller
 
         $form = $this->createFormBuilder()
             ->add('order', 'choice', array('label' => 'Créneau', 'choices' => $ordersChoices))
-            ->setAction($this->generateUrl('insalan_pizza_admin_index', ['showAll' => $showAll]))
+            ->setAction($this->generateUrl('insalan_pizza_admin_commande', ['showAll' => $showAll]))
             ->getForm();
 
         $form->handleRequest($this->getRequest());

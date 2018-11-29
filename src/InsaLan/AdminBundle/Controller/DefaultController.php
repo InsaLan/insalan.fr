@@ -35,8 +35,10 @@ class DefaultController extends Controller
      * @Route("/pizza/{id}")
      * @Template()
      */
-    public function pizzaAction($id = null) {
-      return $this->redirect($this->generateUrl("insalan_pizza_admin_index", array("id" => $id)));
+     public function pizzaAction() {
+    // public function pizzaAction($id = null) {
+      return array();
+      // return $this->redirect($this->generateUrl("insalan_pizza_admin_index", array("id" => $id)));
     }
 
     /**

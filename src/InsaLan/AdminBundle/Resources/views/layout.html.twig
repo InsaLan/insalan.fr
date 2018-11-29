@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+*<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8"/>
     {% block stylesheets %}
       {% stylesheets
+        'bundles/insalan/css/pizza.css'
         'bundles/insalan/css/global.css'
         filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
@@ -46,7 +47,14 @@
           <ul>
             <li><a href="{{ path('insalan_admin_default_index') }}">Accueil</a></li>
             <li><a href="{{ path('insalan_admin_default_tournament') }}">Tournois</a></li>
-            <li><a href="{{ path('insalan_admin_default_pizza') }}">Pizzas</a></li>
+            <li id="adminPizzaMenu">
+              <a href="{{ path('insalan_admin_default_pizza') }}">Pizzas</a>
+              <ul>
+                <li><a href="{{ path('insalan_pizza_admin_commande') }}">Gestion des commandes</a></li>
+                <li><a href="{{ path('insalan_pizza_admin_creneau') }}">Gestion des créneaux</a></li>
+                <li><a href="{{ path('insalan_pizza_admin_pizza') }}">Gestion des pizzas</a></li>
+              </ul>
+            </li>
             <li><a href="{{ path('insalan_admin_default_web') }}">Web</a></li>
           </ul>
         </nav>
@@ -79,6 +87,9 @@
         'bundles/insalan/js/mootools-core-1.4.5.js'
         'bundles/insalan/js/global.js' %}
           <script type="text/javascript" src="{{ asset_url }}"></script>
+          <script type="text/javascript">
+
+          </script>
       {% endjavascripts %}
     {% endblock %}
   </body>
