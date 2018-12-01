@@ -1,7 +1,7 @@
 {% extends 'InsaLanPizzaBundle::Admin/layout.html.twig' %}
 
 {% block title %}
-  {{ parent() }} - Récapitulatif
+  {{ parent() }} - Gestion commandes
 {% endblock %}
 
 {% block body %}
@@ -34,7 +34,7 @@
 
   <section style="margin-top:20px">
   {{ form_start(formAdd, {attr:{'class':'oneline'}}) }}
-    <strong>AJOUT MANUEL</strong>
+    <strong>Ajout manuel d'une commande</strong>
     {{ form_widget(formAdd.username, {'attr': {'placeholder': formAdd.username.vars.label, 'class': 'addInput' }}) }}
     {{ form_widget(formAdd.fullname, {'attr': {'placeholder': formAdd.fullname.vars.label, 'class': 'addInput' }}) }}
     {{ form_widget(formAdd.pizza, {'attr': {'class': 'addInput'}}) }}
@@ -116,7 +116,7 @@
           <button class="order_delivered" data-url="{{ path("insalan_pizza_admin_order_status", {id: uo.id, status: 0}) }}" data-id="{{ uo.id }}" onclick="if(confirm('Confirmer la non livraison ?')) { changeOrderStatus(this) }" {% if not uo.delivered %}style="display:none"{% endif %} >> Non Livrée</button>
           <button class="order_not_delivered" data-url="{{ path("insalan_pizza_admin_order_status", {id: uo.id, status: 1}) }}" data-id="{{ uo.id }}" onclick="changeOrderStatus(this)" {% if uo.delivered %}style="display:none"{% endif %}>> Livrée</button>
         </span>
-        <form method="POST" action="{{ path('insalan_pizza_admin_order_remove', {id: uo.id}) }}">
+        <form method="POST" action="{{ path('insalan_pizza_admin_pizza_remove', {id: uo.id}) }}">
           <input type="submit" value="Supprimer" onclick="return confirm('Confirmer la suppression ?');"/>
         </form>
       </td>

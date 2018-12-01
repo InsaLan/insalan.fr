@@ -732,6 +732,10 @@ strong {
   width: 10%;
 }
 
+.grid-1-5 {
+  width: 15%;
+}
+
 .grid-2 {
   width: 20%;
 }
@@ -913,7 +917,7 @@ li a:hover {
 }
 
 .text-justify {
-    text-align: justify; 
+    text-align: justify;
 }
 
 .text-center {
@@ -954,8 +958,8 @@ li a:hover {
 /** FOR STREAMS ONLY, TEMPORARY */
 
 .streamsHeader {
-  top: 0px; 
-  width: 100%; 
+  top: 0px;
+  width: 100%;
   height: 40px;
   font-family: Oswald, sans-serif;
   font-size: 20px;
@@ -1007,4 +1011,30 @@ li a:hover {
   width: 100%;
   text-align: center;
   display: none;
+}
+
+#adminPizzaMenu a:hover ul, #adminPizzaMenu:hover ul {
+  display: block;
+}
+
+#adminPizzaMenu ul {
+  display: none;
+}
+
+#adminPizzaMenu li:hover {
+  background-color: grey;
+  color: #fff;
+}
+
+#adminPizzaMenu li {
+  background-color: black;
+  padding-top: -5px;
+  padding-bottom: -5px;
+  padding-left: 20px;
+  border: 1px solid grey;
+  width: 150px;
+  font-size: 0.8em;
+  color: grey;
+  text-transform: none;
+  text-align: left;
 }

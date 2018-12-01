@@ -87,8 +87,12 @@ input[type=submit], input[type=button], button {
 table { border-collapse: collapse; }
 
 th {
-  font-size: 1.2em;
-  font-weight: 500;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+td {
+  font-size: 0.9em;
 }
 
 td, th {
@@ -108,4 +112,33 @@ form { display: inline; }
 .addInput[type=text] {
     height: 21px;
     padding: 2px;
+}
+
+.pizzaOnglets {
+  margin: auto;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.pizzaOnglet:hover {
+  background-color: grey;
+}
+
+.pizzaOnglet {
+  padding: 7px;
+  display: inline-block;
+  margin-left: 20px;
+  border: 2px solid grey;
+  color: #fff;
+  font-size: 1.6em;
+  font-weight: 500;
+}
+
+#pizzaAddForm {
+  margin-top: 10px;
+}
+
+#pizzaAddForm div {
+  display: block;
+  margin-top: 5px;
 }
