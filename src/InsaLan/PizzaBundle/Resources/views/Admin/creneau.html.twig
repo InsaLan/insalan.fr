@@ -1,20 +1,81 @@
 {% extends 'InsaLanPizzaBundle::Admin/layout.html.twig' %}
 
 {% block title %}
-  {{ parent() }} - Gestion créneaux
+  {{ parent() }} - Gestion pizzas
 {% endblock %}
 
 {% block body %}
   {{ parent() }}
 
-<article >
+<article>
 
   <header>
-    <h2>Gestion des Créneaux</h2>
+    <h2>Gestion des créneaux</h2>
   </header>
 
-</article>
+<section style="margin-top:20px; padding-top: 20px;">
+{{ form_start(formAdd, {attr:{'class':'oneline'}}) }}
+  <strong>Ajout manuel d'un créneau :</strong>
+  <div class="addOrderDates">
+    <div>
+      <label for="">Date d'expiration :</label>
+      {{ form_widget(formAdd.orderExpirationDateTime, {'attr': {'value': formAdd.orderExpirationDateTime.vars.label,'class': 'addInput dateTime' }}) }}
+    </div>
+    <div>
+      <label for="">Date de livraison :</label>
+      {{ form_widget(formAdd.orderDeliveryDateTime, {'attr': {'value': formAdd.orderDeliveryDateTime.vars.label,'class': 'addInput dateTime' }}) }}
+    </div>
+  </div>
+  <div class="addOrder">
+    <label for="">Nombre de pizza max :</label>
+    {{ form_widget(formAdd.orderCapacity, {'attr': {'class': 'addInput' }}) }}
+  </div>
+  <div class="addOrder">
+    <label for="" style="margin-top:7px;">Nombre de pizza max pour non joueur : </label>
+    {{ form_widget(formAdd.orderForeignCapacity, {'attr': {'class': 'addInput' }}) }}
+  </div>
+  <div class="addOrder" style="margin-bottom:15px;">
+    <label for="" style="margin-top:7px;">Verrouillé : </label>
+    {{ form_widget(formAdd.orderClosed, {'attr': {'class': 'addInput' }}) }}
+  </div>
+  <div class="input left confirmAddOrder">
+    <input type="submit" value="Ajouter"/>
+  </div>
+{{ form_end(formAdd) }}
+</section>
 
+  <section style="margin-top:40px">
+    <strong>Liste des créneaux :</strong>
+
+    <table class="grid-10" style="margin-top:20px;margin-bottom:30px;">
+      <tr>
+        <th class="grid-2">Date d'expiration</th>
+        <th class="grid-2">Date de livraison</th>
+        <th class="grid-2">Pizza max</th>
+        <th class="grid-2">Pizza max pour étrangers</th>
+        <th class="grid-1">Verrouillé</th>
+        <th class="grid-1"></th>
+      </tr>
+
+  {% for order in orders %}
+      <tr>
+        <td>{{ order.expiration | date("d/m H:i") }}</td>
+        <td>{{ order.delivery | date("d/m H:i") }}</td>
+        <td>{{ order.capacity }}</td>
+        <td>{{ order.foreignCapacity }}</td>
+        <td>{% if order.closed %} Oui {% else %} Non {% endif %}</td>
+        <td>
+          <form method="POST" action="{{ path('insalan_pizza_admin_creneau_remove', {id: order.id}) }}">
+            <input type="submit" value="Supprimer" onclick="return confirm('Confirmer la suppression ?');"/>
+          </form>
+        </td>
+      </tr>
+  {% endfor %}
+    </table>
+  </section>
+
+
+</article>
 
 
 
@@ -22,5 +83,4 @@
 
 {% block javascripts %}
 {{ parent() }}
-
 {% endblock %}

@@ -16,7 +16,7 @@
   <section style="margin-top:30px">
   {{ form_start(formAdd, {attr:{'class':'oneline'}}) }}
     <strong>Ajout manuel d'une pizza :</strong>
-    <div id="pizzaAddForm">
+    <div id="addFormBlock">
       {{ form_widget(formAdd.pizzaName, {'attr': {'placeholder': formAdd.pizzaName.vars.label, 'class': 'addInput' }}) }}
       {{ form_widget(formAdd.pizzaPrice, {'attr': {'placeholder': formAdd.pizzaPrice.vars.label, 'class': 'addInput' }}) }}
       {{ form_widget(formAdd.pizzaDescription, {'attr': {'placeholder': formAdd.pizzaDescription.vars.label, 'class': 'addInput' }}) }}

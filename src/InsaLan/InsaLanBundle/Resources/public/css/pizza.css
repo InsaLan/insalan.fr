@@ -134,11 +134,44 @@ form { display: inline; }
   font-weight: 500;
 }
 
-#pizzaAddForm {
+.addFormBlock {
+  display: block;
   margin-top: 10px;
 }
 
-#pizzaAddForm div {
-  display: block;
+.addFormBlock div {
   margin-top: 5px;
 }
+
+.addOrderDates {
+  display: inline-flex;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  height: 70px;
+  width: 100%;
+}
+
+.addOrderDates div {
+  margin-right: 20px;
+  width: 150px;
+}
+
+.addOrderDates label {
+  margin-bottom: 10px;
+}
+
+section label {
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+.addOrder {
+  margin-top: 7px;
+}
+
+.confirmAddOrder {
+  margin-top: 15px;
+}
+
+
+

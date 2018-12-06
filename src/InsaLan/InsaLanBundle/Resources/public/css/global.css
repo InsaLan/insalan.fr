@@ -1012,29 +1012,3 @@ li a:hover {
   text-align: center;
   display: none;
 }
-
-#adminPizzaMenu a:hover ul, #adminPizzaMenu:hover ul {
-  display: block;
-}
-
-#adminPizzaMenu ul {
-  display: none;
-}
-
-#adminPizzaMenu li:hover {
-  background-color: grey;
-  color: #fff;
-}
-
-#adminPizzaMenu li {
-  background-color: black;
-  padding-top: -5px;
-  padding-bottom: -5px;
-  padding-left: 20px;
-  border: 1px solid grey;
-  width: 150px;
-  font-size: 0.8em;
-  color: grey;
-  text-transform: none;
-  text-align: left;
-}
