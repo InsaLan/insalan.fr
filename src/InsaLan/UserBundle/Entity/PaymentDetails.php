@@ -11,6 +11,21 @@ use InsaLan\UserBundle\Entity\User;
  */
 class PaymentDetails extends ArrayObject
 {
+
+    // Available payment types
+    const TYPE_UNDEFINED = 0;
+    const TYPE_PAYPAL = 1;
+    const TYPE_CB = 2;
+    const TYPE_CHECK = 3;
+    const TYPE_CASH = 4;
+
+    // Where payment has been made
+    const PLACE_UNDEFINED = 0;
+    const PLACE_WEB = 1;
+    const PLACE_ON_SITE = 2;
+    const PLACE_IN_PARTNER_SHOP = 3;
+
+
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -28,6 +43,23 @@ class PaymentDetails extends ArrayObject
      */
     protected $discount;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $place;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $type;
+
+    /**
+     * @ORM\Column(type="float")
+     * Price without any discount
+     */
+    protected $rawPrice;
+
+
     private $detailId = 0;
 
     public function addPaymentDetail($name, $price, $description) {
@@ -41,7 +73,7 @@ class PaymentDetails extends ArrayObject
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -65,7 +97,7 @@ class PaymentDetails extends ArrayObject
     /**
      * Get user
      *
-     * @return \InsaLan\UserBundle\Entity\User 
+     * @return \InsaLan\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -88,10 +120,89 @@ class PaymentDetails extends ArrayObject
     /**
      * Get discount
      *
-     * @return \InsaLan\UserBundle\Entity\Discount 
+     * @return \InsaLan\UserBundle\Entity\Discount
      */
     public function getDiscount()
     {
         return $this->discount;
+    }
+
+    /**
+     * Set place
+     *
+     * @param integer $place
+     * @return PaymentDetails
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+
+        return $this;
+    }
+
+    /**
+     * Get place
+     *
+     * @return integer
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     * @return PaymentDetails
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set rawPrice
+     *
+     * @param float $rawPrice
+     * @return PaymentDetails
+     */
+    public function setRawPrice($rawPrice)
+    {
+        $this->rawPrice = $rawPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get rawPrice
+     *
+     * @return float
+     */
+    public function getRawPrice()
+    {
+        return $this->rawPrice;
+    }
+
+    /**
+     * Get details
+     *
+     * @return Array
+     */
+    public function getDetails()
+    {
+        return $this->details;
     }
 }
