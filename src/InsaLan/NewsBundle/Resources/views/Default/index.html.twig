@@ -6,26 +6,24 @@
 
 {% block body %}
   {{ parent() }}
-  <article>
-    {#<header style="margin-left: 0px">
-      <h2 style="text-align: center"><a href="{{ path('insalan_rsc_default_index') }}">>>>Roazhon School Championship<<<</a></h2>
-    </header>#}
+  {#<article>
      <div class="img-center">
        <a href="{{ path('insalan_rsc_default_index') }}">
          <img width="400" align-self="center" src="{{ asset('bundles/insalanrsc/img/home-banner.png') }}" />
        </a>
       <br/>
       <br/>
-        <img width="820" align-self="center" src="{{ asset('bundles/insalan/img/banner-2019.png') }}" />
+        <img width="700" align-self="center" src="{{ asset('bundles/insalan/img/banner-2019.png') }}" />
      </div>
-  </article>
-  {#
+  </article>#}
+  
   <div class="grid-7 pull-left">
-    <iframe width="700" height="437" src="//www.youtube.com/embed/1air1jL6bVE?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+    <img class="frame" width="700" align-self="center" src="{{ asset('bundles/insalan/img/banner-2019.png') }}" />
+    {#<iframe width="700" height="437" src="//www.youtube.com/embed/1air1jL6bVE?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>#}
   </div>
-  #}
+  
 
-{#
+
 <div class="grid-3 pull-left">
       <div class="frame frame-active">
           <header class="full">
@@ -34,7 +32,7 @@
               <small class="pull-right">
                   24 slots
                   <br>
-                  <strong>1 400€</strong>
+                  <strong>1 700€</strong>
               </small>
               <br class="clear">
           </header>
@@ -43,16 +41,16 @@
               <small class="pull-right">
                   24 slots
                   <br>
-                  <strong>1 400€</strong>
+                  <strong>1 700€</strong>
               </small>
               <br class="clear">
           </header>
           <header class="full">
-              <div class="title pull-left">Dota 2</div>
+              <div class="title pull-left">Fortnite</div>
               <small class="pull-right">
-                  28 slots
+                  24 slots
                   <br>
-                  <strong>1 635€</strong>
+                  <strong>1 600€</strong>
               </small>
               <br class="clear">
           </header>
@@ -61,10 +59,10 @@
               <small class="pull-right">
                   48 slots
                   <br>
-                  <strong>565€</strong>
+                  <strong>700€</strong>
               </small>
               <br class="clear">
-          </header>
+          </header>{#
           <header class="full">
               <div class="title pull-left">Kamehado Fest</div>
               <small class="pull-right">
@@ -73,7 +71,7 @@
                   <strong>500€</strong>
               </small>
               <br class="clear">
-          </header>
+          </header>#}
           <header class="huge-button">
               <div class="title pull-left">
                   {% if app.user %}
@@ -88,7 +86,7 @@
           </section>
       </div>
   </div>
-  #}
+  
 
   <br class="clear">
   <article id="horaire" class="info">

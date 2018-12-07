@@ -130,12 +130,17 @@ class UserController extends Controller
             }
         }
 
+        // Get global variables
+        $globalVars = array();
+        $globalKeys = ['romanNumber'];
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
         // Room structure
         $structure = $this->get('insalan.tournament.placement')->getStructure();
 
         // Getting unavailable placements for interface
         $unavailable = $em->getRepository("InsaLanTournamentBundle:Tournament")->getUnavailablePlacements($tournament);
-        return array('structure' => $structure, 'tournament' => $tournament, 'participant' => $participant, 'unavailable' => $unavailable);
+        return array('structure' => $structure, 'tournament' => $tournament, 'participant' => $participant, 'unavailable' => $unavailable, 'globalVars' => $globalVars);
     }
 
     /**
