@@ -33,6 +33,8 @@ use InsaLan\TournamentBundle\Entity\Tournament;
 use InsaLan\TournamentBundle\Entity\Team;
 use InsaLan\TournamentBundle\Entity;
 
+use InsaLan\UserBundle\Entity\PaymentDetails;
+
 /**
 * ManagerController
 * All the stuff realted to managers management
@@ -285,6 +287,11 @@ class ManagerController extends Controller
         $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
         $order = $storage->createModel();
         $order->setUser($usr);
+
+        $order->setRawPrice($manager::ONLINE_PRICE);
+        $order->setPlace(PaymentDetails::PLACE_WEB);
+        $order->setType(PaymentDetails::TYPE_PAYPAL);
+
 
         $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $tournament->getCurrency();
         $order['PAYMENTREQUEST_0_AMT'] = $price;

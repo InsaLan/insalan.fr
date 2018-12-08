@@ -34,6 +34,7 @@ use InsaLan\TournamentBundle\Entity;
 use InsaLan\InsaLanBundle\GlobalVars;
 
 use InsaLan\UserBundle;
+use InsaLan\UserBundle\Entity\PaymentDetails;
 
 /**
  * User tournament registering and management interface
@@ -391,6 +392,10 @@ class UserController extends Controller
         $order = $storage->createModel();
         $order->setUser($usr);
         $order->setDiscount($discount);
+
+        $order->setRawPrice($price);
+        $order->setPlace(PaymentDetails::PLACE_WEB);
+        $order->setType(PaymentDetails::TYPE_PAYPAL);
 
         $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $registrable->getCurrency();
         $order['PAYMENTREQUEST_0_AMT'] = $price + $registrable->getOnlineIncreaseInPrice();

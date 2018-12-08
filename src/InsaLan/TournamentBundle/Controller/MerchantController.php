@@ -14,6 +14,7 @@ use InsaLan\TournamentBundle\Entity\Player;
 use InsaLan\TournamentBundle\Exception\ControllerException;
 
 use InsaLan\UserBundle\Entity\MerchantOrder;
+use InsaLan\UserBundle\Entity\PaymentDetails;
 
 use InsaLan\ApiBundle\Http\JsonResponse;
 
@@ -169,6 +170,16 @@ class MerchantController extends Controller
         }
 
         $order->setDiscount($discount);
+
+        $order->setRawPrice($price);
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) { // The user is in InsaLan's staff so it is a preorder by check
+            $order->setPlace(PaymentDetails::PLACE_WEB);
+            $order->setType(PaymentDetails::TYPE_CHECK);
+            } else { // User is a partner
+                $order->setPlace(PaymentDetails::PLACE_IN_PARTNER_SHOP);
+                $order->setType(PaymentDetails::TYPE_UNDEFINED); // TODO Save payment type
+            }
+
 
         $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $registrable->getCurrency();
         $order['PAYMENTREQUEST_0_AMT'] = $price;
