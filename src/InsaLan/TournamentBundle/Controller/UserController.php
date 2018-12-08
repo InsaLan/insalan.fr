@@ -439,7 +439,12 @@ class UserController extends Controller
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $registrable);
 
-        return array('registrable' => $registrable, 'user' => $usr, 'player' => $player);
+        // Get global variables
+        $globalVars = array();
+        $globalKeys = ['helpPhoneNumber'];
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
+        return array('registrable' => $registrable, 'user' => $usr, 'player' => $player, 'globalVars' => $globalVars);
     }
 
     /**

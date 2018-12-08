@@ -335,7 +335,12 @@ class ManagerController extends Controller
             ->getRepository('InsaLanTournamentBundle:Manager')
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
-        return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager);
+        // Get global variables
+        $globalVars = array();
+        $globalKeys = ['helpPhoneNumber'];
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
+        return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager, 'globalVars' => $globalVars);
     }
 
     /**
