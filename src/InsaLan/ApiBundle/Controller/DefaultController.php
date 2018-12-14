@@ -87,10 +87,10 @@ class DefaultController extends Controller
           "username" => $usr->getUsername(),
           "name" => $usr->getFirstname()." ".$usr->getLastname()
         ),
-        "err" => null,
+        "err" => "registration_not_found",
         "tournament" => null,
         "manager" => False,
-        "has_paid" => null
+        "has_paid" => False
         );
 
 
