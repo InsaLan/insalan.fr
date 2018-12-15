@@ -48,4 +48,5 @@ security:
         - { path: /merchant, role: ROLE_MERCHANT } 
         - { path: ^/pizza, role: ROLE_USER }
         - { path: ^/infos/playersinfos, role: ROLE_USER }
+        - { path: ^/infos/hardwareRental, role: ROLE_USER }
 

@@ -89,13 +89,16 @@
           <h1 style="text-align: center; font-size: 40px; font-weight: bold; color: #FFF; font-family: OpenSansCond">XIVème édition</h1>
           <ul>
             <li><a href="{{ path('insalan_news_default_index') }}">Accueil</a></li>
-            <li><a href="{{ path('insalan_rsc_default_index') }}">RSC</a></li>
+            {#<li><a href="{{ path('insalan_rsc_default_index') }}">RSC</a></li>#}
             <li><a href="{{ path('insalan_tournament_default_index') }}">Tournois</a></li>
               {% if app.user %}
                 <li><a href="{{ path('insalan_information_default_playersinfos') }}">Infos joueurs</a></li>
               {% endif %}
             <li><a href="{{ path('insalan_information_default_cosplay') }}">Cosplay</a></li>
             <li><a href="{{ path('insalan_information_default_faq') }}">Informations</a></li>
+            {% if app.user %}
+            <li><a href="{{ path('insalan_information_default_hardwarerental') }}">Locations</a></li>
+            {% endif %}
             <li><a href="{{ path('insalan_news_default_forum') }}">Forum</a></li>
             {# <li><a href="{{ path('insalan_pizza_default_index') }}">Pizzas</a></li> #}
           </ul>

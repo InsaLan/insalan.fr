@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use InsaLan\InsaLanBundle\Entity;
+use InsaLan\TournamentBundle\Entity\Participant;
 
 class DefaultController extends Controller
 {
@@ -65,5 +66,24 @@ class DefaultController extends Controller
     public function salesTermsAction()
     {
         return array();
+    }
+
+    /** 
+     * @Route("/hardwareRental")
+     * @Template()
+     */
+    public function hardwareRentalAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
+        $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($usr);
+
+        $validated = False;
+        foreach($participants as $p) {
+            if ($p->getValidated() == Participant::STATUS_VALIDATED) {
+                $validated = True;
+            }
+        }
+        return array('validated' => $validated);
     }
 }
