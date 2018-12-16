@@ -195,12 +195,16 @@
         {% if t.kind == "tournament" %}
            <a href="{{ path('insalan_tournament_manager_setname', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription manager</a> 
         {% endif %}
+        {#
         {% if t.isFull and t.kind == 'tournament' and t.participantType == 'team' %}
           <a href="{{ path('insalan_tournament_user_enroll', {registrable: t.id}) }}" class="btn2" style="float: right">Rejoindre une équipe</a>
         {% endif %}
         {% if not t.isFull %}
+        #}
           <a href="{{ path('insalan_tournament_user_enroll', {registrable: t.id}) }}" class="btn2" style="float: right">Inscription joueur</a>
+        {#
         {% endif %}
+        #}
 
         <p>
         {% if t.kind == "tournament" %}
