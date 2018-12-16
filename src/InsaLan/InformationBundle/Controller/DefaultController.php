@@ -48,4 +48,22 @@ class DefaultController extends Controller
 
         return array('globalVars' => $globalVars);
     }
+
+    /**
+     * @Route("/playersinfos")
+     * @Template()
+     */
+    public function playersInfosAction()
+    {
+        return array();
+    }
+
+    /**
+     * @Route("/salesterms")
+     * @Template()
+     */
+    public function salesTermsAction()
+    {
+        return array();
+    }
 }

@@ -1,0 +1,44 @@
+{% extends 'InsaLanInformationBundle::layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+<article class="info">
+
+  <section>
+    <p>
+        Section en cours de construction
+    </p>
+  </section>
+</article>
+<article id="refund" class="info">
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+
+  <header>
+    <h2>Demande de remboursement</h2>
+  </header>
+
+  <section>
+    <p>
+      Si vous avez payé votre place en ligne et que vous souhaitez entamer une procédure de remboursement, vous devez envoyer un mail avec les informations suivantes à l’adresse <span class="emphase">contact@insalan.fr</span>
+      <ul class="shift">
+        <li>Votre <strong>pseudo</strong> sur le site insalan.fr</li>
+        <li>Le <strong>tournoi</strong> auquel vous participez</li>
+        <li>Le <strong>numéro de transaction Paypal</strong> correspondant à l’achat de votre place</li>
+      </ul>
+    </p>
+    <p>
+      Conformément aux informations présentes dans la section inscription, nous rappelons que toute demande de remboursement effectuée après le 08/02/2019 à 20:00 ne sera pas acceptée. De même, la majoration de paiement en ligne (1.00 EUR) ne sera pas remboursée.
+    </p>
+    <p>
+    Nous rappelons également que la <strong>revente de slot</strong> est formellement <strong>interdite</strong>. Toute équipe se présentant à l’InsaLan alors qu’elle n’est pas l’équipe initialement inscrite sera immédiatement disqualifiée.
+    </p>
+  </section>
+</article>
+
+
+{% endblock %}

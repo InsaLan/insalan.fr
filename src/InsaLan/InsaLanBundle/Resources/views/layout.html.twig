@@ -91,6 +91,9 @@
             <li><a href="{{ path('insalan_news_default_index') }}">Accueil</a></li>
             <li><a href="{{ path('insalan_rsc_default_index') }}">RSC</a></li>
             <li><a href="{{ path('insalan_tournament_default_index') }}">Tournois</a></li>
+              {% if app.user %}
+                <li><a href="{{ path('insalan_information_default_playersinfos') }}">Infos joueurs</a></li>
+              {% endif %}
             <li><a href="{{ path('insalan_information_default_cosplay') }}">Cosplay</a></li>
             <li><a href="{{ path('insalan_information_default_faq') }}">Informations</a></li>
             <li><a href="{{ path('insalan_news_default_forum') }}">Forum</a></li>
@@ -173,8 +176,18 @@
                 <li><a href="{{ path('insalan_information_default_faq') }}#contact">Contact</a></li>
               </ul>
             </li>
+
+            <li>
+              <header><a>À Propos</a></header>
+              <div>
+                <ul>
+                  <li><a href="{{ path('insalan_information_default_salesterms') }}">Conditions générales<br/> de vente</a></li>
+                </ul>
+              </div>
+            </li>
           </ul>
-          <div style="margin-top: 40px; float: right">
+
+          <div style="margin-top: 0px; float: right">
             <div class="partner partner-small" style="display: inline; margin: 0px 10px 0px 10px;">
               <a href="http://aeir.asso.insa-rennes.fr">
                 <img style="height: 60px;" src="{{ asset('bundles/insalan/img/partenaires/aeir.png') }}" alt="AEIR" />
