@@ -298,7 +298,7 @@ class ManagerController extends Controller
 
         $order['L_PAYMENTREQUEST_0_NAME0'] = 'Place manager pour le tournoi '.$tournament->getName();
         $order['L_PAYMENTREQUEST_0_AMT0'] = $manager::ONLINE_PRICE;
-        $order['L_PAYMENTREQUEST_0_DESC0'] = $tournament->getDescription();
+        $order['L_PAYMENTREQUEST_0_DESC0'] = "";
         $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;
 
         $order['L_PAYMENTREQUEST_0_NAME1'] = 'Majoration paiement en ligne';
