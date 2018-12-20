@@ -10,9 +10,9 @@
 {% block body %}
 {{ parent() }}
 
-{#
+
 <img src="{{ asset('bundles/insalan/img/cosplay.png') }}" width="1000"/>
-#}
+
 
 <article id="cosplay" class="info">
     <aside>
@@ -44,7 +44,7 @@
     </section>
 
     <br /><br />
-    <div class="partner-list">
+   {# <div class="partner-list">
         <div class="partner partner-big">
             <a href="http://www.otaku-planete.com/">
             <img src="{{ asset('bundles/insalan/img/partenaires/otaku-planet.png') }}" alt="Otaku Planète" />
@@ -60,37 +60,57 @@
             <img src="{{ asset('bundles/insalan/img/partenaires/cosplay-craft.png') }}" alt="Cosplay Craft" />
             </a>
         </div>
-    </div>
+    </div>#}
 </article>
+
 <hr></hr>
-<article id="horaire" class="info">
+
+<article id="links" class="info">
     <aside>
         <div class="square">
           <a href="#body"><span></span></a>
         </div>
     </aside>
     <header>
-        <h2>Inscriptions</h2>
+        <h2>Liens utiles</h2>
     </header>
     <section>
         <p>
             <ol class="shift">
-                <li>Lire et accepter le <strong><a href="{{ asset('bundles/insalan/pdf/reglement.pdf') }}" target="_blank" >[règlement &#x25BE;]</a></strong>.</li>
-                <li>Télécharger et remplir la fiche d'inscription adaptée :
-                    <strong><a href="{{ asset('bundles/insalan/pdf/inscription-cosplay.pdf') }}" target="_blank" >[individuelle &#x25BE;]</a></strong>
-                    <strong><a href="{{ asset('bundles/insalan/pdf/inscription-cosplay-groupe.pdf') }}" target="_blank" >[groupe &#x25BE;]</a></strong>.
-                </li>
-                <li>Télécharger et remplir <strong><a href="{{ asset('bundles/insalan/pdf/droit-image-cosplay.pdf') }}" target="_blank" >[l'autorisation de droit à l'image &#x25BE;]</a></strong>.</li>
-                <li>Pour les mineurs : télécharger et remplir <strong><a href="{{ asset('bundles/insalan/pdf/autorisation-parental-cosplay.pdf') }}" target="_blank" >[l'autorisation parentale &#x25BE;]</a></strong>.</li>
-                <li>Joindre une image du personnage cosplayé correspondant exactement au cosplay réalisé, ainsi que le fichier mp3 ou mp4 de sa prestation.</li>
-                <li>Signer le ou les document(s) nécessaire(s) (imprimer, signer, scanner ou via une tablette graphique ou directement le jour de l'événement).</li>
-                <li>Envoyer votre dossier (si possible en PDF) à <a href="mailto:cosplay@insalan.fr">cosplay@insalan.fr</a> <strong>avant le {{ globalVars.cosplayEndRegistration }}</strong>.</li>
+                <li><strong><a href="{{ asset('bundles/insalan/pdf/reglement.pdf') }}" target="_blank" >[Règlement &#x25BE;]</a></strong>.</li>
+                <li><strong><a href="{{ asset('bundles/insalan/pdf/droit-image-cosplay.pdf') }}" target="_blank" >[Autorisation de droit à l'image &#x25BE;]</a></strong>.</li>
+                <li>Pour les mineurs : <strong><a href="{{ asset('bundles/insalan/pdf/autorisation-parental-cosplay.pdf') }}" target="_blank" >[Autorisation parentale &#x25BE;]</a></strong>.</li>
             </ol>
+        </p>
+        <p>
+            Signer le ou les document(s) nécessaire(s) (imprimer, signer, scanner ou via une tablette graphique ou directement le jour de l'événement).
+        </p>
+    </section>
+</article>
+
+<hr></hr>
+<article id="register" class="info">
+    <aside>
+        <div class="square">
+          <a href="#body"><span></span></a>
+        </div>
+    </aside>
+    <header>
+        <h2>Inscription</h2>
+    </header>
+    <section>
+        <p>
+            Remplissez le questionnaire <strong>avant le {{ globalVars.cosplayEndRegistration }}</strong>.
         </p>
         <p>
             <em>Un problème ? Une question ? Envoyez-nous un mail à <a href="mailto:cosplay@insalan.fr">cosplay@insalan.fr</a> ou contactez-nous via Facebook !</em>
         </p>
     </section>
 </article>
+
+<br/><br/><center>
+<iframe src="https://docs.google.com/forms/d/1OlE7HneRUqWUuu57SWyQAaPflW2Hk4vlY9wkbyfnnrc/viewform?embedded=true" width="700" height="300" frameborder="0" marginheight="0" marginwidth="0">Chargement en cours...</iframe>
+</center><br/><br/>
+
 
 {% endblock %}
