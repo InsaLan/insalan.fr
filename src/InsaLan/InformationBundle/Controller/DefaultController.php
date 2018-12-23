@@ -10,7 +10,7 @@ use InsaLan\TournamentBundle\Entity\Participant;
 
 class DefaultController extends Controller
 {
-    const OPENING_DATE = '2014/10/03 00:00:00';
+    const OPENING_DATE = '2018/12/24 20:00:00';
 
     /**
      * @Route("/faq")
@@ -75,9 +75,25 @@ class DefaultController extends Controller
     public function hardwareRentalAction()
     {
         $em = $this->getDoctrine()->getManager();
+
+        // Get global variables
+        $globalVars = array();
+        // Safety  valve
+        $globalKeys = ['rentalPageEnabled'];
+
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
+        // Disallow access until date reached
+        if(time() < strtotime(self::OPENING_DATE) || $globalVars['rentalPageEnabled'] != "True") {
+            $this->get('session')->getFlashBag()->add('error', "Page indisponible pour le moment. Revenez plus tard !");
+            return $this->redirect($this->generateUrl(
+                'insalan_news_default_index'));
+            }
+
         $usr = $this->get('security.token_storage')->getToken()->getUser();
         $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($usr);
 
+        // Check if player's team / player / manager is validated
         $validated = False;
         foreach($participants as $p) {
             if ($p->getValidated() == Participant::STATUS_VALIDATED) {
