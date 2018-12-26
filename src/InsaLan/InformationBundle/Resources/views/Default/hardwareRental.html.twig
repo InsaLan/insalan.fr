@@ -8,7 +8,7 @@
       <h2><span class="pull-left">Locations</span><span class="pull-right"><a href="https://scoup-esport.fr/"><img src="{{ asset('bundles/insalan/img/partenaires/scoup-esport.png') }}" alt="Scoup Esport"/></a></span><br class="clear"></h2>
   </header>
   <br/><br/>
-  {% if validated %}
+  {% if validated or is_granted('ROLE_ADMIN') %}
     <div class="grid-7 pull-left">
       <header><h2>Inscriptions</h2></header>
       <iframe src="https://www.weezevent.com/widget_billeterie.php?id_evenement=404293&lg_billetterie=1&code=27688&resize=1&width_auto=1&color_primary=00AEEF&v=2" width="570" height="1040" frameborder="0" marginheight="0" marginwidth="0">Chargement en cours...</iframe>
