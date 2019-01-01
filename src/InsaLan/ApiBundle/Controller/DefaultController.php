@@ -75,7 +75,25 @@ class DefaultController extends Controller
     /**
     * @Route("/user/2me")
     * @Template()
-    * Work in Progress
+    * JSON structure:
+    * {
+	*   "user":{
+	*   	"username",
+	*   	"name",
+	*   	"email"
+	*   },
+	*   "err",
+	*   "tournament":[
+	*   	{
+	*   		"shortname",
+	*   		"game_name",
+    *   		"manager",
+    *           "team", // Only for team players
+	*   		"coached_participant", // Only for managers
+	*   		"has_paid"
+	*   	}
+	*   ]
+    * }
     */
     public function index2Action(Request $request)
     {
@@ -85,31 +103,38 @@ class DefaultController extends Controller
       $res = array(
         "user" => array(
           "username" => $usr->getUsername(),
-          "name" => $usr->getFirstname()." ".$usr->getLastname()
+          "name" => $usr->getFirstname()." ".$usr->getLastname(),
+          "email" => $usr->getEmail()
         ),
         "err" => "registration_not_found",
-        "tournament" => null,
-        "manager" => False,
-        "has_paid" => False
+        "tournament" => null
         );
 
 
         // look for a manager corresponding to user
         $manager = $em->getRepository('InsaLanTournamentBundle:Manager')->findByUser($usr);
         foreach ($manager as $m) {
-            if ($m->getTournament()->isPending() || $m->getTournament()->isPlaying())
-            if ($m->getTournament())
-                    if($m->getPaymentDone()) {
-                        $res["err"] = null;
-                        $res["tournament"]= $m->getTournament()->getShortname();
-                        $res["manager"] = True;
-                        $res["has_paid"] = True;
+            if ($m->getTournament()->isPending() || $m->getTournament()->isPlaying()) {
+                        
+                $res["err"] = null;
+                $tournament = [];
+                $tournament["shortname"] =$m->getTournament()->getShortname();
+                $tournament["game_name"] = $m->getGameName();
+                $tournament["manager"] = True;
+                if ($m->getParticipant()) {
+                    $tournament["coached_participant"] = $m->getParticipant()->getName();
+                }
 
-                        return new JsonResponse($res);
-                    } else {
-                        $res["err"] = "no_paid_place";
-                        // no return because we need to check if there is a player timezone_offset_get()
-                    }
+                if($m->getPaymentDone()) {
+                    $tournament["has_paid"] = True;
+                } else {
+                    $tournament["has_paid"] = False;
+                }
+                $res["tournament"][] = $tournament;
+            } else {
+                $res["err"] = "no_paid_place";
+                // no return because we need to check if there is a player timezone_offset_get()
+            }
         }
 
         $player = $em->getRepository('InsaLanTournamentBundle:Player')->findByUser($usr);
@@ -118,26 +143,46 @@ class DefaultController extends Controller
             $res["err"] = "no_paid_place";
 
             if ($p->getTournament()) {
-                if ($p->getTournament()->isPending() || $p->getTournament()->isPlaying())
-                if($p->getPaymentDone()) {
-                    $shortName = $p->getTournament()->getShortname();
+                if ($p->getTournament()->isPending() || $p->getTournament()->isPlaying()) {
+                        
                     $res["err"] = null;
-                    $res["tournament"] = $shortName;
-                    $res["has_paid"] = True;
+                    $tournament = [];
+                    $tournament["shortname"] =$p->getTournament()->getShortname();
+                    $tournament["game_name"] = $p->getGameName();
+                    // Warning getTeam() returns a Collection
+                    if ($p->getTeam()[0] != null) {
+                        $tournament["team"] = $p->getTeam()[0]->getName();
+                    }
+                    $tournament["manager"] = False;
 
-                    return new JsonResponse($res);
+                    if($p->getPaymentDone()) {
+                        $tournament["has_paid"] = True;
+                    } else {
+                        $tournament["has_paid"] = False;
+                    }
+                    $res["tournament"][] = $tournament;      
                 }
             }
 
             elseif ($p->getPendingRegistrable()) {
-                if ($p->getPendingRegistrable()->isOpenedNow())
-                if($p->getPaymentDone()) {
-                    $shortName = $p->getPendingRegistrable()->getShortname();
-                    $res["err"] = null;
-                    $res["tournament"] = $shortName;
-                    $res["has_paid"] = True;
+                if ($p->getPendingRegistrable()->isOpenedNow()) {
 
-                    return new JsonResponse($res);
+                    $res["err"] = null;
+                    $tournament = [];
+                    $tournament["shortname"] =$p->getPendingRegistrable()->getShortname();
+                    $tournament["game_name"] = $p->getGameName();
+                    // Warning getTeam() returns a Collection
+                    if ($p->getTeam()[0] != null) {
+                        $tournament["team"] = $p->getTeam()[0]->getName();
+                    }
+                    $tournament["manager"] = False;
+
+                    if($p->getPaymentDone()) {
+                        $tournament["has_paid"] = True;
+                    } else {
+                        $tournament["has_paid"] = False;
+                    }
+                    $res["tournament"][] = $tournament;                 
                 }
             }
         }
