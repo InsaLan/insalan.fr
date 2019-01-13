@@ -116,7 +116,6 @@ class DefaultController extends Controller
         foreach ($manager as $m) {
             if ($m->getTournament()->isPending() || $m->getTournament()->isPlaying()) {
                         
-                $res["err"] = null;
                 $tournament = [];
                 $tournament["shortname"] =$m->getTournament()->getShortname();
                 $tournament["game_name"] = $m->getGameName();
@@ -127,6 +126,7 @@ class DefaultController extends Controller
 
                 if($m->getPaymentDone()) {
                     $tournament["has_paid"] = True;
+                    $res["err"] = null;
                 } else {
                     $tournament["has_paid"] = False;
                 }
@@ -145,7 +145,6 @@ class DefaultController extends Controller
             if ($p->getTournament()) {
                 if ($p->getTournament()->isPending() || $p->getTournament()->isPlaying()) {
                         
-                    $res["err"] = null;
                     $tournament = [];
                     $tournament["shortname"] =$p->getTournament()->getShortname();
                     $tournament["game_name"] = $p->getGameName();
@@ -157,6 +156,7 @@ class DefaultController extends Controller
 
                     if($p->getPaymentDone()) {
                         $tournament["has_paid"] = True;
+                        $res["err"] = null;
                     } else {
                         $tournament["has_paid"] = False;
                     }
@@ -167,7 +167,6 @@ class DefaultController extends Controller
             elseif ($p->getPendingRegistrable()) {
                 if ($p->getPendingRegistrable()->isOpenedNow()) {
 
-                    $res["err"] = null;
                     $tournament = [];
                     $tournament["shortname"] =$p->getPendingRegistrable()->getShortname();
                     $tournament["game_name"] = $p->getGameName();
@@ -179,6 +178,7 @@ class DefaultController extends Controller
 
                     if($p->getPaymentDone()) {
                         $tournament["has_paid"] = True;
+                        $res["err"] = null;
                     } else {
                         $tournament["has_paid"] = False;
                     }
