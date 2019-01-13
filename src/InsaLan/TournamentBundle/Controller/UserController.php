@@ -408,7 +408,7 @@ class UserController extends Controller
 
         $order['L_PAYMENTREQUEST_0_NAME0'] = $title;
         $order['L_PAYMENTREQUEST_0_AMT0'] = $price;
-        $order['L_PAYMENTREQUEST_0_DESC0'] = $registrable->getDescription();
+        $order['L_PAYMENTREQUEST_0_DESC0'] = ''; //$registrable->getDescription();
         $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;
 
         $order['L_PAYMENTREQUEST_0_NAME1'] = 'Majoration paiement en ligne';
