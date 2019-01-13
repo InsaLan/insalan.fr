@@ -16,6 +16,7 @@ abstract class Participant
     const STATUS_PENDING   = 0; // Not ready for validation
     const STATUS_WAITING   = 1; // Ready for validation, but no slot free
     const STATUS_VALIDATED = 2; // Validated
+    const STATUS_PAYING_OFFLINE = 3; // Chose to pay offline, for single player tournaments
 
     public static function getStatuses()
     {
@@ -23,6 +24,7 @@ abstract class Participant
             self::STATUS_PENDING => 'pending',
             self::STATUS_WAITING => 'waiting',
             self::STATUS_VALIDATED => 'validated',
+            self::STATUS_PAYING_OFFLINE => 'paying_offline',
         );
     }
 
