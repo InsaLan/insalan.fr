@@ -23,7 +23,7 @@ class DefaultController extends Controller
         // Get global variables
         $globalVars = array();
         $globalKeys = ['staffNumber', 'number', 'lettersNumber',
-                      'playersNumber', 'openingDate', 'openingHour', 'closingDate', 'closingHour', 'price', 'webPrice', 'campanilePrice'];
+                      'playersNumber', 'openingDate', 'openingHour', 'closingDate', 'closingHour', 'price', 'webPrice'];
         $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
 
         // Get staff
