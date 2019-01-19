@@ -75,35 +75,41 @@ class Placement
         $structure[] = array("csgo2019", 24, 33, 10, 5, 1);
 
         //                      game    id  x   y   w  h
-        $structure[] = array("fbr2019", 1,  12, 0,  1, 4);
-        $structure[] = array("fbr2019", 5,  13, 0,  1, 4);
         $structure[] = array("fbr2019", 9,  15, 0,  1, 4);
         $structure[] = array("fbr2019", 13, 16, 0,  1, 4);
         $structure[] = array("fbr2019", 17, 18, 0,  1, 4);
         $structure[] = array("fbr2019", 21, 19, 0,  1, 4);
 
-        $structure[] = array("fbr2019", 2,  12, 4,  1, 4);
-        $structure[] = array("fbr2019", 6,  13, 4,  1, 4);
         $structure[] = array("fbr2019", 10, 15, 4,  1, 4);
         $structure[] = array("fbr2019", 14, 16, 4,  1, 4);
         $structure[] = array("fbr2019", 18, 18, 4,  1, 4);
         $structure[] = array("fbr2019", 22, 19, 4,  1, 4); 
         
-        $structure[] = array("fbr2019", 3,  12, 8,  1, 4);
-        $structure[] = array("fbr2019", 7,  13, 8,  1, 4);
         $structure[] = array("fbr2019", 11, 15, 8,  1, 4);
         $structure[] = array("fbr2019", 15, 16, 8,  1, 4);
         $structure[] = array("fbr2019", 19, 18, 8,  1, 4);
         $structure[] = array("fbr2019", 23, 19, 8,  1, 4); 
         
-        $structure[] = array("fbr2019", 4,  12, 12,  1, 4);
-        $structure[] = array("fbr2019", 8,  13, 12,  1, 4);
         $structure[] = array("fbr2019", 12, 15, 12,  1, 4);
         $structure[] = array("fbr2019", 16, 16, 12,  1, 4);
         $structure[] = array("fbr2019", 20, 18, 12,  1, 4);
         $structure[] = array("fbr2019", 24, 19, 12,  1, 4);
 
+        $structure[] = array("fbr2019", 28, 26, 12,  4, 1);
+        $structure[] = array("fbr2019", 5,  26, 13,  4, 1);
+        $structure[] = array("fbr2019", 7,  26, 15,  4, 1);
+        $structure[] = array("fbr2019", 3,  26, 16,  4, 1);
         
+        $structure[] = array("fbr2019", 25, 30, 12,  4, 1);
+        $structure[] = array("fbr2019", 8,  30, 13,  4, 1);
+        $structure[] = array("fbr2019", 6,  30, 15,  4, 1);
+        $structure[] = array("fbr2019", 2,  30, 16,  4, 1);
+
+        $structure[] = array("fbr2019", 4,  34, 12,  4, 1);
+        $structure[] = array("fbr2019", 26, 34, 13,  4, 1);
+        $structure[] = array("fbr2019", 27, 34, 15,  4, 1);
+        $structure[] = array("fbr2019", 1,  34, 16,  4, 1);
+
         $structure[] = array("streamer", 0, 22, 0,  1, 2);
         $structure[] = array("streamer", 1, 22, 3,  1, 2);
         $structure[] = array("streamer", 2, 22, 6,  1, 2);
@@ -112,12 +118,10 @@ class Placement
         // Initalize counters for HS
         $hs = 1;
 
-        // rightmost table
-        for($j = 26; $j < 38; $j++) {
-            $structure[] = array("hs2019", $hs++, $j, 12, 1, 1);
-            $structure[] = array("hs2019", $hs++, $j, 13, 1, 1);
-            $structure[] = array("hs2019", $hs++, $j, 15, 1, 1);
-            $structure[] = array("hs2019", $hs++, $j, 16, 1, 1);
+        // rightmost table 12131516 2638
+        for($j = 0; $j < 16; $j++) {
+            $structure[] = array("hs2019", $hs++, 12, $j, 1, 1);
+            $structure[] = array("hs2019", $hs++, 13, $j, 1, 1);
         }
 
         return $structure;
