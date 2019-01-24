@@ -51,6 +51,15 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/baston")
+     * @Template()
+     */
+    public function bastonAction()
+    {
+        return array();
+    }
+
+    /**
      * @Route("/playersinfos")
      * @Template()
      */
