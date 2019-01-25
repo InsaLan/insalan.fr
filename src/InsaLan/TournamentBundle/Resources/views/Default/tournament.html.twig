@@ -27,7 +27,33 @@
   <header class="game">
     <div class="container">
       <img style="height:100px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" alt="Logo"/>
-      {{ t.name }}
+      {{ t.name }} -
+      {% if t.tournamentClose | date("m") == "1" %}
+        Janvier
+      {% elseif t.tournamentClose | date("m") == "2" %}
+        Février
+      {% elseif t.tournamentClose | date("m") == "3" %}
+        Mars
+      {% elseif t.tournamentClose | date("m") == "4" %}
+        Avril
+      {% elseif t.tournamentClose | date("m") == "5" %}
+        Mai
+      {% elseif t.tournamentClose | date("m") == "6" %}
+        Juin
+      {% elseif t.tournamentClose | date("m") == "7" %}
+        Juillet
+      {% elseif t.tournamentClose | date("m") == "8" %}
+        Août
+      {% elseif t.tournamentClose | date("m") == "9" %}
+        Septembre
+      {% elseif t.tournamentClose | date("m") == "10" %}
+        Octobre
+      {% elseif t.tournamentClose | date("m") == "11" %}
+        Novembre
+      {% else %}
+        Décembre
+      {% endif %}
+      {{ t.tournamentClose | date("Y") }}
     </div>
   </header>
 
@@ -295,7 +321,7 @@
 
     });
   </script>
-  
+
   <script>
   function buildTrees() {
   {% for k in knockouts %}
@@ -314,7 +340,7 @@
 
   <script>
       (function($) {
-        $(".tablink").click(function() { 
+        $(".tablink").click(function() {
             $(".groups").hide();
             var targetId = $(this).data('target');
             var targetType = $(this).data('type');
