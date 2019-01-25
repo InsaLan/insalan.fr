@@ -118,15 +118,14 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $players =  $em->getRepository('InsaLanTournamentBundle:Player')->getPlayersForTournament($tournament);
 
-        $nbPendingPlayers = $nbWaitingPlayers = $nbPayingOfflinePlayers = 0;
+        $nbPendingPlayers = $nbWaitingPlayers = 0;
 
         foreach($players as $p) {
             if ($p->getValidated() == Entity\Participant::STATUS_PENDING) $nbPendingPlayers++;
             if ($p->getValidated() == Entity\Participant::STATUS_WAITING) $nbWaitingPlayers++;
-            if ($p->getValidated() == Entity\Participant::STATUS_PAYING_OFFLINE) $nbPayingOfflinePlayers++;
         }
 
-        return array('players' => $players, 'tournament' => $tournament, 'nbPendingPlayers' => $nbPendingPlayers, 'nbWaitingPlayers' => $nbWaitingPlayers, 'nbPayingOfflinePlayers' => $nbPayingOfflinePlayers);
+        return array('players' => $players, 'tournament' => $tournament, 'nbPendingPlayers' => $nbPendingPlayers, 'nbWaitingPlayers' => $nbWaitingPlayers);
     }
 
 

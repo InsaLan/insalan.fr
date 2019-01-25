@@ -89,36 +89,6 @@
 </article>
 {% endif %}
 
-{% if nbPayingOfflinePlayers %}
-<article>
-  <header>
-    <h2>Joueurs payant sur place ou par chèque</h2>
-  </header>
-
-  <section>
-    {% set count=0 %}
-    {% for p in players %}
-    {% if p.validated == 3 %}
-    <div class="frame frame-active grid-5 pull-left" style="background-color: rgba(0,0,0,.5)">
-        <header>
-            <div class="title pull-left">
-                {{count+1}}. {{ p.name }}
-            </div>
-            <br class="clear">
-        </header>
-    </div>
-    {% set count=count+1 %}
-        {% if count % 2 == 0%}
-        <br class="clear">
-        {% endif %}
-    {% endif %}
-    {% endfor %}
-    <br class="clear">
-  </section>
-</article>
-</div>
-{% endif %}
-
 {% if nbPendingPlayers %}
 <article>
   <header>

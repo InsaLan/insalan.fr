@@ -176,14 +176,8 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_validateplayer',array('registrable' => $registrable->getId())));
         else if ($registrable instanceof Entity\Tournament && $registrable->getParticipantType() === 'team' && $player->getTeamForTournament($registrable) === null)
             return $this->redirect($this->generateUrl('insalan_tournament_user_jointeam',array('tournament' => $registrable->getId())));
-        else if (!$player->getPaymentDone()) {
-            if ($player->getValidated() == Entity\Participant::STATUS_PAYING_OFFLINE) {
-                return $this->redirect($this->generateUrl('insalan_tournament_user_payoffline',array('registrable' => $registrable->getId())));
-            }
-            else {
+        else if (!$player->getPaymentDone())
             return $this->redirect($this->generateUrl('insalan_tournament_user_pay',array('registrable' => $registrable->getId())));
-            }
-        }
         else
             return $this->redirect($this->generateUrl('insalan_tournament_user_paydone',array('registrable' => $registrable->getId())));
     }
@@ -505,24 +499,6 @@ class UserController extends Controller
         }
 
         return array('registrable' => $registrable, 'user' => $usr, 'player' => $player, 'discount' => $discount, 'globalVars' => $globalVars);
-    }
-
-    /**
-     * @Route("/{registrable}/user/pay/offline_temp")
-     */
-    public function payOfflineTempAction(Request $request, Entity\Registrable $registrable) {
-        $em = $this->getDoctrine()->getManager();
-        $usr = $this->get('security.context')->getToken()->getUser();
-        $player = $em
-            ->getRepository('InsaLanTournamentBundle:Player')
-            ->findOneByUserAndPendingRegistrable($usr, $registrable);
-
-
-        $player->setValidated(Entity\Participant::STATUS_PAYING_OFFLINE);
-        $em->persist($player);
-        $em->flush();
-
-        return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
     }
 
     /**
