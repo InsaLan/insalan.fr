@@ -397,6 +397,36 @@ footer aside #twitter:hover, .social #twitter:hover {
   opacity: 1;
 }
 
+.social #return-top {
+  background-color: #00bff3;
+  width: 40px;
+  height: 40px;
+  opacity: 0.8;
+  display: inline-block;
+}
+
+.social #return-top a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.social #return-top a span {
+  display: block;
+  width: 0;
+  height: 0;
+  position: relative;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid white;
+  top: 15px;
+  left: 10px;
+}
+
+.social #return-top:hover {
+  opacity: 1;
+}
+
 footer aside #mail {
   height: 27px;
   width: 120px;
@@ -913,7 +943,7 @@ li a:hover {
 }
 
 .text-justify {
-    text-align: justify; 
+    text-align: justify;
 }
 
 .text-center {
@@ -954,8 +984,8 @@ li a:hover {
 /** FOR STREAMS ONLY, TEMPORARY */
 
 .streamsHeader {
-  top: 0px; 
-  width: 100%; 
+  top: 0px;
+  width: 100%;
   height: 40px;
   font-family: Oswald, sans-serif;
   font-size: 20px;
