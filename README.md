@@ -46,9 +46,9 @@ sudo apt-get install git
 git clone https://github.com/InsaLan/insalan.fr
 ```
 
-It is recommended to get composer.phar in your PATH : https://getcomposer.org/doc/00-intro.md
+It is recommended to get `composer.phar` in your PATH : https://getcomposer.org/doc/00-intro.md
 
-Install the other packages
+Install the remaining packages
 
 ```bash
 sudo apt-get install php php-curl php-intl php-mbstring php-mysql php-xml mariadb-server zip
@@ -86,7 +86,7 @@ GRANT ALL PRIVILEGES ON insalan.* to insalan@'localhost';
 Load fixtures (php-mbstring needed)
 
 ```bash
-php app/console doctrine:schema:create #have to be killed
+php app/console doctrine:schema:create #have to be killed manually
 php app/console doctrine:fixtures:load
 ```
 
@@ -108,9 +108,9 @@ Launch development server
 
 ```bash
 php app/console server:run #localhost only
-php app/console server:run 0.0.0.0 #available for everyone
+php app/console server:run 0.0.0.0 #available for everyone on port 8000
 ```
-(you can also use the php builtin development web server : `cd web && php -S localhost:9001`)
+(you can also use the php builtin development web server : `cd web && php -S localhost:8000`)
 
 
 ### Windows
@@ -124,7 +124,7 @@ http://www.wampserver.com/ should be able to provide everything you need.
 You can use the deploy-ftp script to deploy on a mutualised website.
 You must also have ncftp on your client (yum install ncftp/apt-get install ncftp)
 
-1. Configure your deployment
+### 1) Configure your deployment
 
 ```bash
 cd deploy/conf
@@ -142,7 +142,7 @@ cp parameters.yml.dist parameters.yml
 vim parameters.yml
 ```
 
-1. Deploy
+### 2) Deploy
 
 Deploy takes approximately 5 minutes.
 
@@ -151,7 +151,7 @@ cd deploy
 ./deploy-ftp.sh
 ```
 
-1. Remove app/cache/prod content
+### 3) Remove app/cache/prod content
 
 Use filezilla to clear cache, ie remove app/cache/prod folder content
 
