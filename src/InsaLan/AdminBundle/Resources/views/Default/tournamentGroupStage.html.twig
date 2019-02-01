@@ -1,0 +1,33 @@
+{% extends 'InsaLanAdminBundle::layout.html.twig' %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Tournament</th>
+            <th>Actions</th>
+        </tr>
+        {% for group in groupStages %}
+            <tr>
+                <td>{{ group.id }}</td>
+                <td>{{ group.name }}</td>
+                <td>{{ group.tournament }}</td>
+                <td>
+                    <a class="btn-plain" href = {{ path('insalan_admin_default_tournamentgroupstagemodify', {'id': group.id }) }}>Modifier</a>
+                    <a class="btn-plain" href = {{ path('insalan_admin_default_tournamentgroupstageremove', {'id': group.id }) }}>Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

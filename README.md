@@ -1,5 +1,4 @@
-insalan.fr
-==========
+# insalan.fr
 
 [![Build Status](https://travis-ci.org/InsaLan/insalan.fr.svg?branch=master)](https://travis-ci.org/InsaLan/insalan.fr)
 [![Maintainability](https://api.codeclimate.com/v1/badges/68707ca6cd1a2b332dc4/maintainability)](https://codeclimate.com/github/InsaLan/insalan.fr/maintainability)
@@ -7,8 +6,7 @@ insalan.fr
 
 Website to handle esport tournament
 
-Installation
-------------
+## Installation
 
 Download vendors
 Considering you have composer.phar installed and in your PATH :
@@ -54,8 +52,7 @@ php app/console server:run 0.0.0.0:9001 #available for everyone
 ```
 (you can also use the php builtin development web server : `cd web && php -S localhost:9001`)
 
-Deploy on shared web hosting services
--------------------------------------
+## Deploy on shared web hosting services
 
 You can use the deploy-ftp script to deploy on a mutualised website.
 You must also have ncftp on your client (yum install ncftp/apt-get install ncftp)
@@ -95,3 +92,18 @@ Backup DB before deploy, update it locally and send it after deploy if you chang
 4) Contributing file
 
 If you wish to contribute to the insalan.fr project, refer to [this](https://github.com/insalan/insalan.fr/blob/master/CONTRIBUTING.md) file.
+
+## Database
+
+List databases
+
+```bash
+php app/console sonata:admin:list
+```
+
+Show database schema and links with other databases
+
+```bas
+php app/console sonata:admin:explain sonata.admin.tournament.group
+```
+

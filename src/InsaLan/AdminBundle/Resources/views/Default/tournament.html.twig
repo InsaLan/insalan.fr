@@ -1,9 +1,26 @@
 {% extends 'InsaLanAdminBundle::layout.html.twig' %}
 
 {% block title %}
-  {{ parent() }}
+    {{ parent() }}
 {% endblock %}
 
 {% block body %}
-  {{ parent() }}
+    {{ parent() }}
+    <div class="tournamentTab">
+        <div class="tournamentSubTab">
+            <a href="{{ path('insalan_admin_default_tournamentgroupstage') }}">
+                Gestion des phases de poule
+            </a>
+        </div>
+        <div class="tournamentSubTab">
+            <a href="{{ path('insalan_admin_default_tournamentgroup') }}">
+                Gestion des poules
+            </a>
+        </div>
+        <div class="tournamentSubTab">
+            <a href="{{ path('insalan_admin_default_tournamentmatch') }}">
+                Gestion des matchs
+            </a>
+        </div>
+    </div>
 {% endblock %}
