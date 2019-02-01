@@ -9,6 +9,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 use InsaLan\TournamentBundle\Entity\Match;
+use InsaLan\TournamentBundle\Entity\Participant;
+use InsaLan\TournamentBundle\Entity\ParticipantRepository;
 
 class GroupAdmin extends Admin
 {
@@ -18,7 +20,13 @@ class GroupAdmin extends Admin
         $formMapper
             ->add('name')
             ->add('stage')
-            ->add('participants')
+            // Display only validated participants
+            ->add('participants', null, array('query_builder' => function(ParticipantRepository $er) {
+                                        return $er->createQueryBuilder('e')
+                                                  ->where('e.validated = :status')
+                                                  ->setParameter('status', Participant::STATUS_VALIDATED);
+                                    })
+            )
             // DISABLED SEE BELOW ->add('matches', 'sonata_type_collection', array(), array('edit' => 'inline', 'inline' => 'table'))
         ;
     }
@@ -80,12 +88,12 @@ class GroupAdmin extends Admin
     }
 
     private function autoManageMatches($group)
-    {   
+    {
 
         $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
 
         // Clean up deprecated matches
-        
+
         foreach($group->getMatches()->toArray() as $match) {
 
             if(!$group->hasParticipant($match->getPart1()) ||
@@ -97,8 +105,8 @@ class GroupAdmin extends Admin
             }
         }
 
-        // Create missing matches 
-        
+        // Create missing matches
+
         $participants = $group->getParticipants()->getValues();
 
         for($i = 0; $i < count($participants); $i++)
