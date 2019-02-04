@@ -1,0 +1,11 @@
+services:
+    sonata.admin.stream.stream:
+        class: InsaLan\StreamBundle\Admin\StreamAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Web", label: "Stream" }
+        arguments:
+            - ~
+            - InsaLan\StreamBundle\Entity\Stream
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanStreamBundle]]
