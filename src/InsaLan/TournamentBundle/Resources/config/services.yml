@@ -87,6 +87,17 @@ services:
         calls:
             - [ setTranslationDomain, [InsaLanTournamentBundle]]
 
+    sonata.admin.tournament.score:
+        class: InsaLan\TournamentBundle\Admin\ScoreAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Score", show_in_dashboard: false }
+        arguments:
+            - ~
+            - InsaLan\TournamentBundle\Entity\Score
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanTournamentBundle]]
+
 
     sonata.admin.tournament.knockout:
         class: InsaLan\TournamentBundle\Admin\KnockoutAdmin

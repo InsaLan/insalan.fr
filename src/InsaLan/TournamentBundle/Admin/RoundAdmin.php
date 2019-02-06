@@ -17,8 +17,17 @@ class RoundAdmin extends Admin
     {
         $formMapper
             ->add('match')
-            ->add('score1', null, array('label' => "Score 1"))
-            ->add('score2', null, array('label' => "Score 2"))
+            ->add('scores', 'sonata_type_collection', array(
+                'by_reference' => true,
+                'label' => "Scores",
+                'type_options' => array('delete' => false),
+                'cascade_validation' => true,
+                'btn_add' => false,
+                'required' => true
+            ), array(
+                'edit' => 'inline',
+                'inline' => 'table'
+            ))
             ->add('replayFile', 'file', array('required' => false, 'label' => "Fichier de replay"))
         ;
     }
@@ -28,8 +37,7 @@ class RoundAdmin extends Admin
         $showMapper
             ->add("Détails", null, array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
             ->add('match',   null, array('route' => array('name' => 'show')))
-            ->add('score1',  null, array('label' => "Score 1"))
-            ->add('score2',  null, array('label' => "Score 2"))
+            ->add('scores',  null, array('label' => "Scores"))
             ->add('fullReplay', "string", array('label' => "Replay"))
         ;
     }
@@ -47,10 +55,10 @@ class RoundAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->add('match', null, array('label' => "Match"))
             ->add('match.part1', null, array('label' => "Participant 1"))
             ->add('match.part2', null, array('label' => "Participant 2"))
-            ->add('score1',      null, array('label' => "Score 1"))
-            ->add('score2',      null, array('label' => "Score 2"))
+            ->add('scores',      null, array('label' => "Scores"))
             ->add('_action','actions',array('actions'  => array('edit' => array())));
         ;
     }

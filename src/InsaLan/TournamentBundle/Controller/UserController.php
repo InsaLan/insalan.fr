@@ -884,16 +884,16 @@ class UserController extends Controller
         $round = new Entity\Round();
         $round->setMatch($match);
 
-        $round->setScore1(0);
-        $round->setScore2(0);
+        $round->setScore($match->getPart1(), 0);
+        $round->setScore($match->getPart2(), 0);
 
         $round->setData($data);
 
         if($matchResult) {
-            $round->setScore1(1);
+            $round->setScore($match->getPart1(), 1);
         }
         else {
-            $round->setScore2(1);
+            $round->setScore($match->getPart2(), 1);
         }
 
         // TODO : not for LoL only

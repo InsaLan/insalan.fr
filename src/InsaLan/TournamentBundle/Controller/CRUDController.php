@@ -20,8 +20,8 @@ class CRUDController extends Controller
 
 
         $round = new Round();
-        $round->setScore1(0);
-        $round->setScore2(0);
+        $round->setScore($match->getPart1(), 0);
+        $round->setScore($match->getPart2(), 0);
         $round->setMatch($match);
         $match->addRound($round);
 

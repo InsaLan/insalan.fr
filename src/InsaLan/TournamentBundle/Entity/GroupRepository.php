@@ -15,9 +15,11 @@ class GroupRepository extends EntityRepository
             ->leftJoin('m.part1', 'p1')
             ->leftJoin('m.part2', 'p2')
             ->leftJoin('m.rounds', 'r')
+            ->leftJoin('m.scores', 'sc')
             ->addSelect('partial g.{id, name}')
             ->addSelect('partial m.{id, state}')
-            ->addSelect('partial r.{id, score1, score2, replay}')
+            ->addSelect('partial r.{id, replay}')
+            ->addSelect('sc')
             ->addSelect('p')
             ->addSelect('p1')
             ->addSelect('p2');

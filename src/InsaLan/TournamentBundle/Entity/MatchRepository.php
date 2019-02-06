@@ -28,7 +28,9 @@ class MatchRepository extends EntityRepository
     public function getByGroup($id)
     {
         $q = $this->getQueryBuilder();
-        $q->addSelect('partial r.{id, score1, score2, replay}');
+        $q->addSelect('partial r.{id, replay}');
+        $q->leftJoin('r.scores', 'sc');
+        $q->addSelect('sc');
 
         $q->where('m.group = :g')->setParameter('g', (int)$id);
         return $q->getQuery()->execute();
@@ -47,7 +49,9 @@ class MatchRepository extends EntityRepository
     public function getByParticipant(Entity\Participant $part)
     {
         $q = $this->getQueryBuilder();
-        $q->addSelect('partial r.{id, score1, score2, replay}');
+        $q->addSelect('partial r.{id, replay}');
+        $q->leftJoin('r.scores', 'sc');
+        $q->addSelect('sc');
         $q->where('m.part1 = :a OR m.part2 = :a')
           ->setParameter('a', $part);
         $q->orderBy("m.id");

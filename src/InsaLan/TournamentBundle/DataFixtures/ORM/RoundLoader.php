@@ -20,8 +20,8 @@ class RoundLoader extends AbstractFixture implements OrderedFixtureInterface
         {
             $e = new Round();
             $e->setMatch($this->getReference('match-'.$i));
-            $e->setScore1(mt_rand(0, 1));
-            $e->setScore2(1 - $e->getScore1());
+            $e->setScore($e->getMatch()->getPart1(), mt_rand(0, 1));
+            $e->setScore($e->getMatch()->getPart2(), 1 - $e->getScore($e->getMatch()->getPart1()));
             $manager->persist($e);
         }
 

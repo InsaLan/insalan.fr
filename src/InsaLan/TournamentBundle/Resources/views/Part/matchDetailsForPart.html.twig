@@ -13,11 +13,11 @@
         </thead>
         {% for r in m.rounds %}
         <tr>
-          <td class="{% if r.score1 > r.score2 %}won{% elseif r.score1 < r.score2 %}lost{% endif %}" style="padding: 0px;">
-            {{r.score1}}
+          <td class="{% if r.score(m.part1) > r.score(m.part2) %}won{% elseif r.score(m.part1) < r.score(m.part2) %}lost{% endif %}" style="padding: 0px;">
+            {{r.score(m.part1)}}
           </td>
-          <td class="{% if r.score1 < r.score2 %}won{% elseif r.score1 > r.score2 %}lost{% endif %}" style="padding: 0px;">
-            {{r.score2}}
+          <td class="{% if r.score(m.part1) < r.score(m.part2) %}won{% elseif r.score(m.part1) > r.score(m.part2) %}lost{% endif %}" style="padding: 0px;">
+            {{r.score(m.part2)}}
           </td>
           {#<td>
             {% if r.replay == null and authorized %}

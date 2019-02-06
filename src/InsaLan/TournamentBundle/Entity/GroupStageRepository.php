@@ -19,15 +19,17 @@ class GroupStageRepository extends EntityRepository
             ->leftJoin('m.rounds', 'r')
             ->leftJoin('p1.manager', 'ma1')
             ->leftJoin('p2.manager', 'ma2')
+            ->leftJoin('r.scores', 'sc')
             ->addSelect('partial g.{id, name}')
             ->addSelect('partial gs.{id, name}')
             ->addSelect('partial m.{id, state}')
-            ->addSelect('partial r.{id, score1, score2, replay}')
+            ->addSelect('partial r.{id, replay}')
             ->addSelect('p')
             ->addSelect('p1')
             ->addSelect('p2')
             ->addSelect('ma1')
             ->addSelect('ma2')
+            ->addSelect('sc')
             ->orderBy('gs.name, g.name, p.id')
         ;
     }

@@ -241,8 +241,8 @@ class AdminController extends Controller
         $score2 = intval($request->get('score2'));
 
         $r = new Entity\Round();
-        $r->setScore1($score1);
-        $r->setScore2($score2);
+        $r->setScore($m->getPart1(), $score1);
+        $r->setScore($m->getPart2(), $score2);
         $r->setMatch($m);
         $m->addRound($r);
 

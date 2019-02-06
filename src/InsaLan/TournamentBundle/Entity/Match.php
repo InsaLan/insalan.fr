@@ -53,11 +53,13 @@ class Match extends AbstractMatch
     }
 
     public function getScore1()
-    {   
+    {
+        if ($this->getPart1() === null) return 0;
+
         $won = 0;
         foreach($this->getRounds() as $r)
         {
-            if($r->getScore1() > $r->getScore2())
+            if($this->getPart2() === null || $r->getScore($this->getPart1()) > $r->getScore($this->getPart2()))
                 $won++;
         }
         return $won;
@@ -65,10 +67,12 @@ class Match extends AbstractMatch
 
     public function getScore2()
     {
+        if ($this->getPart2() === null) return 0;
+
         $won = 0;
         foreach($this->getRounds() as $r)
         {
-            if($r->getScore2() > $r->getScore1())
+            if($this->getPart1() === null || $r->getScore($this->getPart2()) > $r->getScore($this->getPart1()))
                 $won++;
         }
         return $won;
