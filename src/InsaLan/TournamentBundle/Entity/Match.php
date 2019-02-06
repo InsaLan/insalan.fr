@@ -2,6 +2,7 @@
 namespace InsaLan\TournamentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -124,6 +125,19 @@ class Match extends AbstractMatch
     public function getPart2()
     {
         return $this->part2;
+    }
+
+    /**
+     * Get participants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getParticipants()
+    {
+        $arr = array();
+        if ($this->getPart1() !== null) $arr[] = $this->getPart1();
+        if ($this->getPart2() !== null) $arr[] = $this->getPart2();
+        return new ArrayCollection($arr);
     }
 
 }

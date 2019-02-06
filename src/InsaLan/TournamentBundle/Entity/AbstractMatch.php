@@ -79,9 +79,26 @@ abstract class AbstractMatch
         else return "?";
     }   
 
+    /**
+     * Get winner
+     *
+     * @return \InsaLan\TournamentBundle\Entity\Participant $participant
+     */
     abstract public function getWinner();
 
+    /**
+     * Get loser
+     *
+     * @return \InsaLan\TournamentBundle\Entity\Participant $participant
+     */
     abstract public function getLoser();
+
+    /**
+     * Get participants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    abstract public function getParticipants();
 
     // End of Customs
 

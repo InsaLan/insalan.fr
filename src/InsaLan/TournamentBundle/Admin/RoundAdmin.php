@@ -63,8 +63,45 @@ class RoundAdmin extends Admin
         ;
     }
 
+    public function removeOldParticipants($round)
+    {
+        $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
+
+        foreach ($round->getScores() as $score) {
+            if (!$round->getMatch()->getParticipants()->contains($score->getParticipant())) {
+                $em->remove($score);
+            }
+        }
+
+        $em->flush();
+    }
+
+    public function addNewParticipants($round)
+    {
+        $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
+
+        foreach ($round->getMatch()->getParticipants() as $p) {
+            if (!$round->hasScore($p)) {
+                $round->setScore($p, 0);
+            }
+        }
+        
+        $em->flush();
+    }
+
+    public function preUpdate($round)
+    {
+        $this->removeOldParticipants($round);
+    }
+
+    public function postPersist($round)
+    {
+        $this->addNewParticipants($round);
+    }
+
     public function postUpdate($round)
-    {   
+    {
+        $this->addNewParticipants($round);
 
         $match = $round->getMatch();
         if($match->getState() === Match::STATE_FINISHED && $match->getKoMatch())

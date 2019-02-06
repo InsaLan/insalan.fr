@@ -34,7 +34,7 @@ class Round
     protected $match;
 
     /**
-     * @ORM\OneToMany(targetEntity="Score", mappedBy="round")
+     * @ORM\OneToMany(targetEntity="Score", mappedBy="round", cascade={"all"})
      */
     protected $scores;
 

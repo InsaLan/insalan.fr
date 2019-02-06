@@ -241,14 +241,17 @@ class AdminController extends Controller
         $score2 = intval($request->get('score2'));
 
         $r = new Entity\Round();
-        $r->setScore($m->getPart1(), $score1);
-        $r->setScore($m->getPart2(), $score2);
         $r->setMatch($m);
         $m->addRound($r);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($r);
         $em->persist($m);
+        $em->flush();
+
+        $r->setScore($m->getPart1(), $score1);
+        $r->setScore($m->getPart2(), $score2);
+        $em->persist($r);
         $em->flush();
 
         return $this->getReturnRedirect($m);
