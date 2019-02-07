@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="kind", type="string")
- * @ORM\DiscriminatorMap({"simple" = "Match"})
+ * @ORM\DiscriminatorMap({"simple" = "Match", "royal" = "RoyalMatch"})
  * @ORM\Table(name="`Match`")
  */
 abstract class AbstractMatch

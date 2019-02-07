@@ -28,7 +28,7 @@ class Round
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Match", inversedBy="rounds")
+     * @ORM\ManyToOne(targetEntity="AbstractMatch", inversedBy="rounds")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $match;
@@ -261,10 +261,10 @@ class Round
     /**
      * Set match
      *
-     * @param \InsaLan\TournamentBundle\Entity\Match $match
+     * @param \InsaLan\TournamentBundle\Entity\AbstractMatch $match
      * @return Round
      */
-    public function setMatch(\InsaLan\TournamentBundle\Entity\Match $match = null)
+    public function setMatch(\InsaLan\TournamentBundle\Entity\AbstractMatch $match = null)
     {
         $this->match = $match;
 
@@ -274,7 +274,7 @@ class Round
     /**
      * Get match
      *
-     * @return \InsaLan\TournamentBundle\Entity\Match
+     * @return \InsaLan\TournamentBundle\Entity\AbstractMatch
      */
     public function getMatch()
     {
