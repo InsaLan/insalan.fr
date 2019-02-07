@@ -29,6 +29,20 @@ class GroupLoader extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($e);
         $this->addReference('group-2', $e);
 
+        for ($i = 1; $i <= 5; $i++) {
+            $e = new Group();
+            $e->setName('Elite '.$i);
+            $e->setStage($this->getReference('royal-stage-'.$i));
+            $manager->persist($e);
+            $this->addReference('royal-elite-'.$i, $e);
+
+            $e = new Group();
+            $e->setName('Challenger '.$i);
+            $e->setStage($this->getReference('royal-stage-'.$i));
+            $manager->persist($e);
+            $this->addReference('royal-challenger-'.$i, $e);
+        }
+
         $manager->flush();
     }
 }

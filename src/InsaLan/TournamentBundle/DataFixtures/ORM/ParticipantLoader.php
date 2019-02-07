@@ -66,6 +66,20 @@ class ParticipantLoader extends AbstractFixture implements OrderedFixtureInterfa
             $this->addReference('participant-'.$i, $e);
         }
 
+        for ($i = 1; $i <= 28 * 4; ++$i) {
+            $e = new Player();
+            $e->setPaymentDone(true);
+            $e->setGameValidated(true);
+            $e->setGameName('Royal player '.$i);
+            $e->setPendingRegistrable($this->getReference('tournament-5'));
+            $teamId = (int)(($i-1)/4) + 1;
+            $e->joinTeam($this->getReference('royal-team-'.$teamId));
+            $this->getReference('royal-team-'.$teamId)->addPlayer($e);
+            $manager->persist($e);
+            $this->addReference('royal-participant-'.$i, $e);
+            $manager->flush();
+        }
+
         $manager->flush();
     }
 }

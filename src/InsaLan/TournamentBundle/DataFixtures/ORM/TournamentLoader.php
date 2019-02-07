@@ -106,6 +106,29 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $manager->persist($e);
         $this->addReference('tournament-4', $e);
 
+        $e = new Tournament();
+        $e->setName('Fortnite');
+        $e->setShortName('fbr');
+        $e->setPlacement(true);
+        $e->setRegistrationOpen(new \DateTime());
+        $e->setRegistrationClose((new \DateTime())->modify('+3 day'));
+        $e->setRegistrationLimit(28);
+        $e->setTeamMaxPlayer(4);
+        $e->setTeamMinPlayer(4);
+        $e->setWebPrice(22);
+        $e->setOnlineIncreaseInPrice(1);
+        $e->setOnSitePrice(30);
+        $e->setCurrency('EUR');
+        $e->setTournamentOpen((new \DateTime())->modify('+90 day'));
+        $e->setTournamentClose((new \DateTime())->modify('+93 day'));
+        $e->setType('fbr');
+        $e->setLogoPath('fixtures-5.png');
+        $e->setParticipantType('team');
+        $e->setLoginType(LoginPlatform::PLATFORM_OTHER);
+
+        $manager->persist($e);
+        $this->addReference('tournament-5', $e);
+
         $manager->flush();
     }
 }
