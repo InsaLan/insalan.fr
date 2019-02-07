@@ -459,8 +459,11 @@ class KnockoutMatchRepository extends NestedTreeRepository
 
     private function setVictoryForPart1(Match $match) {
         $r = new Round();
-        $r->setScore($match->getPart1(), 1);
-        $r->setScore($match->getPart2(), 0);
+        $this->getEntityManager()->persist($r);
+        $this->getEntityManager()->persist($match);
+        $this->getEntityManager()->flush();
+        if ($match->getPart1() !== null) $r->setScore($match->getPart1(), 1);
+        if ($match->getPart2() !== null) $r->setScore($match->getPart2(), 0);
         $r->setMatch($match);
         $match->addRound($r);
         $match->setState(Match::STATE_FINISHED);
@@ -470,8 +473,11 @@ class KnockoutMatchRepository extends NestedTreeRepository
 
     private function setVictoryForPart2(Match $match) {
         $r = new Round();
-        $r->setScore($match->getPart1(), 0);
-        $r->setScore($match->getPart2(), 1);
+        $this->getEntityManager()->persist($r);
+        $this->getEntityManager()->persist($match);
+        $this->getEntityManager()->flush();
+        if ($match->getPart1() !== null) $r->setScore($match->getPart1(), 0);
+        if ($match->getPart2() !== null) $r->setScore($match->getPart2(), 1);
         $r->setMatch($match);
         $match->addRound($r);
         $match->setState(Match::STATE_FINISHED);
