@@ -3,15 +3,11 @@
 namespace InsaLan\AdminBundle\Controller;
 
 use InsaLan\TournamentBundle\Entity\Group;
-use Symfony\Component\HttpFoundation\Response;
 use InsaLan\TournamentBundle\Entity\GroupStage;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use InsaLan\TournamentBundle\Entity\Match;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use InsaLan\PizzaBundle\Entity;
-use InsaLan\ApiBundle\Http\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller {
     /**
@@ -31,7 +27,7 @@ class DefaultController extends Controller {
     }
 
     /**
-     * @Route("/tournament/groupstage", name="groupstageRoute")
+     * @Route("/tournament/groupstage", name="GroupStageAction")
      * @Template()
      * Get all group stages (phases de poule)
      */
@@ -62,7 +58,7 @@ class DefaultController extends Controller {
     }
 
     /**
-     * @Route("/tournament/groupstage/remove/{id}")
+     * @Route("/tournament/groupstage/remove/{id}", name="GroupStageRemoveAction")
      */
     public function tournamentGroupStageRemoveAction($id) {
         $em = $this->getDoctrine()->getManager(); // entity manager
@@ -75,15 +71,15 @@ class DefaultController extends Controller {
                 $em->flush();
             } catch(\Exception $e) {
                 // TODO message d'erreur si on n'arrive pas à enlever le groupstage ?
-                return $this->redirectToRoute('groupstageRoute');
+                return $this->redirectToRoute('GroupStageAction');
             }
         }
 
-        return $this->redirectToRoute('groupstageRoute');
+        return $this->redirectToRoute('GroupStageAction');
     }
 
     /**
-     * @Route("/tournament/groupstage/modify/{id}")
+     * @Route("/tournament/groupstage/modify/{id}", name="GroupStageModifyAction")
      * @Template()
      */
     public function tournamentGroupStageModifyAction($id) {
@@ -102,7 +98,7 @@ class DefaultController extends Controller {
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($groupStage); // tell Doctrine you want to (eventually) save the Product (no queries yet)
             $em->flush(); // actually executes the queries (i.e. the INSERT query)
-            return $this->redirectToRoute('groupstageRoute');
+            return $this->redirectToRoute('GroupStageAction');
         }
 
         return array(
@@ -111,31 +107,96 @@ class DefaultController extends Controller {
     }
 
     /**
-     * @Route("/tournament/group")
+     * @Route("/tournament/group", name="GroupAction")
      * @Template()
      * Get all groups (poules)
      */
     public function tournamentGroupAction() {
         $em = $this->getDoctrine()->getManager();
-        $group = $em->getRepository('InsaLanTournamentBundle:Group')->findAll();
 
-        return $this->render('InsaLanAdminBundle:Default:tournamentGroup.html.twig', array(
-            'groups' => $group
-        ));
+        $group = new Group();
+        $form = $this->createFormBuilder($group)
+            ->add('name')
+            ->add('stage', 'entity', array('class' => 'InsaLanTournamentBundle:GroupStage'))
+            ->add('participants', 'entity', array(
+                'class' => 'InsaLanTournamentBundle:Participant',
+                'multiple' => true))
+            ->add('save', 'submit', array('label' => 'Créer'))
+            ->getForm();
+
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($group); // tell Doctrine you want to (eventually) save the Product (no queries yet)
+            $em->flush(); // actually executes the queries (i.e. the INSERT query)
+        }
+
+        $groups = $em->getRepository('InsaLanTournamentBundle:Group')->findAll();
+
+        return array(
+            'groups' => $groups,
+            'form' => $form->createView()
+        );
     }
 
     /**
-     * @Route("/tournament/match")
+     * @Route("/tournament/group/remove/{id}", name="GroupRemoveAction")
+     */
+    public function tournamentStageRemoveAction($id) {
+        $em = $this->getDoctrine()->getManager(); // entity manager
+
+        $group = $em->getRepository('InsaLanTournamentBundle:Group')->find($id);
+
+        if($group != null) {
+            try {
+                $em->remove($group);
+                $em->flush();
+            } catch(\Exception $e) {
+                return $this->redirectToRoute('GroupAction');
+            }
+        }
+
+        return $this->redirectToRoute('GroupAction');
+    }
+
+    /**
+     * @Route("/tournament/group/modify/{id}", name="GroupModifyAction")
      * @Template()
+     */
+    public function tournamentGroupModifyAction($id) {
+        $em = $this->getDoctrine()->getManager(); // entity manager
+        $group = $em->getRepository('InsaLanTournamentBundle:Group')->find($id);
+
+        $form = $this->createFormBuilder($group)
+            ->add('name')
+            ->add('stage', 'entity', array('class' => 'InsaLanTournamentBundle:GroupStage'))
+            ->add('participants', 'entity', array(
+                'class' => 'InsaLanTournamentBundle:Participant',
+                'multiple' => true))
+            ->add('save', 'submit', array('label' => 'Modifier'))
+            ->getForm();
+
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($group); // tell Doctrine you want to (eventually) save the Product (no queries yet)
+            $em->flush(); // actually executes the queries (i.e. the INSERT query)
+            return $this->redirectToRoute('GroupAction');
+        }
+
+        return array(
+            'form' => $form->createView()
+        );
+    }
+
+    /**
+     * @Route("/tournament/match", name="MatchAction")
      * Get all matches
      */
     public function tournamentMatchAction() {
-        $em = $this->getDoctrine()->getManager();
-        $match = $em->getRepository('InsaLanTournamentBundle:Match')->findAll();
-
-        return $this->render('InsaLanAdminBundle:Default:tournamentMatch.html.twig', array(
-            'match' => $match
-        ));
+        return $this->redirect('/tournament/admin');
     }
 
     /**

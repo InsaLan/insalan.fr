@@ -6,21 +6,26 @@
 
 {% block body %}
     {{ parent() }}
-    <div class="tournamentTab">
-        <div class="tournamentSubTab">
-            <a href="{{ path('insalan_admin_default_tournamentgroupstage') }}">
+
+    <article class="info">
+        <header>
+            <h2>Administration des tournois</h2>
+        </header>
+
+        <h2>
+            <a href="{{ path('GroupStageAction') }}">
                 Gestion des phases de poule
             </a>
-        </div>
-        <div class="tournamentSubTab">
-            <a href="{{ path('insalan_admin_default_tournamentgroup') }}">
+        </h2>
+        <h2>
+            <a href="{{ path('GroupAction') }}">
                 Gestion des poules
             </a>
-        </div>
-        <div class="tournamentSubTab">
-            <a href="{{ path('insalan_admin_default_tournamentmatch') }}">
+        </h2>
+        <h2>
+            <a href="{{ path('MatchAction') }}">
                 Gestion des matchs
             </a>
-        </div>
-    </div>
+        </h2>
+    </article>
 {% endblock %}
