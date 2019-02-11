@@ -187,7 +187,7 @@
       <br>
       <hr style="width:960px">
       <br>
-      {% elseif t.isOpenedNow and (not t.getLocked or t.checkLocked(session.get(t.id ~ ".authToken"))) %}
+      {% elseif (t.isOpenedNow or t.participantType == 'player') and (not t.getLocked or t.checkLocked(session.get(t.id ~ ".authToken"))) %}
         <a class="list-choice" href="{{ path('insalan_tournament_user_enroll', {registrable: t.id}) }}">
         <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
         <h2>{{ t.name }}{% if t.kind == "bundle" %} ({{ t.tournamentsString }}) {% endif %}{% if t.isFull %} - COMPLET {% endif %}</h2>
@@ -211,7 +211,11 @@
         {{ t.teamMinPlayer }} joueur{{ t.teamMinPlayer > 1 ? "s" : ""}}
           -
         {% endif %}
-        Inscriptions jusqu'au {{ t.registrationClose|date('d/m/Y') }}
+        {% if t.isOpenedNow %}
+          Inscriptions jusqu'au {{ t.registrationClose|date('d/m/Y') }}
+        {% else %}
+          Paiement en ligne indisponible
+        {% endif %}
         {% if not t.isFull %}
           - 
           {% if t.freeSlots > 1 %}
@@ -225,7 +229,7 @@
         <br>
         <hr style="width:960px">
         <br>
-      {% elseif t.isOpenedNow and t.getLocked %}
+      {% elseif (t.isOpenedNow or t.participantType == 'player') and t.getLocked %}
       <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
       <h2>{{ t.name }} <small>(ce tournoi n'est accessible que sur invitation)</small></h2>
       {% if t.participantType == 'team' %}
