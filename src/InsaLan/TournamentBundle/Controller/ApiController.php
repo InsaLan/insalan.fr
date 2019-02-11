@@ -62,7 +62,7 @@ class ApiController extends Controller
                         }
 
                         $user = $player->getUser();
-                        $emailList[] = $user->getEmail();
+                        if ($user) $emailList[] = $user->getEmail();
                     }
                     break;
                 case 'team':
@@ -77,7 +77,7 @@ class ApiController extends Controller
                         $players = $team->getPlayers()->toArray();
                         foreach ($players as $player) {
                             $user = $player->getUser();
-                            $emailList[] = $user->getEmail();
+                            if ($user) $emailList[] = $user->getEmail();
                         }
                     }
                     break;
