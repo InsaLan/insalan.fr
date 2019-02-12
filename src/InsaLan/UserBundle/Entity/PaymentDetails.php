@@ -46,12 +46,12 @@ class PaymentDetails extends ArrayObject
     /**
      * @ORM\Column(type="integer")
      */
-    protected $place;
+    protected $place = self::PLACE_UNDEFINED;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected $type;
+    protected $type = self::TYPE_UNDEFINED;
 
     /**
      * @ORM\Column(type="float")
