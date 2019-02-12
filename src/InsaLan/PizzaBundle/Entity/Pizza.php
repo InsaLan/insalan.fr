@@ -32,6 +32,11 @@ class Pizza
      */
     protected $description;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $veggie;
+
 
     public function __toString() {
         return $this->getName();
@@ -40,7 +45,7 @@ class Pizza
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -56,14 +61,14 @@ class Pizza
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -79,14 +84,14 @@ class Pizza
     public function setPrice($price)
     {
         $this->price = $price;
-    
+
         return $this;
     }
 
     /**
      * Get price
      *
-     * @return float 
+     * @return float
      */
     public function getPrice()
     {
@@ -102,17 +107,41 @@ class Pizza
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
         return $this->description;
     }
+
+    /**
+     * Set veggie
+     *
+     * @param boolean $veggie
+     * @return Order
+     */
+    public function setVeggie($veggie)
+    {
+        $this->veggie = $veggie;
+
+        return $this;
+    }
+
+    /**
+     * Get veggie
+     *
+     * @return boolean
+     */
+    public function getVeggie()
+    {
+        return $this->veggie;
+    }
+
 }
