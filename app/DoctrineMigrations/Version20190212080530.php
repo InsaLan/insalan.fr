@@ -18,7 +18,7 @@ class Version20190212080530 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE intra_pizza ADD veggie TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE intra_Pizza ADD veggie TINYINT(1) NOT NULL');
     }
 
     /**
