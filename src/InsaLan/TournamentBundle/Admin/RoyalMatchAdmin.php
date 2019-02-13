@@ -25,9 +25,9 @@ class RoyalMatchAdmin extends Admin
     {
         $formMapper
             ->add('participants', null,
-                array('read_only' => true, 'disabled' => true, 'class' => 'InsaLan\TournamentBundle\Entity\Participant'))
+                array('class' => 'InsaLan\TournamentBundle\Entity\Participant'))
             ->add('group', 'entity',
-                array('read_only' => true, 'disabled' => true, 'class' => 'InsaLan\TournamentBundle\Entity\Group'))
+                array('class' => 'InsaLan\TournamentBundle\Entity\Group'))
             ->add('state', 'choice', array(
                 'choices'   => $this->stateDef,
                 'required'  => true))

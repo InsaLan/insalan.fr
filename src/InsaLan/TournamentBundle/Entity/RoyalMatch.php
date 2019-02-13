@@ -78,4 +78,14 @@ class RoyalMatch extends AbstractMatch
         return $this->participants;
     }
 
+    /**
+     * Check if has participant
+     *
+     * @return bool
+     */
+    public function hasParticipant(\InsaLan\TournamentBundle\Entity\Participant $participant)
+    {
+        return $this->participants->contains($participant);
+    }
+
 }

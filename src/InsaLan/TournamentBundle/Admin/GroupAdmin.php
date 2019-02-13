@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 use InsaLan\TournamentBundle\Entity\Match;
+use InsaLan\TournamentBundle\Entity\RoyalMatch;
 use InsaLan\TournamentBundle\Entity\Group;
 use InsaLan\TournamentBundle\Entity\Participant;
 use InsaLan\TournamentBundle\Entity\ParticipantRepository;
@@ -140,6 +141,34 @@ class GroupAdmin extends Admin
 
                 }
             }
+        }
+        else {
+            // assume STATS_SCORE groups only have 1 RoyalMatch with every participants => battle royale tournaments
+
+            // create match if missing
+            if ($group->getMatches()->count() == 0) {
+                $m = new RoyalMatch();
+                $m->setState(Match::STATE_UPCOMING);
+                $m->setGroup($group);
+                $group->addMatch($m);
+            }
+
+            $match = $group->getMatches()->first();
+
+            // set match participants to all group participants
+            foreach($match->getParticipants() as $p) {
+                if (!$group->hasParticipant($p)) {
+                    $match->removeParticipant($p);
+                }
+            }
+
+            foreach($group->getParticipants() as $p) {
+                if (!$match->hasParticipant($p)) {
+                    $match->addParticipant($p);
+                }
+            }
+
+            $em->persist($match);
         }
 
     }
