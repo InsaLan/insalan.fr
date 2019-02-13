@@ -156,8 +156,8 @@ class Group
                 foreach ($m->getRounds() as $r) {
                     $score1 += $r->getScore($m->getPart1());
                     $score2 += $r->getScore($m->getPart2());
-                    $p1['sum'] += $r->getScore($p1);
-                    $p2['sum'] += $r->getScore($p2);
+                    $p1['sum'] += $r->getScore($m->getPart1());
+                    $p2['sum'] += $r->getScore($m->getPart2());
                 }
 
                 if ($score1 < $score2) {
