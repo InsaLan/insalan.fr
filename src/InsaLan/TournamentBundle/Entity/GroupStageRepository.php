@@ -24,7 +24,7 @@ class GroupStageRepository extends EntityRepository
             ->addSelect('p')
             ->addSelect('ma')
             ->addSelect('sc')
-            ->orderBy('gs.name, g.name, p.id')
+            ->orderBy('gs.id, g.name, p.id')
         ;
     }
 
