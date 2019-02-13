@@ -11,10 +11,14 @@ class RoyalMatchRepository extends EntityRepository
         return $this->_em->createQueryBuilder()
             ->from($this->_entityName, 'm')
             ->leftJoin('m.participants', 'p')
+            ->leftJoin('m.participants', 'p2')
             ->leftJoin('m.rounds', 'r')
             ->leftJoin('m.koMatch', 'k')
+            ->leftJoin('p2.manager', 'ma')
             ->addSelect('k')
             ->addSelect('partial m.{id, state}')
+            ->addSelect('p2')
+            ->addSelect('ma')
         ;
     }
 

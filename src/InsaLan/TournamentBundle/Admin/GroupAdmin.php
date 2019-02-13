@@ -25,6 +25,8 @@ class GroupAdmin extends Admin
             // Display only validated participants
             ->add('participants', null, array('query_builder' => function(ParticipantRepository $er) {
                                         return $er->createQueryBuilder('e')
+                                                  ->leftJoin('e.manager', 'ma')
+                                                  ->addSelect('ma')
                                                   ->where('e.validated = :status')
                                                   ->setParameter('status', Participant::STATUS_VALIDATED);
                                     })
