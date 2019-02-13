@@ -32,8 +32,8 @@ class MatchLoader extends AbstractFixture implements OrderedFixtureInterface
 
         $e = new RoyalMatch();
         for ($p = 1; $p <= 14; $p++) {
-            $e->addParticipant($this->getReference('royal-participant-'.$p));
-            $this->getReference('royal-elite-1')->addParticipant($this->getReference('royal-participant-'.$p));
+            $e->addParticipant($this->getReference('royal-team-'.$p));
+            $this->getReference('royal-elite-1')->addParticipant($this->getReference('royal-team-'.$p));
         }
         $e->setState(Match::STATE_FINISHED);
         $e->setGroup($this->getReference('royal-elite-1'));
@@ -43,8 +43,8 @@ class MatchLoader extends AbstractFixture implements OrderedFixtureInterface
 
         $e = new RoyalMatch();
         for ($p = 15; $p <= 28; $p++) {
-            $e->addParticipant($this->getReference('royal-participant-'.$p));
-            $this->getReference('royal-challenger-1')->addParticipant($this->getReference('royal-participant-'.$p));
+            $e->addParticipant($this->getReference('royal-team-'.$p));
+            $this->getReference('royal-challenger-1')->addParticipant($this->getReference('royal-team-'.$p));
         }
         $e->setState(Match::STATE_FINISHED);
         $e->setGroup($this->getReference('royal-challenger-1'));
@@ -54,8 +54,8 @@ class MatchLoader extends AbstractFixture implements OrderedFixtureInterface
 
         $e = new RoyalMatch();
         for ($p = 1; $p <= 14; $p++) {
-            $e->addParticipant($this->getReference('royal-participant-'.($p * 2)));
-            $this->getReference('royal-elite-2')->addParticipant($this->getReference('royal-participant-'.($p * 2)));
+            $e->addParticipant($this->getReference('royal-team-'.($p * 2)));
+            $this->getReference('royal-elite-2')->addParticipant($this->getReference('royal-team-'.($p * 2)));
         }
         $e->setState(Match::STATE_ONGOING);
         $e->setGroup($this->getReference('royal-elite-2'));
@@ -65,8 +65,8 @@ class MatchLoader extends AbstractFixture implements OrderedFixtureInterface
 
         $e = new RoyalMatch();
         for ($p = 1; $p <= 14; $p++) {
-            $e->addParticipant($this->getReference('royal-participant-'.($p * 2 - 1)));
-            $this->getReference('royal-challenger-2')->addParticipant($this->getReference('royal-participant-'.($p * 2 - 1)));
+            $e->addParticipant($this->getReference('royal-team-'.($p * 2 - 1)));
+            $this->getReference('royal-challenger-2')->addParticipant($this->getReference('royal-team-'.($p * 2 - 1)));
         }
         $e->setState(Match::STATE_ONGOING);
         $e->setGroup($this->getReference('royal-challenger-2'));
