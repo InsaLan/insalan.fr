@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class RoyalMatch extends AbstractMatch
 {
+    const TYPE = 'royal';
+
     /**
      * @ORM\ManyToMany(targetEntity="Participant")
      */

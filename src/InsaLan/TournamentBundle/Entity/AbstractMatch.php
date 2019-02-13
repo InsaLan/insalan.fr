@@ -14,6 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 abstract class AbstractMatch
 {
+    const TYPE = 'abstractMatch';
+
     const STATE_UPCOMING = 0;
     const STATE_ONGOING  = 1;
     const STATE_FINISHED = 2;
@@ -221,5 +223,16 @@ abstract class AbstractMatch
     public function getKoMatch()
     {
         return $this->koMatch;
+    }
+
+    /**
+     * Get kind
+     *
+     * @return string
+     */
+    public function getKind()
+    {
+        $c = get_called_class();
+        return $c::TYPE;
     }
 }

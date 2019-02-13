@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Match extends AbstractMatch
 {
+    const TYPE = 'simple';
+
     /**
      * @ORM\ManyToOne(targetEntity="Participant")
      * @ORM\JoinColumn(onDelete="cascade")

@@ -10,6 +10,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Group
 {
+    const STATS_WINLOST = 0;
+    const STATS_SCORE   = 1;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -24,7 +27,7 @@ class Group
     protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Match", cascade={"persist"}, mappedBy="group")
+     * @ORM\OneToMany(targetEntity="AbstractMatch", cascade={"persist"}, mappedBy="group")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $matches;
@@ -38,6 +41,11 @@ class Group
      * @ORM\ManyToOne(targetEntity="GroupStage", inversedBy="groups")
      */
     protected $stage;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $statsType = Group::STATS_WINLOST;
 
     // CUSTOM FUNCTIONS FOR ADMIN
 
@@ -99,10 +107,10 @@ class Group
     /**
      * Add matches
      *
-     * @param \InsaLan\TournamentBundle\Entity\Match $matches
+     * @param \InsaLan\TournamentBundle\Entity\AbstractMatch $matches
      * @return Group
      */
-    public function addMatch(\InsaLan\TournamentBundle\Entity\Match $matches)
+    public function addMatch(\InsaLan\TournamentBundle\Entity\AbstractMatch $matches)
     {
         $this->matches[] = $matches;
 
@@ -112,9 +120,9 @@ class Group
     /**
      * Remove matches
      *
-     * @param \InsaLan\TournamentBundle\Entity\Match $matches
+     * @param \InsaLan\TournamentBundle\Entity\AbstractMatch $matches
      */
-    public function removeMatch(\InsaLan\TournamentBundle\Entity\Match $matches)
+    public function removeMatch(\InsaLan\TournamentBundle\Entity\AbstractMatch $matches)
     {
         return $this->matches->removeElement($matches);
     }
@@ -134,32 +142,44 @@ class Group
         // Initialize statistics
         $this->stats = array();
         foreach ($this->participants as $p) {
-            $stats = array('won' => 0, 'lost' => 0, 'draw' => 0);
+            $stats = array('won' => 0, 'lost' => 0, 'draw' => 0, 'sum' => 0);
             $this->stats[$p->getId()] = $stats;
         }
 
         foreach ($this->getMatches() as $m) {
-            $p1 = &$this->stats[$m->getPart1()->getId()];
-            $p2 = &$this->stats[$m->getPart2()->getId()];
+            if ($m->getKind() == 'simple') {
+                $p1 = &$this->stats[$m->getPart1()->getId()];
+                $p2 = &$this->stats[$m->getPart2()->getId()];
 
-            $score1 = $score2 = 0;
+                $score1 = $score2 = 0;
 
-            foreach ($m->getRounds() as $r) {
-                $score1 += $r->getScore($m->getPart1());
-                $score2 += $r->getScore($m->getPart2());
-            }
+                foreach ($m->getRounds() as $r) {
+                    $score1 += $r->getScore($m->getPart1());
+                    $score2 += $r->getScore($m->getPart2());
+                    $p1['sum'] += $r->getScore($p1);
+                    $p2['sum'] += $r->getScore($p2);
+                }
 
-            if ($score1 < $score2) {
-                ++$p1['lost'];
-                ++$p2['won'];
-            }
-            else if ($score1 > $score2) {
-                ++$p1['won'];
-                ++$p2['lost'];
-            }
-            else {
-                ++$p1['draw'];
-                ++$p2['draw'];
+                if ($score1 < $score2) {
+                    ++$p1['lost'];
+                    ++$p2['won'];
+                }
+                else if ($score1 > $score2) {
+                    ++$p1['won'];
+                    ++$p2['lost'];
+                }
+                else {
+                    ++$p1['draw'];
+                    ++$p2['draw'];
+                }
+            } else {
+                foreach ($m->getParticipants() as $pIt) {
+                    $p = &$this->stats[$pIt->getId()];
+
+                    foreach ($m->getRounds() as $r) {
+                         $p['sum'] += $r->getScore($pIt);
+                    }
+                }
             }
         }
 
@@ -232,6 +252,29 @@ class Group
     public function hasParticipant(\InsaLan\TournamentBundle\Entity\Participant $participant)
     {
         return $this->participants->contains($participant);
+    }
+
+    /**
+     * Set statsType
+     *
+     * @param integer $statsType
+     * @return Match
+     */
+    public function setStatsType($statsType)
+    {
+        $this->statsType = $statsType;
+
+        return $this;
+    }
+
+    /**
+     * Get statsType
+     *
+     * @return integer
+     */
+    public function getStatsType()
+    {
+        return $this->statsType;
     }
 
     /**
