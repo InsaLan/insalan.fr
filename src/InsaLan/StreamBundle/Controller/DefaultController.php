@@ -18,7 +18,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findPlaying();
-        $streams = $em->getRepository('InsaLanStreamBundle:Stream')->findByTournament($tournaments);
+        $streams = $em->getRepository('InsaLanStreamBundle:Stream')->findBy(array('tournament' => $tournaments, 'display' => true));
         $officialStreams = array();
         $unofficialStreams = array();
           foreach ($streams as $s) {

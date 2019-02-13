@@ -13,10 +13,11 @@ class StreamAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('streamer')
-            ->add('streamLink')
-            ->add('tournament')
-            ->add('official')
+            ->add('streamer', null, array("label" => "Streamer"))
+            ->add('streamLink', null, array("label" => "Lien du stream"))
+            ->add('tournament', null, array("label" => "Tournoi"))
+            ->add('official', null, array("label" => "Officiel"))
+            ->add('display', null, array("label" => "Visible"))
         ;
     }
 
@@ -24,10 +25,10 @@ class StreamAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-        ->add('streamer')
-        ->add('streamLink')
-        ->add('tournament')
-        ->add('official')
+        ->add('streamer', null, array("label" => "Streamer"))
+        ->add('streamLink', null, array("label" => "Lien du stream"))
+        ->add('tournament', null, array("label" => "Tournoi"))
+        ->add('official', null, array("label" => "Officiel"))
         ;
     }
 
@@ -35,9 +36,10 @@ class StreamAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('streamer')
-            ->addIdentifier('tournament')
-            ->add('official')
+            ->addIdentifier('streamer', null, array("label" => "Streamer"))
+            ->addIdentifier('tournament', null, array("label" => "Tournoi"))
+            ->add('official', null, array("label" => "Officiel"))
+            ->add('display', null, array("label" => "Visible"))
         ;
     }
 }

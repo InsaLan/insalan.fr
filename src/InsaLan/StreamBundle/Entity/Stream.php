@@ -44,6 +44,13 @@ class Stream
     private $official;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="display", type="boolean")
+     */
+    private $display;
+
+    /**
      * @ORM\ManyToOne(targetEntity="InsaLan\TournamentBundle\Entity\Tournament")
      */
     private $tournament;
@@ -105,15 +112,15 @@ class Stream
         return $this->streamLink;
     }
 
-    /**
-     * Set official
-     *
-     * @param boolean $official
-     * @return Stream
-     */
-    public function setOfficial($official)
-    {
-        $this->official = $official;
+      /**
+       * Set official
+       *
+       * @param boolean $official
+       * @return Stream
+       */
+      public function setOfficial($official)
+      {
+          $this->official = $official;
 
         return $this;
     }
@@ -126,6 +133,29 @@ class Stream
     public function getOfficial()
     {
         return $this->official;
+    }
+    
+    /**
+     * Set display
+     *
+     * @param boolean $display
+     * @return Stream
+     */
+    public function setDisplay($display)
+    {
+        $this->display = $display;
+
+      return $this;
+    }
+
+    /**
+    * Get display
+    *
+    * @return boolean
+    */
+    public function getDisplay()
+    {
+      return $this->display;
     }
 
         /**
