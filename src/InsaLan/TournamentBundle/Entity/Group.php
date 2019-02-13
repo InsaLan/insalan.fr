@@ -175,6 +175,7 @@ class Group
             } else {
                 foreach ($m->getParticipants() as $pIt) {
                     $p = &$this->stats[$pIt->getId()];
+                    $p['sum'] = 0;
 
                     foreach ($m->getRounds() as $r) {
                          $p['sum'] += $r->getScore($pIt);
@@ -296,5 +297,24 @@ class Group
         }
 
         return null;
+    }
+
+    /**
+     * Get participants sorted by scores (if statsType is STATS_SCORE), by default otherwise
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSortedParticipants()
+    {
+        $array = $this->participants->toArray();
+
+        if ($this->getStatsType() == Group::STATS_SCORE)
+        {
+            usort($array, function ($a, $b) {
+                return $this->stats[$a->getId()]["sum"] < $this->stats[$b->getId()]["sum"] ? 1 : -1;
+            });
+        }
+        
+        return new \Doctrine\Common\Collections\ArrayCollection($array);
     }
 }

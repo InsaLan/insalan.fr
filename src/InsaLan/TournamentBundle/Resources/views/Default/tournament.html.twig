@@ -115,7 +115,7 @@
                 <th>Score</th>
               {% endif %}
             </tr>
-            {% for p in g.participants %}
+            {% for p in g.sortedParticipants %}
             <tr>
               <td><a href="{{ path('insalan_tournament_default_teamdetails', {id: p.id}) }}">{{ p.name }}</a></td>
               {% if g.statsType == constant('InsaLan\\TournamentBundle\\Entity\\Group::STATS_WINLOST') %}
