@@ -1,4 +1,4 @@
-{% if m.part1 and m.part2 %}
+{% if m.kind == 'simple' and m.part1 and m.part2 %}
     <div class="match_detail {% if m.state == 1 %}match_detail_playing{% endif %}" data-p1="{{ m.part1.id }}" data-p2="{{ m.part2.id }}">
 
       <table cellpadding="3px">
@@ -57,6 +57,53 @@
         <p>Remporté par <strong>{{ m.getWinner().name }}</strong></p>
         {% else %}
         <p>Match nul</p>
+        {% endif %}
+      {% endif %}
+
+    </div>
+{% elseif m.kind == 'royal' %}
+    <div class="match_detail {% if m.state == 1 %}match_detail_playing{% endif %}" style="width: auto; height: auto">
+      <table cellpadding="3px">
+        {% if m.koMatch %}
+          <caption>{{ m.koMatch.getFrenchLevel() }}</caption>
+        {% else %}
+          <caption>Match{% if g|length > 1 %} {{i}}{% endif %}</caption>
+        {% endif %}
+        <thead>
+          {% for p in m.participants %}
+            {% if p.id == part.id %}
+              <th><strong>{{ p.name }}</strong></th>
+            {% else %}
+              <th>{{ p.name }}</th>
+            {% endif %}
+          {% endfor %}
+        </thead>
+        {% for r in m.rounds %}
+        <tr>
+          {% for p in m.participants %}
+            <td class="won" style="padding: 0px;">
+              {{r.score(p)}}
+            </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </table>
+
+      {% if m.state == 0 %}
+        <p>Match en attente</p>
+      {% elseif m.state == 1 %}
+
+        {% if authorized == true %}
+        <p style="color:yellow">
+            Round à jouer !
+        </p>
+
+        <p>Contactez un admin pour valider le score.</p>
+
+        {% else %}
+
+        <p style="color:yellow">Match en cours !</p>
+
         {% endif %}
       {% endif %}
 

@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\MatchRepository")
+ * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\RoyalMatchRepository")
  */
 class RoyalMatch extends AbstractMatch
 {

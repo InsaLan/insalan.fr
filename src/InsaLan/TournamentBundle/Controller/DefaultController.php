@@ -245,7 +245,10 @@ class DefaultController extends Controller
         // Get Knockout & Group Matches
 
         $em = $this->getDoctrine()->getManager();
-        $matches = $em->getRepository("InsaLanTournamentBundle:Match")->getByParticipant($part);
+        $simpleMatches = $em->getRepository("InsaLanTournamentBundle:Match")->getByParticipant($part);
+        $royalMatches = $em->getRepository("InsaLanTournamentBundle:RoyalMatch")->getByParticipant($part);
+
+        $matches = array_merge($simpleMatches, $royalMatches);
 
         $kos = array();
         $grs = array();

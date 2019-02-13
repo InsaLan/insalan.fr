@@ -64,14 +64,16 @@
             <table class="matchs" id="matchs{{ g.id }}">
               {% set matchFound = false %}
               {% for m in g.matches %}
-                {% if constant('InsaLan\\TournamentBundle\\Entity\\Match::STATE_FINISHED') == m.state %}
+                {% if constant('InsaLan\\TournamentBundle\\Entity\\AbstractMatch::STATE_FINISHED') == m.state %}
                 {% set matchFound = true %}
                 <tr data-mid="{{ m.id }}" class="match">
-                  <td>{{ m.part1.name }}</td>
-                  <td>
-                    {{ m.score1 }}-{{ m.score2 }}
-                  </td>
-                  <td>{{ m.part2.name }}</td>
+                  {% if m.kind == 'simple' %}
+                    <td>{{ m.part1.name }}</td>
+                    <td>
+                      {{ m.score1 }}-{{ m.score2 }}
+                    </td>
+                    <td>{{ m.part2.name }}</td>
+                  {% endif %}
                 </tr>
                 {% endif %}
               {% endfor %}
@@ -106,14 +108,22 @@
           <table class="group" data-gid="{{ g.id }}">
             <tr>
               <th>{{ g.name }}</th>
-              <th>W</th>
-              <th>L</th>
+              {% if g.statsType == constant('InsaLan\\TournamentBundle\\Entity\\Group::STATS_WINLOST') %}
+                <th>W</th>
+                <th>L</th>
+              {% else %}
+                <th>Score</th>
+              {% endif %}
             </tr>
             {% for p in g.participants %}
             <tr>
               <td><a href="{{ path('insalan_tournament_default_teamdetails', {id: p.id}) }}">{{ p.name }}</a></td>
-              <td>{{ g.stats[p.id].won }}</td>
-              <td>{{ g.stats[p.id].lost }}</td>
+              {% if g.statsType == constant('InsaLan\\TournamentBundle\\Entity\\Group::STATS_WINLOST') %}
+                <td>{{ g.stats[p.id].won }}</td>
+                <td>{{ g.stats[p.id].lost }}</td>
+              {% else %}
+                <td>{{ g.stats[p.id].sum }}</td>
+              {% endif %}
             </tr>
             {% endfor %}
           </table>
