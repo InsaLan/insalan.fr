@@ -165,7 +165,7 @@ class DefaultController extends Controller
             }
 
             elseif ($p->getPendingRegistrable()) {
-                if ($p->getPendingRegistrable()->isOpenedNow() || ($p->getPendingRegistrable()->getKind() == 'tournament' && ($p->getPendingRegistrable()->isPending() || $p->getPendingRegistrable()->isPlaying())) {
+                if ($p->getPendingRegistrable()->isOpenedNow() || ($p->getPendingRegistrable()->getKind() == 'tournament' && ($p->getPendingRegistrable()->isPending() || $p->getPendingRegistrable()->isPlaying()))) {
 
                     $tournament = [];
                     $tournament["shortname"] =$p->getPendingRegistrable()->getShortname();
