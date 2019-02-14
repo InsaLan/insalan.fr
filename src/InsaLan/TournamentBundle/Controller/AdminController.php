@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use InsaLan\TournamentBundle\Entity;
+use InsaLan\TournamentBundle\Entity\Participant;
 use InsaLan\TournamentBundle\Exception\ControllerException;
 
 use InsaLan\ApiBundle\Http\JsonResponse;
@@ -434,7 +435,13 @@ class AdminController extends Controller
 
             $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments();
 
-            $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByRegistrable($id);
+            $participantsRaw = $em->getRepository('InsaLanTournamentBundle:Participant')->findByRegistrable($id);
+            $participants = array();
+            foreach ($participantsRaw as $p) {
+              if ($p->getValidated() == Participant::STATUS_VALIDATED) {
+                $participants[] = $p;
+              }
+            }
 
             // Getting unavailable placements for interface
             $unavailable = $em->getRepository("InsaLanTournamentBundle:Tournament")->getUnavailablePlacements($id);
