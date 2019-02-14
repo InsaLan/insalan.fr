@@ -27,6 +27,14 @@ class GroupStageLoader extends AbstractFixture implements OrderedFixtureInterfac
         $manager->persist($e);
         $this->addReference('groupstage-2', $e);
 
+        for ($i = 1; $i <= 5; $i++) {
+            $e = new GroupStage();
+            $e->setName('Tour ' . $i);
+            $e->setTournament($this->getReference('tournament-5'));
+            $manager->persist($e);
+            $this->addReference('royal-stage-'.$i, $e);
+        }
+
         $manager->flush();
     }
 }

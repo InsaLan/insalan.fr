@@ -20,12 +20,19 @@ class CRUDController extends Controller
 
 
         $round = new Round();
-        $round->setScore1(0);
-        $round->setScore2(0);
         $round->setMatch($match);
         $match->addRound($round);
 
         $this->admin->create($round);
+
+        $em = $this->admin->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
+        $em->flush();
+
+        foreach ($match->getParticipants() as $p) {
+            $round->setScore($p, 0);
+        }
+        $em->persist($round);
+
         $this->admin->update($match);
 
 

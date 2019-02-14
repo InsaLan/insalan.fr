@@ -2,24 +2,15 @@
 namespace InsaLan\TournamentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="InsaLan\TournamentBundle\Entity\MatchRepository")
- * @ORM\Table(name="`Match`")
  */
-class Match
+class Match extends AbstractMatch
 {
-    const STATE_UPCOMING = 0;
-    const STATE_ONGOING  = 1;
-    const STATE_FINISHED = 2;
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    const TYPE = 'simple';
 
     /**
      * @ORM\ManyToOne(targetEntity="Participant")
@@ -33,66 +24,12 @@ class Match
      */
     protected $part2;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $state;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Round", mappedBy="match")
-     */
-    protected $rounds;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Group", inversedBy="matches")
-     */
-    protected $group;
-
-    /**
-     * @ORM\OneToOne(targetEntity="KnockoutMatch", mappedBy="match")
-     */
-    protected $koMatch;
-
     // CUSTOM FUNCTIONS FOR ADMIN
 
     public function __toString()
     {
         return $this->part1 . " vs " . $this->part2;
     }
-
-    public function getTournament()
-    {   
-        if($this->getGroup())
-            return $this->getGroup()->getTournament();
-        elseif($this->getKoMatch())
-            return $this->getKoMatch()->getKnockout()->getTournament();
-        else
-            return null;
-    }
-
-    public function getGroupStage()
-    {   
-        if($this->getGroup())
-            return $this->getGroup()->getStage();
-        else
-            return null;
-    }
-
-    public function getExtraInfos()
-    {   
-
-        if($this->getGroup())
-        {
-            return $this->getGroup()->__toString();
-        }
-
-        elseif($this->getKoMatch())
-        {
-            return $this->getKoMatch()->__toString();
-        }
-
-        else return "?";
-    }   
 
     public function getWinner()
     {   
@@ -119,11 +56,13 @@ class Match
     }
 
     public function getScore1()
-    {   
+    {
+        if ($this->getPart1() === null) return 0;
+
         $won = 0;
         foreach($this->getRounds() as $r)
         {
-            if($r->getScore1() > $r->getScore2())
+            if($this->getPart2() === null || $r->getScore($this->getPart1()) > $r->getScore($this->getPart2()))
                 $won++;
         }
         return $won;
@@ -131,35 +70,18 @@ class Match
 
     public function getScore2()
     {
+        if ($this->getPart2() === null) return 0;
+
         $won = 0;
         foreach($this->getRounds() as $r)
         {
-            if($r->getScore2() > $r->getScore1())
+            if($this->getPart1() === null || $r->getScore($this->getPart2()) > $r->getScore($this->getPart1()))
                 $won++;
         }
         return $won;
     }
 
     // End of Customs
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->state = Match::STATE_UPCOMING;
-        $this->rounds = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set part1
@@ -208,104 +130,16 @@ class Match
     }
 
     /**
-     * Add rounds
-     *
-     * @param \InsaLan\TournamentBundle\Entity\Round $rounds
-     * @return Match
-     */
-    public function addRound(\InsaLan\TournamentBundle\Entity\Round $rounds)
-    {
-        $this->rounds[] = $rounds;
-
-        return $this;
-    }
-
-    /**
-     * Remove rounds
-     *
-     * @param \InsaLan\TournamentBundle\Entity\Round $rounds
-     */
-    public function removeRound(\InsaLan\TournamentBundle\Entity\Round $rounds)
-    {
-        $this->rounds->removeElement($rounds);
-    }
-
-    /**
-     * Get rounds
+     * Get participants
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getRounds()
+    public function getParticipants()
     {
-        return $this->rounds;
+        $arr = array();
+        if ($this->getPart1() !== null) $arr[] = $this->getPart1();
+        if ($this->getPart2() !== null) $arr[] = $this->getPart2();
+        return new ArrayCollection($arr);
     }
 
-    /**
-     * Set state
-     *
-     * @param integer $state
-     * @return Match
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-    /**
-     * Get state
-     *
-     * @return integer
-     */
-    public function getState()
-    {
-        return $this->state;
-    }
-
-    /**
-     * Set group
-     *
-     * @param \InsaLan\TournamentBundle\Entity\Group $group
-     * @return Match
-     */
-    public function setGroup(\InsaLan\TournamentBundle\Entity\Group $group = null)
-    {
-        $this->group = $group;
-
-        return $this;
-    }
-
-    /**
-     * Get group
-     *
-     * @return \InsaLan\TournamentBundle\Entity\Group
-     */
-    public function getGroup()
-    {
-        return $this->group;
-    }
-
-    /**
-     * Set koMatch
-     *
-     * @param \InsaLan\TournamentBundle\Entity\KnockoutMatch $koMatch
-     * @return KnockoutMatch
-     */
-    public function setKoMatch(\InsaLan\TournamentBundle\Entity\KnockoutMatch $koMatch = null)
-    {
-        $this->koMatch = $koMatch;
-
-        return $this;
-    }
-
-    /**
-     * Get koMatch
-     *
-     * @return \InsaLan\TournamentBundle\Entity\KnockoutMatch
-     */
-    public function getKoMatch()
-    {
-        return $this->koMatch;
-    }
 }

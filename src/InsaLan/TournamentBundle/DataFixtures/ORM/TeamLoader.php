@@ -46,6 +46,17 @@ class TeamLoader extends AbstractFixture implements OrderedFixtureInterface, Con
             $manager->persist($t);
         }
 
+        for ($i = 1; $i <= 28; $i++) {
+            $t = new Team();
+            $t->setName("Tondeuse Royale $i");
+            $t->generatePasswordSalt();
+            $t->setPassword($encoder->encodePassword('hello', $t->getPasswordSalt()));
+            $t->setValidated(0);
+            $t->setTournament($this->getReference('tournament-5'));
+            $this->addReference('royal-team-'.$i, $t);
+            $manager->persist($t);
+        }
+
 
         $manager->flush();
     }

@@ -76,6 +76,17 @@ services:
         calls:
             - [ setTranslationDomain, [InsaLanTournamentBundle]]
 
+    sonata.admin.tournament.royalmatch:
+        class: InsaLan\TournamentBundle\Admin\RoyalMatchAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Matchs Battle royale" }
+        arguments:
+            - ~
+            - InsaLan\TournamentBundle\Entity\RoyalMatch
+            - InsaLanTournamentBundle:CRUD
+        calls:
+            - [ setTranslationDomain, [InsaLanTournamentBundle]]
+
     sonata.admin.tournament.round:
         class: InsaLan\TournamentBundle\Admin\RoundAdmin
         tags:
@@ -83,6 +94,17 @@ services:
         arguments:
             - ~
             - InsaLan\TournamentBundle\Entity\Round
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanTournamentBundle]]
+
+    sonata.admin.tournament.score:
+        class: InsaLan\TournamentBundle\Admin\ScoreAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Score", show_in_dashboard: false }
+        arguments:
+            - ~
+            - InsaLan\TournamentBundle\Entity\Score
             - ~
         calls:
             - [ setTranslationDomain, [InsaLanTournamentBundle]]

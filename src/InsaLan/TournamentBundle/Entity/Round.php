@@ -28,20 +28,15 @@ class Round
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Match", inversedBy="rounds")
+     * @ORM\ManyToOne(targetEntity="AbstractMatch", inversedBy="rounds")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $match;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity="Score", mappedBy="round", cascade={"all"})
      */
-    protected $score1;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $score2;
+    protected $scores;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -57,7 +52,7 @@ class Round
 
     public function __toString()
     {
-        return "[" . $this->getScore1() . " : " . $this->getScore2() . "]";
+        return "[" . implode(' - ', array_map(function($s) { return $s->__toString(); }, $this->scores->toArray())) . "]";
     }
 
     public function getTournament()
@@ -83,6 +78,13 @@ class Round
 
     // End Of Customs
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->scores = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     // Replay Upload management
 
     protected $replayFile;
@@ -164,58 +166,105 @@ class Round
     }
 
     /**
-     * Set score1
+     * Set score
      *
-     * @param integer $score1
+     * @param \InsaLan\TournamentBundle\Entity\Participant $participant
+     * @param integer $score
      * @return Round
      */
-    public function setScore1($score1)
+    public function setScore(\InsaLan\TournamentBundle\Entity\Participant $participant, $score)
     {
-        $this->score1 = $score1;
+        $scoreObj = $this->findScore($participant);
+
+        if ($scoreObj !== null) {
+            $scoreObj->setScore($scoreObj);
+            return $this;
+        }
+
+        $scoreObj = new Score();
+        $scoreObj->setRound($this);
+        $scoreObj->setParticipant($participant);
+        $scoreObj->setScore($score);
+
+        $this->addScore($scoreObj);
 
         return $this;
     }
 
     /**
-     * Get score1
+     * Add score
      *
+     * @param \InsaLan\TournamentBundle\Entity\Participant $participant
      * @return integer
      */
-    public function getScore1()
+    public function addScore(\InsaLan\TournamentBundle\Entity\Score $score)
     {
-        return $this->score1;
-    }
-
-    /**
-     * Set score2
-     *
-     * @param integer $score2
-     * @return Round
-     */
-    public function setScore2($score2)
-    {
-        $this->score2 = $score2;
-
+        $this->scores[] = $score;
         return $this;
     }
 
     /**
-     * Get score2
+     * Get score
      *
+     * @param \InsaLan\TournamentBundle\Entity\Participant $participant
      * @return integer
      */
-    public function getScore2()
+    public function getScore(\InsaLan\TournamentBundle\Entity\Participant $participant)
     {
-        return $this->score2;
+        $score = $this->findScore($participant);
+
+        if ($score !== null) {
+            return $score->getScore();
+        }
+
+        return 0;
+    }
+
+    /**
+     * Has score
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Participant $participant
+     * @return bool
+     */
+    public function hasScore(\InsaLan\TournamentBundle\Entity\Participant $participant)
+    {
+        return $this->findScore($participant) !== null;
+    }
+
+    /**
+     * Find score
+     *
+     * @param \InsaLan\TournamentBundle\Entity\Participant $participant
+     * @return \InsaLan\TournamentBundle\Entity\Score $score
+     */
+    public function findScore(\InsaLan\TournamentBundle\Entity\Participant $participant)
+    {
+        foreach ($this->scores as $score) {
+            if ($score->getParticipant()->getId() == $participant->getId()) {
+                return $score;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Get scores
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getScores()
+    {
+        return $this->scores;
     }
 
     /**
      * Set match
      *
-     * @param \InsaLan\TournamentBundle\Entity\Match $match
+     * @param \InsaLan\TournamentBundle\Entity\AbstractMatch $match
      * @return Round
      */
-    public function setMatch(\InsaLan\TournamentBundle\Entity\Match $match = null)
+    public function setMatch(\InsaLan\TournamentBundle\Entity\AbstractMatch $match = null)
     {
         $this->match = $match;
 
@@ -225,7 +274,7 @@ class Round
     /**
      * Get match
      *
-     * @return \InsaLan\TournamentBundle\Entity\Match
+     * @return \InsaLan\TournamentBundle\Entity\AbstractMatch
      */
     public function getMatch()
     {
