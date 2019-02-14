@@ -115,7 +115,7 @@ class DefaultController extends Controller
         $manager = $em->getRepository('InsaLanTournamentBundle:Manager')->findByUser($usr);
         foreach ($manager as $m) {
             if ($m->getTournament()->isPending() || $m->getTournament()->isPlaying()) {
-                        
+
                 $tournament = [];
                 $tournament["shortname"] =$m->getTournament()->getShortname();
                 $tournament["game_name"] = $m->getGameName();
@@ -144,7 +144,7 @@ class DefaultController extends Controller
 
             if ($p->getTournament()) {
                 if ($p->getTournament()->isPending() || $p->getTournament()->isPlaying()) {
-                        
+
                     $tournament = [];
                     $tournament["shortname"] =$p->getTournament()->getShortname();
                     $tournament["game_name"] = $p->getGameName();
@@ -160,12 +160,12 @@ class DefaultController extends Controller
                     } else {
                         $tournament["has_paid"] = False;
                     }
-                    $res["tournament"][] = $tournament;      
+                    $res["tournament"][] = $tournament;
                 }
             }
 
             elseif ($p->getPendingRegistrable()) {
-                if ($p->getPendingRegistrable()->isOpenedNow()) {
+                if ($p->getPendingRegistrable()->isOpenedNow() || ($p->getPendingRegistrable()->getKind() == 'tournament' && ($p->getPendingRegistrable()->isPending() || $p->getPendingRegistrable()->isPlaying())) {
 
                     $tournament = [];
                     $tournament["shortname"] =$p->getPendingRegistrable()->getShortname();
@@ -182,7 +182,7 @@ class DefaultController extends Controller
                     } else {
                         $tournament["has_paid"] = False;
                     }
-                    $res["tournament"][] = $tournament;                 
+                    $res["tournament"][] = $tournament;
                 }
             }
         }
