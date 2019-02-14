@@ -34,6 +34,7 @@ class Version20190205222925 extends AbstractMigration
             FROM intra_Round
             INNER JOIN intra_Match on intra_Match.id = intra_Round.match_id
             WHERE intra_Match.kind = "simple" AND intra_Match.part1_id IS NOT NULL
+                AND intra_Match.part1_id != intra_Match.part2_id
          ');
 
         $this->addSql('INSERT INTO
@@ -49,6 +50,23 @@ class Version20190205222925 extends AbstractMigration
             FROM intra_Round
             INNER JOIN intra_Match on intra_Match.id = intra_Round.match_id
             WHERE intra_Match.kind = "simple" AND intra_Match.part2_id IS NOT NULL
+                AND intra_Match.part1_id != intra_Match.part2_id
+         ');
+
+        $this->addSql('INSERT INTO
+            intra_Score(
+                round_id,
+                participant_id,
+                score
+            )
+            SELECT
+                intra_Round.id as round_id,
+                part1_id as participant_id,
+                (score1 + score2) as score
+            FROM intra_Round
+            INNER JOIN intra_Match on intra_Match.id = intra_Round.match_id
+            WHERE intra_Match.kind = "simple" AND intra_Match.part1_id IS NOT NULL AND intra_Match.part2_id IS NOT NULL
+                AND intra_Match.part1_id = intra_Match.part2_id
          ');
         
         $this->addSql('ALTER TABLE intra_Round DROP score1, DROP score2');
