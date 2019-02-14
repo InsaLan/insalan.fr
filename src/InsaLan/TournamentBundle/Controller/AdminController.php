@@ -422,4 +422,27 @@ class AdminController extends Controller
                 'insalan_tournament_admin_stage',
                 array('id' => $m->getGroup()->getStage()->getId())));
     }
+
+        /**
+         * Show placement
+         * @Route("/{id}/admin/placement", requirements={"id" = "\d+"})
+         * @Template()
+         */
+        public function placementAction(Request $request, Entity\Tournament $id = null) {
+            $em = $this->getDoctrine()->getManager();
+            $usr = $this->get('security.context')->getToken()->getUser();
+
+            $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments();
+
+            $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByRegistrable($id);
+
+            // Getting unavailable placements for interface
+            $unavailable = $em->getRepository("InsaLanTournamentBundle:Tournament")->getUnavailablePlacements($id);
+
+            // Room structure
+            $structure = $this->get('insalan.tournament.placement')->getStructure();
+
+            $output = array('structure' => $structure, 'tournament' => $id, 'participants' => $participants, 'unavailable' => $unavailable);
+            return $output;
+        }
 }

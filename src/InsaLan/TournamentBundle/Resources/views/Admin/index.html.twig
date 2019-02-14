@@ -31,6 +31,9 @@
 {% if tournament %}
   <hr style="margin: 20px 0px;"/>
   <section class="grid-5 pull-left">
+    {% if tournament %}
+    <a href="{{ path('insalan_tournament_admin_placement', {id: tournament.id}) }}" class="btn btn-plain" style="float: right; margin-right: 15px;">Placement</a>
+    {% endif %}
     <section class="groups">
       <h2>Poules</h2>
       <ul style="margin-left: 30px">
