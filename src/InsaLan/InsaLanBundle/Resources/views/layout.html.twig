@@ -24,34 +24,12 @@
   <body id="body">
 
     {% block main_header %}
-    {#
-    <div id="mask">
-      <div class="maskContent" id="stream0">
-        <iframe src="//player.twitch.tv/?channel=mastersjeuvideo&autoplay=false" frameborder="0" scrolling="no" height="378" width="620"></iframe>
-        <br /><a href="#" class="hideMask">Cacher</a>
-      </div>
-      <div class="maskContent" id="stream1">
-        <iframe src="//player.twitch.tv/?channel=docteuryogo&autoplay=false" frameborder="0" scrolling="no" height="378" width="620"></iframe>
-        <br /><a href="#" class="hideMask">Cacher</a>
-      </div>
-      <div class="maskContent" id="stream2">
-        <iframe src="//player.twitch.tv/?channel=milleniumtvhs&autoplay=false" frameborder="0" scrolling="no" height="378" width="620"></iframe>
-        <br /><a href="#" class="hideMask">Cacher</a>
-      </div>
-      <div class="maskContent" id="stream3">
-        <iframe src="//player.twitch.tv/?channel=gaminglive_dota2&autoplay=false" frameborder="0" scrolling="no" height="378" width="620"></iframe>
-        <br /><a href="#" class="hideMask">Cacher</a>
-      </div>
-    </div>
 
     <div class="streamsHeader">
       <div class="grid-2 stream" style="text-align: left"><div class="rec"></div><p style="padding-left:30px">EN DIRECT</p></div>
-      <div class="grid-1 btn-primary streamLink stream showMask" data-target="stream0"><p>LoL</p></div>
-      <div class="grid-1 btn-primary streamLink stream showMask" data-target="stream1"><p>StarCraft II</p></div>
-      <div class="grid-1 btn-primary streamLink stream showMask" data-target="stream2"><p>Hearthstone</p></div>
-      <div class="grid-1 btn-primary streamLink stream showMask" data-target="stream3"><p>DotA 2</p></div>
+      <a href="{{ path('insalan_stream_default_index') }}" class="grid-4 btn-primary streamLink stream"><p>Accéder aux streams</p></a>
     </div>
-    #}
+
     <header>
 
       <div class="container">
