@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Stream
  *
- * @ORM\Table()
+ * @ORM\Table(name="`StreamArchives`")
  * @ORM\Entity(repositoryClass="InsaLan\ArchivesBundle\Entity\StreamRepository")
  */
 class Stream
@@ -41,7 +41,7 @@ class Stream
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
-    
+
     /**
      * @var string
      *
@@ -144,7 +144,7 @@ class Stream
     /**
      * Get album
      *
-     * @return string 
+     * @return string
      */
     public function getAlbum()
     {

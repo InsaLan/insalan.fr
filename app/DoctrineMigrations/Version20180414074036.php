@@ -18,8 +18,8 @@ class Version20180414074036 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE intra_Picture ADD album VARCHAR(255) DEFAULT NULL');
-        $this->addSql('ALTER TABLE intra_Stream ADD album VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE intra_PictureArchives ADD album VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE intra_StreamArchives ADD album VARCHAR(255) DEFAULT NULL');
 
     }
 
@@ -31,8 +31,8 @@ class Version20180414074036 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE intra_Picture DROP album');
-        $this->addSql('ALTER TABLE intra_Stream DROP album');
+        $this->addSql('ALTER TABLE intra_PictureArchives DROP album');
+        $this->addSql('ALTER TABLE intra_StreamArchives DROP album');
 
     }
 }

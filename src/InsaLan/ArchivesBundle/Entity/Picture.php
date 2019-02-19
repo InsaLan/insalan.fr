@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * Picture
  *
- * @ORM\Table()
+ * @ORM\Table(name="`PictureArchives`")
  * @ORM\Entity(repositoryClass="InsaLan\ArchivesBundle\Entity\PictureRepository")
  */
 class Picture
@@ -246,7 +246,7 @@ class Picture
     /**
      * Get album
      *
-     * @return string 
+     * @return string
      */
     public function getAlbum()
     {
