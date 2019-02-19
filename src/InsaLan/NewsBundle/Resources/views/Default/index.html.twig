@@ -6,22 +6,22 @@
 
 {% block body %}
   {{ parent() }}
-  {#<article>
+  <article>
      <div class="img-center">
-       <a href="{{ path('insalan_rsc_default_index') }}">
+      {#<a href="{{ path('insalan_rsc_default_index') }}">
          <img width="400" align-self="center" src="{{ asset('bundles/insalanrsc/img/home-banner.png') }}" />
        </a>
       <br/>
-      <br/>
-        <img width="700" align-self="center" src="{{ asset('bundles/insalan/img/banner-2019.png') }}" />
+      <br/>#}
+        <img width="600" align-self="center" src="{{ asset('bundles/insalan/img/logo-noyear.png') }}" />
      </div>
-  </article>#}
+  </article>
 
+  {#
   <div class="grid-7 pull-left">
-    {#<img class="frame" width="700" align-self="center" src="{{ asset('bundles/insalan/img/banner-2019.png') }}" />#}
+    <img class="frame" width="700" align-self="center" src="{{ asset('bundles/insalan/img/banner-2019.png') }}" />
     <iframe width="700" height="437" src="https://www.youtube.com/embed/_a-zRFnW-bc" frameborder="0" allowfullscreen></iframe>
   </div>
-
 
 
 <div class="grid-3 pull-left">
@@ -96,7 +96,7 @@
           </section>
       </div>
   </div>
-
+#}
 
   <br class="clear">
   <article id="horaire" class="info">

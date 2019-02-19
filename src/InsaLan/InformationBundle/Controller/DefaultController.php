@@ -62,11 +62,11 @@ class DefaultController extends Controller
     /**
      * @Route("/playersinfos")
      * @Template()
-     */
+     *//*
     public function playersInfosAction()
     {
         return array();
-    }
+    }*/
 
     /**
      * @Route("/salesterms")
@@ -77,10 +77,10 @@ class DefaultController extends Controller
         return array();
     }
 
-    /** 
+    /**
      * @Route("/hardwareRental")
      * @Template()
-     */
+     *//*
     public function hardwareRentalAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -110,5 +110,5 @@ class DefaultController extends Controller
             }
         }
         return array('validated' => $validated);
-    }
+    }*/
 }

@@ -24,12 +24,12 @@
   <body id="body">
 
     {% block main_header %}
-
+    {#
     <div class="streamsHeader">
       <div class="grid-2 stream" style="text-align: left"><div class="rec"></div><p style="padding-left:30px">EN DIRECT</p></div>
       <a href="{{ path('insalan_stream_default_index') }}" class="grid-4 btn-primary streamLink stream"><p>Accéder aux streams</p></a>
     </div>
-
+    #}
     <header>
 
       <div class="container">
@@ -69,17 +69,17 @@
             <li><a href="{{ path('insalan_news_default_index') }}">Accueil</a></li>
             {#<li><a href="{{ path('insalan_rsc_default_index') }}">RSC</a></li>#}
             <li><a href="{{ path('insalan_tournament_default_index') }}">Tournois</a></li>
-              {% if app.user %}
+              {#{% if app.user %}
                 <li><a href="{{ path('insalan_information_default_playersinfos') }}">Infos joueurs</a></li>
-              {% endif %}
+              {% endif %}#}
             <li><a href="{{ path('insalan_information_default_cosplay') }}">Cosplay</a></li>
             <li><a href="{{ path('insalan_information_default_baston') }}">Baston</a></li>
             <li><a href="{{ path('insalan_information_default_faq') }}">Informations</a></li>
-            {% if app.user %}
+            {#{% if app.user %}
             <li><a href="{{ path('insalan_information_default_hardwarerental') }}">Locations</a></li>
-            {% endif %}
+          {% endif %}#}
             <li><a href="{{ path('insalan_news_default_forum') }}">Forum</a></li>
-            <li><a href="{{ path('insalan_pizza_default_index') }}">Pizzas</a></li>
+            {#<li><a href="{{ path('insalan_pizza_default_index') }}">Pizzas</a></li>#}
           </ul>
         </nav>
         {% endblock %}
