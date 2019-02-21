@@ -149,10 +149,6 @@ class MerchantController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_merchant_index_1', array('id' => $registrable->getId())));
         }
 
-        $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
-        $order = $storage->create();
-        $order->setUser($player->getUser());
-
         $price = $registrable->getWebPrice();
         $title = 'Place pour le tournoi '.$registrable->getName();
 
@@ -169,6 +165,10 @@ class MerchantController extends Controller
             $title .= " (" . $discount->getName() . ")";
         }
 
+        $payment = $this->get("insalan.user.payment");
+        $order = $payment->getOrder($registrable->getCurrency(), $price);
+        $order->setUser($player->getUser());
+
         $order->setDiscount($discount);
 
         $order->setRawPrice($price);
@@ -180,21 +180,10 @@ class MerchantController extends Controller
                 $order->setType(PaymentDetails::TYPE_UNDEFINED); // TODO Save payment type
             }
 
+        $order->addPaymentDetail($title, $price, '');
+        $order->addPaymentDetail('Paiement dans un point de vente partenaire', 0, 'Paiement validé par '.$user->getFirstName().' '.$user->getLastName());
 
-        $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $registrable->getCurrency();
-        $order['PAYMENTREQUEST_0_AMT'] = $price;
-
-        $order['L_PAYMENTREQUEST_0_NAME0'] = $title;
-        $order['L_PAYMENTREQUEST_0_AMT0'] = $price;
-        $order['L_PAYMENTREQUEST_0_DESC0'] = $registrable->getDescription();
-        $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;
-
-        $order['L_PAYMENTREQUEST_0_NAME1'] = 'Paiement dans un point de vente partenaire';
-        $order['L_PAYMENTREQUEST_0_AMT1'] = 0;
-        $order['L_PAYMENTREQUEST_0_DESC1'] = 'Paiement validé par '.$user->getFirstName().' '.$user->getLastName();
-        $order['L_PAYMENTREQUEST_0_NUMBER1'] = 1;
-
-        $storage->update($order);
+        $payment->update($order);
 
         $merchantOrder = new MerchantOrder();
         $merchantOrder->setMerchant($user);

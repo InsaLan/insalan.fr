@@ -68,5 +68,11 @@ class Payment
 
     }
 
+    public function update($order)
+    {
+        $storage = $this->payum->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
+        $storage->update($order);
+    }
+
 
 }

@@ -378,8 +378,6 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_user_pay', array("registrable" => $registrable->getId())));
         }
 
-        $paymentName = 'paypal_express_checkout_and_doctrine_orm';
-
         $price = $registrable->getWebPrice();
         $title = 'Place pour le tournoi '.$registrable->getName();
 
@@ -388,8 +386,9 @@ class UserController extends Controller
             $title += " (" + $discount->getName() + ")";
         }
 
-        $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
-        $order = $storage->create();
+        $payment = $this->get("insalan.user.payment");
+        $order = $payment->getOrder($registrable->getCurrency(), $price + $registrable->getOnlineIncreaseInPrice());
+
         $order->setUser($usr);
         $order->setDiscount($discount);
 
@@ -397,34 +396,16 @@ class UserController extends Controller
         $order->setPlace(PaymentDetails::PLACE_WEB);
         $order->setType(PaymentDetails::TYPE_PAYPAL);
 
-        $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $registrable->getCurrency();
-        $order['PAYMENTREQUEST_0_AMT'] = $price + $registrable->getOnlineIncreaseInPrice();
+        $order->addPaymentDetail($title, $price, '');
+        $order->addPaymentDetail('Majoration paiement en ligne', $registrable->getOnlineIncreaseInPrice(), 'Frais de gestion du paiement');
 
-        $order['L_PAYMENTREQUEST_0_NAME0'] = $title;
-        $order['L_PAYMENTREQUEST_0_AMT0'] = $price;
-        $order['L_PAYMENTREQUEST_0_DESC0'] = ''; //$registrable->getDescription();
-        $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;
-
-        $order['L_PAYMENTREQUEST_0_NAME1'] = 'Majoration paiement en ligne';
-        $order['L_PAYMENTREQUEST_0_AMT1'] = $registrable->getOnlineIncreaseInPrice();
-        $order['L_PAYMENTREQUEST_0_DESC1'] = 'Frais de gestion du paiement';
-        $order['L_PAYMENTREQUEST_0_NUMBER1'] = 1;
-
-        $storage->update($order);
-
-        $payment = $this->get('payum')->getGateway('paypal_express_checkout_and_doctrine_orm');
-        $captureToken = $this->get('payum')->getTokenFactory()->createCaptureToken(
-            $paymentName,
-            $order,
-            'insalan_tournament_user_paydonetemp',
-            array('registrable' => $registrable->getId())
+        return $this->redirect(
+            $payment->getTargetUrl(
+                $order,
+                'insalan_tournament_user_paydonetemp',
+                array('registrable' => $registrable->getId())
+            )
         );
-
-        $order['RETURNURL'] = $captureToken->getTargetUrl();
-        $order['CANCELURL'] = $captureToken->getTargetUrl();
-        $order['INVNUM'] = $usr->getId();
-        $storage->update($order);
-        return $this->redirect($captureToken->getTargetUrl());
     }
 
     /**
@@ -457,16 +438,9 @@ class UserController extends Controller
             ->getRepository('InsaLanTournamentBundle:Player')
             ->findOneByUserAndPendingRegistrable($usr, $registrable);
 
+        $payment = $this->get("insalan.user.payment");
 
-        $token = $this->get('payum')->getHttpRequestVerifier()->verify($request);
-        $payment = $this->get('payum')->getGateway($token->getGatewayName());
-
-        //$this->get('payum')->getHttpRequestVerifier()->invalidate($token);
-
-        $payment->execute($status = new GetHumanStatus($token));
-
-
-        if ($status->isCaptured()) {
+        if ($payment->check($request, true)) {
             $player->setPaymentDone(true);
             $em->persist($player);
             $em->flush();
