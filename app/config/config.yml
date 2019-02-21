@@ -182,7 +182,7 @@ payum:
     storages:
         InsaLan\UserBundle\Entity\PaymentDetails: { doctrine: orm }
 
-    payments:
+    gateways:
         paypal_express_checkout_and_doctrine_orm:
             paypal_express_checkout_nvp:
                 username: '%paypal_express_checkout_username%'

@@ -4,7 +4,6 @@ namespace InsaLan\UserBundle\Service;
 
 use InsaLan\UserBundle\Entity;
 
-use Payum\Core\Model\Order;
 use Payum\Core\Reply\HttpRedirect;
 use Payum\Core\Reply\HttpResponse;
 use Payum\Core\Request\Capture;
@@ -44,7 +43,7 @@ class Payment
         $storage =  $this->payum->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
         $storage->update($order);
 
-        $payment = $this->payum->getPayment($this->paymentName);
+        $payment = $this->payum->getGateway($this->paymentName);
         $captureToken = $this->payumToken->createCaptureToken(
             $this->paymentName,
             $order,
@@ -62,7 +61,7 @@ class Payment
 
     public function check($request, $invalidate = false) {
         $token = $this->payumCheck->verify($request);
-        $payment = $this->payum->getPayment($token->getPaymentName());
+        $payment = $this->payum->getGateway($token->getGatewayName());
         
         if($invalidate)
             $this->payumCheck->invalidate($token);

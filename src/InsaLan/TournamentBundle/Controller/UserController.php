@@ -412,7 +412,7 @@ class UserController extends Controller
 
         $storage->update($order);
 
-        $payment = $this->get('payum')->getPayment('paypal_express_checkout_and_doctrine_orm');
+        $payment = $this->get('payum')->getGateway('paypal_express_checkout_and_doctrine_orm');
         $captureToken = $this->get('payum.security.token_factory')->createCaptureToken(
             $paymentName,
             $order,
@@ -459,7 +459,7 @@ class UserController extends Controller
 
 
         $token = $this->get('payum.security.http_request_verifier')->verify($request);
-        $payment = $this->get('payum')->getPayment($token->getPaymentName());
+        $payment = $this->get('payum')->getGateway($token->getGatewayName());
 
         //$this->get('payum.security.http_request_verifier')->invalidate($token);
 

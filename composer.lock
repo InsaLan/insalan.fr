@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "61b9359c5df072bf323aab179c698afd",
+    "content-hash": "160a7f3235f5d5cd837f046c11bb7b63",
     "packages": [
         {
             "name": "adoy/oauth2",
@@ -2401,22 +2401,23 @@
         },
         {
             "name": "payum/core",
-            "version": "0.14.7",
+            "version": "0.15.3",
             "target-dir": "Payum/Core",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Payum/Core.git",
-                "reference": "0b3b70cd3d30c90f0d5f7b6496aa4f18d8e85f21"
+                "reference": "3c5af466ec2d8e4311924c4b34f3b017e4f6d36b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Payum/Core/zipball/0b3b70cd3d30c90f0d5f7b6496aa4f18d8e85f21",
-                "reference": "0b3b70cd3d30c90f0d5f7b6496aa4f18d8e85f21",
+                "url": "https://api.github.com/repos/Payum/Core/zipball/3c5af466ec2d8e4311924c4b34f3b017e4f6d36b",
+                "reference": "3c5af466ec2d8e4311924c4b34f3b017e4f6d36b",
                 "shasum": ""
             },
             "require": {
                 "kriswallsmith/buzz": "~0.13",
                 "league/url": "~3.0",
+                "payum/iso4217": "~1.0",
                 "php": ">=5.3.2",
                 "twig/twig": "~1.0"
             },
@@ -2459,7 +2460,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.14-dev"
+                    "dev-master": "0.15-dev"
                 }
             },
             "autoload": {
@@ -2485,7 +2486,7 @@
                     "homepage": "http://payum.org/"
                 }
             ],
-            "description": "Domain friendly payment framework. Paypal, payex, authorize.net, be2bill, omnipay, recurring payments, instant notifications and many more",
+            "description": "Payum  offers everything you need to work with payments. From simplest use cases to very advanced ones.",
             "homepage": "http://payum.org",
             "keywords": [
                 "authorize.net",
@@ -2503,25 +2504,89 @@
                 "paypal rest",
                 "recurring payment"
             ],
-            "time": "2015-09-29T06:51:52+00:00"
+            "time": "2015-08-03T19:00:28+00:00"
+        },
+        {
+            "name": "payum/iso4217",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Payum/iso4217.git",
+                "reference": "6a45480e2818350dea58b7a076d0115aa7ff5789"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Payum/iso4217/zipball/6a45480e2818350dea58b7a076d0115aa7ff5789",
+                "reference": "6a45480e2818350dea58b7a076d0115aa7ff5789",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Payum\\ISO4217\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Bast",
+                    "email": "rob.bast@gmail.com"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "https://github.com/Payum/Payum/contributors"
+                },
+                {
+                    "name": "Kotlyar Maksim",
+                    "email": "kotlyar.maksim@gmail.com"
+                },
+                {
+                    "name": "Payum project",
+                    "homepage": "http://payum.org/"
+                }
+            ],
+            "description": "ISO 4217 PHP Library",
+            "homepage": "http://payum.org",
+            "keywords": [
+                "4217",
+                "ISO 4217",
+                "currencies",
+                "iso",
+                "library"
+            ],
+            "time": "2016-08-04T08:15:12+00:00"
         },
         {
             "name": "payum/offline",
-            "version": "0.14.0",
+            "version": "0.15.1",
             "target-dir": "Payum/Offline",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Payum/Offline.git",
-                "reference": "9dcfd83c454d3f8951abd75418a273a336ae779d"
+                "reference": "dd5ca938ee53d293458816f8edcbf5159eb28faf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Payum/Offline/zipball/9dcfd83c454d3f8951abd75418a273a336ae779d",
-                "reference": "9dcfd83c454d3f8951abd75418a273a336ae779d",
+                "url": "https://api.github.com/repos/Payum/Offline/zipball/dd5ca938ee53d293458816f8edcbf5159eb28faf",
+                "reference": "dd5ca938ee53d293458816f8edcbf5159eb28faf",
                 "shasum": ""
             },
             "require": {
-                "payum/core": "0.14.*",
+                "payum/core": "0.15.*",
                 "php": ">=5.3.2"
             },
             "require-dev": {
@@ -2530,7 +2595,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.14-dev"
+                    "dev-master": "0.15-dev"
                 }
             },
             "autoload": {
@@ -2556,31 +2621,32 @@
                     "homepage": "http://payum.org/"
                 }
             ],
-            "description": "Offline Payments",
+            "description": "The Payum extension. It provides Offline payment integration.",
             "homepage": "http://payum.org",
             "keywords": [
+                "invoice",
                 "offlile",
                 "payment"
             ],
-            "time": "2015-02-20T07:44:44+00:00"
+            "time": "2015-04-28T06:14:45+00:00"
         },
         {
             "name": "payum/paypal-express-checkout-nvp",
-            "version": "0.14.1",
+            "version": "0.15.1",
             "target-dir": "Payum/Paypal/ExpressCheckout/Nvp",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Payum/PaypalExpressCheckoutNvp.git",
-                "reference": "331da4ce873810a3f316c22ff8b74d4d94fd3ecd"
+                "reference": "1019acaac3bba039d3bfd019f2a4efc496fbbdc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Payum/PaypalExpressCheckoutNvp/zipball/331da4ce873810a3f316c22ff8b74d4d94fd3ecd",
-                "reference": "331da4ce873810a3f316c22ff8b74d4d94fd3ecd",
+                "url": "https://api.github.com/repos/Payum/PaypalExpressCheckoutNvp/zipball/1019acaac3bba039d3bfd019f2a4efc496fbbdc3",
+                "reference": "1019acaac3bba039d3bfd019f2a4efc496fbbdc3",
                 "shasum": ""
             },
             "require": {
-                "payum/core": "0.14.*",
+                "payum/core": "0.15.*",
                 "php": ">=5.3.2"
             },
             "require-dev": {
@@ -2589,7 +2655,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.14-dev"
+                    "dev-master": "0.15-dev"
                 }
             },
             "autoload": {
@@ -2615,7 +2681,7 @@
                     "homepage": "http://payum.org/"
                 }
             ],
-            "description": "Paypal express checkout",
+            "description": "The Payum extension. It provides Paypal ExpressCheckout payment integration.",
             "homepage": "http://payum.org/",
             "keywords": [
                 "digital goods",
@@ -2624,24 +2690,24 @@
                 "paypal",
                 "recurring payment"
             ],
-            "time": "2015-03-12T20:04:15+00:00"
+            "time": "2015-04-28T06:14:45+00:00"
         },
         {
             "name": "payum/payum-bundle",
-            "version": "0.14.4",
+            "version": "0.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Payum/PayumBundle.git",
-                "reference": "8be4ec0d2fe760e63e2c82a84a34ebc9a27b3e8a"
+                "reference": "86b3334a293d216d9b069a9775254281c05cfe1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Payum/PayumBundle/zipball/8be4ec0d2fe760e63e2c82a84a34ebc9a27b3e8a",
-                "reference": "8be4ec0d2fe760e63e2c82a84a34ebc9a27b3e8a",
+                "url": "https://api.github.com/repos/Payum/PayumBundle/zipball/86b3334a293d216d9b069a9775254281c05cfe1f",
+                "reference": "86b3334a293d216d9b069a9775254281c05cfe1f",
                 "shasum": ""
             },
             "require": {
-                "payum/core": "0.14.*",
+                "payum/core": "0.15.*",
                 "php": ">=5.3.2",
                 "symfony/form": "~2.3",
                 "symfony/framework-bundle": "~2.3",
@@ -2653,9 +2719,9 @@
                 "omnipay/dummy": "~2.0",
                 "omnipay/paypal": "~2.0",
                 "omnipay/stripe": "~2.0",
-                "payum/jms-payment-bridge": "0.14.*",
-                "payum/omnipay-bridge": "0.14.*",
-                "payum/payum": "0.14.*",
+                "payum/jms-payment-bridge": "0.15.*",
+                "payum/omnipay-bridge": "0.15.*",
+                "payum/payum": "0.15.*",
                 "phpunit/phpunit": "~4.0",
                 "sonata-project/admin-bundle": "~2.0",
                 "symfony/browser-kit": "~2.3",
@@ -2669,7 +2735,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.14-dev"
+                    "dev-master": "0.15-dev"
                 }
             },
             "autoload": {
@@ -2715,7 +2781,7 @@
                 "stripe.js",
                 "symfony"
             ],
-            "time": "2015-04-17T12:36:52+00:00"
+            "time": "2015-04-28T19:35:22+00:00"
         },
         {
             "name": "psr/http-message",
