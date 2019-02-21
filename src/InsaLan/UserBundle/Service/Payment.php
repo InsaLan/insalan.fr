@@ -15,14 +15,10 @@ class Payment
 {   
 
     private $payum;
-    private $payumCheck;
-    private $payumToken;
     private $paymentName = 'paypal_express_checkout_and_doctrine_orm';
 
-    public function __construct($p, $pp, $ppp) {
+    public function __construct($p) {
         $this->payum = $p;
-        $this->payumCheck = $pp;
-        $this->payumToken = $ppp;
     }
 
     public function getOrder($currency, $price) {
@@ -44,7 +40,7 @@ class Payment
         $storage->update($order);
 
         $payment = $this->payum->getGateway($this->paymentName);
-        $captureToken = $this->payumToken->createCaptureToken(
+        $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
             $this->paymentName,
             $order,
             $callbackRoute,
@@ -60,11 +56,11 @@ class Payment
     }
 
     public function check($request, $invalidate = false) {
-        $token = $this->payumCheck->verify($request);
+        $token = $this->payum->getHttpRequestVerifier()->verify($request);
         $payment = $this->payum->getGateway($token->getGatewayName());
         
         if($invalidate)
-            $this->payumCheck->invalidate($token);
+            $this->payum->getHttpRequestVerifier()->invalidate($token);
 
         $payment->execute($status = new GetHumanStatus($token));
 

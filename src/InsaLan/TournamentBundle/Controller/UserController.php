@@ -413,7 +413,7 @@ class UserController extends Controller
         $storage->update($order);
 
         $payment = $this->get('payum')->getGateway('paypal_express_checkout_and_doctrine_orm');
-        $captureToken = $this->get('payum.security.token_factory')->createCaptureToken(
+        $captureToken = $this->get('payum')->getTokenFactory()->createCaptureToken(
             $paymentName,
             $order,
             'insalan_tournament_user_paydonetemp',
@@ -458,10 +458,10 @@ class UserController extends Controller
             ->findOneByUserAndPendingRegistrable($usr, $registrable);
 
 
-        $token = $this->get('payum.security.http_request_verifier')->verify($request);
+        $token = $this->get('payum')->getHttpRequestVerifier()->verify($request);
         $payment = $this->get('payum')->getGateway($token->getGatewayName());
 
-        //$this->get('payum.security.http_request_verifier')->invalidate($token);
+        //$this->get('payum')->getHttpRequestVerifier()->invalidate($token);
 
         $payment->execute($status = new GetHumanStatus($token));
 

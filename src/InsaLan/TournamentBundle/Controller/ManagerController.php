@@ -309,7 +309,7 @@ class ManagerController extends Controller
         $storage->update($order);
 
         $payment = $this->get('payum')->getGateway('paypal_express_checkout_and_doctrine_orm');
-        $captureToken = $this->get('payum.security.token_factory')->createCaptureToken(
+        $captureToken = $this->get('payum')->getTokenFactory()->createCaptureToken(
             $paymentName,
             $order,
             'insalan_tournament_manager_paydonetemp',
@@ -354,10 +354,10 @@ class ManagerController extends Controller
             ->getRepository('InsaLanTournamentBundle:Manager')
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
-        $token = $this->get('payum.security.http_request_verifier')->verify($request);
+        $token = $this->get('payum')->getHttpRequestVerifier()->verify($request);
         $payment = $this->get('payum')->getGateway($token->getGatewayName());
 
-        //$this->get('payum.security.http_request_verifier')->invalidate($token);
+        //$this->get('payum')->getHttpRequestVerifier()->invalidate($token);
 
         $payment->execute($status = new GetHumanStatus($token));
 

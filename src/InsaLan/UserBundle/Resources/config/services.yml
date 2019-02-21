@@ -7,7 +7,7 @@ services:
 
     insalan.user.payment:
         class: InsaLan\UserBundle\Service\Payment
-        arguments: ["@payum", "@payum.security.http_request_verifier", "@payum.security.token_factory"]
+        arguments: ["@payum"]
 
     insalan.user.login_platform:
         class: InsaLan\UserBundle\Service\LoginPlatform
