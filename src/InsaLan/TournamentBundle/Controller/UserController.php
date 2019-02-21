@@ -389,7 +389,7 @@ class UserController extends Controller
         }
 
         $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
-        $order = $storage->createModel();
+        $order = $storage->create();
         $order->setUser($usr);
         $order->setDiscount($discount);
 
@@ -410,7 +410,7 @@ class UserController extends Controller
         $order['L_PAYMENTREQUEST_0_DESC1'] = 'Frais de gestion du paiement';
         $order['L_PAYMENTREQUEST_0_NUMBER1'] = 1;
 
-        $storage->updateModel($order);
+        $storage->update($order);
 
         $payment = $this->get('payum')->getPayment('paypal_express_checkout_and_doctrine_orm');
         $captureToken = $this->get('payum.security.token_factory')->createCaptureToken(
@@ -423,7 +423,7 @@ class UserController extends Controller
         $order['RETURNURL'] = $captureToken->getTargetUrl();
         $order['CANCELURL'] = $captureToken->getTargetUrl();
         $order['INVNUM'] = $usr->getId();
-        $storage->updateModel($order);
+        $storage->update($order);
         return $this->redirect($captureToken->getTargetUrl());
     }
 

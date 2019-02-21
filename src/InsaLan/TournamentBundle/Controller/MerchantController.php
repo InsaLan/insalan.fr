@@ -150,7 +150,7 @@ class MerchantController extends Controller
         }
 
         $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
-        $order = $storage->createModel();
+        $order = $storage->create();
         $order->setUser($player->getUser());
 
         $price = $registrable->getWebPrice();
@@ -194,7 +194,7 @@ class MerchantController extends Controller
         $order['L_PAYMENTREQUEST_0_DESC1'] = 'Paiement validé par '.$user->getFirstName().' '.$user->getLastName();
         $order['L_PAYMENTREQUEST_0_NUMBER1'] = 1;
 
-        $storage->updateModel($order);
+        $storage->update($order);
 
         $merchantOrder = new MerchantOrder();
         $merchantOrder->setMerchant($user);

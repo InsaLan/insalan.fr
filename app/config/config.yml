@@ -132,15 +132,6 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ @annotation_reader ] ]
-
-    payum.buzz.client:
-        class: %payum.buzz.client.class%
-        calls:
-            - [setTimeout, [200]]
-            - [setOption, [64,false]] #CURLOPT_SSL_VERIFYPEER
-            - [setOption, [81,false]] #CURLOPT_SSL_VERIFYHOST
-            - [setOption, [32,4]] #CURLOPT_SSLVERSION
-
     twig.extension.intl:
         class: Twig_Extensions_Extension_Intl
         tags:
@@ -191,7 +182,7 @@ payum:
     storages:
         InsaLan\UserBundle\Entity\PaymentDetails: { doctrine: orm }
 
-    contexts:
+    payments:
         paypal_express_checkout_and_doctrine_orm:
             paypal_express_checkout_nvp:
                 username: '%paypal_express_checkout_username%'

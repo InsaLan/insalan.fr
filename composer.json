@@ -32,7 +32,7 @@
         "paquettg/leaguewrap": "dev-master",
         "payum/payum-bundle": "*@stable",
         "payum/offline": "*@stable",
-        "payum/paypal-express-checkout-nvp": "0.12.*",
+        "payum/paypal-express-checkout-nvp": "0.14.*",
         "lexik/maintenance-bundle": "^2.0",
         "ehesp/steam-login": "^1.1",
         "adoy/oauth2": "^1.3"

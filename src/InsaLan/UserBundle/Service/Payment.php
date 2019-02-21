@@ -30,7 +30,7 @@ class Payment
 
         $storage =  $this->payum->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
 
-        $order = $storage->createModel();
+        $order = $storage->create();
 
         $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $currency;
         $order['PAYMENTREQUEST_0_AMT'] = $price;
@@ -42,7 +42,7 @@ class Payment
         
 
         $storage =  $this->payum->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
-        $storage->updateModel($order);
+        $storage->update($order);
 
         $payment = $this->payum->getPayment($this->paymentName);
         $captureToken = $this->payumToken->createCaptureToken(
@@ -54,7 +54,7 @@ class Payment
 
         $order['RETURNURL'] = $captureToken->getTargetUrl();
         $order['CANCELURL'] = $captureToken->getTargetUrl();
-        $storage->updateModel($order);
+        $storage->update($order);
 
         return $captureToken->getTargetUrl();
 
