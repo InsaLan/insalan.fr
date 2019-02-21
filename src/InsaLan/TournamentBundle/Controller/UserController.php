@@ -844,77 +844,6 @@ class UserController extends Controller
         return array('registrable' => $tournament, 'user' => $usr, 'player' => $player, 'error' => $details, 'form' => $form->createView());
     }
 
-
-    /**
-     * Automated match validation using Riot API
-     * TODO: Unsupported at the moment
-     * @Route("/user/public/team/{id}/validate/{match}", requirements={"id" = "\d+"})
-     * @Template()
-     */
-    public function teamValidateMatchAction(Entity\Participant $team, Entity\Match $match)
-    {
-
-        throw new ControllerException("Not supported");
-
-        try {
-            $pvpService = $this->get('insalan.tournament.pvp_net');
-
-            if($match->getPart1() !== $team && $match->getPart2() !== $team)
-                throw new ControllerException("Invalid team");
-
-            if(!$this->isUserInTeam($team))
-                throw new ControllerException("Invalid user");
-
-            if($match->getState() != Entity\Match::STATE_ONGOING)
-                throw new ControllerException("Invalid match: not in ongoing state");
-
-            try {
-                $matchResult = $pvpService->getGameResult($match->getPart1(), $match->getPart2());
-                $data = $matchResult[1];
-                $matchResult = $matchResult[0];
-            } catch (\Exception $e) {
-                throw new ControllerException($e->getMessage());
-            }
-        }
-        catch (ControllerException $e) {
-            $this->get('session')->getFlashBag()->add('error', $e->getMessage());
-            return $this->redirect($this->generateUrl('insalan_tournament_user_teamdetails', array('id' => $team->getId())));
-        }
-
-        $round = new Entity\Round();
-        $round->setMatch($match);
-
-        $round->setScore($match->getPart1(), 0);
-        $round->setScore($match->getPart2(), 0);
-
-        $round->setData($data);
-
-        if($matchResult) {
-            $round->setScore($match->getPart1(), 1);
-        }
-        else {
-            $round->setScore($match->getPart2(), 1);
-        }
-
-        // TODO : not for LoL only
-
-        $match->setState(Entity\Match::STATE_FINISHED);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($round);
-        $em->persist($match);
-
-        $em->flush();
-
-        if($match->getKoMatch()) {
-            $em->getRepository("InsaLanTournamentBundle:KnockoutMatch")->propagateVictory($match->getKoMatch());
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('insalan_tournament_user_teamdetails', array('id' => $team->getId())));
-
-    }
-
     /**
      * Add a replay to a round of the tournament
      * The replay is an uploaded file
@@ -1015,39 +944,6 @@ class UserController extends Controller
         return true;
     }
 
-    protected function lolValidation($em, $usr, $player, $tournamentId, $check) {
-        if ($player->getGameValidated()) {
-            return $this->redirect(
-                $this->generateUrl(
-                    'insalan_tournament_user_jointeam',
-                    array(
-                        'id' => $tournamentId
-                    )));
-        } else if (!$check) {
-            return array('player' => $player, 'error' => null, 'selectedGame' => 'lol', 'tournamentId' => $tournamentId);
-        } else {
-            $details = null;
-            try {
-                $this->fetchInfo($usr, $player);
-                $em->persist($player);
-                $em->flush();
-            } catch(\Exception $e) {
-                $className = get_class($e);
-
-                if ('GuzzleHttp\\Exception\\ClientException' === $className && 404 == $e->getResponse()->getStatusCode()) {
-                    $details = 'Invocateur introuvable sur EUW';
-                }
-                else if (0 === strpos($className, 'GuzzleHttp')) {
-                    $details = 'Erreur de l\'API. Veuillez réessayer.';
-                } else {
-                    $details = 'Une erreur inconnue est survenue';
-                }
-            }
-            return array('player' => $player, 'error' => $details, 'selectedGame' => 'lol', 'tournamentId' => $tournamentId);
-        }
-
-    }
-
     private function isUserInTeam(Entity\Participant $part) {
 
         $user = $this->get('security.context')->getToken()->getUser();
@@ -1065,41 +961,4 @@ class UserController extends Controller
 
     }
 
-    /**
-     * LoL API : fetch player info to check the masteries pages for requirements
-     * @param  User $user   targeted user
-     * @param  Player $player player associated with user for the tournament to check
-     */
-    protected function fetchInfo($user, $player) {
-        $apiLol = $this->container->get('insalan.lol');
-        $apiSummoner = $apiLol->getApi()->summoner();
-        $rSummoner = $apiSummoner->info($player->getGameName());
-        $player->setGameId($rSummoner->id);
-        $player->setGameName($rSummoner->name);
-        $player->setGameAvatar($rSummoner->profileIconId);
-        $masteryPages = $apiSummoner->masteryPages($player->getGameId());
-        foreach ($masteryPages as $page) {
-            if ($page->get('name') == 'insalan'.$user->getId()) {
-                $player->setGameValidated(true);
-                return;
-            }
-        }
-        throw $this->createNotFoundException('La page de maîtrise n\'existe pas');
-    }
-
-    /**
-     * LoL API : tournament code provider
-     * Fills the provided match pvpNetURL with data provided
-     * @param  Entity\Match $m Targeted match
-     */
-    private function populateTournamentCode(Entity\Match $m)
-    {
-        $pvpService = $this->get('insalan.tournament.pvp_net');
-        $round = 1;
-        $name = "InsaLan Match " . $m->getId() ." G".$round;
-        $m->pvpNetUrl = $pvpService->generateUrl(array(
-            "name" => $name,
-            "extra" => $m->getId(),
-            "pass" => md5('insalan_match_#'.$m->getId().'_'.$round)));
-    }
 }

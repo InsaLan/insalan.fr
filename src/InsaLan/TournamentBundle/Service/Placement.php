@@ -12,7 +12,6 @@
 namespace InsaLan\TournamentBundle\Service;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use InsaLan\InsaLanBundle\API\Lol;
 use InsaLan\TournamentBundle\Entity\Team;
 
 class Placement

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "160a7f3235f5d5cd837f046c11bb7b63",
+    "content-hash": "38c59400ad35684ab3b791784ceb7f33",
     "packages": [
         {
             "name": "adoy/oauth2",
@@ -1306,119 +1306,6 @@
             "time": "2018-07-26T12:16:35+00:00"
         },
         {
-            "name": "guzzlehttp/guzzle",
-            "version": "6.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "c6851d6e48f63b69357cbfa55bca116448140e0c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/c6851d6e48f63b69357cbfa55bca116448140e0c",
-                "reference": "c6851d6e48f63b69357cbfa55bca116448140e0c",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/promises": "~1.0",
-                "guzzlehttp/psr7": "~1.1",
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "ext-curl": "*",
-                "phpunit/phpunit": "~4.0",
-                "psr/log": "~1.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "6.1-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/functions_include.php"
-                ],
-                "psr-4": {
-                    "GuzzleHttp\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Guzzle is a PHP HTTP client library",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "client",
-                "curl",
-                "framework",
-                "http",
-                "http client",
-                "rest",
-                "web service"
-            ],
-            "time": "2015-11-23T00:47:50+00:00"
-        },
-        {
-            "name": "guzzlehttp/promises",
-            "version": "v1.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/promises.git",
-                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/a59da6cf61d80060647ff4d3eb2c03a2bc694646",
-                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Promise\\": "src/"
-                },
-                "files": [
-                    "src/functions_include.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Guzzle promises library",
-            "keywords": [
-                "promise"
-            ],
-            "time": "2016-12-20T10:07:11+00:00"
-        },
-        {
             "name": "guzzlehttp/psr7",
             "version": "1.5.2",
             "source": {
@@ -2294,61 +2181,6 @@
                 "service proxies"
             ],
             "time": "2016-11-04T15:53:15+00:00"
-        },
-        {
-            "name": "paquettg/leaguewrap",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/paquettg/leaguewrap.git",
-                "reference": "0f91813b5d8292054e5e13619d591b6b14dc63e6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/paquettg/leaguewrap/zipball/0f91813b5d8292054e5e13619d591b6b14dc63e6",
-                "reference": "0f91813b5d8292054e5e13619d591b6b14dc63e6",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "~6.1.0",
-                "php": ">=5.5"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9.0",
-                "phpunit/phpunit": "~4.8.0",
-                "satooshi/php-coveralls": "~0.6.0"
-            },
-            "suggest": {
-                "league-php": "Successor of this package."
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "LeagueWrap": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Gilles Paquette",
-                    "email": "paquettg@gmail.com",
-                    "homepage": "http://gillespaquette.ca"
-                }
-            ],
-            "description": "A wrapper for the League of Legends API.",
-            "homepage": "https://github.com/paquettg/leaguewrap",
-            "keywords": [
-                "api",
-                "facade",
-                "league",
-                "legends",
-                "proxy",
-                "wrap"
-            ],
-            "time": "2016-11-11T20:36:16+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -5086,7 +4918,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "knplabs/knp-markdown-bundle": 20,
-        "paquettg/leaguewrap": 20,
         "payum/payum-bundle": 0,
         "payum/offline": 0
     },

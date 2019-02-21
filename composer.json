@@ -29,7 +29,6 @@
         "knplabs/knp-markdown-bundle": "dev-master",
         "sonata-project/admin-bundle": "~2.3",
         "sonata-project/doctrine-orm-admin-bundle": "2.3.*",
-        "paquettg/leaguewrap": "dev-master",
         "payum/payum-bundle": "*@stable",
         "payum/offline": "*@stable",
         "payum/paypal-express-checkout-nvp": "0.15.*",
