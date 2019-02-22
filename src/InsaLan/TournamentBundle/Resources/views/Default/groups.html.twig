@@ -35,8 +35,8 @@
           {% for r in m.match.rounds %}
             {% if r.replay %}<a href="{{ asset('uploads/demos/' ~ r.replay) }}"{%
             else %}<div{% endif %} class="dot {%
-            if r.score1 > r.score2 %}p1{%
-            elseif r.score1 < r.score2 %}p2{%
+            if r.score(m.part1) > r.score(m.part2) %}p1{%
+            elseif r.score(m.part1) < r.score(m.part2) %}p2{%
             else %}p0{% endif %}">
             {% if r.replay %}</a>{% else %}</div>{% endif %}
           {% endfor %}

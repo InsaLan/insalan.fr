@@ -1,0 +1,125 @@
+{% extends 'InsaLanInformationBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/insalan/css/news.css' %}
+      <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<img src="{{ asset('bundles/insalan/img/baston.png') }}" width="1000"/>
+
+<article id="Baston" class="info">
+    <aside>
+        <div class="square">
+            <a href="#body"><span></span></a>
+        </div>
+    </aside>
+
+    <header>
+        <h2>Présentation</h2>
+    </header>
+
+
+
+    <section>
+        <p>
+            Chers ami.e.s joueurs et joueuses, fans de versus et de fun, le 3HitCombo est de retour à l’InsaLan pour organiser 3 tournois de jeux de combat !!!
+        </p>
+        <p>
+            Vous pouvez venir regarder les tournois et jouer en freeplay gratuitement, des animations sont prévues pour les visiteurs !
+        </p>
+        <p>
+            Nous ne pouvions pas passer à côté de la sensation du moment, <strong>SUPER SMASH BROS. ULTIMATE</strong> ! Alors venez donc frapper votre adversaire afin qu’il ne remette jamais les pieds sur la terre ferme jusqu’à ce que vous décrochiez la victoire ! Si vous êtes plutôt jeux de combat 2D classique, nous reconduisons <strong>STREET FIGHTER 5</strong>, dernier opus de la licence phare des jeux de combat ! Ne vous inquiétez pas, joueurs de jeux 3D, pour compléter notre sélection nous avons choisi <strong>SOUL CALIBUR 6</strong> afin d’étancher votre soif de ring out !
+        </p>
+    </section>
+</article>
+
+<br/><br/>
+<div class="partner-list">
+    <div class="partner partner-small">
+        <a href="http://www.3hitcombo.fr/">
+        <img src="{{ asset('bundles/insalan/img/partenaires/3hit.png') }}" alt="3Hit Combo" />
+        </a>
+    </div>
+    <div class="partner partner-small">
+      <a href="https://www.facebook.com/WarpZonebar">
+        <img src="{{ asset('bundles/insalan/img/partenaires/warpzone.png') }}" alt="Warp Zone" />
+      </a>
+    </div>
+</div>
+<br/><br/>
+
+<hr></hr>
+
+<article id="links" class="info">
+    <aside>
+        <div class="square">
+          <a href="#body"><span></span></a>
+        </div>
+    </aside>
+    <header>
+        <h2>Programme et tarifs des tournois</h2>
+    </header>
+    <section>
+        <em style="text-align: center">
+         Les horaires sont donnés à l’heure de Paris et sont celles de début des tournois. Les inscriptions sur place seront fermées 30 minutes avant le début de chaque tournoi.
+         <br/>
+            Le premier tarif indique le tarif classique et le deuxième le tarif réduit (étudiants/chômeurs/adhérents 3HC) sous présentation de justificatifs.
+        </em>
+       <p>
+            <ul class="shift">
+                <li>11h00 : Super Smash Bros. Ultimate (64 slots) 10€/8€</li>
+                <li>13h00 : Street Fighter V (32 slots) 7€/5€</li>
+                <li>13h00 : Soul Calibur 6 (32 slots) 7€/5€</li>
+            </ul>
+        </p>
+    </section>
+</article>
+
+<center>
+    <div class="grid-4">
+        <div class="frame frame-active">
+            <header class="full">
+                <div class="title pull-left">Super Smash Bros. Ultimate</div>
+                <small class="pull-right">
+                    64 slots
+                    <br>
+                    <strong>550€</strong>
+                </small>
+                <br class="clear">
+            </header>
+            <header class="full">
+                <div class="title pull-left">Street Fighter V</div>
+                <small class="pull-right">
+                    32 slots
+                    <br>
+                    <strong>250€</strong>
+                </small>
+                <br class="clear">
+            </header>
+            <header class="full">
+                <div class="title pull-left">Soul Calibur 6</div>
+                <small class="pull-right">
+                    32 slots
+                    <br>
+                    <strong>250€</strong>
+                </small>
+                <br class="clear">
+            </header>
+        </div>
+    </div>
+</center>
+<br class="clear">
+
+<hr></hr>
+
+<br/><br/><center>
+<a href="{{ path('insalan_tournament_user_index') }}" class="btn btn-plain">Inscription</a>
+</center><br/><br/>
+
+
+{% endblock %}

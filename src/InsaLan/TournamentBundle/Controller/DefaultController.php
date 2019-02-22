@@ -202,7 +202,7 @@ class DefaultController extends Controller
         foreach ($match->getRounds() as $round) {
             $r = array();
             $r['replay'] = $round->getFullReplay();
-            $r['score'] = array($round->getScore1(), $round->getScore2());
+            $r['score'] = array($round->getScore($match->getPart1()), $round->getScore($match->getPart2()));
             $r['blob'] = json_decode($round->getData());
             $out['rounds'][] = $r;
         }
@@ -245,7 +245,10 @@ class DefaultController extends Controller
         // Get Knockout & Group Matches
 
         $em = $this->getDoctrine()->getManager();
-        $matches = $em->getRepository("InsaLanTournamentBundle:Match")->getByParticipant($part);
+        $simpleMatches = $em->getRepository("InsaLanTournamentBundle:Match")->getByParticipant($part);
+        $royalMatches = $em->getRepository("InsaLanTournamentBundle:RoyalMatch")->getByParticipant($part);
+
+        $matches = array_merge($simpleMatches, $royalMatches);
 
         $kos = array();
         $grs = array();

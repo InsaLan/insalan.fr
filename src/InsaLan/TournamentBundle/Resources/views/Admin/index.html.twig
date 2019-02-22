@@ -14,6 +14,12 @@
       {{ form_row(form.tournament) }}
       <div class="input left">
         <input type="submit" value="&rarr;"/>
+        &nbsp;&nbsp;&nbsp;
+        <small>
+          <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | merge({'showAll': not showAll})) }}">
+            {{ showAll ? "Masquer" : "Afficher" }} les anciens tournois
+          </a>
+        </small>
       </div>
     {{ form_end(form) }}
 
@@ -25,6 +31,9 @@
 {% if tournament %}
   <hr style="margin: 20px 0px;"/>
   <section class="grid-5 pull-left">
+    {% if tournament %}
+    <a href="{{ path('insalan_tournament_admin_placement', {id: tournament.id}) }}" class="btn btn-plain" style="float: right; margin-right: 15px;">Placement</a>
+    {% endif %}
     <section class="groups">
       <h2>Poules</h2>
       <ul style="margin-left: 30px">

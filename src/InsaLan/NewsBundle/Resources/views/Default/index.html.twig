@@ -7,22 +7,23 @@
 {% block body %}
   {{ parent() }}
   <article>
-    <header>
-      <h2>>>><a href="{{ path('insalan_rsc_default_index') }}">Roazhon School Championship</a><<<</h2>
-    </header>
+     <div class="img-center">
+      {#<a href="{{ path('insalan_rsc_default_index') }}">
+         <img width="400" align-self="center" src="{{ asset('bundles/insalanrsc/img/home-banner.png') }}" />
+       </a>
+      <br/>
+      <br/>#}
+        <img width="600" align-self="center" src="{{ asset('bundles/insalan/img/logo-noyear.png') }}" />
+     </div>
   </article>
+
   {#
   <div class="grid-7 pull-left">
-    <iframe width="700" height="437" src="//www.youtube.com/embed/1air1jL6bVE?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+    <img class="frame" width="700" align-self="center" src="{{ asset('bundles/insalan/img/banner-2019.png') }}" />
+    <iframe width="700" height="437" src="https://www.youtube.com/embed/_a-zRFnW-bc" frameborder="0" allowfullscreen></iframe>
   </div>
-  #}
 
- <div class="img-center">
-  <br/>
-    <img width="820" align-self="center" src="{{ asset('bundles/insalan/img/banner-2019.png') }}" />
- </div>
 
-{#
 <div class="grid-3 pull-left">
       <div class="frame frame-active">
           <header class="full">
@@ -31,7 +32,7 @@
               <small class="pull-right">
                   24 slots
                   <br>
-                  <strong>1 400€</strong>
+                  <strong>1 700€</strong>
               </small>
               <br class="clear">
           </header>
@@ -40,35 +41,45 @@
               <small class="pull-right">
                   24 slots
                   <br>
-                  <strong>1 400€</strong>
+                  <strong>1 700€</strong>
               </small>
               <br class="clear">
           </header>
           <header class="full">
-              <div class="title pull-left">Dota 2</div>
+              <div class="title pull-left">Fortnite</div>
               <small class="pull-right">
                   28 slots
                   <br>
-                  <strong>1 635€</strong>
+                  <strong>1 600€</strong>
               </small>
               <br class="clear">
           </header>
           <header class="full">
               <div class="title pull-left">Hearthstone</div>
               <small class="pull-right">
-                  48 slots
+                  32 slots
                   <br>
-                  <strong>565€</strong>
+                  <strong>700€</strong>
               </small>
               <br class="clear">
           </header>
           <header class="full">
-              <div class="title pull-left">Kamehado Fest</div>
-              <small class="pull-right">
-                  SFV / DBFz
+              <div class="title text-center">Baston</div>
+              <small class="pull-left">
+                  SFV / SC6
+                  <br>
+                  64 slots
                   <br>
                   <strong>500€</strong>
               </small>
+              <small class="pull-right">
+                  Smash Bros
+                  <br>
+                  64 slots
+                  <br>
+                  <strong>550€</strong>
+              </small>
+              <br class="clear">
               <br class="clear">
           </header>
           <header class="huge-button">
@@ -85,7 +96,7 @@
           </section>
       </div>
   </div>
-  #}
+#}
 
   <br class="clear">
   <article id="horaire" class="info">
@@ -97,7 +108,7 @@
           </div>
       </aside>
       <header>
-          <h2>Du 16 au 17 février 2019 à l'INSA Rennes</h2>
+          <h2>Du {{ globalVars.fullDates }} à l'INSA Rennes</h2>
           <div style="font-size: 19px; margin-top: -18px">
             <span>
               20 avenue des buttes de Coësmes, 35708 Rennes - Arrêt Beaulieu Restau U (ligne 4, 31 et 32)
@@ -164,36 +175,26 @@
         <div>
           <div class="grid-5 pull-left">
             Sponsors de l'événement : <br /><br />
-            <div class="partener-list">
-              <div class="partner">
-                <a href="http://store.hp.com/FranceStore/Merch/Offer.aspx?p=c-OMEN-by-HP-laptop">
-                  <img src="{{ asset('bundles/insalan/img/partenaires/omen.png') }}" alt="Omen" />
+            <div class="partner-list">
+              <div class="partner partner-small">
+                <a href="https://www.capgemini.com/fr-fr/">
+                  <img src="{{ asset('bundles/insalan/img/partenaires/Capgemini.png') }}" style="margin-bottom: 15px" alt="Capgemini" />
                 </a>
               </div>
               <div class="partner">
                 <a href="https://www.noctua.at/">
-                  <img src="{{ asset('bundles/insalan/img/partenaires/noctua.jpg') }}" alt="Noctua" />
-                </a>
-              </div>
-              <div class="partner partner-xsmall">
-                <a href="https://www.plantronics.com">
-                  <img src="{{ asset('bundles/insalan/img/partenaires/plantronics.jpg') }}" style="margin-bottom: 15px" alt="Plantronics" />
+                  <img src="{{ asset('bundles/insalan/img/partenaires/noctua.jpg') }}" style="margin-bottom: 15px" alt="Noctua" />
                 </a>
               </div>
               <br />
-              <div class="partner">
-                <a href="http://www.otaku-planete.com/">
-                  <img src="{{ asset('bundles/insalan/img/partenaires/otaku-planet.png') }}" alt="Otaku Planète" />
+              <div class="partner partner-xsmall">
+                <a href="https://scoup-esport.fr/">
+                  <img src="{{ asset('bundles/insalan/img/partenaires/scoup-esport.png') }}" style="margin-bottom: 15px" alt="Scoup Esport" />
                 </a>
               </div>
               <div class="partner">
-                <a href="http://www.cosplay-craft.fr/">
-                  <img src="{{ asset('bundles/insalan/img/partenaires/cosplay-craft.png') }}" alt="Cosplay Craft" />
-                </a>
-              </div>
-              <div class="partner">
-                <a href="https://www.facebook.com/pages/JAPANIM-RENNES/107800482584960">
-                  <img src="{{ asset('bundles/insalan/img/partenaires/japanim.jpg') }}" alt="Jap'Anim" />
+                <a href="https://www.feed.co/fr/">
+                  <img src="{{ asset('bundles/insalan/img/partenaires/feed.jpg') }}"  alt="Feed" />
                 </a>
               </div>
             </div>
@@ -216,6 +217,11 @@
                   <img src="{{ asset('bundles/insalan/img/partenaires/nrj-rennes.png') }}" alt="NRJ Rennes" />
                 </a>
               </div>
+              <div class="partner partner-small">
+                <a href="https://www.univ-rennes1.fr">
+                  <img src="{{ asset('bundles/insalan/img/partenaires/rennes1.png') }}" alt="Université de Rennes 1" />
+                </a>
+              </div>
               <br /><br />
               <div class="partner partner-small">
                 <a href="http://www.breizhloc.fr">
@@ -229,7 +235,7 @@
               </div>
               <div class="partner partner-xsmall">
                 <a href="http://www.accrochenet.com">
-                  <img src="{{ asset('bundles/insalan/img/partenaires/accro.png') }}" alt="Accroche Net" />
+                  <img src="{{ asset('bundles/insalan/img/partenaires/accro.png') }}" alt="Accroche Net"  style="margin-bottom: 15px;"/>
                 </a>
               </div>
             </div>
@@ -237,19 +243,14 @@
         </div>
         <div class="grid-10 pull-left">
           <br /><br />
+              <div class="partner">
+                <a href="https://www.staderennais.com/">
+                  <img src="{{ asset('bundles/insalan/img/partenaires/stade-rennais.png') }}" alt="Stade Rennais" />
+                </a>
+              </div>
           <div class="partner">
-            <a href="http://www.digilux.lu/">
-              <img src="{{ asset('bundles/insalan/img/partenaires/digilux.png') }}" alt="Digilux" />
-            </a>
-          </div>
-          <div class="partner partner-small">
             <a href="http://www.modjo-escalade.fr/">
               <img src="{{ asset('bundles/insalan/img/partenaires/modjo.jpg') }}" alt="Modjo Rennes" />
-            </a>
-          </div>
-          <div class="partner partner-xsmall">
-            <a href="https://eyeblue.fr/">
-              <img src="{{ asset('bundles/insalan/img/partenaires/eyeblue.png') }}" style="margin-bottom: 10px" alt="Eyeblue" />
             </a>
           </div>
           <div class="partner partner-small">
@@ -258,18 +259,18 @@
             </a>
           </div>
           <div class="partner partner-small">
-            <a href="http://www.leblizz.com/">
-              <img src="{{ asset('bundles/insalan/img/partenaires/leblizz.png') }}" alt="Le Blizz" />
-            </a>
-          </div>
-          <div class="partner partner-small">
             <a href="http://www.lasergame-evolution.com/fr/61/Rennes/">
               <img src="{{ asset('bundles/insalan/img/partenaires/lge.png') }}" alt="Laser Game Evolution" />
             </a>
           </div>
-          <div class="partner partner-small">
-            <a href="https://www.facebook.com/poutinebros/">
-              <img src="{{ asset('bundles/insalan/img/partenaires/poutinebros.jpg') }}" alt="POUTINEBROS" />
+          <div class="partner">
+            <a href="http://www.leblizz.com/">
+              <img src="{{ asset('bundles/insalan/img/partenaires/leblizz.png') }}" alt="Le Blizz" />
+            </a>
+          </div>
+          <div class="partner">
+            <a href="https://www.facebook.com/Club3DINSARennes/">
+              <img src="{{ asset('bundles/insalan/img/partenaires/club3d.png') }}" alt="Club 3D" />
             </a>
           </div>
         </div>

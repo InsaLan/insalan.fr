@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use InsaLan\PizzaBundle\Entity;
+use InsaLan\UserBundle\Entity\PaymentDetails;
 
 class DefaultController extends Controller
 {
@@ -87,6 +88,9 @@ class DefaultController extends Controller
             $payment = $this->get("insalan.user.payment");
             $paymentOrder = $payment->getOrder('EUR', $pizza->getPrice() + $paypalIncrease);
             $paymentOrder->setUser($user);
+            $paymentOrder->setRawPrice($pizza->getPrice());
+            $paymentOrder->setPlace(PaymentDetails::PLACE_WEB);
+            $paymentOrder->setType(PaymentDetails::TYPE_PAYPAL);
             $paymentOrder->addPaymentDetail('Commande Pizza InsaLan #' . $userOrder->getId(), $pizza->getPrice(), 'Pizza ' . $pizza->getName());
             $paymentOrder->addPaymentDetail('Majoration paiement en ligne', $paypalIncrease, 'Frais de gestion du paiement');
 

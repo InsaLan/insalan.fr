@@ -33,6 +33,8 @@ use InsaLan\TournamentBundle\Entity\Tournament;
 use InsaLan\TournamentBundle\Entity\Team;
 use InsaLan\TournamentBundle\Entity;
 
+use InsaLan\UserBundle\Entity\PaymentDetails;
+
 /**
 * ManagerController
 * All the stuff realted to managers management
@@ -278,42 +280,27 @@ class ManagerController extends Controller
             ->getRepository('InsaLanTournamentBundle:Manager')
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
-        $paymentName = 'paypal_express_checkout_and_doctrine_orm';
-
         $price = ($manager::ONLINE_PRICE + $tournament->getOnlineIncreaseInPrice());
 
-        $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
-        $order = $storage->createModel();
+        $payment = $this->get("insalan.user.payment");
+        $order = $payment->getOrder($tournament->getCurrency(), $price);
+
         $order->setUser($usr);
 
-        $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $tournament->getCurrency();
-        $order['PAYMENTREQUEST_0_AMT'] = $price;
+        $order->setRawPrice($manager::ONLINE_PRICE);
+        $order->setPlace(PaymentDetails::PLACE_WEB);
+        $order->setType(PaymentDetails::TYPE_PAYPAL);
 
-        $order['L_PAYMENTREQUEST_0_NAME0'] = 'Place manager pour le tournoi '.$tournament->getName();
-        $order['L_PAYMENTREQUEST_0_AMT0'] = $manager::ONLINE_PRICE;
-        $order['L_PAYMENTREQUEST_0_DESC0'] = $tournament->getDescription();
-        $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;
+        $order->addPaymentDetail('Place manager pour le tournoi '.$tournament->getName(), $manager::ONLINE_PRICE, '');
+        $order->addPaymentDetail('Majoration paiement en ligne', $tournament->getOnlineIncreaseInPrice(), 'Frais de gestion du paiement');
 
-        $order['L_PAYMENTREQUEST_0_NAME1'] = 'Majoration paiement en ligne';
-        $order['L_PAYMENTREQUEST_0_AMT1'] = $tournament->getOnlineIncreaseInPrice();
-        $order['L_PAYMENTREQUEST_0_DESC1'] = 'Frais de gestion du paiement';
-        $order['L_PAYMENTREQUEST_0_NUMBER1'] = 1;
-
-        $storage->updateModel($order);
-
-        $payment = $this->get('payum')->getPayment('paypal_express_checkout_and_doctrine_orm');
-        $captureToken = $this->get('payum.security.token_factory')->createCaptureToken(
-            $paymentName,
-            $order,
-            'insalan_tournament_manager_paydonetemp',
-            array('tournament' => $tournament->getId())
+        return $this->redirect(
+            $payment->getTargetUrl(
+                $order,
+                'insalan_tournament_manager_paydonetemp',
+                array('tournament' => $tournament->getId())
+            )
         );
-
-        $order['RETURNURL'] = $captureToken->getTargetUrl();
-        $order['CANCELURL'] = $captureToken->getTargetUrl();
-        $order['INVNUM'] = $usr->getId();
-        $storage->updateModel($order);
-        return $this->redirect($captureToken->getTargetUrl());
     }
 
     /**
@@ -328,7 +315,12 @@ class ManagerController extends Controller
             ->getRepository('InsaLanTournamentBundle:Manager')
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
-        return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager);
+        // Get global variables
+        $globalVars = array();
+        $globalKeys = ['helpPhoneNumber'];
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
+        return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager, 'globalVars' => $globalVars);
     }
 
     /**
@@ -342,14 +334,9 @@ class ManagerController extends Controller
             ->getRepository('InsaLanTournamentBundle:Manager')
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
-        $token = $this->get('payum.security.http_request_verifier')->verify($request);
-        $payment = $this->get('payum')->getPayment($token->getPaymentName());
+        $payment = $this->get("insalan.user.payment");
 
-        //$this->get('payum.security.http_request_verifier')->invalidate($token);
-
-        $payment->execute($status = new GetHumanStatus($token));
-
-        if ($status->isCaptured()) {
+        if ($payment->check($request, true)) {
             $player->setPaymentDone(true);
             $em->persist($player);
             $em->flush();
@@ -369,7 +356,13 @@ class ManagerController extends Controller
             ->getRepository('InsaLanTournamentBundle:Manager')
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
-        return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager);
+        // Get global variables
+        $globalVars = array();
+        $globalKeys = ['payCheckAddress'];
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
+
+        return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager, 'globalVars' => $globalVars);
     }
 
     /**

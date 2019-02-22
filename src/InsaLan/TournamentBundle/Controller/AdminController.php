@@ -5,6 +5,7 @@ namespace InsaLan\TournamentBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -16,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 use InsaLan\TournamentBundle\Entity;
+use InsaLan\TournamentBundle\Entity\Participant;
 use InsaLan\TournamentBundle\Exception\ControllerException;
 
 use InsaLan\ApiBundle\Http\JsonResponse;
@@ -33,12 +35,16 @@ class AdminController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $showAll = $request->query->get("showAll", false);
+
         $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findAll();
 
         // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
         $a = array(null => '');
         foreach ($tournaments as $t) {
-            $a[$t->getName()] = $t->getId();
+            if (!$showAll && $t->getTournamentClose()->getTimestamp() < time() - 3600*24*7) continue;
+
+            $a[$t->getTournamentOpen()->format('Y - ') . $t->getName()] = $t->getId();
         }
 
         $form = $this->createFormBuilder()
@@ -46,7 +52,7 @@ class AdminController extends Controller
                   'label' => 'Tournoi',
                   'choices_as_values' => true,
                   'choices' => $a))
-            ->setAction($this->generateUrl('insalan_tournament_admin_index'))
+            ->setAction($this->generateUrl('insalan_tournament_admin_index', ['showAll' => $showAll]))
             ->getForm();
 
 
@@ -61,7 +67,7 @@ class AdminController extends Controller
             $data = $form->getData();
             return $this->redirect($this->generateUrl(
                 'insalan_tournament_admin_index_1',
-                array('id' => $data['tournament'])));
+                array('id' => $data['tournament'], 'showAll' => $showAll)));
         }
         else if (null !== $id) {
 
@@ -110,7 +116,8 @@ class AdminController extends Controller
             'tournament' => $tournament,
             'stages'     => $stages,
             'knockouts'  => $ko,
-            'players'    => $players
+            'players'    => $players,
+            'showAll'    => $showAll,
         );
 
         if($formKo) {
@@ -246,14 +253,17 @@ class AdminController extends Controller
         $score2 = intval($request->get('score2'));
 
         $r = new Entity\Round();
-        $r->setScore1($score1);
-        $r->setScore2($score2);
         $r->setMatch($m);
         $m->addRound($r);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($r);
         $em->persist($m);
+        $em->flush();
+
+        $r->setScore($m->getPart1(), $score1);
+        $r->setScore($m->getPart2(), $score2);
+        $em->persist($r);
         $em->flush();
 
         return $this->getReturnRedirect($m);
@@ -424,4 +434,33 @@ class AdminController extends Controller
                 'insalan_tournament_admin_stage',
                 array('id' => $m->getGroup()->getStage()->getId())));
     }
+
+        /**
+         * Show placement
+         * @Route("/{id}/admin/placement", requirements={"id" = "\d+"})
+         * @Template()
+         */
+        public function placementAction(Request $request, Entity\Tournament $id = null) {
+            $em = $this->getDoctrine()->getManager();
+            $usr = $this->get('security.context')->getToken()->getUser();
+
+            $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments();
+
+            $participantsRaw = $em->getRepository('InsaLanTournamentBundle:Participant')->findByRegistrable($id);
+            $participants = array();
+            foreach ($participantsRaw as $p) {
+              if ($p->getValidated() == Participant::STATUS_VALIDATED) {
+                $participants[] = $p;
+              }
+            }
+
+            // Getting unavailable placements for interface
+            $unavailable = $em->getRepository("InsaLanTournamentBundle:Tournament")->getUnavailablePlacements($id);
+
+            // Room structure
+            $structure = $this->get('insalan.tournament.placement')->getStructure();
+
+            $output = array('structure' => $structure, 'tournament' => $id, 'participants' => $participants, 'unavailable' => $unavailable);
+            return $output;
+        }
 }

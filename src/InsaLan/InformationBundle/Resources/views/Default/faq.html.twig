@@ -10,9 +10,9 @@
     </div>
     <ul>
       <li>Membres</li>
-      <li>60</li>
+      <li>{{ globalVars.staffNumber }}</li>
       <li>Editions</li>
-      <li>13</li>
+      <li>{{ globalVars.number }}</li>
     </ul>
   </aside>
 
@@ -22,9 +22,9 @@
 
   <section>
     <p>
-      L'InsaLan est un évènement de jeux en réseau d'envergure nationale organisé par un groupe d'étudiants de l'association <em>AEIR</em> (Amicale des Elèves de l'INSA Rennes) à but non lucratif de loi 1901. Cette association étudiante est issue de l'<em>INSA Rennes</em> (Institut National des Sciences Appliquées), une des écoles d'ingénieurs du Groupe INSA. L'InsaLan se compose cette année d'une équipe d'environ 60 étudiants, passionnés de jeux vidéo et de compétition électronique.
+      L'InsaLan est un évènement de jeux en réseau d'envergure nationale organisé par un groupe d'étudiants de l'association <em>AEIR</em> (Amicale des Elèves de l'INSA Rennes) à but non lucratif de loi 1901. Cette association étudiante est issue de l'<em>INSA Rennes</em> (Institut National des Sciences Appliquées), une des écoles d'ingénieurs du Groupe INSA. L'InsaLan se compose cette année d'une équipe d'environ {{ globalVars.staffNumber }} étudiants, passionnés de jeux vidéo et de compétition électronique.
       <br/>
-      Cette année, la treizième édition de l'InsaLan accueillera plus de <em>400 joueurs</em> le temps d'un week-end. Les compétitions se dérouleront dans la zone tournois de l'évènement tandis que des animations gratuites seront proposées à tout le monde. L'équipe de l'InsaLan est ravie de vous présenter le résultat d'une année de travail et l'expérience de ses 12 autres éditions.
+      Cette année, la {{ globalVars.lettersNumber }} édition de l'InsaLan accueillera <em>{{ globalVars.playersNumber }} joueurs</em> le temps d'un week-end. Les compétitions se dérouleront dans la zone tournois de l'évènement tandis que des animations gratuites seront proposées à tout le monde. L'équipe de l'InsaLan est ravie de vous présenter le résultat d'une année de travail et l'expérience de ses {{ globalVars.number - 1}} autres éditions.
     </p>
   </section>
 </article>
@@ -50,7 +50,7 @@
 
   <section>
     <p>
-      L'InsaLan vous ouvre ses portes du <em>Vendredi 23 Février à 19h00 au Dimanche 25 Février, 19h00</em>. L'évènement sera ouvert au public et libre d'accès toute la journée du samedi de <em>8h00 à 1h30 du matin</em> ainsi que la journée du Dimanche de <em>8h00 à 19h00</em>.
+      L'InsaLan vous ouvre ses portes du <em>{{ globalVars.openingDate }} à {{ globalVars.openingHour }} au {{ globalVars.closingDate }}, {{ globalVars.closingHour }}</em>. L'évènement sera ouvert au public et libre d'accès toute la journée du samedi de <em>8h00 à 1h30 du matin</em> ainsi que la journée du Dimanche de <em>8h00 à 19h00</em>.
       <br/>
       Les joueurs possédant un badge sont autorisés à rester dans l'enceinte de l'évènement durant la nuit. Des rondes de sécurité sont organisées par l'équipe.
       L'alcool n'est pas autorisé et sa consommation peut entrainer une exclusion des compétitions et de l'évènement dans sa totalité à la seule discrétion des organisateurs.
@@ -67,7 +67,7 @@
     </div>
     <ul>
       <li>Joueurs</li>
-      <li>&lt;25€/30 €</li>
+      <li>&lt;{{ globalVars.webPrice }} €/{{ globalVars.price }} €</li>
       <li>Visiteurs</li>
       <li>Gratuit</li>
     </ul>
@@ -80,7 +80,7 @@
   <section>
     <p>
       L'entrée visiteur est <em>gratuite</em> et permet l'accès à la zone animations de l'InsaLan. La zone joueurs est restreinte aux personnes inscrites dans une compétition et portant un badge.
-      <em>Le tarif joueur sur place s'élève à 30€</em>, mais des places seront en prévente en ligne à un prix inférieur à 25€.
+      <em>Le tarif joueur sur place s'élève à {{ globalVars.price }}€</em>, mais des places seront en prévente en ligne à un prix inférieur à {{ globalVars.webPrice }}€.
       <br/>
       Un service de restauration sera à votre disposition pendant toute la durée de l'évènement. Cette cafétéria proposera des sandwichs, des pizzas sur commande ainsi que des snacks et boissons sans alcool.
     </p>
@@ -111,13 +111,15 @@
         <li>Vos papiers d'identité, ils seront vérifiés à l'entrée ;</li>
         <li>Un câble réseau droit RJ45 (entre 7 et 10m) ;</li>
         <li>Un casque audio (enceintes interdites) ;</li>
-        <li>Une multiprise avec fil (2m conseillé, triplettes interdites) ;</li>
+        <li>Une multiprise avec fil (2m conseillé, triplettes électriques interdites) ;</li>
         <li>Votre PC avec système d'exploitation, jeux, antivirus et drivers à jour ;</li>
         <li>Un écran ;</li>
         <li>Votre clavier et votre souris ;</li>
         <li>Tout autre périphérique que vous utilisez habituellement ;</li>
         <li>Un sac de couchage et matelas si vous dormez sur place ;</li>
-          <li>Tout participant mineur doit apporter une <strong><a href="{{ asset('bundles/insalan/pdf/autorisation-parental-joueur.pdf') }}" target="_blank" >[autorisation parentale &#x25BE;]</a></strong> signée par son responsable légal ;</li>
+        <li>Tout participant mineur doit apporter une <strong><a href="{{ asset('bundles/insalan/pdf/autorisation-parental-joueur.pdf') }}" target="_blank" >[autorisation parentale &#x25BE;]</a></strong> signée par son responsable légal ;
+            <br/>
+            L'âge minimum est de 16 ans pour participer au tournoi CS:GO et 12 ans pour les autres tournois ;</li>
         <li>Un coussin de chaise pour votre confort.</li>
     </ul>
     </p>
@@ -134,7 +136,7 @@
     <ul>
 
       <li>Hôtel</li>
-      <li>45 €</li>
+      <li>37€ / 45€</li>
     </ul>
   </aside>
 
@@ -144,10 +146,31 @@
 
   <section>
     <p>
-        Vous pourrez loger à l'Hôtel Campanile situé à 2 minutes à pied de l'InsaLan.
+        Vous pourrez loger à <strong>l'Hôtel Campanile</strong> situé à 2 minutes à pied de l'InsaLan.
     </p>
     <p>
-        Campanile vous propose des chambres à <strong>45€ la nuit</strong> (pour 1 ou 2 personnes, contre 60€ en temps normal). Il faudra ajouter la taxe de séjour de 0,85€ par personne et par jour. Le petit déjeuner sera à 9.50€. Pour profiter de cette offre, <strong>appelez l'Hôtel Campanile Rennes Est - Atalante au 02 99 38 37 27 et dites "INSALAN".</strong>
+        Notre partenaire Campanile vous propose des chambres pour 1 ou 2 personnes, deux tarifs sont disponibles : 
+    </p>
+    <p>
+        <strong>37€</strong> la nuit en offre prépayée* et <strong>45€</strong> la nuit en offre flexible** (avec garantie bancaire).
+    </p>
+    <p>
+        Il vous faudra ajouter la taxe de séjour de 1,20€ par personne et par nuit.
+        <br/>
+        Le petit déjeuner sera à 9.50€ par personne.
+    </p>
+    <p>
+        Pour profiter de cette offre, <strong>appelez l'Hôtel Campanile Rennes Est-Atalante au 02 99 38 37 27, et dites «INSALAN» !</strong>
+    </p>
+    <p>
+        <small>
+            * Séjour non remboursable, non modifiable, non annulable, à payer lors de la réservation.
+        </small>
+    </p>
+    <p>
+        <small>
+            ** Séjour annulable et remboursable avant 18h00 le jour même sous peine de facturation (au-delà de cette heure la première nuitée sera facturée) et paiement sur place possible.
+        </small>
     </p>
     <p>
         Si vous êtes plus guerrier, vous pourrez dormir dans l'InsaLan. La salle sera surveillée en permanence la nuit pour éviter les vols.
@@ -185,7 +208,7 @@
 
 <hr/>
 
-{#
+
 <article id="tournoi" class="info">
   <aside>
     <div class="square">
@@ -193,9 +216,9 @@
     </div>
     <ul>
       <li>Nombre</li>
-      <li>5</li>
+      <li>4</li>
       <li>Joueurs</li>
-      <li>440</li>
+      <li>{{ globalVars.playersNumber }}</li>
     </ul>
   </aside>
 
@@ -204,17 +227,16 @@
   </header>
 
   <section>
-    <p>L'InsaLan accueille cette année 5 tournois officiels :</p>
+    <p>L'InsaLan accueille cette année 4 tournois officiels :</p>
     <ul>
       <li><span>Counter-Strike: Global Offensive</span> </li>
       <li><span>League of Legends</span> </li>
       <li><span>Hearthstone</span> </li>
-      <li><span>Dota 2</span> </li>
-      <li><span>Overwatch</span> </li>
+      <li><span>Fortnite Battle Royale</span> </li>
     </ul>
   </section>
 </article>
-#}
+
 
 <hr>
 
@@ -228,8 +250,6 @@
     <ul>
       <li>Email</li>
       <li>contact@insalan.fr</li>
-      <li>Quakenet</li>
-      <li>#insalan</li>
     </ul>
   </aside>
 
@@ -247,9 +267,6 @@
     <a href="https://twitter.com/insalan">
         <span class="emphase">Twitter</span>
     </a>
-    <a href="http://webchat.quakenet.org/?channels=insalan">
-        <span class="emphase">#insalan sur Quakenet</span>
-    </a>
 </p>
 <br>
     <p>
@@ -258,31 +275,20 @@
     </p>
 
     <br />
-     <p>
-     <span class="emphase">Lucas Plançon</span>
 
-     <strong>Responsable Partenariat</strong><br>
-     Tel : +33 (0)6 86 37 33 01<br>
-     Email : partenariat&#64;insalan.fr
+    {% for s in staff %}
+      <p>
+      <span class="emphase">{{ s.firstName }} {{ s.lastName }}</span>
 
-     </p>
-     
-     <p>
-     <span class="emphase">Nolwenn Violette</span>
+      <strong>{{ s.role }}</strong><br>
+      {% if s.phone|length > 4 %}
+        Tel : {{ s.phone }}<br>
+      {% endif %}
+      Email : {{ s.email }}
 
-     <strong>Responsable Tournois</strong><br>
-     Tel : +33 (0)6 66 80 34 56<br>
-     Email : tournois&#64;insalan.fr
+      </p>
+    {% endfor %}
 
-     </p>
-     
-     <p>
-     <span class="emphase">Jean-Loup Maucorps</span>
-
-     <strong>Responsable Cosplay</strong><br>
-     Tel : +33 (0)6 38 29 59 47<br>
-     Email : cosplay&#64;insalan.fr
-     </p>
   </section>
 </article>
 

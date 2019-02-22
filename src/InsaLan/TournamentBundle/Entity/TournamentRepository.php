@@ -21,6 +21,7 @@ class TournamentRepository extends EntityRepository
             ->getQuery();
         return $query->getResult();
     }
+
     public function findOpened() {
         $query = $this->createQueryBuilder('t')
             ->where('t.registrationOpen <= :now AND t.registrationClose >= :now')
@@ -29,6 +30,13 @@ class TournamentRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findPlaying() {
+        $query = $this->createQueryBuilder('t')
+            ->where('t.tournamentOpen <= :now AND t.tournamentClose >= :now')
+            ->setParameter('now', new \DateTime())
+            ->getQuery();
+        return $query->getResult();
+    }
     public function getFreeSlots($tournamentId) {
         $tournament = $this->findOneById($tournamentId);
         $freeSlots = $tournament->getRegistrationLimit();

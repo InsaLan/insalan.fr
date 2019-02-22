@@ -4,7 +4,6 @@ namespace InsaLan\UserBundle\Service;
 
 use InsaLan\UserBundle\Entity;
 
-use Payum\Core\Model\Order;
 use Payum\Core\Reply\HttpRedirect;
 use Payum\Core\Reply\HttpResponse;
 use Payum\Core\Request\Capture;
@@ -16,21 +15,17 @@ class Payment
 {   
 
     private $payum;
-    private $payumCheck;
-    private $payumToken;
     private $paymentName = 'paypal_express_checkout_and_doctrine_orm';
 
-    public function __construct($p, $pp, $ppp) {
+    public function __construct($p) {
         $this->payum = $p;
-        $this->payumCheck = $pp;
-        $this->payumToken = $ppp;
     }
 
     public function getOrder($currency, $price) {
 
         $storage =  $this->payum->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
 
-        $order = $storage->createModel();
+        $order = $storage->create();
 
         $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $currency;
         $order['PAYMENTREQUEST_0_AMT'] = $price;
@@ -42,10 +37,10 @@ class Payment
         
 
         $storage =  $this->payum->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
-        $storage->updateModel($order);
+        $storage->update($order);
 
-        $payment = $this->payum->getPayment($this->paymentName);
-        $captureToken = $this->payumToken->createCaptureToken(
+        $payment = $this->payum->getGateway($this->paymentName);
+        $captureToken = $this->payum->getTokenFactory()->createCaptureToken(
             $this->paymentName,
             $order,
             $callbackRoute,
@@ -54,23 +49,29 @@ class Payment
 
         $order['RETURNURL'] = $captureToken->getTargetUrl();
         $order['CANCELURL'] = $captureToken->getTargetUrl();
-        $storage->updateModel($order);
+        $storage->update($order);
 
         return $captureToken->getTargetUrl();
 
     }
 
     public function check($request, $invalidate = false) {
-        $token = $this->payumCheck->verify($request);
-        $payment = $this->payum->getPayment($token->getPaymentName());
+        $token = $this->payum->getHttpRequestVerifier()->verify($request);
+        $payment = $this->payum->getGateway($token->getGatewayName());
         
         if($invalidate)
-            $this->payumCheck->invalidate($token);
+            $this->payum->getHttpRequestVerifier()->invalidate($token);
 
         $payment->execute($status = new GetHumanStatus($token));
 
         return $status->isCaptured();
 
+    }
+
+    public function update($order)
+    {
+        $storage = $this->payum->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
+        $storage->update($order);
     }
 
 

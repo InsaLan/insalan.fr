@@ -15,6 +15,7 @@ class PizzaAdmin extends Admin
         $formMapper
             ->add('name', null, array("label" => "Nom"))
             ->add('price', null, array("label" => "Prix"))
+            ->add('veggie', null, array("label" => "Végétarienne"))
             ->add('description', null, array("label" => "Description", "required" => false))
         ;
     }
@@ -34,6 +35,7 @@ class PizzaAdmin extends Admin
         $listMapper
             ->addIdentifier('name', null, array("label" => "Nom"))
             ->addIdentifier('price', null, array("label" => "Prix"))
+            ->add('veggie', null, array("label" => "Végétarienne"))
         ;
     }
 }

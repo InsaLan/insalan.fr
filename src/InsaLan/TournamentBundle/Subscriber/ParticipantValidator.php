@@ -192,8 +192,12 @@ class ParticipantValidator implements EventSubscriber
                 ->getFreeSlots($team->getTournament()->getId());
             if($freeSlots > 0)
                 $team->setValidated(Participant::STATUS_VALIDATED);
-            else
-                $team->setValidated(Participant::STATUS_WAITING);
+            else {
+                // Check to avoid validationDate's refresh if the team was put in waiting list by an admin
+                if ($team->getValidated() != Participant::STATUS_WAITING) {
+                    $team->setValidated(Participant::STATUS_WAITING);
+                }
+            }
 
             $this->updated_participants[] = $team;
         }

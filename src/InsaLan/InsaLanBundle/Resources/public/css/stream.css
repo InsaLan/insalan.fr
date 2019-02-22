@@ -38,3 +38,17 @@ h2 {
   letter-spacing: 3px;
   margin-bottom: 10px;
 }
+
+.hidden {
+  display: none;
+}
+
+.hidden:target {
+  display: block;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

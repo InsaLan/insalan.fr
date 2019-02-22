@@ -25,31 +25,9 @@
 
     {% block main_header %}
     {#
-    <div id="mask">
-      <div class="maskContent" id="stream0">
-        <iframe src="//player.twitch.tv/?channel=mastersjeuvideo&autoplay=false" frameborder="0" scrolling="no" height="378" width="620"></iframe>
-        <br /><a href="#" class="hideMask">Cacher</a>
-      </div>
-      <div class="maskContent" id="stream1">
-        <iframe src="//player.twitch.tv/?channel=docteuryogo&autoplay=false" frameborder="0" scrolling="no" height="378" width="620"></iframe>
-        <br /><a href="#" class="hideMask">Cacher</a>
-      </div>
-      <div class="maskContent" id="stream2">
-        <iframe src="//player.twitch.tv/?channel=milleniumtvhs&autoplay=false" frameborder="0" scrolling="no" height="378" width="620"></iframe>
-        <br /><a href="#" class="hideMask">Cacher</a>
-      </div>
-      <div class="maskContent" id="stream3">
-        <iframe src="//player.twitch.tv/?channel=gaminglive_dota2&autoplay=false" frameborder="0" scrolling="no" height="378" width="620"></iframe>
-        <br /><a href="#" class="hideMask">Cacher</a>
-      </div>
-    </div>
-
     <div class="streamsHeader">
       <div class="grid-2 stream" style="text-align: left"><div class="rec"></div><p style="padding-left:30px">EN DIRECT</p></div>
-      <div class="grid-1 btn-primary streamLink stream showMask" data-target="stream0"><p>LoL</p></div>
-      <div class="grid-1 btn-primary streamLink stream showMask" data-target="stream1"><p>StarCraft II</p></div>
-      <div class="grid-1 btn-primary streamLink stream showMask" data-target="stream2"><p>Hearthstone</p></div>
-      <div class="grid-1 btn-primary streamLink stream showMask" data-target="stream3"><p>DotA 2</p></div>
+      <a href="{{ path('insalan_stream_default_index') }}" class="grid-4 btn-primary streamLink stream"><p>Accéder aux streams</p></a>
     </div>
     #}
     <header>
@@ -71,6 +49,10 @@
                     <!-- Change the route to user dashboard once set up -->
                     <a href="{{ path('sonata_admin_dashboard') }}" class="btn2 bnt2-ncolor pull-right" style="margin-left: 10px;">Sonata</a>
                     <a href="{{ path('insalan_tournament_admin_index') }}" class="btn2 bnt2-ncolor pull-right">Admin</a>
+                    <a href="{{ path('insalan_tournament_merchant_index') }}" class="btn2 bnt2-ncolor pull-right" style="margin-top: 10px;">Billetterie</a>
+                    {% elseif is_granted('ROLE_MERCHANT') %}
+                    <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right" style="margin-left: 10px;">Mon compte</a>
+                    <a href="{{ path('insalan_tournament_merchant_index') }}" class="btn2 bnt2-ncolor pull-right">Billetterie</a>
                     {% else %}
                     <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right">Mon compte</a>
                     {% endif %}
@@ -82,15 +64,22 @@
         </aside>
 
         <nav>
-          <h1 style="text-align: center; font-size: 40px; font-weight: bold; color: #FFF; font-family: OpenSansCond">XIIIème édition</h1>
+          <h1 style="text-align: right; margin-right: 200px; font-size: 40px; font-weight: bold; color: #FFF; font-family: OpenSansCond">XIVème édition</h1>
           <ul>
             <li><a href="{{ path('insalan_news_default_index') }}">Accueil</a></li>
-            <li><a href="{{ path('insalan_rsc_default_index') }}">RSC</a></li>
+            {#<li><a href="{{ path('insalan_rsc_default_index') }}">RSC</a></li>#}
             <li><a href="{{ path('insalan_tournament_default_index') }}">Tournois</a></li>
+              {#{% if app.user %}
+                <li><a href="{{ path('insalan_information_default_playersinfos') }}">Infos joueurs</a></li>
+              {% endif %}#}
             <li><a href="{{ path('insalan_information_default_cosplay') }}">Cosplay</a></li>
+            <li><a href="{{ path('insalan_information_default_baston') }}">Baston</a></li>
             <li><a href="{{ path('insalan_information_default_faq') }}">Informations</a></li>
+            {#{% if app.user %}
+            <li><a href="{{ path('insalan_information_default_hardwarerental') }}">Locations</a></li>
+          {% endif %}#}
             <li><a href="{{ path('insalan_news_default_forum') }}">Forum</a></li>
-            {# <li><a href="{{ path('insalan_pizza_default_index') }}">Pizzas</a></li> #}
+            {#<li><a href="{{ path('insalan_pizza_default_index') }}">Pizzas</a></li>#}
           </ul>
         </nav>
         {% endblock %}
@@ -111,6 +100,7 @@
 
       {% block social %}
       <div class="social">
+        <div id="return-top"><a href="#body"><span></span></a></div><br />
         <a id="twitter" target="_blank" href="https://twitter.com/insalan"></a><br />
         <a id="facebook" target="_blank" href="https://www.facebook.com/insalan"></a><br />
         <a id="mail" href="mailto:contact@insalan.fr"><span>📧</span></a><br />
@@ -169,8 +159,18 @@
                 <li><a href="{{ path('insalan_information_default_faq') }}#contact">Contact</a></li>
               </ul>
             </li>
+
+            <li>
+              <header><a>À Propos</a></header>
+              <div>
+                <ul>
+                  <li><a href="{{ path('insalan_information_default_salesterms') }}">Conditions générales<br/> de vente</a></li>
+                </ul>
+              </div>
+            </li>
           </ul>
-          <div style="margin-top: 40px; float: right">
+
+          <div style="margin-top: 0px; float: right">
             <div class="partner partner-small" style="display: inline; margin: 0px 10px 0px 10px;">
               <a href="http://aeir.asso.insa-rennes.fr">
                 <img style="height: 60px;" src="{{ asset('bundles/insalan/img/partenaires/aeir.png') }}" alt="AEIR" />

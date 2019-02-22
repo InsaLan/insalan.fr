@@ -58,7 +58,7 @@
     <h3> Pizzas disponibles </h3>
     <dl>
         {% for p in pizzas %}
-        <dt>{{ p.name }} ({{ p.price }} €)</dt>
+        <dt {% if p.veggie %}style="color: #32CD32;"{% endif %}>{{ p.name }} ({{ p.price }} €)</dt>
             <dd>
               {% if p.description %}
               {{ p.description }}
@@ -102,5 +102,3 @@
 </article>
 
 {% endblock %}
-
-

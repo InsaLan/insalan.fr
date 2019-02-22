@@ -21,9 +21,14 @@ class DefaultController extends Controller
         $sliders = $em->getRepository('InsaLanNewsBundle:Slider')->getLatest(20);
         //$this->get('session')->getFlashBag()->add('info', 'Hey!');
 
-        return array('news' => $news, 'sliders' => $sliders);
+        // Get global variables
+        $globalVars = array();
+        $globalKeys = ['fullDates'];
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
+        return array('news' => $news, 'sliders' => $sliders, 'globalVars' => $globalVars);
     }
-    
+
      /**
      * @Route("/forum/")
      */

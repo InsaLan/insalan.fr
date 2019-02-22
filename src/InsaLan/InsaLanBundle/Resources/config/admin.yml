@@ -1,0 +1,22 @@
+services:
+    sonata.admin.InsaLan.staff:
+        class: InsaLan\InsaLanBundle\Admin\StaffAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Web", label: "Resp'" }
+        arguments:
+            - ~
+            - InsaLan\InsaLanBundle\Entity\Staff
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanBundle]]
+
+    sonata.admin.InsaLan.globalVars:
+        class: InsaLan\InsaLanBundle\Admin\GlobalVarsAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Web", label: "Variables globales" }
+        arguments:
+            - ~
+            - InsaLan\InsaLanBundle\Entity\GlobalVars
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanBundle]]

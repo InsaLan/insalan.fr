@@ -5,10 +5,12 @@ namespace InsaLan\InformationBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use InsaLan\InsaLanBundle\Entity;
+use InsaLan\TournamentBundle\Entity\Participant;
 
 class DefaultController extends Controller
 {
-    const OPENING_DATE = '2014/10/03 00:00:00';
+    const OPENING_DATE = '2018/12/24 20:00:00';
 
     /**
      * @Route("/faq")
@@ -16,7 +18,18 @@ class DefaultController extends Controller
      */
     public function faqAction()
     {
-        return array();
+        $em = $this->getDoctrine()->getManager();
+
+        // Get global variables
+        $globalVars = array();
+        $globalKeys = ['staffNumber', 'number', 'lettersNumber',
+                      'playersNumber', 'openingDate', 'openingHour', 'closingDate', 'closingHour', 'price', 'webPrice'];
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
+        // Get staff
+        $staff = $em->getRepository('InsaLanBundle:Staff')->findAll();
+
+        return array('globalVars' => $globalVars, 'staff' => $staff);
     }
 
     /**
@@ -25,6 +38,77 @@ class DefaultController extends Controller
      */
     public function cosplayAction()
     {
+        $em = $this->getDoctrine()->getManager();
+
+        // Get global variables
+        $globalVars = array();
+        $globalKeys = ['cosplayEdition', 'cosplayName', 'cosplayDate',
+                      'cosplayEndRegistration'];
+
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
+        return array('globalVars' => $globalVars);
+    }
+
+    /**
+     * @Route("/baston")
+     * @Template()
+     */
+    public function bastonAction()
+    {
         return array();
     }
+
+    /**
+     * @Route("/playersinfos")
+     * @Template()
+     *//*
+    public function playersInfosAction()
+    {
+        return array();
+    }*/
+
+    /**
+     * @Route("/salesterms")
+     * @Template()
+     */
+    public function salesTermsAction()
+    {
+        return array();
+    }
+
+    /**
+     * @Route("/hardwareRental")
+     * @Template()
+     *//*
+    public function hardwareRentalAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Get global variables
+        $globalVars = array();
+        // Safety  valve
+        $globalKeys = ['rentalPageEnabled'];
+
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
+        // Disallow access until date reached
+        if(time() < strtotime(self::OPENING_DATE) || $globalVars['rentalPageEnabled'] != "True") {
+            $this->get('session')->getFlashBag()->add('error', "Page indisponible pour le moment. Revenez plus tard !");
+            return $this->redirect($this->generateUrl(
+                'insalan_news_default_index'));
+            }
+
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
+        $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($usr);
+
+        // Check if player's team / player / manager is validated
+        $validated = False;
+        foreach($participants as $p) {
+            if ($p->getValidated() == Participant::STATUS_VALIDATED) {
+                $validated = True;
+            }
+        }
+        return array('validated' => $validated);
+    }*/
 }

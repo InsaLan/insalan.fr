@@ -17,6 +17,7 @@ use InsaLan\TournamentBundle\Exception\ControllerException;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 use InsaLan\UserBundle\Entity\MerchantOrder;
+use InsaLan\UserBundle\Entity\PaymentDetails;
 
 use InsaLan\ApiBundle\Http\JsonResponse;
 
@@ -156,10 +157,6 @@ class MerchantController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_merchant_index_1', array('id' => $registrable->getId())));
         }
 
-        $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
-        $order = $storage->createModel();
-        $order->setUser($player->getUser());
-
         $price = $registrable->getWebPrice();
         $title = 'Place pour le tournoi '.$registrable->getName();
 
@@ -176,22 +173,25 @@ class MerchantController extends Controller
             $title .= " (" . $discount->getName() . ")";
         }
 
+        $payment = $this->get("insalan.user.payment");
+        $order = $payment->getOrder($registrable->getCurrency(), $price);
+        $order->setUser($player->getUser());
+
         $order->setDiscount($discount);
 
-        $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $registrable->getCurrency();
-        $order['PAYMENTREQUEST_0_AMT'] = $price;
+        $order->setRawPrice($price);
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) { // The user is in InsaLan's staff so it is a preorder by check
+            $order->setPlace(PaymentDetails::PLACE_WEB);
+            $order->setType(PaymentDetails::TYPE_CHECK);
+            } else { // User is a partner
+                $order->setPlace(PaymentDetails::PLACE_IN_PARTNER_SHOP);
+                $order->setType(PaymentDetails::TYPE_UNDEFINED); // TODO Save payment type
+            }
 
-        $order['L_PAYMENTREQUEST_0_NAME0'] = $title;
-        $order['L_PAYMENTREQUEST_0_AMT0'] = $price;
-        $order['L_PAYMENTREQUEST_0_DESC0'] = $registrable->getDescription();
-        $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;
+        $order->addPaymentDetail($title, $price, '');
+        $order->addPaymentDetail('Paiement dans un point de vente partenaire', 0, 'Paiement validé par '.$user->getFirstName().' '.$user->getLastName());
 
-        $order['L_PAYMENTREQUEST_0_NAME1'] = 'Paiement dans un point de vente partenaire';
-        $order['L_PAYMENTREQUEST_0_AMT1'] = 0;
-        $order['L_PAYMENTREQUEST_0_DESC1'] = 'Paiement validé par '.$user->getFirstName().' '.$user->getLastName();
-        $order['L_PAYMENTREQUEST_0_NUMBER1'] = 1;
-
-        $storage->updateModel($order);
+        $payment->update($order);
 
         $merchantOrder = new MerchantOrder();
         $merchantOrder->setMerchant($user);

@@ -161,7 +161,7 @@ class DefaultController extends Controller
                 $info = $response['result'];
                 if(isset($info) && isset($info['access_token'])) {
                     $client->setAccessToken($info['access_token']);
-                    $response = $client->fetch('https://eu.api.battle.net/account/user');
+                    $response = $client->fetch('https://eu.battle.net/oauth/userinfo');
                     $em = $this->getDoctrine()->getManager();
                     $usr->setBattleTag($response['result']['battletag']);
                     $em->persist($usr);

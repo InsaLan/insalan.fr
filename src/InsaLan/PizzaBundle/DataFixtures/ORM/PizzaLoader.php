@@ -7,7 +7,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use InsaLan\PizzaBundle\Entity\Pizza;
 
 class PizzaLoader extends AbstractFixture implements OrderedFixtureInterface
-{   
+{
 
     public function getOrder()
     {
@@ -20,6 +20,7 @@ class PizzaLoader extends AbstractFixture implements OrderedFixtureInterface
         $e->setName('Reine');
         $e->setDescription('Tomate, Jambon, Mozzarella');
         $e->setPrice(8);
+        $e->setVeggie(false);
         $this->addReference('pizza-1', $e);
         $manager->persist($e);
 
@@ -27,6 +28,7 @@ class PizzaLoader extends AbstractFixture implements OrderedFixtureInterface
         $e->setName('Campagnarde');
         $e->setDescription('Andouillette, Oignons, Reblochon');
         $e->setPrice(10);
+        $e->setVeggie(false);
         $this->addReference('pizza-2', $e);
         $manager->persist($e);
 
@@ -34,6 +36,7 @@ class PizzaLoader extends AbstractFixture implements OrderedFixtureInterface
         $e->setName('Mystère');
         $e->setPrice(15);
         $e->setDescription("");
+        $e->setVeggie(false);
         $this->addReference('pizza-3', $e);
         $manager->persist($e);
 

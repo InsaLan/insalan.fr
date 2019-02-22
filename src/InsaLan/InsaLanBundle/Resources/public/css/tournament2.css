@@ -84,6 +84,10 @@ body > footer {
   background: #0e0e0e url('../img/bg-DBF.png') no-repeat center fixed;
 }
 
+.bg-fbr {
+  background: #0e0e0e url('../img/bg-FBR.png') no-repeat center fixed;
+}
+
 .results section.matchs {
   width: 260px;
   float: left;

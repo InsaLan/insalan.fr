@@ -55,6 +55,7 @@ class TournamentAdmin extends Admin
                      'Overwatch' => 'ow',
                      'Street Fighter V' => 'sfv',
                      'Dragon Ball FighterZ' => 'dbfz',
+                     'Fortnite Battle Royale' => 'fbr',
                      'Autre/Manuel' => 'manual'),
                 'required'  => true))
             ->add('file', FileType::class, array('required' => false))

@@ -5,7 +5,9 @@ imports:
     - { resource: "@InsaLanPizzaBundle/Resources/config/admin.yml" }
     - { resource: "@InsaLanTournamentBundle/Resources/config/services.yml" }
     - { resource: "@InsaLanBundle/Resources/config/services.yml" }
+    - { resource: "@InsaLanBundle/Resources/config/admin.yml" }
     - { resource: "@InsaLanUserBundle/Resources/config/services.yml" }
+    - { resource: "@InsaLanStreamBundle/Resources/config/admin.yml" }
 
 framework:
     #esi:             ~
@@ -130,14 +132,10 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
-
-    payum.buzz.client:
-        class: %payum.buzz.client.class%
-        calls:
-            - [setTimeout, [200]]
-            - [setOption, [64,false]] #CURLOPT_SSL_VERIFYPEER
-            - [setOption, [81,false]] #CURLOPT_SSL_VERIFYHOST
-            - [setOption, [32,4]] #CURLOPT_SSLVERSION
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
 
 
 # Swiftmailer Configuration
@@ -184,15 +182,15 @@ payum:
     storages:
         InsaLan\UserBundle\Entity\PaymentDetails: { doctrine: orm }
 
-    contexts:
+    gateways:
         paypal_express_checkout_and_doctrine_orm:
-            paypal_express_checkout_nvp:
-                username: '%paypal_express_checkout_username%'
-                password: '%paypal_express_checkout_password%'
-                signature: '%paypal_express_checkout_signature%'
-                sandbox: '%paypal_express_checkout_sandbox%'
+            factory: paypal_express_checkout
+            username: '%paypal_express_checkout_username%'
+            password: '%paypal_express_checkout_password%'
+            signature: '%paypal_express_checkout_signature%'
+            sandbox: '%paypal_express_checkout_sandbox%'
         offline:
-            offline: ~
+            factory: offline
 
 # Maintenance bundle config
 lexik_maintenance:
