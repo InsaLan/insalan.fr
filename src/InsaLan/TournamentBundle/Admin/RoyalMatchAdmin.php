@@ -8,11 +8,14 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\StringType;
 
 use InsaLan\TournamentBundle\Entity\Match;
 
 class RoyalMatchAdmin extends Admin
-{   
+{
 
     protected $stateDef = array(
                             Match::STATE_UPCOMING => 'En attente',
@@ -26,9 +29,9 @@ class RoyalMatchAdmin extends Admin
         $formMapper
             ->add('participants', null,
                 array('class' => 'InsaLan\TournamentBundle\Entity\Participant'))
-            ->add('group', 'entity',
+            ->add('group', EntityType::class,
                 array('class' => 'InsaLan\TournamentBundle\Entity\Group'))
-            ->add('state', 'choice', array(
+            ->add('state', ChoiceType::class, array(
                 'choices'   => $this->stateDef,
                 'required'  => true))
         ;
@@ -37,11 +40,11 @@ class RoyalMatchAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add("Tournois", "string", array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
+            ->add("Tournois", StringType::class, array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
             ->add('participants', null, array('label' => "Participants"))
             ->add('group', null, array('label' => "Poule"))
             ->add('koMatch.knockout', null, array('label' => "Arbre"))
-            ->add('state', 'choice', array(
+            ->add('state', ChoiceType::class, array(
                 'choices'   => $this->stateDef,
                 'label'     => "Statut"))
             ->add('rounds', null, array('route' => array('name' => 'show')));
@@ -53,7 +56,7 @@ class RoyalMatchAdmin extends Admin
         $datagridMapper
             ->add('group', null, array('label' => "Poule"))
             ->add('koMatch.knockout', null, array('label' => "Arbre"))
-            ->add('state', 'doctrine_orm_string', array(), 'choice', array('choices' => $this->stateDef))
+            ->add('state', 'doctrine_orm_string', array(), ChoiceType::class, array('choices' => $this->stateDef))
             ->add('participants', null, array('label' => "Participants"))
         ;
     }
@@ -64,8 +67,8 @@ class RoyalMatchAdmin extends Admin
         $listMapper
             ->add('participants', null, array('label' => "Participants"))
             ->add('extraInfos', null, array('label' => "Conteneur"))
-            ->add('_action','actions',
-                array('actions'  => array('view' => array(),
+            ->add('_action', ActionType::class,
+                array('actions'  => array('show' => array(),
                       'edit' => array(),
                       'createRound' => array(
                         'template' => 'InsaLanTournamentBundle:Admin:list__action_create_round.html.twig'

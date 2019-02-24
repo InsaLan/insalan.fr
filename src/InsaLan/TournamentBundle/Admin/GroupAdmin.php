@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\ActionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 use InsaLan\TournamentBundle\Entity\Match;
 use InsaLan\TournamentBundle\Entity\RoyalMatch;
@@ -32,7 +33,7 @@ class GroupAdmin extends Admin
                                                   ->setParameter('status', Participant::STATUS_VALIDATED);
                                     })
             )
-            ->add('statsType', 'choice', array(
+            ->add('statsType', ChoiceType::class, array(
                 'choices' => array(
                     Group::STATS_WINLOST => 'Victoires/Défaites',
                     Group::STATS_SCORE => 'Somme des scores'
@@ -114,7 +115,7 @@ class GroupAdmin extends Admin
 
                         $group->removeMatch($match);
                         $em->remove($match);
-    
+
                         break;
                     }
                 }
