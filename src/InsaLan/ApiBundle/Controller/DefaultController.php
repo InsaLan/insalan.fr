@@ -132,7 +132,10 @@ class DefaultController extends Controller
                 }
                 $res["tournament"][] = $tournament;
             } else {
-                $res["err"] = "no_paid_place";
+                // Check if a paid place has already been found
+                if ($res["err"]) {
+                  $res["err"] = "no_paid_place";
+                }
                 // no return because we need to check if there is a player timezone_offset_get()
             }
         }
@@ -140,7 +143,10 @@ class DefaultController extends Controller
         $player = $em->getRepository('InsaLanTournamentBundle:Player')->findByUser($usr);
 
         foreach($player as $p) {
+          // Check if a paid place has already been found
+          if ($res["err"]) {
             $res["err"] = "no_paid_place";
+          }
 
             if ($p->getTournament()) {
                 if ($p->getTournament()->isPending() || $p->getTournament()->isPlaying()) {
