@@ -116,6 +116,11 @@ class DefaultController extends Controller
         foreach ($manager as $m) {
             if ($m->getTournament()->isPending() || $m->getTournament()->isPlaying()) {
 
+                // Check if a paid place has not already been found
+                if ($res["err"]) {
+                  $res["err"] = "no_paid_place";
+                }
+
                 $tournament = [];
                 $tournament["shortname"] =$m->getTournament()->getShortname();
                 $tournament["game_name"] = $m->getGameName();
@@ -131,25 +136,20 @@ class DefaultController extends Controller
                     $tournament["has_paid"] = False;
                 }
                 $res["tournament"][] = $tournament;
-            } else {
-                // Check if a paid place has already been found
-                if ($res["err"]) {
-                  $res["err"] = "no_paid_place";
-                }
-                // no return because we need to check if there is a player timezone_offset_get()
             }
+                // no return because we need to check if there is a player timezone_offset_get()
         }
 
         $player = $em->getRepository('InsaLanTournamentBundle:Player')->findByUser($usr);
 
         foreach($player as $p) {
-          // Check if a paid place has already been found
-          if ($res["err"]) {
-            $res["err"] = "no_paid_place";
-          }
-
             if ($p->getTournament()) {
                 if ($p->getTournament()->isPending() || $p->getTournament()->isPlaying()) {
+
+                    // Check if a paid place has not already been found
+                    if ($res["err"]) {
+                      $res["err"] = "no_paid_place";
+                    }
 
                     $tournament = [];
                     $tournament["shortname"] =$p->getTournament()->getShortname();
@@ -172,6 +172,11 @@ class DefaultController extends Controller
 
             elseif ($p->getPendingRegistrable()) {
                 if ($p->getPendingRegistrable()->isOpenedNow() || ($p->getPendingRegistrable()->getKind() == 'tournament' && ($p->getPendingRegistrable()->isPending() || $p->getPendingRegistrable()->isPlaying()))) {
+
+                    // Check if a paid place has not already been found
+                    if ($res["err"]) {
+                      $res["err"] = "no_paid_place";
+                    }
 
                     $tournament = [];
                     $tournament["shortname"] =$p->getPendingRegistrable()->getShortname();
