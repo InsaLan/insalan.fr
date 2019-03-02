@@ -22,6 +22,13 @@ class Edition
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="year", type="integer")
@@ -54,7 +61,6 @@ class Edition
      */
     private $aftermovieUrl;
 
-
     /**
      * Get id
      *
@@ -63,6 +69,29 @@ class Edition
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Stream
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -173,10 +202,14 @@ class Edition
     /**
      * Get aftermovieUrl
      *
-     * @return string 
+     * @return string
      */
     public function getAftermovieUrl()
     {
         return $this->aftermovieUrl;
+    }
+
+    public function __toString() {
+        return $this->getName();
     }
 }

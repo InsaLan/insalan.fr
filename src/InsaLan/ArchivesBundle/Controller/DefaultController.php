@@ -21,22 +21,21 @@ class DefaultController extends Controller
   }
 
   /**
-  * @Route("/{year}", requirements={"year" = "\d+"})
+  * @Route("/{edition}", requirements={"edition" = "\d+"})
   * @Template()
   */
-  public function previousYearAction($year)
+  public function previousYearAction(\InsaLan\ArchivesBundle\Entity\Edition $edition)
   {
     $em = $this->getDoctrine()->getManager();
 
-    $old_tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findPreviousYearTournaments($year);
-    $streamsAlbum = $em->getRepository('InsaLanArchivesBundle:Stream')->findPreviousYearStreamsAlbum($year);
-    $edition = $em->getRepository('InsaLanArchivesBundle:Edition')->findOneByYear($year);
-    $picturesAlbum = $em->getRepository('InsaLanArchivesBundle:Picture')->findPreviousYearPicturesAlbum($year);
+    $old_tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findPreviousYearTournaments($edition->getYear());
+    $picturesAlbum = $em->getRepository('InsaLanArchivesBundle:PictureAlbum')->findByEdition($edition);
+    $streamsAlbum = $em->getRepository('InsaLanArchivesBundle:Stream')->findStreamsAlbumByEdition($edition);
 
     $output = array(
+      'edition' => $edition,
       'old_tournaments' => $old_tournaments,
       'streamsAlbum' => $streamsAlbum,
-      'year' => $year,
       'picturesAlbum' => $picturesAlbum
     );
 
@@ -55,31 +54,15 @@ class DefaultController extends Controller
     return $output;
   }
 
-
   /**
-  * @Route("/{year}/pictures/{album}/{page}", requirements={"year" = "\d+", "page" = "\d+"}, name="archives_pictures")
+  * @Route("/{edition}/streams/{album}/{page}", requirements={"edition" = "\d+", "page" = "\d+"}, name="archives_streams")
   * @Template()
   */
-  public function previousYearPicturesAction($year, $album, $page)
+  public function previousYearStreamsAction(\InsaLan\ArchivesBundle\Entity\Edition $edition, $album, $page)
   {
     $em = $this->getDoctrine()->getManager();
 
-    $pictures = $em->getRepository('InsaLanArchivesBundle:Picture')->findPreviousYearPicturesByAlbum($year, $album);
-
-    return array('pictures' => $pictures, 'year' => $year, 'album' => $album, 'page' => $page);
-  }
-
-
-  /**
-  * @Route("/{year}/streams/{album}/{page}", requirements={"year" = "\d+", "page" = "\d+"}, name="archives_streams")
-  * @Template()
-  */
-  public function previousYearStreamsAction($year, $album, $page)
-  {
-    $em = $this->getDoctrine()->getManager();
-
-    $streams = $em->getRepository('InsaLanArchivesBundle:Stream')->findPreviousYearStreamsByAlbum($year, $album);
-
-    return array('streams' => $streams, 'year' => $year, 'album' => $album, 'page' => $page);
+    $streams = $em->getRepository('InsaLanArchivesBundle:Stream')->findBy(array ('edition' => $edition, 'album' => $album));
+    return array('edition' => $edition, 'streams' => $streams, 'album' => $album, 'page' => $page);
   }
 }

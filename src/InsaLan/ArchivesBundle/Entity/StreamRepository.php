@@ -12,32 +12,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class StreamRepository extends EntityRepository
 {
-	    public function findPreviousYearStreams($year) {
-        $query = $this->createQueryBuilder('s')
-            ->Where('s.date BETWEEN :start AND :end')
-            ->setParameter('start', new \Datetime($year.'-01-01'))
-            ->setParameter('end',   new \Datetime($year.'-12-31'))
-            ->orderBy('s.date', 'ASC')
-            ->getQuery();
-        return $query->getResult();
-    }
-
-		public function findPreviousYearStreamsAlbum($year) {
-			$query = $this->_em->createQuery('SELECT DISTINCT p.album FROM InsaLanArchivesBundle:Stream p WHERE p.date BETWEEN :start AND :end')
-			->setParameter('start', new \Datetime($year.'-01-01'))
-			->setParameter('end',   new \Datetime($year.'-12-31'));
-			return $query->getResult();
-		}
-
-		public function findPreviousYearStreamsByAlbum($year, $album) {
-			$query = $this->createQueryBuilder('t')
-			->Where('t.date BETWEEN :start AND :end')
-			->setParameter('start', new \Datetime($year.'-01-01'))
-			->setParameter('end',   new \Datetime($year.'-12-31'))
-			->andWhere('t.album = :album')
-			->setParameter('album',   $album)
-			->orderBy('t.date', 'ASC')
-			->getQuery();
+		public function findStreamsAlbumByEdition(\InsaLan\ArchivesBundle\Entity\Edition $edition) {
+			$query = $this->_em->createQuery('SELECT DISTINCT p.album FROM InsaLanArchivesBundle:Stream p WHERE p.edition = :e')
+			->setParameter('e', $edition);
 			return $query->getResult();
 		}
 }

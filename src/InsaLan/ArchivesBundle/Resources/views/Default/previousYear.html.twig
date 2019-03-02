@@ -13,7 +13,7 @@
 {% block body %}
 {{ parent() }}
 <header>
-  <h1 style="text-align:center; font-size:40px; margin-top: 18px">Année {{year}}</h1>
+  <h1 style="text-align:center; font-size:40px; margin-top: 18px">Année {{edition.year}}</h1>
 </header>
 
 <br class="clear"/><hr/><br/>
@@ -23,7 +23,7 @@
 <section>
   <div class="previous-years-list">
     <div class="previous-years">
-      <img src="{{ asset('bundles/insalan/img/')  ~ poster}}" alt="InsaLan {{year}}" />
+      <img src="{{ asset('bundles/insalan/img/')  ~ poster}}" alt="InsaLan {{edition.year}}" />
     </div>
   </div>
 </section>
@@ -109,9 +109,7 @@
   <section>
     <div class="album-list ">
       {% for a in picturesAlbum %}
-      {% if a.album != ""%}
-      <a class="btn2 btn2-nocolor" href="{{ path('archives_pictures', {'year': year, 'album': a.album, 'page': 1}) }}">{{ a.album }}</a>
-      {% endif %}
+      <a class="btn2 btn2-nocolor" href="{{ a.url }}">{{ a.name }}</a>
       {% endfor %}
     </div>
 
@@ -138,7 +136,7 @@
     <div class="album-list ">
       {% for a in streamsAlbum %}
       {% if a.album != ""%}
-      <a class="btn2 btn2-nocolor" href="{{ path('archives_streams', {'year': year, 'album': a.album, 'page': 1}) }}">{{ a.album }}</a>
+      <a class="btn2 btn2-nocolor" href="{{ path('archives_streams', {'edition': edition.id, 'album': a.album, 'page': 1}) }}">{{ a.album }}</a>
       {% endif %}
       {% endfor %}
     </div>
