@@ -1,0 +1,35 @@
+.previous-years-list {
+    text-align: center;
+
+}
+
+.previous-years {
+	margin: 0px 10px 0px 10px;
+    display: inline;
+}
+
+.previous-years > img {
+  max-height: 400px;
+  margin: auto;
+  display: center;
+}
+
+.previous-years > a > img {
+  max-height: 400px;
+  text-align: center;
+  margin: auto;
+}
+
+.picture-list {
+	margin: 0px 10px 0px 10px;
+    display: inline;
+}
+
+.picture {
+	margin: 0px 10px 0px 10px;
+    display: inline;
+}
+
+.picture > a > img {
+  max-height: 200px;
+}

@@ -7,6 +7,7 @@ imports:
     - { resource: @InsaLanBundle/Resources/config/services.yml }
     - { resource: "@InsaLanBundle/Resources/config/admin.yml" }
     - { resource: @InsaLanUserBundle/Resources/config/services.yml }
+    - { resource: "@InsaLanArchivesBundle/Resources/config/services.yml" }
     - { resource: "@InsaLanStreamBundle/Resources/config/admin.yml" }
 
 framework:
@@ -54,6 +55,7 @@ assetic:
         - InsaLanTournamentBundle
         - InsaLanPizzaBundle
         - InsaLanInformationBundle
+        - InsaLanArchivesBundle
         - InsaLanRSCBundle
 
     #java: /usr/bin/java

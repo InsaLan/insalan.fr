@@ -1,3 +1,8 @@
+insalan_archives:
+    resource: "@InsaLanArchivesBundle/Controller/"
+    type:     annotation
+    prefix:   /archives
+    
 insa_lan_rsc:
     resource: "@InsaLanRSCBundle/Controller/"
     type:     annotation

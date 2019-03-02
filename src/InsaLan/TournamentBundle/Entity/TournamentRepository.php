@@ -82,4 +82,17 @@ class TournamentRepository extends EntityRepository
         return $out;
     }
 
+    public function findPreviousYearTournaments($year) {
+        $query = $this->createQueryBuilder('t')
+            ->leftJoin('t.participants', 'p')
+            ->addSelect('p')
+            ->leftJoin('p.manager', 'm')
+            ->addSelect('partial m.{id}') // TODO : find why doctrine needs to populate managers...
+            ->Where('t.tournamentOpen BETWEEN :start AND :end')
+            ->setParameter('start', new \Datetime($year.'-01-01'))
+            ->setParameter('end',   new \Datetime($year.'-05-31'))
+            ->orderBy('t.tournamentOpen', 'ASC')
+            ->getQuery();
+        return $query->getResult();
+    }
 }
