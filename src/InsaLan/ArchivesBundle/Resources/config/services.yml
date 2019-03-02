@@ -1,4 +1,15 @@
 services:
+    sonata.admin.archives.edition:
+        class: InsaLan\ArchivesBundle\Admin\EditionAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Archives", label: " Edition" }
+        arguments:
+            - ~
+            - InsaLan\ArchivesBundle\Entity\Edition
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanArchivesBundle]]
+
     sonata.admin.archives.picture:
         class: InsaLan\ArchivesBundle\Admin\PictureAlbumAdmin
         tags:
