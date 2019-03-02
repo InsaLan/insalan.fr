@@ -13,7 +13,8 @@
 {% block body %}
 {{ parent() }}
 <header>
-  <h1 style="text-align:center; font-size:40px; margin-top: 18px">Année {{edition.year}}</h1>
+  <h1 class="text-center" style="font-size:40px; margin-top: 18px">{{edition.name}}</h1>
+  <h2 class="text-center">Année {{edition.year}}</h2>
 </header>
 
 <br class="clear"/><hr/><br/>
@@ -23,7 +24,7 @@
 <section>
   <div class="previous-years-list">
     <div class="previous-years">
-      <img src="{{ asset('bundles/insalan/img/')  ~ poster}}" alt="InsaLan {{edition.year}}" />
+      <img src="{{ asset('bundles/insalan/img/')  ~ poster}}" alt="{{edition.name}}" />
     </div>
   </div>
 </section>

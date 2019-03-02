@@ -16,7 +16,7 @@
     {% for e in editions %}
           <div class="previous-years">
             <a href="{{ path('insalan_archives_default_previousyear', {'edition': e.id}) }}">
-              <img src="{{ asset('bundles/insalan/img/')  ~ e.image}}" alt="InsaLan {{e.year}}" />
+              <img src="{{ asset('bundles/insalan/img/')  ~ e.image}}" alt="{{e.name}}" />
             </a>
           </div>
     {% endfor %}
