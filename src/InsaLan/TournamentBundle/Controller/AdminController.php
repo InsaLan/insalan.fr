@@ -242,9 +242,8 @@ class AdminController extends Controller
     /**
      * @Route("/admin/match/{id}/addRound")
      */
-    public function match_addRoundAction(Entity\Match $m)
+    public function match_addRoundAction(Request $request, Entity\Match $m)
     {
-        $request = $this->get('request');
         if($request->getMethod() !== "POST")
             throw new ControllerException("Bad method");
 
@@ -321,14 +320,14 @@ class AdminController extends Controller
      * @Route("/admin/knockout/{id}/view")
      * @Template()
      */
-    public function knockout_viewAction(Entity\Knockout $ko)
+    public function knockout_viewAction(Request $request, Entity\Knockout $ko)
     {
         $em = $this->getDoctrine()->getManager();
 
         $depth    = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getLeftDepth($ko);
         $children = pow(2, $depth + ($ko->getDoubleElimination() ? 0 : 1));
 
-        if($this->get('request')->getMethod() === "POST") {
+        if($request->getMethod() === "POST") {
 
             $root = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getRoot($ko);
             if($ko->getDoubleElimination()) {
@@ -338,8 +337,8 @@ class AdminController extends Controller
 
             for($i = 0; $i < $children / 2; $i++) {
 
-                $part1 = $this->get('request')->request->get("participant_".($i*2+1));
-                $part2 = $this->get('request')->request->get("participant_".($i*2+2));
+                $part1 = $request->request->get("participant_".($i*2+1));
+                $part2 = $request->request->get("participant_".($i*2+2));
 
                 $part1 = $em->getRepository('InsaLanTournamentBundle:Participant')->findOneById($part1);
                 $part2 = $em->getRepository('InsaLanTournamentBundle:Participant')->findOneById($part2);
@@ -415,7 +414,7 @@ class AdminController extends Controller
     private function getFormKo($tournament) {
         return $this->createFormBuilder()
                     ->add('name', TextType::class, array("label" => "Nom"))
-                    ->add('size', IntegerType::class, array("label" => "Taille", "precision" => 0))
+                    ->add('size', IntegerType::class, array("label" => "Taille", "scale" => 0))
                     ->add('double', CheckboxType::class, array("label" => "Double Elimination", "required" => false))
                     ->setAction($this->generateUrl('insalan_tournament_admin_create_ko',
                                                   array('id' => $tournament)))
@@ -441,7 +440,7 @@ class AdminController extends Controller
          */
         public function placementAction(Request $request, Entity\Tournament $id = null) {
             $em = $this->getDoctrine()->getManager();
-            $usr = $this->get('security.context')->getToken()->getUser();
+            $usr = $this->get('security.token_storage')->getToken()->getUser();
 
             $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments();
 

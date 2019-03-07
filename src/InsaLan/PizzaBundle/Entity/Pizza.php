@@ -39,7 +39,11 @@ class Pizza
 
 
     public function __toString() {
+      if ($this->getName()) {
         return $this->getName();
+      }
+      // We have to return a string value
+      return '';
     }
 
     /**

@@ -9,8 +9,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\StringType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use InsaLan\TournamentBundle\Entity\Match;
 

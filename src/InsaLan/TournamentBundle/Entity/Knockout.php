@@ -58,12 +58,15 @@ class Knockout
     }
 
     public function __toString()
-    {   
+    {
         if($this->tournament)
             return $this->name . " " . $this->tournament->getName();
 
-        else
+        else if ($this->name) {
             return $this->name;
+          }
+          // We have to return a string value
+          return '';
     }
 
     /**
@@ -138,7 +141,7 @@ class Knockout
     /**
      * Get doubleElimination
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDoubleElimination()
     {

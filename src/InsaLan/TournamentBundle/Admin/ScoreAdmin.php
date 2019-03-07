@@ -15,16 +15,16 @@ class ScoreAdmin extends Admin
     {
         $formMapper
             ->add('participant', 'entity',
-                array('read_only' => true, 'disabled' => true, 'class' => 'InsaLan\TournamentBundle\Entity\Participant'))
+                array('disabled' => true, 'class' => 'InsaLan\TournamentBundle\Entity\Participant'))
             ->add('score')
         ;
     }
 
     protected function configureShowFields(ShowMapper $showMapper)
-    {   
+    {
         $showMapper
             ->add('participant', 'entity',
-                array('read_only' => true, 'disabled' => true, 'class' => 'InsaLan\TournamentBundle\Entity\Participant'))
+                array('disabled' => true, 'class' => 'InsaLan\TournamentBundle\Entity\Participant'))
             ->add('score')
         ;
     }

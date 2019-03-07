@@ -9,7 +9,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ActionType;
-use Symfony\Component\Form\Extension\Core\Type\StringType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Valid;
 
 use InsaLan\TournamentBundle\Entity\Match;
 
@@ -24,7 +25,7 @@ class RoundAdmin extends Admin
                 'by_reference' => true,
                 'label' => "Scores",
                 'type_options' => array('delete' => false),
-                'cascade_validation' => true,
+                'constraints' => new Valid(),
                 'btn_add' => false,
                 'required' => true
             ), array(
@@ -41,7 +42,7 @@ class RoundAdmin extends Admin
             ->add("Détails", null, array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
             ->add('match',   null, array('route' => array('name' => 'show')))
             ->add('scores',  null, array('label' => "Scores"))
-            ->add('fullReplay', StringType::class, array('label' => "Replay"))
+            ->add('fullReplay', TextType::class, array('label' => "Replay"))
         ;
     }
 
@@ -68,7 +69,7 @@ class RoundAdmin extends Admin
 
     public function removeOldParticipants($round)
     {
-        $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
 
         foreach ($round->getScores() as $score) {
             if (!$round->getMatch()->getParticipants()->contains($score->getParticipant())) {
@@ -81,14 +82,14 @@ class RoundAdmin extends Admin
 
     public function addNewParticipants($round)
     {
-        $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
 
         foreach ($round->getMatch()->getParticipants() as $p) {
             if (!$round->hasScore($p)) {
                 $round->setScore($p, 0);
             }
         }
-        
+
         $em->flush();
     }
 
@@ -109,7 +110,7 @@ class RoundAdmin extends Admin
         $match = $round->getMatch();
         if($match->getState() === Match::STATE_FINISHED && $match->getKoMatch())
         {
-            $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
+            $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
             $repository = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch');
             $repository->propagateVictory($match->getKoMatch());
             $em->flush();
