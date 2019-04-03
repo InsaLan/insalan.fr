@@ -196,7 +196,7 @@ class DefaultController extends Controller {
      * Get all matches
      */
     public function tournamentMatchAction() {
-        return $this->redirect('/tournament/admin');
+        return $this->redirect($this->generateUrl('insalan_tournament_admin_index'));
     }
 
     /**
