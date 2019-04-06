@@ -20,6 +20,8 @@
       {{ form_widget(formAdd.pizzaName, {'attr': {'placeholder': formAdd.pizzaName.vars.label, 'class': 'addInput' }}) }}
       {{ form_widget(formAdd.pizzaPrice, {'attr': {'placeholder': formAdd.pizzaPrice.vars.label, 'class': 'addInput' }}) }}
       {{ form_widget(formAdd.pizzaDescription, {'attr': {'placeholder': formAdd.pizzaDescription.vars.label, 'class': 'addInput' }}) }}
+      <label for=""> Veggie : </label>
+      {{ form_widget(formAdd.pizzaVeggie, {'attr': {'class': 'addInput' }}) }}
       <div class="input left">
         <input type="submit" value="Ajouter"/>
       </div>
@@ -35,6 +37,7 @@
         <th class="grid-1-5">Nom</th>
         <th class="grid-3">Description</th>
         <th class="grid-1">Prix</th>
+        <th class="grid-1">Veggie</th>
         <th class="grid-1"></th>
       </tr>
 
@@ -43,6 +46,13 @@
         <td>{{ pizza.name }}</td>
         <td>{{ pizza.description }}</td>
         <td>{{ pizza.price }} €</td>
+        <td>
+            {% if pizza.veggie == 1 %}
+                <b style="color: green">&#x2713; </b>
+            {% else %}
+                <b style="color: red">&#x274C; </b>
+            {% endif %}
+        </td>
         <td>
           <form method="POST" action="{{ path('insalan_pizza_admin_pizza_remove', {id: pizza.id}) }}">
             <input type="submit" value="Supprimer" onclick="return confirm('Confirmer la suppression ?');"/>

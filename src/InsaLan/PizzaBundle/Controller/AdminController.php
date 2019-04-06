@@ -43,8 +43,14 @@ class AdminController extends Controller
       $pizza = new Entity\Pizza();
       $pizza->setName($data['pizzaName']);
       $pizzaPrice = $data['pizzaPrice'];
-      $pizza->setPrice(intval(substr($pizzaPrice, 0, -1)));//remove € at the end
-      $pizza->setDescription($data['pizzaDescription']);
+      $pizza->setPrice($pizzaPrice);
+      $pizza->setVeggie($data['pizzaVeggie']);
+      if ($data['pizzaDescription'] == null) {
+        $pizza->setDescription("");
+      } else {
+        $pizza->setDescription($data['pizzaDescription']);
+      }
+
       $em->persist($pizza);
       $em->flush();
     }
@@ -309,7 +315,8 @@ class AdminController extends Controller
     private function getAddPizzaForm() {
         return $this->createFormBuilder()
                     ->add('pizzaName', 'text', array('label' => 'Nom', 'required' => true))
-                    ->add('pizzaPrice', 'text', array('label' => '8€', 'required' => true))
+                    ->add('pizzaPrice', 'number', array('label' => 'Prix', 'required' => true))
+                    ->add('pizzaVeggie', 'checkbox', array('label' => 'Veggie', 'required' => false))
                     ->add('pizzaDescription', 'text', array('label' => 'Description', 'required' => false))
                     ->setAction($this->generateUrl('insalan_pizza_admin_pizza_add'))
                     ->getForm();
