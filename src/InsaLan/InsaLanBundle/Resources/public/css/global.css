@@ -762,6 +762,10 @@ strong {
   width: 10%;
 }
 
+.grid-1-5 {
+  width: 15%;
+}
+
 .grid-2 {
   width: 20%;
 }

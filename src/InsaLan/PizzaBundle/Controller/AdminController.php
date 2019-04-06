@@ -13,12 +13,116 @@ use InsaLan\ApiBundle\Http\JsonResponse;
 
 class AdminController extends Controller
 {
+
+  /**
+   * @Route("/admin/pizza")
+   * @Template()
+   */
+  public function pizzaAction() {
+    $em = $this->getDoctrine()->getManager();
+    $pizzas = $em->getRepository('InsaLanPizzaBundle:Pizza')->findAll();
+    $formAdd = $this->getAddPizzaForm()->createView();
+    return array(
+      'pizzas' => $pizzas,
+      'formAdd' => $formAdd,
+    );
+  }
+
+  /**
+   * @Route("/admin/pizza/add")
+   * @Method({"POST"})
+   */
+  public function pizza_addAction() {
+
+    $em = $this->getDoctrine()->getManager();
+    $form = $this->getAddPizzaForm();
+    $form->handleRequest($this->getRequest());
+    $data = $form->getData();
+
+    if ($form->isValid()) {
+      $pizza = new Entity\Pizza();
+      $pizza->setName($data['pizzaName']);
+      $pizzaPrice = $data['pizzaPrice'];
+      $pizza->setPrice(intval(substr($pizzaPrice, 0, -1)));//remove € at the end
+      $pizza->setDescription($data['pizzaDescription']);
+      $em->persist($pizza);
+      $em->flush();
+    }
+
+    return $this->redirect($this->generateUrl("insalan_pizza_admin_pizza"));
+  }
+
+  /**
+   * @Route("/admin/pizza/{id}/remove")
+   * @Method({"POST"})
+   */
+  public function pizza_removeAction(Entity\Pizza $pizza) {
+
+      $em = $this->getDoctrine()->getManager();
+      $em->remove($pizza);
+      $em->flush();
+
+      return $this->redirect($this->generateUrl("insalan_pizza_admin_pizza"));
+  }
+
+
+  /**
+   * @Route("/admin/creneau")
+   * @Template()
+   */
+  public function creneauAction() {
+    $em = $this->getDoctrine()->getManager();
+    $order = $em->getRepository('InsaLanPizzaBundle:Order')->findAll();
+    $formAdd = $this->getAddOrderForm()->createView();
+    return array(
+      'orders' => $order,
+      'formAdd' => $formAdd,
+    );
+  }
+
+  /**
+   * @Route("/admin/creneau/add")
+   * @Method({"POST"})
+   */
+  public function creneau_addAction() {
+
+    $em = $this->getDoctrine()->getManager();
+    $form = $this->getAddOrderForm();
+    $form->handleRequest($this->getRequest());
+    $data = $form->getData();
+    if ($form->isValid()) {
+      $order = new Entity\Order();
+      $order->setExpiration($data['orderExpirationDateTime']);
+      $order->setDelivery($data['orderDeliveryDateTime']);
+      $order->setCapacity(intval($data['orderCapacity']));
+      $order->setForeignCapacity(intval($data['orderForeignCapacity']));
+      $order->setClosed($data['orderClosed']);
+      $em->persist($order);
+      $em->flush();
+    }
+
+    return $this->redirect($this->generateUrl("insalan_pizza_admin_creneau"));
+  }
+
+  /**
+   * @Route("/admin/creneau/{id}/remove")
+   * @Method({"POST"})
+   */
+  public function creneau_removeAction(Entity\Order $order) {
+
+      $em = $this->getDoctrine()->getManager();
+      $em->remove($order);
+      $em->flush();
+
+      return $this->redirect($this->generateUrl("insalan_pizza_admin_creneau"));
+  }
+
     /**
-     * @Route("/admin")
-     * @Route("/admin/{id}")
+     * @Route("/admin/commande")
+     * @Route("/admin/commande/{id}")
      * @Template()
      */
-    public function indexAction(Request $request, $id = null) {
+    public function commandeAction(Request $request, $id = null) {
         $em = $this->getDoctrine()->getManager();
         $order = $formAdd = null;
 
@@ -36,7 +140,7 @@ class AdminController extends Controller
 
         $form = $this->createFormBuilder()
             ->add('order', 'choice', array('label' => 'Créneau', 'choices' => $ordersChoices))
-            ->setAction($this->generateUrl('insalan_pizza_admin_index', ['showAll' => $showAll]))
+            ->setAction($this->generateUrl('insalan_pizza_admin_commande', ['showAll' => $showAll]))
             ->getForm();
 
         $form->handleRequest($this->getRequest());
@@ -44,7 +148,7 @@ class AdminController extends Controller
         if ($form->isValid()) {
             $data = $form->getData();
             return $this->redirect($this->generateUrl(
-                'insalan_pizza_admin_index_1',
+                'insalan_pizza_admin_commande_1',
                 array('id' => $data['order'], 'showAll' => $showAll)));
         }
 
@@ -113,7 +217,7 @@ class AdminController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl("insalan_pizza_admin_index_1", array("id" => $order->getId())));
+        return $this->redirect($this->generateUrl("insalan_pizza_admin_commande_1", array("id" => $order->getId())));
 
     }
 
@@ -126,7 +230,7 @@ class AdminController extends Controller
         $order->setClosed(true);
         $em->persist($order);
         $em->flush();
-        return $this->redirect($this->generateUrl("insalan_pizza_admin_index_1", array("id" => $order->getId())));
+        return $this->redirect($this->generateUrl("insalan_pizza_admin_commande_1", array("id" => $order->getId())));
     }
 
     /**
@@ -138,7 +242,7 @@ class AdminController extends Controller
         $order->setClosed(false);
         $em->persist($order);
         $em->flush();
-        return $this->redirect($this->generateUrl("insalan_pizza_admin_index_1", array("id" => $order->getId())));
+        return $this->redirect($this->generateUrl("insalan_pizza_admin_commande_1", array("id" => $order->getId())));
     }
 
     /**
@@ -154,7 +258,7 @@ class AdminController extends Controller
         $em->remove($uo);
         $em->flush();
 
-        return $this->redirect($this->generateUrl("insalan_pizza_admin_index_1", array("id" => $id)));
+        return $this->redirect($this->generateUrl("insalan_pizza_admin_commande_1", array("id" => $id)));
     }
 
     /**
@@ -199,6 +303,26 @@ class AdminController extends Controller
                             Entity\UserOrder::FREE_PRICE => 'Gratuit'
                         ), 'label' => 'Tarif'))
                     ->setAction($this->generateUrl('insalan_pizza_admin_add', array('id' => $o->getId())))
+                    ->getForm();
+    }
+
+    private function getAddPizzaForm() {
+        return $this->createFormBuilder()
+                    ->add('pizzaName', 'text', array('label' => 'Nom', 'required' => true))
+                    ->add('pizzaPrice', 'text', array('label' => '8€', 'required' => true))
+                    ->add('pizzaDescription', 'text', array('label' => 'Description', 'required' => false))
+                    ->setAction($this->generateUrl('insalan_pizza_admin_pizza_add'))
+                    ->getForm();
+    }
+
+    private function getAddOrderForm() {
+        return $this->createFormBuilder()
+                    ->add('orderExpirationDateTime', 'datetime', array('required' => true))
+                    ->add('orderDeliveryDateTime', 'datetime', array('required' => true))
+                    ->add('orderCapacity', 'number', array('label' => 20, 'required' => false))
+                    ->add('orderForeignCapacity', 'number', array('label' => 3, 'required' => false))
+                    ->add('orderClosed', 'checkbox', array('required' => false))
+                    ->setAction($this->generateUrl('insalan_pizza_admin_creneau_add'))
                     ->getForm();
     }
 

@@ -1,0 +1,28 @@
+{% extends 'InsaLanAdminBundle::layout.html.twig' %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.stage) }}
+    <div class="input left">
+        <div>Maintenir la touche Ctrl enfoncée pour sélectionner plusieurs joueurs<br>
+            Appuyer sur Shift pour sélectionner une série de joueurs adjacents dans la liste</div>
+        <label>Filtre</label>
+        <input type="text" placeholder="Filtrer joueurs..." id="dropdown-search" onkeyup="filter()"/>
+    </div>
+    {{ form_row(form.participants) }}
+    {{ form_row(form.save) }}
+    {{ form_end(form) }}
+
+    <style>
+        .input select[multiple] {
+            height: auto;
+        }
+    </style>
+{% endblock %}

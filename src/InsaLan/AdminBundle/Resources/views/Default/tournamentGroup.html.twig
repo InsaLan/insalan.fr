@@ -1,0 +1,102 @@
+{% extends 'InsaLanAdminBundle::layout.html.twig' %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="create">
+        <h2>Création d'une nouvelle pool</h2>
+        <div>Maintenir la touche Ctrl enfoncée pour sélectionner plusieurs participants. Maintenir Shift pour sélectionner une série de participants adjacents dans la liste.</div>
+
+        {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.stage) }}
+        <div class="input left">
+            <label>Filtre</label>
+            <input type="text" placeholder="Filtrer participants..." id="dropdown-search" onkeyup="filter()"/>
+        </div>
+        {{ form_row(form.participants) }}
+        {{ form_row(form.save) }}
+        {{ form_end(form) }}
+    </div>
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Pool</th>
+            <th>Participants</th>
+            <th>Actions</th>
+        </tr>
+        {% for group in groups %}
+            <tr>
+                <td>{{ group.id }}</td>
+                <td>{{ group.name }}</td>
+                <td>{{ group.stage }}</td>
+                <td>{{ group.participants.count }}</td>
+                <td>
+                    <a class="btn-plain" href = {{ path('GroupModifyAction', {'id': group.id }) }}>Modifier</a>
+                    <a class="btn-plain" href = {{ path('GroupRemoveAction', {'id': group.id }) }}>Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <style>
+        .input.left input, .input.left button, .input.left select {
+            margin-left: 0px;
+        }
+
+        .create {
+            float: right;
+            width: 40%;
+        }
+
+        table {
+            background-color: rgba(23, 23, 23, 0.8);
+            margin: 20px;
+        }
+
+        td, th, tr {
+            border: 1px solid #393939;
+            padding: 6px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        tr:nth-child(even){background-color: rgba(23, 23, 23, 0.4);}
+        tr:hover {background-color: rgba(23, 23, 23, 0.0);}
+
+        th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            background-color: #00bff3;
+            color: white;
+        }
+
+        .input select[multiple] {
+            height: auto;
+        }
+    </style>
+
+    <script>
+        // Events
+        function filter() {
+            const input = document.getElementById("dropdown-search").value.toLowerCase();
+            const options = document.getElementById('form_participants').getElementsByTagName('option');
+
+            for (let i = 0; i < options.length; i++) {
+                let option = options[i];
+                let txtValue = option.textContent || option.innerText;
+                if (txtValue.toLowerCase().indexOf(input) > -1) {
+                    option.style.display = "";
+                } else {
+                    option.style.display = "none";
+                }
+            }
+        }
+    </script>
+{% endblock %}

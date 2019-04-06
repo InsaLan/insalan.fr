@@ -1,37 +1,19 @@
-{% extends 'InsaLanPizzaBundle::layout.html.twig' %}
+{% extends 'InsaLanAdminBundle::layout.html.twig' %}
 
 {% block stylesheets %}
 {{ parent() }}
-<style type="text/css">
-.container {
-    width: 98%;
-}
-input[type=submit], input[type=button], button, .btn2 {
-    font-size: 0.8em;
-    cursor: pointer;
-}
-td {
-    padding: 2px !important;
-}
-form {
-    display: inline;
-}
-.addInput {
-    color: black;
-    height: 25px;
-    font-size: 18px;
-}
-.addInput[type=text] {
-    height: 21px;
-    padding: 2px;
-}
-</style>
+{% stylesheets
+  'bundles/insalan/css/pizza.css'
+  filter='cssrewrite' %}
+  <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
 {% endblock %}
 
-{% block main_header %}
-{% endblock %}
-{% block main_bottom %}
-{% endblock %}
+{% block main_header %} {{ parent() }} {% endblock %}
+
+{% block rawbody %}{% endblock %}
+
+{% block main_bottom %}{% endblock %}
 
 {% block javascripts %}
     {% javascripts 'bundles/insalan/js/jquery.js' %}
