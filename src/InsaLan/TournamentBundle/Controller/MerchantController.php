@@ -180,7 +180,7 @@ class MerchantController extends Controller
         $order->setDiscount($discount);
 
         $order->setRawPrice($price);
-        if ($this->get('security.token_storage')->isGranted('ROLE_ADMIN')) { // The user is in InsaLan's staff so it is a preorder by check
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) { // The user is in InsaLan's staff so it is a preorder by check
             $order->setPlace(PaymentDetails::PLACE_WEB);
             $order->setType(PaymentDetails::TYPE_CHECK);
             } else { // User is a partner
