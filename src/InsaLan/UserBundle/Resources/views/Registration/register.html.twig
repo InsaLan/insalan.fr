@@ -16,33 +16,33 @@
   </header>
 
   <section>
-    <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST">
-     
+    {{ form_start(form) }}
+
       <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
-      
+
       {{ form_errors(form) }}
       <div class="input left">
         <label for="{{ form.username.vars.id }}">{{ 'form.username'|trans }}</label>
-        <input id="{{ form.username.vars.id }}" name="{{ form.username.vars.full_name }}" value="{{ form.vars.value.username }}" required="required"  type="text" />
+        {{ form_widget(form.username) }}
         {{ form_errors(form.username) }}
       </div>
 
 
       <div class="input left">
         <label for="{{ form.email.vars.id }}">{{ 'form.email'|trans }}</label>
-        <input id="{{ form.email.vars.id }}" name="{{ form.email.vars.full_name }}" value="{{ form.vars.value.email }}" type="email" required="required" />
+        {{ form_widget(form.email) }}
         {{ form_errors(form.email) }}
       </div>
-     
+
       <div class="input left">
         <label for="{{ form.plainPassword.first.vars.id }}">{{ 'form.password'|trans }}</label>
-        <input id="{{ form.plainPassword.first.vars.id }}" name="{{ form.plainPassword.first.vars.full_name }}" value="{{ form.vars.value.plainPassword }}" required="required"  type="password" />
+        {{ form_widget(form.plainPassword.first) }}
         {{ form_errors(form.plainPassword.first) }}
       </div>
-      
+
       <div class="input left">
         <label for="{{ form.plainPassword.second.vars.id }}">{{ 'form.password_confirmation'|trans }}</label>
-        <input id="{{ form.plainPassword.second.vars.id }}" name="{{ form.plainPassword.second.vars.full_name }}" value="{{ form.vars.value.plainPassword }}" required="required"  type="password" />
+        {{ form_widget(form.plainPassword.second) }}
         {{ form_errors(form.plainPassword.second) }}
       </div>
 
@@ -50,7 +50,7 @@
         <input type="submit" id="_submit" name="_submit" value="{{ 'registration.submit'|trans }}" />
       </div>
 
-    </form>
+    {{ form_end(form) }}
   </section>
 </article>
 

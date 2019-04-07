@@ -7,7 +7,7 @@
         <br class="clear">
       </header>
 
-        <form action="{{ path('insalan_tournament_user_createteam', {tournament: registrable.id}) }}" id="step4" method="post" {{ form_enctype(form) }}>
+          {{ form_start(form) }}
 
           {{ form_widget(form._token) }}
           {{ form_errors(form) }}
@@ -28,5 +28,5 @@
           <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_jointeam', {tournament: registrable.id}) }}">Annuler</a>
           <a class="btn btn-primary ctrl grid-8 pull-left" href="javascript:{}" onclick="document.getElementById('step4').submit();">Créer mon équipe</a>
           <br class="clear">
-        </form>
+          {{ form_end(form) }}
     </div>

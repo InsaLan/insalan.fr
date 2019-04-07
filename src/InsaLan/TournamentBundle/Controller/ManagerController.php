@@ -91,7 +91,13 @@ class ManagerController extends Controller
             $manager->setTournament($tournament);
         }
 
-        $form = $this->createForm(new SetManagerName(), $manager);
+        $form = $this->createForm(SetManagerName::class,
+                                  $manager,
+                                  array(
+                                        'method' => 'POST',
+                                        'action' => $this->generateUrl('insalan_tournament_manager_setname', array('tournament' => $tournament->getId())),
+                                        'attr' => array('id' => 'step1')
+                                      ));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -133,7 +139,13 @@ class ManagerController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_manager_setname', array('tournament' => $tournament->getId())));
 
         $form_player = new Player();
-        $form = $this->createForm(new SetPlayerName(), $form_player); // fill player gamename
+        $form = $this->createForm(SetPlayerName::class,
+                                  $form_player,
+                                  array(
+                                        'method' => 'POST',
+                                        'action' => $this->generateUrl('insalan_tournament_manager_joinsoloplayer', array('tournament' => $tournament->getId())),
+                                        'attr' => array('id' => 'step3')
+                                      )); // fill player gamename
         $form->handleRequest($request);
 
         $error_details = null;
@@ -189,7 +201,13 @@ class ManagerController extends Controller
             return $this->redirect($this->generateUrl('insalan_tournament_manager_setname', array('tournament' => $tournament->getId())));
 
         $form_team = new Team();
-        $form = $this->createForm(new TeamLoginType(), $form_team); // fill name and plainPassword
+        $form = $this->createForm(TeamLoginType::class,
+                                  $form_team,
+                                  array(
+                                        'method' => 'POST',
+                                        'action' => $this->generateUrl('insalan_tournament_manager_jointeamwithpassword', array('tournament' => $tournament->getId())),
+                                        'attr' => array('id' => 'step4')
+                                      )); // fill name and plainPassword
         $form->handleRequest($request);
 
         // inspired by UserController::joinExistingTeam

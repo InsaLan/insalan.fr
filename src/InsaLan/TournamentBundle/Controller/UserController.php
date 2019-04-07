@@ -596,7 +596,13 @@ class UserController extends Controller
         if($team->getCaptain() !== $captain)
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
 
-        $form = $this->createForm('InsaLan\TournamentBundle\Form\TeamType', $team);
+        $form = $this->createForm('InsaLan\TournamentBundle\Form\TeamType',
+                                  $team,
+                                  array(
+                                        'method' => 'POST',
+                                        'action' => $this->generateUrl('insalan_tournament_user_editteam', array('teamId' => $teamId)),
+                                        'attr' => array('id' => 'step1')
+                                      ));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -748,7 +754,13 @@ class UserController extends Controller
 
         $team = new Team();
 
-        $form = $this->createForm('InsaLan\TournamentBundle\Form\TeamType', $team);
+        $form = $this->createForm('InsaLan\TournamentBundle\Form\TeamType',
+                                  $team,
+                                  array(
+                                        'method' => 'POST',
+                                        'action' => $this->generateUrl('insalan_tournament_user_createteam', array('tournament' => $tournament->getId())),
+                                        'attr' => array('id' => 'step4')
+                                      ));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -786,7 +798,13 @@ class UserController extends Controller
 
         $team = new Team();
 
-        $form = $this->createForm(new TeamLoginType(), $team);
+        $form = $this->createForm(TeamLoginType::class,
+                                  $team,
+                                  array(
+                                        'method' => 'POST',
+                                        'action' => $this->generateUrl('insalan_tournament_user_existingteam', array('tournament' => $tournament->getId())),
+                                        'attr' => array('id' => 'step4')
+                                      ));
         $form->handleRequest($request);
 
         $details = null;
@@ -893,7 +911,13 @@ class UserController extends Controller
     }
 
     protected function usernameSet($em, UserBundle\Entity\User $usr, Entity\Player $player, $request, Entity\Registrable $registrable) {
-        $form = $this->createForm(new SetPlayerName(), $player);
+        $form = $this->createForm(SetPlayerName::class,
+                                  $player,
+                                  array(
+                                        'method' => 'POST',
+                                        'action' => $this->generateUrl('insalan_tournament_user_setplayer', array('registrable' => $registrable->getId())),
+                                        'attr' => array('id' => 'step1')
+                                      ));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
