@@ -22,6 +22,4 @@ after_script:
 
 notifications:
   email:
-    -  quentin@dufour.io
-    -  mricher@insa-rennes.fr
     -  abourven@insa-rennes.fr
