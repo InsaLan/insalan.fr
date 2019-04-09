@@ -5,7 +5,7 @@
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
          backupGlobals="false"
          colors="true"
-         bootstrap="bootstrap.php.cache"
+         bootstrap="vendor/autoload.php"
 >
     <testsuites>
         <testsuite name="Project Test Suite">
@@ -16,6 +16,12 @@
     <php>
         <server name="KERNEL_DIR" value="app/" />
     </php>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
 
     <logging>
         <log type="coverage-clover" target="var/logs/clover.xml"/>
