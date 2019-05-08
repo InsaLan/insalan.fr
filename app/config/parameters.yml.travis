@@ -5,6 +5,7 @@ parameters:
     database_name:     insalanfr
     database_user:     travis
     database_password: ~
+    database_server_version: 15.1
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -17,8 +18,6 @@ parameters:
     debug_toolbar:          true
     debug_redirects:        false
     use_assetic_controller: true
-
-    lol_api_key: ~
 
     fos_user_email_address: no-reply@example.com
     fos_user_email_sender_name: webmaster

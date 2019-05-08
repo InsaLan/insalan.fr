@@ -2,6 +2,7 @@
 
 namespace InsaLan\TournamentBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,6 +13,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use InsaLan\TournamentBundle\Entity;
 use InsaLan\TournamentBundle\Entity\Player;
 use InsaLan\TournamentBundle\Exception\ControllerException;
+
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 use InsaLan\UserBundle\Entity\MerchantOrder;
 use InsaLan\UserBundle\Entity\PaymentDetails;
@@ -26,20 +29,25 @@ class MerchantController extends Controller
      * @Route("/{id}/merchant", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function indexAction($id = null)
+    public function indexAction($id = null, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $registrables = $em->getRepository('InsaLanTournamentBundle:Registrable')->findAll();
+
+        // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
         $a = array(null => '');
         foreach ($registrables as $t) {
             if ($t->isOpenedNow())
-                $a[$t->getId()] = $t->getName();
+                $a[$t->getName()] = $t->getId();
         }
 
         $form = $this->createFormBuilder()
-            ->add('registrable', 'choice', array('label' => 'Tournoi', 'choices' => $a))
+            ->add('registrable', ChoiceType::class, array(
+                  'label' => 'Tournoi',
+                  'choices_as_values' => true,
+                  'choices' => $a))
             ->setAction($this->generateUrl('insalan_tournament_merchant_index'))
             ->getForm();
 
@@ -47,7 +55,7 @@ class MerchantController extends Controller
         $players = $pendingPlayers = $paidPlayers = $previousPaidPlayers = $discounts = array();
         $total = 0;
 
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -142,16 +150,12 @@ class MerchantController extends Controller
      */
     public function validateAction(Entity\Registrable $registrable, Entity\Player $player, $discount = null){
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($player->getUser() == null){
             $this->get('session')->getFlashBag()->add('error', "Impossible de valider cette place (aucun utilisateur associé à la commande)");
             return $this->redirect($this->generateUrl('insalan_tournament_merchant_index_1', array('id' => $registrable->getId())));
         }
-
-        $storage =  $this->get('payum')->getStorage('InsaLan\UserBundle\Entity\PaymentDetails');
-        $order = $storage->createModel();
-        $order->setUser($player->getUser());
 
         $price = $registrable->getWebPrice();
         $title = 'Place pour le tournoi '.$registrable->getName();
@@ -169,10 +173,14 @@ class MerchantController extends Controller
             $title .= " (" . $discount->getName() . ")";
         }
 
+        $payment = $this->get("insalan.user.payment");
+        $order = $payment->getOrder($registrable->getCurrency(), $price);
+        $order->setUser($player->getUser());
+
         $order->setDiscount($discount);
 
         $order->setRawPrice($price);
-        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) { // The user is in InsaLan's staff so it is a preorder by check
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) { // The user is in InsaLan's staff so it is a preorder by check
             $order->setPlace(PaymentDetails::PLACE_WEB);
             $order->setType(PaymentDetails::TYPE_CHECK);
             } else { // User is a partner
@@ -180,21 +188,10 @@ class MerchantController extends Controller
                 $order->setType(PaymentDetails::TYPE_UNDEFINED); // TODO Save payment type
             }
 
+        $order->addPaymentDetail($title, $price, '');
+        $order->addPaymentDetail('Paiement dans un point de vente partenaire', 0, 'Paiement validé par '.$user->getFirstName().' '.$user->getLastName());
 
-        $order['PAYMENTREQUEST_0_CURRENCYCODE'] = $registrable->getCurrency();
-        $order['PAYMENTREQUEST_0_AMT'] = $price;
-
-        $order['L_PAYMENTREQUEST_0_NAME0'] = $title;
-        $order['L_PAYMENTREQUEST_0_AMT0'] = $price;
-        $order['L_PAYMENTREQUEST_0_DESC0'] = $registrable->getDescription();
-        $order['L_PAYMENTREQUEST_0_NUMBER0'] = 1;
-
-        $order['L_PAYMENTREQUEST_0_NAME1'] = 'Paiement dans un point de vente partenaire';
-        $order['L_PAYMENTREQUEST_0_AMT1'] = 0;
-        $order['L_PAYMENTREQUEST_0_DESC1'] = 'Paiement validé par '.$user->getFirstName().' '.$user->getLastName();
-        $order['L_PAYMENTREQUEST_0_NUMBER1'] = 1;
-
-        $storage->updateModel($order);
+        $payment->update($order);
 
         $merchantOrder = new MerchantOrder();
         $merchantOrder->setMerchant($user);

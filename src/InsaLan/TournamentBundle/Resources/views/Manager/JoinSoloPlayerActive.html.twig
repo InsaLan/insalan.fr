@@ -21,11 +21,11 @@
       </header>
 {% endif %}
 
-<form action="{{ path('insalan_tournament_manager_joinsoloplayer', {tournament: tournament.id}) }}" id="step3" method="post" {{ form_enctype(form) }}>
-    <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
-    <div class="input field">
-      <input type="text" placeholder="Nom en jeu du joueur à coacher" name="{{ form.gameName.vars.full_name }}" value="{{ form.vars.value.gameName }}"/>
-    </div>
-    <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step3').submit();">Ok</a>
-  </form>
+    {{ form_start(form) }}
+      <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
+      <div class="input field">
+        {{ form_widget(form.gameName, {'attr': {'placeholder': "Nom en jeu du joueur à coacher" }}) }}
+      </div>
+      <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step3').submit();">Ok</a>
+    {{ form_end(form) }}
     </div>

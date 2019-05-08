@@ -74,7 +74,7 @@ class Team extends Participant
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -88,7 +88,7 @@ class Team extends Participant
      * @return Team
      */
     public function setPassword($password)
-    {   
+    {
 
         $this->password = $password;
 
@@ -98,7 +98,7 @@ class Team extends Participant
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -156,7 +156,7 @@ class Team extends Participant
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -171,7 +171,7 @@ class Team extends Participant
      * @return Team
      */
     public function addPlayer(\InsaLan\TournamentBundle\Entity\Player $players)
-    {   
+    {
 
         if ($this->getPlayers()->count() >= $this->getTournament()->getTeamMaxPlayer()) {
             throw new \InsaLan\TournamentBundle\Exception\ControllerException("Cette équipe est pleine.");
@@ -196,7 +196,7 @@ class Team extends Participant
     /**
      * Get players
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPlayers()
     {
@@ -233,7 +233,7 @@ class Team extends Participant
     /**
      * Get captain
      *
-     * @return \InsaLan\TournamentBundle\Entity\Player 
+     * @return \InsaLan\TournamentBundle\Entity\Player
      */
     public function getCaptain()
     {
@@ -256,7 +256,7 @@ class Team extends Participant
     /**
      * Get tournament
      *
-     * @return \InsaLan\TournamentBundle\Entity\Tournament 
+     * @return \InsaLan\TournamentBundle\Entity\Tournament
      */
     public function getTournament()
     {
@@ -289,7 +289,7 @@ class Team extends Participant
     /**
      * Get groups
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroups()
     {
@@ -301,9 +301,13 @@ class Team extends Participant
      *
      * @return Team
      */
-    public function __toString() 
+    public function __toString()
     {
-        return $this->name;
+        if ($this->getName()) {
+          return $this->getName();
+        }
+        // We have to return a string value
+        return '';
     }
 
     public function setPlainPassword($plainPassword)
@@ -335,7 +339,7 @@ class Team extends Participant
     /**
      * Get lastUpdated
      *
-     * @return integer 
+     * @return integer
      */
     public function getLastUpdated()
     {

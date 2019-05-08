@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class UserOrderAdmin extends Admin
 {
@@ -20,19 +21,21 @@ class UserOrderAdmin extends Admin
             ->add('paymentDone', null, array("label" => "Paiement effectué", "required" => false))
             ->add('delivered', null, array("label" => "Livrée", "required" => false))
             ->add('foreign', null, array("label" => "Visiteur", "required" => false))
-            ->add('type', 'choice', array(
+            ->add('type', ChoiceType::class, array(
+                'choices_as_values' => true,
                 'choices' => array(
-                    0 => 'Manuel',
-                    1 => 'Paypal'
+                    'Manuel' => 0,
+                    'Paypal' => 1
                 ),
                 'label' => "Type de paiement",
                 'required' => true
             ))
-            ->add('price', 'choice', array(
+            ->add('price', ChoiceType::class, array(
+                'choices_as_values' => true,
                 'choices' => array(
-                    0 => 'Plein tarif',
-                    1 => 'Tarif staff',
-                    2 => 'Offert'
+                    'Plein tarif' => 0,
+                    'Tarif staff' => 1,
+                    'Offert' => 2
                 ),
                 'label' => "Tarif",
                 'required' => true

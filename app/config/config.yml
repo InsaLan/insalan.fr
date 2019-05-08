@@ -1,13 +1,14 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: @InsaLanNewsBundle/Resources/config/admin.yml }
-    - { resource: @InsaLanPizzaBundle/Resources/config/admin.yml }
-    - { resource: @InsaLanTournamentBundle/Resources/config/services.yml }
-    - { resource: @InsaLanBundle/Resources/config/services.yml }
+    - { resource: "@InsaLanNewsBundle/Resources/config/admin.yml" }
+    - { resource: "@InsaLanPizzaBundle/Resources/config/admin.yml" }
+    - { resource: "@InsaLanTournamentBundle/Resources/config/services.yml" }
+    - { resource: "@InsaLanBundle/Resources/config/services.yml" }
     - { resource: "@InsaLanBundle/Resources/config/admin.yml" }
     - { resource: @InsaLanUserBundle/Resources/config/services.yml }
     - { resource: "@InsaLanArchivesBundle/Resources/config/services.yml" }
+    - { resource: "@InsaLanUserBundle/Resources/config/services.yml" }
     - { resource: "@InsaLanStreamBundle/Resources/config/admin.yml" }
 
 framework:
@@ -27,18 +28,19 @@ framework:
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
-        # handler_id set to null will use default session handler from php.ini
-        handler_id:  ~
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
     fragments:       ~
     http_method_override: true
+    assets: ~
 
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    form:
-        resources:
-            - 'InsaLanBundle:Form:fields.html.twig'
+    form_themes:
+        - 'InsaLanBundle:Form:fields.html.twig'
     globals:
         ga_tracking: "%ga_tracking%"
     paths:
@@ -76,6 +78,7 @@ doctrine:
         dbname:   "%database_name%"
         user:     "%database_user%"
         password: "%database_password%"
+        server_version: "%database_server_version%"
         charset:  UTF8
         mapping_types:
             enum: string
@@ -116,34 +119,25 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
-            - [ setAnnotationReader, [ @annotation_reader ] ]
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
     gedmo.listener.timestampable:
         class: Gedmo\Timestampable\TimestampableListener
         tags:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
-            - [ setAnnotationReader, [ @annotation_reader ] ]
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
     gedmo.listener.tree:
         class: Gedmo\Tree\TreeListener
         tags:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
-            - [ setAnnotationReader, [ @annotation_reader ] ]
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
     gedmo.listener.loggable:
         class: Gedmo\Loggable\LoggableListener
         tags:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
-            - [ setAnnotationReader, [ @annotation_reader ] ]
-
-    payum.buzz.client:
-        class: %payum.buzz.client.class%
-        calls:
-            - [setTimeout, [200]]
-            - [setOption, [64,false]] #CURLOPT_SSL_VERIFYPEER
-            - [setOption, [81,false]] #CURLOPT_SSL_VERIFYHOST
-            - [setOption, [32,4]] #CURLOPT_SSLVERSION
-
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
     twig.extension.intl:
         class: Twig_Extensions_Extension_Intl
         tags:
@@ -194,15 +188,15 @@ payum:
     storages:
         InsaLan\UserBundle\Entity\PaymentDetails: { doctrine: orm }
 
-    contexts:
+    gateways:
         paypal_express_checkout_and_doctrine_orm:
-            paypal_express_checkout_nvp:
-                username: '%paypal_express_checkout_username%'
-                password: '%paypal_express_checkout_password%'
-                signature: '%paypal_express_checkout_signature%'
-                sandbox: '%paypal_express_checkout_sandbox%'
+            factory: paypal_express_checkout
+            username: '%paypal_express_checkout_username%'
+            password: '%paypal_express_checkout_password%'
+            signature: '%paypal_express_checkout_signature%'
+            sandbox: '%paypal_express_checkout_sandbox%'
         offline:
-            offline: ~
+            factory: offline
 
 # Maintenance bundle config
 lexik_maintenance:

@@ -6,7 +6,8 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class BundleAdmin extends Admin
 {
@@ -25,7 +26,7 @@ class BundleAdmin extends Admin
             ->add('onlineIncreaseInPrice')
             ->add('onSitePrice')
             ->add('locked', null, array('required'=>false))
-            ->add('file', 'file', array('required' => false))
+            ->add('file', FileType::class, array('required' => false))
         ;
     }
 

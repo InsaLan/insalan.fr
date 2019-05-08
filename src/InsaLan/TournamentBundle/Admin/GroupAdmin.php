@@ -7,6 +7,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\ActionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 use InsaLan\TournamentBundle\Entity\Match;
 use InsaLan\TournamentBundle\Entity\RoyalMatch;
@@ -31,10 +33,10 @@ class GroupAdmin extends Admin
                                                   ->setParameter('status', Participant::STATUS_VALIDATED);
                                     })
             )
-            ->add('statsType', 'choice', array(
+            ->add('statsType', ChoiceType::class, array(
                 'choices' => array(
-                    Group::STATS_WINLOST => 'Victoires/Défaites',
-                    Group::STATS_SCORE => 'Somme des scores'
+                    'Victoires/Défaites' => Group::STATS_WINLOST,
+                    'Somme des scores' => Group::STATS_SCORE
                 ),
                 'required' => true
             ))
@@ -58,7 +60,7 @@ class GroupAdmin extends Admin
             ->addIdentifier('name')
             ->add('stage')
             ->add("Participants", null, array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
-            ->add('_action','actions',array('actions'  => array('edit' => array(),'show' => array())));
+            ->add('_action', ActionType::class,array('actions'  => array('edit' => array(),'show' => array())));
         ;
     }
 
@@ -101,7 +103,7 @@ class GroupAdmin extends Admin
     private function autoManageMatches($group)
     {
 
-        $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
 
         if ($group->getStatsType() == Group::STATS_WINLOST) {
             // Clean up deprecated matches
@@ -113,7 +115,7 @@ class GroupAdmin extends Admin
 
                         $group->removeMatch($match);
                         $em->remove($match);
-    
+
                         break;
                     }
                 }

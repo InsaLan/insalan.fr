@@ -21,12 +21,12 @@ security:
             anonymous: false
             form_login:
                 provider: fos_userbundle
-                csrf_provider: form.csrf_provider
+                csrf_token_generator: security.csrf.token_manager
         main:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
-                csrf_provider: form.csrf_provider
+                csrf_token_generator: security.csrf.token_manager
             logout:       true
             anonymous:    true
             switch_user: { role: ROLE_ADMIN, parameter: _want_to_be }
@@ -50,4 +50,3 @@ security:
         - { path: ^/pizza, role: ROLE_USER }
         - { path: ^/infos/playersinfos, role: ROLE_USER }
         - { path: ^/infos/hardwareRental, role: ROLE_USER }
-

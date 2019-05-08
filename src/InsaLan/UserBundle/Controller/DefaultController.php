@@ -26,8 +26,8 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $usr = $this->get('security.context')->getToken()->getUser();
-        $form = $this->createForm(new UserType(), $usr);
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
+        $form = $this->createForm('InsaLan\UserBundle\Form\UserType', $usr);
         $em = $this->getDoctrine()->getManager();
 
         $form->handleRequest($request);
@@ -57,7 +57,7 @@ class DefaultController extends Controller
      */
     public function registerSteamIdAction(Request $request)
     {
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $connectedAccount = $usr->getSteamId();
         $imageSrc = null;
         $routeDelete = null;
@@ -91,7 +91,7 @@ class DefaultController extends Controller
      */
     public function saveSteamIdAction(Request $request)
     {
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $login = new SteamLogin();
         try {
             $id = $login->validate(100);
@@ -129,7 +129,7 @@ class DefaultController extends Controller
      */
     public function registerBattleNetAction(Request $request)
     {
-        $usr = $this->get('security.context')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
 
         $client_id       = $this->getParameter('battlenet_api_key');
         $client_secret   = $this->getParameter('battlenet_api_secret');

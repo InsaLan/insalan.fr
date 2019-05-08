@@ -10,6 +10,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 use InsaLan\TournamentBundle\Entity;
 use InsaLan\TournamentBundle\Entity\Participant;
 use InsaLan\TournamentBundle\Exception\ControllerException;
@@ -25,22 +30,27 @@ class AdminController extends Controller
      * @Route("/{id}/admin", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function indexAction(Request $request, $id = null)
+    public function indexAction($id = null, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         $showAll = $request->query->get("showAll", false);
 
         $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findAll();
+
+        // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
         $a = array(null => '');
         foreach ($tournaments as $t) {
-            if (!$showAll && $t->getTournamentClose()->getTimestamp() < mktime() - 3600*24*7) continue;
+            if (!$showAll && $t->getTournamentClose()->getTimestamp() < time() - 3600*24*7) continue;
 
-            $a[$t->getId()] = $t->getTournamentOpen()->format('Y - ') . $t->getName();
+            $a[$t->getTournamentOpen()->format('Y - ') . $t->getName()] = $t->getId();
         }
 
         $form = $this->createFormBuilder()
-            ->add('tournament', 'choice', array('label' => 'Tournoi', 'choices' => $a))
+            ->add('tournament', ChoiceType::class, array(
+                  'label' => 'Tournoi',
+                  'choices_as_values' => true,
+                  'choices' => $a))
             ->setAction($this->generateUrl('insalan_tournament_admin_index', ['showAll' => $showAll]))
             ->getForm();
 
@@ -50,7 +60,7 @@ class AdminController extends Controller
         $ko = array();
         $players = array();
 
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -232,9 +242,8 @@ class AdminController extends Controller
     /**
      * @Route("/admin/match/{id}/addRound")
      */
-    public function match_addRoundAction(Entity\Match $m)
+    public function match_addRoundAction(Request $request, Entity\Match $m)
     {
-        $request = $this->get('request');
         if($request->getMethod() !== "POST")
             throw new ControllerException("Bad method");
 
@@ -278,10 +287,10 @@ class AdminController extends Controller
     /**
      * @Route("/{id}/admin/create/ko")
      */
-    public function create_koAction(Entity\Tournament $tournament)
+    public function create_koAction(Entity\Tournament $tournament, Request $request)
     {
         $form = $this->getFormKo($tournament->getId());
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
 
         if(!$form->isValid())
             throw new ControllerException("Not allowed");
@@ -311,14 +320,14 @@ class AdminController extends Controller
      * @Route("/admin/knockout/{id}/view")
      * @Template()
      */
-    public function knockout_viewAction(Entity\Knockout $ko)
+    public function knockout_viewAction(Request $request, Entity\Knockout $ko)
     {
         $em = $this->getDoctrine()->getManager();
 
         $depth    = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getLeftDepth($ko);
         $children = pow(2, $depth + ($ko->getDoubleElimination() ? 0 : 1));
 
-        if($this->get('request')->getMethod() === "POST") {
+        if($request->getMethod() === "POST") {
 
             $root = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getRoot($ko);
             if($ko->getDoubleElimination()) {
@@ -328,8 +337,8 @@ class AdminController extends Controller
 
             for($i = 0; $i < $children / 2; $i++) {
 
-                $part1 = $this->get('request')->request->get("participant_".($i*2+1));
-                $part2 = $this->get('request')->request->get("participant_".($i*2+2));
+                $part1 = $request->request->get("participant_".($i*2+1));
+                $part2 = $request->request->get("participant_".($i*2+2));
 
                 $part1 = $em->getRepository('InsaLanTournamentBundle:Participant')->findOneById($part1);
                 $part2 = $em->getRepository('InsaLanTournamentBundle:Participant')->findOneById($part2);
@@ -404,9 +413,9 @@ class AdminController extends Controller
 
     private function getFormKo($tournament) {
         return $this->createFormBuilder()
-                    ->add('name', 'text', array("label" => "Nom"))
-                    ->add('size', 'integer', array("label" => "Taille", "precision" => 0))
-                    ->add('double', 'checkbox', array("label" => "Double Elimination", "required" => false))
+                    ->add('name', TextType::class, array("label" => "Nom"))
+                    ->add('size', IntegerType::class, array("label" => "Taille", "scale" => 0))
+                    ->add('double', CheckboxType::class, array("label" => "Double Elimination", "required" => false))
                     ->setAction($this->generateUrl('insalan_tournament_admin_create_ko',
                                                   array('id' => $tournament)))
                     ->getForm();
@@ -431,7 +440,7 @@ class AdminController extends Controller
          */
         public function placementAction(Request $request, Entity\Tournament $id = null) {
             $em = $this->getDoctrine()->getManager();
-            $usr = $this->get('security.context')->getToken()->getUser();
+            $usr = $this->get('security.token_storage')->getToken()->getUser();
 
             $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments();
 

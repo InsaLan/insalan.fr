@@ -2,9 +2,11 @@
 
 namespace InsaLan\PizzaBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use InsaLan\PizzaBundle\Entity;
 use InsaLan\UserBundle\Entity\PaymentDetails;
 
@@ -15,12 +17,12 @@ class DefaultController extends Controller
      * @Route("/")
      * @Template()
     */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $paypalIncrease = Entity\UserOrder::PAYPAL_INCREASE;
 
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($user->getFirstname() == null || $user->getFirstname() == "" || $user->getLastname() == null || $user->getLastname() == "" || $user->getPhoneNumber() == null || $user->getPhoneNumber() == "" || $user->getBirthdate() == null) {
             $this->get('session')->getFlashBag()->add(
@@ -40,23 +42,32 @@ class DefaultController extends Controller
             $a = 10*round($order->getAvailableOrders() / 10);
             if($a <= 0)
                 $a = 10;
-            $ordersChoices[$order->getId()] = "Le " . $order->getDelivery()->format("d/m à H \h i") . " (moins de " .
+            // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
+            $ordersKey = "Le " . $order->getDelivery()->format("d/m à H \h i") . " (moins de " .
                                               $a . " pizzas disponibles)";
+            $ordersChoices[$ordersKey] = $order->getId();
         }
 
         $pizzasChoices = array();
 
         foreach($pizzas as $pizza) {
-            $pizzasChoices[$pizza->getId()] = $pizza->getName() . " (" . $pizza->getPrice() . " € + " . $paypalIncrease . " €)";
+            $pizzaKey = $pizza->getName() . " (" . $pizza->getPrice() . " € + " . $paypalIncrease . " €)";
+            $pizzasChoices[$pizzaKey] = $pizza->getId();
         }
 
         $form = $this->createFormBuilder()
-                    ->add('order', 'choice', array('choices' => $ordersChoices, 'label' => 'Heure de livraison'))
-                    ->add('pizza', 'choice', array('choices' => $pizzasChoices, 'label' => 'Pizza choisie'))
+                    ->add('order', ChoiceType::class, array(
+                          'choices_as_values' => true,
+                          'choices' => $ordersChoices,
+                          'label' => 'Heure de livraison'))
+                    ->add('pizza', ChoiceType::class, array(
+                          'choices_as_values' => true,
+                          'choices' => $pizzasChoices,
+                          'label' => 'Pizza choisie'))
                     ->setAction($this->generateUrl('insalan_pizza_default_index'))
                     ->getForm();
 
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
         if($form->isValid()) {
 
             $data = $form->getData();
@@ -93,12 +104,12 @@ class DefaultController extends Controller
     /**
      * @Route("/validate/{id}")
      */
-    public function validateAction(Entity\UserOrder $userOrder) {
+    public function validateAction(Entity\UserOrder $userOrder, Request $request) {
 
         $em = $this->getDoctrine()->getManager();
         $payment = $this->get("insalan.user.payment");
 
-        if($payment->check($this->getRequest(), true)) {
+        if($payment->check($request, true)) {
             $userOrder->setPaymentDone(true);
             $em->persist($userOrder);
             $hour = $userOrder->getOrder()->getDelivery()->format("H \h i");

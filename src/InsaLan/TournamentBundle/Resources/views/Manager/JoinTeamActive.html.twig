@@ -21,7 +21,7 @@
       </header>
 {% endif %}
 
-        <form action="{{ path('insalan_tournament_manager_jointeamwithpassword', {tournament: tournament.id}) }}" id="step4" method="post" {{ form_enctype(form) }}>
+          {{ form_start(form) }}
 
           {{ form_widget(form._token) }}
           {{ form_errors(form) }}
@@ -37,5 +37,5 @@
           <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_manager_setname', {tournament: tournament.id}) }}">Annuler</a>
           <a class="btn btn-primary ctrl grid-8 pull-left" href="javascript:{}" onclick="document.getElementById('step4').submit();">Rejoindre mon équipe</a>
           <br class="clear">
-        </form>
+          {{ form_end(form) }}
     </div>

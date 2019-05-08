@@ -8,6 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 use InsaLan\PizzaBundle\Entity;
 use InsaLan\ApiBundle\Http\JsonResponse;
 
@@ -137,19 +140,24 @@ class AdminController extends Controller
         $orders = $em->getRepository('InsaLanPizzaBundle:Order')->getAll();
         $ordersChoices = array(null => "");
         foreach($orders as $o) {
-            if (!$showAll && $o->getDelivery()->getTimestamp() < mktime() - 3600*24*7) continue;
+            if (!$showAll && $o->getDelivery()->getTimestamp() < time() - 3600*24*7) continue;
 
-            $ordersChoices[$o->getId()] = "Le " . $o->getDelivery()->format("d/m à H:i") . " ~ "
+            // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
+            $key = "Le " . $o->getDelivery()->format("d/m à H:i") . " ~ "
                                             . ($o->getCapacity() - $o->getAvailableOrders(false, false))  . " commandes sur "
                                             . $o->getCapacity();
+            $ordersChoices[$key] = $o->getId();
         }
 
         $form = $this->createFormBuilder()
-            ->add('order', 'choice', array('label' => 'Créneau', 'choices' => $ordersChoices))
+            ->add('order', ChoiceType::class, array(
+                  'label' => 'Créneau',
+                  'choices_as_values' => true,
+                  'choices' => $ordersChoices))
             ->setAction($this->generateUrl('insalan_pizza_admin_commande', ['showAll' => $showAll]))
             ->getForm();
 
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -196,12 +204,12 @@ class AdminController extends Controller
      * @Route("/admin/{id}/add")
      * @Method({"POST"})
      */
-    public function addAction(Entity\Order $order) {
+    public function addAction(Entity\Order $order, Request $request) {
 
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->getAddUserOrderForm($order);
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
@@ -294,20 +302,28 @@ class AdminController extends Controller
         $pizzas = $em->getRepository('InsaLanPizzaBundle:Pizza')->findAll();
         $pizzasChoices = array();
 
+        // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
         foreach($pizzas as $pizza) {
-            $pizzasChoices[$pizza->getId()] = $pizza->getName() . " (" . $pizza->getPrice() . " €)";
+            $key = $pizza->getName() . " (" . $pizza->getPrice() . " €)";
+            $pizzasChoices[$key] = $pizza->getId();
         }
 
         return $this->createFormBuilder()
-                    ->add('username', 'text', array('label' => 'Pseudonyme', 'required' => false))
-                    ->add('fullname', 'text', array('label' => 'Prénom NOM', 'required' => true))
-                    ->add('pizza', 'choice', array('choices' => $pizzasChoices, 'label' => 'Pizza'))
-                    ->add('price', 'choice', array('choices' =>
-                        array(
-                            Entity\UserOrder::FULL_PRICE => 'Joueur',
-                            Entity\UserOrder::STAFF_PRICE => 'Staff',
-                            Entity\UserOrder::FREE_PRICE => 'Gratuit'
-                        ), 'label' => 'Tarif'))
+                    ->add('username', TextType::class, array('label' => 'Pseudonyme', 'required' => false))
+                    ->add('fullname', TextType::class, array('label' => 'Prénom NOM', 'required' => true))
+                    ->add('pizza', ChoiceType::class, array(
+                        'choices_as_values' => true,
+                        'choices' => $pizzasChoices,
+                        'label' => 'Pizza'))
+                    ->add('price', ChoiceType::class, array(
+                        'choices_as_values' => true,
+                        'choices' =>
+                            array(
+                                'Joueur' => Entity\UserOrder::FULL_PRICE,
+                                'Staff' => Entity\UserOrder::STAFF_PRICE,
+                                'Gratuit' => Entity\UserOrder::FREE_PRICE
+                            ),
+                        'label' => 'Tarif'))
                     ->setAction($this->generateUrl('insalan_pizza_admin_add', array('id' => $o->getId())))
                     ->getForm();
     }

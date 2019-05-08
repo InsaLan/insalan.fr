@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class SliderAdmin extends Admin
 {
@@ -16,7 +17,7 @@ class SliderAdmin extends Admin
             ->add('title')
             ->add('subtitle')
             ->add('link')
-            ->add('file', 'file', array('required' => false))
+            ->add('file', FileType::class, array('required' => false))
         ;
     }
 

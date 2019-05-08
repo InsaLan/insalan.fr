@@ -250,8 +250,12 @@ abstract class Registrable
     }
 
     public function __toString()
-    {
-        return $this->getName();
+    {    
+        if ($this->getName()) {
+          return $this->getName();
+        }
+        // We have to return a string value
+        return '';
     }
 
     /**

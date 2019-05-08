@@ -6,11 +6,11 @@
     <div class="title pull-left">Entrez votre pseudonyme en jeu :</div>
     <br class="clear">
   </header>
-  <form action="{{ path('insalan_tournament_manager_setname', {tournament: tournamentId}) }}" id="step1" method="post" {{ form_enctype(form) }}>
+  {{ form_start(form) }}
     <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
     <div class="input field">
-      <input type="text" placeholder="Votre pseudonyme..." name="{{ form.gameName.vars.full_name }}" value="{{ form.vars.value.gameName }}"/>
+      {{ form_widget(form.gameName, {'attr': {'placeholder': "Votre pseudonyme..." }}) }}
     </div>
     <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step1').submit();">Ok</a>
-  </form>
+    {{ form_end(form) }}
 </div>

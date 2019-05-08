@@ -7,6 +7,9 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 use InsaLan\UserBundle\Entity\User;
 
@@ -20,17 +23,18 @@ class TeamAdmin extends Admin
             ->add('tournament')
             ->add('captain')
             ->add('manager')
-            ->add('validated', 'choice', array(
+            ->add('validated', ChoiceType::class, array(
+                'choices_as_values' => true,
                 'required' => true,
                 'choices' => array(
-                    0 => 'Équipe incomplète',
-                    1 => 'Dans la liste d\'attente', 
-                    2 => 'Validée' 
+                    'Équipe incomplète' => 0,
+                    'Dans la liste d\'attente' => 1,
+                    'Validée' => 2
                 )
             ))
-            ->add('plainPassword', 'repeated', array(
+            ->add('plainPassword', RepeatedType::class, array(
                 'required' => false,
-                'type' => 'password',
+                'type' => PasswordType::class,
                 'first_options' => array('label' => 'Mot de passe'),
                 'second_options' => array('label' => 'Confirmation de mot de passe'),
             ))

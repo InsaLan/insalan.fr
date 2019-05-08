@@ -4,13 +4,14 @@ namespace InsaLan\TournamentBundle\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use InsaLan\TournamentBundle\Entity\Round;
 
 class CRUDController extends Controller
 {
-    public function createRoundAction()
+    public function createRoundAction(Request $request)
     {
-        $id = $this->get('request')->get($this->admin->getIdParameter());
+        $id = $request->get($this->admin->getIdParameter());
 
         $match = $this->admin->getObject($id);
 
@@ -25,7 +26,7 @@ class CRUDController extends Controller
 
         $this->admin->create($round);
 
-        $em = $this->admin->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
+        $em = $this->admin->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
         $em->flush();
 
         foreach ($match->getParticipants() as $p) {
