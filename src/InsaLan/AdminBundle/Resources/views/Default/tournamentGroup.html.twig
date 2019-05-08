@@ -19,6 +19,7 @@
             <input type="text" placeholder="Filtrer participants..." id="dropdown-search" onkeyup="filter()"/>
         </div>
         {{ form_row(form.participants) }}
+        {{ form_row(form.statsType) }}
         {{ form_row(form.save) }}
         {{ form_end(form) }}
     </div>
@@ -29,6 +30,7 @@
             <th>Name</th>
             <th>Poule</th>
             <th>Participants</th>
+            <th>Score</th>
             <th>Actions</th>
         </tr>
         {% for group in groups %}
@@ -37,6 +39,11 @@
                 <td>{{ group.name }}</td>
                 <td>{{ group.stage }}</td>
                 <td>{{ group.participants.count }}</td>
+                {% if group.statsType == 0 %}
+                    <td>Classique</td>
+                {% else %}
+                    <td>Battle Royale</td>
+                {% endif %}
                 <td>
                     <a class="btn-plain" href = {{ path('GroupModifyAction', {'id': group.id }) }}>Modifier</a>
                     <a class="btn-plain" href = {{ path('GroupRemoveAction', {'id': group.id }) }}>Supprimer</a>

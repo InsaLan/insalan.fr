@@ -8,6 +8,7 @@ use InsaLan\TournamentBundle\Entity\Match;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class DefaultController extends Controller {
     /**
@@ -121,6 +122,13 @@ class DefaultController extends Controller {
             ->add('participants', 'entity', array(
                 'class' => 'InsaLanTournamentBundle:Participant',
                 'multiple' => true))
+            ->add('statsType', ChoiceType::class, array(
+                'label' => "Type de score",
+                'choices' => array(
+                    'Victoires/Défaites' => Group::STATS_WINLOST,
+                    'Somme des scores' => Group::STATS_SCORE
+                ),
+                'required' => true))
             ->add('save', 'submit', array('label' => 'Créer'))
             ->getForm();
 
@@ -174,6 +182,13 @@ class DefaultController extends Controller {
             ->add('participants', 'entity', array(
                 'class' => 'InsaLanTournamentBundle:Participant',
                 'multiple' => true))
+            ->add('statsType', ChoiceType::class, array(
+                'label' => "Type de score",
+                'choices' => array(
+                    'Victoires/Défaites' => Group::STATS_WINLOST,
+                    'Somme des scores' => Group::STATS_SCORE
+                ),
+                'required' => true))
             ->add('save', 'submit', array('label' => 'Modifier'))
             ->getForm();
 
