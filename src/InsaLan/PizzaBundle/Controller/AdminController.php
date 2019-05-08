@@ -35,11 +35,11 @@ class AdminController extends Controller
    * @Route("/admin/pizza/add")
    * @Method({"POST"})
    */
-  public function pizza_addAction() {
+  public function pizza_addAction(Request $request) {
 
     $em = $this->getDoctrine()->getManager();
     $form = $this->getAddPizzaForm();
-    $form->handleRequest($this->getRequest());
+    $form->handleRequest($request);
     $data = $form->getData();
 
     if ($form->isValid()) {
@@ -93,11 +93,11 @@ class AdminController extends Controller
    * @Route("/admin/creneau/add")
    * @Method({"POST"})
    */
-  public function creneau_addAction() {
+  public function creneau_addAction(Request $request) {
 
     $em = $this->getDoctrine()->getManager();
     $form = $this->getAddOrderForm();
-    $form->handleRequest($this->getRequest());
+    $form->handleRequest($request);
     $data = $form->getData();
     if ($form->isValid()) {
       $order = new Entity\Order();

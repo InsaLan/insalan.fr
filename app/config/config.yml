@@ -6,7 +6,7 @@ imports:
     - { resource: "@InsaLanTournamentBundle/Resources/config/services.yml" }
     - { resource: "@InsaLanBundle/Resources/config/services.yml" }
     - { resource: "@InsaLanBundle/Resources/config/admin.yml" }
-    - { resource: @InsaLanUserBundle/Resources/config/services.yml }
+    - { resource: "@InsaLanUserBundle/Resources/config/services.yml" }
     - { resource: "@InsaLanArchivesBundle/Resources/config/services.yml" }
     - { resource: "@InsaLanUserBundle/Resources/config/services.yml" }
     - { resource: "@InsaLanStreamBundle/Resources/config/admin.yml" }
