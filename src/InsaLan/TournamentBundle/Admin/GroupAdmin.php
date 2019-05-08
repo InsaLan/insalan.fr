@@ -35,8 +35,8 @@ class GroupAdmin extends Admin
             )
             ->add('statsType', ChoiceType::class, array(
                 'choices' => array(
-                    Group::STATS_WINLOST => 'Victoires/Défaites',
-                    Group::STATS_SCORE => 'Somme des scores'
+                    'Victoires/Défaites' => Group::STATS_WINLOST,
+                    'Somme des scores' => Group::STATS_SCORE
                 ),
                 'required' => true
             ))
@@ -103,7 +103,7 @@ class GroupAdmin extends Admin
     private function autoManageMatches($group)
     {
 
-        $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
 
         if ($group->getStatsType() == Group::STATS_WINLOST) {
             // Clean up deprecated matches
