@@ -46,8 +46,22 @@
           <h1 style="text-align: center; font-size: 40px; font-weight: bold; color: #FFF; font-family: OpenSansCond">Admin</h1>
           <ul>
             <li><a href="{{ path('insalan_admin_default_index') }}">Accueil</a></li>
-            <li><a href="{{ path('insalan_admin_default_tournament') }}">Tournois</a></li>
-            <li><a href="{{ path('insalan_admin_default_pizza') }}">Pizzas</a></li>
+            <li class="dropdown">
+              <a href="javascript:void(0)">Tournois</a>
+              <div class="dropdown-content">
+                <a href="{{ path('GroupStageAction') }}">Phases de poule</a>
+                <a href="{{ path('GroupAction') }}">Poules</a>
+                <a href="{{ path('MatchAction') }}">Matchs</a>
+              </div>
+            </li>
+            <li class="dropdown">
+              <a href="javascript:void(0)" class="dropbtn">Pizzas</a>
+              <div class="dropdown-content">
+                <a href="{{ path('insalan_pizza_admin_commande') }}">Commandes</a>
+                <a href="{{ path('insalan_pizza_admin_creneau') }}">Créneaux</a>
+                <a href="{{ path('insalan_pizza_admin_pizza') }}">Pizzas</a>
+              </div>
+            </li>
             <li><a href="{{ path('insalan_admin_default_web') }}">Web</a></li>
           </ul>
         </nav>
@@ -56,7 +70,7 @@
     </header>
     {% endblock %}
 
-    <section class="container">
+    <section class="">
       {% for message in app.session.flashbag.get('info') %}
         <p class="alert-info">{{ message }}</p>
       {% endfor %}
