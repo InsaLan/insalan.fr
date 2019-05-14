@@ -6,6 +6,7 @@
       {% stylesheets
         'bundles/insalan/css/pizza.css'
         'bundles/insalan/css/global.css'
+        'bundles/insalan/css/admin.css'
         filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
       {% endstylesheets %}
@@ -70,7 +71,7 @@
     </header>
     {% endblock %}
 
-    <section class="">
+    <section class="container-admin">
       {% for message in app.session.flashbag.get('info') %}
         <p class="alert-info">{{ message }}</p>
       {% endfor %}
@@ -92,7 +93,7 @@
     {% block javascripts %}
       {% javascripts
         'bundles/insalan/js/mootools-core-1.4.5.js'
-        'bundles/insalan/js/global.js' %}
+        'bundles/insalan/js/admin.js' %}
           <script type="text/javascript" src="{{ asset_url }}"></script>
           <script type="text/javascript">
 
