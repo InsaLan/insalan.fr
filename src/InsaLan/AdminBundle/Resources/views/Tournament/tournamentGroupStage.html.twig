@@ -7,8 +7,14 @@
 {% block body %}
     {{ parent() }}
 
+    <article>
+      <header>
+        <h2>Gestion des Phases de poules</h2>
+      </header>
+    </article>
+
     <div class="create">
-        <h2>Création d'une nouvelle phase de poule</h2>
+        <h2>Création d'une nouvelle phase de poules</h2>
 
         {{ form_start(form) }}
         {{ form_widget(form) }}
