@@ -11,7 +11,6 @@
       <header>
         <h2>Gestion des Poules</h2>
       </header>
-    </article>
 
     <div class="create">
         <h2>Création d'une nouvelle poule</h2>
@@ -30,33 +29,37 @@
         {{ form_end(form) }}
     </div>
 
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Poule</th>
-            <th>Participants</th>
-            <th>Score</th>
-            <th>Actions</th>
-        </tr>
-        {% for group in groups %}
-            <tr>
-                <td>{{ group.id }}</td>
-                <td>{{ group.name }}</td>
-                <td>{{ group.stage }}</td>
-                <td>{{ group.participants.count }}</td>
-                {% if group.statsType == 0 %}
-                    <td>Classique</td>
-                {% else %}
-                    <td>Battle Royale</td>
-                {% endif %}
-                <td>
-                    <a class="btn-plain" href = {{ path('GroupModifyAction', {'id': group.id }) }}>Modifier</a>
-                    <a class="btn-plain" href = {{ path('GroupRemoveAction', {'id': group.id }) }}>Supprimer</a>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+    <section style="margin-top:40px">
+      <strong>Liste des poules :</strong> (Du plus récent au plus ancien)
+
+      <table>
+          <tr>
+              <th>Name</th>
+              <th>Poule</th>
+              <th>Participants</th>
+              <th>Score</th>
+              <th>Actions</th>
+          </tr>
+          {% for group in groups %}
+              <tr>
+                  <td>{{ group.name }}</td>
+                  <td>{{ group.stage }}</td>
+                  <td>{{ group.participants.count }}</td>
+                  {% if group.statsType == 0 %}
+                      <td>Classique</td>
+                  {% else %}
+                      <td>Battle Royale</td>
+                  {% endif %}
+                  <td>
+                      <a class="btn-plain" href = {{ path('GroupModifyAction', {'id': group.id }) }}>Modifier</a>
+                      <a class="btn-plain" href = {{ path('GroupRemoveAction', {'id': group.id }) }}>Supprimer</a>
+                  </td>
+              </tr>
+          {% endfor %}
+      </table>
+    </section>
+  </article>
+
 
     <style>
         .input.left input, .input.left button, .input.left select {

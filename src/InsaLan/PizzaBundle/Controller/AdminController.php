@@ -81,7 +81,7 @@ class AdminController extends Controller
    */
   public function creneauAction() {
     $em = $this->getDoctrine()->getManager();
-    $order = $em->getRepository('InsaLanPizzaBundle:Order')->findAll();
+    $order = $em->getRepository('InsaLanPizzaBundle:Order')->findBy([], ['id' => 'DESC']);
     $formAdd = $this->getAddOrderForm()->createView();
     return array(
       'orders' => $order,

@@ -34,7 +34,7 @@ class TournamentController extends Controller {
             $em->flush(); // actually executes the queries (i.e. the INSERT query)
         }
 
-        $groupStages = $em->getRepository('InsaLanTournamentBundle:GroupStage')->findAll();
+        $groupStages = $em->getRepository('InsaLanTournamentBundle:GroupStage')->findBy([], ['id' => 'DESC']);
 
         return array(
             'groupStages' => $groupStages,
@@ -124,7 +124,7 @@ class TournamentController extends Controller {
             $em->flush(); // actually executes the queries (i.e. the INSERT query)
         }
 
-        $groups = $em->getRepository('InsaLanTournamentBundle:Group')->findAll();
+        $groups = $em->getRepository('InsaLanTournamentBundle:Group')->findBy([], ['id' => 'DESC']);
 
         return array(
             'groups' => $groups,
