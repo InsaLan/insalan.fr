@@ -10,6 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
+use InsaLan\TournamentBundle\Entity\ParticipantRepository;
+use InsaLan\TournamentBundle\Entity\Participant;
+
 class TournamentController extends Controller {
     /**
      * @Route("/tournament/groupstage", name="GroupStageAction")
@@ -104,6 +107,13 @@ class TournamentController extends Controller {
             ->add('name')
             ->add('stage', 'entity', array('class' => 'InsaLanTournamentBundle:GroupStage'))
             ->add('participants', 'entity', array(
+              'query_builder' => function(ParticipantRepository $er) {
+                                    return $er->createQueryBuilder('e')
+                                              ->leftJoin('e.manager', 'ma')
+                                              ->addSelect('ma')
+                                              ->where('e.validated = :status')
+                                              ->setParameter('status', Participant::STATUS_VALIDATED);
+                                },
                 'class' => 'InsaLanTournamentBundle:Participant',
                 'multiple' => true))
             ->add('statsType', ChoiceType::class, array(
@@ -164,6 +174,13 @@ class TournamentController extends Controller {
             ->add('name')
             ->add('stage', 'entity', array('class' => 'InsaLanTournamentBundle:GroupStage'))
             ->add('participants', 'entity', array(
+              'query_builder' => function(ParticipantRepository $er) {
+                                    return $er->createQueryBuilder('e')
+                                              ->leftJoin('e.manager', 'ma')
+                                              ->addSelect('ma')
+                                              ->where('e.validated = :status')
+                                              ->setParameter('status', Participant::STATUS_VALIDATED);
+                                },
                 'class' => 'InsaLanTournamentBundle:Participant',
                 'multiple' => true))
             ->add('statsType', ChoiceType::class, array(
