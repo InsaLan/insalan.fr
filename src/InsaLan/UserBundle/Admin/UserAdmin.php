@@ -61,4 +61,26 @@ class UserAdmin extends Admin
             ;
     }
 
+    public function prePersist($object)
+        {
+            parent::prePersist($object);
+
+        }
+
+    public function preUpdate($object)
+    {
+        parent::preUpdate($object);
+        $this->updateUser($object);
+    }
+
+    //update password
+    public function updateUser(\InsaLan\UserBundle\Entity\User $u) {
+      if ($u->getPlainPassword()) {
+        $u->setPlainPassword($u->getPlainPassword());
+      }
+
+      $um = $this->getConfigurationPool()->getContainer()->get('fos_user.user_manager');
+      $um->updateUser($u, false);
+    }
+
 }
