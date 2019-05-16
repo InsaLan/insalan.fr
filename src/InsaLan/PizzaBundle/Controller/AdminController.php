@@ -67,9 +67,14 @@ class AdminController extends Controller
    */
   public function pizza_removeAction(Entity\Pizza $pizza) {
 
-      $em = $this->getDoctrine()->getManager();
-      $em->remove($pizza);
-      $em->flush();
+      try {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($pizza);
+        $em->flush();
+      } catch (\Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException  $e) {
+        $this->get('session')->getFlashBag()->add('error', "Suppression impossible : des commandes sont associées à cette pizza.");
+      }
+
 
       return $this->redirect($this->generateUrl("insalan_pizza_admin_pizza"));
   }
@@ -119,9 +124,13 @@ class AdminController extends Controller
    */
   public function creneau_removeAction(Entity\Order $order) {
 
-      $em = $this->getDoctrine()->getManager();
-      $em->remove($order);
-      $em->flush();
+      try {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($order);
+        $em->flush();
+      } catch (\Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException  $e) {
+        $this->get('session')->getFlashBag()->add('error', "Suppression impossible : des commandes sont associées à ce créneau.");
+      }
 
       return $this->redirect($this->generateUrl("insalan_pizza_admin_creneau"));
   }
