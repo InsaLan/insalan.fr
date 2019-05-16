@@ -15,7 +15,7 @@ Considering you have composer.phar installed and in your PATH :
 composer.phar install
 ```
 
-If not set with composer.phar, configure symfony2 : 
+If not set with composer.phar, configure symfony3 :
 
 ```bash
 cp app/config/parameters.yml.dist app/config/parameters.yml
@@ -25,30 +25,30 @@ vim app/config/parameters.yml
 Create database & load fixtures (php-mbstring needed)
 
 ```bash
-php app/console doctrine:database:create
-php app/console doctrine:schema:create
-php app/console doctrine:fixtures:load
+php bin/console doctrine:database:create
+php bin/console doctrine:schema:create
+php bin/console doctrine:fixtures:load
 ```
 
 Install assets
 
 ```bash
-php app/console assets:install #dev
-php app/console assetic:dump #prod
+php bin/console assets:install #dev
+php bin/console assetic:dump #prod
 ```
 
 Clear cache
 
 ```bash
-php app/console cache:clear #dev
-php app/console cache:clear --env=prod
+php bin/console cache:clear #dev
+php bin/console cache:clear --env=prod
 ```
 
 Launch development server
 
 ```bash
-php app/console server:run #localhost only
-php app/console server:run 0.0.0.0:9001 #available for everyone 
+php bin/console server:run #localhost only
+php bin/console server:run 0.0.0.0:9001 #available for everyone
 ```
 (you can also use the php builtin development web server : `cd web && php -S localhost:9001`)
 
@@ -85,7 +85,7 @@ cd deploy
 ```
 
 3) Remove app/cache/prod content
-Use filezilla to clear cache, ie remove app/cache/prod folder content
+Use filezilla to clear cache, ie remove var/cache/prod folder content
 
 Backup DB before deploy, update it locally and send it after deploy if you changed the schema.
 
@@ -98,12 +98,11 @@ If you wish to contribute to the insalan.fr project, refer to [this](https://git
 List databases
 
 ```bash
-php app/console sonata:admin:list
+php bin/console sonata:admin:list
 ```
 
 Show database schema and links with other databases
 
 ```bas
-php app/console sonata:admin:explain sonata.admin.tournament.group
+php bin/console sonata:admin:explain sonata.admin.tournament.group
 ```
-
