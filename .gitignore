@@ -1,5 +1,5 @@
 /app/config/parameters.yml
-bin/SymfonyRequirements.php
+/bin/symfony_requirements
 /var/*
 !/var/cache
 /var/cache/*
