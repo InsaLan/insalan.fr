@@ -9,7 +9,7 @@ Website to handle esport tournament
 
 ## Installation
 
-The project need the following package and php-extension :
+The project need the following packages and php-extensions :
 
 Package | Comment
 ------- | -------
@@ -86,8 +86,8 @@ GRANT ALL PRIVILEGES ON insalan.* to insalan@'localhost';
 Load fixtures (php-mbstring needed)
 
 ```bash
-php app/console doctrine:schema:create #have to be killed manually
-php app/console doctrine:fixtures:load
+php bin/console doctrine:schema:create
+php bin/console doctrine:fixtures:load
 ```
 
 Install assets
@@ -103,15 +103,23 @@ Clear cache
 php bin/console cache:clear #dev
 php bin/console cache:clear --env=prod
 ```
+If you have troubles with memory size allowed, do this
+```bash
+php -d memory_limit=-1 bin/console cache:clear #dev
+```
 
 Launch development server
 
 ```bash
-php app/console server:run #localhost only
-php app/console server:run 0.0.0.0 #available for everyone on port 8000
+php bin/console server:run #localhost only
+php bin/console server:run 0.0.0.0 #available for everyone on port 8000
 ```
-(you can also use the php builtin development web server : `cd web && php -S localhost:8000`)
-
+You can also use the php builtin development web server :
+```bash
+cd web
+php -S localhost:8000 -t ../
+```
+Browse to http://localhost:8000/web/app_dev.php
 
 ### Windows
 

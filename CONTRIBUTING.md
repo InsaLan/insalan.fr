@@ -46,25 +46,25 @@ Doctrine migrations are used for database structure updates directly in producti
 For dev purposes, you can only use :
 
 ```bash
-php app/console doctrine:schema:update --force
+php bin/console doctrine:schema:update --force
 ```
 
 But when merging `develop` into `master`, you **HAVE TO** build a new **migration** for production purposes.
 
 ```bash
 php checkout master                         # The current database structure
-php doctrine:schema:drop --force            # Clean-up the database
-php app/console doctrine:schema:create
-php app/console doctrine:fixtures:load
+php bin/console doctrine:schema:drop --force            # Clean-up the database
+php bin/console doctrine:schema:create
+php bin/console doctrine:fixtures:load
 php checkout develop                        # Update to the last structure
-php app/console doctrine:migrations:diff    # Create a raw migration file
+php bin/console doctrine:migrations:diff    # Create a raw migration file
 ```
 
 Then edit the file generated under `app/DoctrineMigrations` to fit your needs. You may not have to edit it.
 Then, you can test your new migration with :
 
 ```bash
-php app/console doctrine:migrations:migrate
+php bin/console doctrine:migrations:migrate
 ```
 
 Of course, this file should be included on your final commit before merging to master.
@@ -75,6 +75,6 @@ On the production side, it's then really easy.
 
 ```bash
 git clone
-php app/console doctrine:migrations:status  # Just to check the situation
-php app/console doctrine:migrations:migrate # Execute missed migrations safely
+php bin/console doctrine:migrations:status  # Just to check the situation
+php bin/console doctrine:migrations:migrate # Execute missed migrations safely
 ```
