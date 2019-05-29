@@ -81,6 +81,17 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/mentions")
+     * @Template()
+     */
+    public function mentionsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $mentions = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("mentions");
+        return array("mentions" => $mentions);
+    }
+
+    /**
      * @Route("/hardwareRental")
      * @Template()
      *//*
