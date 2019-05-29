@@ -1,0 +1,11 @@
+services:
+    sonata.admin.news.news:
+        class: InsaLan\InformationBundle\Admin\LegalDocumentAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Web", label: "Documents légaux" }
+        arguments:
+            - ~
+            - InsaLan\InformationBundle\Entity\LegalDocument
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanInformationBundle]]

@@ -10,6 +10,7 @@ imports:
     - { resource: "@InsaLanArchivesBundle/Resources/config/services.yml" }
     - { resource: "@InsaLanUserBundle/Resources/config/services.yml" }
     - { resource: "@InsaLanStreamBundle/Resources/config/admin.yml" }
+    - { resource: "@InsaLanInformationBundle/Resources/config/admin.yml" }
 
 framework:
     #esi:             ~

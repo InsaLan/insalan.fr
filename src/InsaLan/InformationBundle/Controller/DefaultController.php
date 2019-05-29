@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use InsaLan\InsaLanBundle\Entity;
 use InsaLan\TournamentBundle\Entity\Participant;
+use InsaLan\InformationBundle\Entity\LegalDocument;
 
 class DefaultController extends Controller
 {
@@ -74,7 +75,9 @@ class DefaultController extends Controller
      */
     public function salesTermsAction()
     {
-        return array();
+        $em = $this->getDoctrine()->getManager();
+        $salesTerms = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("cgv");
+        return array("salesterms" => $salesTerms);
     }
 
     /**
