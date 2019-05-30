@@ -1,5 +1,5 @@
 services:
-    sonata.admin.news.news:
+    sonata.admin.web.legaldocuments:
         class: InsaLan\InformationBundle\Admin\LegalDocumentAdmin
         tags:
             - { name: sonata.admin, manager_type: orm, group: "Web", label: "Documents légaux" }
