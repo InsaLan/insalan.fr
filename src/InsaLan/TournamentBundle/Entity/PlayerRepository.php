@@ -111,4 +111,17 @@ class PlayerRepository extends EntityRepository
 
     }
 
+    public function getValidatedPlayersForUpcomingTournaments() {
+
+        $q = $this->createQueryBuilder('p')
+             ->leftJoin('p.tournament', 't')
+             ->where('t.tournamentClose >= :date AND p.validated = :state')
+             ->orderBy('p.validationDate')
+             ->setParameter('date', new \DateTime('now'))
+             ->setParameter('state', Participant::STATUS_VALIDATED);
+
+        return $q->getQuery()->execute();
+
+    }
+
 }

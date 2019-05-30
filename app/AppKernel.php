@@ -51,6 +51,7 @@ class AppKernel extends Kernel
             new InsaLan\ArchivesBundle\InsaLanArchivesBundle(),
             new InsaLan\RSCBundle\InsaLanRSCBundle(),
             new InsaLan\AdminBundle\InsaLanAdminBundle(),
+            new InsaLan\TicketingBundle\InsaLanTicketingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

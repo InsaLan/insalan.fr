@@ -1,0 +1,46 @@
+{% extends 'InsaLanAdminBundle::layout.html.twig' %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <article>
+      <header>
+        <h2>Gestion des Billets</h2>
+      </header>
+
+      <section class="grid-5">
+        <table style="width:100%">
+          <tr>
+            <th colspan="2" class="grid-3">Pseudo / Nom</th>
+            <th class="grid-3">Equipe</th>
+            <th class="grid-2">Actions</th>
+          </tr>
+          {% for player in players %}
+            <tr>
+              <td colspan="2">
+                {{ player.gameName }}
+                <br />
+                <span style="font-size:10px; color: grey;"></span>
+              </td>
+              <td>
+                {% set solo = not (player.team | length > 0) %}
+                {% if not solo %}
+                  {{ player.team[0].name }}
+                {% else %}
+                  (solo)
+                {% endif %}
+              </td>
+              <td>
+                <button>Envoyer billet</button>
+              </td>
+            </tr>
+            </tr>
+          {% endfor %}
+        </table>
+      </section>
+    </article>
+{% endblock %}

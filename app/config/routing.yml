@@ -1,3 +1,8 @@
+insalan_ticketing:
+    resource: "@InsaLanTicketingBundle/Controller/"
+    type:     annotation
+    prefix:   /ticketing
+
 insalan_archives:
     resource: "@InsaLanArchivesBundle/Controller/"
     type:     annotation
