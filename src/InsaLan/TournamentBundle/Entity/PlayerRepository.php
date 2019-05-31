@@ -111,17 +111,27 @@ class PlayerRepository extends EntityRepository
 
     }
 
-    public function getValidatedPlayersForUpcomingTournaments() {
+    public function getValidatedTeamPlayers(Array $tournaments) {
 
         $q = $this->createQueryBuilder('p')
-             ->leftJoin('p.tournament', 't')
-             ->where('t.tournamentClose >= :date AND p.validated = :state')
+             ->where('p.validated = :state')
+             ->andWhere('p.pendingRegistrable IN (:tournaments)')
              ->orderBy('p.validationDate')
-             ->setParameter('date', new \DateTime('now'))
+             ->setParameter('tournaments', $tournaments)
              ->setParameter('state', Participant::STATUS_VALIDATED);
 
-        return $q->getQuery()->execute();
+        $players = $q->getQuery()->execute();
+        $out = array();
+        foreach($players as $player) {
+            foreach($player->getTeam() as $team) {
+                if($team->getValidated() === Participant::STATUS_VALIDATED) {
+                    $out[] = $player;
+                    break;
+                }
+            }
+        }
 
+        return $out;
     }
 
 }

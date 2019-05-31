@@ -12,35 +12,100 @@
         <h2>Gestion des Billets</h2>
       </header>
 
-      <section class="grid-5">
-        <table style="width:100%">
-          <tr>
-            <th colspan="2" class="grid-3">Pseudo / Nom</th>
-            <th class="grid-3">Equipe</th>
-            <th class="grid-2">Actions</th>
-          </tr>
-          {% for player in players %}
+      <section>
+        <div class="input" style="margin-left: 20px;">
+          <input type="text" id="inputFilter" onkeyup="filters()" placeholder="Filtrer...">
+        </div>
+        <table class="grid-9">
+          <thead>
             <tr>
-              <td colspan="2">
-                {{ player.gameName }}
-                <br />
-                <span style="font-size:10px; color: grey;"></span>
-              </td>
-              <td>
-                {% set solo = not (player.team | length > 0) %}
-                {% if not solo %}
-                  {{ player.team[0].name }}
-                {% else %}
-                  (solo)
-                {% endif %}
-              </td>
-              <td>
-                <button>Envoyer billet</button>
-              </td>
+              <th class="grid-2">Pseudo</th>
+              <th class="grid-3">Nom Prénom</th>
+              <th class="grid-2">Equipe</th>
+              <th class="grid-3">Actions</th>
             </tr>
-            </tr>
-          {% endfor %}
+          </thead>
+          <tbody id="tbodyToFilter">
+            {% for player in players %}
+              <tr>
+                <td>
+                  {{ player.gameName }}
+                </td>
+                  <td>
+                    {% if player.user is not null %}
+                      {{ player.user.lastname }} {{ player.user.firstname}}
+                    {% endif %}
+                  </td>
+                <td>
+                  {% set solo = not (player.team | length > 0) %}
+                  {% if not solo %}
+                    {{ player.team[0].name }}
+                  {% else %}
+                    (solo)
+                  {% endif %}
+                </td>
+                <td>
+                  <button class="btn-plain">Envoyer billet</button>
+                  <button class="btn-plain">Annuler billet</button>
+                </td>
+              </tr>
+              </tr>
+            {% endfor %}
+            {% for m in managers %}
+              <tr>
+                <td>
+                  {{ m.gameName }}
+                </td>
+                  <td>
+                    {% if m.user is not null %}
+                      {{ m.user.lastname }} {{ m.user.firstname}}
+                    {% endif %}
+                  </td>
+                <td>
+                  {{ m.participant }} (manager)
+                </td>
+                <td>
+                  <button class="btn-plain">Envoyer billet</button>
+                  <button class="btn-plain">Annuler billet</button>
+                </td>
+              </tr>
+              </tr>
+            {% endfor %}
+          </tbody>
         </table>
       </section>
     </article>
+{% endblock %}
+
+{% block javascripts %}
+  <script>
+  function filters() {
+    // Declare variables
+    var input, filter, table, tbody, tr, td, i, j, txtValue, txtFound;
+    input = document.getElementById("inputFilter");
+    filter = input.value.toUpperCase();
+    tbody = document.getElementById("tbodyToFilter");
+    tr = tbody.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      txtFound = 0;
+      // We filter only on the 3 first columns
+      for (j = 0; j < 3; j++) {
+        td = tr[i].getElementsByTagName("td")[j];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            txtFound = 1;
+          }
+        }
+      }
+      if (txtFound == 1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+  </script>
 {% endblock %}

@@ -95,4 +95,13 @@ class TournamentRepository extends EntityRepository
             ->getQuery();
         return $query->getResult();
     }
+
+    public function getUpcomingTournaments() {
+        $query = $this->createQueryBuilder('t')
+            ->Where('t.tournamentClose >= :date')
+            ->setParameter('date', new \Datetime("now"))
+            ->getQuery();
+        return $query->getResult();
+
+    }
 }
