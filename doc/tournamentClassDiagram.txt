@@ -1,0 +1,72 @@
+@startuml
+package TournamentBundle {
+  class AbstractMatch
+  class Bundle
+  class Group
+  class GroupStage
+  class Knockout
+  class KnockoutMatch
+  class Manager
+  class Match
+  class Participant
+  class Player
+  class Registrable
+  class Round
+  class RoyalMatch
+  class Score
+  class Team
+  class Tournament
+}
+
+package UserBundle {
+  class User
+  class MerchantOrder
+}
+abstract AbstractMatch
+AbstractMatch "1" *-- "many" Round : rounds, match
+AbstractMatch "many" *-- "1" Group : group, matches
+AbstractMatch "1" *-- "1" KnockoutMatch : koMatch, match
+
+Registrable <|-- Bundle
+Bundle "many" *-- "many" Tournament : tournaments, bundles
+
+Group "many" *-- "many" Participant : participants, groups
+Group "many" *-- "1" GroupStage : stage, groups
+
+GroupStage "many" *-- "1" Tournament : tournament
+
+Knockout "many" *-- "1" Tournament : tournament
+Knockout "1" *-- "many" KnockoutMatch : matches, knockout
+
+KnockoutMatch "many" *-- "1" KnockoutMatch : parent, children
+KnockoutMatch "many" *-- "1" KnockoutMatch : loserDestination
+
+Manager "many" *-- "1" User : user
+Manager "many" *-- "1" Tournament : tournament
+Manager "1" *-- "1" Participant : participant, manager
+
+AbstractMatch <|-- Match
+Match "many" *-- "1" Participant : part1 part2
+
+abstract Participant
+Participant "many" *-- "1" Tournament : tournament, participants
+
+Player "many" *-- "1" User : user
+Player "many" *-- "many" Team : team, players
+Player "many" *-- "1" Registrable : pendingRegistrable
+Player "many" *-- "many" MerchantOrder : merchantOrders
+
+abstract Registrable
+
+Round "1" *-- "many" Score : scores, round
+
+AbstractMatch <|-- RoyalMatch
+RoyalMatch "many" *-- "many" Participant : participants
+
+Score "many" *-- "1" Participant : participant
+
+Participant <|-- Team
+Team "1" *-- "1" Player : captain
+
+Registrable <|-- Tournament
+@enduml
