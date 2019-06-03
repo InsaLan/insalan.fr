@@ -20,3 +20,14 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [InsaLanNewsBundle]]
+
+    sonata.admin.news.picture:
+        class: InsaLan\NewsBundle\Admin\PictureAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Actualités", label: "Image" }
+        arguments:
+            - ~
+            - InsaLan\NewsBundle\Entity\Picture
+            - ~
+        calls:
+            - [ setTranslationDomain, [InsaLanNewsBundle]]
