@@ -45,8 +45,19 @@
                   {% endif %}
                 </td>
                 <td>
-                  <button class="btn-plain">Envoyer billet</button>
-                  <button class="btn-plain">Annuler billet</button>
+                  {% if player.eTicket %}
+                      <form action="{{ path('insalan_ticketing_admin_removeeticket') }}" method="post">
+                        <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ player.id)}}">
+                        <input type="hidden" name="player" value="{{ player.id }}">
+                        <button type="submit" class="btn-plain">Annuler billet</button>
+                      </form>
+                  {% else %}
+                      <form action="{{ path('insalan_ticketing_admin_sendeticket') }}" method="post">
+                        <input type="hidden" name="_token" value="{{ csrf_token('send' ~ player.id)}}">
+                        <input type="hidden" name="player" value="{{ player.id }}">
+                        <button type="submit" class="btn-plain">Envoyer billet</button>
+                      </form>
+                  {% endif %}
                 </td>
               </tr>
               </tr>
@@ -65,8 +76,19 @@
                   {{ m.participant }} (manager)
                 </td>
                 <td>
-                  <button class="btn-plain">Envoyer billet</button>
-                  <button class="btn-plain">Annuler billet</button>
+                  {% if m.eTicket %}
+                      <form action="{{ path('insalan_ticketing_admin_removeeticket') }}" method="post">
+                        <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ m.id)}}">
+                        <input type="hidden" name="manager" value="{{ m.id }}">
+                        <button type="submit" class="btn-plain">Annuler billet</button>
+                      </form>
+                  {% else %}
+                      <form action="{{ path('insalan_ticketing_admin_sendeticket') }}" method="post">
+                        <input type="hidden" name="_token" value="{{ csrf_token('send' ~ m.id)}}">
+                        <input type="hidden" name="manager" value="{{ m.id }}">
+                        <button type="submit" class="btn-plain">Envoyer billet</button>
+                      </form>
+                  {% endif %}
                 </td>
               </tr>
               </tr>

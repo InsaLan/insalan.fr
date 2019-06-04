@@ -61,6 +61,11 @@ class Manager
      * @ORM\Column(name="arrived", type="boolean")
      */
     protected $arrived;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="InsaLan\TicketingBundle\Entity\ETicket")
+     */
+    protected $eTicket;
 
     public function getParticipantType() {
         return "manager";
@@ -252,4 +257,27 @@ class Manager
             return "Manager sans nom";
         }
     }
+
+    /**
+     * Set eTicket
+     *
+     * @param integer eTicket
+     * @return Manager
+     */
+    public function setETicket($eTicket)
+    {
+        $this->eTicket = $eTicket;
+        return $this;
+    }
+
+    /**
+     * Get eTicket
+     *
+     * @return integer
+     */
+    public function getETicket()
+    {
+        return $this->eTicket;
+    }
+
 }

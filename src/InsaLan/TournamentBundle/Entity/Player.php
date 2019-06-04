@@ -70,6 +70,12 @@ class Player extends Participant
      */
     protected $merchantOrders;
 
+    /**
+     * @ORM\OneToOne(targetEntity="InsaLan\TicketingBundle\Entity\ETicket")
+     */
+    protected $eTicket;
+
+
     public function getParticipantType() {
         return "player";
     }
@@ -89,7 +95,7 @@ class Player extends Participant
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -100,7 +106,7 @@ class Player extends Participant
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName() {
         if (isset($this->gameName)) {
@@ -127,7 +133,7 @@ class Player extends Participant
     /**
      * Get user
      *
-     * @return \InsaLan\UserBundle\Entity\User 
+     * @return \InsaLan\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -188,7 +194,7 @@ class Player extends Participant
     /**
      * Get tournament
      *
-     * @return \InsaLan\TournamentBundle\Entity\Tournament 
+     * @return \InsaLan\TournamentBundle\Entity\Tournament
      */
     public function getTournament()
     {
@@ -221,7 +227,7 @@ class Player extends Participant
     /**
      * Get groups
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroups()
     {
@@ -277,7 +283,7 @@ class Player extends Participant
     /**
      * Get team
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTeam()
     {
@@ -319,7 +325,7 @@ class Player extends Participant
     /**
      * Get gameName
      *
-     * @return string 
+     * @return string
      */
     public function getGameName()
     {
@@ -342,7 +348,7 @@ class Player extends Participant
     /**
      * Get gameId
      *
-     * @return integer 
+     * @return integer
      */
     public function getGameId()
     {
@@ -365,7 +371,7 @@ class Player extends Participant
     /**
      * Get gameValidated
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getGameValidated()
     {
@@ -388,7 +394,7 @@ class Player extends Participant
     /**
      * Get gameAvatar
      *
-     * @return integer 
+     * @return integer
      */
     public function getGameAvatar()
     {
@@ -435,7 +441,7 @@ class Player extends Participant
     /**
      * Get paymentDone
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPaymentDone()
     {
@@ -471,7 +477,7 @@ class Player extends Participant
     /**
      * Get arrived
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getArrived()
     {
@@ -487,4 +493,27 @@ class Player extends Participant
     {
         return $this->tournament !== null ? $this->tournament : $this->pendingRegistrable;
     }
+
+    /**
+     * Set eTicket
+     *
+     * @param integer eTicket
+     * @return Player
+     */
+    public function setETicket($eTicket)
+    {
+        $this->eTicket = $eTicket;
+        return $this;
+    }
+
+    /**
+     * Get eTicket
+     *
+     * @return integer
+     */
+    public function getETicket()
+    {
+        return $this->eTicket;
+    }
+
 }
