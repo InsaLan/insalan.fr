@@ -56,7 +56,7 @@ class AdminController extends Controller
      * @Route("/admin/ticket/send")
      * @Method({"POST"})
      */
-    public function sendETicketAction(Request $request, Player $player = null, Manager $manager = null) {
+    public function sendETicketAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
         // Find the player or manager
@@ -99,7 +99,10 @@ class AdminController extends Controller
         $em->persist($eTicket);
         $em->persist($participant);
         $em->flush();
-        $this->get('session')->getFlashBag()->add('error', "Billet créé ".$eTicket->getToken());
+
+        // Generate pdf
+        $this->generateETicket($eTicket);
+        $this->get('session')->getFlashBag()->add('info', "Billet créé ".$eTicket->getToken());
 
         $this->sendETicket($eTicket);
         return $this->redirect($this->generateUrl("insalan_ticketing_admin_index"));
@@ -137,15 +140,45 @@ class AdminController extends Controller
       $em->remove($eTicket);
       $em->flush();
 
-      $this->get('session')->getFlashBag()->add('error', "Billet annulé ");
+      $this->get('session')->getFlashBag()->add('info', "Billet annulé ");
       return $this->redirect($this->generateUrl("insalan_ticketing_admin_index"));
     }
 
     private function sendETicket(ETicket $eTicket) {
+      $mailer = $this->get('mailer');
+      // Create the message
+      $message = (new \Swift_Message())
+          ->setSubject('Votre inscription au tournoi ' . $eTicket->getTournament())
+          ->setFrom(['contact@insalan.fr' => 'InsaLan'])
+          ->setTo([$eTicket->getUser()->getEmail()])
+          ->setBody(
+              $this->renderView(
+                  'InsaLanTicketingBundle:Emails:registration.html.twig',
+                  ['user' => $eTicket->getUser(),
+                   'tournament' => $eTicket->getTournament()
+                 ]
+              ),
+              'text/html'
+          );
+      $data = $this->generateETicket($eTicket);
+      $attachment = (new \Swift_Attachment())
+          ->setFilename('Billet_InsaLan.pdf')
+          ->setContentType('application/pdf')
+          ->setBody($data)
+          ;
+      $message->attach($attachment);
+
+      $mailer->send($message);
+
       $em = $this->getDoctrine()->getManager();
       $eTicket->setSentAt(new \DateTime("now"));
       $em->persist($eTicket);
       $em->flush();
-      $this->get('session')->getFlashBag()->add('error', "Billet envoyé");
+      $this->get('session')->getFlashBag()->add('info', "Billet envoyé");
+    }
+
+    private function generateETicket(ETicket $eTicket) {
+      // TODO:
+      //$this->get('session')->getFlashBag()->add('info', "PDF généré");
     }
 }
