@@ -386,7 +386,7 @@ class UserController extends Controller
 
         if ($discount !== null){
             $price -= $discount->getAmount();
-            $title += " (" + $discount->getName() + ")";
+            $title .= " (" . $discount->getName() . ")";
         }
 
         $payment = $this->get("insalan.user.payment");
