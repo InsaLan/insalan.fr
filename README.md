@@ -14,7 +14,7 @@ The project need the following packages and php-extensions :
 Package | Comment
 ------- | -------
 git |
-php | php7.0
+php | php7.2
 composer |
 mariadb-server | if use with local database
 zip | not necessary (only for unzip during install)
@@ -51,7 +51,7 @@ It is recommended to get `composer.phar` in your PATH : https://getcomposer.org/
 Install the remaining packages
 
 ```bash
-sudo apt-get install php php-curl php-intl php-mbstring php-mysql php-xml mariadb-server zip
+sudo apt-get install php7.2 php7.2-curl php7.2-intl php7.2-mbstring php7.2-mysql php7.2-xml mariadb-server zip
 ```
 
 Proceed with the install and accept default settings
