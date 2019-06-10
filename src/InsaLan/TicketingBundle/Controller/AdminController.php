@@ -7,6 +7,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Filesystem\Filesystem;
+
+use Spipu\Html2Pdf\Html2Pdf;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
+use Endroid\QrCode\QrCode;
 
 use InsaLan\TournamentBundle\Entity\Player;
 use InsaLan\TournamentBundle\Entity\Manager;
@@ -100,11 +106,16 @@ class AdminController extends Controller
         $em->persist($participant);
         $em->flush();
 
+        // Generate QR code
+        $this->generateQRCode($eTicket);
+
         // Generate pdf
-        $this->generateETicket($eTicket);
+        $globalKeys = ['fullDates'];
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+        $pdf = $this->generateETicket($eTicket, $participant, $globalVars);
         $this->get('session')->getFlashBag()->add('info', "Billet créé ".$eTicket->getToken());
 
-        $this->sendETicket($eTicket);
+        $this->sendETicket($eTicket, $pdf);
         return $this->redirect($this->generateUrl("insalan_ticketing_admin_index"));
     }
 
@@ -134,6 +145,11 @@ class AdminController extends Controller
         return $this->redirect($this->generateUrl("insalan_ticketing_admin_index"));
       }
 
+      // Delete pdf
+      $filesystem = new Filesystem();
+      $eTicket = $participant->getETicket();
+      $filesystem->remove([realpath("").'/../data/ticket/'.$eTicket->getId().'.pdf']);
+
       $eTicket = $participant->getETicket();
       $participant->setETicket(null);
       $em->persist($participant);
@@ -144,7 +160,7 @@ class AdminController extends Controller
       return $this->redirect($this->generateUrl("insalan_ticketing_admin_index"));
     }
 
-    private function sendETicket(ETicket $eTicket) {
+    private function sendETicket(ETicket $eTicket, $pdf) {
       $mailer = $this->get('mailer');
       // Create the message
       $message = (new \Swift_Message())
@@ -153,20 +169,14 @@ class AdminController extends Controller
           ->setTo([$eTicket->getUser()->getEmail()])
           ->setBody(
               $this->renderView(
-                  'InsaLanTicketingBundle:Emails:registration.html.twig',
+                  'InsaLanTicketingBundle:Templates:email.html.twig',
                   ['user' => $eTicket->getUser(),
                    'tournament' => $eTicket->getTournament()
                  ]
               ),
               'text/html'
           );
-      $data = $this->generateETicket($eTicket);
-      $attachment = (new \Swift_Attachment())
-          ->setFilename('Billet_InsaLan.pdf')
-          ->setContentType('application/pdf')
-          ->setBody($data)
-          ;
-      $message->attach($attachment);
+      $message->attach(\Swift_Attachment::fromPath($pdf)->setFilename('Billet_InsaLan.pdf'));
 
       $mailer->send($message);
 
@@ -177,8 +187,39 @@ class AdminController extends Controller
       $this->get('session')->getFlashBag()->add('info', "Billet envoyé");
     }
 
-    private function generateETicket(ETicket $eTicket) {
+    private function generateETicket(ETicket $eTicket, $participant, $globalVars) {
       // TODO:
-      //$this->get('session')->getFlashBag()->add('info', "PDF généré");
+      try {
+          $pathName = realpath("").'/../data/ticket/'.$eTicket->getId().'.pdf';
+          $content = $this->renderView(
+              'InsaLanTicketingBundle:Templates:ticket.html.twig',
+              ["user" => $eTicket->getUser(),
+               "tournament" => $eTicket->getTournament(),
+               "pseudo" => $participant->getGameName(),
+               "token" => $eTicket->getToken(),
+               "globalVars" => $globalVars
+              ]
+            );
+          $html2pdf = new Html2Pdf('P', 'A4', 'fr');
+          $html2pdf->setDefaultFont('Arial');
+          $html2pdf->writeHTML($content);
+          $html2pdf->output($pathName, 'F');
+          $this->get('session')->getFlashBag()->add('info', "PDF généré " . $pathName);
+      } catch (Html2PdfException $e) {
+          $html2pdf->clean();
+          $formatter = new ExceptionFormatter($e);
+          $this->get('session')->getFlashBag()->add('info', $formatter->getHtmlMessage());
+      }
+      return $pathName;
+    }
+
+    private function generateQRCode(ETicket $eTicket) {
+/*
+      // Create a basic QR code
+      $qrCode = new QrCode($eTicket->getToken());
+      $qrCode->setSize(300);
+
+      // Save it to a file
+      $qrCode->writeFile(realpath("").'/../data/qrcode/'.$eTicket->getId().'.png');*/
     }
 }

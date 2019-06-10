@@ -26,3 +26,7 @@
 *~
 /prod/
 .idea/
+!/data/ticket
+/data/ticket/*
+!/data/qrcode
+/data/qrcode/*
