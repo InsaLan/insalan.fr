@@ -40,3 +40,8 @@ th {
 .input select[multiple] {
     height: auto;
 }
+
+.btn-delete, .btn-delete:hover {
+  background-color: #DC143C;
+  color: white;
+}
