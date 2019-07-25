@@ -196,7 +196,7 @@ class AdminController extends Controller
               ["user" => $eTicket->getUser(),
                "tournament" => $eTicket->getTournament(),
                "pseudo" => $participant->getGameName(),
-               "token" => $eTicket->getToken(),
+               "eTicket" => $eTicket,
                "globalVars" => $globalVars
               ]
             );
