@@ -97,14 +97,22 @@ class AdminController extends Controller
           $tournament = $participant->getPendingRegistrable();
         }
 
-        $eTicket = new ETicket();
-        $eTicket->setUser($participant->getUser())
-                ->setTournament($tournament)
-                ->setToken($participant->getId() . $tournament); // TODO to be improved
-        $participant->setETicket($eTicket);
-        $em->persist($eTicket);
-        $em->persist($participant);
-        $em->flush();
+        try {
+          // The chances of having the same token twice are very small. The try/catch handle this case.
+          $token = sha1(uniqid(mt_rand(), true));
+
+          $eTicket = new ETicket();
+          $eTicket->setUser($participant->getUser())
+                  ->setTournament($tournament)
+                  ->setToken($token);
+          $participant->setETicket($eTicket);
+          $em->persist($eTicket);
+          $em->persist($participant);
+          $em->flush();
+        } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
+          $this->get('session')->getFlashBag()->add('error', "Le token généré est déjà utilisé. Réessayez dans quelques instants.\n Token : " . $token);
+          return $this->redirect($this->generateUrl("insalan_ticketing_admin_index"));
+        }
 
         // Generate QR code
         $this->generateQRCode($eTicket);

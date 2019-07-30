@@ -36,7 +36,7 @@ class ETicket
     /**
      * @var string
      *
-     * @ORM\Column(name="token", type="string", length=255)
+     * @ORM\Column(name="token", type="string", length=255, unique=true)
      */
     private $token;
 
