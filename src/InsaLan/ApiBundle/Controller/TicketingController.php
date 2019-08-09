@@ -24,8 +24,14 @@ class TicketingController extends Controller
         // Deny access if the user is not an admin
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access denied!');
 
+        // Get JSON data
+        $parametersAsArray = [];
+            if ($content = $request->getContent()) {
+                $parametersAsArray = json_decode($content, true);
+            }
+
         // Find e-ticket
-        $token = $request->request->get('token');
+        $token = $parametersAsArray["token"];
         $eTicket = $em->getRepository('InsaLanTicketingBundle:ETicket')->findOneByToken($token);
         if ($eTicket === null) {
           return new JsonResponse(array("err" => "Ticket not found"));
@@ -60,8 +66,14 @@ class TicketingController extends Controller
       // Deny access if the user is not an admin
       $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access denied!');
 
+      // Get JSON data
+      $parametersAsArray = [];
+          if ($content = $request->getContent()) {
+              $parametersAsArray = json_decode($content, true);
+          }
+
       // Find e-ticket
-      $token = $request->request->get('token');
+      $token = $parametersAsArray["token"];
       $eTicket = $em->getRepository('InsaLanTicketingBundle:ETicket')->findOneByToken($token);
       if ($eTicket === null) {
         return new JsonResponse(array("err" => "Ticket not found"));
