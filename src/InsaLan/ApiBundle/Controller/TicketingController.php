@@ -14,6 +14,11 @@ use InsaLan\TicketingBundle\Entity\ETicket;
 
 class TicketingController extends Controller
 {
+
+    const ERR_TICKET_NOT_FOUND = array("no" => 1, "msg" => "Ticket not found");
+    const ERR_PARTICIPANT_NOT_FOUND = array("no" => 2, "msg" => "Participant not found");
+    const ERR_TICKET_ALREADY_SCANNED = array("no" => 3, "msg" => "Already scanned");
+
     /**
      * @Route("/ticket/get")
      * @Method({"POST"})
@@ -34,7 +39,7 @@ class TicketingController extends Controller
         $token = $parametersAsArray["token"];
         $eTicket = $em->getRepository('InsaLanTicketingBundle:ETicket')->findOneByToken($token);
         if ($eTicket === null) {
-          return new JsonResponse(array("err" => "Ticket not found"));
+          return new JsonResponse(array("err" => self::ERR_TICKET_NOT_FOUND));
         }
 
         // Find participant
@@ -43,7 +48,7 @@ class TicketingController extends Controller
           $participant = $em->getRepository('InsaLanTournamentBundle:Manager')->findOneByETicket($eTicket);
         }
         if ($participant === null) {
-          return new JsonResponse(array("err" => "Participant not found"));
+          return new JsonResponse(array("err" => self::ERR_PARTICIPANT_NOT_FOUND));
         }
 
         $res = array(
@@ -76,10 +81,10 @@ class TicketingController extends Controller
       $token = $parametersAsArray["token"];
       $eTicket = $em->getRepository('InsaLanTicketingBundle:ETicket')->findOneByToken($token);
       if ($eTicket === null) {
-        return new JsonResponse(array("err" => "Ticket not found"));
+        return new JsonResponse(array("err" => self::ERR_TICKET_NOT_FOUND));
       }
       if ($eTicket->getIsScanned()) {
-        return new JsonResponse(array("err" => "Already scanned"));
+        return new JsonResponse(array("err" => self::ERR_TICKET_ALREADY_SCANNED));
       } else {
         $eTicket->setIsScanned(true);
         $em->persist($eTicket);
