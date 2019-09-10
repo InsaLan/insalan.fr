@@ -18,6 +18,7 @@ class TicketingController extends Controller
     const ERR_TICKET_NOT_FOUND = array("no" => 1, "msg" => "Ticket not found");
     const ERR_PARTICIPANT_NOT_FOUND = array("no" => 2, "msg" => "Participant not found");
     const ERR_TICKET_ALREADY_SCANNED = array("no" => 3, "msg" => "Already scanned");
+    const ERR_TICKET_CANCELLED = array("no" => 4, "msg" => "Ticket cancelled");
 
     /**
      * @Route("/ticket/get")
@@ -56,7 +57,8 @@ class TicketingController extends Controller
           "phone" => $participant->getUser()->getPhoneNumber(),
           "gameName" => $participant->getGameName(),
           "tournament" => $participant->getTournament()->getName(),
-          "ticketScanned" => $eTicket->getIsScanned()
+          "ticketScanned" => $eTicket->getIsScanned(),
+          "status" => ETicket::getStatuses()[$eTicket->getStatus()]
           );
         return new JsonResponse($res);
     }
@@ -83,13 +85,15 @@ class TicketingController extends Controller
       if ($eTicket === null) {
         return new JsonResponse(array("err" => self::ERR_TICKET_NOT_FOUND));
       }
-      if ($eTicket->getIsScanned()) {
+      if ($eTicket->getStatus() == ETicket::STATUS_SCANNED) {
         return new JsonResponse(array("err" => self::ERR_TICKET_ALREADY_SCANNED));
-      } else {
-        $eTicket->setIsScanned(true);
+      } else if ($eTicket->getStatus() == ETicket::STATUS_VALID){
+        $eTicket->setStatus(ETicket::STATUS_SCANNED);
         $em->persist($eTicket);
         $em->flush();
         return new JsonResponse(array("err" => null));
+      } else {
+        return new JsonResponse(array("err" => self::ERR_TICKET_CANCELLED));
       }
     }
 }

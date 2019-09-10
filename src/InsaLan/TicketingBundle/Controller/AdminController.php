@@ -153,15 +153,13 @@ class AdminController extends Controller
         return $this->redirect($this->generateUrl("insalan_ticketing_admin_index"));
       }
 
-      // Delete pdf
-      $filesystem = new Filesystem();
-      $eTicket = $participant->getETicket();
-      $filesystem->remove([realpath("").'/../data/ticket/'.$eTicket->getId().'.pdf']);
+
 
       $eTicket = $participant->getETicket();
       $participant->setETicket(null);
+      $eTicket->setStatus(ETicket::STATUS_CANCELLED);
       $em->persist($participant);
-      $em->remove($eTicket);
+      $em->persist($eTicket);
       $em->flush();
 
       $this->get('session')->getFlashBag()->add('info', "Billet annulé ");

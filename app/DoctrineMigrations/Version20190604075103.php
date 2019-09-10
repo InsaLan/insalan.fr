@@ -18,7 +18,7 @@ class Version20190604075103 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE intra_e_ticket (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, tournament_id INT DEFAULT NULL, token VARCHAR(255) NOT NULL, sentAt DATETIME DEFAULT NULL, isScanned TINYINT(1) NOT NULL, INDEX IDX_7E1D5491A76ED395 (user_id), INDEX IDX_7E1D549133D1A3E7 (tournament_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE intra_e_ticket (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, tournament_id INT DEFAULT NULL, token VARCHAR(255) NOT NULL, sentAt DATETIME DEFAULT NULL, isScanned TINYINT(1) NOT NULL, status INT NOT NULL, INDEX IDX_7E1D5491A76ED395 (user_id), INDEX IDX_7E1D549133D1A3E7 (tournament_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('ALTER TABLE intra_e_ticket ADD CONSTRAINT FK_7E1D5491A76ED395 FOREIGN KEY (user_id) REFERENCES intra_User (id)');
         $this->addSql('ALTER TABLE intra_e_ticket ADD CONSTRAINT FK_7E1D549133D1A3E7 FOREIGN KEY (tournament_id) REFERENCES intra_Tournament (id)');
         $this->addSql('ALTER TABLE intra_Manager ADD eTicket_id INT DEFAULT NULL');

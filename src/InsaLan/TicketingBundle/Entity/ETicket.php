@@ -12,6 +12,20 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ETicket
 {
+
+    const STATUS_CANCELLED   = 0; // ETicket cancelled
+    const STATUS_VALID   = 1; // Valid but not scanned
+    const STATUS_SCANNED = 2; // Scanned
+
+    public static function getStatuses()
+    {
+        return array (
+            self::STATUS_CANCELLED => 'cancelled',
+            self::STATUS_VALID => 'valid',
+            self::STATUS_SCANNED => 'scanned',
+        );
+    }
+
     /**
      * @var int
      *
@@ -54,6 +68,18 @@ class ETicket
      */
     private $isScanned = false;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $status;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->status = self::STATUS_VALID;
+    }
 
     /**
      * Get id
@@ -180,4 +206,28 @@ class ETicket
     {
         return $this->isScanned;
     }
+
+        /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return ETicket
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+        return $this;
+    }
+
 }
