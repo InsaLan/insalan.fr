@@ -68,27 +68,26 @@ class TicketingController extends Controller
           return new JsonResponse(array("err" => self::ERR_TICKET_NOT_FOUND));
         }
 
-        if ($eTicket->getStatus() === ETicket::STATUS_CANCELLED) {
-          return new JsonResponse(array("err" => self::ERR_TICKET_CANCELLED));
-        }
-
         // Find participant
         $participant = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByETicket($eTicket);
         if ($participant === null) {
           $participant = $em->getRepository('InsaLanTournamentBundle:Manager')->findOneByETicket($eTicket);
         }
-        if ($participant === null) {
+        if ($participant === null && !$eTicket->isCancelled()) {
           return new JsonResponse(array("err" => self::ERR_PARTICIPANT_NOT_FOUND));
         }
 
         $res = array(
-          "name" => $participant->getUser()->getFirstname()." ".$participant->getUser()->getLastname(),
-          "phone" => $participant->getUser()->getPhoneNumber(),
-          "gameName" => $participant->getGameName(),
-          "tournament" => $participant->getTournament()->getName(),
-          "ticketScanned" => $eTicket->getIsScanned(),
-          "status" => ETicket::getStatuses()[$eTicket->getStatus()]
+          "name" => $eTicket->getUser()->getFirstname()." ".$eTicket->getUser()->getLastname(),
+          "phone" => $eTicket->getUser()->getPhoneNumber(),
+          "tournament" => $eTicket->getTournament()->getName(),
+          "ticketScanned" => $eTicket->isScanned(),
+          "ticketCancelled" => $eTicket->isCancelled()
           );
+        
+        if ($participant) {
+          $res["gameName"] = $participant->getGameName();
+        }
         return new JsonResponse($res);
     }
 

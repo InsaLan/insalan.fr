@@ -62,13 +62,6 @@ class ETicket
     private $sentAt;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="isScanned", type="boolean")
-     */
-    private $isScanned = false;
-
-    /**
      * @ORM\Column(type="integer")
      */
     protected $status;
@@ -184,30 +177,6 @@ class ETicket
     }
 
     /**
-     * Set isScanned
-     *
-     * @param boolean $isScanned
-     *
-     * @return ETicket
-     */
-    public function setIsScanned($isScanned)
-    {
-        $this->isScanned = $isScanned;
-
-        return $this;
-    }
-
-    /**
-     * Get isScanned
-     *
-     * @return bool
-     */
-    public function getIsScanned()
-    {
-        return $this->isScanned;
-    }
-
-        /**
      * Get status
      *
      * @return integer
@@ -230,4 +199,33 @@ class ETicket
         return $this;
     }
 
+    /**
+     * Is the eticket scanned
+     *
+     * @return bool
+     */
+    public function isScanned()
+    {
+        return $this->status == self::STATUS_SCANNED;
+    }
+
+    /**
+     * Is the eticket valid
+     *
+     * @return bool
+     */
+    public function isValid()
+    {
+        return $this->status == self::STATUS_VALID;
+    }
+
+    /**
+     * Is the eticket cancelled
+     *
+     * @return bool
+     */
+    public function isCancelled()
+    {
+        return $this->status == self::STATUS_CANCELLED;
+    }
 }
