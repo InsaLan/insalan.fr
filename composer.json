@@ -47,7 +47,8 @@
       "ext-json": "*"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~3.0"
+        "sensio/generator-bundle": "~3.0",
+        "symfony/phpunit-bridge": "^4.3"
     },
     "scripts": {
         "post-root-package-install": [
