@@ -25,7 +25,6 @@ class TicketingController extends Controller
 
     /**
      * @Route("/ticket/login")
-     * @Method({"POST"})
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function loginAction(Request $request)
@@ -36,7 +35,6 @@ class TicketingController extends Controller
 
     /**
      * @Route("/ticket/logout")
-     * @Method({"POST"})
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function logoutAction(Request $request)
