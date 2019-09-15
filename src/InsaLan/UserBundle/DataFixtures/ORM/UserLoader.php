@@ -56,6 +56,19 @@ class UserLoader extends AbstractFixture implements ContainerAwareInterface, Ord
         $this->addReference('user-3', $e);
         $manager->persist($e);
 
+        for ($i = 1; $i <= 305; ++$i) {
+            $e = new User();
+            $e->setUsername('user'.$i);
+            $encoder = $this->container
+                ->get('security.encoder_factory')
+                ->getEncoder($e);
+            $e->setEmail('user'.$i.'@localhost');
+            $e->setPassword($encoder->encodePassword('user', $e->getSalt()));
+            $e->setEnabled(true);
+            $e->addRole('ROLE_USER');
+            $manager->persist($e);
+            $this->addReference('user--'.$i, $e);
+        }
         $manager->flush();
     }
 
