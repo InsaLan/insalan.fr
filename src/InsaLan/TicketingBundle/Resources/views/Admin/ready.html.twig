@@ -22,6 +22,7 @@
               <th class="grid-2">Pseudo</th>
               <th class="grid-3">Nom Prénom</th>
               <th class="grid-2">Equipe</th>
+              <th class="grid-1">Tournoi</th>
               <th class="grid-3">Action</th>
             </tr>
           </thead>
@@ -42,6 +43,13 @@
                     {{ player.team[0].name }}
                   {% else %}
                     (solo)
+                  {% endif %}
+                </td>
+                <td>
+                  {% if not solo %}
+                    {{ player.pendingRegistrable }}
+                  {% else %}
+                    {{ player.tournament }}
                   {% endif %}
                 </td>
                 <td>
@@ -66,6 +74,9 @@
                   </td>
                 <td>
                   {{ m.participant }} (manager)
+                </td>
+                <td>
+                  {{ m.tournament }}
                 </td>
                 <td>
                   <form action="{{ path('insalan_ticketing_admin_sendeticket') }}" method="post">
@@ -96,8 +107,8 @@
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
       txtFound = 0;
-      // We filter only on the 3 first columns
-      for (j = 0; j < 3; j++) {
+      // We filter only on the 4 first columns
+      for (j = 0; j < 4; j++) {
         td = tr[i].getElementsByTagName("td")[j];
         if (td) {
           txtValue = td.textContent || td.innerText;
