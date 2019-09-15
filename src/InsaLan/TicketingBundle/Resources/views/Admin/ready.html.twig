@@ -9,7 +9,7 @@
 
     <article>
       <header>
-        <h2>Gestion des Billets</h2>
+        <h2>Billets à envoyer</h2>
       </header>
 
       <section>
@@ -22,7 +22,7 @@
               <th class="grid-2">Pseudo</th>
               <th class="grid-3">Nom Prénom</th>
               <th class="grid-2">Equipe</th>
-              <th class="grid-3">Actions</th>
+              <th class="grid-3">Action</th>
             </tr>
           </thead>
           <tbody id="tbodyToFilter">
@@ -45,19 +45,11 @@
                   {% endif %}
                 </td>
                 <td>
-                  {% if player.eTicket %}
-                      <form action="{{ path('insalan_ticketing_admin_removeeticket') }}" method="post">
-                        <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ player.id)}}">
-                        <input type="hidden" name="player" value="{{ player.id }}">
-                        <button type="submit" class="btn-delete">Annuler billet</button>
-                      </form>
-                  {% else %}
-                      <form action="{{ path('insalan_ticketing_admin_sendeticket') }}" method="post">
-                        <input type="hidden" name="_token" value="{{ csrf_token('send' ~ player.id)}}">
-                        <input type="hidden" name="player" value="{{ player.id }}">
-                        <button type="submit" class="btn-plain">Envoyer billet</button>
-                      </form>
-                  {% endif %}
+                  <form action="{{ path('insalan_ticketing_admin_sendeticket') }}" method="post">
+                    <input type="hidden" name="_token" value="{{ csrf_token('send' ~ player.id)}}">
+                    <input type="hidden" name="player" value="{{ player.id }}">
+                    <button type="submit" class="btn-plain">Envoyer billet</button>
+                  </form>
                 </td>
               </tr>
               </tr>
@@ -76,19 +68,11 @@
                   {{ m.participant }} (manager)
                 </td>
                 <td>
-                  {% if m.eTicket %}
-                      <form action="{{ path('insalan_ticketing_admin_removeeticket') }}" method="post">
-                        <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ m.id)}}">
-                        <input type="hidden" name="manager" value="{{ m.id }}">
-                        <button type="submit" class="btn-delete">Annuler billet</button>
-                      </form>
-                  {% else %}
-                      <form action="{{ path('insalan_ticketing_admin_sendeticket') }}" method="post">
-                        <input type="hidden" name="_token" value="{{ csrf_token('send' ~ m.id)}}">
-                        <input type="hidden" name="manager" value="{{ m.id }}">
-                        <button type="submit" class="btn-plain">Envoyer billet</button>
-                      </form>
-                  {% endif %}
+                  <form action="{{ path('insalan_ticketing_admin_sendeticket') }}" method="post">
+                    <input type="hidden" name="_token" value="{{ csrf_token('send' ~ m.id)}}">
+                    <input type="hidden" name="manager" value="{{ m.id }}">
+                    <button type="submit" class="btn-plain">Envoyer billet</button>
+                  </form>
                 </td>
               </tr>
               </tr>

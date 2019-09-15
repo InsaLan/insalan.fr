@@ -116,6 +116,7 @@ class PlayerRepository extends EntityRepository
         $q = $this->createQueryBuilder('p')
              ->where('p.validated = :state')
              ->andWhere('p.pendingRegistrable IN (:tournaments)')
+             ->andWhere('p.eTicket is NULL')
              ->orderBy('p.validationDate')
              ->setParameter('tournaments', $tournaments)
              ->setParameter('state', Participant::STATUS_VALIDATED);

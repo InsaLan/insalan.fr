@@ -63,7 +63,14 @@
                 <a href="{{ path('insalan_pizza_admin_pizza') }}">Pizzas</a>
               </div>
             </li>
-            <li><a href="{{ path('insalan_ticketing_admin_index') }}">Billetterie</a></li>
+            <li class="dropdown">
+              <a href="javascript:void(0)">Billetterie</a>
+              <div class="dropdown-content">
+                <a href="{{ path('insalan_ticketing_admin_ready') }}">Billets à envoyer</a>
+                <a href="{{ path('insalan_ticketing_admin_sent') }}">Billets envoyés</a>
+                <a href="{{ path('insalan_ticketing_admin_cancelled') }}">Billets annulés</a>
+              </div>
+            </li>
           </ul>
         </nav>
         {% endblock %}
