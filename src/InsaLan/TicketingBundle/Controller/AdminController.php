@@ -136,9 +136,6 @@ class AdminController extends Controller
           return $this->redirect($this->generateUrl("insalan_ticketing_admin_ready"));
         }
 
-        // Generate QR code
-        $this->generateQRCode($eTicket);
-
         // Generate pdf
         $globalKeys = ['fullDates'];
         $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
@@ -183,6 +180,8 @@ class AdminController extends Controller
       $em->persist($eTicket);
       $em->flush();
 
+      $this->sendCancelEmail($eTicket);
+
       $this->get('session')->getFlashBag()->add('info', "Billet annulé ");
       return $this->redirect($this->generateUrl("insalan_ticketing_admin_sent"));
     }
@@ -217,7 +216,7 @@ class AdminController extends Controller
           ->setTo([$eTicket->getUser()->getEmail()])
           ->setBody(
               $this->renderView(
-                  'InsaLanTicketingBundle:Templates:email.html.twig',
+                  'InsaLanTicketingBundle:Templates:sendETicketEmail.html.twig',
                   ['user' => $eTicket->getUser(),
                    'tournament' => $eTicket->getTournament()
                  ]
@@ -261,13 +260,26 @@ class AdminController extends Controller
       return $pathName;
     }
 
-    private function generateQRCode(ETicket $eTicket) {
-/*
-      // Create a basic QR code
-      $qrCode = new QrCode($eTicket->getToken());
-      $qrCode->setSize(300);
+    private function sendCancelEmail(ETicket $eTicket) {
+      $mailer = $this->get('mailer');
+      // Create the message
+      $message = (new \Swift_Message())
+          ->setSubject('Votre inscription au tournoi ' . $eTicket->getTournament())
+          ->setFrom(['contact@insalan.fr' => 'InsaLan'])
+          ->setTo([$eTicket->getUser()->getEmail()])
+          ->setBody(
+              $this->renderView(
+                  'InsaLanTicketingBundle:Templates:cancelETicketEmail.html.twig',
+                  ['user' => $eTicket->getUser(),
+                   'tournament' => $eTicket->getTournament(),
+                   'eticket' => $eTicket
+                 ]
+              ),
+              'text/html'
+          );
 
-      // Save it to a file
-      $qrCode->writeFile(realpath("").'/../data/qrcode/'.$eTicket->getId().'.png');*/
+      $mailer->send($message);
+
+      $this->get('session')->getFlashBag()->add('info', "Email envoyé");
     }
 }
