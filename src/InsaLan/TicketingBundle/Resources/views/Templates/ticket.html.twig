@@ -14,16 +14,16 @@
                         <b></b><br>
                     </div>
                     <div style="position: absolute; right: 3mm; bottom: 3mm; text-align: right; font-size: 4mm; ">
-                        <b>1</b> place <b>plein tarif</b><br>
+                        {#<b>1</b> place <b>plein tarif</b><br>#}
                         Pseudo : <b>{{ pseudo }}</b><br>
                         Nom Prénom : <b>{{ user.lastname }} {{ user.firstname }}</b><br>
                         Tournois : <b>{{ tournament.name }}</b><br>
                         Prix unitaire TTC : <b>{{ tournament.webPrice }}&euro;</b><br>
                         N° billet : <b>{{ eTicket.id }}</b><br>
-                        Date d'achat : <b>{{ "now"|date("d/m/Y H:i:s") }}</b><br>
+                        Date d'émission : <b>{{ "now"|date("d/m/Y H:i:s") }}</b><br>
                     </div>
                     <h1>Billet Min'InsaLan</h1>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<b>Valable le {{ globalVars.fullDates }} à 20h30</b><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<b>Valable du {{ tournament.tournamentOpen|date("d/m/Y") }} au {{ tournament.tournamentClose|date("d/m/Y") }}</b><br>
                 </div>
             </td>
         </tr>

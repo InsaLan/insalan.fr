@@ -137,9 +137,7 @@ class AdminController extends Controller
         }
 
         // Generate pdf
-        $globalKeys = ['fullDates'];
-        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
-        $pdf = $this->generateETicket($eTicket, $participant, $globalVars);
+        $pdf = $this->generateETicket($eTicket, $participant);
         $this->get('session')->getFlashBag()->add('info', "Billet créé ".$eTicket->getToken());
 
         $this->sendETicket($eTicket, $pdf);
@@ -234,7 +232,7 @@ class AdminController extends Controller
       $this->get('session')->getFlashBag()->add('info', "Billet envoyé");
     }
 
-    private function generateETicket(ETicket $eTicket, $participant, $globalVars) {
+    private function generateETicket(ETicket $eTicket, $participant) {
       // TODO:
       try {
           $pathName = realpath("").'/../data/ticket/'.$eTicket->getId().'.pdf';
@@ -243,8 +241,7 @@ class AdminController extends Controller
               ["user" => $eTicket->getUser(),
                "tournament" => $eTicket->getTournament(),
                "pseudo" => $participant->getGameName(),
-               "eTicket" => $eTicket,
-               "globalVars" => $globalVars
+               "eTicket" => $eTicket
               ]
             );
           $html2pdf = new Html2Pdf('P', 'A4', 'fr');
