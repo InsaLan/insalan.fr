@@ -5,11 +5,7 @@
     h2 { padding: 0; margin: 0; color: #222222; font-size: 5mm; position: relative; }
 
 </style>
-<page format="100x200" orientation="L" backcolor="#AAAACC" style="font: arial;">
-    <div style="rotate: 90; position: absolute; width: 100mm; height: 4mm; left: 195mm; top: 0; font-style: italic; font-weight: normal; text-align: center; font-size: 2.5mm;">
-        Ceci est votre e-ticket à présenter au contrôle d'accès -
-        billet généré par <a href="http://html2pdf.fr/" style="color: #222222; text-decoration: none;">html2pdf</a>
-    </div>
+<page format="100x200" orientation="L" backimg="bundles/insalan/img/eticket/devant.png" backimgy="top" style="font: arial;">
     <table style="width: 99%;border: none;" cellspacing="4mm" cellpadding="0">
         <tr>
             <td colspan="2" style="width: 100%">
@@ -26,11 +22,17 @@
                         N° billet : <b>{{ eTicket.id }}</b><br>
                         Date d'achat : <b>{{ "now"|date("d/m/Y H:i:s") }}</b><br>
                     </div>
-                    <h1>Billet InsaLan XV</h1>
+                    <h1>Billet Min'InsaLan</h1>
                     &nbsp;&nbsp;&nbsp;&nbsp;<b>Valable le {{ globalVars.fullDates }} à 20h30</b><br>
                 </div>
             </td>
         </tr>
+
+    </table>
+</page>
+
+<page format="100x200" orientation="L" backimg="bundles/insalan/img/eticket/dos.png" backimgy="top" style="font: arial;">
+    <table style="width: 99%;border: none;" cellspacing="4mm" cellpadding="0">
         <tr>
             <td style="width: 25%;">
                 <div class="zone" style="height: 40mm;vertical-align: middle;text-align: center;">
@@ -60,7 +62,7 @@
                     <i>Ce billet est reconnu électroniquement lors de votre
                     arrivée sur site. A ce titre, il ne doit être ni dupliqué, ni photocopié.
                     Toute reproduction est frauduleuse et inutile.</i>
-                </div><barcode dimension="1D" type="C39" value="45" style="color: #770000" ></barcode>
+                </div>
 
             </td>
         </tr>
