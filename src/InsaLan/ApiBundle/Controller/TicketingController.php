@@ -113,8 +113,18 @@ class TicketingController extends Controller
       if ($eTicket->getStatus() == ETicket::STATUS_SCANNED) {
         return new JsonResponse(array("err" => self::ERR_TICKET_ALREADY_SCANNED));
       } else if ($eTicket->getStatus() == ETicket::STATUS_VALID){
+        // Find participant
+        $participant = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByETicket($eTicket);
+        if ($participant === null) {
+          $participant = $em->getRepository('InsaLanTournamentBundle:Manager')->findOneByETicket($eTicket);
+        }
+        if ($participant === null && !$eTicket->isCancelled()) {
+          return new JsonResponse(array("err" => self::ERR_PARTICIPANT_NOT_FOUND));
+        }
         $eTicket->setStatus(ETicket::STATUS_SCANNED);
+        $participant->setArrived(true);
         $em->persist($eTicket);
+        $em->persist($participant);
         $em->flush();
         return new JsonResponse(array("err" => null));
       } else {
