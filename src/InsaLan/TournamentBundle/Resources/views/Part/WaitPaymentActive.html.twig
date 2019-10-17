@@ -19,7 +19,7 @@
         Votre inscription sera validée par le staff à la réception du chèque.
         <br><br>
 
-        <h2><strong>Paiement au WarpZone</strong></h2>
+        {#<h2><strong>Paiement au WarpZone</strong></h2>
         <div style="float: right">
             <iframe style="border: 0;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2664.027321343604!2d-1.6946511452301016!3d48.10970867201523!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xcc09232560ffd4ec!2sWarpZone!5e0!3m2!1sen!2sfr!4v1445516841323" frameborder="0" width="200" height="120"></iframe>
         </div>
@@ -28,7 +28,7 @@
         Vous pourrez effectuer le paiement de votre place ({{ registrable.webPrice - (discount.amount | default(0)) }} {{ registrable.currency }}) en liquide, par chèque ou par carte bancaire.<br>
         <br/>
         Votre inscription sera validée à la réception de votre paiement par le partenaire.
-        <br><br>
+        <br><br>#}
         
 {% endif %}
 
@@ -37,25 +37,12 @@
         Vous pourrez régler sur place en liquide, par chèque ou par carte bancaire {#(avec une majoration de 1€ pour la CB)#}.<br>
         <br/></br>
 
-        <h2><strong>Points importants</strong></h2><br/>
-        <ul class="shift">
-            {#<li><strong>Attention</strong> : si vous n'avez pas été officiellement désigné pour représenter votre école, ne vous inscrivez pas. Aucun remboursement ne sera effectué dans ce cas.</li>#}
-            <br />
-            <li>Si vous jouez en équipe (CS:GO, Dota, LoL,{# OW,#} FBR), <strong>votre équipe ne sera validée qu'après réception du paiement de plus de la moitié des membres</strong>.</li>
-            
-            <li>Si vous jouez seul (HS, SFV, SC6, Smash Bros.), votre inscription sera validée dès la réception de votre paiement.</li>
-            <li>Si vous choisissez l'envoi par chèque, <strong>nous ne pouvons pas vous assurer qu'il restera des places lors de la réception de ce dernier</strong>, sauf si 3 de vos coéquipiers ont déjà payé en ligne (cf ci-dessus).</li>
-            
-            <li>Si vous payez sur place, plus de la moitié des membres de votre équipe doivent avoir payé en ligne ou par chèque (cf. point 1).</li>
-            {#<li><strong>Attention</strong> : c'est à vous d'amener votre ordinateur (portable ou fixe), ainsi que multiprise et câble Ethernet. Vous pourrez laisser votre matériel sur place durant la nuit, des équipes de sécurité seront en charge de surveiller la salle.</li>#}
-            <li>En vous inscrivant, <strong>vous vous engagez à participer à l'InsaLan</strong>. Si en cas de force majeure vous devez annuler votre inscription et voulez le remboursement de votre place, contactez-nous : <span class="emphase">contact@insalan.fr</span><br/>
-            Si vous avez payé en ligne, la majoration de paiement en ligne ({{ registrable.onlineIncreaseInPrice }} {{ registrable.currency }}) ne sera pas remboursée. Toute demande de remboursement effectuée après le {{ registrable.registrationClose|date('d/m/Y à H:i') }} ne sera pas acceptée.</li>
-        </ul>
-        </br>
+        {% include 'InsaLanTournamentBundle:Part:ImportantDetails.html.twig'  with {'registrable': registrable}%}
 
-        <br/><br/><center>
+
+        {#<br/><br/><center>
         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfVqoy-M_d6FColSldTnUGuU1sT_NlAUDgyiZ3KO9ZeZuPdDA/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">Chargement en cours...</iframe>
-        </center><br/><br/>
+        </center><br/><br/>#}
     </div>
     <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_index') }}">Valider</a>
     <br class="clear">
