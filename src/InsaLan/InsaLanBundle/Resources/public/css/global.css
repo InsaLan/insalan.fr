@@ -113,7 +113,7 @@ body {
 /** Header **/
 
 body > header {
-  height: 200px;
+  height: 100px;
   background: #0e0e0e;
   border-bottom: 1px solid #2d2d2d;
   border-top: 1px solid #2d2d2d;
@@ -122,34 +122,46 @@ body > header {
   z-index: 1;
 }
 
+body > header .container {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: 50px 50px;
+  grid-template-areas:
+    "logo input"
+    "logo navbar";
+}
+
 body > header .logo {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 400px;
-  height: 200px;
+  grid-area: logo;
+  #position: absolute;
+  #top: 0px;
+  #left: 0px;
+  #width: 400px;
+  #height: 200px;
 }
 
-body > header .logo img {
-  width: 437px;
-  height: 128px;
+body > header .logo a img {
+  padding: 5%;
+  height: 90%;
+  width: 90%;
 }
 
-body > header .logo .pattern {
+/*body > header .logo .pattern {
   background: url('../img/header_pattern1.png') repeat-y;
-  /*bottom: 3px;*/
-  /*left: 0px;*/
-  /*position: absolute;*/
+  bottom: 3px;
+  left: 0px;
+  position: absolute;
   width: 185px;
   height: 100%;
-}
-
+}*/
+/*
 body > header .logo a {
   position: absolute;
   bottom: 33px;
   left: 0px;
 }
-
+*/
+/*
 body > header aside {
   height: 95px;
   width: 460px;
@@ -158,11 +170,13 @@ body > header aside {
   right: 0px;
   padding: 10px;
 }
-
+*/
+/*
 body > header aside span {
   font-family: Oswald;
   text-transform: uppercase;
 }
+*/
 
 body > header aside .day {
   color: white;
@@ -620,7 +634,7 @@ footer #copyright span {
 
 .input {
   clear: both;
-  margin-bottom: 10px;
+  margin-top: 5px;
 }
 
 .input input,
