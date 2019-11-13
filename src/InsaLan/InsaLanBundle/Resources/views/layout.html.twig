@@ -34,9 +34,8 @@
       <div class="container">
         
         <div class="logo">
-          <div class="pattern"></div>
           <a href="{{ path('insalan_news_default_index') }}">
-            <img src="{{ asset('bundles/insalan/img/logo-noyear.png') }}" alt="InsaLan"/>
+            <img src="{{ asset('bundles/insalan/img/logo-noyear-downscaled.png') }}" alt="InsaLan"/>
           </a>
         </div>
 
@@ -48,8 +47,8 @@
               <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right" style="margin-left: 10px;">Mon compte</a>
               <!-- Change the route to user dashboard once set up -->
               <a href="{{ path('sonata_admin_dashboard') }}" class="btn2 bnt2-ncolor pull-right" style="margin-left: 10px;">Sonata</a>
-              <a href="{{ path('insalan_admin_default_index') }}" class="btn2 bnt2-ncolor pull-right">Admin</a>
-              <a href="{{ path('insalan_tournament_merchant_index') }}" class="btn2 bnt2-ncolor pull-right" style="margin-top: 10px;">Billetterie</a>
+              <a href="{{ path('insalan_admin_default_index') }}" class="btn2 bnt2-ncolor pull-right" style="margin-left: 10px;">Admin</a>
+              <a href="{{ path('insalan_tournament_merchant_index') }}" class="btn2 bnt2-ncolor pull-right">Billetterie</a>
             {% elseif is_granted('ROLE_MERCHANT') %}
               <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right" style="margin-left: 10px;">Mon compte</a>
               <a href="{{ path('insalan_tournament_merchant_index') }}" class="btn2 bnt2-ncolor pull-right">Billetterie</a>
