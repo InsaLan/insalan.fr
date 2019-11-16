@@ -41,24 +41,28 @@
 
         {% block top_infos %}
         <div class="input">
-          {% if app.user %}
-            <a href="{{ path('fos_user_security_logout') }}" class="btn2 pull-right" style="margin-left: 10px;">Déconnexion</a>
-            {% if is_granted('ROLE_ADMIN') %}
-              <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right" style="margin-left: 10px;">Mon compte</a>
-              <!-- Change the route to user dashboard once set up -->
-              <a href="{{ path('sonata_admin_dashboard') }}" class="btn2 bnt2-ncolor pull-right" style="margin-left: 10px;">Sonata</a>
-              <a href="{{ path('insalan_admin_default_index') }}" class="btn2 bnt2-ncolor pull-right" style="margin-left: 10px;">Admin</a>
-              <a href="{{ path('insalan_tournament_merchant_index') }}" class="btn2 bnt2-ncolor pull-right">Billetterie</a>
-            {% elseif is_granted('ROLE_MERCHANT') %}
-              <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right" style="margin-left: 10px;">Mon compte</a>
-              <a href="{{ path('insalan_tournament_merchant_index') }}" class="btn2 bnt2-ncolor pull-right">Billetterie</a>
-            {% else %}
-              <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right">Mon compte</a>
-            {% endif %}
-          {% else %}
-            <a href="{{ path('fos_user_registration_register') }}" class="btn2 pull-right" style="margin-left: 10px;">Inscription</a>
-            <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right">Connexion</a>
-          {% endif %}
+          <nav>              
+            <ul>
+              {% if app.user %}
+                <li><a href="{{ path('fos_user_security_logout') }}" class="btn2 pull-right">Déconnexion</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                  <li><a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right">Mon compte</a></li>
+                  <!-- Change the route to user dashboard once set up -->
+                  <li><a href="{{ path('sonata_admin_dashboard') }}" class="btn2 bnt2-ncolor pull-right">Sonata</a></li>
+                  <li><a href="{{ path('insalan_admin_default_index') }}" class="btn2 bnt2-ncolor pull-right">Admin</a></li>
+                  <li><a href="{{ path('insalan_tournament_merchant_index') }}" class="btn2 bnt2-ncolor pull-right">Billetterie</a></li>
+                {% elseif is_granted('ROLE_MERCHANT') %}
+                  <li><a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right">Mon compte</a></li>
+                  <li><a href="{{ path('insalan_tournament_merchant_index') }}" class="btn2 bnt2-ncolor pull-right">Billetterie</a></li>
+                {% else %}
+                  <li><a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right">Mon compte</a></li>
+                {% endif %}
+              {% else %}
+                <li><a href="{{ path('fos_user_registration_register') }}" class="btn2 pull-right">Inscription</a></li>
+                <li><a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right">Connexion</a></li>
+              {% endif %}
+            </ul>
+          </nav>
         </div>
         
         <div class="navbar">
