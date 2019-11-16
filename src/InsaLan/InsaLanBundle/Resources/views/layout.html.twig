@@ -42,7 +42,7 @@
         {% block top_infos %}
         <div class="input">
           {% if app.user %}
-          <a href="{{ path('fos_user_security_logout') }}" class="btn2 pull-right" style="margin-left: 10px;">Déconnexion</a>
+            <a href="{{ path('fos_user_security_logout') }}" class="btn2 pull-right" style="margin-left: 10px;">Déconnexion</a>
             {% if is_granted('ROLE_ADMIN') %}
               <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right" style="margin-left: 10px;">Mon compte</a>
               <!-- Change the route to user dashboard once set up -->
@@ -55,10 +55,10 @@
             {% else %}
               <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right">Mon compte</a>
             {% endif %}
-            {% else %}
+          {% else %}
             <a href="{{ path('fos_user_registration_register') }}" class="btn2 pull-right" style="margin-left: 10px;">Inscription</a>
             <a href="{{ path('insalan_tournament_user_index') }}" class="btn2 btn2-nocolor pull-right">Connexion</a>
-            {% endif %}
+          {% endif %}
         </div>
         
         <div class="navbar">
