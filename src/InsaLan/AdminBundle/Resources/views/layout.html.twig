@@ -28,52 +28,58 @@
 
     <header>
       <div class="container">
+
         <div class="logo">
-          <div class="pattern"></div>
           <a href="{{ path('insalan_news_default_index') }}">
-            <img src="{{ asset('bundles/insalan/img/logo-noyear.png') }}" alt="InsaLan"/></a>
+            <img src="{{ asset('bundles/insalan/img/logo-noyear-admin.png') }}" alt="InsaLan"/>
+          </a>
         </div>
 
         {% block top_infos %}
-        <aside>
-            <div class="input">
-                <!-- TODO Choose which buttons need to be here -->
-                <a href="{{ path('fos_user_security_logout') }}" class="btn2 pull-right" style="margin-left: 10px;">Déconnexion</a>
-                <a href="{{ path('sonata_admin_dashboard') }}" class="btn2 bnt2-ncolor pull-right" style="margin-left: 10px;">Sonata</a>
-            </div>
-        </aside>
+        
+        <div class="input">
+          <nav>
+            <ul>
+              <!-- TODO Choose which buttons need to be here -->
+              <li><a href="{{ path('sonata_admin_dashboard') }}" class="btn2 bnt2-ncolor">Sonata</a></li>
+              <li><a href="{{ path('fos_user_security_logout') }}" class="btn2">Déconnexion</a></li>
+            </ul>
+          </nav>
+        </div>
 
-        <nav>
-          <h1 style="text-align: center; font-size: 40px; font-weight: bold; color: #FFF; font-family: OpenSansCond">Admin</h1>
-          <ul>
-            <li><a href="{{ path('insalan_admin_default_index') }}">Accueil</a></li>
-            <li class="dropdown">
-              <a href="javascript:void(0)">Tournois</a>
-              <div class="dropdown-content">
-                <a href="{{ path('GroupStageAction') }}">Phases de poule</a>
-                <a href="{{ path('GroupAction') }}">Poules</a>
-                <a href="{{ path('MatchAction') }}">Matchs</a>
-              </div>
-            </li>
-            <li class="dropdown">
-              <a href="javascript:void(0)" class="dropbtn">Pizzas</a>
-              <div class="dropdown-content">
-                <a href="{{ path('insalan_pizza_admin_commande') }}">Commandes</a>
-                <a href="{{ path('insalan_pizza_admin_creneau') }}">Créneaux</a>
-                <a href="{{ path('insalan_pizza_admin_pizza') }}">Pizzas</a>
-              </div>
-            </li>
-            <li class="dropdown">
-              <a href="javascript:void(0)">Billetterie</a>
-              <div class="dropdown-content">
-                <a href="{{ path('insalan_ticketing_admin_ready') }}">Billets à envoyer</a>
-                <a href="{{ path('insalan_ticketing_admin_sent') }}">Billets envoyés</a>
-                <a href="{{ path('insalan_ticketing_admin_cancelled') }}">Billets annulés</a>
-              </div>
-            </li>
-          </ul>
-        </nav>
+        <div class="navbar">
+          <nav>
+            <ul>
+              <li><a href="{{ path('insalan_admin_default_index') }}">Accueil</a></li>
+              <li class="dropdown">
+                <a>Tournois</a>
+                <div class="dropdown-content">
+                  <a href="{{ path('GroupStageAction') }}">Phases de poule</a>
+                  <a href="{{ path('GroupAction') }}">Poules</a>
+                  <a href="{{ path('MatchAction') }}">Matchs</a>
+                </div>
+              </li>
+              <li class="dropdown">
+                <a>Pizzas</a>
+                <div class="dropdown-content">
+                  <a href="{{ path('insalan_pizza_admin_commande') }}">Commandes</a>
+                  <a href="{{ path('insalan_pizza_admin_creneau') }}">Créneaux</a>
+                  <a href="{{ path('insalan_pizza_admin_pizza') }}">Liste des pizzas</a>
+                </div>
+              </li>
+              <li class="dropdown">
+                <a>Billetterie</a>
+                <div class="dropdown-content">
+                  <a href="{{ path('insalan_ticketing_admin_ready') }}">Billets à envoyer</a>
+                  <a href="{{ path('insalan_ticketing_admin_sent') }}">Billets envoyés</a>
+                  <a href="{{ path('insalan_ticketing_admin_cancelled') }}">Billets annulés</a>
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
         {% endblock %}
+
       </div>
     </header>
     {% endblock %}
