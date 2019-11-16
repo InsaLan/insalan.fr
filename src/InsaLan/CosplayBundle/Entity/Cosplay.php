@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Cosplay
- *
+ * @ORM\Entity()
  * @ORM\Table(name="cosplay")
  */
 class Cosplay
@@ -40,7 +40,7 @@ class Cosplay
     private $team;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Cosplayer", mappedBy="team")
+     * @ORM\OneToMany(targetEntity="Cosplayer", mappedBy="team")
      */
     private $members;
 

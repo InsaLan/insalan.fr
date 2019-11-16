@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Cosplayer
- *
+ * @ORM\Entity()
  * @ORM\Table(name="Cosplayer")
  */
 class Cosplayer
