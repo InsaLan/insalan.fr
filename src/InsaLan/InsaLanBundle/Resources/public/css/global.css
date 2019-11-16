@@ -142,6 +142,23 @@ body > header .logo a img {
   width: 90%;
 }
 
+/** Input **/
+
+body > header .input {
+  grid-area: input;
+}
+
+body > header .input nav ul {
+  display: flex;
+  justify-content: end;
+  margin-top: 5px;
+}
+
+body > header .input nav ul li {
+  margin-left: 10px;
+  list-style-type: none;
+}
+
 /** Menu **/
 
 body > header .navbar {
@@ -169,20 +186,20 @@ body > header .navbar nav ul li a {
 }
 
 
-body > header nav li.active a {
+body > header .navbar nav li.active a {
   color: white;
 }
 
-body > header nav li:hover:after,
-body > header nav li.active:after {
+body > header .navbar nav li:hover:after,
+body > header .navbar nav li.active:after {
   background: url('../img/menu_hover.png');
   height: 35px;
   width: 110px;
   content: "";
   display: block;
 }
-
-body > header nav li .dropdown {
+/*
+body > header .navbar nav li .dropdown {
   display: inline-block;
 }
 
@@ -210,7 +227,7 @@ body > header nav li .dropdown {
 .dropdown:hover .dropdown-content {
   display: block;
 }
-
+*/
 /** Sections **/
 
 article {
@@ -571,7 +588,7 @@ footer #copyright span {
 
 .input {
   clear: both;
-  margin-top: 5px;
+  #margin-top: 5px;
 }
 
 .input input,
