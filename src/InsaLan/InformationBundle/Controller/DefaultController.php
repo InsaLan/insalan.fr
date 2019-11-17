@@ -34,6 +34,68 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/asso")
+     * @Template()
+     */
+    public function assoAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Get global variables
+        $globalVars = array();
+        $globalKeys = ['staffNumber', 'playersNumber',
+                      'number', 'lettersNumber'];
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
+        return array('globalVars' => $globalVars);
+    }
+
+    /**
+     * @Route("/public")
+     * @Template()
+     */
+    public function publicAction()
+    {
+        return array();
+    }
+
+    /**
+     * @Route("/tournament")
+     * @Template()
+     */
+    public function tournamentAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Get global variables
+        $globalVars = array();
+        $globalKeys = ['playersNumber'];
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
+        return array('globalVars' => $globalVars);
+    }
+
+    /**
+     * @Route("/wwwh")
+     * @Template()
+     */
+    public function wwwhAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Get global variables
+        $globalVars = array();
+        $globalKeys = ['staffNumber', 'number', 'lettersNumber',
+                      'playersNumber', 'openingDate', 'openingHour', 'closingDate', 'closingHour', 'price', 'webPrice'];
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
+        // Get staff
+        $staff = $em->getRepository('InsaLanBundle:Staff')->findAll();
+
+        return array('globalVars' => $globalVars, 'staff' => $staff);
+    }
+
+    /**
      * @Route("/cosplay")
      * @Template()
      */

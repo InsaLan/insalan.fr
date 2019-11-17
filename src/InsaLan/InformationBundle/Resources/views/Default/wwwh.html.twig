@@ -1,0 +1,116 @@
+{% extends 'InsaLanInformationBundle::layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article id="horaire" class="info">
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+    <ul>
+      <li>Début</li>
+      <li>08h00</li>
+      <li>Fin</li>
+      <li>01h30</li>
+    </ul>
+  </aside>
+
+  <header>
+    <h2>Horaires</h2>
+  </header>
+
+  <section>
+    <p>
+      L'InsaLan vous ouvre ses portes du <em>{{ globalVars.openingDate }} à {{ globalVars.openingHour }} au {{ globalVars.closingDate }}, {{ globalVars.closingHour }}</em>. L'évènement sera ouvert au public et libre d'accès toute la journée du samedi de <em>8h00 à 1h30 du matin</em> ainsi que la journée du Dimanche de <em>8h00 à 19h00</em>.
+      <br/>
+      Les joueurs possédant un badge sont autorisés à rester dans l'enceinte de l'évènement durant la nuit. Des rondes de sécurité sont organisées par l'équipe.
+      L'alcool n'est pas autorisé et sa consommation peut entrainer une exclusion des compétitions et de l'évènement dans sa totalité à la seule discrétion des organisateurs.
+    </p>
+  </section>
+</article>
+
+<hr/>
+
+<article id="tarif" class="info">
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+    <ul>
+      <li>Joueurs</li>
+      <li>&lt;{{ globalVars.webPrice }} €/{{ globalVars.price }} €</li>
+      <li>Visiteurs</li>
+      <li>Gratuit</li>
+    </ul>
+  </aside>
+
+  <header>
+    <h2>Tarifs, Repas et Boissons</h2>
+  </header>
+
+  <section>
+    <p>
+      L'entrée visiteur est <em>gratuite</em> et permet l'accès à la zone animations de l'InsaLan. La zone joueurs est restreinte aux personnes inscrites dans une compétition et portant un badge.
+      <em>Le tarif joueur sur place s'élève à {{ globalVars.price }}€</em>, mais des places seront en prévente en ligne à un prix inférieur à {{ globalVars.webPrice }}€.
+      <br/>
+      Un service de restauration sera à votre disposition pendant toute la durée de l'évènement. Cette cafétéria proposera des sandwichs, des pizzas sur commande ainsi que des snacks et boissons sans alcool.
+    </p>
+  </section>
+</article>
+
+<hr/>
+
+<article id="contact" class="info">
+<!-- to be fixed later -->
+<span id="contact"></span>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+    <ul>
+      <li>Email</li>
+      <li>contact@insalan.fr</li>
+    </ul>
+  </aside>
+
+  <header>
+    <h2>Contact & Adresse</h2>
+  </header>
+
+  <section>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2663.3863646693094!2d-1.6364100000000028!3d48.12207200000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480edee93f7ba837%3A0xe124d178b1a5c8f2!2sInsaLan!5e0!3m2!1sfr!2sfr!4v1422581999135" width="880" height="350" frameborder="0" style="border:0; margin-left: 10px;"></iframe>
+      <p>
+     Retrouvez-nous sur les réseaux sociaux !<br>
+     <a href="https://www.facebook.com/insalan">
+        <span class="emphase">Facebook</span>
+    </a>
+    <a href="https://twitter.com/insalan">
+        <span class="emphase">Twitter</span>
+    </a>
+</p>
+<br>
+    <p>
+     Pour toutes demandes de renseignements ou demandes de prestations pour des événements Lan-parties et autres :
+     <br /><span class="emphase">📧 contact@insalan.fr</span>
+    </p>
+
+    <br />
+
+    {% for s in staff %}
+      <p>
+      <span class="emphase">{{ s.firstName }} {{ s.lastName }}</span>
+
+      <strong>{{ s.role }}</strong><br>
+      {% if s.phone|length > 4 %}
+        Tel : {{ s.phone }}<br>
+      {% endif %}
+      Email : {{ s.email }}
+
+      </p>
+    {% endfor %}
+
+  </section>
+</article>
+
+{% endblock %}
