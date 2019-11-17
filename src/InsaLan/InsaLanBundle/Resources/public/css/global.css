@@ -221,9 +221,12 @@ body > header .navbar nav li .dropdown {
   text-align: left;
 }
 
+.dropdown-content a:focus-within,
 .dropdown-content a:hover {
   background-color: darkgray;
 }
+
+.dropdown:focus-within .dropdown-content,
 .dropdown:hover .dropdown-content {
   display: block;
 }
