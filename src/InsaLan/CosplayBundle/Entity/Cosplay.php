@@ -3,14 +3,18 @@
 namespace InsaLan\CosplayBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Cosplay
  * @ORM\Entity()
- * @ORM\Table(name="cosplay")
+ * @ORM\Table(name="Cosplay")
  */
 class Cosplay
 {
+    const LAUNCH_BEFORE = 0;
+    const LAUNCH_AFTER = 1;
+
     /**
      * @var int
      *
@@ -40,12 +44,14 @@ class Cosplay
     private $team;
 
     /**
-     * @ORM\OneToMany(targetEntity="Cosplayer", mappedBy="team")
+     * @ORM\OneToMany(targetEntity="Cosplayer", cascade={"persist", "remove"}, mappedBy="group")
      */
     private $members;
 
     /**
-     * @ORM\Column(name="launch", type="enum", type="string", nullable=false, columnDefinition="enum('before', 'after')")
+     * @var int
+     *
+     * @ORM\Column(name="launch", type="integer")
      */
     private $launch;
 
@@ -70,6 +76,11 @@ class Cosplay
      */
     private $soundtrack;
 
+
+    public function __construct()
+    {
+        $this->members = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -156,7 +167,7 @@ class Cosplay
     /**
      * Set launch
      *
-     * @param string $launch
+     * @param int $launch
      *
      * @return Cosplay
      */
@@ -170,7 +181,7 @@ class Cosplay
     /**
      * Get launch
      *
-     * @return string
+     * @return int
      */
     public function getLaunch()
     {
@@ -247,5 +258,39 @@ class Cosplay
     public function getSoundtrack()
     {
         return $this->soundtrack;
+    }
+
+    /**
+     * Add members
+     *
+     * @param \InsaLan\CosplayBundle\Entity\Cosplayer $members
+     * @return Cosplay
+     */
+    public function addMember(\InsaLan\CosplayBundle\Entity\Cosplayer $member)
+    {
+        $this->members[] = $member;
+        $member->setGroup($this);
+        return $this;
+    }
+
+    /**
+     * Remove members
+     *
+     * @param \InsaLan\CosplayBundle\Entity\Cosplayer $members
+     */
+    public function removeMember(\InsaLan\CosplayBundle\Entity\Cosplayer $member)
+    {
+        $this->members->removeElement($member);
+        return $this;
+    }
+
+    /**
+     * Get members
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMembers()
+    {
+        return $this->members;
     }
 }
