@@ -10,63 +10,80 @@
 
 <section>
         <header>
-                <h1> Inscription Cosplayer </h1>
+                <h2> <strong>Inscription Cosplayer</strong> </h2>
         </header>
         <article>
                 {{form_start(form)}}
                 {{form_errors(form)}}
 
-                <div class="input field"> 
-                        {{form_row(form.firstname)}}
-                </div>
+                <article>
+                        <h3>Informations civils</h3>
+                        <div class="input field"> 
+                                {{form_row(form.firstname)}}
+                        </div>
 
-                <div class="input field">
-                        {{form_row(form.lastname)}}
-                </div>
+                        <div class="input field">
+                                {{form_row(form.lastname)}}
+                        </div>
 
-                <div class="input field">
-                        {{form_row(form.pseudo)}}
-                </div>
+                        <div class="input field">
+                                {{form_row(form.pseudo)}}
+                        </div>
 
-                <div class="input field">
-                        {{form_row(form.usePseudo)}}
-                </div>
+                        <div class="input field">
+                                {{form_row(form.usePseudo)}}
+                        </div>
 
-                <div class="input field">
-                        {{form_row(form.adult)}}
-                </div>
+                        <div class="input field">
+                                {{form_row(form.adult)}}
+                        </div>
+                </article>
+                <br class="clear">
 
-                <div class="input field">
-                        {{form_row(form.email)}}
-                </div>
+                <article>
+                        <h3>Contacts</h3>
+                        <div class="input field">
+                                {{form_row(form.email)}}
+                        </div>
 
-                <div class="input field">
-                        {{form_row(form.phone)}}
-                </div>
+                        <div class="input field">
+                                {{form_row(form.phone)}}
+                        </div>
 
-                <div class="input field">
-                        {{form_row(form.postalCode)}}
-                </div>
+                        <div class="input field">
+                                {{form_row(form.postalCode)}}
+                        </div>
+                </article>
+                <br class="clear">
 
-                <div class="input field">
-                        {{form_row(form.characterCosplayed)}}
-                </div>
+                <article>
+                        <h3>Informations sur le personnage</h3>
+                        <div class="input field">
+                                {{form_row(form.characterCosplayed)}}
+                        </div>
 
-                <div class="input field">
-                        {{form_row(form.origin)}}
-                </div>
+                        <div class="input field">
+                                {{form_row(form.origin)}}
+                        </div>
 
-                <div class="input field">
-                        {{form_row(form.picturePath)}}
-                </div>
+                        <div class="input field">
+                                {{form_row(form.picturePath)}}
+                        </div>
+                </article>
+                <br class="clear">
 
-                <div class="input field">
-                        {{form_row(form.pictureRightPath)}}
-                </div>
+                <article>
+                        <h3>Autorisations légals</h3>
+                        <div class="input field">
+                                {{form_row(form.pictureRightPath)}}
+                        </div>
 
-                <div class="input field">
-                        {{form_row(form.parentalConsentPath)}}
-                </div>
+                        <div class="input field">
+                                {{form_row(form.parentalConsentPath)}}
+                        </div>
+                </article>
+                <br class="clear">
+                <br class="clear">
 
                 <div>
                         <input type="submit" value="Valider"></input>
