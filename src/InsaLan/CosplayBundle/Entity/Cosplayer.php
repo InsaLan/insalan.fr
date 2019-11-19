@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Cosplayer
- *
+ * @ORM\Entity()
  * @ORM\Table(name="Cosplayer")
  */
 class Cosplayer
@@ -107,9 +107,14 @@ class Cosplayer
     /**
      * @var string
      *
-     * @ORM\Column(name="parentalConsentPath", type="string", length=255, unique=true)
+     * @ORM\Column(name="parentalConsentPath", type="string", length=255, unique=true, nullable=true)
      */
     private $parentalConsentPath;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Cosplay", inversedBy="members")
+     */
+    private $group;
 
 
     /**
@@ -432,5 +437,29 @@ class Cosplayer
     public function getParentalConsentPath()
     {
         return $this->parentalConsentPath;
+    }
+
+    /**
+     * Set group
+     *
+     * @param string $group
+     *
+     * @return Cosplayer
+     */
+    public function setGroup($group)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return string
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }
