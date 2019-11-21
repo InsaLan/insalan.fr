@@ -1,0 +1,52 @@
+{% extends 'InsaLanBundle::layout.html.twig' %}
+
+{% block title %}
+  {{ parent() }} -
+  Cosplay
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+<section>
+        <header>
+         <h2><strong>Inscription Concourt Cosplay</strong></h2>
+        </header>
+
+        <article>
+                 {{form_start(form)}}
+                {{form_errors(form)}}
+                <article>
+                        <h3>Informations équipe</h3>
+                        <br class="clear">
+                        <div class="input field"> 
+                                {{form_row(form.name)}}
+                        </div>
+                        <div class="input field"> 
+                                {{form_row(form.team)}}
+                        </div>
+                </article>
+                <br class="clear">
+
+                <article>
+                        <h3>Informations Représentation</h3>
+                        <br class="clear">
+                        <div class="input field"> 
+                                {{form_row(form.launch)}}
+                        </div>
+                        <div class="input field"> 
+                                {{form_row(form.setup)}}
+                        </div>
+                        <div class="input field"> 
+                                {{form_row(form.details)}}
+                        </div>
+                        <div class="input field"> 
+                                {{form_row(form.soundtrack)}}
+                        </div>
+                </article>
+                <br class="clear">
+                <br class="clear">
+                <input type="submit" value="valider"></input>
+        </article>
+</section>
+
+{% endblock %}
