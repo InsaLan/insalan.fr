@@ -2,6 +2,7 @@
 
 namespace InsaLan\CosplayBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -15,11 +16,12 @@ class UserController extends Controller
      * @Route("/cosplay/register")
      * @Template()
      */
-    public function registerAction()
+    public function registerAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $p1 = new Cosplayer();
         $form = $this->createForm(CosplayerType::class, $p1);
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
         	$em->persist($p1);
         	$em->flush();
