@@ -21,23 +21,7 @@ window.addEvent('domready', function() {
     button.inject(e, 'top');
   });
 
-  { // Highlight current module
-    var module = window.location.pathname;
-    if (module == '/' || module == '/app_dev.php/') {
-      module += 'news/';
-    }
-
-    $$('body > header nav li a').each(function(a) {
-      var p = a.pathname;
-      if (p == '/' || p == '/app_dev.php/') {
-        p += 'news/';
-      }
-
-      if (0 === module.lastIndexOf(p, 0)) {
-        a.parentNode.addClass('active');
-      }
-    });
-  }
+ 
 
   // Streams actions
   
