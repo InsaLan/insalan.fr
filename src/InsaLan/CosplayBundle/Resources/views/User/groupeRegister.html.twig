@@ -24,6 +24,9 @@
                         <div class="input field"> 
                                 {{form_row(form.team)}}
                         </div>
+                        <div class="input field">
+                                <label for="count">nombre de participant</label><input type="number" name="count" id="count" action={% set count %}{% endset %}></input>
+                        </div>
                 </article>
                 <br class="clear">
 
@@ -45,7 +48,10 @@
                 </article>
                 <br class="clear">
                 <br class="clear">
-                <input type="submit" value="valider"></input>
+                <div>
+                        <input type="submit" value="valider"></input>
+                </div>
+                {{form_end(form)}}
         </article>
 </section>
 

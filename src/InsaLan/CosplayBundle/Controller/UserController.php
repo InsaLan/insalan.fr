@@ -27,8 +27,11 @@ class UserController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
         	$em->persist($p1);
-        	$em->flush();
-        	return $this->redirect($this->generateUrl('insalan_cosplay_register'));
+            $em->flush();
+            while ($count > 0){
+                return $this->redirect($this->generateUrl('insalan_cosplay_register',array('count' => $count-1 )));
+            }
+        	return $this->redirect($this->generateUrl('insalan_cosplay_index'));
         }
         return $this->render('InsaLanCosplayBundle:User:register.html.twig', array(
             'form' => $form->createView(),
@@ -49,11 +52,12 @@ class UserController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
         	$em->persist($p1);
-        	$em->flush();
-        	return $this->redirect($this->generateUrl('insalan_cosplay_index'));
+            $em->flush();
+            return $this->redirect($this->generateUrl('insalan_cosplay_register',array('count' => $count)));
         }
         return $this->render('InsaLanCosplayBundle:User:groupeRegister.html.twig', array(
             'form' => $form->createView(),
+            'count' => $count,
             ));
     }
 }
