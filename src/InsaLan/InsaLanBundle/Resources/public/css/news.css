@@ -7,13 +7,13 @@ article > aside {
 }
 
 article > aside .square {
-  background-color: #00bff3;
+  background-color: var(--accent-color);
   width: 80px;
   height: 80px;
 }
 
 article.subsection > aside .square {
-  background-color: #00bff3;
+  background-color: var(--accent-color);
   width: 27px;
   height: 27px;
 }
@@ -31,7 +31,7 @@ article > aside .square a span {
   position: relative;
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
-  border-bottom: 20px solid white;
+  border-bottom: 20px solid var(--comp-light-color);
   top: 30px;
   left: 20px;
 }
@@ -39,7 +39,7 @@ article > aside .square a span {
 article.subsection > aside .square a span {
   border-bottom: 7px solid transparent;
   border-top: 7px solid transparent;
-  border-left: 7px solid black;
+  border-left: 7px solid var(--main-dark-color);
   top: 7px;
   left: 10px;
 }
@@ -53,14 +53,14 @@ article > aside li {
 article > aside li:nth-child(odd) {
   font-family: Oswald;
   font-size: 0.8em;
-  color: white;
+  color: var(--comp-light-color);
   padding-top: 10px;
 }
 
 article > aside li:nth-child(even) {
   font-family: OpenSansCond;
   font-size: 0.9em;
-  color: #00bff3;
+  color: var(--accent-color);
 }
 
 article > header {
@@ -77,7 +77,7 @@ article.subsection > header {
 article.subsection > header h2 {
   font-family: OpenSansCond;
   text-transform: uppercase;
-  color: #00bff3;
+  color: var(--accent-color);
   letter-spacing: 0px;
   margin-bottom: 5px;
   font-size: 2.1em;
@@ -87,7 +87,7 @@ article.subsection > header h2 {
 article > header span {
   font-family: Oswald;
   text-transform: uppercase;
-  color: white;
+  color: var(--comp-light-color);
   font-size: 0.8em;
 }
 
@@ -116,15 +116,15 @@ article.subsection > section p {
 }
 
 article > section p em {
-  color: #00bff3;
+  color: var(--accent-color);
 }
 
 article > section p a {
-  color: white;
+  color: var(--comp-light-color);
 }
 
 article > section p a:hover {
-  color: #00bff3;
+  color: var(--accent-color);
 }
 
 /* List */
@@ -154,10 +154,9 @@ aside.carousel .picture {
   height: 300px;
   width: 100%;
   overflow: hidden;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--main-dark-color);
 }
 
-/*
 aside.carousel .grid {
   height: 300px;
   width: 100%;
@@ -169,7 +168,7 @@ aside.carousel .grid {
   background-position: 50px 50px;
   top: 0px;
   left: 0px;
-}*/
+}
 
 aside.carousel table {
   width: 1000px;
@@ -186,7 +185,7 @@ aside.carousel table .title {
 }
 
 aside.carousel table .title .main {
-  color: #00bff3;
+  color: var(--accent-color);
   font-family: OpenSansCond;
   text-transform: uppercase;
   font-size: 2.4em;
@@ -221,13 +220,13 @@ aside.carousel table .items a {
 
 aside.carousel table .items a:hover,
 aside.carousel table .items a.active {
-  background: #00bff3;
+  background: var(--accent-color);
 }
 
 aside.carousel table .open {
   width: 100px;
   height: 100px;
-  background: #00bff3;
+  background: var(--accent-color);
   vertical-align: middle;
 }
 
@@ -244,7 +243,7 @@ aside.carousel table .open a span {
   height: 0;
   border-bottom: 30px solid transparent;  /* left arrow slant */
   border-top: 30px solid transparent; /* right arrow slant */
-  border-left: 30px solid black; /* bottom, add background color here */
+  border-left: 30px solid var(--main-dark-color); /*  bottom, add background color here */
   font-size: 0;
   line-height: 0;
   margin: auto;
@@ -270,7 +269,7 @@ section.news {
 
 section.news > h2,
 aside.twitter > h2 {
-  color: white;
+  color: var(--comp-light-color);
   font-family: OpenSansCond;
   font-size: 3em;
   letter-spacing: 3px;
@@ -288,7 +287,7 @@ aside.twitter > div {
   background-color: #0e0e0e;
   padding-left: 4px;
   border-radius: 10px;
-  color: #a2a2a2;
+  color: var(--comp-dark-color);
 }
 
 section.news nav {
@@ -304,14 +303,14 @@ section.news nav a {
   padding: 1px 10px;
   width: 80px;
   text-align: center;
-  background-color: #161616;
-  color: #00bff3;
+  background-color: var(--comp-light-color);
+  color: var(--accent-color);
   text-transform: uppercase;
   font-weight: bold;
 }
 
 section.news nav a:hover {
-  background-color: #272727;
+  background-color: var(--main-color);
 }
 
 section.news nav .prev span {
