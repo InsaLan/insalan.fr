@@ -19,108 +19,101 @@ class Placement
     public function getStructure() {
         $structure = array();
         //                      game    id  x  y  w  h
-        $structure[] = array("lol2019", 1,  0, 0,  5, 1);
-        $structure[] = array("lol2019", 3,  0, 1,  5, 1);
-        $structure[] = array("lol2019", 5,  0, 3,  5, 1);
-        $structure[] = array("lol2019", 7,  0, 4,  5, 1);
-        $structure[] = array("lol2019", 9,  0, 6,  5, 1);
-        $structure[] = array("lol2019", 11, 0, 7,  5, 1);
-        $structure[] = array("lol2019", 13, 0, 9,  5, 1);
-        $structure[] = array("lol2019", 15, 0, 10, 5, 1);
-        $structure[] = array("lol2019", 17, 0, 12, 5, 1);
-        $structure[] = array("lol2019", 19, 0, 13, 5, 1);
-        $structure[] = array("lol2019", 21, 0, 15, 5, 1);
-        $structure[] = array("lol2019", 23, 0, 16, 5, 1);
+        $structure[] = array("csgo2020", 1,  0, 0,  5, 1);
+        $structure[] = array("csgo2020", 5,  0, 1,  5, 1);
+        $structure[] = array("csgo2020", 9,  0, 3,  5, 1);
+        $structure[] = array("csgo2020", 13, 0, 4,  5, 1);
+        $structure[] = array("csgo2020", 17, 0, 6,  5, 1);
+        $structure[] = array("csgo2020", 21, 0, 7,  5, 1);
 
-        $structure[] = array("lol2019", 2,  5, 0,  5, 1);
-        $structure[] = array("lol2019", 4,  5, 1,  5, 1);
-        $structure[] = array("lol2019", 6,  5, 3,  5, 1);
-        $structure[] = array("lol2019", 8,  5, 4,  5, 1);
-        $structure[] = array("lol2019", 10, 5, 6,  5, 1);
-        $structure[] = array("lol2019", 12, 5, 7,  5, 1);
-        $structure[] = array("lol2019", 14, 5, 9,  5, 1);
-        $structure[] = array("lol2019", 16, 5, 10, 5, 1);
-        $structure[] = array("lol2019", 18, 5, 12, 5, 1);
-        $structure[] = array("lol2019", 20, 5, 13, 5, 1);
-        $structure[] = array("lol2019", 22, 5, 15, 5, 1);
-        $structure[] = array("lol2019", 24, 5, 16, 5, 1);
+        $structure[] = array("csgo2020", 2,  5, 0,  5, 1);
+        $structure[] = array("csgo2020", 6,  5, 1,  5, 1);
+        $structure[] = array("csgo2020", 10, 5, 3,  5, 1);
+        $structure[] = array("csgo2020", 14, 5, 4,  5, 1);
+        $structure[] = array("csgo2020", 18, 5, 6,  5, 1);
+        $structure[] = array("csgo2020", 22, 5, 7,  5, 1);
+
+        $structure[] = array("csgo2020", 3,  11, 0, 5, 1);
+        $structure[] = array("csgo2020", 7,  11, 1, 5, 1);
+        $structure[] = array("csgo2020", 11, 11, 3, 5, 1);
+        $structure[] = array("csgo2020", 15, 11, 4, 5, 1);
+        $structure[] = array("csgo2020", 19, 11, 6, 5, 1);
+        $structure[] = array("csgo2020", 23, 11, 7, 5, 1);
+
+        $structure[] = array("csgo2020", 4,  16, 0, 5, 1);
+        $structure[] = array("csgo2020", 8,  16, 1, 5, 1);
+        $structure[] = array("csgo2020", 12, 16, 3, 5, 1);
+        $structure[] = array("csgo2020", 16, 16, 4, 5, 1);
+        $structure[] = array("csgo2020", 20, 16, 6, 5, 1);
+        $structure[] = array("csgo2020", 24, 16, 7, 5, 1);
 
         //                      game     id  x   y   w  h
-        $structure[] = array("csgo2019", 1,  23, 0,  5, 1);
-        $structure[] = array("csgo2019", 4,  23, 1,  5, 1);
-        $structure[] = array("csgo2019", 7,  23, 3,  5, 1);
-        $structure[] = array("csgo2019", 10, 23, 4,  5, 1);
-        $structure[] = array("csgo2019", 13, 23, 6,  5, 1);
-        $structure[] = array("csgo2019", 16, 23, 7,  5, 1);
-        $structure[] = array("csgo2019", 19, 23, 9,  5, 1);
-        $structure[] = array("csgo2019", 22, 23, 10, 5, 1);
+        $structure[] = array("lol2020", 1,  0, 10,  5, 1);
+        $structure[] = array("lol2020", 5,  0, 11,  5, 1);
+        $structure[] = array("lol2020", 9,  0, 13,  5, 1);
+        $structure[] = array("lol2020", 13, 0, 14,  5, 1);
+        $structure[] = array("lol2020", 17, 0, 16,  5, 1);
+        $structure[] = array("lol2020", 21, 0, 17,  5, 1);
 
-        $structure[] = array("csgo2019", 2,  28, 0,  5, 1);
-        $structure[] = array("csgo2019", 5,  28, 1,  5, 1);
-        $structure[] = array("csgo2019", 8,  28, 3,  5, 1);
-        $structure[] = array("csgo2019", 11, 28, 4,  5, 1);
-        $structure[] = array("csgo2019", 14, 28, 6,  5, 1);
-        $structure[] = array("csgo2019", 17, 28, 7,  5, 1);
-        $structure[] = array("csgo2019", 20, 28, 9,  5, 1);
-        $structure[] = array("csgo2019", 23, 28, 10, 5, 1);
+        $structure[] = array("lol2020", 2,  5, 10,  5, 1);
+        $structure[] = array("lol2020", 6,  5, 11,  5, 1);
+        $structure[] = array("lol2020", 10, 5, 13,  5, 1);
+        $structure[] = array("lol2020", 14, 5, 14,  5, 1);
+        $structure[] = array("lol2020", 18, 5, 16,  5, 1);
+        $structure[] = array("lol2020", 22, 5, 17,  5, 1);
 
-        $structure[] = array("csgo2019", 3,  33, 0,  5, 1);
-        $structure[] = array("csgo2019", 6,  33, 1,  5, 1);
-        $structure[] = array("csgo2019", 9,  33, 3,  5, 1);
-        $structure[] = array("csgo2019", 12, 33, 4,  5, 1);
-        $structure[] = array("csgo2019", 15, 33, 6,  5, 1);
-        $structure[] = array("csgo2019", 18, 33, 7,  5, 1);
-        $structure[] = array("csgo2019", 21, 33, 9,  5, 1);
-        $structure[] = array("csgo2019", 24, 33, 10, 5, 1);
+        $structure[] = array("lol2020", 3,  11, 10, 5, 1);
+        $structure[] = array("lol2020", 7,  11, 11, 5, 1);
+        $structure[] = array("lol2020", 11, 11, 13, 5, 1);
+        $structure[] = array("lol2020", 15, 11, 14, 5, 1);
+        $structure[] = array("lol2020", 19, 11, 16, 5, 1);
+        $structure[] = array("lol2020", 23, 11, 17, 5, 1);
+
+        $structure[] = array("lol2020", 4,  16, 10, 5, 1);
+        $structure[] = array("lol2020", 8,  16, 11, 5, 1);
+        $structure[] = array("lol2020", 12, 16, 13, 5, 1);
+        $structure[] = array("lol2020", 16, 16, 14, 5, 1);
+        $structure[] = array("lol2020", 20, 16, 16, 5, 1);
+        $structure[] = array("lol2020", 24, 16, 17, 5, 1);
 
         //                      game    id  x   y   w  h
-        $structure[] = array("fbr2019", 9,  15, 0,  1, 4);
-        $structure[] = array("fbr2019", 13, 16, 0,  1, 4);
-        $structure[] = array("fbr2019", 17, 18, 0,  1, 4);
-        $structure[] = array("fbr2019", 21, 19, 0,  1, 4);
+        $structure[] = array("dota2020", 1,  27, 0,  5, 1);
+        $structure[] = array("dota2020", 3,  27, 1,  5, 1);
+        $structure[] = array("dota2020", 5,  27, 3,  5, 1);
+        $structure[] = array("dota2020", 7,  27, 4,  5, 1);
+        $structure[] = array("dota2020", 9,  27, 6,  5, 1);
+        $structure[] = array("dota2020", 11, 27, 7,  5, 1);
 
-        $structure[] = array("fbr2019", 10, 15, 4,  1, 4);
-        $structure[] = array("fbr2019", 14, 16, 4,  1, 4);
-        $structure[] = array("fbr2019", 18, 18, 4,  1, 4);
-        $structure[] = array("fbr2019", 22, 19, 4,  1, 4); 
-        
-        $structure[] = array("fbr2019", 11, 15, 8,  1, 4);
-        $structure[] = array("fbr2019", 15, 16, 8,  1, 4);
-        $structure[] = array("fbr2019", 19, 18, 8,  1, 4);
-        $structure[] = array("fbr2019", 23, 19, 8,  1, 4); 
-        
-        $structure[] = array("fbr2019", 12, 15, 12,  1, 4);
-        $structure[] = array("fbr2019", 16, 16, 12,  1, 4);
-        $structure[] = array("fbr2019", 20, 18, 12,  1, 4);
-        $structure[] = array("fbr2019", 24, 19, 12,  1, 4);
+        $structure[] = array("dota2020", 13, 27, 10,  5, 1);
+        $structure[] = array("dota2020", 15, 27, 11,  5, 1);
+        $structure[] = array("dota2020", 17, 27, 13,  5, 1);
+        $structure[] = array("dota2020", 19, 27, 14,  5, 1);
+        $structure[] = array("dota2020", 21, 27, 16,  5, 1);
+        $structure[] = array("dota2020", 23, 27, 17,  5, 1);
 
-        $structure[] = array("fbr2019", 28, 26, 12,  4, 1);
-        $structure[] = array("fbr2019", 5,  26, 13,  4, 1);
-        $structure[] = array("fbr2019", 7,  26, 15,  4, 1);
-        $structure[] = array("fbr2019", 3,  26, 16,  4, 1);
-        
-        $structure[] = array("fbr2019", 25, 30, 12,  4, 1);
-        $structure[] = array("fbr2019", 8,  30, 13,  4, 1);
-        $structure[] = array("fbr2019", 6,  30, 15,  4, 1);
-        $structure[] = array("fbr2019", 2,  30, 16,  4, 1);
+        $structure[] = array("dota2020", 2,  32, 0,  5, 1);
+        $structure[] = array("dota2020", 4,  32, 1,  5, 1);
+        $structure[] = array("dota2020", 6,  32, 3,  5, 1);
+        $structure[] = array("dota2020", 8,  32, 4,  5, 1);
+        $structure[] = array("dota2020", 10, 32, 6,  5, 1);
+        $structure[] = array("dota2020", 12, 32, 7,  5, 1);
 
-        $structure[] = array("fbr2019", 4,  34, 12,  4, 1);
-        $structure[] = array("fbr2019", 26, 34, 13,  4, 1);
-        $structure[] = array("fbr2019", 27, 34, 15,  4, 1);
-        $structure[] = array("fbr2019", 1,  34, 16,  4, 1);
+        $structure[] = array("dota2020", 14, 32, 10, 5, 1);
+        $structure[] = array("dota2020", 16, 32, 11, 5, 1);
+        $structure[] = array("dota2020", 18, 32, 13, 5, 1);
+        $structure[] = array("dota2020", 20, 32, 14, 5, 1);
+        $structure[] = array("dota2020", 22, 32, 16, 5, 1);
+        $structure[] = array("dota2020", 24, 32, 17, 5, 1);
 
-        $structure[] = array("streamer", 0, 22, 0,  1, 2);
-        $structure[] = array("streamer", 1, 22, 3,  1, 2);
-        $structure[] = array("streamer", 2, 22, 6,  1, 2);
-        $structure[] = array("streamer", 3, 22, 9,  1, 2);
+        // Initalize counters for TFT
+        $tft = 1;
 
-        // Initalize counters for HS
-        $hs = 1;
-
-        // rightmost table 12131516 2638
-        for($j = 0; $j < 16; $j++) {
-            $structure[] = array("hs2019", $hs++, 12, $j, 1, 1);
-            $structure[] = array("hs2019", $hs++, 13, $j, 1, 1);
+        // rightmost table 23
+        for($j = 0; $j < 18; $j++) {
+            if ($j!=8 && $j!=9) {
+                $structure[] = array("tft2020", $tft++, 23, $j, 1, 1);
+                $structure[] = array("tft2020", $tft++, 24, $j, 1, 1);
+            }
         }
 
         return $structure;
