@@ -157,68 +157,64 @@
 
         {% block bottom_infos %}
         <div class="navmap">
-        <nav>
-          <ul>
-            <li>
-              <header><a href="{{ path('insalan_tournament_default_index') }}">Tournois</a></header>
-              <div>
+          <nav>
+            <ul>
+              <li>
+                <header><a href="{{ path('insalan_tournament_default_index') }}">Tournois</a></header>
                 <ul>
                   <li><a href="{{ path('insalan_news_default_index') }}">Accueil</a></li>
                   <li><a href="{{ path('insalan_user_default_index') }}">Connexion</a></li>
                   <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
                 </ul>
-              </div>
-            </li>
+              </li>
 
-            <li>
-              <header><a href="{{ path('insalan_information_default_faq') }}">Infos</a></header>
-              <div>
+              <li>
+                <header><a href="{{ path('insalan_information_default_faq') }}">Infos</a></header>
                 <ul>
                   <li><a href="{{ path('insalan_news_default_index') }}">Déroulement</a></li>
                   <li><a href="{{ path('insalan_tournament_default_index') }}">Jeux</a></li>
                   <li><a href="{{ path('insalan_news_default_index') }}">Prix</a></li>
                 </ul>
-              </div>
-            </li>
+              </li>
 
-            <li>
-              <header><a href="{{ path('insalan_news_default_index') }}">InsaLan.fr</a></header>
-              <ul>
-                <li><a href="{{ path('insalan_news_default_index') }}">News</a></li>
-                {#<li><a href="http://www.insalan.fr/gallery/">Galerie</a></li>
-                <li><a href="{{ path('insalan_stream_default_index') }}">Stream</a></li>#}
-                <li><a href="http://old.insalan.fr/forum/">Forum</a></li>
-                <li><a href="{{ path('insalan_information_default_faq') }}#contact">Contact</a></li>
-              </ul>
-            </li>
+              <li>
+                <header><a href="{{ path('insalan_news_default_index') }}">InsaLan.fr</a></header>
+                <ul>
+                  <li><a href="{{ path('insalan_news_default_index') }}">News</a></li>
+                  {#<li><a href="http://www.insalan.fr/gallery/">Galerie</a></li>
+                  <li><a href="{{ path('insalan_stream_default_index') }}">Stream</a></li>#}
+                  <li><a href="http://old.insalan.fr/forum/">Forum</a></li>
+                  <li><a href="{{ path('insalan_information_default_faq') }}#contact">Contact</a></li>
+                </ul>
+              </li>
 
-            <li>
-              <header><a>À Propos</a></header>
-              <div>
+              <li>
+                <header><a>À Propos</a></header>
                 <ul>
                   <li><a href="{{ path('insalan_information_default_mentions') }}">Mentions légales</a></li>
                   <li><a href="{{ path('insalan_information_default_salesterms') }}">Conditions générales<br/> de vente</a></li>
                 </ul>
-              </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="logo">
+          <ul>
+            <li>
+              <a href="http://aeir.insa-rennes.fr/">
+                <img src="{{ asset('bundles/insalan/img/partenaires/aeir.png') }}" alt="AEIR" />
+              </a> 
+            </li>
+            <li>
+              <a href="http://www.insa-rennes.fr">
+                <img src="{{ asset('bundles/insalan/img/partenaires/insa-rennes.png') }}" alt="INSA Rennes"/>
+              </a>
             </li>
           </ul>
-        </nav>
-        </div>
-        <div class="logo">
-          <div style="margin-top: 0px; float: right">
-            <div class="partner partner-small" style="display: inline; margin: 0px 10px 0px 10px;">
-              <a href="http://aeir.insa-rennes.fr/">
-                <img style="height: 60px;" src="{{ asset('bundles/insalan/img/partenaires/aeir.png') }}" alt="AEIR" />
-              </a>
-            </div>
-            <div class="partner partner-small" style="display: inline; margin: 0px 10px 0px 10px;">
-              <a href="http://www.insa-rennes.fr">
-                <img style="height: 60px;" src="{{ asset('bundles/insalan/img/partenaires/insa-rennes.png') }}" alt="INSA Rennes"/>
-              </a>
-            </div>
-          </div>
         </div>
         {% endblock %}
+        
         <div class="copyright">
           <ul>
             <li>© 2014-2019 InsaLan</li>
