@@ -312,40 +312,41 @@ figure figcaption {
 /** Footer **/
 
 footer {
-  height: 200px;
+  #height: 200px;
   background: var(--main-color);
   border-top: 1px solid var(--main-light-color);
   clear: both;
   margin-top: 30px;
 }
 
-footer > div {
-  height: 100%;
-  width: 1000px;
-  margin: auto;
-  position: relative;
+footer .container {
+  #weight: 100%;
+  #width: 1000px;
+  #margin: auto;
+  #position: relative;
+  display: grid;
+  grid-template-columns: 200px 3fr 1fr;
+  grid-template-rows: 160px 1fr;
+  grid-template-areas:
+    "contact navmap logo"
+    "copyright copyright copyright";
 }
 
 /** Contact **/
 
-footer aside {
-  height: 160px;
-  width: 220px;
+footer .contact {
+  grid-area: contact;
+}
+
+footer .contact > div {
+  height: 100%;
+  width: 100%;
   background-repeat: repeat-y;
   background-image: url('../img/pattern_footer.png');
   background-position: 0px 4px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
 }
 
-footer aside > div {
-  height: 100%;
-  width: 100%;
-  position: relative;
-}
-
-footer aside #logo {
+footer .contact #logo {
   width: 214px;
   height: 63px;
   display: inline-block;
@@ -356,11 +357,11 @@ footer aside #logo {
   left: 31px;
 }
 
-footer aside #logo:hover {
+footer .contact #logo:hover {
   opacity: 1;
 }
 
-footer aside #facebook {
+footer .contact #facebook {
   width: 27px;
   height: 27px;
   background-color: #3b5998;
@@ -383,11 +384,12 @@ footer aside #facebook {
   display: inline-block;
 }
 
-footer aside #facebook:hover, .social #facebook:hover {
+footer .contact #facebook:hover,
+.social #facebook:hover {
   opacity: 1;
 }
 
-footer aside #twitter {
+footer .contact #twitter {
   width: 27px;
   height: 27px;
   background-color: #00aced;
@@ -410,7 +412,8 @@ footer aside #twitter {
   display: inline-block;
 }
 
-footer aside #twitter:hover, .social #twitter:hover {
+footer .contact #twitter:hover,
+.social #twitter:hover {
   opacity: 1;
 }
 
@@ -444,7 +447,7 @@ footer aside #twitter:hover, .social #twitter:hover {
   opacity: 1;
 }
 
-footer aside #mail {
+footer .contact #mail {
   height: 27px;
   width: 120px;
   background: var(--main-dark-color);
@@ -455,7 +458,7 @@ footer aside #mail {
   left: 62px;
 }
 
-footer aside #mail a {
+footer .contact #mail a {
   color: var(--accent-color);
   font-family: OpenSansCond;
   text-transform: uppercase;
@@ -479,7 +482,7 @@ footer aside #mail a {
   color: var(--comp-light-color);
 }
 
-footer aside #mail:hover, .social #mail:hover {
+footer .contact #mail:hover, .social #mail:hover {
   opacity: 1;
 }
 
@@ -496,12 +499,13 @@ div.social {
 
 /* NAVIGATION ------------------------------------------------------ */
 
+footer .navmap {
+  grid-area: navmap;
+}
+
 footer nav {
-  width: 780px;
-  height: 160px;
-  position: absolute;
-  top: 0px;
-  left: 220px;
+  width: 100%;
+  height: 100%;
 }
 
 footer nav > ul > li {
@@ -566,35 +570,50 @@ footer nav #infos .second li {
   margin-left: 40px;
 }
 
-/** Copyright **/
+/** logo **/
 
-footer #copyright {
-  margin: auto;
-  width: 1000px;
-  height: 39px;
-  border-top: 1px solid var(--main-light-color);
-  position: absolute;
-  bottom: 0px;
-  text-align: center;
+footer .logo {
+  grid-area: logo;
 }
 
-footer #copyright p {
-  padding-top: 7px;
+/** Copyright **/
+
+footer .copyright {
+  grid-area: copyright;
+  #margin: auto;
+  #width: 1000px;
+  #height: 39px;
+  #position: absolute;
+  #bottom: 0px;
+  #text-align: center;
+}
+
+footer .copyright ul {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--main-light-color);
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+footer .copyright li {
+  list-style-type: none;
+  #padding-top: 7px;
   font-family: OpenSansCond;
   text-transform: uppercase;
   font-size: 0.9em;
   color: var(--main-light-color);
 }
 
-footer #copyright a {
+footer .copyright a {
   font-family: OpenSansCond;
 }
 
-footer #copyright a:hover {
+footer .copyright a:hover {
   color: var(--accent-color);
 }
 
-footer #copyright span {
+footer .copyright span {
   font-family: OpenSansCond;
   color: var(--accent-color);
   padding-left: 10px;

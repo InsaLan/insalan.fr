@@ -145,17 +145,18 @@
 
     {% block main_bottom %}
     <footer>
-      <div>
-        <aside>
+      <div class="container">
+        <div class="contact">
           <div>
             <a id="logo" href="{{ path('insalan_news_default_index') }}"></a>
             <a id="facebook" href="https://www.facebook.com/insalan"></a>
             <a id="twitter" href="https://twitter.com/insalan"></a>
             <div id="mail"><a href="mailto:contact@insalan.fr">contact@insalan.fr</a></div>
           </div>
-        </aside>
+        </div>
 
         {% block bottom_infos %}
+        <div class="navmap">
         <nav>
           <ul>
             <li>
@@ -201,7 +202,9 @@
               </div>
             </li>
           </ul>
-
+        </nav>
+        </div>
+        <div class="logo">
           <div style="margin-top: 0px; float: right">
             <div class="partner partner-small" style="display: inline; margin: 0px 10px 0px 10px;">
               <a href="http://aeir.insa-rennes.fr/">
@@ -214,14 +217,16 @@
               </a>
             </div>
           </div>
-        </nav>
+        </div>
         {% endblock %}
-        <div id="copyright">
-          <p>
-            © 2014-2018 InsaLan <span>|</span>
-            Design by <a href="https://www.alecahain.fr/">Aceltis</a> <span>|</span>
-            Code by <a href="https://nhurman.fr/">Nicolas</a>, <a href="https://www.lesterpig.com/">Loïck</a>, <a href="https://quentin.dufour.io">Quentin</a> &amp; <a href="https://mricher.fr/">Maximilien</a>
-          </p>
+        <div class="copyright">
+          <ul>
+            <li>© 2014-2019 InsaLan</li>
+            <li><span>|</span></li>
+            <li>Design by <a href="https://www.alecahain.fr/">Aceltis</a></li>
+            <li><span>|</span></li>
+            <li>Code by <a href="https://nhurman.fr/">Nicolas</a>, <a href="https://www.lesterpig.com/">Loïck</a>, <a href="https://quentin.dufour.io">Quentin</a> &amp; <a href="https://mricher.fr/">Maximilien</a></li>
+          </ul>        
         </div>
       </div>
     </footer>
