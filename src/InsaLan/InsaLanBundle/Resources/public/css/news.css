@@ -340,7 +340,7 @@ section.news nav .next a {
   background-color: var(--comp-color);
   color: var(--main-color);
   padding-top: 40px;
-  padding-bottom: 100px;
+  padding-bottom: 40px;
 }
 
 .highlightBox .container > ul {
@@ -363,13 +363,14 @@ section.news nav .next a {
 .highlightBox .partner-display > div {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-gap: 20px; 
+  grid-gap: 10px; 
 }
 
 .highlightBox .partner-display a > div {
   height: 100px;
   padding: 5%;
-  background-color: green;
+  background-color: var(--main-color);
+  color: var(--comp-color);
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -379,7 +380,11 @@ section.news nav .next a {
 
 .highlightBox .partner-display img {
   max-height: 70%;
-  max-width: 70%;
+  max-width: 90%;
+}
+
+.highlightBox .partner-display h4 {
+  font-weight: bold;
 }
 
 .partner-list {

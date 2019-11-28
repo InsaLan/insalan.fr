@@ -34,6 +34,10 @@ em, i {
   font-style: italic;
 }
 
+strong {
+  color: var(--accent-color);
+}
+
 strong, b {
   font-weight: bold;
 }
@@ -263,7 +267,7 @@ article > header h2 {
 h3 {
   font-family: OpenSansCond;
   text-transform: uppercase;
-  color: var(--comp-light-color);
+  #color: var(--comp-light-color);
   margin-bottom: 10px;
 }
 
@@ -759,12 +763,6 @@ button:active,
   margin-left: 10px;
   font-size: 1em;
   line-height: 100%;
-}
-
-
-
-strong {
-  color: #00bff3;
 }
 
 .hero > .big-picture {
