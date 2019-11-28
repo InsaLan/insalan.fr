@@ -52,6 +52,17 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/cosplay/rules")
+     * @Template()
+     */
+    public function cosplayRulesAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $rules = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("cosplayrules");
+        return array("rules" => $rules);
+    }
+
+    /**
      * @Route("/baston")
      * @Template()
      */

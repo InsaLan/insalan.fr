@@ -45,11 +45,11 @@
 
     <br /><br />
     <div class="partner-list">
-        <div class="partner">
+        {#<div class="partner">
             <a href="https://www.ecolaines.com/">
             <img src="{{ asset('bundles/insalan/img/partenaires/ecolaine.png') }}" alt="Ecolaine" />
             </a>
-        </div>{#
+        </div>
         <div class="partner partner-big">
             <a href="https://www.facebook.com/pages/JAPANIM-RENNES/107800482584960">
             <img src="{{ asset('bundles/insalan/img/partenaires/japanim.jpg') }}" alt="Jap'Anim" />
@@ -77,7 +77,8 @@
     <section>
         <p>
             <ol class="shift">
-                <li><strong><a href="{{ asset('bundles/insalan/pdf/reglement.pdf') }}" target="_blank" >[Règlement &#x25BE;]</a></strong>.</li>
+                {#<li><strong><a href="{{ asset('bundles/insalan/pdf/reglement.pdf') }}" target="_blank" >[Règlement &#x25BE;]</a></strong>.</li>#}
+                <li><strong><a href="{{ path('insalan_information_default_cosplayrules') }}">Règlement</a></strong>.</li>
                 <li><strong><a href="{{ asset('bundles/insalan/pdf/droit-image-cosplay.pdf') }}" target="_blank" >[Autorisation de droit à l'image &#x25BE;]</a></strong>.</li>
                 <li>Pour les mineurs : <strong><a href="{{ asset('bundles/insalan/pdf/autorisation-parental-cosplay.pdf') }}" target="_blank" >[Autorisation parentale &#x25BE;]</a></strong>.</li>
             </ol>
@@ -109,7 +110,7 @@
 </article>
 
 <br/><br/><center>
-<iframe src="https://docs.google.com/forms/d/1OlE7HneRUqWUuu57SWyQAaPflW2Hk4vlY9wkbyfnnrc/viewform?embedded=true" width="700" height="300" frameborder="0" marginheight="0" marginwidth="0">Chargement en cours...</iframe>
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSf935s_yWrarcj8Fmw19WcW-lVn8LLGp9i_iJASwnBNA8ZFvA/viewform?embedded=true" width="700" height="300" frameborder="0" marginheight="0" marginwidth="0">Chargement en cours...</iframe>
 </center><br/><br/>
 
 
