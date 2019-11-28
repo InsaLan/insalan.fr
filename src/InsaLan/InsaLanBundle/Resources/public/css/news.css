@@ -333,6 +333,55 @@ section.news nav .next a {
   float: right;
 }
 
+/** highlightBox **/
+
+.highlightBox {
+  #background: url('../img/fade-bot.png') repeat-x top, url('../img/tweed.png') repeat;
+  background-color: var(--comp-color);
+  color: var(--main-color);
+  padding-top: 40px;
+  padding-bottom: 100px;
+}
+
+.highlightBox .container > ul {
+  margin: 20px;
+}
+
+.highlightBox .container > ul {
+  display: flex;
+  justify-content: space-around;
+}
+
+.highlightBox .container > ul li {
+  list-style: none;
+}
+
+.highlightBox .partner-display {
+  padding-top: 20px;
+}
+
+.highlightBox .partner-display > div {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 20px; 
+}
+
+.highlightBox .partner-display a > div {
+  height: 100px;
+  padding: 5%;
+  background-color: green;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+}
+
+.highlightBox .partner-display img {
+  max-height: 70%;
+  max-width: 70%;
+}
+
 .partner-list {
     text-align: center;
 }

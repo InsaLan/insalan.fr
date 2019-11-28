@@ -983,14 +983,6 @@ li a:hover {
   color: #fff;
 }
 
-.highlightBox {
-  #background: url('../img/fade-bot.png') repeat-x top, url('../img/tweed.png') repeat;
-  background-color: var(--comp-color);
-  color: var(--main-color);
-  padding-top: 40px;
-  padding-bottom: 100px;
-}
-
 .list-choice {
     color: #fff;
 }
