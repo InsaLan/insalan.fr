@@ -10,6 +10,7 @@
   --comp-dark-color: #a2a2a2;
 
   --accent-color: #00bff3;
+  --accent-light-color: #69dcfc;
 }
 
 /** General **/
@@ -135,7 +136,7 @@ body > header {
   background: var(--main-color);
   border-bottom: 1px solid var(--main-light-color);
   border-top: 1px solid var(--main-light-color);
-  margin-bottom: 35px;
+  #margin-bottom: 35px;
   top: 0;
   position: sticky;
   z-index: 1;
@@ -251,6 +252,11 @@ body > header .navbar nav li .dropdown {
 
 /** Sections **/
 
+body > .container {
+  background-color: var(--main-color);
+  padding: 20px;
+}
+
 article {
   margin-top: 30px;
 }
@@ -320,7 +326,7 @@ footer {
   background: var(--main-color);
   border-top: 1px solid var(--main-light-color);
   clear: both;
-  margin-top: 30px;
+  #margin-top: 30px;
 }
 
 footer .container {
@@ -561,7 +567,7 @@ footer nav > ul > li header a {
 }
 
 footer nav > ul > li header a:hover {
-  color: #69dcfc;
+  color: var(--accent-light-color);
 }
 
 footer nav > ul > li ul {
@@ -724,6 +730,18 @@ button,
   padding: 5px;
 }
 
+input[type=submit]:focus-within,
+input[type=button]:focus-within,
+button:focus-within,
+.btn2:focus-within,
+input[type=submit]:hover,
+input[type=button]:hover,
+button:hover,
+.btn2:hover {
+  color: var(--main-light-color);
+  background-color: var(--accent-light-color);
+}
+
 input[type=submit]:active,
 input[type=button]:active,
 button:active,
@@ -732,7 +750,12 @@ button:active,
 }
 
 .btn2-nocolor {
-    background-color: var(--comp-dark-color);
+  background-color: var(--comp-dark-color);
+}
+
+.btn2-nocolor:focus-within,
+.btn2-nocolor:hover {
+  background-color: var(--comp-color);
 }
 
 .input select {

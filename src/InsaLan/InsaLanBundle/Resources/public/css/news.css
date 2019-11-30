@@ -378,6 +378,11 @@ section.news nav .next a {
   text-align: center;
 }
 
+.highlightBox .partner-display a:hover > div {
+  background-color: var(--main-light-color);
+  color: var(--accent-color);
+}
+
 .highlightBox .partner-display img {
   max-height: 70%;
   max-width: 90%;
