@@ -117,6 +117,15 @@
       </div>
     </header>
     {% endblock %}
+      
+    {% block social %}
+    <div class="social">
+      <div id="return-top"><a href="#body"><span></span></a></div><br />
+      <a id="twitter" target="_blank" href="https://twitter.com/insalan"></a><br />
+      <a id="facebook" target="_blank" href="https://www.facebook.com/insalan"></a><br />
+      <a id="mail" href="mailto:contact@insalan.fr"><span>📧</span></a><br />
+    </div>
+    {% endblock %}
 
     <section class="container">
       {% for message in app.session.flashbag.get('info') %}
@@ -128,15 +137,6 @@
       {% endfor %}
 
       {% block body %}{% endblock %}
-
-      {% block social %}
-      <div class="social">
-        <div id="return-top"><a href="#body"><span></span></a></div><br />
-        <a id="twitter" target="_blank" href="https://twitter.com/insalan"></a><br />
-        <a id="facebook" target="_blank" href="https://www.facebook.com/insalan"></a><br />
-        <a id="mail" href="mailto:contact@insalan.fr"><span>📧</span></a><br />
-      </div>
-      {% endblock %}
 
       <div class="clear"></div>
     </section>

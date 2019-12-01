@@ -78,7 +78,10 @@ table, tr, th, td {
 }
 
 body {
-  background: var(--main-dark-color);
+  background-image: url('../img/background.jpg');
+  background-attachment: fixed;
+  background-size: 100%;
+  #background: var(--main-dark-color);
   color: var(--comp-dark-color);
 }
 
