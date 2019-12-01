@@ -7,13 +7,13 @@ article > aside {
 }
 
 article > aside .square {
-  background-color: var(--accent-color);
+  background-color: rgb(var(--accent-color));
   width: 80px;
   height: 80px;
 }
 
 article.subsection > aside .square {
-  background-color: var(--accent-color);
+  background-color: rgb(var(--accent-color));
   width: 27px;
   height: 27px;
 }
@@ -31,7 +31,7 @@ article > aside .square a span {
   position: relative;
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
-  border-bottom: 20px solid var(--comp-light-color);
+  border-bottom: 20px solid rgb(var(--comp-light-color));
   top: 30px;
   left: 20px;
 }
@@ -39,7 +39,7 @@ article > aside .square a span {
 article.subsection > aside .square a span {
   border-bottom: 7px solid transparent;
   border-top: 7px solid transparent;
-  border-left: 7px solid var(--main-dark-color);
+  border-left: 7px solid rgb(var(--main-dark-color));
   top: 7px;
   left: 10px;
 }
@@ -53,14 +53,14 @@ article > aside li {
 article > aside li:nth-child(odd) {
   font-family: Oswald;
   font-size: 0.8em;
-  color: var(--comp-light-color);
+  color: rgb(var(--comp-light-color));
   padding-top: 10px;
 }
 
 article > aside li:nth-child(even) {
   font-family: OpenSansCond;
   font-size: 0.9em;
-  color: var(--accent-color);
+  color: rgb(var(--accent-color));
 }
 
 article > header {
@@ -77,7 +77,7 @@ article.subsection > header {
 article.subsection > header h2 {
   font-family: OpenSansCond;
   text-transform: uppercase;
-  color: var(--accent-color);
+  color: rgb(var(--accent-color));
   letter-spacing: 0px;
   margin-bottom: 5px;
   font-size: 2.1em;
@@ -87,7 +87,7 @@ article.subsection > header h2 {
 article > header span {
   font-family: Oswald;
   text-transform: uppercase;
-  color: var(--comp-light-color);
+  color: rgb(var(--comp-light-color));
   font-size: 0.8em;
 }
 
@@ -116,15 +116,15 @@ article.subsection > section p {
 }
 
 article > section p em {
-  color: var(--accent-color);
+  color: rgb(var(--accent-color));
 }
 
 article > section p a {
-  color: var(--comp-light-color);
+  color: rgb(var(--comp-light-color));
 }
 
 article > section p a:hover {
-  color: var(--accent-color);
+  color: rgb(var(--accent-color));
 }
 
 /* List */
@@ -269,7 +269,7 @@ section.news {
 
 section.news > h2,
 aside.twitter > h2 {
-  color: var(--comp-light-color);
+  color: rgb(var(--comp-light-color));
   font-family: OpenSansCond;
   font-size: 3em;
   letter-spacing: 3px;
@@ -287,7 +287,7 @@ aside.twitter > div {
   background-color: #0e0e0e;
   padding-left: 4px;
   border-radius: 10px;
-  color: var(--comp-dark-color);
+  color: rgb(var(--comp-dark-color));
 }
 
 section.news nav {
@@ -303,14 +303,14 @@ section.news nav a {
   padding: 1px 10px;
   width: 80px;
   text-align: center;
-  background-color: var(--comp-light-color);
-  color: var(--accent-color);
+  background-color: rgb(var(--comp-light-color));
+  color: rgb(var(--accent-color));
   text-transform: uppercase;
   font-weight: bold;
 }
 
 section.news nav a:hover {
-  background-color: var(--main-color);
+  background-color: rgb(var(--main-color))
 }
 
 section.news nav .prev span {
@@ -337,10 +337,13 @@ section.news nav .next a {
 
 .highlightBox {
   #background: url('../img/fade-bot.png') repeat-x top, url('../img/tweed.png') repeat;
-  background-color: var(--comp-color);
-  color: var(--main-color);
-  padding-top: 40px;
-  padding-bottom: 40px;
+  background-color: rgba(var(--comp-color), 0.65);
+  color: rgb(var(--main-color));
+  #padding-top: 40px;
+  #padding-bottom: 40px;
+  padding: 20px;
+  margin: auto;
+  width: 1000px;
 }
 
 .highlightBox .container > ul {
@@ -369,8 +372,8 @@ section.news nav .next a {
 .highlightBox .partner-display a > div {
   height: 100px;
   padding: 5%;
-  background-color: var(--main-color);
-  color: var(--comp-color);
+  background-color: rgb(var(--main-color));
+  color: rgb(var(--comp-color));
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -379,8 +382,8 @@ section.news nav .next a {
 }
 
 .highlightBox .partner-display a:hover > div {
-  background-color: var(--main-light-color);
-  color: var(--accent-color);
+  background-color: rgb(var(--main-light-color));
+  color: rgb(var(--accent-color));
 }
 
 .highlightBox .partner-display img {

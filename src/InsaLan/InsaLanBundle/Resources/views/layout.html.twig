@@ -119,12 +119,26 @@
     {% endblock %}
       
     {% block social %}
-    <div class="social">
-      <div id="return-top"><a href="#body"><span></span></a></div><br />
-      <a id="twitter" target="_blank" href="https://twitter.com/insalan"></a><br />
-      <a id="facebook" target="_blank" href="https://www.facebook.com/insalan"></a><br />
-      <a id="mail" href="mailto:contact@insalan.fr"><span>📧</span></a><br />
-    </div>
+    <aside class="social">
+      <ul>
+        <li>
+          <div id="return-top"><a href="#body"><span></span></a></div>
+        </li>
+        <li>
+          <a id="twitter" target="_blank" href="https://twitter.com/insalan">
+            <img src="{{ asset('bundles/insalan/img/twitter.png') }}" alt="Twitter"/>
+          </a>
+        </li>
+        <li>
+          <a id="facebook" target="_blank" href="https://www.facebook.com/insalan">
+            <img src="{{ asset('bundles/insalan/img/facebook.png') }}" alt="Facebook"/>
+          </a>
+        </li>
+        <li>
+          <a id="mail" href="mailto:contact@insalan.fr"><span>📧</span></a>
+        </li> 
+      </ul>
+    </aside>
     {% endblock %}
 
     <section class="container">
@@ -149,8 +163,12 @@
         <div class="contact">
           <div>
             <a id="logo" href="{{ path('insalan_news_default_index') }}"></a>
-            <a id="facebook" href="https://www.facebook.com/insalan"></a>
-            <a id="twitter" href="https://twitter.com/insalan"></a>
+            <a id="facebook" href="https://www.facebook.com/insalan">
+              <img src="{{ asset('bundles/insalan/img/facebook.png') }}" alt="Facebook"/>
+            </a>
+            <a id="twitter" href="https://twitter.com/insalan">
+              <img src="{{ asset('bundles/insalan/img/twitter.png') }}" alt="Twitter"/>
+            </a>
             <div id="mail"><a href="mailto:contact@insalan.fr">contact@insalan.fr</a></div>
           </div>
         </div>

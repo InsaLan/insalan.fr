@@ -1,6 +1,17 @@
 /** Color Theme **/
 
 :root {
+  --main-color: 45, 45, 45;
+  --main-light-color: 97, 97, 97;
+  --main-dark-color: 0, 0, 0;
+  
+  --comp-color: 206, 206, 206;
+  --comp-light-color: 255, 255, 255;
+  --comp-dark-color: 162, 162, 162;
+
+  --accent-color: 0, 191, 243;
+  --accent-light-color: 105, 220, 252;
+/*
   --main-color: #2d2d2d;
   --main-light-color: #616161;
   --main-dark-color: black;
@@ -11,6 +22,7 @@
 
   --accent-color: #00bff3;
   --accent-light-color: #69dcfc;
+*/
 }
 
 /** General **/
@@ -36,7 +48,7 @@ em, i {
 }
 
 strong {
-  color: var(--accent-color);
+  color: rgb(var(--accent-color));
 }
 
 strong, b {
@@ -82,7 +94,7 @@ body {
   background-attachment: fixed;
   background-size: 100%;
   #background: var(--main-dark-color);
-  color: var(--comp-dark-color);
+  color: rgb(var(--comp-dark-color));
 }
 
 .todo {
@@ -129,16 +141,16 @@ body {
 }
 
 .alert-info {
-  background-color: var(--accent-color);
+  background-color: rgb(var(--accent-color));
 }
 
 /** Header **/
 
 body > header {
   height: 100px;
-  background: var(--main-color);
-  border-bottom: 1px solid var(--main-light-color);
-  border-top: 1px solid var(--main-light-color);
+  background: rgb(var(--main-color));
+  border-bottom: 1px solid rgb(var(--main-light-color));
+  border-top: 1px solid rgb(var(--main-light-color));
   #margin-bottom: 35px;
   top: 0;
   position: sticky;
@@ -209,7 +221,7 @@ body > header .navbar nav ul li a {
 
 
 body > header .navbar nav li.active a {
-  color: white;
+  color: rgb(--var(--comp-light-color));
 }
 
 body > header .navbar nav li:hover:after,
@@ -230,8 +242,8 @@ body > header .navbar nav li .dropdown {
   position: absolute;
   min-width: 160px;
   overflow: auto;
-  background-color: var(--main-color);
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  background-color: rgb(var(--main-color));
+  box-shadow: 0px 8px 16px 0px rgba(var(--main-dark-color),0.2);
   z-index: 1;
 }
 
@@ -245,7 +257,7 @@ body > header .navbar nav li .dropdown {
 
 .dropdown-content a:focus-within,
 .dropdown-content a:hover {
-  background-color: var(--comp-dark-color);
+  background-color: rgb(var(--comp-dark-color));
 }
 
 .dropdown:focus-within .dropdown-content,
@@ -256,7 +268,7 @@ body > header .navbar nav li .dropdown {
 /** Sections **/
 
 body > .container {
-  background-color: var(--main-color);
+  background-color: rgba(var(--main-color), 0.65);
   padding: 20px;
 }
 
@@ -265,7 +277,7 @@ article {
 }
 
 article > header h2 {
-  color: var(--comp-light-color);
+  color: rgb(var(--comp-light-color));
   font-family: OpenSansCond;
   font-size: 3em;
   letter-spacing: 3px;
@@ -276,33 +288,33 @@ article > header h2 {
 h3 {
   font-family: OpenSansCond;
   text-transform: uppercase;
-  #color: var(--comp-light-color);
+  #color: rgb(var(--comp-light-color));
   margin-bottom: 10px;
 }
 
 h3.blue {
-  color: var(--accent-color);
+  color: rgb(var(--accent-color));
 }
 
 
 article > section p em {
-  color: var(--accent-color);
+  color: rgb(var(--accent-color));
 }
 
 article > section p a {
-  color: var(--comp-light-color);
+  color: rgb(var(--comp-light-color));
 }
 
 article > section p a:hover {
-  color: var(--accent-color);
+  color: rgb(var(--accent-color));
 }
 
 hr {
   width: 1000px;
-  background-color: var(--main-dark-color);
+  background-color: rgb(var(--main-dark-color));
   height: 1px;
   opacity: 0.5;
-  border-bottom: 1px dashed var(--accent-color);
+  border-bottom: 1px dashed rgb(var(--accent-color));
 }
 
 /** Figure **/
@@ -326,8 +338,8 @@ figure figcaption {
 
 footer {
   #height: 200px;
-  background: var(--main-color);
-  border-top: 1px solid var(--main-light-color);
+  background: rgb(var(--main-color));
+  border-top: 1px solid rgb(var(--main-light-color));
   clear: both;
   #margin-top: 30px;
 }
@@ -378,8 +390,8 @@ footer .contact #facebook {
   width: 27px;
   height: 27px;
   background-color: #3b5998;
-  background-image: url('../img/facebook.png');
-  background-size: 27px 27px;
+  #background-image: url('../img/facebook.png');
+  #background-size: 27px 27px;
   opacity: 0.5;
   display: inline-block;
   position: absolute;
@@ -391,8 +403,8 @@ footer .contact #facebook {
   width: 40px;
   height: 40px;
   background-color: #3b5998;
-  background-image: url('../img/facebook.png');
-  background-size: 40px 40px;
+  #background-image: url('../img/facebook.png');
+  #background-size: 40px 40px;
   opacity: 0.8;
   display: inline-block;
 }
@@ -406,8 +418,8 @@ footer .contact #twitter {
   width: 27px;
   height: 27px;
   background-color: #00aced;
-  background-image: url('../img/twitter.png');
-  background-size: 27px 27px;
+  #background-image: url('../img/twitter.png');
+  #background-size: 27px 27px;
   opacity: 0.5;
   display: inline-block;
   position: absolute;
@@ -419,8 +431,8 @@ footer .contact #twitter {
   width: 40px;
   height: 40px;
   background-color: #00aced;
-  background-image: url('../img/twitter.png');
-  background-size: 40px 40px;
+  #background-image: url('../img/twitter.png');
+  #background-size: 40px 40px;
   opacity: 0.8;
   display: inline-block;
 }
@@ -431,7 +443,7 @@ footer .contact #twitter:hover,
 }
 
 .social #return-top {
-  background-color: var(--accent-color);
+  background-color: rgb(var(--accent-color));
   width: 40px;
   height: 40px;
   opacity: 0.8;
@@ -451,7 +463,7 @@ footer .contact #twitter:hover,
   position: relative;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 10px solid white;
+  border-bottom: 10px solid rgb(var(--comp-light-color));
   top: 15px;
   left: 10px;
 }
@@ -463,7 +475,7 @@ footer .contact #twitter:hover,
 footer .contact #mail {
   height: 27px;
   width: 120px;
-  background: var(--main-dark-color);
+  background: rgb(var(--main-dark-color));
   opacity: 0.5;
   text-align: center;
   position: absolute;
@@ -482,7 +494,7 @@ footer .contact #mail a {
 .social #mail {
   width: 40px;
   height: 40px;
-  background-color: var(--accent-color);
+  background-color: rgb(var(--accent-color));
   background-size: 40px 40px;
   opacity: 0.8;
   display: inline-block;
@@ -492,14 +504,14 @@ footer .contact #mail a {
   padding-top: 4px;
   padding-left: 3px;
   font-size: 26px;
-  color: var(--comp-light-color);
+  color: rgb(var(--comp-light-color));
 }
 
 footer .contact #mail:hover, .social #mail:hover {
   opacity: 1;
 }
 
-div.social {
+aside.social {
   background: none repeat scroll 0 0 transparent;
   left: 0px;
   top: 106px;
@@ -507,7 +519,13 @@ div.social {
   padding: 0;
   position: fixed;
   width: 40px;
-  z-index: 12;
+  z-index: 1;
+}
+
+.contact img,
+.social img {
+  height: 100%;
+  width: 100%;
 }
 
 /* NAVIGATION ------------------------------------------------------ */
@@ -556,21 +574,21 @@ footer nav #galerie {
 */
 footer nav > ul > li header {
   height: 30px;
-  border-bottom: 1px solid var(--main-light-color);
+  border-bottom: 1px solid rgb(var(--main-light-color));
 }
 
 footer nav li > a:hover {
-  color: var(--comp-light-color);
+  color: rgb(var(--comp-light-color));
 }
 
 footer nav > ul > li header a {
   font-family: Oswald;
   text-transform: uppercase;
-  color: var(--accent-color);
+  color: rgb(var(--accent-color));
 }
 
 footer nav > ul > li header a:hover {
-  color: var(--accent-light-color);
+  color: rgb(var(--accent-light-color));
 }
 
 footer nav > ul > li ul {
@@ -633,7 +651,7 @@ footer .copyright {
 footer .copyright ul {
   display: flex;
   justify-content: center;
-  border-top: 1px solid var(--main-light-color);
+  border-top: 1px solid rgb(var(--main-light-color));
   padding-top: 5px;
   padding-bottom: 5px;
 }
@@ -644,7 +662,7 @@ footer .copyright li {
   font-family: OpenSansCond;
   text-transform: uppercase;
   font-size: 0.9em;
-  color: var(--main-light-color);
+  color: rgb(var(--main-light-color));
 }
 
 footer .copyright a {
@@ -652,7 +670,7 @@ footer .copyright a {
 }
 
 footer .copyright a:hover {
-  color: var(--accent-color);
+  color: rgb(var(--accent-color));
 }
 
 footer .copyright span {
@@ -677,7 +695,7 @@ footer .copyright span {
 }
 
 .input label {
-  color: var(--comp-light-color);
+  color: rgb(var(--comp-light-color));
   font-size: 1.2em;
   line-height: 30px;
   display: block;
@@ -716,7 +734,7 @@ footer .copyright span {
 .input input[type=number],
 .input select {
   color: black;
-  border: solid black 1px;
+  border: solid rgb(var(--main-dark-color)) 1px;
   font-size: 1.2em;
   height: 26px;
   padding: 2px 5px 2px 2px;
@@ -727,9 +745,9 @@ input[type=button],
 button,
 .btn2 {
   font-size: 1.2em;
-  color: var(--comp-light-color);
-  background-color: var(--accent-color);
-  border: 1px solid black;
+  color: rgb(var(--comp-light-color));
+  background-color: rgb(var(--accent-color));
+  border: 1px solid rgb(var(--main-dark-color));
   padding: 5px;
 }
 
@@ -741,8 +759,8 @@ input[type=submit]:hover,
 input[type=button]:hover,
 button:hover,
 .btn2:hover {
-  color: var(--main-light-color);
-  background-color: var(--accent-light-color);
+  color: rgb(var(--main-light-color));
+  background-color: rgb(var(--accent-light-color));
 }
 
 input[type=submit]:active,
@@ -753,12 +771,12 @@ button:active,
 }
 
 .btn2-nocolor {
-  background-color: var(--comp-dark-color);
+  background-color: rgb(var(--comp-dark-color));
 }
 
 .btn2-nocolor:focus-within,
 .btn2-nocolor:hover {
-  background-color: var(--comp-color);
+  background-color: rgb(var(--comp-color));
 }
 
 .input select {
@@ -810,7 +828,7 @@ button:active,
 
 .btn {
   display: block;
-  background-color: black;
+  background-color: rgb(var(--main-dark-color));
   text-align: center;
   font-size: 40px;
   font-family: OpenSansCond;
@@ -818,7 +836,7 @@ button:active,
 
 .btn-primary {
   color: white;
-  border-bottom: solid var(--accent-color) 1px;
+  border-bottom: solid rgb(var(--accent-color)) 1px;
 }
 
 .btn-danger {
@@ -837,8 +855,8 @@ button:active,
 }
 
 .btn-plain, .btn-plain:hover {
-  background-color: var(--accent-color);
-  color: white;
+  background-color: rgb(var(--accent-color));
+  color: rgb(var(--comp-light-color));
 }
 
 .pull-left {
@@ -1004,15 +1022,15 @@ button:active,
 }
 
 li a:hover {
-  color: #fff;
+  color: rgb(var(--comp-light-color));
 }
 
 .list-choice {
-    color: #fff;
+    color: rgb(var(--comp-light-color));
 }
 
 .list-choice:hover {
-    color: var(--accent-color);
+    color: rgb(var(--accent-color));
 }
 
 .order {
