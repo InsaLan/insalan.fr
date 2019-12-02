@@ -90,10 +90,10 @@ table, tr, th, td {
 }
 
 body {
-  background-image: url('../img/background.jpg');
-  background-attachment: fixed;
-  background-size: 100%;
-  #background: var(--main-dark-color);
+  #background-image: url('../img/background.jpg');
+  #background-attachment: fixed;
+  #background-size: 100%;
+  background-color: rgb(var(--main-dark-color));
   color: rgb(var(--comp-dark-color));
 }
 
@@ -267,6 +267,14 @@ body > header .navbar nav li .dropdown {
 
 /** Sections **/
 
+body > .background-container {
+  width: 100%;
+  background-image: url('../img/background.jpg');
+  #background-attachment: fixed;
+  background-size: 100%;
+}
+
+body > .background-container > .container,
 body > .container {
   background-color: rgba(var(--main-color), 0.65);
   padding: 20px;

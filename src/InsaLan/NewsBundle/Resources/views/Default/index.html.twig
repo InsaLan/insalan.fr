@@ -4,8 +4,10 @@
   {{ parent() }}
 {% endblock %}
 
-{% block body %}
+{% block rawbody %}
   {{ parent() }}
+<div class="background-container">
+<section class="container">
   <article>
     <div class="img-center">
       <a href="{{ path('insalan_rsc_default_index') }}">
@@ -117,6 +119,7 @@
     </header>
   </article>
 </section>
+</div>
 
 <section class="highlightBox">
   <div class="container" style="text-align:center">
@@ -362,7 +365,7 @@
         </aside>
 
         <header>
-            <h2>{{ n.title }}</h2>
+          <h2>{{ n.title }}</h2>
           <span class="date">{{ n.createdAt | date('d/m/Y H:i') }}</span> -
           <span class="category">{{ n.category }}</span>
         </header>
@@ -373,14 +376,14 @@
       </article>
       {% endfor %}
 
-      </section>
-      <aside class="twitter">
-            <a class="twitter-timeline"  href="https://twitter.com/insalan" data-widget-id="300559677375258624">Tweets de @insalan</a>
-            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-        </aside>
-        <br class="clear"/>
-
+    </section>
+    <aside class="twitter">
+      <a class="twitter-timeline"  href="https://twitter.com/insalan" data-widget-id="300559677375258624">Tweets de @insalan</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </aside>
+  <br class="clear"/>
+  </section>
+<div>
 {% endblock %}
 
 
