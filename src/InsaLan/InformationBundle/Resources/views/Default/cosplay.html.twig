@@ -1,15 +1,14 @@
 {% extends 'InsaLanInformationBundle::layout.html.twig' %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets 'bundles/insalan/css/news.css' %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
+{{ parent() }}
+  {% stylesheets 'bundles/insalan/css/news.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
 {% endblock %}
 
 {% block body %}
 {{ parent() }}
-
 
 <img src="{{ asset('bundles/insalan/img/cosplay.png') }}" width="1000"/>
 
@@ -112,6 +111,5 @@
 <br/><br/><center>
 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSf935s_yWrarcj8Fmw19WcW-lVn8LLGp9i_iJASwnBNA8ZFvA/viewform?embedded=true" width="700" height="300" frameborder="0" marginheight="0" marginwidth="0">Chargement en cours...</iframe>
 </center><br/><br/>
-
 
 {% endblock %}

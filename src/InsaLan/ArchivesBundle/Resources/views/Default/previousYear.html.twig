@@ -2,16 +2,17 @@
 
 {% block stylesheets %}
 {{ parent() }}
-{% stylesheets 'bundles/insalan/css/archives.css' %}
-<link rel="stylesheet" href="{{ asset_url }}" />
-{% endstylesheets %}
-{% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
-<link rel="stylesheet" href="{{ asset_url }}" />
-{% endstylesheets %}
+  {% stylesheets 'bundles/insalan/css/archives.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
+  {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
 {% endblock %}
 
 {% block body %}
 {{ parent() }}
+
 <header>
   <h1 class="text-center" style="font-size:40px; margin-top: 18px">{{edition.name}}</h1>
   <h2 class="text-center">Année {{edition.year}}</h2>

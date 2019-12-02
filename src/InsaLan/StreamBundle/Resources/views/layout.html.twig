@@ -7,12 +7,18 @@
 
 
 {% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets 'bundles/insalan/css/stream.css' %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
+  {{ parent() }}
+  {% stylesheets 'bundles/insalan/css/stream.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
 {% endblock %}
 
 
-{% block body %}
+{% block rawbody %}
+{{ parent() }}
+
+  <section class="container">
+    {% block stylesheets %}{% endblock %}
+  </section>
+
 {% endblock %}

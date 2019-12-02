@@ -140,20 +140,19 @@
       </ul>
     </aside>
     {% endblock %}
-    
-    <section class="container">
-      {% for message in app.session.flashbag.get('info') %}
-        <p class="alert-info">{{ message }}</p>
-      {% endfor %}
 
-      {% for message in app.session.flashbag.get('error') %}
-        <p class="alert-error">{{ message }}</p>
-      {% endfor %}
+    {% if app.session.flashbag.get('info')
+       or app.session.flashbag.get('error') %}    
+      <section class="container">
+        {% for message in app.session.flashbag.get('info') %}
+          <p class="alert-info">{{ message }}</p>
+        {% endfor %}
 
-      {% block body %}{% endblock %}
-
-      <div class="clear"></div>
-    </section>
+        {% for message in app.session.flashbag.get('error') %}
+          <p class="alert-error">{{ message }}</p>
+        {% endfor %}
+      </section>
+    {% endif %}
 
     {% block rawbody %}{% endblock %}
 

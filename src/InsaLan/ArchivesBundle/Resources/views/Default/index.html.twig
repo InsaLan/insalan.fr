@@ -1,28 +1,23 @@
 {% extends 'InsaLanArchivesBundle::layout.html.twig' %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets 'bundles/insalan/css/archives.css' %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
+  {{ parent() }}
+  {% stylesheets 'bundles/insalan/css/archives.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
 {% endblock %}
 
 {% block body %}
 {{ parent() }}
 
-
-
 <div class="previous-years-list">
-    {% for e in editions %}
-          <div class="previous-years">
-            <a href="{{ path('insalan_archives_default_previousyear', {'edition': e.id}) }}">
-              <img src="{{ asset('bundles/insalan/img/')  ~ e.image}}" alt="{{e.name}}" />
-            </a>
-          </div>
-    {% endfor %}
-
-
-
+  {% for e in editions %}
+    <div class="previous-years">
+      <a href="{{ path('insalan_archives_default_previousyear', {'edition': e.id}) }}">
+        <img src="{{ asset('bundles/insalan/img/')  ~ e.image}}" alt="{{e.name}}" />
+      </a>
+    </div>
+  {% endfor %}
 </div>
 
 {% endblock %}

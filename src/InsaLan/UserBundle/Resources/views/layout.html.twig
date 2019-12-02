@@ -1,5 +1,11 @@
 {% extends 'InsaLanBundle::layout.html.twig' %}
-{% block body %}
+
+{% block rawbody %}
 {{ parent() }}
- {% block fos_user_content %}{% endblock %}
+  <section class="container">
+    {% block body %}{% endblock %}
+
+    {% block fos_user_content %}{% endblock %}
+  </section>
+
 {% endblock %}

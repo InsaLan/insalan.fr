@@ -5,15 +5,20 @@
   Informations
 {% endblock %}
 
-
 {#
 {% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets 'bundles/insalan/css/info.css' %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
+{{ parent() }}
+  {% stylesheets 'bundles/insalan/css/info.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
 {% endblock %}
 #}
 
-{% block body %}
+{% block rawbody %}
+{{ parent() }}
+
+  <section class="container">
+    {% block body %}{% endblock %}
+  </section>
+
 {% endblock %}
