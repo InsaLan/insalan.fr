@@ -16,8 +16,6 @@
         <img width="800" align-self="center" src="{{ asset('bundles/insalanrsc/img/RSC-banner.png') }}" />
       </a>
       #}
-      <br/>
-      <br/>
       <img width=80% src="{{ asset('bundles/insalan/img/logo-noyear-wide.png') }}" />
     </div>
   </article>
@@ -103,24 +101,25 @@
   </div>
 #}
 
-  <br class="clear">
-  <article id="horaire" class="info">
-    <aside>
+  <div class="schedule">
+    <div class="edition">
+      <h2>Édition</h2>
+      <h1>{{ globalVars.number }}</h1>
+    </div>
+    <div>
       <div class="square">
         <a href="">
           <span></span>
         </a>
       </div>
-    </aside>
-    <header>
-      <h2>Du {{ globalVars.fullDates }} à l'INSA Rennes</h2>
-      <div style="font-size: 19px; margin-top: -18px">
-        <span>
-          20 avenue des buttes de Coësmes, 35708 Rennes - Arrêt Beaulieu Restau U (ligne 4, 31 et 32)
-        </span>
-      </div>
-    </header>
-  </article>
+    </div>
+    <div>
+      <h1>Du {{ globalVars.fullDates }} à l'INSA Rennes</h2>
+      <h3>
+        20 avenue des buttes de Coësmes, 35708 Rennes - Arrêt Beaulieu Restau U (ligne 4, 31 et 32)
+      <h3>
+    </div>
+  </div>
 </section>
 </div>
 

@@ -107,13 +107,52 @@ article > ul li:before {
   left: -20px;
 }
 
+/** Schedule **/
+
+.schedule {
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+  color: rgb(var(--comp-light-color));
+}
+
+.schedule > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin: 10px;
+}
+
+.schedule .edition {
+  align-items: center;
+}
+
+.schedule h1 {
+  font-size: 2.5em;
+}
+
+.schedule h2 {
+  font-size: 1.5em;
+}
+
+.schedule h3 {
+  font-size: 1.1em;
+}
+
 /** Squares **/
 
-#horaire > aside .square, #finale > aside .square {
+#finale > aside .square {
   background: white;
 }
 
-#horaire > aside .square a span, #finale > aside .square a span  {
+.schedule .square {
+  background-color: rgb(var(--comp-light-color));
+  height: 80px;
+  width: 80px;
+}
+
+.schedule .square a span,
+#finale > aside .square a span  {
   display: block;
   position: relative;
   width: 0;
@@ -122,6 +161,18 @@ article > ul li:before {
   border-bottom: 20px solid transparent; /* right arrow slant */
   border-left: 20px solid black; /* bottom, add background color here */
   top: 20px;
+  left: 30px;
+}
+
+.schedule .square a span {
+  display: block;
+  position: relative;
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;  /* left arrow slant */
+  border-bottom: 20px solid transparent; /* right arrow slant */
+  border-left: 20px solid black; /* bottom, add background color here */
+  #top: 20px;
   left: 30px;
 }
 
