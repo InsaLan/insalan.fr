@@ -22,8 +22,9 @@
     {% endstylesheets %}
 {% endblock %}
 
-{% block rawbody %}
+{% block body %}
 {{ parent() }}
+  
   <header class="game">
     <div class="container">
       <img style="height:100px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" alt="Logo"/>
@@ -31,6 +32,11 @@
       {{ t.tournamentClose |localizeddate('none', 'none', 'fr_FR', null, "MMMM Y") }}
     </div>
   </header>
+
+{% endblock %}
+
+{% block rawbody %}
+{{ parent() }}
 
   <div class="container bg-{{ t.type }}">
     {% if stages|length == 0 and knockouts|length == 0 %}

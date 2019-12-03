@@ -7,14 +7,20 @@
     {% endstylesheets %}
 {% endblock %}
 
-{% block rawbody %}
+{% block body %}
 {{ parent() }}
+
 <header class="game">
   <div class="container">
     <img style="height:100px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" alt="Logo"/>
     {{ t.name }}
   </div>
 </header>
+
+{% endblock %}
+
+{% block rawbody %}
+{{ parent() }}
 
 <div class="container bg-{{ t.type }}">
     <br /><br />
