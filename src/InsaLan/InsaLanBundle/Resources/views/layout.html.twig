@@ -78,11 +78,11 @@
                   'insalan_information_default_public',
                   'insalan_information_default_asso'
                 ] %}active{% endif %}">
-                <a href="">Informations</a>
+                <a href="{{ path('insalan_information_default_wwwh') }}">Informations</a>
                 <div class="dropdown-content">
                   <a href="{{ path('insalan_information_default_wwwh') }}">Infos Générales</a>
                   <a href="{{ path('insalan_information_default_tournament') }}">Tournois</a>
-                  <a href="{{ path('insalan_information_default_public') }}">Publique</a>
+                  <a href="{{ path('insalan_information_default_public') }}">Public</a>
                   <a href="{{ path('insalan_information_default_asso') }}">Association</a>
                 </div>
               </li>
