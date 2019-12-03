@@ -25,6 +25,11 @@ class GlobalVarsLoader implements FixtureInterface
         $manager->persist($e);
 
         $e = new GlobalVars();
+        $e->setGlobalKey('romanNumber');
+        $e->setGlobalValue('XIV');
+        $manager->persist($e);
+
+        $e = new GlobalVars();
         $e->setGlobalKey('playersNumber');
         $e->setGlobalValue('400');
         $manager->persist($e);
