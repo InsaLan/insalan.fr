@@ -86,9 +86,6 @@
                   <a href="{{ path('insalan_information_default_asso') }}">Association</a>
                 </div>
               </li>
-              <li{% if page == 'insalan_rsc_default_index' %} class="active"{% endif %}>
-                <a href="{{ path('insalan_rsc_default_index') }}">RSC</a>
-              </li>
               <li{% if page == 'insalan_tournament_default_index' %} class="active"{% endif %}>
                 <a href="{{ path('insalan_tournament_default_index') }}">Tournois</a>
               </li>
@@ -104,6 +101,9 @@
               {#{% if app.user %}
                 <li><a href="{{ path('insalan_information_default_hardwarerental') }}">Locations</a></li>
               {% endif %}#}
+              <li{% if page == 'insalan_rsc_default_index' %} class="active"{% endif %}>
+                <a href="{{ path('insalan_rsc_default_index') }}">RSC</a>
+              </li>
               <li{% if page == 'insalan_archives_default_index' %} class="active"{% endif %}>
                 <a href="{{ path('insalan_archives_default_index') }}">Archives</a>
               </li>
