@@ -11,18 +11,6 @@
 
   --accent-color: 0, 191, 243;
   --accent-light-color: 105, 220, 252;
-/*
-  --main-color: #2d2d2d;
-  --main-light-color: #616161;
-  --main-dark-color: black;
-  
-  --comp-color: #cecece;
-  --comp-light-color: white;
-  --comp-dark-color: #a2a2a2;
-
-  --accent-color: #00bff3;
-  --accent-light-color: #69dcfc;
-*/
 }
 
 /** General **/
@@ -90,9 +78,6 @@ table, tr, th, td {
 }
 
 body {
-  #background-image: url('../img/background.jpg');
-  #background-attachment: fixed;
-  #background-size: 100%;
   background-color: rgb(var(--main-dark-color));
   color: rgb(var(--comp-dark-color));
 }
@@ -117,15 +102,17 @@ body {
 
 /** Alerts **/
 
-.alert-error, .alert-info {
-  color: white;
+.alert-error,
+.alert-info {
+  color: rgb(var(--comp-light-color));
   padding: 15px;
   margin: 10px 0px;
-  text-shadow: black 1px 1px;
+  text-shadow: rgb(var(--main-dark-color)) 1px 1px;
   border-radius: 3px;
 }
 
-.alert-error button, .alert-info button {
+.alert-error button,
+.alert-info button {
   float: right;
   background: transparent;
   font-size: 1.5em;
@@ -151,7 +138,6 @@ body > header {
   background: rgb(var(--main-color));
   border-bottom: 1px solid rgb(var(--main-light-color));
   border-top: 1px solid rgb(var(--main-light-color));
-  #margin-bottom: 35px;
   top: 0;
   position: sticky;
   z-index: 1;
@@ -219,7 +205,6 @@ body > header .navbar nav ul li a {
   text-transform: uppercase;
 }
 
-
 body > header .navbar nav li.active a {
   color: rgb(--var(--comp-light-color));
 }
@@ -270,7 +255,6 @@ body > header .navbar nav li .dropdown {
 body > .background-container {
   width: 100%;
   background-image: url('../img/background.jpg');
-  #background-attachment: fixed;
   background-size: 100%;
 }
 
@@ -296,7 +280,6 @@ article > header h2 {
 h3 {
   font-family: OpenSansCond;
   text-transform: uppercase;
-  #color: rgb(var(--comp-light-color));
   margin-bottom: 10px;
 }
 
@@ -345,18 +328,12 @@ figure figcaption {
 /** Footer **/
 
 footer {
-  #height: 200px;
   background: rgb(var(--main-color));
   border-top: 1px solid rgb(var(--main-light-color));
   clear: both;
-  #margin-top: 30px;
 }
 
 footer .container {
-  #weight: 100%;
-  #width: 1000px;
-  #margin: auto;
-  #position: relative;
   display: grid;
   grid-template-columns: 200px 3fr 1fr;
   grid-template-rows: 160px 1fr;
@@ -398,8 +375,6 @@ footer .contact #facebook {
   width: 27px;
   height: 27px;
   background-color: #3b5998;
-  #background-image: url('../img/facebook.png');
-  #background-size: 27px 27px;
   opacity: 0.5;
   display: inline-block;
   position: absolute;
@@ -411,8 +386,6 @@ footer .contact #facebook {
   width: 40px;
   height: 40px;
   background-color: #3b5998;
-  #background-image: url('../img/facebook.png');
-  #background-size: 40px 40px;
   opacity: 0.8;
   display: inline-block;
 }
@@ -426,8 +399,6 @@ footer .contact #twitter {
   width: 27px;
   height: 27px;
   background-color: #00aced;
-  #background-image: url('../img/twitter.png');
-  #background-size: 27px 27px;
   opacity: 0.5;
   display: inline-block;
   position: absolute;
@@ -439,8 +410,6 @@ footer .contact #twitter {
   width: 40px;
   height: 40px;
   background-color: #00aced;
-  #background-image: url('../img/twitter.png');
-  #background-size: 40px 40px;
   opacity: 0.8;
   display: inline-block;
 }
@@ -554,32 +523,10 @@ footer nav > ul {
 }
 
 footer nav > ul > li {
-  float: left;
   display: block;
   list-style-type: none;
-  #margin-right: 25px;
-  #margin-left: 25px;
-  #margin-top: 15px;
-}
-/*
-footer nav #stream {
-  width: 110px;
-  margin-left: 60px;
 }
 
-footer nav #tournois {
-  width: 110px;
-}
-
-footer nav #infos {
-  width: 220px;
-}
-
-footer nav #galerie {
-  width: 110px;
-  margin-right: 0px;
-}
-*/
 footer nav > ul > li header {
   height: 30px;
   border-bottom: 1px solid rgb(var(--main-light-color));
@@ -602,7 +549,6 @@ footer nav > ul > li header a:hover {
 footer nav > ul > li ul {
   display: flex;
   flex-direction: column;
-  #justify-content: start;
 }
 
 footer nav > ul > li ul li {
@@ -612,16 +558,6 @@ footer nav > ul > li ul li {
   font-size: 0.9em;
 }
 
-/*
-footer nav > ul > li > div > ul {
-  float: left;
-  display: block;
-}
-
-footer nav #infos .second li {
-  margin-left: 40px;
-}
-*/
 /** logo **/
 
 footer .logo {
@@ -648,12 +584,6 @@ footer .logo img {
 
 footer .copyright {
   grid-area: copyright;
-  #margin: auto;
-  #width: 1000px;
-  #height: 39px;
-  #position: absolute;
-  #bottom: 0px;
-  #text-align: center;
 }
 
 footer .copyright ul {
@@ -666,7 +596,6 @@ footer .copyright ul {
 
 footer .copyright li {
   list-style-type: none;
-  #padding-top: 7px;
   font-family: OpenSansCond;
   text-transform: uppercase;
   font-size: 0.9em;
@@ -692,7 +621,6 @@ footer .copyright span {
 
 .input {
   clear: both;
-  #margin-top: 5px;
 }
 
 .input input,
@@ -733,7 +661,6 @@ footer .copyright span {
 .input.right label {
   margin-left: 170px;
 }
-
 
 .input input[type=text],
 .input input[type=password],

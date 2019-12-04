@@ -154,7 +154,7 @@ aside.carousel .picture {
   height: 300px;
   width: 100%;
   overflow: hidden;
-  border-bottom: 1px solid var(--main-dark-color);
+  border-bottom: 1px solid rgb(var(--main-dark-color));
 }
 
 aside.carousel .grid {
@@ -185,7 +185,7 @@ aside.carousel table .title {
 }
 
 aside.carousel table .title .main {
-  color: var(--accent-color);
+  color: rgb(var(--accent-color));
   font-family: OpenSansCond;
   text-transform: uppercase;
   font-size: 2.4em;
@@ -220,13 +220,13 @@ aside.carousel table .items a {
 
 aside.carousel table .items a:hover,
 aside.carousel table .items a.active {
-  background: var(--accent-color);
+  background: rgb(var(--accent-color));
 }
 
 aside.carousel table .open {
   width: 100px;
   height: 100px;
-  background: var(--accent-color);
+  background: rgb(var(--accent-color));
   vertical-align: middle;
 }
 
@@ -243,7 +243,7 @@ aside.carousel table .open a span {
   height: 0;
   border-bottom: 30px solid transparent;  /* left arrow slant */
   border-top: 30px solid transparent; /* right arrow slant */
-  border-left: 30px solid var(--main-dark-color); /*  bottom, add background color here */
+  border-left: 30px solid rgb(var(--main-dark-color)); /*  bottom, add background color here */
   font-size: 0;
   line-height: 0;
   margin: auto;
@@ -336,11 +336,8 @@ section.news nav .next a {
 /** highlightBox **/
 
 .highlightBox {
-  #background: url('../img/fade-bot.png') repeat-x top, url('../img/tweed.png') repeat;
   background-color: rgba(var(--comp-color), 0.65);
   color: rgb(var(--main-color));
-  #padding-top: 40px;
-  #padding-bottom: 40px;
   padding: 20px;
   margin: auto;
   width: 1000px;

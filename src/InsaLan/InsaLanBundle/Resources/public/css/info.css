@@ -8,7 +8,7 @@
 }
 
 .info > aside .square {
-  background-color: #00bff3;
+  background-color: rgb(var(--acccent-color));
   width: 80px;
   height: 80px;
 }
@@ -26,7 +26,7 @@
   position: relative;
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
-  border-bottom: 20px solid white;
+  border-bottom: 20px solid rgb(var(--comp-light-color));
   top: 30px;
   left: 20px;
 }
@@ -183,7 +183,6 @@ article > ul li:before {
   border-top: 20px solid transparent;  /* left arrow slant */
   border-bottom: 20px solid transparent; /* right arrow slant */
   border-left: 20px solid black; /* bottom, add background color here */
-  #top: 20px;
   left: 30px;
 }
 
