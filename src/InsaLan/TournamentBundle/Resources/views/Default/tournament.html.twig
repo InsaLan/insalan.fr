@@ -27,9 +27,11 @@
   
   <header class="game">
     <div class="container">
-      <img style="height:100px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" alt="Logo"/>
-      {{ t.name }} -
-      {{ t.tournamentClose |localizeddate('none', 'none', 'fr_FR', null, "MMMM Y") }}
+      <img src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" alt="Logo"/>
+      <div>
+        <h1>{{ t.name }}</h1>
+        <h1>{{ t.tournamentClose |localizeddate('none', 'none', 'fr_FR', null, "MMMM Y") }}</h1>
+      </div>
     </div>
   </header>
 
