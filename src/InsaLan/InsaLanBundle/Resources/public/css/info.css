@@ -8,7 +8,7 @@
 }
 
 .info > aside .square {
-  background-color: rgb(var(--acccent-color));
+  background-color: rgb(var(--accent-color));
   width: 80px;
   height: 80px;
 }
