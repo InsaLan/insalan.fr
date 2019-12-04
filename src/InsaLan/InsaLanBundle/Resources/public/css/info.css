@@ -107,6 +107,17 @@ article > ul li:before {
   left: -20px;
 }
 
+/** Huge Container **/
+
+.huge-container {
+  display: flex;
+  justify-content: center;
+}
+
+.huge-container .btn2 {
+  font-size: 2.5em;
+}
+
 /** Schedule **/
 
 .schedule {
