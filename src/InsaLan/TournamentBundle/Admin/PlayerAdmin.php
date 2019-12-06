@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class PlayerAdmin extends Admin
 {
@@ -22,6 +23,15 @@ class PlayerAdmin extends Admin
             ->add('gameId')
             ->add('tournament')
             ->add('paymentDone', null, array('required'=>false))
+            ->add('validated', ChoiceType::class, array(
+                'choices_as_values' => true,
+                'required' => true,
+                'choices' => array(
+                    'Non payé' => 0,
+                    'Dans la liste d\'attente' => 1,
+                    'Validée' => 2
+                )
+            ))
             ->add('arrived', null, array('required'=>false))
             ->add('placement')
             ->add('pendingRegistrable', null, array('required' => false))
