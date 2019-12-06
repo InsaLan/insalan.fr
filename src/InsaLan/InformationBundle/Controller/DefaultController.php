@@ -123,14 +123,22 @@ class DefaultController extends Controller
         $rules = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("cosplayrules");
         return array("rules" => $rules);
     }
-
+    
     /**
      * @Route("/baston")
      * @Template()
      */
     public function bastonAction()
     {
-        return array();
+        $em = $this->getDoctrine()->getManager();
+
+        // Get global variables
+        $globalVars = array();
+        $globalKeys = ['bastonRegisterLink', 'bastonStartRegistration'];
+
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
+        return array('globalVars' => $globalVars);
     }
 
     /**
