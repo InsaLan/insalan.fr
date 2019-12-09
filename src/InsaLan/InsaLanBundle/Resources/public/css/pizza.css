@@ -1,90 +1,96 @@
 section > h3 {
-    color: white;
-    font-family: OpenSansCond;
-    font-size: 1.8em;
-    letter-spacing: 1px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+  color: white;
+  font-family: OpenSansCond;
+  font-size: 1.8em;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 section > dl {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 section > dl > dt {
-    color: white;
-    font-family: Oswald;
-    margin-top: 5px;
+  color: white;
+  font-family: Oswald;
+  margin-top: 5px;
 }
 
 section > dl > dd {
-    padding-left: 15px;
+  padding-left: 15px;
 }
 
 fieldset.form-frame {
-    margin-left: auto;
-    margin-right: auto;
-    padding : 30px;
-    padding-top: 15px;
-    text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding : 30px;
+  padding-top: 15px;
+  text-align: center;
 }
 
 fieldset.form-frame > form {
-    padding-top: 25px;
-    padding-bottom: 25px;
-    margin-left: 200px;
-    margin-right: 200px;
-    border: 2px groove rgb(0, 191, 243);
-    border-radius: 20px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  margin-left: 200px;
+  margin-right: 200px;
+  border: 2px groove rgb(0, 191, 243);
+  border-radius: 20px;
 }
 
 fieldset.form-frame > form > * {
-    margin-top: 10px;
-    margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 fieldset.form-frame > form > input {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 fieldset.form-frame > form > input[type="text"] {
-    color: black;
-    font-size: 0.9em;
-    max-width: 100px;
-    border-radius: 2px;
+  color: black;
+  font-size: 0.9em;
+  max-width: 100px;
+  border-radius: 2px;
 }
 
 fieldset.form-frame > form > input[type="text"]:focus {
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(82, 168, 236, 0.6);
-    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(82, 168, 236, 0.6);
+  transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
 }
 table {
-    margin-left: auto;
-    margin-right: auto;
-    border-spacing: 15px;
-    border-collapse: collapse;
-    border: 1px groove rgb(0, 191, 243);
-    text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  border-spacing: 15px;
+  border-collapse: collapse;
+  border: 1px groove rgb(0, 191, 243);
+  text-align: center;
 }
 
 th {
-    font-family: OpenSansCond;
-    font-size: 1.4em;
+  font-family: OpenSansCond;
+  font-size: 1.4em;
 }
 
 tr:hover {
-    background: rgb(14, 14, 14);
-    color: rgb(0, 191, 243);
+  background: rgb(14, 14, 14);
+  color: rgb(0, 191, 243);
 }
 
-#hideShowCommand:hover { text-decoration: underline; }
-
-input[type=submit], input[type=button], button {
-    font-size: 0.8em;
-    cursor: pointer;
+#hideShowCommand:hover {
+  text-decoration: underline;
 }
 
-table { border-collapse: collapse; }
+input[type=submit],
+input[type=button],
+button {
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+}
 
 th {
   font-size: 1.3em;
@@ -95,23 +101,26 @@ td {
   font-size: 0.9em;
 }
 
-td, th {
+td,
+th {
   border: 1px solid grey;
   padding: 5px !important;
 }
 
-form { display: inline; }
+form {
+  display: inline;
+}
 
 .addInput {
-    color: black;
-    height: 25px;
-    font-size: 18px;
-    margin-left: 10px;
+  color: black;
+  height: 25px;
+  font-size: 18px;
+  margin-left: 10px;
 }
 
 .addInput[type=text] {
-    height: 21px;
-    padding: 2px;
+  height: 21px;
+  padding: 2px;
 }
 
 .pizzaOnglets {
