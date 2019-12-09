@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 use InsaLan\CosplayBundle\Entity\Cosplayer;
 use InsaLan\CosplayBundle\Form\CosplayerType;
@@ -16,10 +15,10 @@ use InsaLan\CosplayBundle\Form\CosplayType;
 class UserController extends Controller
 {
     /**
-     * @Route("/cosplay/register")
+     * @Route("/cosplay/register/{max}/{actuel}")
      * @Template()
      */
-    public function registerAction(Request $request)
+    public function registerAction(Request $request,int $max,int $actuel)
     {
         $em = $this->getDoctrine()->getManager();
         $p1 = new Cosplayer();
@@ -28,10 +27,10 @@ class UserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
         	$em->persist($p1);
             $em->flush();
-            while ($count > 0){
-                return $this->redirect($this->generateUrl('insalan_cosplay_register',array('count' => $count-1 )));
+            while ($actuel < $max){
+                return $this->redirect($this->generateUrl('insalan_cosplay_user_register',array('max'=>$max, 'actuel' => $actuel+1 )));
             }
-        	return $this->redirect($this->generateUrl('insalan_cosplay_index'));
+        	return $this->redirect($this->generateUrl('insalan_cosplay_default_index'));
         }
         return $this->render('InsaLanCosplayBundle:User:register.html.twig', array(
             'form' => $form->createView(),
@@ -47,17 +46,19 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $p1 = new Cosplay();
-        $count = new IntegerType;
+        $count = 1;
         $form = $this->createForm(CosplayType::class, $p1);
         $form->handleRequest($request);
+        if($_SERVER["REQUEST_METHOD"]  === 'POST'){
+           $count = $_POST['count'];
+        }
         if ($form->isSubmitted() && $form->isValid()) {
         	$em->persist($p1);
             $em->flush();
-            return $this->redirect($this->generateUrl('insalan_cosplay_register',array('count' => $count)));
+            return $this->redirect($this->generateUrl('insalan_cosplay_user_register',array('max' => $count,'actuel'=>1)));
         }
         return $this->render('InsaLanCosplayBundle:User:groupeRegister.html.twig', array(
             'form' => $form->createView(),
-            'count' => $count,
             ));
     }
 }

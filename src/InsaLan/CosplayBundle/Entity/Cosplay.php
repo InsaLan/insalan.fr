@@ -72,7 +72,7 @@ class Cosplay
     /**
      * @var string
      *
-     * @ORM\Column(name="soundtrack", type="string", length=255)
+     * @ORM\Column(name="soundtrack", type="string", length=255, nullable=true)
      */
     private $soundtrack;
 

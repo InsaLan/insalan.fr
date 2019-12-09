@@ -93,14 +93,14 @@ class Cosplayer
     /**
      * @var string
      *
-     * @ORM\Column(name="picturePath", type="string", length=255, unique=true)
+     * @ORM\Column(name="picturePath", type="string", length=255, unique=true, nullable=true)
      */
     private $picturePath;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pictureRightPath", type="string", length=255, unique=true)
+     * @ORM\Column(name="pictureRightPath", type="string", length=255, unique=true, nullable=true)
      */
     private $pictureRightPath;
 
@@ -115,6 +115,12 @@ class Cosplayer
      * @ORM\ManyToOne(targetEntity="Cosplay", inversedBy="members")
      */
     private $group;
+
+    public function __construct()
+    {
+        $this->usePseudo = false;
+        $this->adult = false;
+    }
 
 
     /**
