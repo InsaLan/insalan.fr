@@ -1,70 +1,91 @@
 <style type="text/css">
+div.zone {
+  border: none;
+  border-radius: 6mm;
+  background: #FFFFFF;
+  border-collapse: collapse;
+  padding:3mm;
+  font-size: 2.7mm;
+}
 
-    div.zone { border: none; border-radius: 6mm; background: #FFFFFF; border-collapse: collapse; padding:3mm; font-size: 2.7mm;}
-    h1 { padding: 0; margin: 0; color: #DD0000; font-size: 7mm; }
-    h2 { padding: 0; margin: 0; color: #222222; font-size: 5mm; position: relative; }
+h1 {
+  padding: 0;
+  margin: 0;
+  color: #DD0000;
+  font-size: 7mm;
+}
 
+h2 {
+  padding: 0;
+  margin: 0;
+  color: #222222;
+  font-size: 5mm;
+  position: relative;
+}
 </style>
-<page format="100x200" orientation="L" backimg="bundles/insalan/img/eticket/devant.png" backimgy="top" style="font: arial;">
-    <table style="width: 99%;border: none;" cellspacing="4mm" cellpadding="0">
-        <tr>
-            <td colspan="2" style="width: 100%">
-                <div class="zone" style="height: 34mm;position: relative;font-size: 5mm;">
-                    <div style="position: absolute; right: 3mm; top: 3mm; text-align: right; font-size: 4mm; ">
-                        <b></b><br>
-                    </div>
-                    <div style="position: absolute; right: 3mm; bottom: 3mm; text-align: right; font-size: 4mm; ">
-                        {#<b>1</b> place <b>plein tarif</b><br>#}
-                        Pseudo : <b>{{ pseudo }}</b><br>
-                        Nom Prénom : <b>{{ user.lastname }} {{ user.firstname }}</b><br>
-                        Tournois : <b>{{ tournament.name }}</b><br>
-                        Prix unitaire TTC : <b>{{ tournament.webPrice }}&euro;</b><br>
-                        N° billet : <b>{{ eTicket.id }}</b><br>
-                        Date d'émission : <b>{{ "now"|date("d/m/Y H:i:s") }}</b><br>
-                    </div>
-                    <h1>Billet RSC</h1>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<b>Valable du {{ tournament.tournamentOpen|date("d/m/Y") }} au {{ tournament.tournamentClose|date("d/m/Y") }}</b><br>
-                </div>
-            </td>
-        </tr>
 
-    </table>
+<page format="100x200" orientation="L" backimg="bundles/insalan/img/eticket/devant.png" backimgy="top" style="font: arial;">
+  <table style="width: 99%;border: none;" cellspacing="4mm" cellpadding="0">
+    <tr>
+      <td colspan="2" style="width: 100%">
+        <div class="zone" style="height: 34mm;position: relative;font-size: 5mm;">
+          <div style="position: absolute; right: 3mm; top: 3mm; text-align: right; font-size: 4mm; ">
+            <b></b><br>
+          </div>
+          <div style="position: absolute; right: 3mm; bottom: 3mm; text-align: right; font-size: 4mm; ">
+            {#
+            <b>1</b> place <b>plein tarif</b><br>
+            #}
+            Pseudo : <b>{{ pseudo }}</b><br>
+            Nom Prénom : <b>{{ user.lastname }} {{ user.firstname }}</b><br>
+            Tournois : <b>{{ tournament.name }}</b><br>
+            Prix unitaire TTC : <b>{{ tournament.webPrice }}&euro;</b><br>
+            N° billet : <b>{{ eTicket.id }}</b><br>
+            Date d'émission : <b>{{ "now"|date("d/m/Y H:i:s") }}</b><br>
+          </div>
+          <h1>Billet RSC</h1>
+          &nbsp;&nbsp;&nbsp;&nbsp;<b>Valable du {{ tournament.tournamentOpen|date("d/m/Y") }} au {{ tournament.tournamentClose|date("d/m/Y") }}</b><br>
+        </div>
+      </td>
+    </tr>
+  </table>
 </page>
 
 <page format="100x200" orientation="L" backimg="bundles/insalan/img/eticket/dos.png" backimgy="top" style="font: arial;">
-    <table style="width: 99%;border: none;" cellspacing="4mm" cellpadding="0">
-        <tr>
-            <td style="width: 25%;">
-                <div class="zone" style="height: 40mm;vertical-align: middle;text-align: center;">
-               <qrcode value="{{ eTicket.token }}" ec="H" style="width: 37mm; border: none;" ></qrcode>  </div>
-            </td>
-            <td style="width: 75%">
-
-
-
-                <div class="zone" style="height: 40mm;vertical-align: middle; text-align: justify">
-                    <b>Conditions d'utilisation du billet</b><br>
-                    Le billet est soumis aux conditions générales de vente que vous avez
-                    acceptées avant l'achat du billet. Vous pouvez présenter ce billet sur support électronique ou choisir de  l'imprimer. Si vous l'imprimez, le billet d'entrée est uniquement
-                    valable s'il est imprimé sur du papier A4 blanc, vierge recto et verso.
-                    L'entrée est soumise au contrôle de la validité de votre billet. Une bonne
-                    qualité d'impression est nécessaire. Les billets partiellement imprimés,
-                    souillés, endommagés ou illisibles ne seront pas acceptés et seront
-                    considérés comme non valables. En cas d'incident ou de mauvaise qualité
-                    d'impression, vous devez imprimer à nouveau votre fichier. Pour vérifier
-                    la bonne qualité de l'impression, assurez-vous que les informations écrites
-                    sur le billet, ainsi que les pictogrammes (code à barres 2D) sont bien
-                    lisibles. Ce titre doit être conservé jusqu'à la fin de la manifestation.
-                    Une pièce d'identité pourra être demandée conjointement à ce billet. En
-                    cas de non respect de l'ensemble des règles précisées ci-dessus, ce billet
-                    sera considéré comme non valable.<br>
-                    <br>
-                    <i>Ce billet est reconnu électroniquement lors de votre
-                    arrivée sur site. A ce titre, il ne doit être ni dupliqué, ni photocopié.
-                    Toute reproduction est frauduleuse et inutile.</i>
-                </div>
-
-            </td>
-        </tr>
-    </table>
+  <table style="width: 99%;border: none;" cellspacing="4mm" cellpadding="0">
+    <tr>
+      <td style="width: 25%;">
+        <div class="zone" style="height: 40mm;vertical-align: middle;text-align: center;">
+          <qrcode value="{{ eTicket.token }}" ec="H" style="width: 37mm; border: none;" ></qrcode>
+        </div>
+      </td>
+      <td style="width: 75%">
+        <div class="zone" style="height: 40mm;vertical-align: middle; text-align: justify">
+          <b>Conditions d'utilisation du billet</b><br>
+          Le billet est soumis aux conditions générales de vente que vous avez
+          acceptées avant l'achat du billet. Vous pouvez présenter ce billet sur
+          support électronique ou choisir de  l'imprimer. Si vous l'imprimez, le billet d'entrée est uniquement
+          valable s'il est imprimé sur du papier A4 blanc, vierge recto et verso.
+          L'entrée est soumise au contrôle de la validité de votre billet. Une bonne
+          qualité d'impression est nécessaire. Les billets partiellement imprimés,
+          souillés, endommagés ou illisibles ne seront pas acceptés et seront
+          considérés comme non valables. En cas d'incident ou de mauvaise qualité
+          d'impression, vous devez imprimer à nouveau votre fichier. Pour vérifier
+          la bonne qualité de l'impression, assurez-vous que les informations écrites
+          sur le billet, ainsi que les pictogrammes (code à barres 2D) sont bien
+          lisibles. Ce titre doit être conservé jusqu'à la fin de la manifestation.
+          Une pièce d'identité pourra être demandée conjointement à ce billet. En
+          cas de non respect de l'ensemble des règles précisées ci-dessus, ce billet
+          sera considéré comme non valable.
+          <br>
+          <br>
+          <i>
+            Ce billet est reconnu électroniquement lors de votre
+            arrivée sur site. A ce titre, il ne doit être ni dupliqué, ni photocopié.
+            Toute reproduction est frauduleuse et inutile.
+          </i>
+        </div>
+      </td>
+    </tr>
+  </table>
 </page>
