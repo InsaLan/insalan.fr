@@ -16,30 +16,32 @@
   </header>
 
   <section>
-
     {% if tournament.loginType != "" %}
-        <div class="text" style="text-align: center">
-          <br />
-          <p>
-            Vous devez renseigner votre identifiant
-            <strong>
-              {% if tournament.loginType == constant('InsaLan\\UserBundle\\Service\\LoginPlatform::PLATFORM_BATTLENET') %} Battle.net {% endif %}
-              {% if tournament.loginType == constant('InsaLan\\UserBundle\\Service\\LoginPlatform::PLATFORM_STEAM') %} Steam {% endif %}
-            </strong>
-            pour participer à ce tournoi.
-          </p>
-          <br />
-          <div>
-            {% if tournament.loginType == constant('InsaLan\\UserBundle\\Service\\LoginPlatform::PLATFORM_BATTLENET') %}
-              <a href="{{ path('insalan_user_default_registerbattlenet') }}" class="btn btn-primary">Renseigner votre identifiant</a>
-            {% endif %}
-            {% if tournament.loginType == constant('InsaLan\\UserBundle\\Service\\LoginPlatform::PLATFORM_STEAM') %}
-              <a href="{{ path('insalan_user_default_registersteamid') }}" class="btn btn-primary">Renseigner votre identifiant</a>
-            {% endif %}
-          </div>
+      <div class="text" style="text-align: center">
+        <br/>
+        <p>
+          Vous devez renseigner votre identifiant
+          <strong>
+            {% if tournament.loginType == constant('InsaLan\\UserBundle\\Service\\LoginPlatform::PLATFORM_BATTLENET') %} Battle.net {% endif %}
+            {% if tournament.loginType == constant('InsaLan\\UserBundle\\Service\\LoginPlatform::PLATFORM_STEAM') %} Steam {% endif %}
+          </strong>
+          pour participer à ce tournoi.
+        </p>
+        <br/>
+        <div>
+          {% if tournament.loginType == constant('InsaLan\\UserBundle\\Service\\LoginPlatform::PLATFORM_BATTLENET') %}
+            <a href="{{ path('insalan_user_default_registerbattlenet') }}" class="btn btn-primary">
+              Renseigner votre identifiant
+            </a>
+          {% endif %}
+          {% if tournament.loginType == constant('InsaLan\\UserBundle\\Service\\LoginPlatform::PLATFORM_STEAM') %}
+            <a href="{{ path('insalan_user_default_registersteamid') }}" class="btn btn-primary">
+              Renseigner votre identifiant
+            </a>
+          {% endif %}
         </div>
+      </div>
     {% endif %}
-
   </section>
 </article>
 {% endblock %}
