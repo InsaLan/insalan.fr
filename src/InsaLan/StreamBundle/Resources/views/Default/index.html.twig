@@ -4,35 +4,34 @@
 {{ parent() }}
 
 {% if tournaments %}
-<nav class="streams">
-  <ul>
-  {% for t in tournaments %}
-    <li><a href="#{{ t.id }}" class="btn-primary streamLink stream center">{{ t.name }}</a></li>
-  {% endfor %}
-  </ul>
-</nav>
+  <nav class="streams">
+    <ul>
+    {% for t in tournaments %}
+      <li><a href="#{{ t.id }}" class="btn-primary streamLink stream center">{{ t.name }}</a></li>
+    {% endfor %}
+    </ul>
+  </nav>
 
-{% for t in tournaments %}
-<section id="{{ t.id }}" class="hidden">
-{% for s in officialStreams %}
-{% if s.tournament == t %}
-  <iframe class="center" src="{{ s.streamLink }}" frameborder="0" scrolling="no" height="378" width="620"></iframe>
-  <br class="clear"/>
-{% endif %}
-{% endfor %}
-<br/><hr/><br/>
-  <div>
-    <h2>Streams libres</h2>
-    {% for s in unofficialStreams %}
+  {% for t in tournaments %}
+  <section id="{{ t.id }}" class="hidden">
+    {% for s in officialStreams %}
     {% if s.tournament == t %}
-      <a href="{{ s.streamLink }}" class="btn btn-primary grid-1 streamLink stream">{{ s.streamer }}</a>
+      <iframe class="center" src="{{ s.streamLink }}" frameborder="0" scrolling="no" height="378" width="620"></iframe>
+      <br class="clear"/>
     {% endif %}
     {% endfor %}
-  </div>
-</section>
-{% endfor %}
+    <br/><hr/><br/>
+    <div>
+      <h2>Streams libres</h2>
+      {% for s in unofficialStreams %}
+      {% if s.tournament == t %}
+        <a href="{{ s.streamLink }}" class="btn btn-primary grid-1 streamLink stream">{{ s.streamer }}</a>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+  {% endfor %}
 {% else %}
-<h2 class="text-center">Streams bientôt disponibles !</h2>
+  <h2 class="text-center">Streams bientôt disponibles !</h2>
 {% endif %}
-
 {% endblock %}
