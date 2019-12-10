@@ -1,19 +1,37 @@
-<h2><strong>Points importants</strong></h2><br/>
+<h2><strong>Points importants</strong></h2>
+<br/>
 <ul class="shift">
-    {#<li><strong>Attention</strong> : si vous n'avez pas été officiellement désigné pour représenter votre école, ne vous inscrivez pas. Aucun remboursement ne sera effectué dans ce cas.</li>#}
-    <br />
+  {#
+  <li>
+    <strong>Attention</strong> : si vous n'avez pas été officiellement désigné pour représenter votre école, ne vous inscrivez pas. Aucun remboursement ne sera effectué dans ce cas.
+  </li>
+  #}
+  <br/>
+
+  <li>
+    Le tarif indiqué est valable jusqu'au {{ registrable.registrationClose|date('d/m/Y à H:i') }}. Passée cette date, seul le plein tarif (sur place) sera disponible.
+  </li>
+  <br/>
     
-    <li>Le tarif indiqué est valable jusqu'au {{ registrable.registrationClose|date('d/m/Y à H:i') }}. Passée cette date, seul le plein tarif (sur place) sera disponible.</li>
-    <br />
-    
-    <li>Si vous jouez en équipe (CS:GO, Dota, LoL), <strong>votre équipe ne sera validée qu'après réception du paiement de plus de la moitié des membres</strong>.</li>
-    
-    <li>Si vous jouez seul (TFT, SFV, SC6, Smash Bros.), votre inscription sera validée dès la réception de votre paiement.</li>
-    <li>Si vous choisissez l'envoi par chèque, <strong>nous ne pouvons pas vous assurer qu'il restera des places lors de la réception de ce dernier</strong>, sauf si 3 de vos coéquipiers ont déjà payé en ligne (cf ci-dessus).</li>
-    
-    <li>Si vous payez sur place, plus de la moitié des membres de votre équipe doivent avoir payé en ligne ou par chèque (cf. point 1).</li>
-    <li><strong>Attention</strong> : c'est à vous d'amener votre ordinateur (portable ou fixe), ainsi que multiprise et câble Ethernet. Vous pourrez laisser votre matériel sur place durant la nuit, des équipes de sécurité seront en charge de surveiller la salle.</li>
-    <li>En vous inscrivant, <strong>vous vous engagez à participer à l'InsaLan{#au RSC#}</strong>. Si en cas de force majeure vous devez annuler votre inscription et voulez le remboursement de votre place, contactez-nous : <span class="emphase">contact@insalan.fr</span><br/>
-    Si vous avez payé en ligne, la majoration de paiement en ligne ({{ registrable.onlineIncreaseInPrice }} {{ registrable.currency }}) ne sera pas remboursée. Toute demande de remboursement effectuée après le 22/02/2019 à 00:00{#{{ registrable.registrationClose|date('d/m/Y à H:i') }}#} ne sera pas acceptée.</li>
+  <li>
+    Si vous jouez en équipe (CS:GO, Dota, LoL), <strong>votre équipe ne sera validée qu'après réception du paiement de plus de la moitié des membres</strong>.
+  </li>    
+  <li>
+    Si vous jouez seul (TFT, SFV, SC6, Smash Bros.), votre inscription sera validée dès la réception de votre paiement.
+  </li>
+  <li>
+    Si vous choisissez l'envoi par chèque, <strong>nous ne pouvons pas vous assurer qu'il restera des places lors de la réception de ce dernier</strong>, sauf si 3 de vos coéquipiers ont déjà payé en ligne (cf ci-dessus).
+  </li>
+  <li>
+    Si vous payez sur place, plus de la moitié des membres de votre équipe doivent avoir payé en ligne ou par chèque (cf. point 1).
+  </li>
+  <li>
+    <strong>Attention</strong> : c'est à vous d'amener votre ordinateur (portable ou fixe), ainsi que multiprise et câble Ethernet. Vous pourrez laisser votre matériel sur place durant la nuit, des équipes de sécurité seront en charge de surveiller la salle.
+  </li>
+  <li>
+    En vous inscrivant, <strong>vous vous engagez à participer à l'InsaLan{#au RSC#}</strong>. Si en cas de force majeure vous devez annuler votre inscription et voulez le remboursement de votre place, contactez-nous : <span class="emphase">contact@insalan.fr</span>
+    <br/>
+    Si vous avez payé en ligne, la majoration de paiement en ligne ({{ registrable.onlineIncreaseInPrice }} {{ registrable.currency }}) ne sera pas remboursée. Toute demande de remboursement effectuée après le 22/02/2019 à 00:00{#{{ registrable.registrationClose|date('d/m/Y à H:i') }}#} ne sera pas acceptée.
+  </li>
 </ul>
 <br/>
