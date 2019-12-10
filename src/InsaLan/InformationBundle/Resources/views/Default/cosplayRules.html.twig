@@ -2,33 +2,31 @@
 
 {% block body %}
 {{ parent() }}
-<article class="info">
 
+<article class="info">
   <div class="container">
-      <br /><br />
-      <section class="markdown">
-          <div class="frame frame-active grid-10" style="background-color: rgba(0,0,0,.5)">
-              <section class="full">
-              <div style="margin: 10px">
-                {% if rules is not null %}
-                  <center><h2>{{ rules.name }}</h2></center>
-                  <br />
-                  {{ rules.content|markdown }}
-                  <div class="pull-right">
-                    Date de dernière mise à jour : {{ rules.updatedAt | date("d/m/Y") }}
-                  </div>
-                {% else %}
-                      <p style="text-align: center">
-                          Cette section n'est pas disponible actuellement.<br />
-                      </p>
-                {% endif %}
+    <br/><br/>
+    <section class="markdown">
+      <div class="frame frame-active grid-10" style="background-color: rgba(0,0,0,.5)">
+        <section class="full">
+          <div style="margin: 10px">
+            {% if rules is not null %}
+              <center><h2>{{ rules.name }}</h2></center>
+              <br/>
+              {{ rules.content|markdown }}
+              <div class="pull-right">
+                Date de dernière mise à jour : {{ rules.updatedAt | date("d/m/Y") }}
               </div>
-              <br class="clear">
-              </section>
+            {% else %}
+              <p style="text-align: center">
+                Cette section n'est pas disponible actuellement.<br />
+              </p>
+            {% endif %}
           </div>
-      </section>
+        <br class="clear">
+        </section>
+      </div>
+    </section>
   </div>
 </article>
-
-
 {% endblock %}
