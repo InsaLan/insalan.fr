@@ -1,15 +1,15 @@
 {% extends 'InsaLanBundle::layout.html.twig' %}
 
 {% block title %}
-  {{ parent() }} -
-  Actualités
+{{ parent() }}
+- Actualités
 {% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets 'bundles/insalan/css/news.css' %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
+{{ parent() }}
+  {% stylesheets 'bundles/insalan/css/news.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
 {% endblock %}
 
 {% block body %}

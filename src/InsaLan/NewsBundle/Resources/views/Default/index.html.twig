@@ -1,129 +1,129 @@
 {% extends 'InsaLanNewsBundle::layout.html.twig' %}
 
 {% block title %}
-  {{ parent() }}
+{{ parent() }}
 {% endblock %}
 
 {% block rawbody %}
-  {{ parent() }}
+{{ parent() }}
+
 <div class="background-container">
-<section class="container">
-
-  <article>
-    <div class="img-center">
-      {#
-      <a href="{{ path('insalan_rsc_default_index') }}">
-        <img width="800" align-self="center" src="{{ asset('bundles/insalanrsc/img/RSC-banner.png') }}" />
-      </a>
-      #}
-      <img width=80% src="{{ asset('bundles/insalan/img/logo-noyear-wide.png') }}" />
-    </div>
-  </article>
-
-{#
-  <div class="grid-7 pull-left">
-    <img class="frame" width="700" align-self="center" src="{{ asset('bundles/insalan/img/banner-2019.png') }}" />
-    <iframe width="700" height="437" src="https://www.youtube.com/embed/_a-zRFnW-bc" frameborder="0" allowfullscreen></iframe>
-  </div>
-
-  <div class="grid-3 pull-left">
-    <div class="frame frame-active">
-      <header class="full">
-        <div class="title pull-left">LoL</div>
-
-        <small class="pull-right">
-          24 slots
-          <br>
-          <strong>1 700€</strong>
-        </small>
-        <br class="clear">
-      </header>
-      <header class="full">
-        <div class="title pull-left">CS:GO</div>
-              <small class="pull-right">
-                  24 slots
-                  <br>
-                  <strong>1 700€</strong>
-              </small>
-              <br class="clear">
-          </header>
-          <header class="full">
-              <div class="title pull-left">Fortnite</div>
-              <small class="pull-right">
-                  28 slots
-                  <br>
-                  <strong>1 600€</strong>
-              </small>
-              <br class="clear">
-          </header>
-          <header class="full">
-              <div class="title pull-left">Hearthstone</div>
-              <small class="pull-right">
-                  32 slots
-                  <br>
-                  <strong>700€</strong>
-              </small>
-              <br class="clear">
-          </header>
-          <header class="full">
-              <div class="title text-center">Baston</div>
-              <small class="pull-left">
-                  SFV / SC6
-                  <br>
-                  64 slots
-                  <br>
-                  <strong>500€</strong>
-              </small>
-              <small class="pull-right">
-                  Smash Bros
-                  <br>
-                  64 slots
-                  <br>
-                  <strong>550€</strong>
-              </small>
-              <br class="clear">
-              <br class="clear">
-          </header>
-          <header class="huge-button">
-              <div class="title pull-left">
-                  {% if app.user %}
-                  <a href="{{ path('insalan_tournament_user_index') }}" style="display:block">MON COMPTE</a>
-                  {% else %}
-                  <a href="{{path('fos_user_registration_register') }}" style="display:block">INSCRIPTION</a>
-                  {% endif %}
-              </div>
-              <br class="clear">
-          </header>
-          <section class="tournaments">
-          </section>
-      </div>
-  </div>
-#}
-
-  <div class="schedule">
-    <div class="edition">
-      <h2>Édition</h2>
-      <h1>{{ globalVars.romanNumber }}</h1>
-    </div>
-    <div>
-      <div class="square">
-        <a href="">
-          <span></span>
+  <section class="container">
+    <article>
+      <div class="img-center">
+        {#
+        <a href="{{ path('insalan_rsc_default_index') }}">
+          <img width="800" align-self="center" src="{{ asset('bundles/insalanrsc/img/RSC-banner.png') }}" />
         </a>
+        #}
+        <img width=80% src="{{ asset('bundles/insalan/img/logo-noyear-wide.png') }}" />
+      </div>
+    </article>
+
+    {#
+    <div class="grid-7 pull-left">
+      <img class="frame" width="700" align-self="center" src="{{ asset('bundles/insalan/img/banner-2019.png') }}" />
+      <iframe width="700" height="437" src="https://www.youtube.com/embed/_a-zRFnW-bc" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="grid-3 pull-left">
+      <div class="frame frame-active">
+        <header class="full">
+          <div class="title pull-left">LoL</div>
+
+          <small class="pull-right">
+            24 slots
+            <br>
+            <strong>1 700€</strong>
+          </small>
+          <br class="clear">
+        </header>
+        <header class="full">
+          <div class="title pull-left">CS:GO</div>
+          <small class="pull-right">
+            24 slots
+            <br>
+            <strong>1 700€</strong>
+          </small>
+          <br class="clear">
+        </header>
+        <header class="full">
+          <div class="title pull-left">Fortnite</div>
+          <small class="pull-right">
+            28 slots
+            <br>
+            <strong>1 600€</strong>
+          </small>
+          <br class="clear">
+        </header>
+        <header class="full">
+          <div class="title pull-left">Hearthstone</div>
+          <small class="pull-right">
+            32 slots
+            <br>
+            <strong>700€</strong>
+          </small>
+          <br class="clear">
+        </header>
+        <header class="full">
+          <div class="title text-center">Baston</div>
+          <small class="pull-left">
+            SFV / SC6
+            <br>
+            64 slots
+            <br>
+            <strong>500€</strong>
+          </small>
+          <small class="pull-right">
+            Smash Bros
+            <br>
+            64 slots
+            <br>
+            <strong>550€</strong>
+          </small>
+          <br class="clear">
+          <br class="clear">
+        </header>
+        <header class="huge-button">
+          <div class="title pull-left">
+            {% if app.user %}
+              <a href="{{ path('insalan_tournament_user_index') }}" style="display:block">MON COMPTE</a>
+            {% else %}
+              <a href="{{path('fos_user_registration_register') }}" style="display:block">INSCRIPTION</a>
+            {% endif %}
+          </div>
+          <br class="clear">
+        </header>
+        <section class="tournaments">
+        </section>
       </div>
     </div>
-    <div>
-      <h1>Du {{ globalVars.fullDates }} à l'INSA Rennes</h2>
-      <h3>
-        20 avenue des buttes de Coësmes, 35708 Rennes - Arrêt Beaulieu Restau U (ligne 4, 31 et 32)
-      <h3>
-    </div>
-  </div>
+    #}
 
-  <div class="huge-container">
-    <a href="{{ path('insalan_tournament_user_index') }}" class="btn2">Inscription</a>
-  </div>
-</section>
+    <div class="schedule">
+      <div class="edition">
+        <h2>Édition</h2>
+        <h1>{{ globalVars.romanNumber }}</h1>
+      </div>
+      <div>
+        <div class="square">
+          <a href="">
+            <span></span>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h1>Du {{ globalVars.fullDates }} à l'INSA Rennes</h2>
+        <h3>
+          20 avenue des buttes de Coësmes, 35708 Rennes - Arrêt Beaulieu Restau U (ligne 4, 31 et 32)
+        <h3>
+      </div>
+    </div>
+
+    <div class="huge-container">
+      <a href="{{ path('insalan_tournament_user_index') }}" class="btn2">Inscription</a>
+    </div>
+  </section>
 </div>
 
 <section class="highlightBox">
@@ -357,7 +357,6 @@
   </div>
 </section>
 
-</section>
 <section class="container">
   <section class="news">
 
@@ -379,63 +378,63 @@
           {{ n.text | markdown }}
         </section>
       </article>
-      {% endfor %}
-
-    </section>
-    <aside class="twitter">
-      <a class="twitter-timeline"  href="https://twitter.com/insalan" data-widget-id="300559677375258624">Tweets de @insalan</a>
-      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </aside>
+    {% endfor %}
+  </section>
+  
+  <aside class="twitter">
+    <a class="twitter-timeline"  href="https://twitter.com/insalan" data-widget-id="300559677375258624">Tweets de @insalan</a>
+    <script>
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    </script>
+  </aside>
   <br class="clear"/>
   </section>
 <div>
 {% endblock %}
 
-
 {% block javascripts %}
-  {{ parent() }}
+{{ parent() }}
 
-  <script type="text/javascript">
+<script type="text/javascript">
   //<![CDATA[
-    window.addEvent('domready', function() {
-      var carousel = $$('aside.carousel');
-      for (var i = 0; i < carousel.length; ++i) {
-        var links = carousel[i].getElements('.items a');
-        links.activeId = 0;
-        links.pause = false;
+  window.addEvent('domready', function() {
+    var carousel = $$('aside.carousel');
+    for (var i = 0; i < carousel.length; ++i) {
+      var links = carousel[i].getElements('.items a');
+      links.activeId = 0;
+      links.pause = false;
+      carousel[i].addEvent('mouseenter', function() { links.pause = true; });
+      carousel[i].addEvent('mouseleave', function() { links.pause = false; });
 
-        carousel[i].addEvent('mouseenter', function() { links.pause = true; });
-        carousel[i].addEvent('mouseleave', function() { links.pause = false; });
+      links.each(function(e, j) {
+        e.addEvent('click', function(ev) {
+          e.getParent('.items').getElements('a').removeClass('active');
+          this.addClass('active');
 
-        links.each(function(e, j) {
-          e.addEvent('click', function(ev) {
-            e.getParent('.items').getElements('a').removeClass('active');
-            this.addClass('active');
+          var picture = e.getParent('aside.carousel').getElements('.picture');
+          picture.setStyle('display', 'none');
+          picture[j].setStyle('display', '');
 
-            var picture = e.getParent('aside.carousel').getElements('.picture');
-            picture.setStyle('display', 'none');
-            picture[j].setStyle('display', '');
+          var title = e.getParent('aside.carousel').getElements('.title > div');
+          title.setStyle('display', 'none');
+          title[j].setStyle('display', '');
 
-            var title = e.getParent('aside.carousel').getElements('.title > div');
-            title.setStyle('display', 'none');
-            title[j].setStyle('display', '');
+          var open = e.getParent('aside.carousel').getElements('.open > a');
+          open.setStyle('display', 'none');
+          open[j].setStyle('display', '');
 
-            var open = e.getParent('aside.carousel').getElements('.open > a');
-            open.setStyle('display', 'none');
-            open[j].setStyle('display', '');
-
-            ev.stop();
-            links.activeId = j;
-          });
+          ev.stop();
+          links.activeId = j;
         });
+      });
 
-        links.slideShow = window.setInterval(function() {
-          if (links.pause) return;
-          links.activeId = (links.activeId + 1) % links.length;
-          links[links.activeId].click();
-        }, 5000);
+      links.slideShow = window.setInterval(function() {
+        if (links.pause) return;
+        links.activeId = (links.activeId + 1) % links.length;
+        links[links.activeId].click();
+      }, 5000);
       }
     });
   //]]>
-  </script>
+</script>
 {% endblock %}
