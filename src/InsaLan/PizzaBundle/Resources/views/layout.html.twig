@@ -1,12 +1,12 @@
 {% extends 'InsaLanBundle::layout.html.twig' %}
 
 {% block title %}
-  {{ parent() }} -
-  Pizzas
+{{ parent() }}
+ - Pizzas
 {% endblock %}
 
 {% block stylesheets %}
-  {{ parent() }}
+{{ parent() }}
   {% stylesheets 'bundles/insalan/css/pizza.css' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
   {% endstylesheets %}
@@ -15,8 +15,7 @@
 {% block rawbody %}
 {{ parent() }}
 
-  <section class="container">
-    {% block body %}{% endblock %}
-  </section>
-
+<section class="container">
+  {% block body %}{% endblock %}
+</section>
 {% endblock %}

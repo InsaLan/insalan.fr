@@ -9,18 +9,22 @@
 {% endstylesheets %}
 {% endblock %}
 
-{% block main_header %} {{ parent() }} {% endblock %}
+{% block main_header %}
+{{ parent() }}
+{% endblock %}
 
 {% block rawbody %}{% endblock %}
 
 {% block main_bottom %}{% endblock %}
 
 {% block javascripts %}
-    {% javascripts 'bundles/insalan/js/jquery.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-    <script type="text/javascript">
-        jQuery.noConflict();
-    </script>
-    {{ parent() }}
+{{ parent() }}
+
+{% javascripts 'bundles/insalan/js/jquery.js' %}
+  <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+<script type="text/javascript">
+  jQuery.noConflict();
+</script>
 {% endblock %}

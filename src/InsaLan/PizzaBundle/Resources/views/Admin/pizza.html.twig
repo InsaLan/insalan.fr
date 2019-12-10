@@ -1,11 +1,12 @@
 {% extends 'InsaLanPizzaBundle::Admin/layout.html.twig' %}
 
 {% block title %}
-  {{ parent() }} - Gestion pizzas
+{{ parent() }}
+ - Gestion pizzas
 {% endblock %}
 
 {% block body %}
-  {{ parent() }}
+{{ parent() }}
 
 <article >
 
@@ -14,7 +15,7 @@
   </header>
 
   <section style="margin-top:30px">
-  {{ form_start(formAdd, {attr:{'class':'oneline'}}) }}
+    {{ form_start(formAdd, {attr:{'class':'oneline'}}) }}
     <strong>Ajout manuel d'une pizza :</strong>
     <div id="addFormBlock">
       {{ form_widget(formAdd.pizzaName, {'attr': {'placeholder': formAdd.pizzaName.vars.label, 'class': 'addInput' }}) }}
@@ -26,12 +27,11 @@
         <input type="submit" value="Ajouter"/>
       </div>
     </div>
-  {{ form_end(formAdd) }}
+    {{ form_end(formAdd) }}
   </section>
 
   <section style="margin-top:40px">
     <strong>Liste des pizzas :</strong>
-
     <table class="grid-10" style="margin-top:20px">
       <tr>
         <th class="grid-1-5">Nom</th>
@@ -40,18 +40,17 @@
         <th class="grid-1">Veggie</th>
         <th class="grid-1"></th>
       </tr>
-
-  {% for pizza in pizzas %}
+      {% for pizza in pizzas %}
       <tr>
         <td>{{ pizza.name }}</td>
         <td>{{ pizza.description }}</td>
         <td>{{ pizza.price }} €</td>
         <td>
-            {% if pizza.veggie == 1 %}
-                <b style="color: green">&#x2713; </b>
-            {% else %}
-                <b style="color: red">&#x274C; </b>
-            {% endif %}
+          {% if pizza.veggie == 1 %}
+            <b style="color: green">&#x2713; </b>
+          {% else %}
+            <b style="color: red">&#x274C; </b>
+          {% endif %}
         </td>
         <td>
           <form method="POST" action="{{ path('insalan_pizza_admin_pizza_remove', {id: pizza.id}) }}">
@@ -59,18 +58,12 @@
           </form>
         </td>
       </tr>
-  {% endfor %}
+      {% endfor %}
     </table>
   </section>
-
-
 </article>
-
-
-
 {% endblock %}
 
 {% block javascripts %}
 {{ parent() }}
-
 {% endblock %}
