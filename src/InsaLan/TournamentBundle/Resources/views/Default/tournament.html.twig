@@ -12,67 +12,71 @@
 #}
 
 {% block title %}
-  {{ parent() }} - {{ t.name }}
+{{ parent() }}
+ - {{ t.name }}
 {% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets 'bundles/insalan/css/tournament2.css' filter='cssrewrite' %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
+{{ parent() }}
+  {% stylesheets 'bundles/insalan/css/tournament2.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
 {% endblock %}
 
 {% block body %}
 {{ parent() }}
   
-  <header class="game">
-    <div class="container">
-      <img src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" alt="Logo"/>
-      <div>
-        <h1>{{ t.name }}</h1>
-        <h1>{{ t.tournamentClose |localizeddate('none', 'none', 'fr_FR', null, "MMMM Y") }}</h1>
-      </div>
+<header class="game">
+  <div class="container">
+    <img src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" alt="Logo"/>
+    <div>
+      <h1>{{ t.name }}</h1>
+      <h1>{{ t.tournamentClose |localizeddate('none', 'none', 'fr_FR', null, "MMMM Y") }}</h1>
     </div>
-  </header>
-
+  </div>
+</header>
 {% endblock %}
 
 {% block rawbody %}
 {{ parent() }}
 
-  <div class="container bg-{{ t.type }}">
-    {% if stages|length == 0 and knockouts|length == 0 %}
-    <br /><br />
-    <section>
-      <div class="frame frame-active grid-10" style="background-color: rgba(0,0,0,.5)">
-          <section class="full">
-              <div style="text-align: center">
-                <p>Aucun match n'est disponible.</p>
-                {% if t.isPending() %}
-                <p>Ce tournoi débutera le {{ t.tournamentOpen | date("d/m à H:i") }}.</p>
-                {% endif %}
-                <br />
-                {% if t.participantType == "team" %}
-                    <a class="btn2" href="{{ path("insalan_tournament_default_teamlist", {"id":t.id}) }}">
-                {% else %}
-                    <a class="btn2" href="{{ path("insalan_tournament_default_playerlist", {"id":t.id}) }}">
-                {% endif %}
-                Participants</a>
-                <a href="{{ path('insalan_tournament_default_rules', {id: t.id}) }}" class="btn2">Règlement</a>
-              </div>
-              <br class="clear">
-          </section>
-      </div>
-    </section>
-    {% endif %}
-    <section class="results">
-      <section class="matchs">
-        {% for s in stages %}
-          {% for g in s.groups %}
-            <table class="matchs" id="matchs{{ g.id }}">
-              {% set matchFound = false %}
-              {% for m in g.matches %}
-                {% if constant('InsaLan\\TournamentBundle\\Entity\\AbstractMatch::STATE_FINISHED') == m.state %}
+<div class="container bg-{{ t.type }}">
+  {% if stages|length == 0 and knockouts|length == 0 %}
+  <br/><br/>
+  <section>
+    <div class="frame frame-active grid-10" style="background-color: rgba(0,0,0,.5)">
+      <section class="full">
+        <div style="text-align: center">
+          <p>Aucun match n'est disponible.</p>
+          {% if t.isPending() %}
+            <p>Ce tournoi débutera le {{ t.tournamentOpen | date("d/m à H:i") }}.</p>
+          {% endif %}
+          <br/>
+          {% if t.participantType == "team" %}
+            <a class="btn2" href="{{ path("insalan_tournament_default_teamlist", {"id":t.id}) }}">
+          {% else %}
+            <a class="btn2" href="{{ path("insalan_tournament_default_playerlist", {"id":t.id}) }}">
+          {% endif %}
+            Participants
+          </a>
+          <a href="{{ path('insalan_tournament_default_rules', {id: t.id}) }}" class="btn2">
+            Règlement
+          </a>
+        </div>
+        <br class="clear">
+      </section>
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="results">
+    <section class="matchs">
+      {% for s in stages %}
+        {% for g in s.groups %}
+          <table class="matchs" id="matchs{{ g.id }}">
+            {% set matchFound = false %}
+            {% for m in g.matches %}
+              {% if constant('InsaLan\\TournamentBundle\\Entity\\AbstractMatch::STATE_FINISHED') == m.state %}
                 {% set matchFound = true %}
                 <tr data-mid="{{ m.id }}" class="match">
                   {% if m.kind == 'simple' %}
@@ -83,72 +87,75 @@
                     <td>{{ m.part2.name }}</td>
                   {% endif %}
                 </tr>
-                {% endif %}
-              {% endfor %}
-              {% if not matchFound %}
+              {% endif %}
+            {% endfor %}
+            {% if not matchFound %}
               <tr>
                 <th colspan="3" style="text-align: center; padding: 7px; font-style: italic">
                   Aucune information disponible
                 </th>
               </tr>
-              {% endif %}
-            </table>
-          {% endfor %}
-        {% endfor %}
-      </section>
-
-      <section class="tabs">
-        <nav>
-            <ul>
-            {% for s in stages %}
-            <li><a href="#" class="tablink" data-type="stage" data-target="{{ s.id }}">{{ s.name }}</a></li>
-            {% endfor %}
-            {% for k in knockouts %}
-              <li><a href="#" class="tablink" data-type="knockout" data-target="{{ k.id }}">{{ k.name }}</a></li>
-            {% endfor %}
-
-          </ul>
-          <div class="clear"></div>
-        </nav>
-        {% for s in stages %}
-        <div class="groups" id="stage{{ s.id }}" style="display: none;">
-          {% for g in s.groups %}
-          <table class="group" data-gid="{{ g.id }}">
-            <tr>
-              <th>{{ g.name }}</th>
-              {% if g.statsType == constant('InsaLan\\TournamentBundle\\Entity\\Group::STATS_WINLOST') %}
-                <th>W</th>
-                <th>L</th>
-              {% else %}
-                <th>Score</th>
-              {% endif %}
-            </tr>
-            {% for p in g.sortedParticipants %}
-            <tr>
-              <td><a href="{{ path('insalan_tournament_default_teamdetails', {id: p.id}) }}">{{ p.name }}</a></td>
-              {% if g.statsType == constant('InsaLan\\TournamentBundle\\Entity\\Group::STATS_WINLOST') %}
-                <td>{{ g.stats[p.id].won }}</td>
-                <td>{{ g.stats[p.id].lost }}</td>
-              {% else %}
-                <td>{{ g.stats[p.id].sum }}</td>
-              {% endif %}
-            </tr>
-            {% endfor %}
+            {% endif %}
           </table>
+        {% endfor %}
+      {% endfor %}
+    </section>
+
+    <section class="tabs">
+      <nav>
+        <ul>
+          {% for s in stages %}
+          <li>
+            <a href="#" class="tablink" data-type="stage" data-target="{{ s.id }}">{{ s.name }}</a>
+          </li>
           {% endfor %}
-          <div class="clear"></div>
-        </div>
+          {% for k in knockouts %}
+          <li>
+            <a href="#" class="tablink" data-type="knockout" data-target="{{ k.id }}">{{ k.name }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="clear"></div>
+      </nav>
+        {% for s in stages %}
+          <div class="groups" id="stage{{ s.id }}" style="display: none;">
+            {% for g in s.groups %}
+              <table class="group" data-gid="{{ g.id }}">
+                <tr>
+                  <th>{{ g.name }}</th>
+                  {% if g.statsType == constant('InsaLan\\TournamentBundle\\Entity\\Group::STATS_WINLOST') %}
+                    <th>W</th>
+                    <th>L</th>
+                  {% else %}
+                    <th>Score</th>
+                  {% endif %}
+                </tr>
+                {% for p in g.sortedParticipants %}
+                <tr>
+                  <td>
+                    <a href="{{ path('insalan_tournament_default_teamdetails', {id: p.id}) }}">{{ p.name }}</a>
+                  </td>
+                  {% if g.statsType == constant('InsaLan\\TournamentBundle\\Entity\\Group::STATS_WINLOST') %}
+                    <td>{{ g.stats[p.id].won }}</td>
+                    <td>{{ g.stats[p.id].lost }}</td>
+                  {% else %}
+                    <td>{{ g.stats[p.id].sum }}</td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+              </table>
+            {% endfor %}
+            <div class="clear"></div>
+          </div>
         {% endfor %}
 
         {% for k in knockouts %}
-        <div class="groups" id="knockout{{ k.id }}" style="display: none;">
-
+          <div class="groups" id="knockout{{ k.id }}" style="display: none;">
             <div id="bracketContainer_{{ k.id }}">
             </div>
 
             <div class="clear"></div>
-        </div>
-
+          </div>
         {% endfor %}
       </section>
       <div class="clear"></div>
@@ -195,7 +202,6 @@
           <a href="#">Télécharger le Replay</a>
         </div>
       </section>
-
 
       <table id="team100">
         <caption></caption>
@@ -253,102 +259,101 @@
 {% endblock %}
 
 {% block javascripts %}
-  {{ parent() }}
-  {% javascripts
-    'bundles/insalan/js/tournament.js'
-    'bundles/insalan/data/champion.js'
-    'bundles/insalan/data/item.js'
-    'bundles/insalan/data/summoner.js'
-  %}
-    <script src="{{ asset_url }}" type="text/javascript"></script>
-  {% endjavascripts %}
+{{ parent() }}
 
+{% javascripts
+  'bundles/insalan/js/tournament.js'
+  'bundles/insalan/data/champion.js'
+  'bundles/insalan/data/item.js'
+  'bundles/insalan/data/summoner.js'
+%}
+<script src="{{ asset_url }}" type="text/javascript"></script>
+{% endjavascripts %}
 
-  <script type="text/javascript">
-    loadMatch.url = '{{ path('insalan_tournament_default_matchdata', {id:'__id__'}) }}';
-    loadRound.replayUrl = '{{ asset('') }}';
+<script type="text/javascript">
+loadMatch.url = '{{ path('insalan_tournament_default_matchdata', {id:'__id__'}) }}';
+loadRound.replayUrl = '{{ asset('') }}';
 
-    window.addEvent('domready', function() {
-      var matches = $$('table.matchs');
-      var groups  = $$('table.group');
-      var tabs    = $$('section.tabs .groups');
+window.addEvent('domready', function() {
+  var matches = $$('table.matchs');
+  var groups  = $$('table.group');
+  var tabs    = $$('section.tabs .groups');
 
-      if(tabs.length > 0) {
-        tabs[0].show();
-        buildTrees();
-      }
+  if(tabs.length > 0) {
+    tabs[0].show();
+    buildTrees();
+  }
 
-      if (matches.length > 0) {
-        groups[0].addClass('active');
-        matches.hide();
-        matches[0].show();
-
-        groups.addEvent('click', function() {
-          var gid = parseInt(this.dataset.gid);
-          $$('table.matchs').hide();
-          $$('table.group').removeClass('active');
-          $('matchs' + gid).show();
-          $(this).addClass('active');
-        });
-      } else {
-        $$("section.matchs").hide();
-      }
-
-      {#var target = $$('.match-details .container')[0];
-      matches = $$('table.matchs tr.match');
-      matches.addEvent('click', function() {
-        var mid = parseInt(this.dataset.mid);
-        loadMatch(mid, target);
-        new Fx.Scroll(window).toElement(target);
-        $$('table.matchs tr.match').removeClass('active');
-        $(this).addClass('active');
-      });
-
-      $$('.rounds nav ul li').addEvent('click', function() {
-        if ($(this).hasClass('disabled')) {
-          return;
-        }
-
-        loadRound(target, this);
-      });#}
-
+  if (matches.length > 0) {
+    groups[0].addClass('active');
+    matches.hide();
+    matches[0].show();
+    groups.addEvent('click', function() {
+      var gid = parseInt(this.dataset.gid);
+      $$('table.matchs').hide();
+      $$('table.group').removeClass('active');
+      $('matchs' + gid).show();
+      $(this).addClass('active');
     });
-  </script>
+  } else {
+    $$("section.matchs").hide();
+  }
 
-  <script>
-  function buildTrees() {
+  {#
+  var target = $$('.match-details .container')[0];
+  matches = $$('table.matchs tr.match');
+  matches.addEvent('click', function() {
+    var mid = parseInt(this.dataset.mid);
+    loadMatch(mid, target);
+    new Fx.Scroll(window).toElement(target);
+    $$('table.matchs tr.match').removeClass('active');
+    $(this).addClass('active');
+  });
+
+  $$('.rounds nav ul li').addEvent('click', function() {
+    if ($(this).hasClass('disabled')) {
+      return;
+    }
+
+    loadRound(target, this);
+  });
+  #}
+});
+</script>
+
+<script>
+function buildTrees() {
   {% for k in knockouts %}
     (function($) {
-        $('#bracketContainer_{{ k.id }}').bracket({
-          init:  {{ k.jsonData|raw }},
-          skipConsolationRound: true,
-          {% if k.doubleElimination %}
+      $('#bracketContainer_{{ k.id }}').bracket({
+        init:  {{ k.jsonData|raw }},
+        skipConsolationRound: true,
+        {% if k.doubleElimination %}
           skipSecondaryFinal: true
-          {% endif %}
-        });
+        {% endif %}
+      });
     })(jQuery);
   {% endfor %}
-  }
-  </script>
+}
+</script>
 
-  <script>
-      (function($) {
-        $(".tablink").click(function() {
-            $(".groups").hide();
-            var targetId = $(this).data('target');
-            var targetType = $(this).data('type');
-            $("table.matchs").hide();
-            $("#"+targetType+targetId).show();
-            if(targetType === "stage") {
-              $("section.matchs").show();
-              $("#matchs"+targetId).show();
-            } else {
-              $("section.matchs").hide();
-              buildTrees();
-            }
-            return false;
-        });
-    })(jQuery);
-  </script>
-
+<script>
+(function($) {
+  $(".tablink").click(function() {
+    $(".groups").hide();
+    var targetId = $(this).data('target');
+    var targetType = $(this).data('type');
+    $("table.matchs").hide();
+    $("#"+targetType+targetId).show();
+    if(targetType === "stage") {
+      $("section.matchs").show();
+      $("#matchs"+targetId).show();
+    } else {
+      $("section.matchs").hide();
+      buildTrees();
+    }
+    return false;
+  });
+})(jQuery);
+</script>
 {% endblock %}

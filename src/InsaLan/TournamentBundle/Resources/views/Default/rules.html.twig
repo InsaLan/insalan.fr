@@ -1,10 +1,10 @@
 {% extends 'InsaLanTournamentBundle::layout.html.twig' %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets 'bundles/insalan/css/tournament2.css' filter='cssrewrite' %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
+{{ parent() }}
+  {% stylesheets 'bundles/insalan/css/tournament2.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
 {% endblock %}
 
 {% block body %}
@@ -16,34 +16,34 @@
     {{ t.name }}
   </div>
 </header>
-
 {% endblock %}
 
 {% block rawbody %}
 {{ parent() }}
 
 <div class="container bg-{{ t.type }}">
-    <br /><br />
-    <section class="markdown">
-        <div class="frame frame-active grid-10" style="background-color: rgba(0,0,0,.5)">
-            <section class="full">
-            <div style="margin: 10px">
-                <center><h2>Règlement du tournoi</h2></center>
-                <br />
-                {% if t.rules | length > 0 %}
-                    {{ t.rules|markdown }}
-                {% else %}
-                    <p style="text-align: center">
-                        Le règlement n'est pas disponible actuellement.<br />
-                        <br />
-                        Vous pouvez contacter les administrateurs du tournoi en cas de questions.
-                    </p>
-                {% endif %}
-            </div>
-            <br class="clear">
-            </section>
+  <br/><br/>
+  <section class="markdown">
+    <div class="frame frame-active grid-10" style="background-color: rgba(0,0,0,.5)">
+      <section class="full">
+        <div style="margin: 10px">
+          <center>
+            <h2>Règlement du tournoi</h2>
+          </center>
+          <br/>
+          {% if t.rules | length > 0 %}
+            {{ t.rules|markdown }}
+          {% else %}
+            <p style="text-align: center">
+              Le règlement n'est pas disponible actuellement.<br/>
+              <br/>
+              Vous pouvez contacter les administrateurs du tournoi en cas de questions.
+            </p>
+          {% endif %}
         </div>
-    </section>
+        <br class="clear">
+      </section>
+    </div>
+  </section>
 </div>
-
 {% endblock %}

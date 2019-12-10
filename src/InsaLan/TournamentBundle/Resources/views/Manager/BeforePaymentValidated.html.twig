@@ -1,12 +1,16 @@
 <div class="frame">
   <header class="">
     <div class="step pull-left">
-        {{ counter }}
+      {{ counter }}
     </div>
     {% if tournament.free %}
-    <div class="title pull-left">Tournoi gratuit, pas de paiement</div>
+      <div class="title pull-left">
+        Tournoi gratuit, pas de paiement
+      </div>
     {% else %}
-    <div class="title pull-left">Récapitulatif avant paiement</div>
+      <div class="title pull-left">
+        Récapitulatif avant paiement
+      </div>
     {% endif %}
     <br class="clear">
   </header>

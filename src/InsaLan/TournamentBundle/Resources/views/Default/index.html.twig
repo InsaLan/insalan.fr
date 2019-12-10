@@ -1,10 +1,10 @@
 {% extends 'InsaLanTournamentBundle::layout.html.twig' %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
+{{ parent() }}
+  {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
 {% endblock %}
 
 {% block body %}
@@ -48,5 +48,4 @@
   {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': old_tournaments} %}
 </article>
 {% endif %}
-
 {% endblock %}

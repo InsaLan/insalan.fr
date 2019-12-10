@@ -1,11 +1,9 @@
 {% extends 'InsaLanTournamentBundle::Admin/layout.html.twig' %}
 
-
 {% block body %}
 {{ parent() }}
 
 <article>
-
   <header>
     <h2>{{ knockout.name }} - {{ knockout.tournament.name }}</h2>
     <a href="{{ path("insalan_tournament_admin_knockout", {id: knockout.id }) }}"><<< Retour</a>
@@ -15,15 +13,13 @@
   </div>
 
   <div class="clear"></div>
-
 </article>
 
 <article>
-
   <h3>Initialiser les participants de l'arbre :</h3>
   <i>Attention, à ne faire qu'au début du tournois si possible.</i>
 
-  <br />
+  <br/>
 
   <form method="POST" action="{{ path('insalan_tournament_admin_knockout_view', {id: knockout.id}) }}">
     {% for i in 1..children %}
@@ -33,12 +29,11 @@
           <option value='{{id}}'>{{name}}</option>
         {% endfor %}
       </select>
-      <br />
+      <br/>
     {% endfor %}
     <input type="submit" value="Initialiser"/>
   </form>
 </article>
-
 {% endblock %}
 
 {% block javascripts %}
@@ -46,9 +41,7 @@
 
 <script type="text/javascript">
 (function($) {
-
     var data = {{ knockout.jsonData|raw }};
-
     $('#bracketContainer').bracket({
       init: data,
       skipConsolationRound: true,
@@ -57,9 +50,5 @@
       {% endif %}
     });
 })(jQuery);
-
-
-
 </script>
-
 {% endblock %}

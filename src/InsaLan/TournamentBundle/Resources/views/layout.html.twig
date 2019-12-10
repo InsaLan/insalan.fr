@@ -1,45 +1,50 @@
 {% extends 'InsaLanBundle::layout.html.twig' %}
 
 {% block title %}
-  {{ parent() }} -
-  Tournois
+{{ parent() }}
+ - Tournois
 {% endblock %}
 
 
 {% block stylesheets %}
 {{ parent() }}
-  {% stylesheets 'bundles/insalan/css/jquery.bracket.min.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
 
-  <style type="text/css"> {# overrides jQBracket style #}
-    {#div.jQBracket {
-      width: 100% !important;
-    }
-    div.jQBracket .bracket {
-      float:left !important;
-    }
-    div.jQBracket .team {
-      width: 150px !important;
-    }
-    div.jQBracket .round {
-      width: 150px !important;
-    }
-    div.jQBracket .team div.label {
-      width: 130px !important;
-    }#}
-  </style>
+{% stylesheets 'bundles/insalan/css/jquery.bracket.min.css' %}
+  <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+<style type="text/css"> {# overrides jQBracket style #}
+  {#
+  div.jQBracket {
+    width: 100% !important;
+  }
+  div.jQBracket .bracket {
+    float:left !important;
+  }
+  div.jQBracket .team {
+    width: 150px !important;
+  }
+  div.jQBracket .round {
+    width: 150px !important;
+  }
+  div.jQBracket .team div.label {
+    width: 130px !important;
+  }
+  #}
+</style>
 {% endblock %}
 
 {% block javascripts %}
-  {% javascripts 'bundles/insalan/js/jquery.js'
-                 'bundles/insalan/js/jquery.bracket.min.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-  {% endjavascripts %}
-  <script type="text/javascript">
-    jQuery.noConflict();
-  </script>
 {{ parent() }}
+
+{% javascripts 'bundles/insalan/js/jquery.js'
+               'bundles/insalan/js/jquery.bracket.min.js' %}
+  <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+<script type="text/javascript">
+  jQuery.noConflict();
+</script>
 {% endblock %}
 
 
@@ -49,5 +54,4 @@
 <section class="container">
   {% block body %}{% endblock %}
 </section> 
-
 {% endblock %}

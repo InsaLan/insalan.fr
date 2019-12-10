@@ -16,19 +16,17 @@
   </header>
 
   <section>
-
-      {% if tournament.participantType == 'team' %}
-          {% include 'InsaLanTournamentBundle:Manager:ChooseManagerNameValidated.html.twig'  with {'counter': 1}%}
-          {% include 'InsaLanTournamentBundle:Manager:CreateJoinTeamValidated.html.twig'  with {'counter': 2}%}
-          {% include 'InsaLanTournamentBundle:Manager:BeforePaymentValidated.html.twig'  with {'counter': 3}%}
-          {% include 'InsaLanTournamentBundle:Manager:AfterPaymentActive.html.twig' with {'counter': 4} %}
-      {% else %}
-          {% include 'InsaLanTournamentBundle:Manager:ChooseManagerNameValidated.html.twig' with {'counter': 1} %}
-          {% include 'InsaLanTournamentBundle:Manager:JoinSoloPlayerValidated.html.twig'  with {'counter': 2} %}
-          {% include 'InsaLanTournamentBundle:Manager:BeforePaymentValidated.html.twig' with {'counter': 3} %}
-          {% include 'InsaLanTournamentBundle:Manager:AfterPaymentActive.html.twig' with {'counter': 4} %}
-      {% endif %}
-
+    {% if tournament.participantType == 'team' %}
+      {% include 'InsaLanTournamentBundle:Manager:ChooseManagerNameValidated.html.twig'  with {'counter': 1}%}
+      {% include 'InsaLanTournamentBundle:Manager:CreateJoinTeamValidated.html.twig'  with {'counter': 2}%}
+      {% include 'InsaLanTournamentBundle:Manager:BeforePaymentValidated.html.twig'  with {'counter': 3}%}
+      {% include 'InsaLanTournamentBundle:Manager:AfterPaymentActive.html.twig' with {'counter': 4} %}
+    {% else %}
+      {% include 'InsaLanTournamentBundle:Manager:ChooseManagerNameValidated.html.twig' with {'counter': 1} %}
+      {% include 'InsaLanTournamentBundle:Manager:JoinSoloPlayerValidated.html.twig'  with {'counter': 2} %}
+      {% include 'InsaLanTournamentBundle:Manager:BeforePaymentValidated.html.twig' with {'counter': 3} %}
+      {% include 'InsaLanTournamentBundle:Manager:AfterPaymentActive.html.twig' with {'counter': 4} %}
+    {% endif %}
   </section>
 </article>
 {% endblock %}
