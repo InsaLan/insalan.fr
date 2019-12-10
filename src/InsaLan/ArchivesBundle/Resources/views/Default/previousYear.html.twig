@@ -20,7 +20,6 @@
 
 <br class="clear"/><hr/><br/>
 
-
 {% if poster is defined %}
 <section>
   <div class="previous-years-list">
@@ -137,14 +136,13 @@
   <section>
     <div class="album-list ">
       {% for a in streamsAlbum %}
-      {% if a.album != ""%}
-      <a class="btn2 btn2-nocolor" href="{{ path('archives_streams', {'edition': edition.id, 'album': a.album, 'page': 1}) }}">{{ a.album }}</a>
-      {% endif %}
+        {% if a.album != ""%}
+        <a class="btn2 btn2-nocolor" href="{{ path('archives_streams', {'edition': edition.id, 'album': a.album, 'page': 1}) }}">{{ a.album }}</a>
+        {% endif %}
       {% endfor %}
     </div>
 
   </section>
 </article>
 {% endif %}
-
 {% endblock %}
