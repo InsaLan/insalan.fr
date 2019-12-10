@@ -1,28 +1,31 @@
 {% extends 'InsaLanUserBundle::layout.html.twig' %}
+
 {% block body %}
 {{ parent() }}
 
 <div class="frame frame-active">
-    <header class="full">
-        <div class="step pull-left">
-            &#x2699;
-        </div>
-        <h2 class="title pull-left">Mon profil</h2>
-        <br class="clear">
-    </header>
-    <div class="text">
-        <form id="profile" method="POST" action="{{ path('insalan_user_default_index') }}">
-            <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
-            {{ form_errors(form) }}
-            {{ form_row(form.firstname) }}
-            {{ form_row(form.lastname) }}
-            {{ form_row(form.phoneNumber) }}
-            {{ form_row(form.birthdate) }}
-            <br class="clear">
-
-        </form>
+  <header class="full">
+    <div class="step pull-left">
+      &#x2699;
     </div>
-    <style>select { float:left; } .input.left select {margin-left: 0px;}</style>
+    <h2 class="title pull-left">Mon profil</h2>
+    <br class="clear">
+  </header>
+ 
+   <div class="text">
+     <form id="profile" method="POST" action="{{ path('insalan_user_default_index') }}">
+       <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
+       {{ form_errors(form) }}
+       {{ form_row(form.firstname) }}
+       {{ form_row(form.lastname) }}
+       {{ form_row(form.phoneNumber) }}
+       {{ form_row(form.birthdate) }}
+     </form>
+     <br class="clear">
+   </div>
+
+   <style>select { float:left; } .input.left select {margin-left: 0px;}</style>
+
     <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('profile').submit();">Ok</a>
 </div>
 
