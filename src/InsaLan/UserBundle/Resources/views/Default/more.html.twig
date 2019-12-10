@@ -30,51 +30,51 @@
 </div>
 
 <div class="frame frame-active">
-    <header class="full">
-        <div class="step pull-left">
-            &#x2699;
-        </div>
-        <h2 class="title pull-left">Connexion à Steam</h2>
-        <br class="clear">
-    </header>
-    <div class="text">
-        <br />
-        {% if steam %}
-            <a href="{{ steam.profileurl }}" target="_blank">
-                <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ steam.avatarmedium }}" />
-            </a>
-            <h2>{{ steam.personaname }}</h2>
-            <a href="{{ path('insalan_user_default_registersteamid') }}" class="btn2" style="float: right">Modifier / Supprimer la connexion</a>
-        {% else %}
-            <h2>Non connecté</h2>
-            <a href="{{ path('insalan_user_default_registersteamid') }}" class="btn2" style="float: right">Lier un compte Steam</a>
-        {% endif %}
-        <p>Utilisé pour les inscriptions aux tournois Steam</p>
-        <br>
+  <header class="full">
+    <div class="step pull-left">
+      &#x2699;
     </div>
+    <h2 class="title pull-left">Connexion à Steam</h2>
+    <br class="clear">
+  </header>
+
+  <div class="text">
+    <br/>
+    {% if steam %}
+      <a href="{{ steam.profileurl }}" target="_blank">
+        <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ steam.avatarmedium }}" />
+      </a>
+      <h2>{{ steam.personaname }}</h2>
+      <a href="{{ path('insalan_user_default_registersteamid') }}" class="btn2" style="float: right">Modifier / Supprimer la connexion</a>
+    {% else %}
+      <h2>Non connecté</h2>
+      <a href="{{ path('insalan_user_default_registersteamid') }}" class="btn2" style="float: right">Lier un compte Steam</a>
+    {% endif %}
+    <p>Utilisé pour les inscriptions aux tournois Steam</p>
+    <br>
+  </div>
 </div>
 
 <div class="frame frame-active">
-    <header class="full">
-        <div class="step pull-left">
-            &#x2699;
-        </div>
-        <h2 class="title pull-left">Connexion à Battle.net</h2>
-        <br class="clear">
-    </header>
-    <div class="text">
-        <br />
-        {% if battletag %}
-            <h2>{{ battletag }}</h2>
-            <a href="{{ path('insalan_user_default_registerbattlenet') }}" class="btn2" style="float: right">Modifier / Supprimer la connexion</a>
-        {% else %}
-            <h2>Non connecté</h2>
-            <a href="{{ path('insalan_user_default_registerbattlenet') }}" class="btn2" style="float: right">Lier un compte BattleNet</a>
-        {% endif %}
-        <p>Utilisé pour les inscriptions aux tournois Battle.Net</p>
-        <br>
+  <header class="full">
+    <div class="step pull-left">
+      &#x2699;
     </div>
+    <h2 class="title pull-left">Connexion à Battle.net</h2>
+    <br class="clear">
+  </header>
+
+  <div class="text">
+    <br/>
+    {% if battletag %}
+      <h2>{{ battletag }}</h2>
+      <a href="{{ path('insalan_user_default_registerbattlenet') }}" class="btn2" style="float: right">Modifier / Supprimer la connexion</a>
+    {% else %}
+      <h2>Non connecté</h2>
+      <a href="{{ path('insalan_user_default_registerbattlenet') }}" class="btn2" style="float: right">Lier un compte BattleNet</a>
+    {% endif %}
+    <p>Utilisé pour les inscriptions aux tournois Battle.Net</p>
+    <br>
+  </div>
 </div>
-
-
 {% endblock %}

@@ -3,7 +3,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-
 <article>
   <aside>
     <div class="square">
@@ -26,7 +25,6 @@
         {{ form_widget(form.username) }}
         {{ form_errors(form.username) }}
       </div>
-
 
       <div class="input left">
         <label for="{{ form.email.vars.id }}">{{ 'form.email'|trans }}</label>
@@ -53,5 +51,4 @@
     {{ form_end(form) }}
   </section>
 </article>
-
 {% endblock fos_user_content %}
