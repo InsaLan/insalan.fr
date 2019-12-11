@@ -141,19 +141,18 @@
     </aside>
     {% endblock %}
 
-    {% if app.session.flashbag.get('info')
-       or app.session.flashbag.get('error') %}    
+    {% if app.session.flashbag.peekAll()|length %}
       <section class="container">
-        {% for message in app.session.flashbag.get('info') %}
-          <p class="alert-info">{{ message }}</p>
-        {% endfor %}
-
-        {% for message in app.session.flashbag.get('error') %}
-          <p class="alert-error">{{ message }}</p>
+        {% for label, flashes in app.session.flashbag.all %}
+          {% for flash in flashes %}
+            <div class="alert alert-{{ label }}">
+              {{ flash }}
+            </div>
+          {% endfor %}
         {% endfor %}
       </section>
-    {% endif %}
-
+    {% endif %}  
+    
     {% block rawbody %}{% endblock %}
 
     {% block main_bottom %}
