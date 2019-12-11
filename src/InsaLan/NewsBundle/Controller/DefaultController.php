@@ -19,7 +19,11 @@ class DefaultController extends Controller
 
         $news = $em->getRepository('InsaLanNewsBundle:News')->getLatest(20);
         $sliders = $em->getRepository('InsaLanNewsBundle:Slider')->getLatest(20);
-        //$this->get('session')->getFlashBag()->add('info', 'Hey!');
+
+        if ($this->container->getParameter('kernel.environment') === 'dev') {
+            $this->get('session')->getFlashBag()->add('info', 'Debug: info flashbag');
+            $this->get('session')->getFlashBag()->add('error', 'Debug: error flashbag');
+        }
 
         // Get global variables
         $globalVars = array();
