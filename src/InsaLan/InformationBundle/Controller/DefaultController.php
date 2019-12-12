@@ -175,7 +175,7 @@ class DefaultController extends Controller
     /**
      * @Route("/hardwareRental")
      * @Template()
-     *//*
+     */
     public function hardwareRentalAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -200,10 +200,10 @@ class DefaultController extends Controller
         // Check if player's team / player / manager is validated
         $validated = False;
         foreach($participants as $p) {
-            if ($p->getValidated() == Participant::STATUS_VALIDATED) {
+            if ($p->getValidated() == Participant::STATUS_VALIDATED && !$p->getTournament()->isClosed()) {
                 $validated = True;
             }
         }
         return array('validated' => $validated);
-    }*/
+    }
 }
