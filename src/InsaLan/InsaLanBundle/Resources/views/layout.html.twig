@@ -98,9 +98,9 @@
               <li{% if page == 'insalan_information_default_baston' %} class="active"{% endif %}>
                 <a href="{{ path('insalan_information_default_baston') }}">Baston</a>
               </li>
-              {#{% if app.user %}
+              {% if app.user %}
                 <li><a href="{{ path('insalan_information_default_hardwarerental') }}">Locations</a></li>
-              {% endif %}#}
+              {% endif %}
               <li{% if page == 'insalan_rsc_default_index' %} class="active"{% endif %}>
                 <a href="{{ path('insalan_rsc_default_index') }}">RSC</a>
               </li>
