@@ -17,10 +17,12 @@
 <div class="bg-{{ tournament.type }}">
 
 <header class="game">
-<div class="container">
+  <div class="container">
     <img style="height:100px" src="{{ asset(tournament.getUploadDir() ~ tournament.logoPath) }}" alt="Logo"/>
-    {{ tournament.name }}
-</div>
+    <div>
+      <h1>{{ tournament.name }}</h1>
+    </div>
+  </div>
 </header>
 
 <article>
