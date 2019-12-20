@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -53,6 +53,8 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.token_storage')->getToken()->getUser();
 
+        $logger = $this->get('logger');
+        $logger->notice("userlogin" . "::" . $usr->getUsername() . "::" . $_SERVER['REMOTE_ADDR']);
         if (!$this->userProfileCompleted($usr))
             return $this->redirect($this->generateUrl('insalan_user_default_index'));
 
@@ -671,8 +673,10 @@ class UserController extends Controller
          * - A validated team roster cannot be modified in paid tournaments
          * - Bans invalidates the team (see below)
          */
-        if(!$team->getTournament()->isFree() && $team->getValidated())
+        if(!$team->getTournament()->isFree() && $team->getValidated() && $team->getPlayers()->count() <= $team->getTournament()->getTeamMinPlayer()) {
+            $this->get('session')->getFlashBag()->add('error', "Votre équipe est validée et si vous bannissez ce joueur vous serez en dessous du nombre minimum de joueurs.");
             return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+        }
 
         // captain cannot ban himself !
         if($playerToBan !== $captain) {
