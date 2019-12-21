@@ -53,8 +53,8 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.token_storage')->getToken()->getUser();
 
-        $logger = $this->get('logger');
-        $logger->notice("userlogin" . "::" . $usr->getUsername() . "::" . $_SERVER['REMOTE_ADDR']);
+        $logger = $this->get('monolog.logger.user');
+        $logger->info("userlogin" . "::" . $usr->getUsername() . "::" . $_SERVER['REMOTE_ADDR']);
         if (!$this->userProfileCompleted($usr))
             return $this->redirect($this->generateUrl('insalan_user_default_index'));
 
