@@ -35,6 +35,7 @@ class RemoveOldBattleTagCommand extends ContainerAwareCommand
             if ($user->getBattleTag() !== null && ($user->getBattleTagUpdatedAt() === null || $user->getBattleTagUpdatedAt() < $ttl) ) {
                 $user->setBattleTag(null);
                 $em->persist($user);
+                $output->writeln('BattleTag removed for user : '.$user->getUsername());
             }
         }
         $em->flush();
