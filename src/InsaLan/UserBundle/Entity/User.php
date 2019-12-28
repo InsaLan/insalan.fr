@@ -53,6 +53,11 @@ class User extends BaseUser
     /**
      * @ORM\Column(type="date", nullable=true) 
      */
+    private $battleTagUpdatedAt;
+
+    /**
+     * @ORM\Column(type="date", nullable=true) 
+     */
     private $birthdate;
 
     /**
@@ -200,6 +205,29 @@ class User extends BaseUser
     {
         return $this->battleTag;
     }
+
+    /**
+     * Set battleTagUpdatedAt
+     *
+     * @param \DateTime $battleTagUpdatedAt
+     * @return User
+     */
+    public function setBattleTagUpdatedAt($battleTagUpdatedAt)
+    {
+        $this->battleTagUpdatedAt = $battleTagUpdatedAt;
+        return $this;
+    }
+
+    /**
+     * Get battleTagUpdatedAt
+     *
+     * @return \DateTime
+     */
+    public function getBattleTagUpdatedAt()
+    {
+        return $this->battleTagUpdatedAt;
+    }
+
     /**
      * Set birthdate
      *

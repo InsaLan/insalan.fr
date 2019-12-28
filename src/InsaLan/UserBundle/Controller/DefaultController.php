@@ -164,6 +164,7 @@ class DefaultController extends Controller
                     $response = $client->fetch('https://eu.battle.net/oauth/userinfo');
                     $em = $this->getDoctrine()->getManager();
                     $usr->setBattleTag($response['result']['battletag']);
+                    $usr->setBattleTagUpdatedAt(new \DateTime("now"));
                     $em->persist($usr);
                     $em->flush();
                     return array('enregistre' => true, 'battletag' => $usr->getBattleTag());
