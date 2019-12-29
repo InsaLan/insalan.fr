@@ -14,26 +14,6 @@ class DefaultController extends Controller
     const OPENING_DATE = '2018/12/24 20:00:00';
 
     /**
-     * @Route("/faq")
-     * @Template()
-     */
-    public function faqAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        // Get global variables
-        $globalVars = array();
-        $globalKeys = ['staffNumber', 'number', 'lettersNumber',
-                      'playersNumber', 'openingDate', 'openingHour', 'closingDate', 'closingHour', 'price', 'webPrice'];
-        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
-
-        // Get staff
-        $staff = $em->getRepository('InsaLanBundle:Staff')->findAll();
-
-        return array('globalVars' => $globalVars, 'staff' => $staff);
-    }
-
-    /**
      * @Route("/asso")
      * @Template()
      */
