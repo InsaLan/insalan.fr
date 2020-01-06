@@ -115,8 +115,8 @@
           </td>
           <td>
             <span class="payment_status_m{{ manager.id }}">
-                <button class="payment_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 0 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if not manager.arrived %}style="display:none"{% endif %}>OUI</button>
-              <button class="payment_not_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if manager.arrived %}style="display:none"{% endif %}>NON</button>
+                <button class="payment_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 0 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if not manager.paymentDone %}style="display:none"{% endif %}>OUI</button>
+              <button class="payment_not_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if manager.paymentDone %}style="display:none"{% endif %}>NON</button>
             </span>
           </td>
           <td>
