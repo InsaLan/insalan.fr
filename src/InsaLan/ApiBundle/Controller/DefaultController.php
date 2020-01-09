@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class DefaultController extends Controller
 {
@@ -198,6 +199,34 @@ class DefaultController extends Controller
             }
         }
 
+        return new JsonResponse($res);
+    }
+
+    /**
+     * @Route("/admin/placement")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function placementAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->getUpcomingTournaments();
+        $res = [];
+        $res["participants"] = [];
+        // Participants
+        foreach ($tournaments as $t) {
+            $ps = $em->getRepository('InsaLanTournamentBundle:Participant')->findByRegistrable($t);
+            foreach ($ps as $p) {
+                $res["participants"][] = array(
+                    "name" => $p->getName(),
+                    "tournament" => $p->getTournament()->getShortName(),
+                    "placement" => $p->getPlacement()
+                );
+            }
+        }
+
+        // Room structure
+        $structure = $this->get('insalan.tournament.placement')->getStructure();
+        $res["map"] = $structure;
         return new JsonResponse($res);
     }
 }
