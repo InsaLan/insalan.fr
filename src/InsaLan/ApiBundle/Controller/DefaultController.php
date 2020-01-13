@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+use InsaLan\TournamentBundle\Entity\Participant;
+
 class DefaultController extends Controller
 {
     /**
@@ -216,11 +218,13 @@ class DefaultController extends Controller
         foreach ($tournaments as $t) {
             $ps = $em->getRepository('InsaLanTournamentBundle:Participant')->findByRegistrable($t);
             foreach ($ps as $p) {
-                $res["participants"][] = array(
-                    "name" => $p->getName(),
-                    "tournament" => $p->getTournament()->getShortName(),
-                    "placement" => $p->getPlacement()
-                );
+                if ($p->getValidated() === Participant::STATUS_VALIDATED) {
+                    $res["participants"][] = array(
+                        "name" => $p->getName(),
+                        "tournament" => $p->getTournament()->getShortName(),
+                        "placement" => $p->getPlacement()
+                    );
+                }
             }
         }
 
