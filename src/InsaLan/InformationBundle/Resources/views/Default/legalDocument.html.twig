@@ -11,12 +11,12 @@
           <div class="frame frame-active grid-10" style="background-color: rgba(0,0,0,.5)">
               <section class="full">
               <div style="margin: 10px">
-                {% if salesterms is not null %}
-                  <center><h2>{{ salesterms.name }}</h2></center>
+                {% if document is not null %}
+                  <center><h2>{{ document.name }}</h2></center>
                   <br />
-                  {{ salesterms.content|markdown }}
+                  {{ document.content|markdown }}
                   <div class="pull-right">
-                    Date de dernière mise à jour : {{ salesterms.updatedAt | date("d/m/Y") }}
+                    Date de dernière mise à jour : {{ document.updatedAt | date("d/m/Y") }}
                   </div>
                 {% else %}
                       <p style="text-align: center">
