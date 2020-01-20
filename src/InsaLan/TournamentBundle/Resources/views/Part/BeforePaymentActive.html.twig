@@ -64,7 +64,7 @@
   <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leave', {registrable: registrable.id}) }}">Annuler</a>
   {% endif %}
 
-  {% if registrable.freeSlots > 0 or (registrable.kind == "tournament" and registrable.participantType == 'team' and player.teamForTournament(registrable).validated) %}
+  {% if registrable.freeSlots > 0 or (registrable.kind == "tournament" and registrable.participantType == 'team' and player.teamForTournament(registrable).validated) or (registrable.kind == "tournament" and registrable.participantType == 'player') %}
 
   {% if selectedDiscount %}
   <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline_1', {registrable: registrable.id, discount: selectedDiscount.id}) }}">Chèque/Partenaire/Sur place</a>
