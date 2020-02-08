@@ -442,8 +442,6 @@ class AdminController extends Controller
             $em = $this->getDoctrine()->getManager();
             $usr = $this->get('security.token_storage')->getToken()->getUser();
 
-            $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments();
-
             $participantsRaw = $em->getRepository('InsaLanTournamentBundle:Participant')->findByRegistrable($id);
             $participants = array();
             foreach ($participantsRaw as $p) {

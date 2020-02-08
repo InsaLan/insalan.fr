@@ -9,14 +9,14 @@ use InsaLan\TournamentBundle\Entity\Participant;
 
 class TournamentRepository extends EntityRepository
 {
-    public function findThisYearTournaments() {
+    public function findThisYearTournaments($time) {
         $query = $this->createQueryBuilder('t')
             ->leftJoin('t.participants', 'p')
             ->addSelect('p')
             ->leftJoin('p.manager', 'm')
             ->addSelect('partial m.{id}') // TODO : find why doctrine needs to populate managers...
             ->where('t.registrationOpen >= :lastyear')
-            ->setParameter('lastyear', (new \DateTime('now'))->modify('-10 month'))
+            ->setParameter('lastyear', (new \DateTime('now'))->modify('-' . $time . ' month'))
             ->orderBy('t.tournamentOpen', 'ASC')
             ->getQuery();
         return $query->getResult();

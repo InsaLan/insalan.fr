@@ -23,7 +23,7 @@ class ApiController extends Controller
      */
     public function listEmailAction(Request $request)
     {
-        $tournaments = $this->getDoctrine()->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments();
+        $tournaments = $this->getDoctrine()->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments(10);
 
         // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
         $playerStatusChoices = array_flip(Participant::getStatuses());
