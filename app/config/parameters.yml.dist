@@ -32,3 +32,5 @@ parameters:
     battlenet_api_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     battlenet_api_secret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     battlenet_api_redirect_uri: https://insalan.fr/user/battleNetSignIn
+
+    show_pizza_tab: false

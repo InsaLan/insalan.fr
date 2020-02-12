@@ -27,3 +27,5 @@ parameters:
     paypal_express_checkout_password: AAAAAAAAAAAAAAAA
     paypal_express_checkout_signature: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     paypal_express_checkout_sandbox: true
+
+    show_pizza_tab: false

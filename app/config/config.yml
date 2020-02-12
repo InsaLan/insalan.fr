@@ -44,6 +44,7 @@ twig:
         - 'InsaLanBundle:Form:fields.html.twig'
     globals:
         ga_tracking: "%ga_tracking%"
+        show_pizza_tab: "%show_pizza_tab%"
     paths:
         %kernel.root_dir%/../vendor/payum/core/Payum/Core/Resources/views: PayumCore
 
