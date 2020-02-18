@@ -30,6 +30,44 @@ tarteaucitron.services.iframe = {
     }
 };
 
+// amplitude
+tarteaucitron.services.amplitude = {
+    "key": "amplitude",
+    "type": "analytic",
+    "name": "Amplitude",
+    "uri": "https://amplitude.com/privacy",
+    "needConsent": true,
+    "cookies": [],
+    "js": function () {
+        "use strict";
+        if (tarteaucitron.user.amplitude === undefined) {
+            return;
+        }
+        tarteaucitron.addScript('https://cdn.amplitude.com/libs/amplitude-5.8.0-min.gz.js', '', function() {
+
+          window.amplitude = {
+             _q: [],
+             _iq: {}
+          };
+          function s(e,t){e.prototype[t]=function(){this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));return this}}
+          var o=function(){this._q=[];return this};
+          var a=["add","append","clearAll","prepend","set","setOnce","unset"];
+          for(var u=0;u<a.length;u++){s(o,a[u])}
+          amplitude.Identify=o;
+          var c=function(){this._q=[];return this};
+          var l=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"];
+          for(var p=0;p<l.length;p++){s(c,l[p])}
+          amplitude.Revenue=c;
+          var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","enableTracking","setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId","groupIdentify","onInit","logEventWithTimestamp","logEventWithGroups","setSessionId","resetSessionId"];
+          function v(e){function t(t){e[t]=function(){e._q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}for(var n=0;n<d.length;n++){t(d[n])}}
+          v(amplitude);
+          amplitude.getInstance=function(e){e=(!e||e.length===0?"$default_instance":e).toLowerCase();if(!amplitude._iq.hasOwnProperty(e)){amplitude._iq[e]={_q:[]};v(amplitude._iq[e])}return amplitude._iq[e]};
+          
+          amplitude.getInstance().init(tarteaucitron.user.amplitude);
+        });
+    }
+};
+
 // abtasty
 tarteaucitron.services.abtasty = {
     "key": "abtasty",
@@ -44,6 +82,37 @@ tarteaucitron.services.abtasty = {
             return;
         }
         tarteaucitron.addScript('//try.abtasty.com/'+tarteaucitron.user.abtastyID+'.js');
+    }
+};
+
+
+// yandex metrica
+tarteaucitron.services.metrica = {
+    "key": "metrica",
+    "type": "analytic",
+    "name": "Yandex Metrica",
+    "uri": "https://yandex.com/legal/confidential/",
+    "needConsent": true,
+    "cookies": ['_ym_metrika_enabled','_ym_isad', '_ym_uid', '_ym_d','yabs-sid','_ym_debug','_ym_mp2_substs','_ym_hostIndex','_ym_mp2_track','yandexuid','usst'],
+    "js": function () {
+        "use strict";
+        if (tarteaucitron.user.yandexmetrica === undefined) {
+            return;
+        }
+        tarteaucitron.addScript('https://mc.yandex.ru/metrika/tag.js', '', function() {
+
+           (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+           ym(tarteaucitron.user.yandexmetrica, "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true,
+                webvisor:true,
+                ecommerce:"dataLayer"
+            });
+        });
     }
 };
 
@@ -1434,9 +1503,10 @@ tarteaucitron.services.mautic = {
             return;
         }
 
-        window['MauticTrackingObject'] = 'mt';
-        window['mt'] = window['mt'] || function() {
-            (window['mt'].q = window['mt'].q || []).push(arguments);
+        window.MauticTrackingObject = 'mt';
+        window.mt = window.mt || function () {
+            window.mt.q = window.mt.q || [];
+            window.mt.q.push(arguments);
         };
 
         tarteaucitron.addScript(tarteaucitron.user.mauticurl, '', function() {
@@ -2506,9 +2576,11 @@ tarteaucitron.services.webmecanik = {
         if (tarteaucitron.user.webmecanikurl === undefined) {
             return;
         }
-        window['WebmecanikTrackingObject'] = 'mt';
-        window['mt'] = window['mt'] || function() {
-            (window['mt'].q = window['mt'].q || []).push(arguments);
+
+        window.WebmecanikTrackingObject = 'mt';
+        window.mt = window.mt || function () {
+            window.mt.q = window.mt.q || [];
+            window.mt.q.push(arguments);
         };
 
         tarteaucitron.addScript(tarteaucitron.user.webmecanikurl, '', function() {
