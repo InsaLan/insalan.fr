@@ -2971,3 +2971,65 @@ tarteaucitron.services.youtubeapi = {
         tarteaucitron.addScript('https://www.youtube.com/player_api');
     }
 };
+
+
+// googledocs
+tarteaucitron.services.googledocs = {
+    "key": "googledocs",
+    "type": "other",
+    "name": "Google Docs",
+    "uri": "https://policies.google.com/privacy",
+    "needConsent": true,
+    "cookies": [],
+    "js": function () {
+        "use strict";
+        tarteaucitron.fallback(['googledocs'], function (x) {
+            var width = x.getAttribute("width"),
+                height = x.getAttribute("height"),
+                url = x.getAttribute("data-url");
+
+            return '<iframe src="' + url + '" width="' + width + '" height="' + height + '" frameborder="0"></iframe>';
+            
+        });
+    },
+    "fallback": function () {
+        "use strict";
+        var id = 'googledocs';
+        tarteaucitron.fallback(['googledocs'], function (elem) {
+            elem.style.width = elem.getAttribute('width') + 'px';
+            elem.style.height = elem.getAttribute('height') + 'px';
+            return tarteaucitron.engage(id);
+        });
+    }
+};
+
+
+// weezevent
+tarteaucitron.services.weezevent = {
+    "key": "weezevent",
+    "type": "other",
+    "name": "Weezevent",
+    "uri": "https://weezevent.com/fr/cgv-weezticket/",
+    "needConsent": true,
+    "cookies": [],
+    "js": function () {
+        "use strict";
+        tarteaucitron.fallback(['weezevent'], function (x) {
+            var width = x.getAttribute("width"),
+                height = x.getAttribute("height"),
+                url = x.getAttribute("data-url");
+
+            return '<iframe src="' + url + '" width="' + width + '" height="' + height + '" frameborder="0"></iframe>';
+            
+        });
+    },
+    "fallback": function () {
+        "use strict";
+        var id = 'weezevent';
+        tarteaucitron.fallback(['weezevent'], function (elem) {
+            elem.style.width = elem.getAttribute('width') + 'px';
+            elem.style.height = elem.getAttribute('height') + 'px';
+            return tarteaucitron.engage(id);
+        });
+    }
+};

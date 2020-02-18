@@ -29,3 +29,5 @@ tarteaucitron.init({
   (tarteaucitron.job = tarteaucitron.job || []).push('analytics');
   (tarteaucitron.job = tarteaucitron.job || []).push('youtube');
   (tarteaucitron.job = tarteaucitron.job || []).push('facebookcomment');
+  (tarteaucitron.job = tarteaucitron.job || []).push('googledocs');
+  (tarteaucitron.job = tarteaucitron.job || []).push('weezevent');
