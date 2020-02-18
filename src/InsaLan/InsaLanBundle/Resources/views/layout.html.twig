@@ -209,6 +209,7 @@
                 <ul>
                   <li><a href="{{ path('insalan_information_default_mentions') }}">Mentions légales</a></li>
                   <li><a href="{{ path('insalan_information_default_salesterms') }}">Conditions générales<br/> de vente</a></li>
+                  <li><a href="/#tarteaucitron">Gestion des<br/> cookies</a></li>
                 </ul>
               </li>
             </ul>
@@ -250,17 +251,10 @@
         'bundles/insalan/js/mootools-more-1.4.0.1.js'
         'bundles/insalan/js/global.js' %}
           <script type="text/javascript" src="{{ asset_url }}"></script>
+          <script type="text/javascript" src="/bundles/insalan/tarteaucitron.js/tarteaucitron.js"></script>
+
+        <script type="text/javascript" src="/bundles/insalan/js/tarteaucitron.config.js"></script>
       {% endjavascripts %}
-      <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', '{{ ga_tracking }}', 'auto');
-  ga('send', 'pageview');
-
-    </script>
     {% endblock %}
   </body>
 </html>
