@@ -37,13 +37,14 @@
 
   <section>
     <div class="picture-list ">
-      {% set nbStreams = 5 %}
+      {% set nbStreams = 25 %}
       {% for s in streams|slice((page - 1) * nbStreams, page * nbStreams)  %}
-
+      {# TODO Handle cookies
       <div>
         <iframe width="854" height="480" src="{{ s.url }}" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
+      </div>#}
 
+        <a class="btn2 btn-plain" href="{{ s.url }}">{{ s.name }}</a>
       {% endfor %}
     </div>
   </section>
