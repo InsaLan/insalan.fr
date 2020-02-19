@@ -219,10 +219,20 @@ class DefaultController extends Controller
             $ps = $em->getRepository('InsaLanTournamentBundle:Participant')->findByRegistrable($t);
             foreach ($ps as $p) {
                 if ($p->getValidated() === Participant::STATUS_VALIDATED) {
+                    $userNames = [];
+                    if ($p->getTournament()->getParticipantType()=='team') {
+                        $players = $p->getPlayers();
+                        foreach ($players as $player) {
+                            $userNames[] = $player->getUser()->getUsername();
+                        }
+                    } else {
+                        $userNames[] = $p->getUser()->getUsername();
+                    }
                     $res["participants"][] = array(
                         "name" => $p->getName(),
                         "tournament" => $p->getTournament()->getShortName(),
-                        "placement" => $p->getPlacement()
+                        "placement" => $p->getPlacement(),
+                        "user_names" => $userNames
                     );
                 }
             }
