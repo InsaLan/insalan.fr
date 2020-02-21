@@ -67,6 +67,7 @@
 .matches td:first-child {
   padding-left: 5px;
 }
+
 .matches td:last-child {
   padding-right: 5px;
 }
@@ -94,7 +95,8 @@ caption {
   border-bottom: none;
 }
 
-.groups table a, .matches table a {
+.groups table a,
+.matches table a {
   display: block;
 }
 
@@ -106,7 +108,8 @@ caption {
   color: white;
 }
 
-tr:hover td, tr:hover th {
+tr:hover td,
+tr:hover th {
   color: white;
 }
 
@@ -139,17 +142,40 @@ tr:hover td, tr:hover th {
   border-right: 1px dashed #00bff3;
 }
 
+.groups table {
+  background-color: rgba(22, 22, 22, 0.3);
+  color: #555555;
+  border-color: #2a2a2a;
+}
 
-.groups table { background-color: rgba(22, 22, 22, 0.3); color: #555555; border-color: #2a2a2a; }
-.groups table caption { background-color: #222222; border-color: #2a2a2a; color: #888888; }
-.groups table td:nth-child(2), .groups table td:nth-child(3) {
+.groups table caption {
+  background-color: #222222;
+  border-color: #2a2a2a;
+  color: #888888;
+}
+
+.groups table td:nth-child(2),
+.groups table td:nth-child(3) {
   border-right: 1px dashed #008cb2;
 }
 
-.groups table.hovered, .groups table:hover { background-color: rgba(22, 22, 22, 0.8); color: #a2a2a2; }
-.groups table.hovered caption, .groups table:hover caption { background-color: #232323; border-color: #393939; color: white; }
-.groups table.hovered td:nth-child(2), .groups table.hovered td:nth-child(3),
-.groups table:hover td:nth-child(2), .groups table:hover td:nth-child(3) {
+.groups table.hovered,
+.groups table:hover {
+  background-color: rgba(22, 22, 22, 0.8);
+  color: #a2a2a2;
+}
+
+.groups table.hovered caption,
+.groups table:hover caption {
+  background-color: #232323;
+  border-color: #393939;
+  color: white;
+}
+
+.groups table.hovered td:nth-child(2),
+.groups table.hovered td:nth-child(3),
+.groups table:hover td:nth-child(2),
+.groups table:hover td:nth-child(3) {
   border-right: 1px dashed #00bff3;
 }
 
@@ -161,7 +187,8 @@ tr:hover {
   background-color: rgba(0, 191, 243, 0.25);
 }
 
-.matches header, .groups header {
+.matches header,
+.groups header {
   height: 30px;
   margin-top: 30px;
   margin-bottom: 10px;
@@ -173,12 +200,17 @@ tr:hover {
   top: 5px;
 }
 
-.matches .p1, .matches .p2 { width: 99px; }
+.matches .p1,
+.matches .p2 {
+  width: 99px;
+}
+
 .matches .p1 {
   float: left;
   text-align: left;
   padding-right: 3px;
 }
+
 .matches .p2 {
   float: right;
   text-align: right;
@@ -277,7 +309,8 @@ section.infos li {
   margin-left: 30px;
 }
 
-section.infos td, section.infos th {
+section.infos td,
+section.infos th {
   border: 1px solid #393939;
   padding: 5px;
   text-align: center
@@ -292,7 +325,9 @@ section.infos td, section.infos th {
     font-size: 30px;
 }
 
-.list, .list tr, .list td {
+.list,
+.list tr,
+.list td {
     vertical-align: middle;
     text-align: center;
 }

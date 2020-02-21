@@ -1,10 +1,10 @@
 {% extends 'InsaLanTournamentBundle::layout.html.twig' %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
-      <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
+{{ parent() }}
+  {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
 {% endblock %}
 
 
@@ -22,7 +22,8 @@
         <td>
           <a class="delete" href="{{
             path('insalan_tournament_admin_group_deleteparticipant',
-              {group: group.id, participant: p.id}) }}" onclick="return confirm('Supprimer ce participant ?')">x</a>
+              {group: group.id, participant: p.id}) }}" onclick="return confirm('Supprimer ce participant ?')">x
+          </a>
           {{ p.name }}
         </td>
       </tr>
@@ -101,5 +102,4 @@
     </table>
   </section>
 </article>
-
 {% endblock %}

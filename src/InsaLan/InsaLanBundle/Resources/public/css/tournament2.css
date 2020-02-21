@@ -28,23 +28,17 @@ body > footer {
 /** Game Header **/
 
 .game {
-  #height: 120px;
-  #line-height: 120px;
-  #vertical-align: middle;
   border: solid #2d2d2d 1px;
   border-left: none;
   border-right: none;
   color: white;
   font-family: 'Open Sans', sans-serif;
-  #font-size: 250%;
   background: black;
 }
 
 .game img {
   height: 100px;
   padding: 10px;
-  #vertical-align: middle;
-  #padding-right: 20px;
 }
 
 .game .container {
@@ -125,7 +119,8 @@ body > footer {
   cursor: pointer;
 }
 
-.results table.matchs tr.active, .results table.matchs tr.active:hover {
+.results table.matchs tr.active,
+.results table.matchs tr.active:hover {
   outline: solid #00Bff3 1px;
 }
 
@@ -202,7 +197,8 @@ body > footer {
   outline: solid #00617b 1px;
 }
 
-.results table.group.active, .results table.group.active:hover {
+.results table.group.active,
+.results table.group.active:hover {
   outline: solid #00bff3 1px;
 }
 
@@ -336,11 +332,11 @@ body > footer {
 }
 
 .match-details header .team .details .won {
-  color: #5b9966;;
+  color: #5b9966;
 }
 
 .match-details header .team .details .lost {
-  color: #b12e22;;
+  color: #b12e22;
 }
 
 .match-details header .score {
@@ -472,7 +468,6 @@ body > footer {
   padding-left: 7px;
 }
 
-
 .match-details table#team100 th {
   background: url('../img/table-header-blue.png') repeat-x;
 }
@@ -485,13 +480,29 @@ body > footer {
   border-radius: 2px;
 }
 
-.match-details table .champion  { width: 75px; }
-.match-details table .kda    { width: 70px; }
-.match-details table .items  { width: 350px; }
-.match-details table .spells { width: 100px; }
-.match-details table .gold   { width: 40px; }
-.match-details table .cs     { width: 40px; }
+.match-details table .champion  {
+  width: 75px;
+}
 
+.match-details table .kda {
+  width: 70px;
+}
+
+.match-details table .items {
+  width: 350px;
+}
+
+.match-details table .spells {
+  width: 100px;
+}
+
+.match-details table .gold {
+  width: 40px;
+}
+
+.match-details table .cs {
+  width: 40px;
+}
 
 .match-details table tr .gold,
 .match-details table tr .cs {
@@ -539,7 +550,9 @@ body > footer {
 
 /************************************************/
 
-.match-details td, .match-details th,
-.results td, .results th {
+.match-details td,
+.match-details th,
+.results td,
+.results th {
   vertical-align: middle;
 }

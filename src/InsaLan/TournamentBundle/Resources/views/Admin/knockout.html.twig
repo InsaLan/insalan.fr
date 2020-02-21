@@ -2,16 +2,19 @@
 
 {% block body %}
 {{ parent() }}
+
 <article>
   <header>
-  <h2>{{ knockout.name }} - {{ knockout.tournament.name }}</h2>
-  <a href="{{ path("insalan_tournament_admin_index_1", {id: knockout.tournament.id}) }}"><<< Retour</a> 
-  - 
-  <a href="{{ path("insalan_tournament_admin_knockout_view", {id: knockout.id }) }}">Voir Arbre</a>
+    <h2>{{ knockout.name }} - {{ knockout.tournament.name }}</h2>
+    <a href="{{ path("insalan_tournament_admin_index_1", {id: knockout.tournament.id}) }}">
+      <<< Retour
+    </a> 
+    -
+    <a href="{{ path("insalan_tournament_admin_knockout_view", {id: knockout.id }) }}">
+      Voir Arbre
+    </a>
   </header>
 
   {% include 'InsaLanTournamentBundle:Part:AdminMatches.html.twig' %}
-
 </article>
-
 {% endblock %}

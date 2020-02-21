@@ -2,14 +2,15 @@
 
 {% block body %}
 {{ parent() }}
+
 <article>
   <header>
-  <h2>{{ stage.name }} - {{ stage.tournament.name }}</h2>
-  <a href="{{ path("insalan_tournament_admin_index_1", {id: stage.tournament.id}) }}"><<< Retour</a>
+    <h2>{{ stage.name }} - {{ stage.tournament.name }}</h2>
+    <a href="{{ path("insalan_tournament_admin_index_1", {id: stage.tournament.id}) }}">
+      <<< Retour
+    </a>
   </header>
 
   {% include 'InsaLanTournamentBundle:Part:AdminMatches.html.twig' %}
-
 </article>
-
 {% endblock %}

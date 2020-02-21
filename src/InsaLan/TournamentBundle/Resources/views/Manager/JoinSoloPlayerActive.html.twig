@@ -1,31 +1,37 @@
 {% if error %}
-    <div class="frame frame-danger">
-      <header class="full">
-        <div class="step pull-left">
-            {{ counter }}
-        </div>
-        <div class="title pull-left">Coacher un joueur inscrit</div>
-        <br class="clear">
-      </header>
-      <div class="text">
-        <p>{{ error }}</p>
-      </div>
+<div class="frame frame-danger">
+  <header class="full">
+    <div class="step pull-left">
+      {{ counter }}
+    </div>
+    <div class="title pull-left">
+      Coacher un joueur inscrit
+    </div>
+    <br class="clear">
+  </header>
+  <div class="text">
+    <p>{{ error }}</p>
+  </div>
 {% else %}
-    <div class="frame frame-active">
-      <header class="full">
-        <div class="step pull-left">
-            {{ counter }}
-        </div>
-        <div class="title pull-left">Coacher un joueur inscrit</div>
-        <br class="clear">
-      </header>
+<div class="frame frame-active">
+  <header class="full">
+    <div class="step pull-left">
+      {{ counter }}
+    </div>
+    <div class="title pull-left">
+      Coacher un joueur inscrit
+    </div>
+    <br class="clear">
+  </header>
 {% endif %}
 
-    {{ form_start(form) }}
-      <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
-      <div class="input field">
-        {{ form_widget(form.gameName, {'attr': {'placeholder': "Nom en jeu du joueur à coacher" }}) }}
-      </div>
-      <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step3').submit();">Ok</a>
-    {{ form_end(form) }}
-    </div>
+{{ form_start(form) }}
+  <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
+  <div class="input field">
+    {{ form_widget(form.gameName, {'attr': {'placeholder': "Nom en jeu du joueur à coacher" }}) }}
+  </div>
+  <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step3').submit();">
+    Ok
+  </a>
+{{ form_end(form) }}
+</div>

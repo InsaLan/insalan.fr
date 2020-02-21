@@ -1,10 +1,10 @@
 .previous-years-list {
-    text-align: center;
+  text-align: center;
 }
 
 .previous-years {
-	margin: 0px 10px 0px 10px;
-    display: inline;
+  margin: 0px 10px 0px 10px;
+  display: inline;
 }
 
 .previous-years > img {
@@ -20,13 +20,13 @@
 }
 
 .picture-list {
-	margin: 0px 10px 0px 10px;
-    display: inline;
+  margin: 0px 10px 0px 10px;
+  display: inline;
 }
 
 .picture {
-	margin: 0px 10px 0px 10px;
-    display: inline;
+  margin: 0px 10px 0px 10px;
+  display: inline;
 }
 
 .picture > a > img {

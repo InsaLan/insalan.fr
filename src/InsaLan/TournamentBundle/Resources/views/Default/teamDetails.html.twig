@@ -1,7 +1,8 @@
 {% extends 'InsaLanTournamentBundle:User:layout.html.twig' %}
 
 {% block title %}
-  {{ parent() }} - {{ part.name }}
+{{ parent() }}
+ - {{ part.name }}
 {% endblock %}
 
 {% block body %}
@@ -11,17 +12,33 @@
   <header>
     <h2>{{ part.name }}</h2>
 
-    <p><a href="{{ path('insalan_tournament_default_tournament', {id: part.tournament.id}) }}"><<< Retour tournoi <b>{{ part.tournament.name }}</b></a></p>
+    <p>
+      <a href="{{ path('insalan_tournament_default_tournament', {id: part.tournament.id}) }}">
+        <<< Retour tournoi <b>{{ part.tournament.name }}</b>
+      </a>
+    </p>
 
     {% if part.tournament.participantType == "team" %}
-      <p>&Eacute;quipe composée de 
-        {% for player in part.players %}{% if not loop.first and not loop.last %}, {% elseif loop.last %} et {% endif %}<strong>{{ player.name }}</strong>{% endfor %}.</p>
+      <p>
+        &Eacute;quipe composée de 
+        {% for player in part.players %}
+        {% if not loop.first and not loop.last %}
+          ,
+        {% elseif loop.last %}
+          et
+        {% endif %}
+          <strong>{{ player.name }}</strong>
+        {% endfor %}
+        .
+      </p>
     {% endif %}
 
   </header>
 
   {% if groupMatches|length == 0 and knockoutMatches|length == 0 %}
-    <p style="margin-bottom:200px; margin-top:50px"><i>Aucun match n'est pour l'instant disponible.</i></p>
+    <p style="margin-bottom:200px; margin-top:50px">
+      <i>Aucun match n'est pour l'instant disponible.</i>
+    </p>
   {% endif %}
 
   {% for g in groupMatches %}
@@ -63,4 +80,3 @@
   {% endif %}
 
 {% endblock %}
-

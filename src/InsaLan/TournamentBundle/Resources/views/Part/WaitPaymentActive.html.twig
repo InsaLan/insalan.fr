@@ -1,49 +1,61 @@
 <div class="frame frame-active">
-    <header class="full">
-        <div class="step pull-left">
-            {{ counter }}
-        </div>
-        <div class="title pull-left">Paiement en attente</div>
-        <br class="clear">
-    </header>
-    <div class="text">
-        <br />
-
-{% if registrable.isOpenedNow %}
-        
-        <h2><strong>Paiement par chèque</strong></h2><br>
-        Vous devez envoyer un chèque de {{ registrable.webPrice - (discount.amount | default(0)) }} {{ registrable.currency }} à l'ordre de <strong>"AEIR InsaLan"</strong> par la poste à l'adresse suivante :
-        <br>
-        {{ globalVars.payCheckAddress | raw }}
-        <br>
-        Votre inscription sera validée par le staff à la réception du chèque.
-        <br><br>
-
-        <h2><strong>Paiement au WarpZone</strong></h2>
-        <div style="float: right">
-            <iframe style="border: 0;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2664.027321343604!2d-1.6946511452301016!3d48.10970867201523!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xcc09232560ffd4ec!2sWarpZone!5e0!3m2!1sen!2sfr!4v1445516841323" frameborder="0" width="200" height="120"></iframe>
-        </div>
-        <br>
-        Vous devez vous rendre au <strong>WarpZone, 92 Mail François Mitterrand, 35000 Rennes</strong>.<br>
-        Vous pourrez effectuer le paiement de votre place ({{ registrable.webPrice - (discount.amount | default(0)) }} {{ registrable.currency }}) en liquide, par chèque ou par carte bancaire.<br>
-        <br/>
-        Votre inscription sera validée à la réception de votre paiement par le partenaire.
-        <br><br>
-        
-{% endif %}
-
-        <h2><strong>Paiement sur place</strong></h2><br>
-        <h3>Le tarif joueur sur place s'élève à {{ registrable.onSitePrice - (discount.amount | default(0)) }} {{ registrable.currency }}.</h3>
-        Vous pourrez régler sur place en liquide, par chèque ou par carte bancaire {#(avec une majoration de 1€ pour la CB)#}.<br>
-        <br/></br>
-
-        {% include 'InsaLanTournamentBundle:Part:ImportantDetails.html.twig'  with {'registrable': registrable}%}
-
-
-        {#<br/><br/><center>
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfVqoy-M_d6FColSldTnUGuU1sT_NlAUDgyiZ3KO9ZeZuPdDA/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">Chargement en cours...</iframe>
-        </center><br/><br/>#}
+  <header class="full">
+    <div class="step pull-left">
+      {{ counter }}
     </div>
-    <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_index') }}">Valider</a>
+    <div class="title pull-left">
+      Paiement en attente
+    </div>
     <br class="clear">
+  </header>
+  <div class="text">
+    <br/>
+    
+    {% if registrable.isOpenedNow %}    
+      <h2><strong>Paiement par chèque</strong></h2>
+      <br>
+      Vous devez envoyer un chèque de {{ registrable.webPrice - (discount.amount | default(0)) }} {{ registrable.currency }} à l'ordre de <strong>"AEIR InsaLan"</strong> par la poste à l'adresse suivante :
+      <br>
+      {{ globalVars.payCheckAddress | raw }}
+      <br>
+      Votre inscription sera validée par le staff à la réception du chèque.
+      <br><br>
+
+      <h2><strong>Paiement au WarpZone</strong></h2>
+      <div style="float: right">
+        <iframe style="border: 0;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2664.027321343604!2d-1.6946511452301016!3d48.10970867201523!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xcc09232560ffd4ec!2sWarpZone!5e0!3m2!1sen!2sfr!4v1445516841323" frameborder="0" width="200" height="120"> 
+          Chargement en cours...
+        </iframe>
+      </div>
+      <br>
+      Vous devez vous rendre au <strong>WarpZone, 92 Mail François Mitterrand, 35000 Rennes</strong>.<br>
+      Vous pourrez effectuer le paiement de votre place ({{ registrable.webPrice - (discount.amount | default(0)) }} {{ registrable.currency }}) en liquide, par chèque ou par carte bancaire.
+      <br>
+      <br/>
+      Votre inscription sera validée à la réception de votre paiement par le partenaire.
+      <br><br>  
+    {% endif %}
+    <h2><strong>Paiement sur place</strong></h2>
+    <br>
+    <h3>Le tarif joueur sur place s'élève à {{ registrable.onSitePrice - (discount.amount | default(0)) }} {{ registrable.currency }}.</h3>
+    Vous pourrez régler sur place en liquide, par chèque ou par carte bancaire {#(avec une majoration de 1€ pour la CB)#}.
+    <br>
+    <br/></br>
+
+    {% include 'InsaLanTournamentBundle:Part:ImportantDetails.html.twig'  with {'registrable': registrable} %}
+      
+    {#
+    <br/><br/>
+    <center>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfVqoy-M_d6FColSldTnUGuU1sT_NlAUDgyiZ3KO9ZeZuPdDA/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">
+        Chargement en cours...
+      </iframe>
+    </center>
+    <br/><br/>
+    #}
+  </div>
+  <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_index') }}">
+    Valider
+  </a>
+  <br class="clear">
 </div>

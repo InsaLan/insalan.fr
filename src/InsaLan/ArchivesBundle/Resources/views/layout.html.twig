@@ -1,8 +1,9 @@
 {% extends 'InsaLanBundle::layout.html.twig' %}
 
 {% block title %}
-  {{ parent() }} -
-  Archives
+{{ parent() }}
+
+- Archives
 {% endblock %}
 
 {% block stylesheets %}
@@ -15,8 +16,7 @@
 {% block rawbody %}
 {{ parent() }}
 
-  <section class="container">
-    {% block body %}{% endblock %}
-  </section>
-
+<section class="container">
+  {% block body %}{% endblock %}
+</section>
 {% endblock %}

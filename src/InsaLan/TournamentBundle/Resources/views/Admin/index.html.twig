@@ -25,117 +25,130 @@
 
     <a href="{{ path('insalan_tournament_api_listemail') }}" class="btn btn-plain" style="float: right;">Mails équipes</a>
   </section>
-
 </article>
 
 {% if tournament %}
-  <hr style="margin: 20px 0px;"/>
-  <section class="grid-5 pull-left">
-    {% if tournament %}
-    <a href="{{ path('insalan_tournament_admin_placement', {id: tournament.id}) }}" class="btn btn-plain" style="float: right; margin-right: 15px;">Placement</a>
-    {% endif %}
-    <section class="groups">
-      <h2>Poules</h2>
-      <ul style="margin-left: 30px">
+<hr style="margin: 20px 0px;"/>
+<section class="grid-5 pull-left">
+  {% if tournament %}
+    <a href="{{ path('insalan_tournament_admin_placement', {id: tournament.id}) }}" class="btn btn-plain" style="float: right; margin-right: 15px;">
+      Placement
+    </a>
+  {% endif %}
+  <section class="groups">
+    <h2>Poules</h2>
+    <ul style="margin-left: 30px">
       {% for s in stages %}
-        <li><a href="{{ path('insalan_tournament_admin_stage', {id: s.id}) }}">{{ s.name }}</a></li>
+      <li>
+        <a href="{{ path('insalan_tournament_admin_stage', {id: s.id}) }}">
+          {{ s.name }}
+        </a>
+      </li>
       {% endfor %}
-      </ul>
-    </section>
+    </ul>
+  </section>
 
-    <div class="clear"></div>
+  <div class="clear"></div>
 
-    <section class="knockouts">
-      <h2>Arbres</h2>
-      <ul style="margin-left: 30px">
+  <section class="knockouts">
+    <h2>Arbres</h2>
+    <ul style="margin-left: 30px">
       {% for ko in knockouts %}
-        <li><a href="{{ path('insalan_tournament_admin_knockout', {id: ko.id}) }}">{{ ko.name }}</a></li>
+      <li>
+        <a href="{{ path('insalan_tournament_admin_knockout', {id: ko.id}) }}">
+          {{ ko.name }}
+        </a>
+      </li>
       {% endfor %}
-      </ul>
+    </ul>
 
-      <h2 style="margin-top:20px">Nouvel arbre</h2>
+    <h2 style="margin-top:20px">Nouvel arbre</h2>
 
-      {{ form_start(formKo) }}
-        {{ form_errors(formKo) }}
-        {{ form_row(formKo.name) }}
-        {{ form_row(formKo.size) }}
-        {{ form_row(formKo.double) }}
-        <div class="input left">
-          <input type="submit" id="_submit" name="_submit" value="Ajouter" />
-        </div>
-      {{ form_end(formKo) }}
-
-    </section>
+    {{ form_start(formKo) }}
+      {{ form_errors(formKo) }}
+      {{ form_row(formKo.name) }}
+      {{ form_row(formKo.size) }}
+      {{ form_row(formKo.double) }}
+      <div class="input left">
+        <input type="submit" id="_submit" name="_submit" value="Ajouter" />
+      </div>
+    {{ form_end(formKo) }}
   </section>
-  <section class="grid-5 pull-left">
-    <table style="width:100%">
-      <tr>
-        <th colspan="2" class="grid-3">Pseudo / Nom</th>
-        <th class="grid-3">Equipe</th>
-        <th class="grid-2">Payé</th>
-        <th class="grid-2">Arrivé</th>
-      </tr>
-      {% for player in players %}
-        <tr>
-          <td colspan="2">
-            {{ player.gameName }}
-            <br />
-            <span style="font-size:10px; color: grey;">{{ player.user.firstname }} {{ player.user.lastname}}</span>
-          </td>
-          <td>
-            {% set solo = not (player.team | length > 0) %}
-            {% if not solo %}
-              {{ player.team[0].name }}
-            {% else %}
-              (solo)
-            {% endif %}
-          </td>
-          <td>
-            <span class="payment_status_{{ player.id }}">
-              <button class="payment_ok" data-url="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id, status: 0 }) }}" data-id="{{ player.id }}" onclick="changePaymentStatus(this)" {% if not player.paymentDone %}style="display:none"{% endif %}>OUI</button>
-              <button class="payment_not_ok" data-url="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id, status: 1 }) }}" data-id="{{ player.id }}" onclick="changePaymentStatus(this)" {% if player.paymentDone %}style="display:none"{% endif %}>NON</button>
-            </span>
-          </td>
-          <td>
-            <span class="arrived_status_{{ player.id }}">
-                <button class="arrived" data-url="{{ path('insalan_tournament_admin_player_tooglearrived', { t: tournament.id, p: player.id, status: 0 }) }}" data-id="{{ player.id }}" onclick="changeArrivedStatus(this)" {% if not player.arrived %}style="display:none"{% endif %}>OUI</button>
-              <button class="not_arrived" data-url="{{ path('insalan_tournament_admin_player_tooglearrived', { t: tournament.id, p: player.id, status: 1 }) }}" data-id="{{ player.id }}" onclick="changeArrivedStatus(this)" {% if player.arrived %}style="display:none"{% endif %}>NON</button>
-            </span>
-          </td>
-        </tr>
-        {% set manager = solo ? player.manager : player.team[0].manager %}
-        {% set next = (solo or loop.last) ? none : players[loop.index0 + 1] %}
-        {% set nextTeamId = next and (next.team | length > 0) ? next.team[0].id : none %}
-        {% if manager and (not next or player.team[0].id != nextTeamId) %}
-        <tr>
-          <td style="background-color: silver; width: 1%"></td>
-          <td colspan="2">
-            Manager : {{ manager.gameName }}
-            <span style="color: grey;">({{ manager.user.firstname }} {{ manager.user.lastname}})</span>
-          </td>
-          <td>
-            <span class="payment_status_m{{ manager.id }}">
-                <button class="payment_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 0 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if not manager.paymentDone %}style="display:none"{% endif %}>OUI</button>
-              <button class="payment_not_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if manager.paymentDone %}style="display:none"{% endif %}>NON</button>
-            </span>
-          </td>
-          <td>
-            <span class="arrived_status_m{{ manager.id }}">
-                <button class="arrived" data-url="{{ path('insalan_tournament_admin_manager_tooglearrived', { t: tournament.id, m: manager.id, status: 0 }) }}" data-id="m{{ manager.id }}" onclick="changeArrivedStatus(this)" {% if not manager.arrived %}style="display:none"{% endif %}>OUI</button>
-              <button class="not_arrived" data-url="{{ path('insalan_tournament_admin_manager_tooglearrived', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changeArrivedStatus(this)" {% if manager.arrived %}style="display:none"{% endif %}>NON</button>
-            </span>
-          </td>
-        </tr>
+</section>
+
+<section class="grid-5 pull-left">
+  <table style="width:100%">
+    <tr>
+      <th colspan="2" class="grid-3">Pseudo / Nom</th>
+      <th class="grid-3">Equipe</th>
+      <th class="grid-2">Payé</th>
+      <th class="grid-2">Arrivé</th>
+    </tr>
+    {% for player in players %}
+    <tr>
+      <td colspan="2">
+        {{ player.gameName }}
+        <br/>
+        <span style="font-size:10px; color: grey;">
+          {{ player.user.firstname }} {{ player.user.lastname}}
+        </span>
+      </td>
+      <td>
+        {% set solo = not (player.team | length > 0) %}
+        {% if not solo %}
+          {{ player.team[0].name }}
+        {% else %}
+          (solo)
         {% endif %}
-      {% endfor %}
-    </table>
-  </section>
+      </td>
+      <td>
+        <span class="payment_status_{{ player.id }}">
+          <button class="payment_ok" data-url="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id, status: 0 }) }}" data-id="{{ player.id }}" onclick="changePaymentStatus(this)" {% if not player.paymentDone %}style="display:none"{% endif %}>OUI</button>
+          <button class="payment_not_ok" data-url="{{ path('insalan_tournament_admin_player_tooglepayment', { t: tournament.id, p: player.id, status: 1 }) }}" data-id="{{ player.id }}" onclick="changePaymentStatus(this)" {% if player.paymentDone %}style="display:none"{% endif %}>NON</button>
+        </span>
+      </td>
+      <td>
+        <span class="arrived_status_{{ player.id }}">
+          <button class="arrived" data-url="{{ path('insalan_tournament_admin_player_tooglearrived', { t: tournament.id, p: player.id, status: 0 }) }}" data-id="{{ player.id }}" onclick="changeArrivedStatus(this)" {% if not player.arrived %}style="display:none"{% endif %}>OUI</button>
+          <button class="not_arrived" data-url="{{ path('insalan_tournament_admin_player_tooglearrived', { t: tournament.id, p: player.id, status: 1 }) }}" data-id="{{ player.id }}" onclick="changeArrivedStatus(this)" {% if player.arrived %}style="display:none"{% endif %}>NON</button>
+        </span>
+      </td>
+    </tr>
+    {% set manager = solo ? player.manager : player.team[0].manager %}
+    {% set next = (solo or loop.last) ? none : players[loop.index0 + 1] %}
+    {% set nextTeamId = next and (next.team | length > 0) ? next.team[0].id : none %}
+    {% if manager and (not next or player.team[0].id != nextTeamId) %}
+    <tr>
+      <td style="background-color: silver; width: 1%"></td>
+      <td colspan="2">
+        Manager : {{ manager.gameName }}
+        <span style="color: grey;">
+          ({{ manager.user.firstname }} {{ manager.user.lastname}})
+        </span>
+      </td>
+      <td>
+        <span class="payment_status_m{{ manager.id }}">
+          <button class="payment_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 0 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if not manager.payementDone %}style="display:none"{% endif %}>OUI</button>
+          <button class="payment_not_ok" data-url="{{ path('insalan_tournament_admin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if manager.payementDone %}style="display:none"{% endif %}>NON</button>
+        </span>
+      </td>
+      <td>
+        <span class="arrived_status_m{{ manager.id }}">
+          <button class="arrived" data-url="{{ path('insalan_tournament_admin_manager_tooglearrived', { t: tournament.id, m: manager.id, status: 0 }) }}" data-id="m{{ manager.id }}" onclick="changeArrivedStatus(this)" {% if not manager.arrived %}style="display:none"{% endif %}>OUI</button>
+          <button class="not_arrived" data-url="{{ path('insalan_tournament_admin_manager_tooglearrived', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changeArrivedStatus(this)" {% if manager.arrived %}style="display:none"{% endif %}>NON</button>
+        </span>
+      </td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+  </table>
+</section>
 {% endif %}
-
 {% endblock %}
 
 {% block javascripts %}
 {{ parent() }}
+
 <script type="text/javascript">
 (function($) {
   window.changePaymentStatus = function(e) {
@@ -155,7 +168,9 @@
     })(e);
   };
 })(jQuery);
-</script><script type="text/javascript">
+</script>
+
+<script type="text/javascript">
 (function($) {
     window.changeArrivedStatus = function(e) {
       (function(e) {

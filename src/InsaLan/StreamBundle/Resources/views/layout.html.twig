@@ -1,13 +1,13 @@
 {% extends 'InsaLanBundle::layout.html.twig' %}
 
 {% block title %}
-  {{ parent() }} -
-  Streams
+{{ parent() }}
+ - Streams
 {% endblock %}
 
 
 {% block stylesheets %}
-  {{ parent() }}
+{{ parent() }}
   {% stylesheets 'bundles/insalan/css/stream.css' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
   {% endstylesheets %}
@@ -17,8 +17,7 @@
 {% block rawbody %}
 {{ parent() }}
 
-  <section class="container">
-    {% block body %}{% endblock %}
-  </section>
-
+<section class="container">
+  {% block body %}{% endblock %}
+</section>
 {% endblock %}

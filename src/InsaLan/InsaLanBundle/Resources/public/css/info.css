@@ -215,13 +215,16 @@ article > ul li:before {
   left: 10px;
 }
 
-#tournoi section ul li, #finale section ul li {
+#tournoi section ul li,
+#finale section ul li {
   list-style-type: none;
   margin-left: 60px;
   color: #00bff3;
 }
 
-#tournoi section ul li span, #finale section ul li span, .emphase {
+#tournoi section ul li span,
+#finale section ul li span,
+.emphase {
   font-family: Oswald;
   font-size: 0.9em;
   color: white;
@@ -235,7 +238,10 @@ article > ul li:before {
   color: #fff;
 }
 
-.block:first-child { margin-left:none; }
+.block:first-child {
+  margin-left:none;
+}
+
 .block {
   width: 200px;
   margin: 0;

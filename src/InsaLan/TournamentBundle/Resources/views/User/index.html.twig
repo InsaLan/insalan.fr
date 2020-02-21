@@ -5,7 +5,15 @@
 
 <article>
   <header>
-      <h2><span class="pull-left">Inscriptions aux tournois</span><span class="pull-right"><a href="{{ path('insalan_user_default_index') }}" class="btn2" style="font-size: 0.5em">&#x2699;Mon profil</a></span><br class="clear"></h2>
+    <h2>
+      <span class="pull-left">
+        Inscriptions aux tournois
+      </span>
+      <span class="pull-right">
+        <a href="{{ path('insalan_user_default_index') }}" class="btn2" style="font-size: 0.5em">&#x2699;Mon profil</a>
+      </span>
+      <br class="clear">
+    </h2>
   </header>
 
   {% for participant in participants %}
@@ -226,25 +234,28 @@
         <hr style="width:960px">
         <br>
       {% elseif t.isOpenedNow and t.getLocked %}
-      <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
-      <h2>{{ t.name }} <small>(ce tournoi n'est accessible que sur invitation)</small></h2>
-      {% if t.participantType == 'team' %}
-         <a href="{{ path('insalan_tournament_manager_setname', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription manager</a> 
-      {% endif %}
-      <p class="pull-left">
-        {{ t.teamMinPlayer }} joueur{{ t.teamMinPlayer > 1 ? "s" : ""}}
-      </p><br class="clear">
-      <br>
-      <hr style="width:960px">
-      <br>
+        <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
+        <h2>
+          {{ t.name }}
+          <small>(ce tournoi n'est accessible que sur invitation)</small>
+        </h2>
+        {% if t.participantType == 'team' %}
+          <a href="{{ path('insalan_tournament_manager_setname', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription manager</a> 
+        {% endif %}
+        <p class="pull-left">
+          {{ t.teamMinPlayer }} joueur{{ t.teamMinPlayer > 1 ? "s" : ""}}
+        </p><br class="clear">
+        <br>
+        <hr style="width:960px">
+        <br>
       {% endif %}
       {% endspaceless %}
       {% endfor %}
-        <div class="clear"></div>
-      </div>
+      <div class="clear"></div>
     </div>
-
-  </article>
-
-  {#<img src="{{ asset(t.getUploadDir() ~ t.logoPath) }} " alt="{{ t.name }}"/>#}
-  {% endblock %}
+  </div>
+</article>
+{#
+<img src="{{ asset(t.getUploadDir() ~ t.logoPath) }} " alt="{{ t.name }}"/>
+#}
+{% endblock %}

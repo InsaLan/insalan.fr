@@ -3,7 +3,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-
 <article>
   <aside>
     <div class="square">
@@ -19,9 +18,10 @@
     <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
     <br>
     <p>
-    <a href="{{ path('insalan_user_default_index') }}" class="block block-huge" style="margin-left: 302px;">Inscription à un tournoi</a>
+      <a href="{{ path('insalan_user_default_index') }}" class="block block-huge" style="margin-left: 302px;">
+        Inscription à un tournoi
+      </a>
     </p>
   </section>
 </article>
-
 {% endblock fos_user_content %}

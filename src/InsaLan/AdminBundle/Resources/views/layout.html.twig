@@ -25,7 +25,6 @@
   <body id="body">
 
     {% block main_header %}
-
     <header>
       <div class="container">
 
@@ -35,23 +34,28 @@
           </a>
         </div>
 
-        {% block top_infos %}
-        
+        {% block top_infos %}        
         <div class="input">
           <nav>
             <ul>
-              <!-- TODO Choose which buttons need to be here -->
               <li><a href="{{ path('sonata_admin_dashboard') }}" class="btn2 bnt2-ncolor">Sonata</a></li>
               <li><a href="{{ path('fos_user_security_logout') }}" class="btn2">Déconnexion</a></li>
             </ul>
           </nav>
         </div>
-
+        
+        {% set page = app.request.get('_route') %}
         <div class="navbar">
           <nav>
             <ul>
-              <li><a href="{{ path('insalan_admin_default_index') }}">Accueil</a></li>
-              <li class="dropdown">
+              <li {% if page == 'insalan_admin_default_index' %} class="active"{% endif %}>
+                <a href="{{ path('insalan_admin_default_index') }}">Accueil</a>
+              </li>
+              <li class="dropdown {% if page in [
+                  'GroupStageAction',
+                  'GroupAction',
+                  'MatchAction'
+                ] %}active{% endif %}">
                 <a href="">Tournois</a>
                 <div class="dropdown-content">
                   <a href="{{ path('GroupStageAction') }}">Phases de poule</a>
@@ -59,7 +63,11 @@
                   <a href="{{ path('MatchAction') }}">Matchs</a>
                 </div>
               </li>
-              <li class="dropdown">
+              <li class="dropdown {% if page in [
+                  'insalan_pizza_admin_commande',
+                  'insalan_pizza_admin_creneau',
+                  'insalan_pizza_admin_pizza'
+                ] %}active{% endif %}">
                 <a href="">Pizzas</a>
                 <div class="dropdown-content">
                   <a href="{{ path('insalan_pizza_admin_commande') }}">Commandes</a>
@@ -67,7 +75,11 @@
                   <a href="{{ path('insalan_pizza_admin_pizza') }}">Liste des pizzas</a>
                 </div>
               </li>
-              <li class="dropdown">
+              <li class="dropdown {% if page in [
+                  'insalan_ticketing_admin_ready',
+                  'insalan_ticketing_admin_sent',
+                  'insalan_ticketing_admin_cancelled'
+                ] %}active{% endif %}">
                 <a href="">Billetterie</a>
                 <div class="dropdown-content">
                   <a href="{{ path('insalan_ticketing_admin_ready') }}">Billets à envoyer</a>
@@ -109,9 +121,6 @@
         'bundles/insalan/js/admin.js'
         'bundles/insalan/js/jquery.js' %}
           <script type="text/javascript" src="{{ asset_url }}"></script>
-          <script type="text/javascript">
-
-          </script>
       {% endjavascripts %}
     {% endblock %}
   </body>

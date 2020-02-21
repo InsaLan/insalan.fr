@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
+
 <style type="text/css">
 .tournamentSlotPlacement {
   position: absolute;
@@ -10,9 +11,11 @@
   height: 21px;
   width: 21px;
 }
+
 .tournamentSlotPlacementAvailable {
   cursor: pointer;
 }
+
 .tournamentSlotPlacementAvailable:hover {
   opacity: 0.8;
 }
@@ -30,7 +33,8 @@
   <p>
     Vous pouvez, si vous le souhaitez, réserver une place spécifique pour l'InsaLan {{ globalVars.romanNumber }}.
     {% if tournament.participantType == "team" %}
-    <br />Tous les membres de votre équipe seront bien entendu placés sur l'emplacement que vous choisirez.
+      <br/>
+      Tous les membres de votre équipe seront bien entendu placés sur l'emplacement que vous choisirez.
     {% endif %}
   </p>
 </article>
@@ -66,5 +70,4 @@
   <div class="tournamentSlotPlacement" style="background-color: black; top: {{ 28*17 }}px; left: {{ 23*14 }}px; width: 100px"> &nbsp; Votre place</div>
   <div class="tournamentSlotPlacement" style="background-color: black; top: {{ 28*18 }}px; left: {{ 23*14 }}px; width: 100px"> &nbsp; Autre tournoi</div>
 </div>
-
 {% endblock %}

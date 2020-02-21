@@ -2,10 +2,10 @@
 
 {% block rawbody %}
 {{ parent() }}
-  <section class="container">
-    {% block body %}{% endblock %}
 
-    {% block fos_user_content %}{% endblock %}
-  </section>
+<section class="container">
+  {% block body %}{% endblock %}
 
+  {% block fos_user_content %}{% endblock %}
+</section>
 {% endblock %}

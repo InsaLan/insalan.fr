@@ -484,7 +484,8 @@ footer .contact #mail a {
   color: rgb(var(--comp-light-color));
 }
 
-footer .contact #mail:hover, .social #mail:hover {
+footer .contact #mail:hover,
+.social #mail:hover {
   opacity: 1;
 }
 
