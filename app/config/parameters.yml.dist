@@ -34,3 +34,4 @@ parameters:
     battlenet_api_redirect_uri: https://insalan.fr/user/battleNetSignIn
 
     show_pizza_tab: false
+    show_streams_header: false
