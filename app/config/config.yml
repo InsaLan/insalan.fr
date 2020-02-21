@@ -45,6 +45,7 @@ twig:
     globals:
         ga_tracking: "%ga_tracking%"
         show_pizza_tab: "%show_pizza_tab%"
+        show_streams_header: "%show_streams_header%"
     paths:
         %kernel.root_dir%/../vendor/payum/core/Payum/Core/Resources/views: PayumCore
 

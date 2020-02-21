@@ -24,12 +24,15 @@
   <body id="body">
 
     {% block main_header %}
-    {#
-    <div class="streamsHeader">
-      <div class="grid-2 stream" style="text-align: left"><div class="rec"></div><p style="padding-left:30px">EN DIRECT</p></div>
-      <a href="{{ path('insalan_stream_default_index') }}" class="grid-4 btn-primary streamLink stream"><p>Accéder aux streams</p></a>
-    </div>
-    #}
+    {% if show_streams_header %}
+      <div class="streamsHeader">
+        <div class="grid-2 stream" style="text-align: left">
+          <div class="rec"></div>
+          <p style="padding-left:30px">EN DIRECT</p>
+        </div>
+        <a href="{{ path('insalan_stream_default_index') }}" class="grid-4 btn-primary streamLink stream"><p>Accéder aux streams</p></a>
+      </div>
+    {% endif %}
     <header>
       <div class="container">
         
