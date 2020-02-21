@@ -70,4 +70,81 @@ class GroupRepository extends EntityRepository
 
         return $q->getQuery()->execute();
     }
+
+    public function autoManageMatches(Entity\Group $group)
+    {
+
+        $em = $this->getEntityManager();
+
+        if ($group->getStatsType() == Group::STATS_WINLOST) {
+            // Clean up deprecated matches
+
+            foreach($group->getMatches()->toArray() as $match) {
+
+                foreach($match->getParticipants() as $p) {
+                    if (!$group->hasParticipant($p)) {
+
+                        $group->removeMatch($match);
+                        $em->remove($match);
+
+                        break;
+                    }
+                }
+            }
+
+            // Create missing matches
+
+            $participants = $group->getParticipants()->getValues();
+
+            for($i = 0; $i < count($participants); $i++)
+            {
+                for($j = $i+1; $j < count($participants); $j++)
+                {
+
+                    $a = $participants[$i];
+                    $b = $participants[$j];
+
+                    if(!$group->getMatchBetween($a, $b)) {
+                        $match = new Match();
+                        $match->setPart1($a);
+                        $match->setPart2($b);
+                        $match->setState(Match::STATE_UPCOMING);
+                        $match->setGroup($group);
+                        $group->addMatch($match);
+                        $em->persist($match);
+                    }
+
+                }
+            }
+        }
+        else {
+            // assume STATS_SCORE groups only have 1 RoyalMatch with every participants => battle royale tournaments
+
+            // create match if missing
+            if ($group->getMatches()->count() == 0) {
+                $m = new RoyalMatch();
+                $m->setState(Match::STATE_UPCOMING);
+                $m->setGroup($group);
+                $group->addMatch($m);
+            }
+
+            $match = $group->getMatches()->first();
+
+            // set match participants to all group participants
+            foreach($match->getParticipants() as $p) {
+                if (!$group->hasParticipant($p)) {
+                    $match->removeParticipant($p);
+                }
+            }
+
+            foreach($group->getParticipants() as $p) {
+                if (!$match->hasParticipant($p)) {
+                    $match->addParticipant($p);
+                }
+            }
+
+            $em->persist($match);
+        }
+
+    }
 }

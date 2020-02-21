@@ -131,6 +131,7 @@ class TournamentController extends Controller {
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($group); // tell Doctrine you want to (eventually) save the Product (no queries yet)
+            $em->getRepository('InsaLanTournamentBundle:Group')->autoManageMatches($group);
             $em->flush(); // actually executes the queries (i.e. the INSERT query)
         }
 
@@ -198,6 +199,7 @@ class TournamentController extends Controller {
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($group); // tell Doctrine you want to (eventually) save the Product (no queries yet)
+            $em->getRepository('InsaLanTournamentBundle:Group')->autoManageMatches($group);
             $em->flush(); // actually executes the queries (i.e. the INSERT query)
             return $this->redirectToRoute('GroupAction');
         }
