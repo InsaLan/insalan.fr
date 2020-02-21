@@ -40,7 +40,7 @@ class KnockoutAdmin extends Admin
     /*public function postPersist($ko)
     {
 
-        $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
         $repository = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch');
 
         $repository->generateMatches($ko, $ko->getSize());

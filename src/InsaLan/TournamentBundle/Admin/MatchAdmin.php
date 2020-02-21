@@ -92,7 +92,7 @@ class MatchAdmin extends Admin
     {
         if($match->getState() === Match::STATE_FINISHED && $match->getKoMatch())
         {
-            $em = $this->getConfigurationPool()->getContainer()->get('Doctrine')->getManager();
+            $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
             $repository = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch');
             $repository->propagateVictory($match->getKoMatch());
 
