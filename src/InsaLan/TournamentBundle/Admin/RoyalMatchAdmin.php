@@ -18,10 +18,10 @@ class RoyalMatchAdmin extends Admin
 {
 
     protected $stateDef = array(
-                            Match::STATE_UPCOMING => 'En attente',
-                            Match::STATE_ONGOING  => 'En cours',
-                            Match::STATE_FINISHED => 'Terminé'
-                        );
+        'En attente' => Match::STATE_UPCOMING,
+        'En cours' => Match::STATE_ONGOING,
+        'Terminé' => Match::STATE_FINISHED
+   );
 
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
@@ -33,7 +33,8 @@ class RoyalMatchAdmin extends Admin
                 array('class' => 'InsaLan\TournamentBundle\Entity\Group'))
             ->add('state', ChoiceType::class, array(
                 'choices'   => $this->stateDef,
-                'required'  => true))
+                'required'  => true,
+                'label'     => "Statut"))
         ;
     }
 
