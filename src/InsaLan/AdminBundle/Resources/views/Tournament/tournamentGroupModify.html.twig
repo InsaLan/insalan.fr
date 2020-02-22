@@ -34,4 +34,22 @@
     height: auto;
   }
 </style>
+
+<script>
+  // Events
+  function filter() {
+    const input = document.getElementById("dropdown-search").value.toLowerCase();
+    const options = document.getElementById('form_participants').getElementsByTagName('option');
+
+    for (let i = 0; i < options.length; i++) {
+      let option = options[i];
+      let txtValue = option.textContent || option.innerText;
+      if (txtValue.toLowerCase().indexOf(input) > -1) {
+        option.style.display = "";
+      } else {
+        option.style.display = "none";
+      }
+    }
+  }
+</script>
 {% endblock %}
