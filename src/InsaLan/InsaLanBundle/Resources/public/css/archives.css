@@ -1,22 +1,21 @@
 .previous-years-list {
-  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
 }
 
 .previous-years {
-  margin: 0px 10px 0px 10px;
-  display: inline;
-}
-
-.previous-years > img {
-  max-height: 400px;
-  margin: auto;
-  display: center;
+  text-align: center;
 }
 
 .previous-years > a > img {
   max-height: 400px;
-  text-align: center;
   margin: auto;
+  opacity: 1;
+}
+
+.previous-years > a > img:hover {
+  opacity: 0.8;
 }
 
 .picture-list {
