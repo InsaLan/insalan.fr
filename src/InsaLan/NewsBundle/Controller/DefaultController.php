@@ -17,7 +17,7 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $news = $em->getRepository('InsaLanNewsBundle:News')->getLatest(20);
+        $news = $em->getRepository('InsaLanNewsBundle:News')->getLatest(1);
         $sliders = $em->getRepository('InsaLanNewsBundle:Slider')->getLatest(20);
 
         if ($this->container->getParameter('kernel.environment') === 'dev') {
