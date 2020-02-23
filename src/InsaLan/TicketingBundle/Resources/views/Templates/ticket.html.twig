@@ -39,7 +39,7 @@ h2 {
             Pseudo : <b>{{ pseudo }}</b><br>
             Nom Prénom : <b>{{ user.lastname }} {{ user.firstname }}</b><br>
             Tournoi : <b>{{ tournament.name }}</b><br>
-            Prix unitaire TTC : <b>{{ tournament.webPrice }}&euro;</b><br>
+            Prix unitaire TTC : <b>{% if type == 'manager' %}{{ managerPrice }}{% else %}{{ tournament.webPrice }}{% endif %}&euro;</b><br>
             N° billet : <b>{{ eTicket.id }}</b><br>
             Date d'émission : <b>{{ "now"|date("d/m/Y H:i:s") }}</b><br>
           </div>

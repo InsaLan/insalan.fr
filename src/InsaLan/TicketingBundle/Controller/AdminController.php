@@ -241,6 +241,8 @@ class AdminController extends Controller
               ["user" => $eTicket->getUser(),
                "tournament" => $eTicket->getTournament(),
                "pseudo" => $participant->getGameName(),
+               "type" => $participant->getParticipantType(),
+               "managerPrice" => Manager::ONLINE_PRICE,
                "eTicket" => $eTicket
               ]
             );
