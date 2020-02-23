@@ -28,3 +28,4 @@
 .idea/
 /data/ticket/*
 !/data/ticket/.gitkeep
+*.swp
