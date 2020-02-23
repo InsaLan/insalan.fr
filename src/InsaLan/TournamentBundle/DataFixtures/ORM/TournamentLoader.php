@@ -35,6 +35,7 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
         $e->setLogoPath('fixtures-1.png');
         $e->setParticipantType('player');
 		$e->setLoginType(LoginPlatform::PLATFORM_STEAM);
+
         $manager->persist($e);
         $this->addReference('tournament-1', $e);
 
@@ -128,6 +129,29 @@ class TournamentLoader extends AbstractFixture implements OrderedFixtureInterfac
 
         $manager->persist($e);
         $this->addReference('tournament-5', $e);
+
+        $e = new Tournament();
+        $e->setName('CS: GO open forever');
+        $e->setShortName('csgo-of');
+        $e->setPlacement(true);
+        $e->setRegistrationOpen((new \DateTime())->modify('-2 day'));
+        $e->setRegistrationClose((new \DateTime())->modify('-1 day'));
+        $e->setRegistrationLimit(64);
+        $e->setTeamMaxPlayer(8);
+        $e->setTeamMinPlayer(5);
+        $e->setWebPrice(22);
+        $e->setOnlineIncreaseInPrice(1);
+        $e->setOnSitePrice(30);
+        $e->setCurrency('EUR');
+        $e->setTournamentOpen((new \DateTime()));
+        $e->setTournamentClose((new \DateTime())->modify('+300 day'));
+        $e->setType('manual');
+        $e->setLogoPath('fixtures-1.png');
+        $e->setParticipantType('player');
+		$e->setLoginType(LoginPlatform::PLATFORM_STEAM);
+
+        $manager->persist($e);
+        $this->addReference('tournament-6', $e);
 
         $manager->flush();
     }
