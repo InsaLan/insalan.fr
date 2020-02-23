@@ -7,27 +7,40 @@
   <nav class="streams">
     <ul>
     {% for t in tournaments %}
-      <li><a href="#{{ t.id }}" class="btn-primary streamLink stream center">{{ t.name }}</a></li>
+      <li>
+        <a href="#{{ t.id }}" class="btn-primary">{{ t.name }}</a>
+      </li>
     {% endfor %}
     </ul>
   </nav>
 
   {% for t in tournaments %}
   <section id="{{ t.id }}" class="hidden">
-    {% for s in officialStreams %}
-    {% if s.tournament == t %}
-      <iframe class="center" src="{{ s.streamLink }}" frameborder="0" scrolling="no" height="378" width="620"></iframe>
-      <br class="clear"/>
-    {% endif %}
-    {% endfor %}
+    <div class="official">
+      <h2>Stream officiel</h2>
+      <div class="stream-display">
+        {% for s in officialStreams %}
+        {% if s.tournament == t %}
+          <iframe src="{{ s.streamLink }}" frameborder="0" scrolling="no" height="378" width="620"></iframe>
+          <br/>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
     <br/><hr/><br/>
-    <div>
+
+    <div class="unofficial">
       <h2>Streams libres</h2>
-      {% for s in unofficialStreams %}
-      {% if s.tournament == t %}
-        <a href="{{ s.streamLink }}" class="btn btn-primary grid-1 streamLink stream">{{ s.streamer }}</a>
-      {% endif %}
-      {% endfor %}
+      <div class="stream-display">
+        {% for s in unofficialStreams %}
+        {% if s.tournament == t %}
+          <a href="{{ s.streamLink }}" class="btn btn-primary">
+            <h4>{{ s.streamer }}</h4>
+          </a>
+        {% endif %}
+        {% endfor %}
+      </div>
     </div>
   </section>
   {% endfor %}

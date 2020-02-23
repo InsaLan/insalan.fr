@@ -1,29 +1,43 @@
 .streams {
   width: 100%;
   margin-top: 30px;
-  margin-bottom: 50px;
-  border-bottom: 1px solid #0E0E0E;
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgb(var(--main-dark-color));
+}
+
+.streams ul {
+  display: flex;
 }
 
 .streams li {
   list-style-type: none;
-  display: inline-block;
-  height: 40px;
-  text-align: center;
-  color: white;
-  width: 19.5%;
+  color: rgb(var(--comp-color));
 }
 
 .streams a {
   display: block;
+  padding-left: 20px;
+  padding-right: 20px;
   font-family: OpenSansCond;
   line-height: 40px;
   font-size: 1.2em;
 }
 
 .streams li:hover {
-  background: #0E0E0E;
-  color: #00bff3;
+  background: rgb(var(--main-dark-color));
+  color: rgb(var(--accent-color));
+}
+
+.official > .stream-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.unofficial > .stream-display {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
 }
 
 .video {
@@ -32,7 +46,7 @@
 }
 
 h2 {
-  color: white;
+  color: rgb(var(--comp-color));
   font-family: OpenSansCond, sans-serif;
   font-size: 2em;
   letter-spacing: 3px;
@@ -45,10 +59,4 @@ h2 {
 
 .hidden:target {
   display: block;
-}
-
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
