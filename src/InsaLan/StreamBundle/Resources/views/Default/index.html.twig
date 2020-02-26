@@ -2,7 +2,14 @@
 
 {% block body %}
 {{ parent() }}
-
+  {% if globalVars.topStream | length > 5 %}
+    <section>
+      <iframe class="center" src="{{ globalVars.topStream }}" frameborder="0" scrolling="no" height="378" width="620"></iframe>
+      <br class="clear"/>
+      <br/><hr/><br/>
+    </section>
+  {% endif %}
+  
 {% if tournaments %}
   <nav class="streams">
     <ul>

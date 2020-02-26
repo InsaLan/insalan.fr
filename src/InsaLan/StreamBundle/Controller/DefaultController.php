@@ -29,6 +29,11 @@ class DefaultController extends Controller
             }
           }
 
-        return array('tournaments' => $tournaments, 'officialStreams' => $officialStreams, 'unofficialStreams' => $unofficialStreams);
+        // Get global variables
+        $globalVars = array();
+        $globalKeys = ['topStream'];
+        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+
+        return array('tournaments' => $tournaments, 'officialStreams' => $officialStreams, 'unofficialStreams' => $unofficialStreams, 'globalVars' => $globalVars);
     }
 }
