@@ -40,7 +40,7 @@ class AdminController extends Controller
       }
       $soloPlayers = $em->getRepository('InsaLanTournamentBundle:Player')->findBy(["tournament" => $soloTournaments, "validated" => Participant::STATUS_VALIDATED, "eTicket" => null]);
       $teamPlayers = $em->getRepository('InsaLanTournamentBundle:Player')->getValidatedTeamPlayers($teamTournaments);
-      $players = $soloPlayers + $teamPlayers;
+      $players = array_merge($soloPlayers, $teamPlayers);
 
       // get validated managers
       $managers = array();
