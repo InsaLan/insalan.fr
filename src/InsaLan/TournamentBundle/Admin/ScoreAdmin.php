@@ -2,13 +2,13 @@
 
 namespace InsaLan\TournamentBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 use InsaLan\TournamentBundle\Entity\Match;
 
-class ScoreAdmin extends Admin
+class ScoreAdmin extends AbstractAdmin
 {
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)

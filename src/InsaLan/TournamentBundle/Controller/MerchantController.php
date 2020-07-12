@@ -46,7 +46,6 @@ class MerchantController extends Controller
         $form = $this->createFormBuilder()
             ->add('registrable', ChoiceType::class, array(
                   'label' => 'Tournoi',
-                  'choices_as_values' => true,
                   'choices' => $a))
             ->setAction($this->generateUrl('insalan_tournament_merchant_index'))
             ->getForm();
@@ -57,7 +56,7 @@ class MerchantController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             return $this->redirect($this->generateUrl(
                 'insalan_tournament_merchant_index_1',

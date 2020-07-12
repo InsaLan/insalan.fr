@@ -2,7 +2,7 @@
 
 namespace InsaLan\TournamentBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\StringType;
 
 use InsaLan\TournamentBundle\Entity\Match;
 
-class MatchAdmin extends Admin
+class MatchAdmin extends AbstractAdmin
 {
     // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
     protected $stateDef = array(
