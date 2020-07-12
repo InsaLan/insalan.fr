@@ -7,7 +7,7 @@ ADD . .
 
 COPY app/config/parameters.yml.dist app/config/parameters.yml
 RUN sed -i "s/database_password: ~/database_password: password/g" app/config/parameters.yml
-ADD https://getcomposer.org/composer.phar .
+ADD https://getcomposer.org/composer-stable.phar composer.phar
 ADD composer.json .
 ADD composer.lock .
 ADD app/config app/config

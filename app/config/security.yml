@@ -16,12 +16,14 @@ security:
             pattern: ^/api
             http_basic:
                 realm: "API"
+            logout_on_user_change: true
         opening:
             request_matcher: insalan.opening_matcher
             anonymous: false
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
+            logout_on_user_change: true
         main:
             pattern: ^/
             form_login:
@@ -30,11 +32,13 @@ security:
             logout:       true
             anonymous:    true
             switch_user: { role: ROLE_ADMIN, parameter: _want_to_be }
+            logout_on_user_change: true
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
         default:
+            logout_on_user_change: true
             anonymous: ~
 
     access_control:

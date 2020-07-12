@@ -47,7 +47,7 @@ twig:
         show_pizza_tab: "%show_pizza_tab%"
         show_streams_header: "%show_streams_header%"
     paths:
-        %kernel.root_dir%/../vendor/payum/core/Payum/Core/Resources/views: PayumCore
+        "%kernel.root_dir%/../vendor/payum/core/Payum/Core/Resources/views": PayumCore
 
 # Assetic Configuration
 assetic:
@@ -169,7 +169,7 @@ fos_user:
             template:   FOSUserBundle:Registration:email.txt.twig
 
 stof_doctrine_extensions:
-    default_locale: %locale%
+    default_locale: "%locale%"
     orm:
         default:
             timestampable: true
