@@ -27,7 +27,9 @@ tarteaucitron.init({
   tarteaucitron.user.analyticsUa = '{{ ga_tracking }}';
   tarteaucitron.user.analyticsMore = function () { /* add here your optionnal ga.push() */ };
   (tarteaucitron.job = tarteaucitron.job || []).push('analytics');
-  (tarteaucitron.job = tarteaucitron.job || []).push('youtube');
+  (tarteaucitron.job = tarteaucitron.job || []).push('youtubecustom');
   (tarteaucitron.job = tarteaucitron.job || []).push('facebookcomment');
   (tarteaucitron.job = tarteaucitron.job || []).push('googledocs');
   (tarteaucitron.job = tarteaucitron.job || []).push('weezevent');
+  (tarteaucitron.job = tarteaucitron.job || []).push('twitchplayer');
+  (tarteaucitron.job = tarteaucitron.job || []).push('otherplayer');

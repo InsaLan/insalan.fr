@@ -1143,7 +1143,7 @@ var tarteaucitron = {
 
 
             } else if (type === 'cookie') {
-
+                
                 // put cookies list at bottom
                 if (document.getElementById('tarteaucitronAlertSmall') !== null) {
                     tarteaucitron.userInterface.css('tarteaucitronCookiesListContainer', 'bottom', (document.getElementById('tarteaucitronAlertSmall').offsetHeight) + 'px');
