@@ -28,5 +28,9 @@ parameters:
     paypal_express_checkout_signature: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     paypal_express_checkout_sandbox: true
 
+    lyfpay_checkout_uri: 'https://sandbox-webpos.lyf.eu/fr/plugin/PaymentCb.aspx'
+    lyfpay_checkout_pos_id: XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    lyfpay_checkout_secret_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    
     show_pizza_tab: false
     show_streams_header: false
