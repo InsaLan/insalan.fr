@@ -11,7 +11,9 @@ before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
-
+  - composer self-update --rollback
+  - composer --version
+  
 script:
   - cp app/config/parameters.yml.travis app/config/parameters.yml
   - composer install
