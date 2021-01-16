@@ -12,6 +12,19 @@
   </body>
 </div>
 
+<div class="frame">
+  <header>
+    <div class="title pull-left">
+      Tournoi réservé aux étudiants
+    </div>
+    <br class="clear">
+  </header>
+  <body class="text-center">
+  <input type="checkbox" id="studentCheckbox" class="form-check-input"/>
+  En cochant cette case, je certifie être étudiant dans une école française et m'engage à contacter les organisateurs pour montrer ma carte d'étudiant en appel vidéo dans la semaine précédent l'évènement, sous peine de disqualification de mon équipe complète du tournoi.
+  </body>
+</div>
+
 <div class="frame frame-active">
   <header class="full">
     <div class="step pull-left">
@@ -25,8 +38,27 @@
     <div class="input field">
       {{ form_widget(form.gameName, {'attr': {'placeholder': 'Votre pseudonyme...'}}) }}
     </div>
-    <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('step1').submit();">
+    <a class="btn ctrl grid-10" href="javascript:{}" id="submitButton">
       Ok
     </a>
   {{ form_end(form) }}
 </div>
+
+<script type="text/javascript">
+  manageStudentCheckbox = function() {
+    let submitButton = document.getElementById('submitButton');
+    let checked = document.getElementById('studentCheckbox').checked;
+    submitButton.disabled = !checked;
+    if(checked) {
+      submitButton.classList.add('btn-primary');
+      submitButton.onclick = () => document.getElementById('step1').submit();
+    } else {
+      submitButton.classList.remove('btn-primary');
+      submitButton.onclick = () => {};
+    }
+  }
+  document.getElementById('studentCheckbox').addEventListener("click", manageStudentCheckbox);
+
+  manageStudentCheckbox();
+</script>
+
