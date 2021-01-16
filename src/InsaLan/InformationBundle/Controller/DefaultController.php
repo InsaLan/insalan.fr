@@ -95,13 +95,13 @@ class DefaultController extends Controller
 
     /**
      * @Route("/cosplay/rules")
-     * @Template()
+     * @Template("@InsaLanInformationBundle/Resources/views/Default/legalDocument.html.twig")
      */
     public function cosplayRulesAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $rules = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("cosplayrules");
-        return array("rules" => $rules);
+        $document = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("cosplayrules");
+        return array("document" => $document);
     }
     
     /**
@@ -132,24 +132,35 @@ class DefaultController extends Controller
 
     /**
      * @Route("/salesterms")
-     * @Template()
+     * @Template("@InsaLanInformationBundle/Resources/views/Default/legalDocument.html.twig")
      */
     public function salesTermsAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $salesTerms = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("cgv");
-        return array("salesterms" => $salesTerms);
+        $document = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("cgv");
+        return array("document" => $document);
     }
 
     /**
      * @Route("/mentions")
-     * @Template()
+     * @Template("@InsaLanInformationBundle/Resources/views/Default/legalDocument.html.twig")
      */
     public function mentionsAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $mentions = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("mentions");
-        return array("mentions" => $mentions);
+        $document = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("mentions");
+        return array("document" => $document);
+    }
+
+    /**
+     * @Route("/cookiespolicy")
+     * @Template("@InsaLanInformationBundle/Resources/views/Default/legalDocument.html.twig")
+     */
+    public function cookiespolicyAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $document = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("cookiespolicy");
+        return array("document" => $document);
     }
 
     /**

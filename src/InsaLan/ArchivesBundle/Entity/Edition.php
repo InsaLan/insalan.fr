@@ -75,7 +75,7 @@ class Edition
      * Set name
      *
      * @param string $name
-     * @return Stream
+     * @return Edition
      */
     public function setName($name)
     {

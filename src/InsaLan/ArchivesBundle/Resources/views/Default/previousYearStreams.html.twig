@@ -34,11 +34,17 @@
 
   <section>
     <div class="picture-list ">
-      {% set nbStreams = 5 %}
+      {% set nbStreams = 25 %}
       {% for s in streams|slice((page - 1) * nbStreams, page * nbStreams)  %}
-      <div>
-        <iframe width="854" height="480" src="{{ s.url }}" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
+      {% if 'youtube' in s.url %}
+        {% set playerClass = "youtubecustom" %}
+      {% elseif 'twitch' in s.url %}
+        {% set playerClass = "twitchplayer" %}
+      {% else %}
+        {% set playerClass = "otherplayer" %}
+      {% endif %}
+      
+      <div class="{{ playerClass }}" data-url="{{ s.url }}" width="700" height="437" autoplay="0"></div>
       {% endfor %}
     </div>
   </section>
