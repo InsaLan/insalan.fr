@@ -13,7 +13,8 @@
 {% if future_tournaments | length > 0 %}
 <article>
   <header>
-    <h2>Tournois de la prochaine édition</h2>
+    {# <h2>Tournois de la prochaine édition</h2> TODO Remettre ce titre après l'intralan #}
+    <h2>Tournois de l'IntraLan</h2>
   </header>
   {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': future_tournaments} %}
 </article>
@@ -25,7 +26,8 @@
 
 <article>
   <header>
-    <h2>Tournois ouverts</h2>
+{#    <h2>Tournois ouverts</h2> TODO Remettre ce titre après l'intralan #}
+    <h2>Tournois de l'IntraLan</h2>
   </header>
   {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': opened_tournaments} %}
 </article>
@@ -34,7 +36,8 @@
 {% if registration_closed_tournaments | length > 0 %}
 <article>
   <header>
-    <h2>Tournois en cours</h2>
+{#    <h2>Tournois en cours</h2> TODO Remettre ce titre après l'intralan #}
+    <h2>Tournois de l'IntraLan</h2>
   </header>
   {% include 'InsaLanTournamentBundle:Part:TournamentList.html.twig' with {'tournaments': registration_closed_tournaments} %}
 </article>
