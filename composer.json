@@ -14,7 +14,7 @@
     },
     "require": {
         "php": "^7.2",
-        "symfony/symfony": "3.4.*",
+        "symfony/symfony": "^4.1",
         "doctrine/orm": "2.5.*",
         "doctrine/annotations": "^1.2.6",
         "doctrine/doctrine-cache-bundle": "1.2.*",

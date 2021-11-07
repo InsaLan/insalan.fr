@@ -4,7 +4,7 @@ parameters:
 services:
     insalan.tblprefix_subscriber:
         class: InsaLan\InsaLanBundle\Subscriber\TablePrefixSubscriber
-        arguments: [%insalan.db.table_prefix%]
+        arguments: ["%insalan.db.table_prefix%"]
         tags:
             - { name: doctrine.event_subscriber }
     insalan.free_slots:

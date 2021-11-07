@@ -2,7 +2,7 @@
 
 namespace InsaLan\TournamentBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 use InsaLan\TournamentBundle\Entity\Match;
 
-class RoundAdmin extends Admin
+class RoundAdmin extends AbstractAdmin
 {
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)

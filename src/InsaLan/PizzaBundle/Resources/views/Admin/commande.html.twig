@@ -86,7 +86,7 @@
           <th class="grid-1">&Eacute;tat</th>
           <th class="grid-2"></th>
         </tr>
-        {% for uo in order.ordersOrdered if uo.paymentDone %}
+        {% for uo in order.ordersOrdered | filter(uo=>uo.paymentDone) %}
         <tr>
           <td>{{ uo.createdAt | date("d/m H:i") }}</td>
           <td>
