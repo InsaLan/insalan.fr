@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\InsaLan\ApiBundle\Controller;
+namespace Tests\App\Controller;
 
-use InsaLan\ApiBundle\Http\JsonResponse;
+use App\Http\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 
-use InsaLan\TicketingBundle\Entity\ETicket;
+use App\Entity\ETicket;
 
 class TicketingControllerTest extends WebTestCase
 {

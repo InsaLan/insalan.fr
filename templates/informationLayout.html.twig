@@ -1,0 +1,24 @@
+{% extends 'InsaLanLayout.html.twig' %}
+
+{% block title %}
+{{ parent() }}
+
+- Informations
+{% endblock %}
+
+{#
+{% block stylesheets %}
+{{ parent() }}
+  {% stylesheets 'bundles/insalan/css/info.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
+{% endblock %}
+#}
+
+{% block rawbody %}
+{{ parent() }}
+
+<section class="container">
+  {% block body %}{% endblock %}
+</section>
+{% endblock %}
