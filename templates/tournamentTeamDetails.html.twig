@@ -13,7 +13,7 @@
     <h2>{{ part.name }}</h2>
 
     <p>
-      <a href="{{ path('insalan_tournament_default_tournament', {id: part.tournament.id}) }}">
+      <a href="{{ path('app_tournament_tournament', {id: part.tournament.id}) }}">
         <<< Retour tournoi <b>{{ part.tournament.name }}</b>
       </a>
     </p>
@@ -74,7 +74,7 @@
   {% if authorized and part.tournament.playerInfos %}
     <div class="clear" style="margin-top:20px"></div>
     <section class="infos">
-      {{ part.tournament.playerInfos | markdown }}
+      {{ part.tournament.playerInfos | markdown_to_html }}
     </section>
     <div class="clear" style="margin-bottom:20px"></div>
   {% endif %}

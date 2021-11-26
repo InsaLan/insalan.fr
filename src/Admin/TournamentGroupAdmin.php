@@ -10,7 +10,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\ActionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-use App\Entity\TournamentMatch;
+use App\Entity\TournamentMatch as Match;
 use App\Entity\RoyalMatch;
 use App\Entity\Group;
 use App\Entity\Participant;
@@ -93,13 +93,13 @@ class TournamentGroupAdmin extends AbstractAdmin
     public function preUpdate($group)
     {
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
-        $em->getRepository('InsaLanTournamentBundle:Group')->autoManageMatches($group);
+        $em->getRepository('App\Entity\TournamentGroup')->autoManageMatches($group);
     }
 
     public function prePersist($group)
     {
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
-        $em->getRepository('InsaLanTournamentBundle:Group')->autoManageMatches($group);
+        $em->getRepository('App\Entity\TournamentGroup')->autoManageMatches($group);
     }
 
 }

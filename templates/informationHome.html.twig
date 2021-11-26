@@ -1,4 +1,4 @@
-{% extends 'InsaLanInformationBundle::layout.html.twig' %}
+{% extends 'informationLayout.html.twig' %}
 
 {% block body %}
 {{ parent() }}
@@ -20,7 +20,7 @@
       Gratuit
     </a>
     {% if app.user %}
-    <a href="{{ path('insalan_user_default_index') }}" class="btn btn-plain block-huge pull-left">
+    <a href="{{ path('app_user_index') }}" class="btn btn-plain block-huge pull-left">
       MON ESPACE 
     </a>
     {% else %}

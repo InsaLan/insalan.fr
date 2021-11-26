@@ -13,7 +13,7 @@
   </header>
  
    <div class="text">
-     <form id="profile" method="POST" action="{{ path('insalan_user_default_index') }}">
+     <form id="profile" method="POST" action="{{ path('app_user_index') }}">
        <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
        {{ form_errors(form) }}
        {{ form_row(form.firstname) }}
@@ -45,10 +45,10 @@
         <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ steam.avatarmedium }}" />
       </a>
       <h2>{{ steam.personaname }}</h2>
-      <a href="{{ path('insalan_user_default_registersteamid') }}" class="btn2" style="float: right">Modifier / Supprimer la connexion</a>
+      <a href="{{ path('app_user_registersteamid') }}" class="btn2" style="float: right">Modifier / Supprimer la connexion</a>
     {% else %}
       <h2>Non connecté</h2>
-      <a href="{{ path('insalan_user_default_registersteamid') }}" class="btn2" style="float: right">Lier un compte Steam</a>
+      <a href="{{ path('app_user_registersteamid') }}" class="btn2" style="float: right">Lier un compte Steam</a>
     {% endif %}
     <p>Utilisé pour les inscriptions aux tournois Steam</p>
     <br>
@@ -68,10 +68,10 @@
     <br/>
     {% if battletag %}
       <h2>{{ battletag }}</h2>
-      <a href="{{ path('insalan_user_default_registerbattlenet') }}" class="btn2" style="float: right">Modifier / Supprimer la connexion</a>
+      <a href="{{ path('app_user_registerbattlenet') }}" class="btn2" style="float: right">Modifier / Supprimer la connexion</a>
     {% else %}
       <h2>Non connecté</h2>
-      <a href="{{ path('insalan_user_default_registerbattlenet') }}" class="btn2" style="float: right">Lier un compte BattleNet</a>
+      <a href="{{ path('app_user_registerbattlenet') }}" class="btn2" style="float: right">Lier un compte BattleNet</a>
     {% endif %}
     <p>Utilisé pour les inscriptions aux tournois Battle.Net</p>
     <br>

@@ -69,7 +69,7 @@
           {% endif %}
         </td>
         <td>
-          <form method="POST" action="{{ path('insalan_pizza_admin_creneau_remove', {id: order.id}) }}">
+          <form method="POST" action="{{ path('app_pizza_admin_creneau_remove', {id: order.id}) }}">
             <input type="submit" value="Supprimer" onclick="return confirm('Confirmer la suppression ?');"/>
           </form>
         </td>

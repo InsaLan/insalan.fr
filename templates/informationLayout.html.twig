@@ -7,11 +7,10 @@
 {% endblock %}
 
 {#
-{% block stylesheets %}
+{% block customcss %}
 {{ parent() }}
-  {% stylesheets 'bundles/insalan/css/info.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
+    <link rel="stylesheet" href="/public/css/global.css" />
+    <link rel="stylesheet" href="/public/css/info.css" />
 {% endblock %}
 #}
 

@@ -1,4 +1,4 @@
-{% extends 'InsaLanNewsBundle::layout.html.twig' %}
+{% extends 'newsLayout.html.twig' %}
 
 {% block title %}
 {{ parent() }}
@@ -12,17 +12,17 @@
     <article>
       <div class="img-center">
         {#
-        <a href="{{ path('insalan_rsc_default_index') }}">
-          <img width="800" align-self="center" src="{{ asset('bundles/insalanrsc/img/RSC-banner.png') }}" />
+        <a href="{{ path('app_rsc_index') }}">
+          <img width="800" align-self="center" src="{{ asset('publicrsc/img/RSC-banner.png') }}" />
         </a>
         #}
-        <img width=80% src="{{ asset('bundles/insalan/img/logo-noyear-wide.png') }}" />
+        <img width=80% src="{{ asset('/public/img/logo-noyear-wide.png') }}" />
       </div>
     </article>
 
     {#
     <div class="grid-7 pull-left">
-      <img class="frame" width="700" align-self="center" src="{{ asset('bundles/insalan/img/banner-2019.png') }}" />
+      <img class="frame" width="700" align-self="center" src="{{ asset('/public/img/banner-2019.png') }}" />
       <iframe width="700" height="437" src="https://www.youtube.com/embed/_a-zRFnW-bc" frameborder="0" allowfullscreen></iframe>
     </div>
 
@@ -87,7 +87,7 @@
         <header class="huge-button">
           <div class="title pull-left">
             {% if app.user %}
-              <a href="{{ path('insalan_tournament_user_index') }}" style="display:block">MON COMPTE</a>
+              <a href="{{ path('User/index') }}" style="display:block">MON COMPTE</a>
             {% else %}
               <a href="{{path('fos_user_registration_register') }}" style="display:block">INSCRIPTION</a>
             {% endif %}
@@ -121,7 +121,7 @@
     </div>
 
     <div class="huge-container">
-      <a href="{{ path('insalan_tournament_user_index') }}" class="btn2">Inscription</a>
+      <a href="{{ 'User/index' }}" class="btn2">Inscription</a>
     </div>
   </section>
 </div>
@@ -183,7 +183,7 @@
         <div>
           <a href="https://www.capgemini.com">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/capgemini.png') }}" alt="Noctua"/>
+              <img src="{{ asset('/public/img/partners-preview/capgemini.png') }}" alt="Capgemini"/>
               <h4>Capgemini</h4>
             </div>
           </a>
@@ -191,7 +191,7 @@
         <div>
           <a href="https://www.noctua.at">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/noctua.jpg') }}" alt="Noctua"/>
+              <img src="{{ asset('/public/img/partners-preview/noctua.jpg') }}" alt="Noctua"/>
               <h4>Noctua</h4>
             </div>
           </a>
@@ -199,7 +199,7 @@
         <div>
           <a href="https://scoup-esport.fr/">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/scoup-esport.png') }}" alt="Scoup Esport"/>
+              <img src="{{ asset('/public/img/partners-preview/scoup-esport.png') }}" alt="Scoup Esport"/>
               <h4>Scoup Esport</h4>
             </div>
           </a>
@@ -207,7 +207,7 @@
         <div>
           <a href="https://www.feed.co">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/feed.png') }}" alt="Feed"/>
+              <img src="{{ asset('/public/img/partners-preview/feed.png') }}" alt="Feed"/>
               <h4>Feed</h4>
             </div>
           </a>
@@ -215,7 +215,7 @@
         <div>
           <a href="https://www.staderennais.com/">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/stade-rennais.png') }}" alt="Stade Rennais"/>
+              <img src="{{ asset('/public/img/partners-preview/stade-rennais.png') }}" alt="Stade Rennais"/>
               <h4>Stade Rennais</h4>
             </div>
           </a>
@@ -223,7 +223,7 @@
         <div>
           <a href="http://www.modjo-escalade.fr/">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/modjo.jpg') }}" alt="Modjo Rennes" />
+              <img src="{{ asset('/public/img/partners-preview/modjo.jpg') }}" alt="Modjo Rennes" />
               <h4>Modjo Rennes</h4>
             </div>
           </a>
@@ -231,7 +231,7 @@
         <div>
           <a href="http://virtualgame.fr/">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/virtual-game.png') }}" alt="Virtual Games Rennes" />
+              <img src="{{ asset('/public/img/partners-preview/virtual-game.png') }}" alt="Virtual Games Rennes" />
               <h4>Virtual Games Rennes</h4>
             </div>
           </a>
@@ -239,7 +239,7 @@
         <div>
           <a href="http://www.lasergame-evolution.com/fr/61/Rennes/">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/lge.png') }}" alt="Laser Game Evolution" />
+              <img src="{{ asset('/public/img/partners-preview/lge.png') }}" alt="Laser Game Evolution" />
               <h4>Laser Game Evolution</h4>
             </div>
           </a>
@@ -247,7 +247,7 @@
         <div>
           <a href="http://www.leblizz.com/">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/leblizz.png') }}" alt="Le Blizz" />
+              <img src="{{ asset('/public/img/partners-preview/leblizz.png') }}" alt="Le Blizz" />
               <h4>Le Blizz</h4>
             </div>
           </a>
@@ -255,7 +255,7 @@
         <div>
           <a href="https://www.facebook.com/Club3DINSARennes/">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/club3d.png') }}" alt="Club 3D" />
+              <img src="{{ asset('/public/img/partners-preview/club3d.png') }}" alt="Club 3D" />
               <h4>Club 3D</h4>
             </div>
           </a>
@@ -269,7 +269,7 @@
         <div>
           <a href="http://www.rennes.fr">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/vdr.png') }}" alt="Ville de Rennes"/>
+              <img src="{{ asset('/public/img/partners-preview/vdr.png') }}" alt="Ville de Rennes"/>
               <h4>Ville de Rennes</h4>
             </div>
           </a>
@@ -277,7 +277,7 @@
         <div>
           <a href="http://www.societegenerale.fr">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/soge.png') }}" alt="Société Générale"/>
+              <img src="{{ asset('/public/img/partners-preview/soge.png') }}" alt="Société Générale"/>
               <h4>Société Générale</h4>
             </div>
           </a>
@@ -285,7 +285,7 @@
         <div>
           <a href="http://www.nrj.fr/">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/nrj-rennes.png') }}" alt="NRJ Rennes"/>
+              <img src="{{ asset('/public/img/partners-preview/nrj-rennes.png') }}" alt="NRJ Rennes"/>
               <h4>NRJ Rennes</h4>
             </div>
           </a>
@@ -293,7 +293,7 @@
         <div>
           <a href="https://www.univ-rennes1.fr">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/rennes1.png') }}" alt="Université de Rennes 1"/>
+              <img src="{{ asset('/public/img/partners-preview/rennes1.png') }}" alt="Université de Rennes 1"/>
               <h4>Université de Rennes 1</h4>
             </div>
           </a>
@@ -301,7 +301,7 @@
         <div>
           <a href="http://www.breizhloc.fr">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/breizhloc.png') }}" alt="Breizh'Loc"/>
+              <img src="{{ asset('/public/img/partners-preview/breizhloc.png') }}" alt="Breizh'Loc"/>
               <h4>Breizh'Loc</h4>
             </div>
           </a>
@@ -309,7 +309,7 @@
         <div>
           <a href="https://pizza.dominos.fr">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/dominos.png') }}" alt="Domino's"/>
+              <img src="{{ asset('/public/img/partners-preview/dominos.png') }}" alt="Domino's"/>
               <h4>Domino's</h4>
             </div>
           </a>
@@ -317,7 +317,7 @@
         <div>
           <a href="http://www.accrochenet.com">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/accro.png') }}" alt="Accroche Net"/>
+              <img src="{{ asset('/public/img/partners-preview/accro.png') }}" alt="Accroche Net"/>
               <h4>Accroche Net</h4>
             </div>
           </a>
@@ -325,7 +325,7 @@
         <div>
           <a href="http://www.3hitcombo.fr/">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/3hit.png') }}" alt="3Hit Combo" />
+              <img src="{{ asset('/public/img/partners-preview/3hit.png') }}" alt="3Hit Combo" />
               <h4>3Hit Combo</h4>
             </div>
           </a>
@@ -333,7 +333,7 @@
         <div>
           <a href="https://www.facebook.com/WarpZoneRennes">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/warpzone.png') }}" alt="Warp Zone" />
+              <img src="{{ asset('/public/img/partners-preview/warpzone.png') }}" alt="Warp Zone" />
               <h4>Warp Zone</h4>
             </div>
           </a>
@@ -341,7 +341,7 @@
         <div>
            <a href="https://www.quantic-telecom.net/">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/quantic-telecom.png') }}" alt="Quantic Telecom" />
+              <img src="{{ asset('/public/img/partners-preview/quantic-telecom.png') }}" alt="Quantic Telecom" />
               <h4>Quantic Telecom</h4>
             </div>
            </a>
@@ -349,7 +349,7 @@
         <div>
            <a href="https://discord.gg/368Gxzc">
             <div>
-              <img src="{{ asset('bundles/insalan/img/partners-preview/la-confrerie.png') }}" alt="La confrérie" />
+              <img src="{{ asset('/public/img/partners-preview/la-confrerie.png') }}" alt="La confrérie" />
               <h4>Lᴀ CᴏɴFʀᴇ́ʀɪᴇ</h4>
             </div>
            </a>
@@ -377,7 +377,7 @@
         </header>
 
         <section>
-          {{ n.text | markdown }}
+          {{ n.text | markdown_to_html }}
         </section>
       </article>
       {% endfor %}

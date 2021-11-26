@@ -6,31 +6,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use App\Entity;
-
+/**
+ * @Route("/")
+ */
 class NewsController extends Controller
 {
     /**
      * @Route("/")
-     * @Template()
+     * @Template("newsIndex.html.twig")
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $news = $em->getRepository('InsaLanNewsBundle:News')->getLatest(1);
-        $sliders = $em->getRepository('InsaLanNewsBundle:Slider')->getLatest(20);
+        $news = $em->getRepository("App\Entity\News")->getLatest(1);
+        $sliders = $em->getRepository("App\Entity\NewsSlider")->getLatest(20);
 
-        if ($this->container->getParameter('kernel.environment') === 'dev') {
-            $this->get('session')->getFlashBag()->add('info', 'Debug: info flashbag');
-            $this->get('session')->getFlashBag()->add('error', 'Debug: error flashbag');
+        if ($this->container->getParameter("kernel.environment") === "dev") {
+            $this->get("session")->getFlashBag()->add("info", "Debug: info flashbag");
+            $this->get("session")->getFlashBag()->add("error", "Debug: error flashbag");
         }
 
         // Get global variables
         $globalVars = array();
-        $globalKeys = ['fullDates', 'romanNumber'];
-        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
-
-        return array('news' => $news, 'sliders' => $sliders, 'globalVars' => $globalVars);
+        $globalKeys = ["fullDates", "romanNumber"];
+        $globalVars = $em->getRepository("App\Entity\InsaLanGlobalVars")->getGlobalVars($globalKeys);
+        return $this->render('newsIndex.html.twig', ["news" => $news, "sliders" => $sliders, "globalVars" => $globalVars]);
+//        return array("news" => $news, "sliders" => $sliders, "globalVars" => $globalVars);
     }
 
      /**

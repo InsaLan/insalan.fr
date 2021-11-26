@@ -9,7 +9,7 @@ use App\Entity\Tournament;
 /**
  * Discount
  *
- * @ORM\Entity(repositoryClass="App\Entity\DiscountRepository")
+ * @ORM\Entity(repositoryClass="App\Entity\UserDiscountRepository")
  * @ORM\Table()
  * @ORM\Entity
  */

@@ -6,7 +6,7 @@
 <article>
   <header>
     <h2>{{ knockout.name }} - {{ knockout.tournament.name }}</h2>
-    <a href="{{ path("insalan_tournament_admin_knockout", {id: knockout.id }) }}"><<< Retour</a>
+    <a href="path('app_tournament_admin_knockout", {id: knockout.id }) }}"><<< Retour</a>
   </header>
 
   <div id="bracketContainer">
@@ -21,7 +21,7 @@
 
   <br/>
 
-  <form method="POST" action="{{ path('insalan_tournament_admin_knockout_view', {id: knockout.id}) }}">
+  <form method="POST" action="{{ path('app_tournament_admin_knockout_view', {id: knockout.id}) }}">
     {% for i in 1..children %}
       Participant {{i}} : 
       <select name="participant_{{i}}" id="participant_{{i}}">

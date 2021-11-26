@@ -1,4 +1,4 @@
-{% extends 'InsaLanBundle::layout.html.twig' %}
+{% extends 'InsaLanLayout.html.twig' %}
 
 {% block title %}
 {{ parent() }}
@@ -7,9 +7,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
-  {% stylesheets 'bundles/insalan/css/pizza.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
+    <link rel="stylesheet" href="/public/css/pizza.css" />
 {% endblock %}
 
 {% block rawbody %}

@@ -61,15 +61,15 @@ class ApiTicketingController extends Controller
 
         // Find e-ticket
         $token = $parametersAsArray["token"];
-        $eTicket = $em->getRepository('InsaLanTicketingBundle:ETicket')->findOneByToken($token);
+        $eTicket = $em->getRepository('App\Entity\ETicket')->findOneByToken($token);
         if ($eTicket === null) {
           return new JsonResponse(array("err" => self::ERR_TICKET_NOT_FOUND));
         }
 
         // Find participant
-        $participant = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByETicket($eTicket);
+        $participant = $em->getRepository('App\Entity\Player')->findOneByETicket($eTicket);
         if ($participant === null) {
-          $participant = $em->getRepository('InsaLanTournamentBundle:Manager')->findOneByETicket($eTicket);
+          $participant = $em->getRepository('App\Entity\TournamentManager')->findOneByETicket($eTicket);
         }
         if ($participant === null && !$eTicket->isCancelled()) {
           return new JsonResponse(array("err" => self::ERR_PARTICIPANT_NOT_FOUND));
@@ -106,7 +106,7 @@ class ApiTicketingController extends Controller
 
       // Find e-ticket
       $token = $parametersAsArray["token"];
-      $eTicket = $em->getRepository('InsaLanTicketingBundle:ETicket')->findOneByToken($token);
+      $eTicket = $em->getRepository('App\Entity\ETicket')->findOneByToken($token);
       if ($eTicket === null) {
         return new JsonResponse(array("err" => self::ERR_TICKET_NOT_FOUND));
       }
@@ -114,9 +114,9 @@ class ApiTicketingController extends Controller
         return new JsonResponse(array("err" => self::ERR_TICKET_ALREADY_SCANNED));
       } else if ($eTicket->getStatus() == ETicket::STATUS_VALID){
         // Find participant
-        $participant = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByETicket($eTicket);
+        $participant = $em->getRepository('App\Entity\Player')->findOneByETicket($eTicket);
         if ($participant === null) {
-          $participant = $em->getRepository('InsaLanTournamentBundle:Manager')->findOneByETicket($eTicket);
+          $participant = $em->getRepository('App\Entity\TournamentManager')->findOneByETicket($eTicket);
         }
         if ($participant === null && !$eTicket->isCancelled()) {
           return new JsonResponse(array("err" => self::ERR_PARTICIPANT_NOT_FOUND));

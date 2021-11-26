@@ -1,4 +1,4 @@
-{% extends 'InsaLanBundle::layout.html.twig' %}
+{% extends 'InsaLanLayout.html.twig' %}
 
 {% block title %}
 {{ parent() }}
@@ -9,9 +9,7 @@
 {% block stylesheets %}
 {{ parent() }}
 
-{% stylesheets 'bundles/insalan/css/jquery.bracket.min.css' %}
-  <link rel="stylesheet" href="{{ asset_url }}" />
-{% endstylesheets %}
+  <link rel="stylesheet" href="/public/css/jquery.bracket.min.css" />
 
 <style type="text/css"> {# overrides jQBracket style #}
   {#
@@ -37,10 +35,8 @@
 {% block javascripts %}
 {{ parent() }}
 
-{% javascripts 'bundles/insalan/js/jquery.js'
-               'bundles/insalan/js/jquery.bracket.min.js' %}
-  <script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/jquery.bracket.min.js"></script>
 
 <script type="text/javascript">
   jQuery.noConflict();

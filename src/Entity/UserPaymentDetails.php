@@ -39,7 +39,7 @@ class UserPaymentDetails extends ArrayObject
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Discount")
+     * @ORM\ManyToOne(targetEntity="App\Entity\UserDiscount")
      */
     protected $discount;
 
@@ -107,10 +107,10 @@ class UserPaymentDetails extends ArrayObject
     /**
      * Set discount
      *
-     * @param \App\Entity\Discount $discount
+     * @param \App\Entity\UserDiscount $discount
      * @return PaymentDetails
      */
-    public function setDiscount(\App\Entity\Discount $discount = null)
+    public function setDiscount(\App\Entity\UserDiscount $discount = null)
     {
         $this->discount = $discount;
 
@@ -120,7 +120,7 @@ class UserPaymentDetails extends ArrayObject
     /**
      * Get discount
      *
-     * @return \App\Entity\Discount
+     * @return \App\Entity\UserDiscount
      */
     public function getDiscount()
     {

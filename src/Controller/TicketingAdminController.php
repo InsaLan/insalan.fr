@@ -20,6 +20,9 @@ use App\Entity\Tournament;
 use App\Entity\Participant;
 use App\Entity\ETicket;
 
+/**
+ * @Route("/ticketing")
+ */
 class TicketingAdminController extends Controller
 {
     /**
@@ -29,7 +32,7 @@ class TicketingAdminController extends Controller
     public function readyAction()
     {
       $em = $this->getDoctrine()->getManager();
-      $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->getUpcomingTournaments();
+      $tournaments = $em->getRepository('App\Entity\Tournament')->getUpcomingTournaments();
       $soloTournaments = $teamTournaments = array();
       foreach ($tournaments as $tournament) {
         if ($tournament->getParticipantType() == 'team') {
@@ -38,13 +41,13 @@ class TicketingAdminController extends Controller
           $soloTournaments[] = $tournament;
         }
       }
-      $soloPlayers = $em->getRepository('InsaLanTournamentBundle:Player')->findBy(["tournament" => $soloTournaments, "validated" => Participant::STATUS_VALIDATED, "eTicket" => null]);
-      $teamPlayers = $em->getRepository('InsaLanTournamentBundle:Player')->getValidatedTeamPlayers($teamTournaments);
+      $soloPlayers = $em->getRepository('App\Entity\Player')->findBy(["tournament" => $soloTournaments, "validated" => Participant::STATUS_VALIDATED, "eTicket" => null]);
+      $teamPlayers = $em->getRepository('App\Entity\Player')->getValidatedTeamPlayers($teamTournaments);
       $players = array_merge($soloPlayers, $teamPlayers);
 
       // get validated managers
       $managers = array();
-      $teams = $em->getRepository('InsaLanTournamentBundle:Team')->findBy(["tournament" => $teamTournaments, "validated" => Participant::STATUS_VALIDATED]);
+      $teams = $em->getRepository('App\Entity\TournamentTeam')->findBy(["tournament" => $teamTournaments, "validated" => Participant::STATUS_VALIDATED]);
       foreach ($soloPlayers as $player) {
         if ($player->getManager() && $player->getManager()->isOk() && $player->getManager()->getETicket() == null) {
           $managers[] = $player->getManager();
@@ -65,7 +68,7 @@ class TicketingAdminController extends Controller
     public function sentAction()
     {
       $em = $this->getDoctrine()->getManager();
-      $eTickets = $em->getRepository('InsaLanTicketingBundle:ETicket')->findByStatus([ETicket::STATUS_VALID, ETicket::STATUS_SCANNED]);
+      $eTickets = $em->getRepository('App\Entity\ETicket')->findByStatus([ETicket::STATUS_VALID, ETicket::STATUS_SCANNED]);
       return array("eTickets" => $eTickets);
     }
 
@@ -76,7 +79,7 @@ class TicketingAdminController extends Controller
     public function cancelledAction()
     {
       $em = $this->getDoctrine()->getManager();
-      $eTickets = $em->getRepository('InsaLanTicketingBundle:ETicket')->findByStatus(ETicket::STATUS_CANCELLED);
+      $eTickets = $em->getRepository('App\Entity\ETicket')->findByStatus(ETicket::STATUS_CANCELLED);
       return array("eTickets" => $eTickets);
     }
 
@@ -89,27 +92,27 @@ class TicketingAdminController extends Controller
 
         // Find the player or manager
         if ($request->request->get('player')) {
-          $participant = $em->getRepository('InsaLanTournamentBundle:Player')->findOneById($request->request->get('player'));
+          $participant = $em->getRepository('App\Entity\Player')->findOneById($request->request->get('player'));
           $isManager = false;
         } elseif ($request->request->get('manager')) {
-          $participant = $em->getRepository('InsaLanTournamentBundle:Manager')->findOneById($request->request->get('manager'));
+          $participant = $em->getRepository('App\Entity\TournamentManager')->findOneById($request->request->get('manager'));
           $isManager = true;
         } else {
           $this->get('session')->getFlashBag()->add('error', "Pas de joueur ni de manager correspondant.");
-          return $this->redirect($this->generateUrl("insalan_ticketing_admin_ready"));
+          return $this->redirect($this->generateUrl("app_ticketing_admin_ready"));
         }
 
         // Check csrf token
         $submittedToken = $request->request->get('_token');
         if (!$this->isCsrfTokenValid('send' . $participant->getId(), $submittedToken)) {
           $this->get('session')->getFlashBag()->add('error', "Token csrf invalide.");
-          return $this->redirect($this->generateUrl("insalan_ticketing_admin_ready"));
+          return $this->redirect($this->generateUrl("app_ticketing_admin_ready"));
         }
 
         // Check if a ticket already exists
         if ($participant->getETicket()) {
           $this->get('session')->getFlashBag()->add('error', "Billet déjà créé ");
-          return $this->redirect($this->generateUrl("insalan_ticketing_admin_ready"));
+          return $this->redirect($this->generateUrl("app_ticketing_admin_ready"));
         }
 
         // tournament is not in the same field between player and manager
@@ -133,7 +136,7 @@ class TicketingAdminController extends Controller
           $em->flush();
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
           $this->get('session')->getFlashBag()->add('error', "Le token généré est déjà utilisé. Réessayez dans quelques instants.\n Token : " . $token);
-          return $this->redirect($this->generateUrl("insalan_ticketing_admin_ready"));
+          return $this->redirect($this->generateUrl("app_ticketing_admin_ready"));
         }
 
         // Generate pdf
@@ -141,7 +144,7 @@ class TicketingAdminController extends Controller
         $this->get('session')->getFlashBag()->add('info', "Billet créé ".$eTicket->getToken());
 
         $this->sendETicket($eTicket, $pdf);
-        return $this->redirect($this->generateUrl("insalan_ticketing_admin_ready"));
+        return $this->redirect($this->generateUrl("app_ticketing_admin_ready"));
     }
 
     /**
@@ -151,23 +154,23 @@ class TicketingAdminController extends Controller
     public function removeETicketAction(Request $request) {
       $em = $this->getDoctrine()->getManager();
       // Find the eticket
-      $eTicket = $em->getRepository('InsaLanTicketingBundle:ETicket')->findOneById($request->request->get('eticket'));
+      $eTicket = $em->getRepository('App\Entity\ETicket')->findOneById($request->request->get('eticket'));
 
       // Find the player or manager
-      $participant = $em->getRepository('InsaLanTournamentBundle:Player')->findOneByETicket($eTicket->getId());
+      $participant = $em->getRepository('App\Entity\Player')->findOneByETicket($eTicket->getId());
       if ($participant == null) {
-        $participant = $em->getRepository('InsaLanTournamentBundle:Manager')->findOneByETicket($eTicket->getId());
+        $participant = $em->getRepository('App\Entity\TournamentManager')->findOneByETicket($eTicket->getId());
       }
       if ($participant == null) {
           $this->get('session')->getFlashBag()->add('error', "Pas de joueur ni de manager correspondant.");
-        return $this->redirect($this->generateUrl("insalan_ticketing_admin_sent"));
+        return $this->redirect($this->generateUrl("app_ticketing_admin_sent"));
       }
 
       // Check csrf token
       $submittedToken = $request->request->get('_token');
       if (!$this->isCsrfTokenValid('remove' . $eTicket->getId(), $submittedToken)) {
         $this->get('session')->getFlashBag()->add('error', "Token csrf invalide.");
-        return $this->redirect($this->generateUrl("insalan_ticketing_admin_sent"));
+        return $this->redirect($this->generateUrl("app_ticketing_admin_sent"));
       }
 
 
@@ -181,7 +184,7 @@ class TicketingAdminController extends Controller
       $this->sendCancelEmail($eTicket);
 
       $this->get('session')->getFlashBag()->add('info', "Billet annulé ");
-      return $this->redirect($this->generateUrl("insalan_ticketing_admin_sent"));
+      return $this->redirect($this->generateUrl("app_ticketing_admin_sent"));
     }
 
     /**
@@ -192,13 +195,13 @@ class TicketingAdminController extends Controller
       $em = $this->getDoctrine()->getManager();
 
       // Find the eticket
-      $eTicket = $em->getRepository('InsaLanTicketingBundle:ETicket')->findOneById($request->request->get('eticket'));
+      $eTicket = $em->getRepository('App\Entity\ETicket')->findOneById($request->request->get('eticket'));
 
       // Check csrf token
       $submittedToken = $request->request->get('_token');
       if (!$this->isCsrfTokenValid('download' . $eTicket->getId(), $submittedToken)) {
         $this->get('session')->getFlashBag()->add('error', "Token csrf invalide.");
-        return $this->redirect($this->generateUrl("insalan_ticketing_admin_ready"));
+        return $this->redirect($this->generateUrl("app_ticketing_admin_ready"));
       }
 
       $pathName = realpath("").'/../data/ticket/'.$eTicket->getId().'.pdf';

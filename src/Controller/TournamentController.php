@@ -11,21 +11,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use App\Entity;
 
 /**
- * Public display for tournaments
+ * @Route("/tournament")
  */
 class TournamentController extends Controller
 {
     /**
      * Public page indexing all tounaments
      * @Route("/public")
-     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
         // TODO: Manage tournaments with yearview
-        $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findThisYearTournaments(15);
+        $tournaments = $em->getRepository('App\Entity\Tournament')->findThisYearTournaments(15);
 
         // separate opened tournaments and old ones
         $old_tournaments = array();
@@ -43,11 +42,15 @@ class TournamentController extends Controller
             else // tournament is not completed yet, but I cannot register
                 $registration_closed_tournaments[] = $t;
         }
-
-        return array('old_tournaments' => $old_tournaments,
-                     'registration_closed_tournaments' => $registration_closed_tournaments,
-                      'future_tournaments' => $future_tournaments,
-                     'opened_tournaments' => $opened_tournaments);
+        return $this->render('tournamentIndex.html.twig',['old_tournaments' => $old_tournaments,
+        'registration_closed_tournaments' => $registration_closed_tournaments,
+         'future_tournaments' => $future_tournaments,
+        'opened_tournaments' => $opened_tournaments]);
+/**         return array('old_tournaments' => $old_tournaments,
+*                     'registration_closed_tournaments' => $registration_closed_tournaments,
+*                      'future_tournaments' => $future_tournaments,
+*                      'opened_tournaments' => $opened_tournaments);
+*/
     }
 
     /**
@@ -59,8 +62,8 @@ class TournamentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $stages = $em->getRepository('InsaLanTournamentBundle:GroupStage')->getByTournament($tournament);
-        $KOs = $em->getRepository('InsaLanTournamentBundle:Knockout')->getByTournament($tournament);
+        $stages = $em->getRepository('App\Entity\TournamentGroupStage')->getByTournament($tournament);
+        $KOs = $em->getRepository('App\Entity\TournamentKnockout')->getByTournament($tournament);
 
         foreach ($stages as $s) {
             foreach ($s->getGroups() as $g) {
@@ -71,11 +74,11 @@ class TournamentController extends Controller
         $output = array();
 
         foreach($KOs as $ko) {
-            $ko->jsonData = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getJson($ko);
+            $ko->jsonData = $em->getRepository('App\Entity\TournamentKnockoutMatch')->getJson($ko);
             $output[] = $ko;
         }
-
-        return array('t' => $tournament, 'stages' => $stages, 'knockouts' => $output);
+        return $this->render('tournamentStages.html.twig',['t' => $tournament, 'stages' => $stages, 'knockouts' => $output]);
+//        return array('t' => $tournament, 'stages' => $stages, 'knockouts' => $output);
     }
 
     /**
@@ -85,7 +88,8 @@ class TournamentController extends Controller
      */
     public function rulesAction(Entity\Tournament $tournament)
     {
-        return array('t' => $tournament);
+        return $this->render('tournamentRules.html.twig',['t' => $tournament]);
+//        return array('t' => $tournament);
     }
 
     /**
@@ -96,7 +100,7 @@ class TournamentController extends Controller
     public function teamListAction(Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $teams =  $em->getRepository('InsaLanTournamentBundle:Team')->getTeamsForTournament($tournament);
+        $teams =  $em->getRepository('App\Entity\TournamentTeam')->getTeamsForTournament($tournament);
 
         $nbPendingTeams = $nbWaitingTeams = 0;
 
@@ -104,8 +108,8 @@ class TournamentController extends Controller
             if ($t->getValidated() == Entity\Participant::STATUS_PENDING) $nbPendingTeams++;
             if ($t->getValidated() == Entity\Participant::STATUS_WAITING) $nbWaitingTeams++;
         }
-
-        return array('teams' => $teams, 'tournament' => $tournament, 'nbPendingTeams' => $nbPendingTeams, 'nbWaitingTeams' => $nbWaitingTeams);
+        return $this->render('tournamentTeamList.html.twig',['teams' => $teams, 'tournament' => $tournament, 'nbPendingTeams' => $nbPendingTeams, 'nbWaitingTeams' => $nbWaitingTeams]);
+//        return array('teams' => $teams, 'tournament' => $tournament, 'nbPendingTeams' => $nbPendingTeams, 'nbWaitingTeams' => $nbWaitingTeams);
     }
 
     /**
@@ -116,7 +120,7 @@ class TournamentController extends Controller
     public function playerListAction(Entity\Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $players =  $em->getRepository('InsaLanTournamentBundle:Player')->getPlayersForTournament($tournament);
+        $players =  $em->getRepository('App\Entity\Player')->getPlayersForTournament($tournament);
 
         $nbPendingPlayers = $nbWaitingPlayers = 0;
 
@@ -124,8 +128,8 @@ class TournamentController extends Controller
             if ($p->getValidated() == Entity\Participant::STATUS_PENDING) $nbPendingPlayers++;
             if ($p->getValidated() == Entity\Participant::STATUS_WAITING) $nbWaitingPlayers++;
         }
-
-        return array('players' => $players, 'tournament' => $tournament, 'nbPendingPlayers' => $nbPendingPlayers, 'nbWaitingPlayers' => $nbWaitingPlayers);
+        return $this->render('tournamentPlayerList.html.twig', ['players' => $players, 'tournament' => $tournament, 'nbPendingPlayers' => $nbPendingPlayers, 'nbWaitingPlayers' => $nbWaitingPlayers]);
+//        return array('players' => $players, 'tournament' => $tournament, 'nbPendingPlayers' => $nbPendingPlayers, 'nbWaitingPlayers' => $nbWaitingPlayers);
     }
 
 
@@ -142,7 +146,7 @@ class TournamentController extends Controller
 
 
         $em = $this->getDoctrine()->getManager();
-        $team = $em->getRepository('InsaLanTournamentBundle:Team')->find($team_id);
+        $team = $em->getRepository('App\Entity\TournamentTeam')->find($team_id);
 
         if (!$team) {
             throw $this->createNotFoundException(
@@ -154,7 +158,7 @@ class TournamentController extends Controller
             if ($player->getId() == $player_id) {
                 $team->setCaptain($player);
                 $em->flush();
-                return $this->redirect($this->generateUrl('insalan_user_default_index'));
+                return $this->redirect($this->generateUrl('app_user_index'));
             }
         }
 
@@ -173,8 +177,8 @@ class TournamentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $match = $em->getRepository('InsaLanTournamentBundle:Match')->getById($id);
-        $group = $em->getRepository('InsaLanTournamentBundle:Group')->getById($match->getGroup()->getId(), false);
+        $match = $em->getRepository('App\Entity\TournamentMatch')->getById($id);
+        $group = $em->getRepository('App\Entity\TournamentGroup')->getById($match->getGroup()->getId(), false);
         $group->countWins();
 
         $scores = array_map(function($a) {
@@ -220,16 +224,16 @@ class TournamentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $KOs = $em->getRepository('InsaLanTournamentBundle:Knockout')->findByTournament($t);
+        $KOs = $em->getRepository('App\Entity\TournamentKnockout')->findByTournament($t);
 
         $output = array();
 
         foreach($KOs as $ko) {
-            $ko->jsonData = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getJson($ko);
+            $ko->jsonData = $em->getRepository('App\Entity\TournamentKnockoutMatch')->getJson($ko);
             $output[] = $ko;
         }
-
-        return array("tournament" => $t, "knockouts" => $output);
+        return $this->render('tournamentKnockout.html.twig',["tournament" => $t, "knockouts" => $output]);
+//        return array("tournament" => $t, "knockouts" => $output);
 
 
     }
@@ -245,8 +249,8 @@ class TournamentController extends Controller
         // Get Knockout & Group Matches
 
         $em = $this->getDoctrine()->getManager();
-        $simpleMatches = $em->getRepository("InsaLanTournamentBundle:Match")->getByParticipant($part);
-        $royalMatches = $em->getRepository("InsaLanTournamentBundle:RoyalMatch")->getByParticipant($part);
+        $simpleMatches = $em->getRepository("App\Entity\TournamentMatch")->getByParticipant($part);
+        $royalMatches = $em->getRepository("App\Entity\TournamentRoyalMatch")->getByParticipant($part);
 
         $matches = array_merge($simpleMatches, $royalMatches);
 
@@ -271,8 +275,8 @@ class TournamentController extends Controller
                 $kos[$id][] = $m;
             }
         }
-
-        return array("part" => $part, "groupMatches" => $grs, "knockoutMatches" => $kos, "authorized" => $this->isUserInTeam($part));
+        return $this->render('tournamentTeamDetails.html.twig',["part" => $part, "groupMatches" => $grs, "knockoutMatches" => $kos, "authorized" => $this->isUserInTeam($part)]);
+//        return array("part" => $part, "groupMatches" => $grs, "knockoutMatches" => $kos, "authorized" => $this->isUserInTeam($part));
     }
 
     private function isUserInTeam(Entity\Participant $part) {

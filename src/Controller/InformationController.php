@@ -7,8 +7,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use App\Entity;
 use App\Entity\Participant;
-use App\Entity\LegalDocument;
+use App\Entity\InformationLegalDocument;
 
+/**
+ * @Route("/infos")
+ */
 class InformationController extends Controller
 {
     const OPENING_DATE = '2018/12/24 20:00:00';
@@ -25,9 +28,9 @@ class InformationController extends Controller
         $globalVars = array();
         $globalKeys = ['staffNumber', 'playersNumber',
                       'number', 'lettersNumber'];
-        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
-
-        return array('globalVars' => $globalVars);
+        $globalVars = $em->getRepository('App\Entity\InsaLanGlobalVars')->getGlobalVars($globalKeys);
+        return $this->render('informationAsso.html.twig', ['globalVars' => $globalVars]);
+//        return array('globalVars' => $globalVars);
     }
 
     /**
@@ -36,7 +39,8 @@ class InformationController extends Controller
      */
     public function publicAction()
     {
-        return array();
+        return $this->render('informationPublic.html.twig');
+//        return array();
     }
 
     /**
@@ -50,9 +54,9 @@ class InformationController extends Controller
         // Get global variables
         $globalVars = array();
         $globalKeys = ['playersNumber'];
-        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
-
-        return array('globalVars' => $globalVars);
+        $globalVars = $em->getRepository('App\Entity\InsaLanGlobalVars')->getGlobalVars($globalKeys);
+        return $this->render('informationTournament.html.twig', ['globalVars' => $globalVars]);
+//        return array('globalVars' => $globalVars);
     }
 
     /**
@@ -67,12 +71,12 @@ class InformationController extends Controller
         $globalVars = array();
         $globalKeys = ['staffNumber', 'number', 'lettersNumber',
                       'playersNumber', 'openingDate', 'openingHour', 'closingDate', 'closingHour', 'price', 'webPrice'];
-        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+        $globalVars = $em->getRepository('App\Entity\InsaLanGlobalVars')->getGlobalVars($globalKeys);
 
         // Get staff
-        $staff = $em->getRepository('InsaLanBundle:Staff')->findAll();
-
-        return array('globalVars' => $globalVars, 'staff' => $staff);
+        $staff = $em->getRepository('App\Entity\InsaLanStaff')->findAll();
+        return $this->render('informationWwwh.html.twig', ['globalVars' => $globalVars, 'staff' => $staff]);
+//        return array('globalVars' => $globalVars, 'staff' => $staff);
     }
 
     /**
@@ -88,9 +92,9 @@ class InformationController extends Controller
         $globalKeys = ['cosplayEdition', 'cosplayName', 'cosplayDate',
                       'cosplayEndRegistration'];
 
-        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
-
-        return array('globalVars' => $globalVars);
+        $globalVars = $em->getRepository('App\Entity\InsaLanGlobalVars')->getGlobalVars($globalKeys);
+        return $this->render('informationCosplay.html.twig', ['globalVars' => $globalVars]);
+//        return array('globalVars' => $globalVars);
     }
 
     /**
@@ -100,8 +104,9 @@ class InformationController extends Controller
     public function cosplayRulesAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $document = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("cosplayrules");
-        return array("document" => $document);
+        $document = $em->getRepository('App\Entity\InformationLegalDocument')->findOneByShortName("cosplayrules");
+        return $this->render('informationLegalDocument.html.twig', ['document' => $document]);
+//        return array("document" => $document);
     }
     
     /**
@@ -116,9 +121,9 @@ class InformationController extends Controller
         $globalVars = array();
         $globalKeys = ['bastonRegisterLink', 'bastonStartRegistration'];
 
-        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
-
-        return array('globalVars' => $globalVars);
+        $globalVars = $em->getRepository('App\Entity\InsaLanGlobalVars')->getGlobalVars($globalKeys);
+        return $this->render('informationBaston.html.twig', ['globalVars' => $globalVars]);
+//        return array('globalVars' => $globalVars);
     }
 
     /**
@@ -137,8 +142,8 @@ class InformationController extends Controller
     public function salesTermsAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $document = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("cgv");
-        return array("document" => $document);
+        $document = $em->getRepository('App\Entity\InformationLegalDocument')->findOneByShortName("cgv");
+        return $this->render('informationLegalDocument.html.twig', ['document' => $document]);
     }
 
     /**
@@ -148,8 +153,9 @@ class InformationController extends Controller
     public function mentionsAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $document = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("mentions");
-        return array("document" => $document);
+        $document = $em->getRepository('App\Entity\InformationLegalDocument')->findOneByShortName("mentions");
+        return $this->render('informationLegalDocument.html.twig', ['document' => $document]);
+//        return array("document" => $document);
     }
 
     /**
@@ -159,8 +165,9 @@ class InformationController extends Controller
     public function cookiespolicyAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $document = $em->getRepository('InsaLanInformationBundle:LegalDocument')->findOneByShortName("cookiespolicy");
-        return array("document" => $document);
+        $document = $em->getRepository('App\Entity\InformationLegalDocument')->findOneByShortName("cookiespolicy");
+        return $this->render('informationLegalDocument.html.twig', ['document' => $document]);
+//        return array("document" => $document);
     }
 
     /**
@@ -176,17 +183,17 @@ class InformationController extends Controller
         // Safety  valve
         $globalKeys = ['rentalPageEnabled'];
 
-        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+        $globalVars = $em->getRepository('App\Entity\InsaLanGlobalVars')->getGlobalVars($globalKeys);
 
         // Disallow access until date reached
         if(time() < strtotime(self::OPENING_DATE) || $globalVars['rentalPageEnabled'] != "True") {
             $this->get('session')->getFlashBag()->add('error', "Page indisponible pour le moment. Revenez plus tard !");
             return $this->redirect($this->generateUrl(
-                'insalan_news_default_index'));
+                'index'));
             }
 
         $usr = $this->get('security.token_storage')->getToken()->getUser();
-        $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($usr);
+        $participants = $em->getRepository('App\Entity\Participant')->findByUser($usr);
 
         // Check if player's team / player / manager is validated
         $validated = False;
@@ -195,6 +202,7 @@ class InformationController extends Controller
                 $validated = True;
             }
         }
+        return $this->render('informationHardwareRental.html.twig', ['validated' => $validated]);
         return array('validated' => $validated);
     }
 }

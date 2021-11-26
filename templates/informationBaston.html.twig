@@ -1,16 +1,14 @@
-{% extends 'InsaLanInformationBundle::layout.html.twig' %}
+{% extends 'informationLayout.html.twig' %}
 
 {% block stylesheets %}
 {{ parent() }}
-  {% stylesheets 'bundles/insalan/css/news.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
+    <link rel="stylesheet" href="/public/css/news.css" />
 {% endblock %}
 
 {% block body %}
 {{ parent() }}
 
-{#<img src="{{ asset('bundles/insalan/img/baston.png') }}" width="1000"/>#}
+{#<img src="{{ asset('/public/img/baston.png') }}" width="1000"/>#}
 
 <article id="Baston" class="info">
   <aside>
@@ -44,12 +42,12 @@
 <div class="partner-list">
   <div class="partner partner-small">
     <a href="http://www.3hitcombo.fr/">
-      <img src="{{ asset('bundles/insalan/img/partners-preview/3hit.png') }}" alt="3Hit Combo" />
+      <img src="{{ asset('/public/img/partners-preview/3hit.png') }}" alt="3Hit Combo" />
     </a>
   </div>
   <div class="partner partner-small">
     <a href="https://www.facebook.com/WarpZonebar">
-      <img src="{{ asset('bundles/insalan/img/partners-preview/warpzone.png') }}" alt="Warp Zone" />
+      <img src="{{ asset('/public/img/partners-preview/warpzone.png') }}" alt="Warp Zone" />
     </a>
   </div>
 </div>

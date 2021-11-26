@@ -38,7 +38,7 @@
       {{ form_widget(form.plainPassword, {'attr': {'placeholder': 'Mot de passe'}}) }}
     </div>
 
-    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_jointeam', {tournament: registrable.id}) }}">
+    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('app_tournament_user_jointeam', {tournament: registrable.id}) }}">
       Annuler
     </a>
     <a class="btn btn-primary ctrl grid-8 pull-left" href="javascript:{}" onclick="document.getElementById('step4').submit();">

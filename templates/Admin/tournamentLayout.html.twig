@@ -1,4 +1,4 @@
-{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+{% extends 'tournamentLayout.html.twig' %}
 
 {% block stylesheets %}
 {{ parent() }}
@@ -65,7 +65,7 @@ button,
 {% block javascripts %}
 {{ parent() }}
 
-{% javascripts 'bundles/insalan/js/jquery.js' %}
+{% javascripts 'public/js/jquery.js' %}
   <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 

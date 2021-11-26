@@ -17,9 +17,9 @@ class TournamentMatchAdmin extends AbstractAdmin
 {
     // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
     protected $stateDef = array(
-                             'En attente' => Match::STATE_UPCOMING,
-                             'En cours' => Match::STATE_ONGOING,
-                             'Terminé' => Match::STATE_FINISHED
+                             'En attente' => TournamentMatch::STATE_UPCOMING,
+                             'En cours' => TournamentMatch::STATE_ONGOING,
+                             'Terminé' => TournamentMatch::STATE_FINISHED
                         );
 
     // Fields to be shown on create/edit forms
@@ -90,10 +90,10 @@ class TournamentMatchAdmin extends AbstractAdmin
 
     public function postUpdate($match)
     {
-        if($match->getState() === Match::STATE_FINISHED && $match->getKoMatch())
+        if($match->getState() === TournamentMatch::STATE_FINISHED && $match->getKoMatch())
         {
             $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
-            $repository = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch');
+            $repository = $em->getRepository('App\Entity\TournamentKnockoutMatch');
             $repository->propagateVictory($match->getKoMatch());
 
             $ko = $match->getKoMatch()->getKnockout();

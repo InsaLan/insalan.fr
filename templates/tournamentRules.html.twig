@@ -1,10 +1,8 @@
-{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+{% extends 'tournamentLayout.html.twig' %}
 
 {% block stylesheets %}
 {{ parent() }}
-  {% stylesheets 'bundles/insalan/css/tournament2.css' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
+    <link rel="stylesheet" href="/public/css/tournament2.css" />
 {% endblock %}
 
 {% block body %}
@@ -32,7 +30,7 @@
           </center>
           <br/>
           {% if t.rules | length > 0 %}
-            {{ t.rules|markdown }}
+            {{ t.rules|markdown_to_html }}
           {% else %}
             <p style="text-align: center">
               Le règlement n'est pas disponible actuellement.<br/>

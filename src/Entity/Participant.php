@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Entity\ParticipantRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="kind", type="string")
- * @ORM\DiscriminatorMap({"team" = "Team", "player" = "Player"})
+ * @ORM\DiscriminatorMap({"team" = "TournamentTeam", "player" = "Player"})
  */
 abstract class Participant
 {
@@ -40,7 +40,7 @@ abstract class Participant
     protected $tournament;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Group", mappedBy="participants")
+     * @ORM\ManyToMany(targetEntity="TournamentGroup", mappedBy="participants")
      */
     protected $groups;
 
@@ -60,7 +60,7 @@ abstract class Participant
     protected $placement;
 
     /**
-     * @ORM\OneToOne(targetEntity="Manager", mappedBy="participant")
+     * @ORM\OneToOne(targetEntity="TournamentManager", mappedBy="participant")
      */
     protected $manager;
 
@@ -113,10 +113,10 @@ abstract class Participant
     /**
      * Add groups
      *
-     * @param \App\Entity\Group $groups
+     * @param \App\Entity\TournamentGroup $groups
      * @return Participant
      */
-    public function addGroup(\App\Entity\Group $groups)
+    public function addGroup(\App\Entity\TournamentGroup $groups)
     {
         $this->groups[] = $groups;
 
@@ -126,9 +126,9 @@ abstract class Participant
     /**
      * Remove groups
      *
-     * @param \App\Entity\Group $groups
+     * @param \App\Entity\TournamentGroup $groups
      */
-    public function removeGroup(\App\Entity\Group $groups)
+    public function removeGroup(\App\Entity\TournamentGroup $groups)
     {
         $this->groups->removeElement($groups);
     }

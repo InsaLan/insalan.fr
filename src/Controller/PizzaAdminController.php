@@ -23,7 +23,7 @@ class PizzaAdminController extends Controller
    */
   public function pizzaAction() {
     $em = $this->getDoctrine()->getManager();
-    $pizzas = $em->getRepository('InsaLanPizzaBundle:Pizza')->findAll();
+    $pizzas = $em->getRepository('App\Entity\Pizza')->findAll();
     $formAdd = $this->getAddPizzaForm()->createView();
     return array(
       'pizzas' => $pizzas,
@@ -58,7 +58,7 @@ class PizzaAdminController extends Controller
       $em->flush();
     }
 
-    return $this->redirect($this->generateUrl("insalan_pizza_admin_pizza"));
+    return $this->redirect($this->generateUrl("app_pizza_admin_pizza"));
   }
 
   /**
@@ -76,7 +76,7 @@ class PizzaAdminController extends Controller
       }
 
 
-      return $this->redirect($this->generateUrl("insalan_pizza_admin_pizza"));
+      return $this->redirect($this->generateUrl("app_pizza_admin_pizza"));
   }
 
 
@@ -86,7 +86,7 @@ class PizzaAdminController extends Controller
    */
   public function creneauAction() {
     $em = $this->getDoctrine()->getManager();
-    $order = $em->getRepository('InsaLanPizzaBundle:Order')->findBy([], ['id' => 'DESC']);
+    $order = $em->getRepository('App\Entity\PizzaOrder')->findBy([], ['id' => 'DESC']);
     $formAdd = $this->getAddOrderForm()->createView();
     return array(
       'orders' => $order,
@@ -115,7 +115,7 @@ class PizzaAdminController extends Controller
       $em->flush();
     }
 
-    return $this->redirect($this->generateUrl("insalan_pizza_admin_creneau"));
+    return $this->redirect($this->generateUrl("app_pizza_admin_creneau"));
   }
 
   /**
@@ -132,7 +132,7 @@ class PizzaAdminController extends Controller
         $this->get('session')->getFlashBag()->add('error', "Suppression impossible : des commandes sont associées à ce créneau.");
       }
 
-      return $this->redirect($this->generateUrl("insalan_pizza_admin_creneau"));
+      return $this->redirect($this->generateUrl("app_pizza_admin_creneau"));
   }
 
     /**
@@ -146,7 +146,7 @@ class PizzaAdminController extends Controller
 
         $showAll = $request->query->get("showAll", false);
 
-        $orders = $em->getRepository('InsaLanPizzaBundle:Order')->getAll();
+        $orders = $em->getRepository('App\Entity\PizzaOrder')->getAll();
         $ordersChoices = array(null => "");
         foreach($orders as $o) {
             if (!$showAll && $o->getDelivery()->getTimestamp() < time() - 3600*24*7) continue;
@@ -163,7 +163,7 @@ class PizzaAdminController extends Controller
                   'label' => 'Créneau',
                   'choices_as_values' => true,
                   'choices' => $ordersChoices))
-            ->setAction($this->generateUrl('insalan_pizza_admin_commande', ['showAll' => $showAll]))
+            ->setAction($this->generateUrl('app_pizza_admin_commande', ['showAll' => $showAll]))
             ->getForm();
 
         $form->handleRequest($request);
@@ -171,13 +171,13 @@ class PizzaAdminController extends Controller
         if ($form->isValid()) {
             $data = $form->getData();
             return $this->redirect($this->generateUrl(
-                'insalan_pizza_admin_commande_1',
+                'app_pizza_admin_commande_1',
                 array('id' => $data['order'], 'showAll' => $showAll)));
         }
 
         if($id) {
 
-            $order = $em->getRepository('InsaLanPizzaBundle:Order')->getOneById($id);
+            $order = $em->getRepository('App\Entity\PizzaOrder')->getOneById($id);
 
             if(!$order)
                 throw new \Exception("Not Available");
@@ -226,13 +226,13 @@ class PizzaAdminController extends Controller
             $uo = new Entity\PizzaUserOrder();
             $uo->setUsernameCanonical($data['username']);
             $uo->setFullnameCanonical($data['fullname']);
-            $uo->setPizza($em->getRepository("InsaLanPizzaBundle:Pizza")->findOneById($data['pizza']));
+            $uo->setPizza($em->getRepository("App\Entity\Pizza")->findOneById($data['pizza']));
             $uo->setOrder($order);
             $uo->setPaymentDone(true);
             $uo->setType(Entity\PizzaUserOrder::TYPE_MANUAL);
             $uo->setPrice($data['price']);
 
-            $user = $em->getRepository("InsaLanUserBundle:User")->findOneByUsername($data['username']);
+            $user = $em->getRepository("App\Entity\User")->findOneByUsername($data['username']);
             if($user)
                 $uo->setUser($user);
 
@@ -240,7 +240,7 @@ class PizzaAdminController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl("insalan_pizza_admin_commande_1", array("id" => $order->getId())));
+        return $this->redirect($this->generateUrl("app_pizza_admin_commande_1", array("id" => $order->getId())));
 
     }
 
@@ -253,7 +253,7 @@ class PizzaAdminController extends Controller
         $order->setClosed(true);
         $em->persist($order);
         $em->flush();
-        return $this->redirect($this->generateUrl("insalan_pizza_admin_commande_1", array("id" => $order->getId())));
+        return $this->redirect($this->generateUrl("app_pizza_admin_commande_1", array("id" => $order->getId())));
     }
 
     /**
@@ -265,7 +265,7 @@ class PizzaAdminController extends Controller
         $order->setClosed(false);
         $em->persist($order);
         $em->flush();
-        return $this->redirect($this->generateUrl("insalan_pizza_admin_commande_1", array("id" => $order->getId())));
+        return $this->redirect($this->generateUrl("app_pizza_admin_commande_1", array("id" => $order->getId())));
     }
 
     /**
@@ -281,7 +281,7 @@ class PizzaAdminController extends Controller
         $em->remove($uo);
         $em->flush();
 
-        return $this->redirect($this->generateUrl("insalan_pizza_admin_commande_1", array("id" => $id)));
+        return $this->redirect($this->generateUrl("app_pizza_admin_commande_1", array("id" => $id)));
     }
 
     /**
@@ -308,7 +308,7 @@ class PizzaAdminController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $pizzas = $em->getRepository('InsaLanPizzaBundle:Pizza')->findAll();
+        $pizzas = $em->getRepository('App\Entity\Pizza')->findAll();
         $pizzasChoices = array();
 
         // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
@@ -333,7 +333,7 @@ class PizzaAdminController extends Controller
                                 'Gratuit' => Entity\PizzaUserOrder::FREE_PRICE
                             ),
                         'label' => 'Tarif'))
-                    ->setAction($this->generateUrl('insalan_pizza_admin_add', array('id' => $o->getId())))
+                    ->setAction($this->generateUrl('app_pizza_admin_add', array('id' => $o->getId())))
                     ->getForm();
     }
 
@@ -343,7 +343,7 @@ class PizzaAdminController extends Controller
                     ->add('pizzaPrice', 'number', array('label' => 'Prix', 'required' => true))
                     ->add('pizzaVeggie', 'checkbox', array('label' => 'Veggie', 'required' => false))
                     ->add('pizzaDescription', 'text', array('label' => 'Description', 'required' => false))
-                    ->setAction($this->generateUrl('insalan_pizza_admin_pizza_add'))
+                    ->setAction($this->generateUrl('app_pizza_admin_pizza_add'))
                     ->getForm();
     }
 
@@ -354,7 +354,7 @@ class PizzaAdminController extends Controller
                     ->add('orderCapacity', 'number', array('label' => 20, 'required' => false))
                     ->add('orderForeignCapacity', 'number', array('label' => 3, 'required' => false))
                     ->add('orderClosed', 'checkbox', array('required' => false))
-                    ->setAction($this->generateUrl('insalan_pizza_admin_creneau_add'))
+                    ->setAction($this->generateUrl('app_pizza_admin_creneau_add'))
                     ->getForm();
     }
 

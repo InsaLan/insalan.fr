@@ -2,7 +2,7 @@
 namespace App\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\PizzaOrderedFixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\TournamentKnockoutMatch;
 
@@ -15,7 +15,7 @@ class TournamentKnockoutMatchLoader extends AbstractFixture implements OrderedFi
 
     public function load(ObjectManager $manager)
     {
-        $repository = $manager->getRepository('InsaLanTournamentBundle:KnockoutMatch');
+        $repository = $manager->getRepository('App\Entity\TournamentKnockoutMatch');
         $rootA = $repository->generateMatches($this->getReference('knockout-1'), 5, true);
         $rootB = $repository->generateMatches($this->getReference('knockout-2'), 8);
         $manager->flush();

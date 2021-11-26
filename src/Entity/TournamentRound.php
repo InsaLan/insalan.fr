@@ -28,13 +28,13 @@ class TournamentRound
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AbstractMatch", inversedBy="rounds")
+     * @ORM\ManyToOne(targetEntity="TournamentAbstractMatch", inversedBy="rounds")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $match;
 
     /**
-     * @ORM\OneToMany(targetEntity="Score", mappedBy="round", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="TournamentScore", mappedBy="round", cascade={"all"})
      */
     protected $scores;
 
@@ -181,7 +181,7 @@ class TournamentRound
             return $this;
         }
 
-        $scoreObj = new Score();
+        $scoreObj = new TournamentScore();
         $scoreObj->setRound($this);
         $scoreObj->setParticipant($participant);
         $scoreObj->setScore($score);
@@ -197,7 +197,7 @@ class TournamentRound
      * @param \App\Entity\Participant $participant
      * @return integer
      */
-    public function addScore(\App\Entity\Score $score)
+    public function addScore(\App\Entity\TournamentScore $score)
     {
         $this->scores[] = $score;
         return $this;
@@ -235,7 +235,7 @@ class TournamentRound
      * Find score
      *
      * @param \App\Entity\Participant $participant
-     * @return \App\Entity\Score $score
+     * @return \App\Entity\TournamentScore $score
      */
     public function findScore(\App\Entity\Participant $participant)
     {

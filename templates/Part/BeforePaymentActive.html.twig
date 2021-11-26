@@ -24,7 +24,7 @@
     {% if selectedDiscount %}
       <h2>
         <strong>Tarif réduit {{ selectedDiscount.name }}</strong>
-        <a href="{{ path('insalan_tournament_user_pay', {registrable: registrable.id}) }}">
+        <a href="{{ path('app_tournament_user_pay', {registrable: registrable.id}) }}">
           <button class="btn2 btn2-nocolor" style="font-size: 0.6em">
             Retour tarif normal
           </button>
@@ -39,7 +39,7 @@
     {% elseif discounts %}
       Tarifs réduit disponibles :
       {% for discount in discounts %}
-        <a href="{{ path('insalan_tournament_user_pay_1', {registrable: registrable.id, discount: discount.id}) }}">
+        <a href="{{ path('app_tournament_user_pay_1', {registrable: registrable.id, discount: discount.id}) }}">
           <button class="btn2" style="font-size: 0.8em">
             {{ discount.name }} ({{ registrable.webprice - discount.amount }} {{ registrable.currency }})
           </button>
@@ -66,17 +66,17 @@
     {% include 'InsaLanTournamentBundle:Part:ImportantDetails.html.twig'  with {'registrable': registrable}%}
       
     <p>
-      En cliquant sur le bouton "Chèque/Partenaire/Sur place" ou le bouton "Paiement en ligne" vous déclarez avoir lu et accepté sans réserve les <strong><a href="{{ path('insalan_information_default_salesterms') }}" target="_blank" >[conditions générales de vente &#x25BE;]</a></strong> ainsi que le <strong><a href="{{ path('insalan_tournament_default_rules', {id: registrable.id}) }}" target="_blank" >[règlement du tournoi &#x25BE;]</a></strong>
+      En cliquant sur le bouton "Chèque/Partenaire/Sur place" ou le bouton "Paiement en ligne" vous déclarez avoir lu et accepté sans réserve les <strong><a href="{{ path('app_information_salesterms') }}" target="_blank" >[conditions générales de vente &#x25BE;]</a></strong> ainsi que le <strong><a href="{{ path('app_tournament_rules', {id: registrable.id}) }}" target="_blank" >[règlement du tournoi &#x25BE;]</a></strong>
     </p>
     <br/><br/>
   </div>
 
   {% if registrable.kind == "tournament" and registrable.participantType == 'team' %}
-    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leaveteam', {registrable: registrable.id, teamId: player.teamForTournament(registrable).id}) }}">
+    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('app_tournament_user_leaveteam', {registrable: registrable.id, teamId: player.teamForTournament(registrable).id}) }}">
       Annuler
     </a>
   {% else %}
-    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_leave', {registrable: registrable.id}) }}">
+    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('app_tournament_user_leave', {registrable: registrable.id}) }}">
       Annuler
     </a>
   {% endif %}
@@ -84,21 +84,21 @@
   {% if registrable.freeSlots > 0 or (registrable.kind == "tournament" and registrable.participantType == 'team' and player.teamForTournament(registrable).validated) or (registrable.kind == "tournament" and registrable.participantType == 'player') %}
 
     {% if selectedDiscount %}
-      <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline_1', {registrable: registrable.id, discount: selectedDiscount.id}) }}">
+      <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('app_tournament_user_payoffline_1', {registrable: registrable.id, discount: selectedDiscount.id}) }}">
         Chèque/Partenaire/Sur place
       </a>
     {% else %}
-      <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline', {registrable: registrable.id}) }}">
+      <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('app_tournament_user_payoffline', {registrable: registrable.id}) }}">
         Chèque/Partenaire/Sur place
       </a>
     {% endif %}
     {% if registrable.isOpenedNow %}
       {% if selectedDiscount %}
-        <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_user_paypaypalec_1', {registrable: registrable.id, discount: selectedDiscount.id}) }}">
+        <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('app_tournament_user_paypaypalec_1', {registrable: registrable.id, discount: selectedDiscount.id}) }}">
           Paiement en ligne
         </a>
       {% else %}
-        <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_user_paypaypalec', {registrable: registrable.id}) }}">
+        <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('app_tournament_user_paypaypalec', {registrable: registrable.id}) }}">
           Paiement en ligne
         </a>
       {% endif %}
@@ -111,11 +111,11 @@
   {% else %}
 
     {% if selectedDiscount %}
-      <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline_1', {registrable: registrable.id, discount: selectedDiscount.id}) }}">
+      <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('app_tournament_user_payoffline_1', {registrable: registrable.id, discount: selectedDiscount.id}) }}">
         Chèque/Partenaire/Sur place
       </a>
     {% else %}
-      <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_user_payoffline', {registrable: registrable.id}) }}">
+      <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('app_tournament_user_payoffline', {registrable: registrable.id}) }}">
         Chèque/Partenaire/Sur place
       </a>
     {% endif %}

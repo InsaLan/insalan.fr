@@ -29,7 +29,7 @@ class TournamentGroupStage
     protected $tournament;
 
     /**
-     * @ORM\OneToMany(targetEntity="Group", mappedBy="stage")
+     * @ORM\OneToMany(targetEntity="TournamentGroup", mappedBy="stage")
      */
     protected $groups;
 
@@ -55,7 +55,7 @@ class TournamentGroupStage
      * Set name
      *
      * @param string $name
-     * @return GroupStage
+     * @return TournamentGroupStage
      */
     public function setName($name)
     {
@@ -78,7 +78,7 @@ class TournamentGroupStage
      * Set tournament
      *
      * @param \App\Entity\Tournament $tournament
-     * @return GroupStage
+     * @return TournamentGroupStage
      */
     public function setTournament(\App\Entity\Tournament $tournament = null)
     {
@@ -100,10 +100,10 @@ class TournamentGroupStage
     /**
      * Add groups
      *
-     * @param \App\Entity\Group $groups
-     * @return GroupStage
+     * @param \App\Entity\TournamentGroup $groups
+     * @return TournamentGroupStage
      */
-    public function addGroup(\App\Entity\Group $groups)
+    public function addGroup(\App\Entity\TournamentGroup $groups)
     {
         $this->groups[] = $groups;
 
@@ -113,9 +113,9 @@ class TournamentGroupStage
     /**
      * Remove groups
      *
-     * @param \App\Entity\Group $groups
+     * @param \App\Entity\TournamentGroup $groups
      */
-    public function removeGroup(\App\Entity\Group $groups)
+    public function removeGroup(\App\Entity\TournamentGroup $groups)
     {
         $this->groups->removeElement($groups);
     }

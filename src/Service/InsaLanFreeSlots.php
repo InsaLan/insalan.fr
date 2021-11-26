@@ -30,7 +30,7 @@ class InsaLanFreeSlots
     public function get()
     {   
         return self::TOTAL_SLOTS - count($this->doctrine
-                                              ->getRepository('InsaLanTournamentBundle:Participant')
+                                              ->getRepository('App\Entity\Participant')
                                               ->findByValidated(Participant::STATUS_VALIDATED));
     }
 
@@ -39,7 +39,7 @@ class InsaLanFreeSlots
      */
     public function selectWaitingTeam() {
         $participant = $this->doctrine
-                            ->getRepository('InsaLanTournamentBundle:Participant')
+                            ->getRepository('App\Entity\Participant')
                             ->findBy(array("validated" => Participant::STATUS_WAITING), //select
                                      array("id"        => "ASC"),                       //order by
                                      1);                                                //limit

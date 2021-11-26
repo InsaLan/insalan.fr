@@ -1,4 +1,15 @@
+index:
+    path: /
+    controller: App\Controller\News*
 
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+tournament:
+    path: /tournament
+    controller: App\Controller\Tournament*
+
+infos:
+    path: /infos
+    controller: App\Controller\Information*
+
+pizza:
+    path: /pizza
+    controller: App\Controller\Pizza*

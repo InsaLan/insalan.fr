@@ -2,12 +2,8 @@
 
 {% block stylesheets %}
 {{ parent() }}
-  {% stylesheets 'bundles/insalan/css/archives.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
-  {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
+    <link rel="stylesheet" href="/public/css/archives.css" />
+    <link rel="stylesheet" href="/public/css/tournament.css" />
 {% endblock %}
 
 {% block body %}
@@ -24,7 +20,7 @@
 <section>
   <div class="previous-years-list">
     <div class="previous-years">
-      <img src="{{ asset('bundles/insalan/img/')  ~ poster}}" alt="{{edition.name}}" />
+      <img src="{{ asset('/public/img/')  ~ poster}}" alt="{{edition.name}}" />
     </div>
   </div>
 </section>

@@ -10,6 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use App\Entity;
 use App\Entity\PaymentDetails;
 
+/**
+ * @Route("/pizza")
+ */
 class PizzaController extends Controller
 {
 
@@ -29,12 +32,12 @@ class PizzaController extends Controller
                 'info',
                 'Merci de remplir ces informations avant toute commande...'
             );
-            return $this->redirect($this->generateUrl('insalan_user_default_index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
         }
 
-        $orders = $em->getRepository('InsaLanPizzaBundle:Order')->getAvailable($user);
-        $pizzas = $em->getRepository('InsaLanPizzaBundle:Pizza')->findAll();
-        $myOrders = $em->getRepository('InsaLanPizzaBundle:UserOrder')->getByUser($user);
+        $orders = $em->getRepository('App\Entity\PizzaOrder')->getAvailable($user);
+        $pizzas = $em->getRepository('App\Entity\Pizza')->findAll();
+        $myOrders = $em->getRepository('App\Entity\PizzaUserOrder')->getByUser($user);
 
         $ordersChoices = array();
 
@@ -64,7 +67,7 @@ class PizzaController extends Controller
                           'choices_as_values' => true,
                           'choices' => $pizzasChoices,
                           'label' => 'Pizza choisie'))
-                    ->setAction($this->generateUrl('insalan_pizza_default_index'))
+                    ->setAction($this->generateUrl('app_pizza_index'))
                     ->getForm();
 
         $form->handleRequest($request);
@@ -72,9 +75,9 @@ class PizzaController extends Controller
 
             $data = $form->getData();
 
-            $order = $em->getRepository('InsaLanPizzaBundle:Order')->findOneById($data["order"]);
-            $pizza = $em->getRepository('InsaLanPizzaBundle:Pizza')->findOneById($data["pizza"]);
-            $foreign = $em->getRepository('InsaLanPizzaBundle:Order')->isForeignUser($user);
+            $order = $em->getRepository('App\Entity\PizzaOrder')->findOneById($data["order"]);
+            $pizza = $em->getRepository('App\Entity\Pizza')->findOneById($data["pizza"]);
+            $foreign = $em->getRepository('App\Entity\PizzaOrder')->isForeignUser($user);
 
             $userOrder = new Entity\PizzaUserOrder();
             $userOrder->setUser($user);
@@ -94,7 +97,7 @@ class PizzaController extends Controller
             $paymentOrder->addPaymentDetail('Commande Pizza InsaLan #' . $userOrder->getId(), $pizza->getPrice(), 'Pizza ' . $pizza->getName());
             $paymentOrder->addPaymentDetail('Majoration paiement en ligne', $paypalIncrease, 'Frais de gestion du paiement');
 
-            return $this->redirect($payment->getTargetUrl($paymentOrder, 'insalan_pizza_default_validate', array("id" => $userOrder->getId())));
+            return $this->redirect($payment->getTargetUrl($paymentOrder, '_pizza_validate', array("id" => $userOrder->getId())));
         }
 
 
@@ -121,7 +124,7 @@ class PizzaController extends Controller
 
         $em->flush();
 
-        return $this->redirect($this->generateUrl("insalan_pizza_default_index"));
+        return $this->redirect($this->generateUrl("app_pizza_index"));
 
     }
 }

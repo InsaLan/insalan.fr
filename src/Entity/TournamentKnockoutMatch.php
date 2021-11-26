@@ -26,13 +26,13 @@ class TournamentKnockoutMatch
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Knockout", inversedBy="matches")
+     * @ORM\ManyToOne(targetEntity="TournamentKnockout", inversedBy="matches")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $knockout;
 
     /**
-     * @ORM\OneToOne(targetEntity="Match", inversedBy="koMatch")
+     * @ORM\OneToOne(targetEntity="TournamentMatch", inversedBy="koMatch")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $match;
@@ -63,19 +63,19 @@ class TournamentKnockoutMatch
 
     /**
      * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="KnockoutMatch", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="TournamentKnockoutMatch", inversedBy="children")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="KnockoutMatch", mappedBy="parent")
-     * @ORM\PizzaOrderBy({"left" = "ASC"})
+     * @ORM\OneToMany(targetEntity="TournamentKnockoutMatch", mappedBy="parent")
+     * @ORM\OrderBy({"left" = "ASC"})
      */
     private $children;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KnockoutMatch")
+     * @ORM\ManyToOne(targetEntity="TournamentKnockoutMatch")
      */
     private $loserDestination;
 

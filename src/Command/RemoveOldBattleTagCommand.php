@@ -28,7 +28,7 @@ class RemoveOldBattleTagCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $users = $em->getRepository('InsaLanUserBundle:User')->findAll();
+        $users = $em->getRepository('App\Entity\User')->findAll();
 
         $ttl = (new \DateTime("now"))->modify("-30 day");
         foreach ($users as $user) {

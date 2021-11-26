@@ -1,10 +1,8 @@
-{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+{% extends 'tournamentLayout.html.twig' %}
 
 {% block stylesheets %}
 {{ parent() }}
-  {% stylesheets 'bundles/insalan/css/tournament2.css' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
+    <link rel="stylesheet" href="/public/css/tournament2.css" />
 {% endblock %}
 
 {% block title %}
@@ -38,7 +36,7 @@
         <div class="frame frame-active grid-5 pull-left" style="background-color: rgba(0,0,0,.5)">
           <header class="full">
             <div class="title pull-left">
-              {{count + 1}}. <a href="{{ path('insalan_tournament_default_teamdetails', {id: t.id}) }}">{{ t.name }}</a>
+              {{count + 1}}. <a href="{{ path('app_tournament_teamdetails', {id: t.id}) }}">{{ t.name }}</a>
             </div>
             <br class="clear">
           </header>
@@ -72,7 +70,7 @@
         <header class="full">
           <div class="title" style="text-align: center">
             Il n'y a pas encore d'équipes inscrites sur ce tournoi !<br/>
-            <a href="{{ path('insalan_tournament_user_index') }}" class="btn2">
+            <a href="{{ path('User/index') }}" class="btn2">
               Inscription
             </a>
           </div>

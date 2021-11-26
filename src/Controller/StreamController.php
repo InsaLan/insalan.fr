@@ -7,6 +7,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use App\Entity\Tournament;
 
+/**
+ * @Route("/stream")
+ */
 class StreamController extends Controller
 {
     /**
@@ -17,8 +20,8 @@ class StreamController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findPlaying();
-        $streams = $em->getRepository('InsaLanStreamBundle:Stream')->findBy(array('tournament' => $tournaments, 'display' => true));
+        $tournaments = $em->getRepository('App\Entity\Tournament')->findPlaying();
+        $streams = $em->getRepository('App\Entity\Stream')->findBy(array('tournament' => $tournaments, 'display' => true));
         $officialStreams = array();
         $unofficialStreams = array();
           foreach ($streams as $s) {
@@ -32,7 +35,7 @@ class StreamController extends Controller
         // Get global variables
         $globalVars = array();
         $globalKeys = ['topStream'];
-        $globalVars = $em->getRepository('InsaLanBundle:GlobalVars')->getGlobalVars($globalKeys);
+        $globalVars = $em->getRepository('App\Entity\InsaLanGlobalVars')->getGlobalVars($globalKeys);
 
         return array('tournaments' => $tournaments, 'officialStreams' => $officialStreams, 'unofficialStreams' => $unofficialStreams, 'globalVars' => $globalVars);
     }

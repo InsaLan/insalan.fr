@@ -54,7 +54,7 @@ class Player extends Participant
     protected $gameAvatar;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Team", inversedBy="players", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="TournamentTeam", inversedBy="players", cascade={"persist"})
      * @ORM\JoinColumn()
      */
     protected $team;
@@ -66,7 +66,7 @@ class Player extends Participant
     // this is a temporary variable when a player has not validated its account, and/or is waiting for a team.
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\MerchantOrder", mappedBy="players")
+     * @ORM\ManyToMany(targetEntity="App\Entity\UserMerchantOrder", mappedBy="players")
      */
     protected $merchantOrders;
 
@@ -143,10 +143,10 @@ class Player extends Participant
     /**
      * Join team
      *
-     * @param \App\Entity\Team $team
+     * @param \App\Entity\TournamentTeam $team
      * @return Player
      */
-    public function joinTeam(\App\Entity\Team $team)
+    public function joinTeam(\App\Entity\TournamentTeam $team)
     {
         $this->addTeam($team);
         return $this;
@@ -155,7 +155,7 @@ class Player extends Participant
     /**
      * Leave team
      *
-     * @param \App\Entity\Team $team
+     * @param \App\Entity\TournamentTeam $team
      * @return Player
      */
     public function leaveTeam($team)
@@ -204,10 +204,10 @@ class Player extends Participant
     /**
      * Add groups
      *
-     * @param \App\Entity\Group $groups
+     * @param \App\Entity\TournamentGroup $groups
      * @return Player
      */
-    public function addGroup(\App\Entity\Group $groups)
+    public function addGroup(\App\Entity\TournamentGroup $groups)
     {
         $this->groups[] = $groups;
 
@@ -217,9 +217,9 @@ class Player extends Participant
     /**
      * Remove groups
      *
-     * @param \App\Entity\Group $groups
+     * @param \App\Entity\TournamentGroup $groups
      */
-    public function removeGroup(\App\Entity\Group $groups)
+    public function removeGroup(\App\Entity\TournamentGroup $groups)
     {
         $this->groups->removeElement($groups);
     }
@@ -260,10 +260,10 @@ class Player extends Participant
     /**
      * Add team
      *
-     * @param \App\Entity\Team $team
+     * @param \App\Entity\TournamentTeam $team
      * @return Player
      */
-    public function addTeam(\App\Entity\Team $team)
+    public function addTeam(\App\Entity\TournamentTeam $team)
     {
         $this->team[] = $team;
 
@@ -273,9 +273,9 @@ class Player extends Participant
     /**
      * Remove team
      *
-     * @param \App\Entity\Team $team
+     * @param \App\Entity\TournamentTeam $team
      */
-    public function removeTeam(\App\Entity\Team $team)
+    public function removeTeam(\App\Entity\TournamentTeam $team)
     {
         $this->team->removeElement($team);
     }

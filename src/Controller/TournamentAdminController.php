@@ -36,7 +36,7 @@ class TournamentAdminController extends Controller
 
         $showAll = $request->query->get("showAll", false);
 
-        $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->findAll();
+        $tournaments = $em->getRepository('App\Entity\Tournament')->findAll();
 
         // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
         $a = array(null => '');
@@ -51,7 +51,7 @@ class TournamentAdminController extends Controller
                   'label' => 'Tournoi',
                   'choices_as_values' => true,
                   'choices' => $a))
-            ->setAction($this->generateUrl('insalan_tournament_admin_index', ['showAll' => $showAll]))
+            ->setAction($this->generateUrl('app_tournament_admin_index', ['showAll' => $showAll]))
             ->getForm();
 
 
@@ -65,7 +65,7 @@ class TournamentAdminController extends Controller
         if ($form->isValid()) {
             $data = $form->getData();
             return $this->redirect($this->generateUrl(
-                'insalan_tournament_admin_index_1',
+                'app_tournament_admin_index_1',
                 array('id' => $data['tournament'], 'showAll' => $showAll)));
         }
         else if (null !== $id) {
@@ -88,14 +88,14 @@ class TournamentAdminController extends Controller
 
 
             // Find group stages and groups for this tournament
-            $stages = $em->getRepository('InsaLanTournamentBundle:GroupStage')
+            $stages = $em->getRepository('App\Entity\TournamentGroupStage')
                          ->findByTournament($tournament);
 
             // Find knockout for this tournament
-            $ko = $em->getRepository('InsaLanTournamentBundle:Knockout')
+            $ko = $em->getRepository('App\Entity\TournamentKnockout')
                      ->findByTournament($tournament);
 
-            $players = $em->getRepository('InsaLanTournamentBundle:Player')
+            $players = $em->getRepository('App\Entity\Player')
                           ->getAllPlayersForTournament($tournament);
 
 
@@ -198,7 +198,7 @@ class TournamentAdminController extends Controller
     public function stageAction(Entity\TournamentGroupStage $g)
     {
         $em = $this->getDoctrine()->getManager();
-        $matches = $em->getRepository("InsaLanTournamentBundle:Match")->getByGroupStage($g);
+        $matches = $em->getRepository("App\Entity\TournamentMatch")->getByGroupStage($g);
 
         return array("stage" => $g, "matches" => $matches);
 
@@ -211,7 +211,7 @@ class TournamentAdminController extends Controller
     public function knockoutAction(Entity\TournamentKnockout $k)
     {
         $em = $this->getDoctrine()->getManager();
-        $matches = $em->getRepository("InsaLanTournamentBundle:Match")->getByKnockout($k);
+        $matches = $em->getRepository("App\Entity\TournamentMatch")->getByKnockout($k);
 
         return array("knockout" => $k, "matches" => $matches);
 
@@ -308,11 +308,11 @@ class TournamentAdminController extends Controller
         $em->persist($ko);
         $em->flush();
 
-        $em->getRepository("InsaLanTournamentBundle:KnockoutMatch")
+        $em->getRepository("App\Entity\TournamentKnockoutMatch")
            ->generateMatches($ko, $data['size'], $data['double']);
 
         return $this->redirect($this->generateUrl(
-                'insalan_tournament_admin_knockout_view',
+                'app_tournament_admin_knockout_view',
                 array('id' => $ko->getId())));
     }
 
@@ -324,12 +324,12 @@ class TournamentAdminController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $depth    = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getLeftDepth($ko);
+        $depth    = $em->getRepository('App\Entity\TournamentKnockoutMatch')->getLeftDepth($ko);
         $children = pow(2, $depth + ($ko->getDoubleElimination() ? 0 : 1));
 
         if($request->getMethod() === "POST") {
 
-            $root = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getRoot($ko);
+            $root = $em->getRepository('App\Entity\TournamentKnockoutMatch')->getRoot($ko);
             if($ko->getDoubleElimination()) {
                 $root = $root->getChildren()->get(0);
             }
@@ -340,8 +340,8 @@ class TournamentAdminController extends Controller
                 $part1 = $request->request->get("participant_".($i*2+1));
                 $part2 = $request->request->get("participant_".($i*2+2));
 
-                $part1 = $em->getRepository('InsaLanTournamentBundle:Participant')->findOneById($part1);
-                $part2 = $em->getRepository('InsaLanTournamentBundle:Participant')->findOneById($part2);
+                $part1 = $em->getRepository('App\Entity\Participant')->findOneById($part1);
+                $part2 = $em->getRepository('App\Entity\Participant')->findOneById($part2);
 
                 // Is there any previous match ?
                 $km = $koMatches[$i];
@@ -366,15 +366,15 @@ class TournamentAdminController extends Controller
 
             // Propagate for potential empty matches
 
-            $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->propagateVictoryAll($ko);
+            $em->getRepository('App\Entity\TournamentKnockoutMatch')->propagateVictoryAll($ko);
             $em->flush();
 
         }
 
-        $ko->jsonData = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getJson($ko);
+        $ko->jsonData = $em->getRepository('App\Entity\TournamentKnockoutMatch')->getJson($ko);
 
         // Get participants in this tournament
-        $participants = $em->getRepository('InsaLanTournamentBundle:Participant')->findByTournament($ko->getTournament());
+        $participants = $em->getRepository('App\Entity\Participant')->findByTournament($ko->getTournament());
         $a = array(null => '');
         foreach ($participants as $p) {
             $a[$p->getId()] = $p->getName();
@@ -395,7 +395,7 @@ class TournamentAdminController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $repository = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch');
+        $repository = $em->getRepository('App\Entity\TournamentKnockoutMatch');
         $repository->propagateVictory($match->getKoMatch());
 
         $ko = $match->getKoMatch()->getKnockout();
@@ -416,7 +416,7 @@ class TournamentAdminController extends Controller
                     ->add('name', TextType::class, array("label" => "Nom"))
                     ->add('size', IntegerType::class, array("label" => "Taille", "scale" => 0))
                     ->add('double', CheckboxType::class, array("label" => "Double Elimination", "required" => false))
-                    ->setAction($this->generateUrl('insalan_tournament_admin_create_ko',
+                    ->setAction($this->generateUrl('app_tournament_admin_create_ko',
                                                   array('id' => $tournament)))
                     ->getForm();
     }
@@ -424,12 +424,12 @@ class TournamentAdminController extends Controller
     private function getReturnRedirect(Entity\TournamentMatch $m) {
         if($m->getKoMatch()) {
             return $this->redirect($this->generateUrl(
-                'insalan_tournament_admin_knockout',
+                'app_tournament_admin_knockout',
                 array('id' => $m->getKoMatch()->getKnockout()->getId())));
         }
 
         return $this->redirect($this->generateUrl(
-                'insalan_tournament_admin_stage',
+                'app_tournament_admin_stage',
                 array('id' => $m->getGroup()->getStage()->getId())));
     }
 
@@ -442,7 +442,7 @@ class TournamentAdminController extends Controller
             $em = $this->getDoctrine()->getManager();
             $usr = $this->get('security.token_storage')->getToken()->getUser();
 
-            $participantsRaw = $em->getRepository('InsaLanTournamentBundle:Participant')->findByRegistrable($id);
+            $participantsRaw = $em->getRepository('App\Entity\Participant')->findByRegistrable($id);
             $participants = array();
             foreach ($participantsRaw as $p) {
               if ($p->getValidated() == Participant::STATUS_VALIDATED) {
@@ -451,7 +451,7 @@ class TournamentAdminController extends Controller
             }
 
             // Getting unavailable placements for interface
-            $unavailable = $em->getRepository("InsaLanTournamentBundle:Tournament")->getUnavailablePlacements($id);
+            $unavailable = $em->getRepository("App\Entity\Tournament")->getUnavailablePlacements($id);
 
             // Room structure
             $structure = $this->get('insalan.tournament.placement')->getStructure();

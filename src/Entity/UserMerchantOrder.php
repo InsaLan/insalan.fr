@@ -9,7 +9,7 @@ use App\Entity\Player;
 /**
  * MerchantOrder
  *
- * @ORM\Entity(repositoryClass="App\Entity\MerchantOrderRepository")
+ * @ORM\Entity(repositoryClass="App\Entity\UserMerchantOrderRepository")
  * @ORM\Table()
  */
 class UserMerchantOrder
@@ -27,7 +27,7 @@ class UserMerchantOrder
     private $merchant;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PaymentDetails",cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="UserPaymentDetails",cascade={"persist"})
      */
     private $payment;
 
@@ -51,7 +51,7 @@ class UserMerchantOrder
      * Set user
      *
      * @param \App\Entity\User $user
-     * @return MerchantOrder
+     * @return UserMerchantOrder
      */
     public function setMerchant(\App\Entity\User $user = null)
     {
@@ -73,10 +73,10 @@ class UserMerchantOrder
     /**
      * Set payment
      *
-     * @param \App\Entity\PaymentDetails $payment
-     * @return MerchantOrder
+     * @param \App\Entity\UserPaymentDetails $payment
+     * @return UserMerchantOrder
      */
-    public function setPayment(\App\Entity\PaymentDetails $payment = null)
+    public function setPayment(\App\Entity\UserPaymentDetails $payment = null)
     {
         $this->payment = $payment;
 
@@ -86,7 +86,7 @@ class UserMerchantOrder
     /**
      * Get payment
      *
-     * @return \App\Entity\PaymentDetails
+     * @return \App\Entity\UserPaymentDetails
      */
     public function getPayment()
     {
@@ -97,7 +97,7 @@ class UserMerchantOrder
      * Add players
      *
      * @param \App\Entity\Player $players
-     * @return Group
+     * @return TournamentGroup
      */
     public function addPlayer(\App\Entity\Player $players)
     {

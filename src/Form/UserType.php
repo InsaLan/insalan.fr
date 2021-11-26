@@ -38,6 +38,6 @@ class UserType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'insalan_userbundle_user';
+        return '_userbundle_user';
     }
 }

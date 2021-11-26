@@ -34,7 +34,7 @@ class TournamentKnockout
     protected $doubleElimination;
 
     /**
-     * @ORM\OneToMany(targetEntity="KnockoutMatch", mappedBy="knockout")
+     * @ORM\OneToMany(targetEntity="TournamentKnockoutMatch", mappedBy="knockout")
      */
     protected $matches;
 

@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\StringType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-use App\Entity\TournamentMatch;
+use App\Entity\TournamentMatch as Match;
 
 class TournamentRoyalMatchAdmin extends AbstractAdmin
 {

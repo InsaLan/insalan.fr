@@ -69,7 +69,7 @@ class PizzaOrderRepository extends EntityRepository
     public function isForeignUser(User $user)
     {
 
-        $players = $this->getEntityManager()->getRepository("InsaLanTournamentBundle:Player")
+        $players = $this->getEntityManager()->getRepository("App\Entity\Player")
                                             ->findBy(array(
                                                 "user" => $user,
                                                 "paymentDone" => true

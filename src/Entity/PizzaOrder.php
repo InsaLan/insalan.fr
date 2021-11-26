@@ -22,7 +22,7 @@ class PizzaOrder
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserOrder", mappedBy="order")
+     * @ORM\OneToMany(targetEntity="PizzaUserOrder", mappedBy="order")
      */
     protected $orders;
 

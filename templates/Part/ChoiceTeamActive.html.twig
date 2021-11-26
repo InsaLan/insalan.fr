@@ -18,19 +18,19 @@
   </div>
 
   {% if registrable.loginType == "Autre" %}
-    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_setplayer', {registrable: registrable.id}) }}">
+    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('app_tournament_user_setplayer', {registrable: registrable.id}) }}">
       Annuler
     </a>
   {% else %}
-    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_user_index') }}">
+    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('User/index') }}">
       Annuler
     </a>
   {% endif %}
 
-  <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_createteam', {tournament: registrable.id}) }}">
+  <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('app_tournament_user_createteam', {tournament: registrable.id}) }}">
     Créer
   </a>
-  <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('insalan_tournament_user_existingteam', {tournament: registrable.id}) }}">
+  <a class="btn btn-primary ctrl grid-4 pull-left" href="{{ path('app_tournament_user_existingteam', {tournament: registrable.id}) }}">
     Rejoindre
   </a>
   <br class="clear">

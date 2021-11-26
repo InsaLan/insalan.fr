@@ -20,7 +20,9 @@ use App\Entity\MerchantOrder;
 use App\Entity\PaymentDetails;
 
 use App\Http\JsonResponse;
-
+/**
+ * @Route("/tournament")
+ */
 class TournamentMerchantController extends Controller
 {
 
@@ -34,7 +36,7 @@ class TournamentMerchantController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $registrables = $em->getRepository('InsaLanTournamentBundle:Registrable')->findAll();
+        $registrables = $em->getRepository('App\Entity\Registrable')->findAll();
 
         // Patch to switch from Symfony2 to Symfony3. We have to switch keys and values in arrays for choices.
         $a = array(null => '');
@@ -48,7 +50,7 @@ class TournamentMerchantController extends Controller
                   'label' => 'Tournoi',
                   'choices_as_values' => true,
                   'choices' => $a))
-            ->setAction($this->generateUrl('insalan_tournament_merchant_index'))
+            ->setAction($this->generateUrl('app_tournament_merchant_index'))
             ->getForm();
 
         $registrable = $data = null;
@@ -60,7 +62,7 @@ class TournamentMerchantController extends Controller
         if ($form->isValid()) {
             $data = $form->getData();
             return $this->redirect($this->generateUrl(
-                'insalan_tournament_merchant_index_1',
+                '_tournament_merchant_index_1',
                 array('id' => $data['registrable'])));
         }
         else if (null !== $id) {
@@ -77,7 +79,7 @@ class TournamentMerchantController extends Controller
                 throw new NotFoundHttpException('InsaLan\\TournamentBundle\\Entity\\Registrable object not found.');;
             }
 
-            $players = $em->getRepository('InsaLanTournamentBundle:Participant')
+            $players = $em->getRepository('App\Entity\Participant')
                           ->findByRegistrable($registrable);
 
             foreach ($players as &$p) {
@@ -92,17 +94,17 @@ class TournamentMerchantController extends Controller
                 }
             }
 
-            $discounts = $em->getRepository('InsaLanUserBundle:Discount')
+            $discounts = $em->getRepository('App\Entity\UserDiscount')
                             ->findByRegistrable($registrable);
         }
 
-        $allPaidPlayers = $em->getRepository('InsaLanUserBundle:MerchantOrder')
+        $allPaidPlayers = $em->getRepository('App\Entity\UserMerchantOrder')
                         ->findByMerchant($user);
 
         foreach ($allPaidPlayers as &$order) {
             $paidParticipant = [];
             foreach ($order->getPlayers() as $p) {
-                foreach ($em->getRepository('InsaLanTournamentBundle:Participant')->findByUser($p->getUser()) as $pp)
+                foreach ($em->getRepository('App\Entity\Participant')->findByUser($p->getUser()) as $pp)
                     $paidParticipant[] = $pp;
             }
 
@@ -154,19 +156,19 @@ class TournamentMerchantController extends Controller
 
         if ($player->getUser() == null){
             $this->get('session')->getFlashBag()->add('error', "Impossible de valider cette place (aucun utilisateur associé à la commande)");
-            return $this->redirect($this->generateUrl('insalan_tournament_merchant_index_1', array('id' => $registrable->getId())));
+            return $this->redirect($this->generateUrl('app_tournament_merchant_index_1', array('id' => $registrable->getId())));
         }
 
         $price = $registrable->getWebPrice();
         $title = 'Place pour le tournoi '.$registrable->getName();
 
         if ($discount !== null){
-            $discount = $em->getRepository('InsaLanUserBundle:Discount')
+            $discount = $em->getRepository('App\Entity\UserDiscount')
                             ->findOneById($discount);
 
             if ($discount->getRegistrable()->getId() !== $registrable->getId()){
                 $this->get('session')->getFlashBag()->add('error', "discount not allowed");
-                return $this->redirect($this->generateUrl('insalan_tournament_merchant_index_1', array('id' => $registrable->getId())));
+                return $this->redirect($this->generateUrl('app_tournament_merchant_index_1', array('id' => $registrable->getId())));
             }
 
             $price -= $discount->getAmount();
@@ -209,7 +211,7 @@ class TournamentMerchantController extends Controller
         $em->flush();
 
         return $this->redirect($this->generateUrl(
-            'insalan_tournament_merchant_index_1',
+            '_tournament_merchant_index_1',
             array('id' => $registrable->getId())));
     }
 }

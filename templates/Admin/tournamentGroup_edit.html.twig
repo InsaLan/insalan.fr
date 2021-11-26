@@ -1,10 +1,8 @@
-{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+{% extends 'tournamentLayout.html.twig' %}
 
 {% block stylesheets %}
 {{ parent() }}
-  {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
+    <link rel="stylesheet" href="/public/css/tournament.css" />
 {% endblock %}
 
 
@@ -21,7 +19,7 @@
       <tr>
         <td>
           <a class="delete" href="{{
-            path('insalan_tournament_admin_group_deleteparticipant',
+            path('app_tournament_admin_group_deleteparticipant',
               {group: group.id, participant: p.id}) }}" onclick="return confirm('Supprimer ce participant ?')">x
           </a>
           {{ p.name }}

@@ -41,7 +41,7 @@ class TournamentKnockoutAdmin extends AbstractAdmin
     {
 
         $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
-        $repository = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch');
+        $repository = $em->getRepository('App\Entity\TournamentKnockoutMatch');
 
         $repository->generateMatches($ko, $ko->getSize());
 

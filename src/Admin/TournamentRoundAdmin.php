@@ -108,10 +108,10 @@ class TournamentRoundAdmin extends AbstractAdmin
         $this->addNewParticipants($round);
 
         $match = $round->getMatch();
-        if($match->getState() === Match::STATE_FINISHED && $match->getKoMatch())
+        if($match->getState() === TournamentMatch::STATE_FINISHED && $match->getKoMatch())
         {
             $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
-            $repository = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch');
+            $repository = $em->getRepository('App\Entity\TournamentKnockoutMatch');
             $repository->propagateVictory($match->getKoMatch());
             $em->flush();
         }

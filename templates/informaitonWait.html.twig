@@ -1,4 +1,4 @@
-{% extends 'InsaLanInformationBundle::layout.html.twig' %}
+{% extends 'informationLayout.html.twig' %}
 
 {#% block top_infos %}
 {% endblock %#}
@@ -7,18 +7,18 @@
 <nav>
   <ul>
     <li>
-      <header><a href="{{ path('insalan_information_default_index') }}">Infos</a></header>
+      <header><a href="{{ path('app_information_index') }}">Infos</a></header>
       <div>
         <ul>
-          <li><a href="{{ path('insalan_information_default_wait') }}#rewards">Récompenses</a></li>
-          <li><a href="{{ path('insalan_information_default_wait') }}#organization">Déroulement</a></li>
-          <li><a href="{{ path('insalan_information_default_wait') }}#games">Jeux</a></li>
-          <li><a href="{{ path('insalan_information_default_wait') }}#price">Prix</a></li>
+          <li><a href="{{ path('app_information_wait') }}#rewards">Récompenses</a></li>
+          <li><a href="{{ path('app_information_wait') }}#organization">Déroulement</a></li>
+          <li><a href="{{ path('app_information_wait') }}#games">Jeux</a></li>
+          <li><a href="{{ path('app_information_wait') }}#price">Prix</a></li>
         </ul>
       </div>
     </li>
     <li>
-      <header><a href="{{ path('insalan_stream_default_index') }}">InsaLan.fr</a></header>
+      <header><a href="{{ path('app_stream_index') }}">InsaLan.fr</a></header>
       <ul>
         <li><a href="http://www.insalan.fr/news/">News</a></li>
         <li><a href="http://www.insalan.fr/gallery/">Galerie</a></li>

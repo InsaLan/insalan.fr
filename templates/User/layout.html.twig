@@ -1,4 +1,4 @@
-{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+{% extends 'tournamentLayout.html.twig' %}
 
 {% block title %}
 {{ parent() }}
@@ -6,7 +6,5 @@
 
 {% block stylesheets %}
 {{ parent() }}
-  {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
+    <link rel="stylesheet" href="/public/css/tournament.css" />
 {% endblock %}

@@ -28,7 +28,7 @@ class RegistrationConfirmListener implements EventSubscriberInterface
 
     public function onRegistrationConfirm($event)
     {
-        $url = $this->router->generate('insalan_tournament_user_index');
+        $url = $this->router->generate('User/index');
 
         $event->setResponse(new RedirectResponse($url));
     }

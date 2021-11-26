@@ -12,6 +12,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use App\Entity\Participant;
 
+/**
+ * @Route("/api")
+ */
 class ApiController extends Controller
 {
     /**
@@ -33,7 +36,7 @@ class ApiController extends Controller
         );
 
         // look for a manager corresponding to user and provieded tournaments
-        $manager = $em->getRepository('InsaLanTournamentBundle:Manager')->findByUser($usr);
+        $manager = $em->getRepository('App\Entity\TournamentManager')->findByUser($usr);
         foreach ($manager as $m) {
             if ($m->getTournament())
                 if (in_array($m->getTournament()->getShortname(),$t))
@@ -48,7 +51,7 @@ class ApiController extends Controller
                     }
         }
 
-        $player = $em->getRepository('InsaLanTournamentBundle:Player')->findByUser($usr);
+        $player = $em->getRepository('App\Entity\Player')->findByUser($usr);
 
         foreach($player as $p) {
             $res["err"] = "no_paid_place";
@@ -115,7 +118,7 @@ class ApiController extends Controller
 
 
         // look for a manager corresponding to user
-        $manager = $em->getRepository('InsaLanTournamentBundle:Manager')->findByUser($usr);
+        $manager = $em->getRepository('App\Entity\TournamentManager')->findByUser($usr);
         foreach ($manager as $m) {
             if ($m->getTournament()->isPending() || $m->getTournament()->isPlaying()) {
 
@@ -143,7 +146,7 @@ class ApiController extends Controller
                 // no return because we need to check if there is a player timezone_offset_get()
         }
 
-        $player = $em->getRepository('InsaLanTournamentBundle:Player')->findByUser($usr);
+        $player = $em->getRepository('App\Entity\Player')->findByUser($usr);
 
         foreach($player as $p) {
             if ($p->getTournament()) {
@@ -211,12 +214,12 @@ class ApiController extends Controller
     public function placementAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $tournaments = $em->getRepository('InsaLanTournamentBundle:Tournament')->getUpcomingTournaments();
+        $tournaments = $em->getRepository('App\Entity\Tournament')->getUpcomingTournaments();
         $res = [];
         $res["participants"] = [];
         // Participants
         foreach ($tournaments as $t) {
-            $ps = $em->getRepository('InsaLanTournamentBundle:Participant')->findByRegistrable($t);
+            $ps = $em->getRepository('App\Entity\Participant')->findByRegistrable($t);
             foreach ($ps as $p) {
                 if ($p->getValidated() === Participant::STATUS_VALIDATED) {
                     $userNames = [];

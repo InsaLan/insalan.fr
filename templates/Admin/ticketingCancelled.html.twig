@@ -40,7 +40,7 @@
             {{ eTicket.tournament.name }}
           </td>
           <td>
-            <form action="{{ path('insalan_ticketing_admin_downloadeticket') }}" method="post">
+            <form action="{{ path('app_ticketing_admin_downloadeticket') }}" method="post">
               <input type="hidden" name="_token" value="{{ csrf_token('download' ~ eTicket.id)}}">
               <input type="hidden" name="eticket" value="{{ eTicket.id }}">
               <button type="submit" class="btn-plain">Télécharger billet</button>

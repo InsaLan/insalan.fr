@@ -37,7 +37,7 @@ class ArchivesPictureAlbum
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Edition")
+     * @ORM\ManyToOne(targetEntity="ArchivesEdition")
      * @ORM\JoinColumn()
      */
     private $edition;
@@ -56,7 +56,7 @@ class ArchivesPictureAlbum
      * Set url
      *
      * @param string $url
-     * @return PictureAlbum
+     * @return ArchivesPictureAlbum
      */
     public function setUrl($url)
     {
@@ -79,7 +79,7 @@ class ArchivesPictureAlbum
      * Set name
      *
      * @param string $name
-     * @return PictureAlbum
+     * @return ArchivesPictureAlbum
      */
     public function setName($name)
     {
@@ -102,7 +102,7 @@ class ArchivesPictureAlbum
      * Set edition
      *
      * @param \App\Entity\ArchivesEdition $edition
-     * @return PictureAlbum
+     * @return ArchivesPictureAlbum
      */
     public function setEdition(\App\Entity\ArchivesEdition $edition)
     {

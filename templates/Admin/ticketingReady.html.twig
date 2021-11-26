@@ -53,7 +53,7 @@
             {% endif %}
           </td>
           <td>
-            <form action="{{ path('insalan_ticketing_admin_sendeticket') }}" method="post">
+            <form action="{{ path('app_ticketing_admin_sendeticket') }}" method="post">
               <input type="hidden" name="_token" value="{{ csrf_token('send' ~ player.id)}}">
               <input type="hidden" name="player" value="{{ player.id }}">
               <button type="submit" class="btn-plain">Envoyer billet</button>
@@ -79,7 +79,7 @@
             {{ m.tournament }}
           </td>
           <td>
-            <form action="{{ path('insalan_ticketing_admin_sendeticket') }}" method="post">
+            <form action="{{ path('app_ticketing_admin_sendeticket') }}" method="post">
               <input type="hidden" name="_token" value="{{ csrf_token('send' ~ m.id)}}">
               <input type="hidden" name="manager" value="{{ m.id }}">
               <button type="submit" class="btn-plain">Envoyer billet</button>

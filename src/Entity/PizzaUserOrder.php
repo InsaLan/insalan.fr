@@ -55,7 +55,7 @@ class PizzaUserOrder
     protected $usernameCanonical; // for manual orders
 
     /**
-     * @ORM\ManyToOne(targetEntity="Order", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="PizzaOrder", inversedBy="orders")
      * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
      */
     protected $order;
@@ -140,7 +140,7 @@ class PizzaUserOrder
      * Set delivered
      *
      * @param boolean $delivered
-     * @return UserOrder
+     * @return PizzaUserOrder
      */
     public function setDelivered($delivered)
     {
@@ -163,7 +163,7 @@ class PizzaUserOrder
      * Set user
      *
      * @param \App\Entity\User $user
-     * @return UserOrder
+     * @return PizzaUserOrder
      */
     public function setUser(\App\Entity\User $user = null)
     {
@@ -186,7 +186,7 @@ class PizzaUserOrder
      * Set order
      *
      * @param \App\Entity\PizzaOrder $order
-     * @return UserOrder
+     * @return PizzaUserOrder
      */
     public function setOrder(\App\Entity\PizzaOrder $order = null)
     {
@@ -209,7 +209,7 @@ class PizzaUserOrder
      * Set pizza
      *
      * @param \App\Entity\Pizza $pizza
-     * @return UserOrder
+     * @return PizzaUserOrder
      */
     public function setPizza(\App\Entity\Pizza $pizza = null)
     {
@@ -233,7 +233,7 @@ class PizzaUserOrder
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return UserOrder
+     * @return PizzaUserOrder
      */
     public function setCreatedAt($createdAt)
     {
@@ -256,7 +256,7 @@ class PizzaUserOrder
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return UserOrder
+     * @return PizzaUserOrder
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -279,7 +279,7 @@ class PizzaUserOrder
      * Set type
      *
      * @param integer $type
-     * @return UserOrder
+     * @return PizzaUserOrder
      */
     public function setType($type)
     {
@@ -302,7 +302,7 @@ class PizzaUserOrder
      * Set paymentDone
      *
      * @param boolean $paymentDone
-     * @return UserOrder
+     * @return PizzaUserOrder
      */
     public function setPaymentDone($paymentDone)
     {
@@ -325,7 +325,7 @@ class PizzaUserOrder
      * Set fullnameCanonical
      *
      * @param string $fullnameCanonical
-     * @return UserOrder
+     * @return PizzaUserOrder
      */
     public function setFullnameCanonical($fullnameCanonical)
     {
@@ -348,7 +348,7 @@ class PizzaUserOrder
      * Set usernameCanonical
      *
      * @param string $usernameCanonical
-     * @return UserOrder
+     * @return PizzaUserOrder
      */
     public function setUsernameCanonical($usernameCanonical)
     {
@@ -371,7 +371,7 @@ class PizzaUserOrder
      * Set price
      *
      * @param integer $price
-     * @return UserOrder
+     * @return PizzaUserOrder
      */
     public function setPrice($price)
     {
@@ -395,7 +395,7 @@ class PizzaUserOrder
      * Set foreign
      *
      * @param boolean $foreign
-     * @return UserOrder
+     * @return PizzaUserOrder
      */
     public function setForeign($foreign)
     {

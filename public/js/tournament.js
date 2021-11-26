@@ -95,9 +95,9 @@ function formatImg(img)
     return '';
   }
 
-  var t = '<img src="/bundles/insalan/img/pix.gif" style="width:'
+  var t = '<img src="/public/img/pix.gif" style="width:'
       + w + 'px;height:'
-      + h + 'px;background:url(\'/bundles/insalan/img/sprite/small_'
+      + h + 'px;background:url(\'/public/img/sprite/small_'
       + img.sprite + '\') -'
       + Math.round(img.x * w/parseFloat(img.w)) + 'px -'
       + Math.round(img.y * h/parseFloat(img.h)) + 'px" alt=""/>';

@@ -1,10 +1,8 @@
-{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+{% extends 'tournamentLayout.html.twig' %}
 
 {% block stylesheets %}
 {{ parent() }}
-  {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
+    <link rel="stylesheet" href="/public/css/tournament.css" />
 {% endblock %}
 
 
@@ -34,11 +32,11 @@
 
         {% for group in s.groups %}
         <table>
-          <caption><a href="{{ path('insalan_tournament_admin_group_edit', {id: group.id}) }}">
+          <caption><a href="{{ path('app_tournament_admin_group_edit', {id: group.id}) }}">
             {{ group.name }}</a></caption>
           {% for p in group.participants %}
           <tr>
-            <td><a href="{{ path('insalan_tournament_admin_group_edit', {id: group.id}) }}">
+            <td><a href="{{ path('app_tournament_admin_group_edit', {id: group.id}) }}">
               {{ p.name }}</a></td>
           </tr>
           {% endfor %}

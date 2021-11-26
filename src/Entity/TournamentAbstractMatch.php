@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="kind", type="string")
- * @ORM\DiscriminatorMap({"simple" = "Match", "royal" = "RoyalMatch"})
+ * @ORM\DiscriminatorMap({"simple" = "TournamentMatch", "royal" = "TournamentRoyalMatch"})
  * @ORM\Table(name="`Match`")
  */
 abstract class TournamentAbstractMatch
@@ -33,17 +33,17 @@ abstract class TournamentAbstractMatch
     protected $state;
 
     /**
-     * @ORM\OneToMany(targetEntity="Round", mappedBy="match")
+     * @ORM\OneToMany(targetEntity="TournamentRound", mappedBy="match")
      */
     protected $rounds;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Group", inversedBy="matches")
+     * @ORM\ManyToOne(targetEntity="TournamentGroup", inversedBy="matches")
      */
     protected $group;
 
     /**
-     * @ORM\OneToOne(targetEntity="KnockoutMatch", mappedBy="match")
+     * @ORM\OneToOne(targetEntity="TournamentKnockoutMatch", mappedBy="match")
      */
     protected $koMatch;
 
@@ -109,7 +109,7 @@ abstract class TournamentAbstractMatch
      */
     public function __construct()
     {
-        $this->state = Match::STATE_UPCOMING;
+        $this->state = TournamentMatch::STATE_UPCOMING;
         $this->rounds = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -127,7 +127,7 @@ abstract class TournamentAbstractMatch
      * Add rounds
      *
      * @param \App\Entity\TournamentRound $rounds
-     * @return Match
+     * @return TournamentMatch
      */
     public function addRound(\App\Entity\TournamentRound $rounds)
     {
@@ -160,7 +160,7 @@ abstract class TournamentAbstractMatch
      * Set state
      *
      * @param integer $state
-     * @return Match
+     * @return TournamentMatch
      */
     public function setState($state)
     {
@@ -182,10 +182,10 @@ abstract class TournamentAbstractMatch
     /**
      * Set group
      *
-     * @param \App\Entity\Group $group
-     * @return Match
+     * @param \App\Entity\TournamentGroup $group
+     * @return TournamentMatch
      */
-    public function setGroup(\App\Entity\Group $group = null)
+    public function setGroup(\App\Entity\TournamentGroup $group = null)
     {
         $this->group = $group;
 
@@ -195,7 +195,7 @@ abstract class TournamentAbstractMatch
     /**
      * Get group
      *
-     * @return \App\Entity\Group
+     * @return \App\Entity\TournamentGroup
      */
     public function getGroup()
     {
@@ -206,7 +206,7 @@ abstract class TournamentAbstractMatch
      * Set koMatch
      *
      * @param \App\Entity\TournamentKnockoutMatch $koMatch
-     * @return KnockoutMatch
+     * @return TournamentKnockoutMatch
      */
     public function setKoMatch(\App\Entity\TournamentKnockoutMatch $koMatch = null)
     {

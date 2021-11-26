@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  *
- * @ORM\Entity(repositoryClass="App\Entity\GlobalVarsRepository")
+ * @ORM\Entity(repositoryClass="App\Entity\InsaLanGlobalVarsRepository")
  */
 class InsaLanGlobalVars
 {

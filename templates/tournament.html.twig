@@ -1,4 +1,4 @@
-{% extends 'InsaLanTournamentBundle::layout.html.twig' %}
+{% extends 'tournamentLayout.html.twig' %}
 
 {#
 
@@ -18,9 +18,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
-  {% stylesheets 'bundles/insalan/css/tournament2.css' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
+    <link rel="stylesheet" href="/public/css/tournament2.css" />
 {% endblock %}
 
 {% block body %}
@@ -53,13 +51,13 @@
           {% endif %}
           <br/>
           {% if t.participantType == "team" %}
-            <a class="btn2" href="{{ path("insalan_tournament_default_teamlist", {"id":t.id}) }}">
+            <a class="btn2" href="path('app_tournament_teamlist", {"id":t.id}) }}">
           {% else %}
-            <a class="btn2" href="{{ path("insalan_tournament_default_playerlist", {"id":t.id}) }}">
+            <a class="btn2" href="path('app_tournament_playerlist", {"id":t.id}) }}">
           {% endif %}
             Participants
           </a>
-          <a href="{{ path('insalan_tournament_default_rules', {id: t.id}) }}" class="btn2">
+          <a href="{{ path('app_tournament_rules', {id: t.id}) }}" class="btn2">
             Règlement
           </a>
         </div>
@@ -133,7 +131,7 @@
                 {% for p in g.sortedParticipants %}
                 <tr>
                   <td>
-                    <a href="{{ path('insalan_tournament_default_teamdetails', {id: p.id}) }}">{{ p.name }}</a>
+                    <a href="{{ path('app_tournament_teamdetails', {id: p.id}) }}">{{ p.name }}</a>
                   </td>
                   {% if g.statsType == constant('InsaLan\\TournamentBundle\\Entity\\Group::STATS_WINLOST') %}
                     <td>{{ g.stats[p.id].won }}</td>
@@ -262,16 +260,16 @@
 {{ parent() }}
 
 {% javascripts
-  'bundles/insalan/js/tournament.js'
-  'bundles/insalan/data/champion.js'
-  'bundles/insalan/data/item.js'
-  'bundles/insalan/data/summoner.js'
+  'public/js/tournament.js'
+  'public/data/champion.js'
+  'public/data/item.js'
+  'public/data/summoner.js'
 %}
 <script src="{{ asset_url }}" type="text/javascript"></script>
 {% endjavascripts %}
 
 <script type="text/javascript">
-loadMatch.url = '{{ path('insalan_tournament_default_matchdata', {id:'__id__'}) }}';
+loadMatch.url = '{{ path('app_tournament_matchdata', {id:'__id__'}) }}';
 loadRound.replayUrl = '{{ asset('') }}';
 
 window.addEvent('domready', function() {

@@ -38,27 +38,27 @@
     </ul>
     <br/>
     <p>
-      En cliquant sur le bouton "Chèque/Sur place" ou le bouton "Paiement en ligne" vous déclarez avoir lu et accepté sans réserve les <strong><a href="{{ path('insalan_information_default_salesterms') }}" target="_blank" >[conditions générales de vente &#x25BE;]</a></strong> ainsi que le <strong><a href="{{ path('insalan_tournament_default_rules', {id: tournament.id}) }}" target="_blank" >[règlement du tournoi &#x25BE;]</a></strong>
+      En cliquant sur le bouton "Chèque/Sur place" ou le bouton "Paiement en ligne" vous déclarez avoir lu et accepté sans réserve les <strong><a href="{{ path('app_information_salesterms') }}" target="_blank" >[conditions générales de vente &#x25BE;]</a></strong> ainsi que le <strong><a href="{{ path('app_tournament_rules', {id: tournament.id}) }}" target="_blank" >[règlement du tournoi &#x25BE;]</a></strong>
     </p>
     </br>
   </div>
 
   {% if tournament.participantType == 'team' %}
-    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_manager_leaveteam', {tournament: tournament.id, teamId: manager.participant.id}) }}">
+    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('app_tournament_manager_leaveteam', {tournament: tournament.id, teamId: manager.participant.id}) }}">
       Annuler
     </a>
   {% else %}
-    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('insalan_tournament_manager_leave', {tournament: tournament.id}) }}">
+    <a class="btn btn-danger ctrl grid-2 pull-left" href="{{ path('app_tournament_manager_leave', {tournament: tournament.id}) }}">
       Annuler
     </a>
   {% endif %}
 
   {% if manager.participant.validated %}
-    <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('insalan_tournament_manager_payoffline', {tournament: tournament.id}) }}">
+    <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('app_tournament_manager_payoffline', {tournament: tournament.id}) }}">
       Chèque/Sur place
     </a>
     {% if tournament.isOpenedNow %}
-      <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('insalan_tournament_manager_paypaypalec', {tournament: tournament.id}) }}">
+      <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('app_tournament_manager_paypaypalec', {tournament: tournament.id}) }}">
         Paiement en ligne
       </a>
     {% else %}

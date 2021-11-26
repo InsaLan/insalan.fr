@@ -1,7 +1,9 @@
 fos_user:
-    db_driver: orm
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main
     user_class: App\Entity\User
     from_email:
-        address: "my@mail.com"
-        sender_name: "Name Surname"
+        address: "test@domain.com"
+        sender_name: "test@domain.com"
+    service:
+        user_manager: fos_user.user_manager.default

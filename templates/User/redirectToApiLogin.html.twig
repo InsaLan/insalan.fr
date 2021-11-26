@@ -30,12 +30,12 @@
         <br/>
         <div>
           {% if tournament.loginType == constant('InsaLan\\UserBundle\\Service\\LoginPlatform::PLATFORM_BATTLENET') %}
-            <a href="{{ path('insalan_user_default_registerbattlenet') }}" class="btn btn-primary">
+            <a href="{{ path('app_user_registerbattlenet') }}" class="btn btn-primary">
               Renseigner votre identifiant
             </a>
           {% endif %}
           {% if tournament.loginType == constant('InsaLan\\UserBundle\\Service\\LoginPlatform::PLATFORM_STEAM') %}
-            <a href="{{ path('insalan_user_default_registersteamid') }}" class="btn btn-primary">
+            <a href="{{ path('app_user_registersteamid') }}" class="btn btn-primary">
               Renseigner votre identifiant
             </a>
           {% endif %}

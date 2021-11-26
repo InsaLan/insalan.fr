@@ -92,7 +92,7 @@ class Tournament extends Registrable
     protected $playerInfos;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Bundle", mappedBy="tournaments")
+     * @ORM\ManyToMany(targetEntity="TournamentBundle", mappedBy="tournaments")
      */
     protected $bundles;
 

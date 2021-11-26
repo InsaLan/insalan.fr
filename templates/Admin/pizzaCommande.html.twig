@@ -50,7 +50,7 @@
           <strong>
             Les commandes via le site sont bloquées.
             {#
-            <form method="POST" action="{{ path('insalan_pizza_admin_unlock', {id: order.id}) }}"><input type="submit" value="Débloquer"/></form>
+            <form method="POST" action="{{ path('app_pizza_admin_unlock', {id: order.id}) }}"><input type="submit" value="Débloquer"/></form>
             #}
           </strong>
         {% elseif order.availableOrders(false) == 0 %}
@@ -61,7 +61,7 @@
             , mais les non-joueurs <strong>ne peuvent plus commander</strong>
           {% endif %}.
           {#
-          <form method="POST" action="{{ path('insalan_pizza_admin_lock', {id: order.id}) }}"><input type="submit" value="Bloquer" onclick="return confirm('Confirmer le blocage ? Cette opération est automatique lorsque la limite horaire est atteinte.')"/></form>
+          <form method="POST" action="{{ path('app_pizza_admin_lock', {id: order.id}) }}"><input type="submit" value="Bloquer" onclick="return confirm('Confirmer le blocage ? Cette opération est automatique lorsque la limite horaire est atteinte.')"/></form>
           #}
         {% endif %}
       </div>
@@ -119,10 +119,10 @@
           </td>
           <td>
             <span class="order_status_{{ uo.id }}">
-              <button class="order_delivered" data-url="{{ path("insalan_pizza_admin_order_status", {id: uo.id, status: 0}) }}" data-id="{{ uo.id }}" onclick="if(confirm('Confirmer la non livraison ?')) { changeOrderStatus(this) }" {% if not uo.delivered %}style="display:none"{% endif %} >> Non Livrée</button>
-              <button class="order_not_delivered" data-url="{{ path("insalan_pizza_admin_order_status", {id: uo.id, status: 1}) }}" data-id="{{ uo.id }}" onclick="changeOrderStatus(this)" {% if uo.delivered %}style="display:none"{% endif %}>> Livrée</button>
+              <button class="order_delivered" data-url="path('app_pizza_admin_order_status", {id: uo.id, status: 0}) }}" data-id="{{ uo.id }}" onclick="if(confirm('Confirmer la non livraison ?')) { changeOrderStatus(this) }" {% if not uo.delivered %}style="display:none"{% endif %} >> Non Livrée</button>
+              <button class="order_not_delivered" data-url="path('app_pizza_admin_order_status", {id: uo.id, status: 1}) }}" data-id="{{ uo.id }}" onclick="changeOrderStatus(this)" {% if uo.delivered %}style="display:none"{% endif %}>> Livrée</button>
             </span>
-            <form method="POST" action="{{ path('insalan_pizza_admin_order_remove', {id: uo.id}) }}">
+            <form method="POST" action="{{ path('app_pizza_admin_order_remove', {id: uo.id}) }}">
               <input type="submit" value="Supprimer" onclick="return confirm('Confirmer la suppression ?');"/>
             </form>
           </td>

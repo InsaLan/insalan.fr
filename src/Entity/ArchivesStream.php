@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Stream
  *
  * @ORM\Table(name="`StreamArchives`")
- * @ORM\Entity(repositoryClass="App\Entity\StreamRepository")
+ * @ORM\Entity(repositoryClass="App\Entity\ArchivesStreamRepository")
  */
 class ArchivesStream
 {
@@ -36,7 +36,7 @@ class ArchivesStream
     private $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Edition")
+     * @ORM\ManyToOne(targetEntity="ArchivesEdition")
      * @ORM\JoinColumn()
      */
     private $edition;

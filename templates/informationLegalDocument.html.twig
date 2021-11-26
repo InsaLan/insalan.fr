@@ -1,4 +1,4 @@
-{% extends 'InsaLanInformationBundle::layout.html.twig' %}
+{% extends 'informationLayout.html.twig' %}
 
 {% block body %}
 {{ parent() }}
@@ -13,7 +13,7 @@
               {% if document is not null %}
                 <center><h2>{{ document.name }}</h2></center>
                 <br />
-                {{ document.content|markdown }}
+                {{ document.content|markdown_to_html }}
                 <div class="pull-right">
                   Date de dernière mise à jour : {{ document.updatedAt | date("d/m/Y") }}
                 </div>

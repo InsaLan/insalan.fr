@@ -2,12 +2,8 @@
 
 {% block stylesheets %}
 {{ parent() }}
-  {% stylesheets 'bundles/insalan/css/archives.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
-  {% stylesheets 'bundles/insalan/css/tournament.css' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-  {% endstylesheets %}
+    <link rel="stylesheet" href="/public/css/archives.css" />
+    <link rel="stylesheet" href="/public/css/tournament.css" />
 {% endblock %}
 
 {% block body %}
@@ -24,7 +20,7 @@
 <article class="info">
   <aside>
     <div class="square">
-      <a href="{{ path('insalan_archives_default_previousyear', {'edition': edition.id}) }}"><span></span></a>
+      <a href="{{ path('app_archives_previousyear', {'edition': edition.id}) }}"><span></span></a>
     </div>
   </aside>
 

@@ -21,7 +21,7 @@
       {#
       <td>
         {% if r.replay == null and authorized %}
-          <a href="{{ path('insalan_tournament_user_roundaddreplay', {id: part.id, round: r.id }) }}">
+          <a href="{{ path('app_tournament_user_roundaddreplay', {id: part.id, round: r.id }) }}">
             replay
           </a>
         {% elseif r.replay != null %}
@@ -49,7 +49,7 @@
       </p>
 
       {#
-      <form action="{{ path('insalan_tournament_user_teamvalidatematch', {id: part.id, match: m.id }) }}" method="GET">
+      <form action="{{ path('app_tournament_user_teamvalidatematch', {id: part.id, match: m.id }) }}" method="GET">
         <i>Tournament Code :</i>
         <input title="Dans le launcher : Play - Custom - Tournament Code" type="text" value="{{ m.pvpNetUrl }}" style="width: 95%;padding: 3px 5px;background: #232323;cursor: help" onclick="this.setSelectionRange(0, this.value.length)"/>
         <br/>

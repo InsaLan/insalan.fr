@@ -252,7 +252,7 @@ var tarteaucitron = {
         if ( !tarteaucitron.parameters.useExternalCss ) {
             linkElement.rel = 'stylesheet';
             linkElement.type = 'text/css';
-            linkElement.href = cdn + 'css/tarteaucitron.css?v=' + tarteaucitron.version;
+            linkElement.href = cdn + '/public/css/tarteaucitron.css?v=' + tarteaucitron.version;
             document.getElementsByTagName('head')[0].appendChild(linkElement);
         }
         // Step 2: load language and services

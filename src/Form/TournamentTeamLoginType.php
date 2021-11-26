@@ -38,6 +38,6 @@ class TournamentTeamLoginType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'insalan_tournamentbundle_team';
+        return '_tournamentbundle_team';
     }
 }

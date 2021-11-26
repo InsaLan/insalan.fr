@@ -34,6 +34,6 @@ class TournamentSetPlayerName extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'insalan_tournamentbundle_player';
+        return '_tournamentbundle_player';
     }
 }

@@ -75,7 +75,7 @@
     </table>
   </div>
 
-  <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('insalan_tournament_user_index') }}">
+  <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('User/index') }}">
     Ok
   </a>
   <br class="clear">
@@ -95,7 +95,7 @@
     Une erreur est survenue. Vous pouvez contacter un administrateur via contact@insalan.fr ou au {{ globalVars.helpPhoneNumber }}.
   </div>
 
-  <a class="btn btn-danger ctrl grid-10 pull-left" href="{{ path('insalan_tournament_manager_setname', {tournament: tournament.id}) }}">
+  <a class="btn btn-danger ctrl grid-10 pull-left" href="{{ path('app_tournament_manager_setname', {tournament: tournament.id}) }}">
     Réessayer
   </a>
 </div>

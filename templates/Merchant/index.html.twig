@@ -48,11 +48,11 @@
       </td>
       <td>
         <span>
-          <a href="{{ path('insalan_tournament_merchant_validate', { id: registrable.id, player: player.id }) }}">
+          <a href="{{ path('app_tournament_merchant_validate', { id: registrable.id, player: player.id }) }}">
             <button class="payment_ok">Plein tarif ({{ registrable.webPrice }} {{ registrable.currency }})</button>
           </a>
           {% for discount in discounts %}
-            <a href="{{ path('insalan_tournament_merchant_validate_1', { id: registrable.id, player: player.id, discount: discount.id }) }}">
+            <a href="{{ path('app_tournament_merchant_validate_1', { id: registrable.id, player: player.id, discount: discount.id }) }}">
               <button class="payment_ok">{{ discount.name }} ({{ registrable.webPrice - discount.amount }} {{ registrable.currency }})</button>
             </a>
           {% endfor %}

@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Entity\GroupRepository")
+ * @ORM\Entity(repositoryClass="App\Entity\TournamentGroupRepository")
  * @ORM\Table(name="`Group`")
  */
 class TournamentGroup
@@ -27,7 +27,7 @@ class TournamentGroup
     protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="AbstractMatch", cascade={"persist"}, mappedBy="group")
+     * @ORM\OneToMany(targetEntity="TournamentAbstractMatch", cascade={"persist"}, mappedBy="group")
      * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $matches;
@@ -38,14 +38,14 @@ class TournamentGroup
     protected $participants;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GroupStage", inversedBy="groups")
+     * @ORM\ManyToOne(targetEntity="TournamentGroupStage", inversedBy="groups")
      */
     protected $stage;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected $statsType = Group::STATS_WINLOST;
+    protected $statsType = TournamentGroup::STATS_WINLOST;
 
     // CUSTOM FUNCTIONS FOR ADMIN
 
@@ -75,7 +75,7 @@ class TournamentGroup
      * Set name
      *
      * @param string $name
-     * @return Group
+     * @return TournamentGroup
      */
     public function setName($name)
     {
@@ -108,7 +108,7 @@ class TournamentGroup
      * Add matches
      *
      * @param \App\Entity\TournamentAbstractMatch $matches
-     * @return Group
+     * @return TournamentGroup
      */
     public function addMatch(\App\Entity\TournamentAbstractMatch $matches)
     {
@@ -191,7 +191,7 @@ class TournamentGroup
      * Set stage
      *
      * @param \App\Entity\TournamentGroupStage $stage
-     * @return Group
+     * @return TournamentGroup
      */
     public function setStage(\App\Entity\TournamentGroupStage $stage = null)
     {
@@ -220,7 +220,7 @@ class TournamentGroup
      * Add participants
      *
      * @param \App\Entity\Participant $participants
-     * @return Group
+     * @return TournamentGroup
      */
     public function addParticipant(\App\Entity\Participant $participants)
     {
@@ -259,7 +259,7 @@ class TournamentGroup
      * Set statsType
      *
      * @param integer $statsType
-     * @return Match
+     * @return TournamentMatch
      */
     public function setStatsType($statsType)
     {
@@ -308,7 +308,7 @@ class TournamentGroup
     {
         $array = $this->participants->toArray();
 
-        if ($this->getStatsType() == Group::STATS_SCORE)
+        if ($this->getStatsType() == TournamentGroup::STATS_SCORE)
         {
             usort($array, function ($a, $b) {
                 return $this->stats[$a->getId()]["sum"] < $this->stats[$b->getId()]["sum"] ? 1 : -1;

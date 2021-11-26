@@ -82,7 +82,7 @@ class ParticipantValidator implements EventSubscriber
 
                     
                     $waitingPlayer = $em
-                        ->getRepository('InsaLanTournamentBundle:Player')
+                        ->getRepository('App\Entity\Player')
                         ->getWaitingPlayer($entity->getTournament());
 
                     if($waitingPlayer) {
@@ -93,7 +93,7 @@ class ParticipantValidator implements EventSubscriber
                 } else {
 
                     $waitingTeam = $em
-                        ->getRepository('InsaLanTournamentBundle:Team')
+                        ->getRepository('App\Entity\TournamentTeam')
                         ->getWaitingTeam($entity->getTournament());
 
                     if($waitingTeam) {
@@ -141,7 +141,7 @@ class ParticipantValidator implements EventSubscriber
             $player->setValidated(Participant::STATUS_WAITING);
 
         if ($player->getValidated() === Participant::STATUS_VALIDATED && $player->getRegistrable() instanceof Bundle) {
-            $orders = $em->getRepository('InsaLanUserBundle:MerchantOrder')->findByPlayer($player);
+            $orders = $em->getRepository('App\Entity\UserMerchantOrder')->findByPlayer($player);
 
             foreach ($player->getRegistrable()->getTournaments() as $t) {
                 $p = new Player();
@@ -188,7 +188,7 @@ class ParticipantValidator implements EventSubscriber
 
             //Ready for validation
             $freeSlots = $em
-                ->getRepository('InsaLanTournamentBundle:Tournament')
+                ->getRepository('App\Entity\Tournament')
                 ->getFreeSlots($team->getTournament()->getId());
             if($freeSlots > 0)
                 $team->setValidated(Participant::STATUS_VALIDATED);
@@ -210,7 +210,7 @@ class ParticipantValidator implements EventSubscriber
         if($team->getPlayers()->count() < $team->getTournament()->getTeamMinPlayer()) {
             
             $waitingTeam = $em
-                    ->getRepository('InsaLanTournamentBundle:Team')
+                    ->getRepository('App\Entity\TournamentTeam')
                     ->getWaitingTeam($team->getTournament());
 
             if($waitingTeam) {

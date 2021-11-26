@@ -3,12 +3,12 @@
     {% for t in tournaments %}
     <tr>
       <td>
-        <a href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}">
+        <a href="{{ path('app_tournament_tournament', {id: t.id}) }}">
           <img src="{{ asset(t.getUploadDir() ~ t.logoPath)  }}" alt="{{ t.name }}"/>
         </a>
       </td>
       <td>
-        <a href="{{ path('insalan_tournament_default_tournament', {id: t.id}) }}" >
+        <a href="{{ path('app_tournament_tournament', {id: t.id}) }}" >
           <div>
             <h1>
               {{ t.name }}
@@ -22,9 +22,9 @@
       <td>
         <br><br>
         {% if t.participantType == "team" %}
-          <a class="btn2 btn2-nocolor" href="{{ path("insalan_tournament_default_teamlist", {"id":t.id}) }}">
+          <a class="btn2 btn2-nocolor" href="path('app_tournament_teamlist", {"id":t.id}) }}">
         {% else %}
-          <a class="btn2 btn2-nocolor" href="{{ path("insalan_tournament_default_playerlist", {"id":t.id}) }}">
+          <a class="btn2 btn2-nocolor" href="path('app_tournament_playerlist", {"id":t.id}) }}">
         {% endif %}
           Participants
         </a>
@@ -36,7 +36,7 @@
         {% endif %}
       </td>
       <td>
-        <a class="btn2 btn2-nocolor" href="{{ path('insalan_tournament_default_rules', {id: t.id}) }}" >
+        <a class="btn2 btn2-nocolor" href="{{ path('app_tournament_rules', {id: t.id}) }}" >
           Règlement
         </a>
       </td>

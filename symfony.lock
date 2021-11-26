@@ -174,6 +174,9 @@
     "symfony/polyfill-php81": {
         "version": "v1.23.0"
     },
+    "symfony/process": {
+        "version": "v4.4.34"
+    },
     "symfony/property-access": {
         "version": "v4.4.30"
     },
@@ -304,6 +307,15 @@
             "config/routes/dev/web_profiler.yaml"
         ]
     },
+    "symfony/web-server-bundle": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "dae9b39fd6717970be7601101ce5aa960bf53d9a"
+        }
+    },
     "symfony/webpack-encore-bundle": {
         "version": "1.12",
         "recipe": {
@@ -330,6 +342,9 @@
         "version": "v4.4.29"
     },
     "twig/extra-bundle": {
+        "version": "v3.3.3"
+    },
+    "twig/markdown-extra": {
         "version": "v3.3.3"
     },
     "twig/string-extra": {

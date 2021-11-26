@@ -17,6 +17,9 @@ use OAuth2\Client;
 use OAuth2\GrantType\IGrantType;
 use OAuth2\GrantType\AuthorizationCode;
 
+/**
+ * @Route("/user")
+ */
 class UserController extends Controller
 {
 
@@ -35,7 +38,7 @@ class UserController extends Controller
         if ($form->isValid()) {
             $em->persist($usr);
             $em->flush();
-            return $this->redirect($this->generateUrl('insalan_tournament_user_index'));
+            return $this->redirect($this->generateUrl('User/index'));
         }
 
         $battletag = $usr->getBattleTag();
@@ -62,7 +65,7 @@ class UserController extends Controller
         $imageSrc = null;
         $routeDelete = null;
         $login = new SteamLogin();
-        $url = $this->generateUrl('insalan_user_default_savesteamid', array('slug' => ''),UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->generateUrl('app_user_savesteamid', array('slug' => ''),UrlGeneratorInterface::ABSOLUTE_URL);
         $url = str_replace("http://", "https://", $url);
         $url = $login->url($url);
 
@@ -71,11 +74,11 @@ class UserController extends Controller
             $usr->setSteamId(null);
             $em->persist($usr);
             $em->flush();
-            return $this->redirect($this->generateUrl('insalan_user_default_registersteamid'));
+            return $this->redirect($this->generateUrl('app_user_registersteamid'));
         }
 
         if($connectedAccount != null) {
-            $routeDelete = $this->generateUrl('insalan_user_default_registersteamid');
+            $routeDelete = $this->generateUrl('app_user_registersteamid');
             $routeDelete = $routeDelete.'?action=remove';
             $steamDetails = $this->get("insalan.user.login_platform")->getSteamDetails($usr);
             $connectedAccount = $steamDetails->personaname;
