@@ -1,4 +1,7 @@
 {
+    "composer/package-versions-deprecated": {
+        "version": "1.11.99.4"
+    },
     "doctrine/deprecations": {
         "version": "v0.5.3"
     },
@@ -14,6 +17,9 @@
     "egulias/email-validator": {
         "version": "3.1.2"
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.5"
+    },
     "friendsofsymfony/user-bundle": {
         "version": "v2.2.2"
     },
@@ -22,6 +28,18 @@
     },
     "jms/serializer": {
         "version": "3.15.0"
+    },
+    "laminas/laminas-code": {
+        "version": "3.4.1"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.2.1"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.1"
+    },
+    "nikic/php-parser": {
+        "version": "v4.13.1"
     },
     "paragonie/random_compat": {
         "version": "v9.99.100"
@@ -150,6 +168,15 @@
     "symfony/lts": {
         "version": "4-dev"
     },
+    "symfony/maker-bundle": {
+        "version": "1.36",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
+        }
+    },
     "symfony/mime": {
         "version": "v5.3.8"
     },
@@ -220,6 +247,9 @@
     },
     "symfony/service-contracts": {
         "version": "v2.4.0"
+    },
+    "symfony/stopwatch": {
+        "version": "v4.4.27"
     },
     "symfony/string": {
         "version": "v5.3.10"

@@ -1,6 +1,6 @@
-{% extends 'InsaLanAdminBundle::layout.html.twig' %}
+{% extends 'Admin/adminLayout.html.twig' %}
 
-{% block stylesheets %}
+{% block customcss %}
 {{ parent() }}
   <link rel="stylesheet" href="/public/css/pizza.css" />
 {% endblock %}
@@ -16,9 +16,8 @@
 {% block javascripts %}
 {{ parent() }}
 
-{% javascripts 'public/js/jquery.js' %}
-  <script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
+  <script type="text/javascript" src="/public/js/jquery.js"></script>
+
 
 <script type="text/javascript">
   jQuery.noConflict();

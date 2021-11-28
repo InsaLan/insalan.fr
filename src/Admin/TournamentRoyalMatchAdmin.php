@@ -41,7 +41,7 @@ class TournamentRoyalMatchAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add("Tournois", StringType::class, array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
+            ->add("Tournois", StringType::class, array("template" => "Admin/tournamentAdmin:admin_extra_infos.html.twig"))
             ->add('participants', null, array('label' => "Participants"))
             ->add('group', null, array('label' => "Poule"))
             ->add('koMatch.knockout', null, array('label' => "Arbre"))
@@ -72,7 +72,7 @@ class TournamentRoyalMatchAdmin extends AbstractAdmin
                 array('actions'  => array('show' => array(),
                       'edit' => array(),
                       'createRound' => array(
-                        'template' => 'InsaLanTournamentBundle:Admin:list__action_create_round.html.twig'
+                        'template' => 'Admin/tournamentList__action_create_round.html.twig'
                       ))))
         ;
     }

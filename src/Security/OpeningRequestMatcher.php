@@ -8,7 +8,7 @@ class OpeningRequestMatcher implements RequestMatcherInterface
 {
     public function matches(Request $request)
     {
-        $date = strtotime(\App\Controller\InsalanController::OPENING_DATE);
+        $date = strtotime(\App\Controller\InformationController::OPENING_DATE);
 
         if (time() >= $date) {
             return false;

@@ -21,12 +21,12 @@ use App\Entity\Participant;
 use App\Entity\ETicket;
 
 /**
- * @Route("/ticketing")
+ * @Route("/admin")
  */
-class TicketingAdminController extends Controller
+class AdminTicketingController extends Controller
 {
     /**
-     * @Route("/admin/ready")
+     * @Route("/ticketing/ready")
      * @Template()
      */
     public function readyAction()
@@ -62,7 +62,7 @@ class TicketingAdminController extends Controller
     }
 
     /**
-     * @Route("/admin/sent")
+     * @Route("/ticketing/sent")
      * @Template()
      */
     public function sentAction()
@@ -73,7 +73,7 @@ class TicketingAdminController extends Controller
     }
 
     /**
-     * @Route("/admin/cancelled")
+     * @Route("/ticketing/cancelled")
      * @Template()
      */
     public function cancelledAction()
@@ -84,7 +84,7 @@ class TicketingAdminController extends Controller
     }
 
     /**
-     * @Route("/admin/ticket/send")
+     * @Route("/ticketing/ticket/send")
      * @Method({"POST"})
      */
     public function sendETicketAction(Request $request) {
@@ -148,7 +148,7 @@ class TicketingAdminController extends Controller
     }
 
     /**
-     * @Route("/admin/ticket/remove")
+     * @Route("/ticketing/ticket/remove")
      * @Method({"POST"})
      */
     public function removeETicketAction(Request $request) {
@@ -188,7 +188,7 @@ class TicketingAdminController extends Controller
     }
 
     /**
-     * @Route("/admin/ticket/download")
+     * @Route("/ticketing/ticket/download")
      * @Method({"POST"})
      */
     public function downloadETicketAction(Request $request) {
@@ -217,7 +217,7 @@ class TicketingAdminController extends Controller
           ->setTo([$eTicket->getUser()->getEmail()])
           ->setBody(
               $this->renderView(
-                  'InsaLanTicketingBundle:Templates:sendETicketEmail.html.twig',
+                  'sendETicketEmail.html.twig',
                   ['user' => $eTicket->getUser(),
                    'tournament' => $eTicket->getTournament()
                  ]
@@ -240,7 +240,7 @@ class TicketingAdminController extends Controller
       try {
           $pathName = realpath("").'/../data/ticket/'.$eTicket->getId().'.pdf';
           $content = $this->renderView(
-              'InsaLanTicketingBundle:Templates:ticket.html.twig',
+              'ticket.html.twig',
               ["user" => $eTicket->getUser(),
                "tournament" => $eTicket->getTournament(),
                "pseudo" => $participant->getGameName(),
@@ -271,7 +271,7 @@ class TicketingAdminController extends Controller
           ->setTo([$eTicket->getUser()->getEmail()])
           ->setBody(
               $this->renderView(
-                  'InsaLanTicketingBundle:Templates:cancelETicketEmail.html.twig',
+                  'cancelETicketEmail.html.twig',
                   ['user' => $eTicket->getUser(),
                    'tournament' => $eTicket->getTournament(),
                    'eticket' => $eTicket

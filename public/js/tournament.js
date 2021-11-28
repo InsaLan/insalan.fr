@@ -95,7 +95,7 @@ function formatImg(img)
     return '';
   }
 
-  var t = '<img src="/public/img/pix.gif" style="width:'
+  var t = '<img src=img/pix.gif" style="width:'
       + w + 'px;height:'
       + h + 'px;background:url(\'/public/img/sprite/small_'
       + img.sprite + '\') -'

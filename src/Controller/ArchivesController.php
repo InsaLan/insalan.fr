@@ -19,8 +19,7 @@ class ArchivesController extends Controller
   {
     $em = $this->getDoctrine()->getManager();
     $editions = $em->getRepository('App\Entity\ArchivesEdition')->getEditions();
-
-    return array('editions' => $editions);
+    return $this->render('archivesIndex.html.twig', ['editions' => $editions]);
   }
 
   /**
@@ -54,7 +53,7 @@ class ArchivesController extends Controller
       $aftermovie = $edition->getAftermovieUrl();
       $output['aftermovie'] = $aftermovie;
     }
-    return $output;
+    return $this->render('archivesPreviousYear.html.twig', $output);
   }
 
   /**
@@ -66,6 +65,6 @@ class ArchivesController extends Controller
     $em = $this->getDoctrine()->getManager();
 
     $streams = $em->getRepository('App\Entity\ArchivesStream')->findBy(array ('edition' => $edition, 'album' => $album));
-    return array('edition' => $edition, 'streams' => $streams, 'album' => $album, 'page' => $page);
+    return $this->render('archivesPreviousYearStreams.html.twig', ['editions' => $editions, 'streams' => $streams, 'album' => $album, 'page' => $page]);
   }
 }

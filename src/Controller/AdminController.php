@@ -18,7 +18,7 @@ class AdminController extends Controller {
      * @Template()
      */
     public function indexAction() {
-        return array();
+        return $this->render('Admin/adminIndex.html.twig');
     }
 
     /**
@@ -26,6 +26,6 @@ class AdminController extends Controller {
      * @Template()
      */
     public function webAction() {
-        return array();
+        return $this->render('Admin/adminWeb.html.twig');
     }
 }

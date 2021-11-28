@@ -1,6 +1,6 @@
 {% extends 'tournamentLayout.html.twig' %}
 
-{% block stylesheets %}
+{% block customcss %}
 {{ parent() }}
 
 <style type="text/css">
@@ -65,9 +65,7 @@ button,
 {% block javascripts %}
 {{ parent() }}
 
-{% javascripts 'public/js/jquery.js' %}
-  <script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
+  <script type="text/javascript" src="/public/js/jquery.js"></script>
 
 <script type="text/javascript">
   jQuery.noConflict();

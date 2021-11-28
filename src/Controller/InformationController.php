@@ -30,7 +30,6 @@ class InformationController extends Controller
                       'number', 'lettersNumber'];
         $globalVars = $em->getRepository('App\Entity\InsaLanGlobalVars')->getGlobalVars($globalKeys);
         return $this->render('informationAsso.html.twig', ['globalVars' => $globalVars]);
-//        return array('globalVars' => $globalVars);
     }
 
     /**
@@ -40,7 +39,6 @@ class InformationController extends Controller
     public function publicAction()
     {
         return $this->render('informationPublic.html.twig');
-//        return array();
     }
 
     /**
@@ -56,7 +54,6 @@ class InformationController extends Controller
         $globalKeys = ['playersNumber'];
         $globalVars = $em->getRepository('App\Entity\InsaLanGlobalVars')->getGlobalVars($globalKeys);
         return $this->render('informationTournament.html.twig', ['globalVars' => $globalVars]);
-//        return array('globalVars' => $globalVars);
     }
 
     /**
@@ -76,7 +73,6 @@ class InformationController extends Controller
         // Get staff
         $staff = $em->getRepository('App\Entity\InsaLanStaff')->findAll();
         return $this->render('informationWwwh.html.twig', ['globalVars' => $globalVars, 'staff' => $staff]);
-//        return array('globalVars' => $globalVars, 'staff' => $staff);
     }
 
     /**
@@ -94,7 +90,6 @@ class InformationController extends Controller
 
         $globalVars = $em->getRepository('App\Entity\InsaLanGlobalVars')->getGlobalVars($globalKeys);
         return $this->render('informationCosplay.html.twig', ['globalVars' => $globalVars]);
-//        return array('globalVars' => $globalVars);
     }
 
     /**
@@ -106,7 +101,6 @@ class InformationController extends Controller
         $em = $this->getDoctrine()->getManager();
         $document = $em->getRepository('App\Entity\InformationLegalDocument')->findOneByShortName("cosplayrules");
         return $this->render('informationLegalDocument.html.twig', ['document' => $document]);
-//        return array("document" => $document);
     }
     
     /**
@@ -123,7 +117,6 @@ class InformationController extends Controller
 
         $globalVars = $em->getRepository('App\Entity\InsaLanGlobalVars')->getGlobalVars($globalKeys);
         return $this->render('informationBaston.html.twig', ['globalVars' => $globalVars]);
-//        return array('globalVars' => $globalVars);
     }
 
     /**
@@ -155,7 +148,6 @@ class InformationController extends Controller
         $em = $this->getDoctrine()->getManager();
         $document = $em->getRepository('App\Entity\InformationLegalDocument')->findOneByShortName("mentions");
         return $this->render('informationLegalDocument.html.twig', ['document' => $document]);
-//        return array("document" => $document);
     }
 
     /**
@@ -167,7 +159,6 @@ class InformationController extends Controller
         $em = $this->getDoctrine()->getManager();
         $document = $em->getRepository('App\Entity\InformationLegalDocument')->findOneByShortName("cookiespolicy");
         return $this->render('informationLegalDocument.html.twig', ['document' => $document]);
-//        return array("document" => $document);
     }
 
     /**
@@ -203,6 +194,5 @@ class InformationController extends Controller
             }
         }
         return $this->render('informationHardwareRental.html.twig', ['validated' => $validated]);
-        return array('validated' => $validated);
     }
 }

@@ -333,7 +333,7 @@ class TournamentAdminController extends Controller
             if($ko->getDoubleElimination()) {
                 $root = $root->getChildren()->get(0);
             }
-            $koMatches = $em->getRepository('InsaLanTournamentBundle:KnockoutMatch')->getLvlChildren($root, $depth);
+            $koMatches = $em->getRepository('App\Entity\TournamentKnockoutMatch')->getLvlChildren($root, $depth);
 
             for($i = 0; $i < $children / 2; $i++) {
 

@@ -13,12 +13,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 use App\Entity;
 use App\Http\JsonResponse;
-
-class PizzaAdminController extends Controller
+/**
+ * @Route("/admin")
+ */
+class AdminPizzaController extends Controller
 {
 
   /**
-   * @Route("/admin/pizza")
+   * @Route("/pizza")
    * @Template()
    */
   public function pizzaAction() {
@@ -32,7 +34,7 @@ class PizzaAdminController extends Controller
   }
 
   /**
-   * @Route("/admin/pizza/add")
+   * @Route("/pizza/add")
    * @Method({"POST"})
    */
   public function pizza_addAction(Request $request) {
@@ -58,11 +60,11 @@ class PizzaAdminController extends Controller
       $em->flush();
     }
 
-    return $this->redirect($this->generateUrl("app_pizza_admin_pizza"));
+    return $this->redirect($this->generateUrl("app_admin_pizza_pizza"));
   }
 
   /**
-   * @Route("/admin/pizza/{id}/remove")
+   * @Route("/pizza/{id}/remove")
    * @Method({"POST"})
    */
   public function pizza_removeAction(Entity\Pizza $pizza) {
@@ -76,12 +78,12 @@ class PizzaAdminController extends Controller
       }
 
 
-      return $this->redirect($this->generateUrl("app_pizza_admin_pizza"));
+      return $this->redirect($this->generateUrl("app_admin_pizza_pizza"));
   }
 
 
   /**
-   * @Route("/admin/creneau")
+   * @Route("/creneau")
    * @Template()
    */
   public function creneauAction() {
@@ -95,7 +97,7 @@ class PizzaAdminController extends Controller
   }
 
   /**
-   * @Route("/admin/creneau/add")
+   * @Route("/creneau/add")
    * @Method({"POST"})
    */
   public function creneau_addAction(Request $request) {
@@ -115,11 +117,11 @@ class PizzaAdminController extends Controller
       $em->flush();
     }
 
-    return $this->redirect($this->generateUrl("app_pizza_admin_creneau"));
+    return $this->redirect($this->generateUrl("app_admin_pizza_creneau"));
   }
 
   /**
-   * @Route("/admin/creneau/{id}/remove")
+   * @Route("/creneau/{id}/remove")
    * @Method({"POST"})
    */
   public function creneau_removeAction(Entity\PizzaOrder $order) {
@@ -132,12 +134,12 @@ class PizzaAdminController extends Controller
         $this->get('session')->getFlashBag()->add('error', "Suppression impossible : des commandes sont associées à ce créneau.");
       }
 
-      return $this->redirect($this->generateUrl("app_pizza_admin_creneau"));
+      return $this->redirect($this->generateUrl("app_admin_pizza_creneau"));
   }
 
     /**
-     * @Route("/admin/commande")
-     * @Route("/admin/commande/{id}")
+     * @Route("/commande")
+     * @Route("/commande/{id}")
      * @Template()
      */
     public function commandeAction(Request $request, $id = null) {
@@ -163,7 +165,7 @@ class PizzaAdminController extends Controller
                   'label' => 'Créneau',
                   'choices_as_values' => true,
                   'choices' => $ordersChoices))
-            ->setAction($this->generateUrl('app_pizza_admin_commande', ['showAll' => $showAll]))
+            ->setAction($this->generateUrl('app_admin_pizza_commande', ['showAll' => $showAll]))
             ->getForm();
 
         $form->handleRequest($request);
@@ -171,7 +173,7 @@ class PizzaAdminController extends Controller
         if ($form->isValid()) {
             $data = $form->getData();
             return $this->redirect($this->generateUrl(
-                'app_pizza_admin_commande_1',
+                'app_admin_pizza_commande_1',
                 array('id' => $data['order'], 'showAll' => $showAll)));
         }
 
@@ -210,7 +212,7 @@ class PizzaAdminController extends Controller
     }
 
     /**
-     * @Route("/admin/{id}/add")
+     * @Route("/{id}/add")
      * @Method({"POST"})
      */
     public function addAction(Entity\PizzaOrder $order, Request $request) {
@@ -240,12 +242,12 @@ class PizzaAdminController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl("app_pizza_admin_commande_1", array("id" => $order->getId())));
+        return $this->redirect($this->generateUrl("app_admin_pizza_commande_1", array("id" => $order->getId())));
 
     }
 
     /**
-     * @Route("/admin/{id}/lock")
+     * @Route("/{id}/lock")
      * @Method({"POST"})
      */
     public function lockAction(Entity\PizzaOrder $order) {
@@ -253,11 +255,11 @@ class PizzaAdminController extends Controller
         $order->setClosed(true);
         $em->persist($order);
         $em->flush();
-        return $this->redirect($this->generateUrl("app_pizza_admin_commande_1", array("id" => $order->getId())));
+        return $this->redirect($this->generateUrl("app_admin_pizza_commande_1", array("id" => $order->getId())));
     }
 
     /**
-     * @Route("/admin/{id}/unlock")
+     * @Route("/{id}/unlock")
      * @Method({"POST"})
      */
     public function unlockAction(Entity\PizzaOrder $order) {
@@ -265,11 +267,11 @@ class PizzaAdminController extends Controller
         $order->setClosed(false);
         $em->persist($order);
         $em->flush();
-        return $this->redirect($this->generateUrl("app_pizza_admin_commande_1", array("id" => $order->getId())));
+        return $this->redirect($this->generateUrl("app_admin_pizza_commande_1", array("id" => $order->getId())));
     }
 
     /**
-     * @Route("/admin/order/{id}/remove")
+     * @Route("/order/{id}/remove")
      * @Method({"POST"})
      */
     public function order_removeAction(Entity\PizzaUserOrder $uo) {
@@ -281,11 +283,11 @@ class PizzaAdminController extends Controller
         $em->remove($uo);
         $em->flush();
 
-        return $this->redirect($this->generateUrl("app_pizza_admin_commande_1", array("id" => $id)));
+        return $this->redirect($this->generateUrl("app_admin_pizza_commande_1", array("id" => $id)));
     }
 
     /**
-     * @Route("/admin/order/{id}/status/{status}")
+     * @Route("/order/{id}/status/{status}")
      * @Method({"POST"})
      */
     public function order_statusAction(Entity\PizzaUserOrder $uo, $status) {
@@ -333,7 +335,7 @@ class PizzaAdminController extends Controller
                                 'Gratuit' => Entity\PizzaUserOrder::FREE_PRICE
                             ),
                         'label' => 'Tarif'))
-                    ->setAction($this->generateUrl('app_pizza_admin_add', array('id' => $o->getId())))
+                    ->setAction($this->generateUrl('app_admin_pizza_add', array('id' => $o->getId())))
                     ->getForm();
     }
 
@@ -343,7 +345,7 @@ class PizzaAdminController extends Controller
                     ->add('pizzaPrice', 'number', array('label' => 'Prix', 'required' => true))
                     ->add('pizzaVeggie', 'checkbox', array('label' => 'Veggie', 'required' => false))
                     ->add('pizzaDescription', 'text', array('label' => 'Description', 'required' => false))
-                    ->setAction($this->generateUrl('app_pizza_admin_pizza_add'))
+                    ->setAction($this->generateUrl('app_admin_pizza_pizza_add'))
                     ->getForm();
     }
 
@@ -354,7 +356,7 @@ class PizzaAdminController extends Controller
                     ->add('orderCapacity', 'number', array('label' => 20, 'required' => false))
                     ->add('orderForeignCapacity', 'number', array('label' => 3, 'required' => false))
                     ->add('orderClosed', 'checkbox', array('required' => false))
-                    ->setAction($this->generateUrl('app_pizza_admin_creneau_add'))
+                    ->setAction($this->generateUrl('app_admin_pizza_creneau_add'))
                     ->getForm();
     }
 

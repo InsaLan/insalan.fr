@@ -32,7 +32,6 @@ class NewsController extends Controller
         $globalKeys = ["fullDates", "romanNumber"];
         $globalVars = $em->getRepository("App\Entity\InsaLanGlobalVars")->getGlobalVars($globalKeys);
         return $this->render('newsIndex.html.twig', ["news" => $news, "sliders" => $sliders, "globalVars" => $globalVars]);
-//        return array("news" => $news, "sliders" => $sliders, "globalVars" => $globalVars);
     }
 
      /**

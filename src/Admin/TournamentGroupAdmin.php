@@ -59,7 +59,7 @@ class TournamentGroupAdmin extends AbstractAdmin
         $listMapper
             ->addIdentifier('name')
             ->add('stage')
-            ->add("Participants", null, array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
+            ->add("Participants", null, array("template" => "Admin/tournamentAdmin_extra_infos.html.twig"))
             ->add('_action', ActionType::class,array('actions'  => array('edit' => array(),'show' => array())));
         ;
     }

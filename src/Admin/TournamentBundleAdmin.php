@@ -44,7 +44,7 @@ class TournamentBundleAdmin extends AbstractAdmin
     {
         $listMapper
             ->addIdentifier('name')
-            ->add("Tournois", null, array("template" => "InsaLanTournamentBundle:Admin:admin_bundle_tournaments.html.twig"))
+            ->add("Tournois", null, array("template" => "Admin/tournamentAdmin_bundle_tournaments.html.twig"))
             ->add('registrationOpen')
             ->add('registrationClose')
             ->add('registrationLimit')

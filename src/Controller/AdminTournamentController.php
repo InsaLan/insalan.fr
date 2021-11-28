@@ -25,7 +25,7 @@ class AdminTournamentController extends Controller {
         $groupStage = new TournamentGroupStage();
         $form = $this->createFormBuilder($groupStage)
             ->add('name')
-            ->add('tournament', 'entity', array('class' => 'InsaLanTournamentBundle:Tournament'))
+            ->add('tournament', 'entity', array('class' => 'App\Entity\Tournament'))
             ->add('save', 'submit', array('label' => 'Créer'))
             ->getForm();
 
@@ -182,7 +182,7 @@ class AdminTournamentController extends Controller {
                                               ->where('e.validated = :status')
                                               ->setParameter('status', Participant::STATUS_VALIDATED);
                                 },
-                'class' => 'InsaLanTournamentBundle:Participant',
+                'class' => 'App\Entity\Participant',
                 'multiple' => true))
             ->add('statsType', ChoiceType::class, array(
                 'label' => "Type de score",

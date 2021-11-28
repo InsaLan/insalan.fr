@@ -1,0 +1,10 @@
+monolog:
+    channels: ['user']
+    handlers:
+        user:
+            # log all messages (since debug is the lowest level)
+            level:    debug
+            type:     rotating_file
+            path:     '%kernel.logs_dir%/user.log'
+            channels: [user]
+            max_files: 10

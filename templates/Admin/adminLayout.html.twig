@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8"/>
-    {% block stylesheets %}
+    {% block customcss %}
         <link rel="stylesheet" href="/public/css/pizza.css" />
         <link rel="stylesheet" href="/public/css/global.css" />
         <link rel="stylesheet" href="/public/css/admin.css" />
@@ -14,7 +14,7 @@
     <title>{% block title %}InsaLan{% endblock %}</title>
 
     <!--[if lt IE 9]>
-      <script src="{{ asset('public/js/html5shiv.js') }}"></script>
+      <script src="{{ asset('public/"/public/js/html5shiv.js') }}"></script>
     <![endif]-->
   </head>
 
@@ -60,27 +60,27 @@
                 </div>
               </li>
               <li class="dropdown {% if page in [
-                  '_pizza_admin_commande',
-                  '_pizza_admin_creneau',
-                  '_pizza_admin_pizza'
+                  '_adminpizza_commande',
+                  '_adminpizza_creneau',
+                  '_adminpizza_pizza'
                 ] %}active{% endif %}">
                 <a href="">Pizzas</a>
                 <div class="dropdown-content">
-                  <a href="{{ path('app_pizza_admin_commande') }}">Commandes</a>
-                  <a href="{{ path('app_pizza_admin_creneau') }}">Créneaux</a>
-                  <a href="{{ path('app_pizza_admin_pizza') }}">Liste des pizzas</a>
+                  <a href="{{ path('app_adminpizza_commande') }}">Commandes</a>
+                  <a href="{{ path('app_adminpizza_creneau') }}">Créneaux</a>
+                  <a href="{{ path('app_adminpizza_pizza') }}">Liste des pizzas</a>
                 </div>
               </li>
               <li class="dropdown {% if page in [
-                  '_ticketing_admin_ready',
-                  '_ticketing_admin_sent',
-                  '_ticketing_admin_cancelled'
+                  '_adminticketing_ready',
+                  '_adminticketing_sent',
+                  '_adminticketing_cancelled'
                 ] %}active{% endif %}">
                 <a href="">Billetterie</a>
                 <div class="dropdown-content">
-                  <a href="{{ path('app_ticketing_admin_ready') }}">Billets à envoyer</a>
-                  <a href="{{ path('app_ticketing_admin_sent') }}">Billets envoyés</a>
-                  <a href="{{ path('app_ticketing_admin_cancelled') }}">Billets annulés</a>
+                  <a href="{{ path('app_adminticketing_ready') }}">Billets à envoyer</a>
+                  <a href="{{ path('app_adminticketing_sent') }}">Billets envoyés</a>
+                  <a href="{{ path('app_adminticketing_cancelled') }}">Billets annulés</a>
                 </div>
               </li>
             </ul>
@@ -112,9 +112,9 @@
     {% block main_bottom %}{% endblock %}
 
     {% block javascripts %}
-        <script type="text/javascript" src="public/js/mootools-core-1.4.5.js"></script>
-        <script type="text/javascript" src="public/js/admin.js"></script>
-        <script type="text/javascript" src="public/js/jquery.js"></script>
+        <script type="text/javascript" src="/public/js/mootools-core-1.4.5.js"></script>
+        <script type="text/javascript" src="/public/js/admin.js"></script>
+        <script type="text/javascript" src="/public/js/jquery.js"></script>
     {% endblock %}
   </body>
 </html>

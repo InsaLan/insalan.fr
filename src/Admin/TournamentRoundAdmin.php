@@ -39,7 +39,7 @@ class TournamentRoundAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add("Détails", null, array("template" => "InsaLanTournamentBundle:Admin:admin_extra_infos.html.twig"))
+            ->add("Détails", null, array("template" => "Admin/tournamentAdmin_extra_infos.html.twig"))
             ->add('match',   null, array('route' => array('name' => 'show')))
             ->add('scores',  null, array('label' => "Scores"))
             ->add('fullReplay', TextType::class, array('label' => "Replay"))

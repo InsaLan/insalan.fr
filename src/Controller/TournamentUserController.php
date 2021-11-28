@@ -253,7 +253,7 @@ class TournamentUserController extends Controller
     /**
      * Prompt the user to fill-in his LoginPlatform infos
      * @Route("/{tournament}/user/player/registerLoginPlatform/")
-     * @Template("InsaLanTournamentBundle:User:redirectToApiLogin.html.twig")
+     * @Template("User/redirectToApiLogin.html.twig")
      */
     public function redirectToApiLoginAction(Request $request, Entity\Tournament $tournament) {
         return array('tournament' => $tournament);

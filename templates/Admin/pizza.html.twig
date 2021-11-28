@@ -1,4 +1,4 @@
-{% extends 'InsaLanPizzaBundle::Admin/layout.html.twig' %}
+{% extends 'Admin/pizzaLayout.html.twig' %}
 
 {% block title %}
 {{ parent() }}
@@ -53,7 +53,7 @@
           {% endif %}
         </td>
         <td>
-          <form method="POST" action="{{ path('app_pizza_admin_pizza_remove', {id: pizza.id}) }}">
+          <form method="POST" action="{{ path('app_admin_pizza_pizza_remove', {id: pizza.id}) }}">
             <input type="submit" value="Supprimer" onclick="return confirm('Confirmer la suppression ?');"/>
           </form>
         </td>

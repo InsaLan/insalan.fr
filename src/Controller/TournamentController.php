@@ -46,11 +46,7 @@ class TournamentController extends Controller
         'registration_closed_tournaments' => $registration_closed_tournaments,
          'future_tournaments' => $future_tournaments,
         'opened_tournaments' => $opened_tournaments]);
-/**         return array('old_tournaments' => $old_tournaments,
-*                     'registration_closed_tournaments' => $registration_closed_tournaments,
-*                      'future_tournaments' => $future_tournaments,
-*                      'opened_tournaments' => $opened_tournaments);
-*/
+
     }
 
     /**
@@ -78,7 +74,6 @@ class TournamentController extends Controller
             $output[] = $ko;
         }
         return $this->render('tournamentStages.html.twig',['t' => $tournament, 'stages' => $stages, 'knockouts' => $output]);
-//        return array('t' => $tournament, 'stages' => $stages, 'knockouts' => $output);
     }
 
     /**
@@ -89,7 +84,6 @@ class TournamentController extends Controller
     public function rulesAction(Entity\Tournament $tournament)
     {
         return $this->render('tournamentRules.html.twig',['t' => $tournament]);
-//        return array('t' => $tournament);
     }
 
     /**
@@ -109,7 +103,6 @@ class TournamentController extends Controller
             if ($t->getValidated() == Entity\Participant::STATUS_WAITING) $nbWaitingTeams++;
         }
         return $this->render('tournamentTeamList.html.twig',['teams' => $teams, 'tournament' => $tournament, 'nbPendingTeams' => $nbPendingTeams, 'nbWaitingTeams' => $nbWaitingTeams]);
-//        return array('teams' => $teams, 'tournament' => $tournament, 'nbPendingTeams' => $nbPendingTeams, 'nbWaitingTeams' => $nbWaitingTeams);
     }
 
     /**
@@ -129,7 +122,6 @@ class TournamentController extends Controller
             if ($p->getValidated() == Entity\Participant::STATUS_WAITING) $nbWaitingPlayers++;
         }
         return $this->render('tournamentPlayerList.html.twig', ['players' => $players, 'tournament' => $tournament, 'nbPendingPlayers' => $nbPendingPlayers, 'nbWaitingPlayers' => $nbWaitingPlayers]);
-//        return array('players' => $players, 'tournament' => $tournament, 'nbPendingPlayers' => $nbPendingPlayers, 'nbWaitingPlayers' => $nbWaitingPlayers);
     }
 
 
@@ -233,7 +225,6 @@ class TournamentController extends Controller
             $output[] = $ko;
         }
         return $this->render('tournamentKnockout.html.twig',["tournament" => $t, "knockouts" => $output]);
-//        return array("tournament" => $t, "knockouts" => $output);
 
 
     }
@@ -276,7 +267,6 @@ class TournamentController extends Controller
             }
         }
         return $this->render('tournamentTeamDetails.html.twig',["part" => $part, "groupMatches" => $grs, "knockoutMatches" => $kos, "authorized" => $this->isUserInTeam($part)]);
-//        return array("part" => $part, "groupMatches" => $grs, "knockoutMatches" => $kos, "authorized" => $this->isUserInTeam($part));
     }
 
     private function isUserInTeam(Entity\Participant $part) {

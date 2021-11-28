@@ -25,7 +25,7 @@ class UserController extends Controller
 
     /**
      * @Route("/")
-     * @Template("InsaLanUserBundle:Default:more.html.twig")
+     * @Template("userMore.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -35,10 +35,10 @@ class UserController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($usr);
             $em->flush();
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('User/more'));
         }
 
         $battletag = $usr->getBattleTag();
@@ -47,16 +47,11 @@ class UserController extends Controller
         if ($usr->getSteamId() != null) {
             $steam = $this->get("insalan.user.login_platform")->getSteamDetails($usr);
         }
-
-        return array(
-            'form' => $form->createView(),
-            'steam' => $steam,
-            'battletag' => $battletag,
-        );
+        return $this->render('userMore.html.twig', ['form' => $form->createView(), 'steam' => $steam, 'battletag' => $battletag,]);
     }
     /**
      * @Route("/steamSignin",)
-     * @Template("InsaLanUserBundle:Default:steamRegistration.html.twig")
+     * @Template("userSteamRegistration.html.twig")
      */
     public function registerSteamIdAction(Request $request)
     {
@@ -85,12 +80,12 @@ class UserController extends Controller
             $imageSrc = $steamDetails->avatar;
         }
 
-        return array('url' => $url, 'connectedAccount' => $connectedAccount, 'avatarSteamSrc' => $imageSrc,"deleteLink" => $routeDelete);
+        return $this->render('userSteamRegistration.html.twig', ['url' => $url, 'connectedAccount' => $connectedAccount, 'avatarSteamSrc' => $imageSrc,"deleteLink" => $routeDelete]);
     }
 
     /**
      * @Route("/steamSignin/sent",)
-     * @Template("InsaLanUserBundle:Default:steamRegistrationSent.html.twig")
+     * @Template("userSteamRegistrationSent.html.twig")
      */
     public function saveSteamIdAction(Request $request)
     {
@@ -99,7 +94,7 @@ class UserController extends Controller
         try {
             $id = $login->validate(100);
         } catch (\Exception $e) {
-            return array('erreur' => true);
+            return $this->render('userSteamRegistrationSent.html.twig', ['erreur' => true]);
         }
         $em = $this->getDoctrine()->getManager();
         $callbackRoute = $this->get('session')->get('callbackRegisterApiRoute');
@@ -119,16 +114,15 @@ class UserController extends Controller
             $steamDetails = $this->get("insalan.user.login_platform")->getSteamDetails($usr);
             $connectedAccount = $steamDetails->personaname;
             $imageSrc = $steamDetails->avatarmedium;
-
-            return array('connectedAccount' => $connectedAccount, 'avatarSteamSrc' => $imageSrc);
+            return $this->render('userSteamRegistrationSent.html.twig', ['connectedAccount' => $connectedAccount, 'avatarSteamSrc' => $imageSrc]);
         }
 
-        return array('erreur' => true);
+        return $this->render('userSteamRegistrationSent.html.twig', ['erreur' => true]);
     }
 
     /**
      * @Route("/battleNetSignIn",)
-     * @Template("InsaLanUserBundle:Default:battleNetRegistration.html.twig")
+     * @Template("userBattleNetRegistration.html.twig")
      */
     public function registerBattleNetAction(Request $request)
     {
@@ -151,11 +145,11 @@ class UserController extends Controller
         }
         $client = new Client($client_id, $client_secret);
         if($usr->getBattleTag() != null) {
-            return array('enregistre' => true, 'battletag' => $usr->getBattleTag());
+            return $this->render('userBattleNetRegistration.html.twig', ['enregistre' => true, 'battletag' => $usr->getBattleTag()]);
         }
         if (!isset($_GET['code'])) {
             $auth_url = $client->getAuthenticationUrl($authorize_uri, $redirect_uri);
-            return array('enregistre' => false, 'url' => $auth_url);
+            return $this->render('userBattleNetRegistration.html.twig', ['enregistre' => false, 'url' => $auth_url]);
         } else {
             $code = $_GET['code'];
             $params = array('code' => $code, 'redirect_uri' => $redirect_uri);
@@ -170,12 +164,12 @@ class UserController extends Controller
                     $usr->setBattleTagUpdatedAt(new \DateTime("now"));
                     $em->persist($usr);
                     $em->flush();
-                    return array('enregistre' => true, 'battletag' => $usr->getBattleTag());
+                    return $this->render('userBattleNetRegistration.html.twig', ['enregistre' => true, 'battletag' => $usr->getBattleTag()]);
                 } else {
-                    return array('erreur' => true);
+                    return $this->render('userBattleNetRegistration.html.twig', ['erreur' => true]);
                 }
             } catch(\Exception $e) {
-                return array('erreur' => true);
+                    return $this->render('userBattleNetRegistration.html.twig', ['erreur' => true]);
             }
         }
         return null;

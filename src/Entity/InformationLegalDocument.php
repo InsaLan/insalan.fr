@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * LegalDocument
  *
  * @ORM\Table(name="legal_document")
- * @ORM\Entity(repositoryClass="App\Repository\InformationLegalDocumentRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\LegalDocumentRepository")
  */
 class InformationLegalDocument
 {
