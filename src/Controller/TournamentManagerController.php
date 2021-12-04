@@ -82,7 +82,7 @@ class TournamentManagerController extends Controller
         $countManagers = count($em->getRepository('App\Entity\TournamentManager')->findByTournament($tournament));
         if($tournament->getMaxManager() != null && $countManagers >= $tournament->getMaxManager()) {
             $this->get('session')->getFlashBag()->add('error', "Il ne reste plus de places manager sur ce tournois !");
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
         }
 
         if ($manager === null) {
@@ -402,18 +402,18 @@ class TournamentManagerController extends Controller
         // not allowed if he paid something
         if(!$tournament->isFree() && $manager->getPaymentDone()){
             $this->get('session')->getFlashBag()->add('error', "Vous avez payé votre place, merci de contacter l'InsaLan si vous souhaitez vous désister.");
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
         }
         // not allowed either if registration are closed
         if(!$tournament->isOpenedNow())
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         $manager->getParticipant()->setManager(null);
         $manager->setParticipant(null);
         $em->remove($manager);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('User/index'));
+        return $this->redirect($this->generateUrl('app_user_index'));
     }
 
     /**
@@ -428,7 +428,7 @@ class TournamentManagerController extends Controller
             ->findOneById($teamId);
 
         if($team === null)
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         // get targeted manager
         $usr = $this->get('security.token_storage')->getToken()->getUser();
@@ -438,16 +438,16 @@ class TournamentManagerController extends Controller
 
         // is he part of the team roster ?
         if($team->getManager() != $manager)
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         // not allowed if he paid something
         if(!$team->getTournament()->isFree() && $manager->getPaymentDone()){
             $this->get('session')->getFlashBag()->add('error', "Vous avez payé votre place, merci de contacter l'InsaLan si vous souhaitez vous désister.");
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
         }
         // not allowed either if registration are closed
         if(!$team->getTournament()->isOpenedNow())
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         $manager->setParticipant(null);
         $team->setManager(null);
@@ -456,7 +456,7 @@ class TournamentManagerController extends Controller
         $em->remove($manager);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('User/index'));
+        return $this->redirect($this->generateUrl('app_user_index'));
     }
 
 }

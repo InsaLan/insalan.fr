@@ -82,7 +82,7 @@
         <header class="huge-button">
           <div class="title pull-left">
             {% if app.user %}
-              <a href="{{ path('User/index') }}" style="display:block">MON COMPTE</a>
+              <a href="{{ path('app_user_index') }}" style="display:block">MON COMPTE</a>
             {% else %}
               <a href="{{path('fos_user_registration_register') }}" style="display:block">INSCRIPTION</a>
             {% endif %}
@@ -116,7 +116,7 @@
     </div>
 
     <div class="huge-container">
-      <a href="{{ 'User/index' }}" class="btn2">Inscription</a>
+      <a href="{{ path('app_user_index') }}" class="btn2">Inscription</a>
     </div>
   </section>
 </div>

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
 use App\Entity\Participant;
+use App\Entity\Tournament;
 
 class TournamentTeamRepository extends EntityRepository
 {
