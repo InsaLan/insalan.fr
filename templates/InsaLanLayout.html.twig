@@ -3,17 +3,17 @@
   <head>
     <meta charset="utf-8"/>
     {% block customcss %}
-        <link rel="stylesheet" href="/public/css/global.css" />
-        <link rel="stylesheet" href="/public/css/info.css" />
+        <link rel="stylesheet" href="{{ asset('css/global.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/info.css') }}" />
     {% endblock %}
 
-    <link href="{{ asset('/public/img/favicon.png') }}" rel="icon" type="image/png"/>
+    <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png"/>
     <link href="//fonts.googleapis.com/css?family=PT+Sans%7COpen+Sans:300%7COswald" rel="stylesheet" type="text/css"/>
 
     <title>{% block title %}InsaLan{% endblock %}</title>
 
     <!--[if lt IE 9]>
-      <script src="{{ asset('"/public/js/html5shiv.js') }}"></script>
+      <script src="{{ asset('js/html5shiv.js') }}"></script>
     <![endif]-->
   </head>
 
@@ -39,7 +39,7 @@
         
         <div class="logo">
           <a href="{{ path('app_news_index') }}">
-            <img src="{{ asset('/public/img/logo-noyear-downscaled.png') }}" alt="InsaLan"/>
+            <img src="{{ asset('img/logo-noyear-downscaled.png') }}" alt="InsaLan"/>
           </a>
         </div>
 
@@ -133,12 +133,12 @@
         </li>
         <li>
           <a id="twitter" target="_blank" href="https://twitter.com/insalan">
-            <img src="{{ asset('/public/img/twitter.png') }}" alt="Twitter"/>
+            <img src="{{ asset('img/twitter.png') }}" alt="Twitter"/>
           </a>
         </li>
         <li>
           <a id="facebook" target="_blank" href="https://www.facebook.com/insalan">
-            <img src="{{ asset('/public/img/facebook.png') }}" alt="Facebook"/>
+            <img src="{{ asset('img/facebook.png') }}" alt="Facebook"/>
           </a>
         </li>
         <li>
@@ -169,10 +169,10 @@
           <div>
             <a id="logo" href="{{ path('app_news_index') }}"></a>
             <a id="facebook" href="https://www.facebook.com/insalan">
-              <img src="{{ asset('/public/img/facebook.png') }}" alt="Facebook"/>
+              <img src="{{ asset('img/facebook.png') }}" alt="Facebook"/>
             </a>
             <a id="twitter" href="https://twitter.com/insalan">
-              <img src="{{ asset('/public/img/twitter.png') }}" alt="Twitter"/>
+              <img src="{{ asset('img/twitter.png') }}" alt="Twitter"/>
             </a>
             <div id="mail"><a href="mailto:contact@insalan.fr">contact@insalan.fr</a></div>
           </div>
@@ -227,12 +227,12 @@
           <ul>
             <li>
               <a href="http://aeir.insa-rennes.fr/">
-                <img src="{{ asset('/public/img/partners-preview/aeir.png') }}" alt="AEIR" />
+                <img src="{{ asset('img/partners-preview/aeir.png') }}" alt="AEIR" />
               </a> 
             </li>
             <li>
               <a href="http://www.insa-rennes.fr">
-                <img src="{{ asset('/public/img/partners-preview/insa-rennes.png') }}" alt="INSA Rennes"/>
+                <img src="{{ asset('img/partners-preview/insa-rennes.png') }}" alt="INSA Rennes"/>
               </a>
             </li>
           </ul>
@@ -253,12 +253,12 @@
     {% endblock %}
 
     {% block javascripts %}
-        <script type="text/javascript" src="/public/js/mootools-core-1.4.5.js"></script>
-        <script type="text/javascript" src="/public/js/mootools-more-1.4.0.1.js"></script>
-        <script type="text/javascript" src="/public/js/global.js"></script>
-        <script type="text/javascript" src="/public/tarteaucitron.js/tarteaucitron.js"></script>
+        <script type="text/javascript" src="{{ asset('js/mootools-core-1.4.5.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/mootools-more-1.4.0.1.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/global.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('tarteaucitron.js/tarteaucitron.js') }}"></script>
 
-        <script type="text/javascript" src="/public/js/tarteaucitron.config.js"></script>
+        <script type="text/javascript" src="{{ asset('js/tarteaucitron.config.js') }}"></script>
     {% endblock %}
   </body>
 </html>

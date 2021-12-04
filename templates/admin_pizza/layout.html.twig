@@ -2,7 +2,7 @@
 
 {% block customcss %}
 {{ parent() }}
-  <link rel="stylesheet" href="/public/css/pizza.css" />
+  <link rel="stylesheet" href="{{ asset("css/pizza.css") }}" />
 {% endblock %}
 
 {% block main_header %}
@@ -16,7 +16,7 @@
 {% block javascripts %}
 {{ parent() }}
 
-  <script type="text/javascript" src="/public/js/jquery.js"></script>
+  <script type="text/javascript" src="{{ asset("js/jquery.js") }}"></script>
 
 
 <script type="text/javascript">

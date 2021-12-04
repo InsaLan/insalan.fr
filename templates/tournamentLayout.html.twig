@@ -9,7 +9,7 @@
 {% block stylesheets %}
 {{ parent() }}
 
-  <link rel="stylesheet" href="/public/css/jquery.bracket.min.css" />
+  <link rel="stylesheet" href="{{ asset("css/jquery.bracket.min.css") }}" />
 
 <style type="text/css"> {# overrides jQBracket style #}
   {#
@@ -35,8 +35,8 @@
 {% block javascripts %}
 {{ parent() }}
 
-  <script type="text/javascript" src="/public/js/jquery.js"></script>
-  <script type="text/javascript" src="/public/js/jquery.bracket.min.js"></script>
+  <script type="text/javascript" src="{{ asset("js/jquery.js") }}"></script>
+  <script type="text/javascript" src="{{ asset("js/jquery.bracket.min.js") }}"></script>
 
 <script type="text/javascript">
   jQuery.noConflict();

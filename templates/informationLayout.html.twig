@@ -9,8 +9,8 @@
 {#
 {% block customcss %}
 {{ parent() }}
-    <link rel="stylesheet" href="/public/css/global.css" />
-    <link rel="stylesheet" href="/public/css/info.css" />
+    <link rel="stylesheet" href="{{ asset("css/global.css") }}" />
+    <link rel="stylesheet" href="{{ asset("css/info.css") }}" />
 {% endblock %}
 #}
 
