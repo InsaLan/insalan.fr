@@ -34,7 +34,7 @@ use App\Exception\ControllerException;
 use App\Entity\Player;
 use App\Entity\Team;
 use App\Entity;
-use App\GlobalVars;
+use App\Entity\InsaLanGlobalVars;
 
 use App;
 use App\Entity\PaymentDetails;
@@ -107,7 +107,7 @@ class TournamentUserController extends Controller
 
         if(!$tournament->isPending() || !$tournament->getPlacement()) {
             $this->get('session')->getFlashBag()->add('error', "Le tournoi ne permet pas de choisir de places actuellement.");
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
         }
 
         $participant = $em->getRepository('App\Entity\Participant')
@@ -118,7 +118,7 @@ class TournamentUserController extends Controller
             $participant instanceof Entity\Team &&
             $participant->getCaptain()->getUser() !== $usr) {
             $this->get('session')->getFlashBag()->add('error', "Seul le capitaine peut choisir une place pour l'équipe.");
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
         }
 
         if(null !== ($placement = $request->query->get("placement"))) {
@@ -164,7 +164,7 @@ class TournamentUserController extends Controller
             // Check if registrations have started
         if ($registrable->isOpenedInFuture()) {
           $this->get('session')->getFlashBag()->add('error', "Les inscriptions ne sont pas encore ouvertes pour ce tournoi.");
-          return $this->redirect($this->generateUrl('User/index'));
+          return $this->redirect($this->generateUrl('app_user_index'));
         }
 
         $player = $em
@@ -173,7 +173,7 @@ class TournamentUserController extends Controller
 
         if ($player === null && $registrable->isLocked() && !$registrable->checkLocked($this->get('session')->get($registrable->getId() . ".authToken", ''))) {
             $this->get('session')->getFlashBag()->add('error', "Ce tournois n'est accessible que sur invitation.");
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
         }
         else if ($player === null)
             return $this->redirect($this->generateUrl('app_tournamentuser_setplayer',array('registrable' => $registrable->getId())));
@@ -195,7 +195,7 @@ class TournamentUserController extends Controller
         // check provided token
         if (!$registrable->checkLocked($authToken)) {
             $this->get('session')->getFlashBag()->add('error', "Ce tournois n'est accessible que sur invitation.");
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
         } else { // from here we are authentificated
             $this->get('session')->set($registrable->getId() . ".authToken", $authToken);
             $this->get('session')->getMetadataBag()->stampNew(0);
@@ -222,13 +222,13 @@ class TournamentUserController extends Controller
             // Check if registrations have started
             if ($registrable->isOpenedInFuture()) {
               $this->get('session')->getFlashBag()->add('error', "Les inscriptions ne sont pas encore ouvertes pour ce tournoi.");
-              return $this->redirect($this->generateUrl('User/index'));
+              return $this->redirect($this->generateUrl('app_user_index'));
             }
 
             // make sure we are allowed to register
             if ($registrable->isLocked() && !$registrable->checkLocked($this->get('session')->get($registrable->getId() . ".authToken", ''))) {
                 $this->get('session')->getFlashBag()->add('error', "Ce tournois n'est accessible que sur invitation.");
-                return $this->redirect($this->generateUrl('User/index'));
+                return $this->redirect($this->generateUrl('app_user_index'));
             }
 
             $player = new Player();
@@ -315,17 +315,17 @@ class TournamentUserController extends Controller
         // not allowed if he paid something
         if(!$player->getRegistrable()->isFree() && $player->getPaymentDone()){
             $this->get('session')->getFlashBag()->add('error', "Vous avez payé votre place, merci de contacter l'InsaLan si vous souhaitez vous désister.");
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
         }
 
         // not allowed either if registration are closed
         if(!$player->getRegistrable()->isOpenedNow())
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         $em->remove($player);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('User/index'));
+        return $this->redirect($this->generateUrl('app_user_index'));
     }
 
     /**
@@ -528,7 +528,7 @@ class TournamentUserController extends Controller
             ->findOneById($teamId);
 
         if($team === null)
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         // get targeted player
         $usr = $this->get('security.token_storage')->getToken()->getUser();
@@ -538,16 +538,16 @@ class TournamentUserController extends Controller
 
         // is he part of the team roster ?
         if(!$team->haveInPlayers($player))
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         // not allowed if he paid something
         if(!$team->getTournament()->isFree() && $player->getPaymentDone()){
             $this->get('session')->getFlashBag()->add('error', "Vous avez payé votre place, merci de contacter l'InsaLan si vous souhaitez vous désister.");
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
         }
         // not allowed either if registration are closed
         if(!$team->getTournament()->isOpenedNow())
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         $player->leaveTeam($team);
         $team->removePlayer($player);
@@ -568,7 +568,7 @@ class TournamentUserController extends Controller
 
         $em->remove($player);
         $em->flush();
-        return $this->redirect($this->generateUrl('User/index'));
+        return $this->redirect($this->generateUrl('app_user_index'));
     }
 
     /**
@@ -586,7 +586,7 @@ class TournamentUserController extends Controller
 
         // does the team exist ?
         if($team === null)
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         // get current logged user corresponding player
         $usr = $this->get('security.token_storage')->getToken()->getUser();
@@ -596,7 +596,7 @@ class TournamentUserController extends Controller
 
         // is he really the captain ? (also check for null)
         if($team->getCaptain() !== $captain)
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         $form = $this->createForm('App\Form\TeamType',
                                   $team,
@@ -618,7 +618,7 @@ class TournamentUserController extends Controller
             $em->persist($team);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
         }
 
         $tournament = $team->getTournament();
@@ -639,11 +639,11 @@ class TournamentUserController extends Controller
 
         // does the team exist ?
         if($team === null)
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         // not allowed if registration are closed
         if(!$team->getTournament()->isOpenedNow())
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         // get current logged user corresponding player
         $usr = $this->get('security.token_storage')->getToken()->getUser();
@@ -653,7 +653,7 @@ class TournamentUserController extends Controller
 
         // is he really the captain ? (also check for null)
         if($team->getCaptain() !== $captain)
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         $playerToBan = $em
             ->getRepository('App\Entity\Player')
@@ -661,11 +661,11 @@ class TournamentUserController extends Controller
 
         // does this player exist ?
         if($playerToBan === null)
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         // not possible if the player payed something ! (paid tournament + payement done)
         if(!$team->getTournament()->isFree() && $playerToBan->getPaymentDone())
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         /**
          * Manage team validation state
@@ -675,7 +675,7 @@ class TournamentUserController extends Controller
          */
         if(!$team->getTournament()->isFree() && $team->getValidated() && $team->getPlayers()->count() <= $team->getTournament()->getTeamMinPlayer()) {
             $this->get('session')->getFlashBag()->add('error', "Votre équipe est validée et si vous bannissez ce joueur vous serez en dessous du nombre minimum de joueurs.");
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
         }
 
         // captain cannot ban himself !
@@ -694,7 +694,7 @@ class TournamentUserController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('User/index'));
+        return $this->redirect($this->generateUrl('app_user_index'));
     }
 
     /**
@@ -709,7 +709,7 @@ class TournamentUserController extends Controller
 
         // does the team exist ?
         if($team === null)
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         // get current logged user corresponding player
         $usr = $this->get('security.token_storage')->getToken()->getUser();
@@ -719,7 +719,7 @@ class TournamentUserController extends Controller
 
         // is he really the captain ? (also check for null)
         if($team->getCaptain() !== $captain)
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         $playerToPromote = $em
             ->getRepository('App\Entity\Player')
@@ -727,17 +727,17 @@ class TournamentUserController extends Controller
 
         // does this player exist ?
         if($playerToPromote === null)
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         // is he part of the team roster ?
         if(!$team->haveInPlayers($playerToPromote))
-            return $this->redirect($this->generateUrl('User/index'));
+            return $this->redirect($this->generateUrl('app_user_index'));
 
         $team->setCaptain($playerToPromote);
         $em->persist($team);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('User/index'));
+        return $this->redirect($this->generateUrl('app_user_index'));
     }
 
     /**

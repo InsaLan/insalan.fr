@@ -22,7 +22,6 @@ class PizzaUserOrderAdmin extends AbstractAdmin
             ->add('delivered', null, array("label" => "Livrée", "required" => false))
             ->add('foreign', null, array("label" => "Visiteur", "required" => false))
             ->add('type', ChoiceType::class, array(
-                'choices_as_values' => true,
                 'choices' => array(
                     'Manuel' => 0,
                     'Paypal' => 1
@@ -31,7 +30,6 @@ class PizzaUserOrderAdmin extends AbstractAdmin
                 'required' => true
             ))
             ->add('price', ChoiceType::class, array(
-                'choices_as_values' => true,
                 'choices' => array(
                     'Plein tarif' => 0,
                     'Tarif staff' => 1,

@@ -8,6 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Entity\TournamentMatch;
 
 /**
  * @ORM\Entity
@@ -48,8 +49,7 @@ class TournamentRound
      */
     protected $data;
 
-    // CUSTOM FUNCTIONS FOR ADMIN
-
+    
     public function __toString()
     {
         return "[" . implode(' - ', array_map(function($s) { return $s->__toString(); }, $this->scores->toArray())) . "]";
@@ -170,7 +170,7 @@ class TournamentRound
      *
      * @param \App\Entity\Participant $participant
      * @param integer $score
-     * @return Round
+     * @return TournamentRound
      */
     public function setScore(\App\Entity\Participant $participant, $score)
     {
@@ -261,10 +261,10 @@ class TournamentRound
     /**
      * Set match
      *
-     * @param \App\Entity\TournamentAbstractMatch $match
-     * @return Round
+     * @param TournamentAbstractMatch $match
+     * @return TournamentRound
      */
-    public function setMatch(\App\Entity\TournamentAbstractMatch $match = null)
+    public function setMatch(TournamentAbstractMatch $match = null)
     {
         $this->match = $match;
 
@@ -274,7 +274,7 @@ class TournamentRound
     /**
      * Get match
      *
-     * @return \App\Entity\TournamentAbstractMatch
+     * @return TournamentAbstractMatch
      */
     public function getMatch()
     {
@@ -287,7 +287,7 @@ class TournamentRound
      * Set replay
      *
      * @param string $replay
-     * @return Round
+     * @return TournamentRound
      */
     public function setReplay($replay)
     {
@@ -312,7 +312,7 @@ class TournamentRound
      * Set data
      *
      * @param string $data
-     * @return Round
+     * @return TournamentRound
      */
     public function setData($data)
     {

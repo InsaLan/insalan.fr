@@ -24,7 +24,6 @@ class TournamentPlayerAdmin extends AbstractAdmin
             ->add('tournament')
             ->add('paymentDone', null, array('required'=>false))
             ->add('validated', ChoiceType::class, array(
-                'choices_as_values' => true,
                 'required' => true,
                 'choices' => array(
                     'Non payé' => 0,

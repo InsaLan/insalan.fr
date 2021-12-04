@@ -1,6 +1,6 @@
 {% for s in stages %}
 <section>
   <h3>{{ s.name }}</h3>
-  {{ render(controller('InsaLanTournamentBundle:Default:groups', {'stage': s.id })) }}
+  {{ render(controller('App\\Controller\\TournamentController:tournamentGroups', {'stage': s.id })) }}
 </section>
 {% endfor %}

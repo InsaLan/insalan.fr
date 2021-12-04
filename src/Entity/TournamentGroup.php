@@ -3,10 +3,13 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\TournamentMatch;
+use App\Entity\Participant;
+use App\Entity\TournamentGroupStage;
+use App\Entity;
 
 /**
- * @ORM\Entity(repositoryClass="App\Entity\TournamentGroupRepository")
- * @ORM\Table(name="`Group`")
+ * @ORM\Entity(repositoryClass="App\Repository\TournamentGroupRepository")
  */
 class TournamentGroup
 {
@@ -190,10 +193,10 @@ class TournamentGroup
     /**
      * Set stage
      *
-     * @param \App\Entity\TournamentGroupStage $stage
+     * @param TournamentGroupStage $stage
      * @return TournamentGroup
      */
-    public function setStage(\App\Entity\TournamentGroupStage $stage = null)
+    public function setStage(TournamentGroupStage $stage = null)
     {
         $this->stage = $stage;
 
@@ -203,7 +206,7 @@ class TournamentGroup
     /**
      * Get stage
      *
-     * @return \App\Entity\TournamentGroupStage
+     * @return TournamentGroupStage
      */
     public function getStage()
     {
@@ -219,10 +222,10 @@ class TournamentGroup
     /**
      * Add participants
      *
-     * @param \App\Entity\Participant $participants
+     * @param Participant $participants
      * @return TournamentGroup
      */
-    public function addParticipant(\App\Entity\Participant $participants)
+    public function addParticipant(Participant $participants)
     {
         $this->participants[] = $participants;
 
@@ -232,9 +235,9 @@ class TournamentGroup
     /**
      * Remove participants
      *
-     * @param \App\Entity\Participant $participants
+     * @param Participant $participants
      */
-    public function removeParticipant(\App\Entity\Participant $participants)
+    public function removeParticipant(Participant $participants)
     {
         return $this->participants->removeElement($participants);
 
@@ -250,7 +253,7 @@ class TournamentGroup
         return $this->participants;
     }
 
-    public function hasParticipant(\App\Entity\Participant $participant)
+    public function hasParticipant(Participant $participant)
     {
         return $this->participants->contains($participant);
     }
@@ -281,11 +284,11 @@ class TournamentGroup
     /**
      * Get the match between two participants in this group only
      *
-     * @param  \App\Entity\Participant $A
-     * @param  \App\Entity\Participant $B
-     * @return \App\Entity\TournamentMatch       or null if not available
+     * @param  Participant $A
+     * @param  Participant $B
+     * @return TournamentMatch       or null if not available
      */
-    public function getMatchBetween(\App\Entity\Participant $A, \App\Entity\Participant $B)
+    public function getMatchBetween(Participant $A, Participant $B)
     {
         $matches = $this->getMatches()->toArray();
 

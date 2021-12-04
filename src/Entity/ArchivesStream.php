@@ -7,8 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Stream
  *
- * @ORM\Table(name="`StreamArchives`")
- * @ORM\Entity(repositoryClass="App\Entity\ArchivesStreamRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ArchivesStreamRepository")
  */
 class ArchivesStream
 {

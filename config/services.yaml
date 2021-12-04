@@ -5,6 +5,20 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     insalan.db.table_prefix: intra_
+    insalan.table_prefix: intra_
+    table_prefix: intra_
+    
+    debug_toolbar:          true
+    debug_redirects:        false
+
+    fos_user_email_address: no-reply@example.com
+    fos_user_email_sender_name: webmaster
+    ga_tracking: UA-xxxxx
+
+    paypal_express_checkout_username: xxxxx
+    paypal_express_checkout_password: xxxx
+    paypal_express_checkout_signature: xxxx
+    paypal_express_checkout_sandbox: true
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -16,7 +30,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php}'
+        exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php,Migrations}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -30,17 +44,308 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - { name: twig.extension }
-
-    admin.global_vars:
-        class: App\Admin\GlobalVarsAdmin
-        arguments: [~, App\Entity\GlobalVars, App\Controller\AdminController]
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Web", label: "Variables globales" }
+            - { name: twig.extension }
+
+    sonata.admin.archives.edition:
+        class: App\Admin\ArchivesEditionAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Archives", label: " Edition" }
+        arguments:
+            - ~
+            - App\Entity\ArchivesEdition
+            - ~
+        public: true
+
+    sonata.admin.archives.picture:
+        class: App\Admin\ArchivesPictureAlbumAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Archives", label: " Album photo" }
+        arguments:
+            - ~
+            - App\Entity\ArchivesPictureAlbum
+            - ~
+        public: true
+
+    sonata.admin.archives.stream:
+        class: App\Admin\ArchivesStreamAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Archives", label: "Stream" }
+        arguments:
+            - ~
+            - App\Entity\ArchivesStream
+            - ~
         public: true
     
+    sonata.admin.web.legaldocuments:
+        class: App\Admin\InformationLegalDocumentAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Web", label: "Documents légaux" }
+        arguments:
+            - ~
+            - App\Entity\InformationLegalDocument
+            - ~
 
+    sonata.admin.InsaLan.staff:
+        class: App\Admin\InsaLanStaffAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Web", label: "Resp'" }
+        arguments:
+            - ~
+            - App\Entity\InsaLanStaff
+            - ~
+
+    sonata.admin.InsaLan.globalVars:
+        class: App\Admin\InsaLanGlobalVarsAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Web", label: "Variables globales" }
+        arguments:
+            - ~
+            - App\Entity\InsaLanGlobalVars
+            - ~
+
+    sonata.admin.news.news:
+        class: App\Admin\NewsAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Actualités", label: "News" }
+        arguments:
+            - ~
+            - App\Entity\News
+            - ~
+
+    sonata.admin.news.slider:
+        class: App\Admin\NewsSliderAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Actualités", label: "Slider" }
+        arguments:
+            - ~
+            - App\Entity\NewsSlider
+            - ~
+
+    sonata.admin.news.picture:
+        class: App\Admin\NewsPictureAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Actualités", label: "Image" }
+        arguments:
+            - ~
+            - App\Entity\NewsPicture
+            - ~
+    
+    sonata.admin.pizza.pizza:
+        class: App\Admin\PizzaAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Restauration", label: "Pizza" }
+        arguments:
+            - ~
+            - App\Entity\Pizza
+            - ~
+
+    sonata.admin.pizza.order:
+        class: App\Admin\PizzaOrderAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Restauration", label: "Créneau" }
+        arguments:
+            - ~
+            - App\Entity\PizzaOrder
+            - ~
+
+    sonata.admin.pizza.userorder:
+        class: App\Admin\PizzaUserOrderAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Restauration", label: "Commande" }
+        arguments:
+            - ~
+            - App\Entity\PizzaUserOrder
+            - ~
+    
+    sonata.admin.stream.stream:
+        class: App\Admin\StreamAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Web", label: "Stream" }
+        arguments:
+            - ~
+            - App\Entity\Stream
+            - ~
+    
+    sonata.admin.tournament.tournament:
+        class: App\Admin\TournamentAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Tournoi" }
+        arguments:
+            - ~
+            - App\Entity\Tournament
+            - ~
+        
+    sonata.admin.tournament.groupstage:
+        class: App\Admin\TournamentGroupStageAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Phase poules" }
+        arguments:
+            - ~
+            - App\Entity\TournamentGroupStage
+            - ~
+        
+    sonata.admin.tournament.group:
+        class: App\Admin\TournamentGroupAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Poule" }
+        arguments:
+            - ~
+            - App\Entity\TournamentGroup
+            - ~
+        
+    sonata.admin.player:
+        class: App\Admin\TournamentPlayerAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Joueur" }
+        arguments:
+            - ~
+            - App\Entity\Player
+            - ~
+        
+    sonata.admin.tournament.manager:
+        class: App\Admin\TournamentManagerAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Manager" }
+        arguments:
+            - ~
+            - App\Entity\TournamentManager
+            - ~
+        
+    sonata.admin.tournament.team:
+        class: App\Admin\TournamentTeamAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Equipes" }
+        arguments:
+            - ~
+            - App\Entity\TournamentTeam
+            - ~
+        
+    sonata.admin.tournament.match:
+        class: App\Admin\TournamentMatchAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Matchs" }
+        arguments:
+            - ~
+            - App\Entity\TournamentMatch
+            - App\Controller\TournamentCRUD
+        
+    sonata.admin.tournament.royalmatch:
+        class: App\Admin\TournamentRoyalMatchAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Matchs Battle royale" }
+        arguments:
+            - ~
+            - App\Entity\TournamentRoyalMatch
+            - App\Controller\TournamentCRUD
+        
+    sonata.admin.tournament.round:
+        class: App\Admin\TournamentRoundAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Rounds" }
+        arguments:
+            - ~
+            - App\Entity\TournamentRound
+            - ~
+        
+    sonata.admin.tournament.score:
+        class: App\Admin\TournamentScoreAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Score", show_in_dashboard: false }
+        arguments:
+            - ~
+            - App\Entity\TournamentScore
+            - ~
+        
+
+    sonata.admin.tournament.knockout:
+        class: App\Admin\TournamentKnockoutAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Arbres" }
+        arguments:
+            - ~
+            - App\Entity\TournamentKnockout
+            - ~
+        
+    sonata.admin.tournament.bundle:
+        class: App\Admin\TournamentBundleAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Tournois", label: "Bundle" }
+        arguments:
+            - ~
+            - App\Entity\TournamentBundle
+            - ~
+    
+    sonata.admin.tournament.user:
+        class: App\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Compte", label: "Utilisateur" }
+        arguments:
+            - ~
+            - App\Entity\User
+            - ~
+
+    sonata.admin.tournament.merchantorder:
+        class: App\Admin\UserMerchantOrderAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Compte", label: "Paiments hors ligne" }
+        arguments:
+            - ~
+            - App\Entity\UserMerchantOrder
+            - ~
+
+    sonata.admin.tournament.discount:
+        class: App\Admin\UserDiscountAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Compte", label: "Tarifs réduits" }
+        arguments:
+            - ~
+            - App\Entity\UserDiscount
+            - ~
+
+    gedmo.listener.softdeleteable:
+        class: Gedmo\SoftDeleteable\SoftDeleteableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
+    gedmo.listener.timestampable:
+        class: Gedmo\Timestampable\TimestampableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
+    gedmo.listener.tree:
+        class: Gedmo\Tree\TreeListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
+    gedmo.listener.loggable:
+        class: Gedmo\Loggable\LoggableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    insalan.tblprefix_subscriber:
+        class: App\Subscriber\TablePrefixSubscriber
+        arguments: [intra_]
+        tags:
+            - { name: doctrine.event_subscriber }
     insalan.free_slots:
         class: App\Service\FreeSlots
         arguments: ["@doctrine"]
     insalan.opening_matcher:
         class: App\Security\OpeningRequestMatcher
+
+    insalan.tournament.participant_validator:
+        class: App\Subscriber\ParticipantValidator
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    insalan.tournament.placement:
+        class: App\Service\TournamentPlacement
+        public: true

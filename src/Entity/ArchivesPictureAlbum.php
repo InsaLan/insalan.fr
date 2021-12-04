@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PictureAlbum
  *
- * @ORM\Table(name="`PictureAlbumArchives`")
  * @ORM\Entity()
  */
 class ArchivesPictureAlbum

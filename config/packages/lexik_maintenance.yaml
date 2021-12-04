@@ -1,0 +1,22 @@
+lexik_maintenance:
+    authorized:
+    #   path: /path                              # Optional. Authorized path, accepts regexs
+    #   host: your-domain.com                    # Optional. Authorized domain, accepts regexs
+    #   ips: ['127.0.0.1', '172.123.10.14']      # Optional. Authorized ip addresses
+    #   query: { foo: bar }                      # Optional. Authorized request query parameter (GET/POST)
+    #   cookie: { bar: baz }                     # Optional. Authorized cookie
+    #   route:                                   # Optional. Authorized route name
+    #   attributes:                              # Optional. Authorized route attributes
+    driver:
+    #   ttl: 3600                                # Optional ttl option, can be not set
+
+        # Database driver:
+        class: 'Lexik\Bundle\MaintenanceBundle\Drivers\DatabaseDriver' # class for database driver
+
+        # Option 1 : for doctrine
+        # options: {connection: connection-name}
+
+    # Optional. response code and status of the maintenance page
+    response:
+        code: 503
+        status: "Le site est actuellement en maintenance"

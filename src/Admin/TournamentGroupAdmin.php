@@ -10,11 +10,11 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\ActionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-use App\Entity\TournamentMatch as Match;
+use App\Entity\TournamentMatch;
 use App\Entity\RoyalMatch;
-use App\Entity\Group;
+use App\Entity\TournamentGroup;
 use App\Entity\Participant;
-use App\Entity\ParticipantRepository;
+use App\Repository\ParticipantRepository;
 
 class TournamentGroupAdmin extends AbstractAdmin
 {
@@ -35,8 +35,8 @@ class TournamentGroupAdmin extends AbstractAdmin
             )
             ->add('statsType', ChoiceType::class, array(
                 'choices' => array(
-                    'Victoires/Défaites' => Group::STATS_WINLOST,
-                    'Somme des scores' => Group::STATS_SCORE
+                    'Victoires/Défaites' => TournamentGroup::STATS_WINLOST,
+                    'Somme des scores' => TournamentGroup::STATS_SCORE
                 ),
                 'required' => true
             ))

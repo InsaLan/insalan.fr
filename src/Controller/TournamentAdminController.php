@@ -8,19 +8,22 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-use App\Entity;
+Use App\Entity\TournamentGroupStage;
+use App\Entity\TournamentMatch;
 use App\Entity\Participant;
 use App\Exception\ControllerException;
+Use App\Entity;
 
 use App\Http\JsonResponse;
-
+/**
+ * @Route("/tournament")
+ */
 class TournamentAdminController extends Controller
 {
 
@@ -49,9 +52,8 @@ class TournamentAdminController extends Controller
         $form = $this->createFormBuilder()
             ->add('tournament', ChoiceType::class, array(
                   'label' => 'Tournoi',
-                  'choices_as_values' => true,
                   'choices' => $a))
-            ->setAction($this->generateUrl('app_tournament_admin_index', ['showAll' => $showAll]))
+            ->setAction($this->generateUrl('app_tournamentadmin_index', ['showAll' => $showAll]))
             ->getForm();
 
 
@@ -62,10 +64,10 @@ class TournamentAdminController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() &&$form->isValid()) {
             $data = $form->getData();
             return $this->redirect($this->generateUrl(
-                'app_tournament_admin_index_1',
+                'app_tournamentadmin_index_1',
                 array('id' => $data['tournament'], 'showAll' => $showAll)));
         }
         else if (null !== $id) {
@@ -192,10 +194,10 @@ class TournamentAdminController extends Controller
 
 
     /**
-     * @Route("/admin/stage/{id}")
+     * @Route("/admin/stage/{id}", requirements={"id":"\d+"})
      * @Template()
      */
-    public function stageAction(Entity\TournamentGroupStage $g)
+    public function stageAction(TournamentGroupStage $g)
     {
         $em = $this->getDoctrine()->getManager();
         $matches = $em->getRepository("App\Entity\TournamentMatch")->getByGroupStage($g);
@@ -218,16 +220,17 @@ class TournamentAdminController extends Controller
     }
 
     /**
-     * @Route("/admin/match/{id}/setState/{state}")
+     * @Route("/admin/match/{id}/setState/{state}", requirements={"id":"\d+"})
+     * @Template()
      */
-    public function match_setStateAction(Entity\TournamentMatch $m, $state)
+    public function match_setStateAction(TournamentMatch $m, $state)
     {
         $em = $this->getDoctrine()->getManager();
         $state = intval($state);
 
-        if($state !== Entity\TournamentMatch::STATE_UPCOMING &&
-           $state !== Entity\TournamentMatch::STATE_ONGOING &&
-           $state !== Entity\TournamentMatch::STATE_FINISHED)
+        if($state !== TournamentMatch::STATE_UPCOMING &&
+           $state !== TournamentMatch::STATE_ONGOING &&
+           $state !== TournamentMatch::STATE_FINISHED)
             throw new ControllerException("Unexpected argument state");
 
         $m->setState($state);
@@ -241,8 +244,9 @@ class TournamentAdminController extends Controller
 
     /**
      * @Route("/admin/match/{id}/addRound")
+     * @Template()
      */
-    public function match_addRoundAction(Request $request, Entity\TournamentMatch $m)
+    public function match_addRoundAction(Request $request, TournamentMatch $m)
     {
         if($request->getMethod() !== "POST")
             throw new ControllerException("Bad method");
@@ -269,8 +273,9 @@ class TournamentAdminController extends Controller
 
     /**
      * @Route("/admin/match/{id}/reset")
+     * @Template()
      */
-    public function match_resetAction(Entity\TournamentMatch $m)
+    public function match_resetAction(TournamentMatch $m)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -312,7 +317,7 @@ class TournamentAdminController extends Controller
            ->generateMatches($ko, $data['size'], $data['double']);
 
         return $this->redirect($this->generateUrl(
-                'app_tournament_admin_knockout_view',
+                'app_tournamentadmin_knockout_view',
                 array('id' => $ko->getId())));
     }
 
@@ -350,8 +355,8 @@ class TournamentAdminController extends Controller
                     $match = $km->getMatch();
                 }
                 else {
-                    $match = new Entity\TournamentMatch();
-                    $match->setState(Entity\TournamentMatch::STATE_UPCOMING);
+                    $match = new TournamentMatch();
+                    $match->setState(TournamentMatch::STATE_UPCOMING);
                     $km->setMatch($match);
                     $match->setKoMatch($km);
                 }
@@ -388,9 +393,9 @@ class TournamentAdminController extends Controller
     }
 
 
-    private function updateMatch(Entity\TournamentMatch $match) {
+    private function updateMatch(TournamentMatch $match) {
 
-        if($match->getState() !== Entity\TournamentMatch::STATE_FINISHED || !$match->getKoMatch())
+        if($match->getState() !== TournamentMatch::STATE_FINISHED || !$match->getKoMatch())
             return;
 
         $em = $this->getDoctrine()->getManager();
@@ -416,20 +421,20 @@ class TournamentAdminController extends Controller
                     ->add('name', TextType::class, array("label" => "Nom"))
                     ->add('size', IntegerType::class, array("label" => "Taille", "scale" => 0))
                     ->add('double', CheckboxType::class, array("label" => "Double Elimination", "required" => false))
-                    ->setAction($this->generateUrl('app_tournament_admin_create_ko',
+                    ->setAction($this->generateUrl('app_tournamentadmin_create_ko',
                                                   array('id' => $tournament)))
                     ->getForm();
     }
 
-    private function getReturnRedirect(Entity\TournamentMatch $m) {
+    private function getReturnRedirect(TournamentMatch $m) {
         if($m->getKoMatch()) {
             return $this->redirect($this->generateUrl(
-                'app_tournament_admin_knockout',
+                'app_tournamentadmin_knockout',
                 array('id' => $m->getKoMatch()->getKnockout()->getId())));
         }
 
         return $this->redirect($this->generateUrl(
-                'app_tournament_admin_stage',
+                'app_tournamentadmin_stage',
                 array('id' => $m->getGroup()->getStage()->getId())));
     }
 

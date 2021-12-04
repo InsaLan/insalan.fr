@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Entity\TournamentKnockoutRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TournamentKnockoutRepository")
  */
 class TournamentKnockout
 {

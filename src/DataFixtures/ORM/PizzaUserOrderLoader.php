@@ -19,46 +19,46 @@ class PizzaUserOrderLoader extends AbstractFixture implements OrderedFixtureInte
 
         // Web Users
 
-        $e = new UserOrder();
+        $e = new PizzaUserOrder();
         $e->setUser($this->getReference('user-1'));
         $e->setPaymentDone(true);
         $e->setPizza($this->getReference('pizza-1'));
         $e->setOrder($this->getReference('order-1'));
-        $e->setType(UserOrder::TYPE_PAYPAL);
+        $e->setType(PizzaUserOrder::TYPE_PAYPAL);
         $manager->persist($e);
 
-        $e = new UserOrder();
+        $e = new PizzaUserOrder();
         $e->setUser($this->getReference('user-1'));
         $e->setPaymentDone(true);
         $e->setPizza($this->getReference('pizza-2'));
         $e->setOrder($this->getReference('order-2'));
-        $e->setType(UserOrder::TYPE_PAYPAL);
+        $e->setType(PizzaUserOrder::TYPE_PAYPAL);
         $manager->persist($e);
 
-        $e = new UserOrder();
+        $e = new PizzaUserOrder();
         $e->setUser($this->getReference('user-1'));
         $e->setPaymentDone(false);
         $e->setPizza($this->getReference('pizza-3'));
         $e->setOrder($this->getReference('order-2'));
-        $e->setType(UserOrder::TYPE_PAYPAL);
+        $e->setType(PizzaUserOrder::TYPE_PAYPAL);
         $manager->persist($e);
 
         // Manual Users
         
-        $e = new UserOrder();
+        $e = new PizzaUserOrder();
         $e->setPaymentDone(true);
         $e->setPizza($this->getReference('pizza-1'));
         $e->setOrder($this->getReference('order-1'));
-        $e->setType(UserOrder::TYPE_MANUAL);
+        $e->setType(PizzaUserOrder::TYPE_MANUAL);
         $e->setUsernameCanonical("Aaah");
         $e->setFullnameCanonical("Albert Le Grand");
         $manager->persist($e);
 
-        $e = new UserOrder();
+        $e = new PizzaUserOrder();
         $e->setPaymentDone(true);
         $e->setPizza($this->getReference('pizza-3'));
         $e->setOrder($this->getReference('order-1'));
-        $e->setType(UserOrder::TYPE_MANUAL);
+        $e->setType(PizzaUserOrder::TYPE_MANUAL);
         $e->setUsernameCanonical("Uhuh");
         $manager->persist($e);
 

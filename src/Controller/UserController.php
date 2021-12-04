@@ -38,7 +38,7 @@ class UserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($usr);
             $em->flush();
-            return $this->redirect($this->generateUrl('User/more'));
+            return $this->redirect($this->generateUrl('app_user_index'));
         }
 
         $battletag = $usr->getBattleTag();

@@ -10,6 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 use App\Entity;
 use App\Http\JsonResponse;
@@ -44,7 +47,7 @@ class AdminPizzaController extends Controller
     $form->handleRequest($request);
     $data = $form->getData();
 
-    if ($form->isValid()) {
+    if ($form-> isSubmitted() && $form->isValid()) {
       $pizza = new Entity\Pizza();
       $pizza->setName($data['pizzaName']);
       $pizzaPrice = $data['pizzaPrice'];
@@ -60,7 +63,7 @@ class AdminPizzaController extends Controller
       $em->flush();
     }
 
-    return $this->redirect($this->generateUrl("app_admin_pizza_pizza"));
+    return $this->redirect($this->generateUrl("app_adminpizza_pizza"));
   }
 
   /**
@@ -78,7 +81,7 @@ class AdminPizzaController extends Controller
       }
 
 
-      return $this->redirect($this->generateUrl("app_admin_pizza_pizza"));
+      return $this->redirect($this->generateUrl("app_adminpizza_pizza"));
   }
 
 
@@ -106,7 +109,7 @@ class AdminPizzaController extends Controller
     $form = $this->getAddOrderForm();
     $form->handleRequest($request);
     $data = $form->getData();
-    if ($form->isValid()) {
+    if ($form-> isSubmitted() && $form->isValid()) {
       $order = new Entity\PizzaOrder();
       $order->setExpiration($data['orderExpirationDateTime']);
       $order->setDelivery($data['orderDeliveryDateTime']);
@@ -117,7 +120,7 @@ class AdminPizzaController extends Controller
       $em->flush();
     }
 
-    return $this->redirect($this->generateUrl("app_admin_pizza_creneau"));
+    return $this->redirect($this->generateUrl("app_adminpizza_creneau"));
   }
 
   /**
@@ -134,7 +137,7 @@ class AdminPizzaController extends Controller
         $this->get('session')->getFlashBag()->add('error', "Suppression impossible : des commandes sont associées à ce créneau.");
       }
 
-      return $this->redirect($this->generateUrl("app_admin_pizza_creneau"));
+      return $this->redirect($this->generateUrl("app_adminpizza_creneau"));
   }
 
     /**
@@ -163,17 +166,16 @@ class AdminPizzaController extends Controller
         $form = $this->createFormBuilder()
             ->add('order', ChoiceType::class, array(
                   'label' => 'Créneau',
-                  'choices_as_values' => true,
                   'choices' => $ordersChoices))
-            ->setAction($this->generateUrl('app_admin_pizza_commande', ['showAll' => $showAll]))
+            ->setAction($this->generateUrl('app_adminpizza_commande', ['showAll' => $showAll]))
             ->getForm();
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form-> isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             return $this->redirect($this->generateUrl(
-                'app_admin_pizza_commande_1',
+                'app_adminpizza_commande_1',
                 array('id' => $data['order'], 'showAll' => $showAll)));
         }
 
@@ -222,7 +224,7 @@ class AdminPizzaController extends Controller
         $form = $this->getAddUserOrderForm($order);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form-> isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
             $uo = new Entity\PizzaUserOrder();
@@ -242,7 +244,7 @@ class AdminPizzaController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl("app_admin_pizza_commande_1", array("id" => $order->getId())));
+        return $this->redirect($this->generateUrl("app_adminpizza_commande_1", array("id" => $order->getId())));
 
     }
 
@@ -255,7 +257,7 @@ class AdminPizzaController extends Controller
         $order->setClosed(true);
         $em->persist($order);
         $em->flush();
-        return $this->redirect($this->generateUrl("app_admin_pizza_commande_1", array("id" => $order->getId())));
+        return $this->redirect($this->generateUrl("app_adminpizza_commande_1", array("id" => $order->getId())));
     }
 
     /**
@@ -267,7 +269,7 @@ class AdminPizzaController extends Controller
         $order->setClosed(false);
         $em->persist($order);
         $em->flush();
-        return $this->redirect($this->generateUrl("app_admin_pizza_commande_1", array("id" => $order->getId())));
+        return $this->redirect($this->generateUrl("app_adminpizza_commande_1", array("id" => $order->getId())));
     }
 
     /**
@@ -283,7 +285,7 @@ class AdminPizzaController extends Controller
         $em->remove($uo);
         $em->flush();
 
-        return $this->redirect($this->generateUrl("app_admin_pizza_commande_1", array("id" => $id)));
+        return $this->redirect($this->generateUrl("app_adminpizza_commande_1", array("id" => $id)));
     }
 
     /**
@@ -323,11 +325,9 @@ class AdminPizzaController extends Controller
                     ->add('username', TextType::class, array('label' => 'Pseudonyme', 'required' => false))
                     ->add('fullname', TextType::class, array('label' => 'Prénom NOM', 'required' => true))
                     ->add('pizza', ChoiceType::class, array(
-                        'choices_as_values' => true,
                         'choices' => $pizzasChoices,
                         'label' => 'Pizza'))
                     ->add('price', ChoiceType::class, array(
-                        'choices_as_values' => true,
                         'choices' =>
                             array(
                                 'Joueur' => Entity\PizzaUserOrder::FULL_PRICE,
@@ -335,28 +335,28 @@ class AdminPizzaController extends Controller
                                 'Gratuit' => Entity\PizzaUserOrder::FREE_PRICE
                             ),
                         'label' => 'Tarif'))
-                    ->setAction($this->generateUrl('app_admin_pizza_add', array('id' => $o->getId())))
+                    ->setAction($this->generateUrl('app_adminpizza_add', array('id' => $o->getId())))
                     ->getForm();
     }
 
     private function getAddPizzaForm() {
         return $this->createFormBuilder()
-                    ->add('pizzaName', 'text', array('label' => 'Nom', 'required' => true))
-                    ->add('pizzaPrice', 'number', array('label' => 'Prix', 'required' => true))
-                    ->add('pizzaVeggie', 'checkbox', array('label' => 'Veggie', 'required' => false))
-                    ->add('pizzaDescription', 'text', array('label' => 'Description', 'required' => false))
-                    ->setAction($this->generateUrl('app_admin_pizza_pizza_add'))
+                    ->add('pizzaName', TextType::class, array('label' => 'Nom', 'required' => true))
+                    ->add('pizzaPrice', NumberType::class, array('label' => 'Prix', 'required' => true))
+                    ->add('pizzaVeggie', CheckboxType::class, array('label' => 'Veggie', 'required' => false))
+                    ->add('pizzaDescription', TextType::class, array('label' => 'Description', 'required' => false))
+                    ->setAction($this->generateUrl('app_adminpizza_pizza_add'))
                     ->getForm();
     }
 
     private function getAddOrderForm() {
         return $this->createFormBuilder()
-                    ->add('orderExpirationDateTime', 'datetime', array('required' => true))
-                    ->add('orderDeliveryDateTime', 'datetime', array('required' => true))
-                    ->add('orderCapacity', 'number', array('label' => 20, 'required' => false))
-                    ->add('orderForeignCapacity', 'number', array('label' => 3, 'required' => false))
-                    ->add('orderClosed', 'checkbox', array('required' => false))
-                    ->setAction($this->generateUrl('app_admin_pizza_creneau_add'))
+                    ->add('orderExpirationDateTime', DateTimeType::class, array('required' => true))
+                    ->add('orderDeliveryDateTime', DateTimeType::class, array('required' => true))
+                    ->add('orderCapacity', NumberType::class, array('label' => 20, 'required' => false))
+                    ->add('orderForeignCapacity', NumberType::class, array('label' => 3, 'required' => false))
+                    ->add('orderClosed', CheckboxType::class, array('required' => false))
+                    ->setAction($this->generateUrl('app_adminpizza_creneau_add'))
                     ->getForm();
     }
 

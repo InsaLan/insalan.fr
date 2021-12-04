@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * There can be only one manager per team !
  * Pretty similar to the Player entity
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="App\Entity\TournamentManagerRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TournamentManagerRepository")
  */
 class TournamentManager
 {

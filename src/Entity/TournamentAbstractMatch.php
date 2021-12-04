@@ -5,12 +5,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Entity\TournamentMatchRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TournamentMatchRepository")
  * @ORM\HasLifecycleCallbacks
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="kind", type="string")
  * @ORM\DiscriminatorMap({"simple" = "TournamentMatch", "royal" = "TournamentRoyalMatch"})
- * @ORM\Table(name="`Match`")
+ * @ORM\Table(name="`TournamentMatch`")
  */
 abstract class TournamentAbstractMatch
 {

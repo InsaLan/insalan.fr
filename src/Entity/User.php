@@ -7,7 +7,6 @@ use App\Entity\Player;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="fos_user")
  */
 class User Extends BaseUser
 {

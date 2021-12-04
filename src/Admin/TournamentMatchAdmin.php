@@ -33,7 +33,6 @@ class TournamentMatchAdmin extends AbstractAdmin
             ->add('group', 'entity',
                 array('read_only' => true, 'disabled' => true, 'class' => 'App\Entity\Group'))*/
             ->add('state', ChoiceType::class, array(
-                'choices_as_values' => true,
                 'choices'   => $this->stateDef,
                 'required'  => true))
         ;
@@ -48,7 +47,6 @@ class TournamentMatchAdmin extends AbstractAdmin
             ->add('group', null, array('label' => "Poule"))
             ->add('koMatch.knockout', null, array('label' => "Arbre"))
             ->add('state', ChoiceType::class, array(
-                'choices_as_values' => true,
                 'choices'   => $this->stateDef,
                 'label'     => "Statut"))
             ->add('rounds', null, array('route' => array('name' => 'show')));
@@ -60,8 +58,7 @@ class TournamentMatchAdmin extends AbstractAdmin
         $datagridMapper
             ->add('group', null, array('label' => "Poule"))
             ->add('koMatch.knockout', null, array('label' => "Arbre"))
-            ->add('state', 'doctrine_orm_string', array(), ChoiceType::class, array('choices_as_values' => true,
-                                                                                    'choices' => $this->stateDef))
+            ->add('state', 'doctrine_orm_string', array(), ChoiceType::class, array('choices' => $this->stateDef))
             ->add('part1', null, array('label' => "Participant 1"))
             ->add('part2', null, array('label' => "Participant 2"))
         ;

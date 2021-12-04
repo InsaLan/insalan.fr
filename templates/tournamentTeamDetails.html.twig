@@ -1,4 +1,4 @@
-{% extends 'InsaLanTournamentBundle:User:layout.html.twig' %}
+{% extends 'tournament_user/layout.html.twig' %}
 
 {% block title %}
 {{ parent() }}
@@ -48,7 +48,7 @@
     {% set i=0 %}
     {% for m in g %}
       {% set i=i+1 %}
-      {% include 'InsaLanTournamentBundle:Part:matchDetailsForPart.html.twig' %}
+      {% include 'Part/matchDetailsForPart.html.twig' %}
 
     {% endfor %}
 
@@ -63,7 +63,7 @@
     {% set i=0 %}
     {% for m in k %}
       {% set i=i+1 %}
-      {% include 'InsaLanTournamentBundle:Part:matchDetailsForPart.html.twig' %}
+      {% include 'Part/matchDetailsForPart.html.twig' %}
 
     {% endfor %}
 

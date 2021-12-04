@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Edition
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="App\Entity\ArchivesEditionRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ArchivesEditionRepository")
  */
 class ArchivesEdition
 {

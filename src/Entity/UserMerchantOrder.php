@@ -9,7 +9,7 @@ use App\Entity\Player;
 /**
  * MerchantOrder
  *
- * @ORM\Entity(repositoryClass="App\Entity\UserMerchantOrderRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserMerchantOrderRepository")
  * @ORM\Table()
  */
 class UserMerchantOrder

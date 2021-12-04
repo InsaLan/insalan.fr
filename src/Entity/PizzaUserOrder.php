@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * @ORM\Entity(repositoryClass="App\Entity\PizzaUserOrderRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\PizzaUserOrderRepository")
  */
 class PizzaUserOrder
 {

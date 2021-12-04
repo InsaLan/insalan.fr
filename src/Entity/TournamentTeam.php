@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Entity\TournamentTeamRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TournamentTeamRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class TournamentTeam extends Participant

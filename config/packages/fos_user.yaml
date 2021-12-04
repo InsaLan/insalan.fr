@@ -3,7 +3,11 @@ fos_user:
     firewall_name: main
     user_class: App\Entity\User
     from_email:
-        address: "test@domain.com"
-        sender_name: "test@domain.com"
+        address: "%fos_user_email_address%"
+        sender_name: "%fos_user_email_address%"
     service:
         user_manager: fos_user.user_manager.default
+    registration:
+        confirmation:
+            enabled:    true # change to true for required email confirmation
+            template:   FOSUserBundle:Registration:email.txt.twig

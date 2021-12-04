@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
 
 /**
- * @ORM\Entity(repositoryClass="App\Entity\PlayerRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\PlayerRepository")
  */
 class Player extends Participant
 {

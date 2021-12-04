@@ -7,6 +7,8 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use App\Entity\User;
 
 class UserLoader extends AbstractFixture implements ContainerAwareInterface, OrderedFixtureInterface
@@ -22,9 +24,14 @@ class UserLoader extends AbstractFixture implements ContainerAwareInterface, Ord
     {
         $e = new User();
         $e->setUsername('admin');
-        $encoder = $this->container
-            ->get('security.encoder_factory')
-            ->getEncoder($e);
+        $defaultEncoder = new MessageDigestPasswordEncoder('sha512');
+
+        $encoders = [
+            User::class => $defaultEncoder, // Your user class. This line specify you ant sha512 encoder for this user class
+           ];
+
+        $factory = new EncoderFactory($encoders);
+        $encoder = $factory->getEncoder($e);
         $e->setEmail('admin@localhost');
         $e->setPassword($encoder->encodePassword('admin', $e->getSalt()));
         $e->setEnabled(true);
@@ -34,9 +41,14 @@ class UserLoader extends AbstractFixture implements ContainerAwareInterface, Ord
 
         $e = new User();
         $e->setUsername('user');
-        $encoder = $this->container
-            ->get('security.encoder_factory')
-            ->getEncoder($e);
+        $defaultEncoder = new MessageDigestPasswordEncoder('sha512');
+
+        $encoders = [
+            User::class => $defaultEncoder, // Your user class. This line specify you ant sha512 encoder for this user class
+           ];
+
+        $factory = new EncoderFactory($encoders);
+        $encoder = $factory->getEncoder($e);
         $e->setEmail('user@localhost');
         $e->setPassword($encoder->encodePassword('user', $e->getSalt()));
         $e->setEnabled(true);
@@ -46,9 +58,14 @@ class UserLoader extends AbstractFixture implements ContainerAwareInterface, Ord
 
         $e = new User();
         $e->setUsername('merchant');
-        $encoder = $this->container
-            ->get('security.encoder_factory')
-            ->getEncoder($e);
+        $defaultEncoder = new MessageDigestPasswordEncoder('sha512');
+
+        $encoders = [
+            User::class => $defaultEncoder, // Your user class. This line specify you ant sha512 encoder for this user class
+           ];
+
+        $factory = new EncoderFactory($encoders);
+        $encoder = $factory->getEncoder($e);
         $e->setEmail('merchant@localhost');
         $e->setPassword($encoder->encodePassword('merchant', $e->getSalt()));
         $e->setEnabled(true);
@@ -59,9 +76,14 @@ class UserLoader extends AbstractFixture implements ContainerAwareInterface, Ord
         for ($i = 1; $i <= 305; ++$i) {
             $e = new User();
             $e->setUsername('user'.$i);
-            $encoder = $this->container
-                ->get('security.encoder_factory')
-                ->getEncoder($e);
+            $defaultEncoder = new MessageDigestPasswordEncoder('sha512');
+
+            $encoders = [
+                User::class => $defaultEncoder, // Your user class. This line specify you ant sha512 encoder for this user class
+               ];
+
+            $factory = new EncoderFactory($encoders);
+            $encoder = $factory->getEncoder($e);
             $e->setEmail('user'.$i.'@localhost');
             $e->setPassword($encoder->encodePassword('user', $e->getSalt()));
             $e->setEnabled(true);

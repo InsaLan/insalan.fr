@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Entity\Player;
-use App\Entity\Team;
+use App\Entity\TournamentTeam;
 use App\Entity\Tournament;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,14 +14,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+/**
+ * @Route("/tournament/admin")
+ */
 class TournamentApiController extends Controller
 {
 
     /**
-     * @Route("/admin/email")
+     * @Route("/email")
      * @Template()
      */
-    public function listEmailAction(Request $request)
+    public function emailAction(Request $request)
     {
         $tournaments = $this->getDoctrine()->getRepository('App\Entity\Tournament')->findThisYearTournaments(10);
 
@@ -37,7 +40,6 @@ class TournamentApiController extends Controller
         $form = $this->createFormBuilder()
             ->add('shortName', ChoiceType::class, array(
                 'choices' => $tournamentsChoices,
-                'choices_as_values' => true,
                 'label' => 'Nom du tournois',
                 'expanded' => false,
                 'multiple' => false,
@@ -45,7 +47,6 @@ class TournamentApiController extends Controller
             ))
             ->add('playerStatus', ChoiceType::class, array(
                 'choices' => $playerStatusChoices,
-                'choices_as_values' => true,
                 'label' => 'Status des joueurs',
                 'expanded' => false,
                 'multiple' => false,

@@ -9,14 +9,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-use App\Entity\ParticipantRepository;
+use App\Repository\ParticipantRepository;
 use App\Entity\Participant;
+
 
 class AdminTournamentController extends Controller {
     /**
      * @Route("/tournament/groupstage", name="GroupStageAction")
-     * @Template()
      * Get all group stages (phases de poule)
      */
     public function tournamentGroupStageAction() {
@@ -25,8 +27,8 @@ class AdminTournamentController extends Controller {
         $groupStage = new TournamentGroupStage();
         $form = $this->createFormBuilder($groupStage)
             ->add('name')
-            ->add('tournament', 'entity', array('class' => 'App\Entity\Tournament'))
-            ->add('save', 'submit', array('label' => 'Créer'))
+            ->add('tournament', EntityType::class, array('class' => 'App\Entity\Tournament'))
+            ->add('save', SubmitType::class, array('label' => 'Créer'))
             ->getForm();
 
         $request = $this->container->get('request_stack')->getCurrentRequest();
@@ -39,10 +41,7 @@ class AdminTournamentController extends Controller {
 
         $groupStages = $em->getRepository('App\Entity\TournamentGroupStage')->findBy([], ['id' => 'DESC']);
 
-        return array(
-            'groupStages' => $groupStages,
-            'form' => $form->createView()
-        );
+        return $this->render('Tournament/tournamentGroupStage.html.twig', ['groupStages' => $groupStages, 'form' => $form->createView()]);
     }
 
     /**
@@ -68,7 +67,7 @@ class AdminTournamentController extends Controller {
 
     /**
      * @Route("/tournament/groupstage/modify/{id}", name="GroupStageModifyAction")
-     * @Template()
+     * @Template("Tournament/tournamentGroupStageModify.html.twig")
      */
     public function tournamentGroupStageModifyAction($id) {
         $em = $this->getDoctrine()->getManager(); // entity manager
@@ -76,8 +75,8 @@ class AdminTournamentController extends Controller {
 
         $form = $this->createFormBuilder($groupStage)
             ->add('name')
-            ->add('tournament', 'entity', array('class' => 'App\Entity\Tournament'))
-            ->add('save', 'submit', array('label' => 'Modifier'))
+            ->add('tournament', EntityType::class, array('class' => 'App\Entity\Tournament'))
+            ->add('save', SubmitType::class, array('label' => 'Modifier'))
             ->getForm();
 
         $request = $this->container->get('request_stack')->getCurrentRequest();
@@ -96,7 +95,7 @@ class AdminTournamentController extends Controller {
 
     /**
      * @Route("/tournament/group", name="GroupAction")
-     * @Template()
+     * @Template("Tournament/tournamentGroup.html.twig")
      * Get all groups (poules)
      */
     public function tournamentGroupAction() {
@@ -105,8 +104,8 @@ class AdminTournamentController extends Controller {
         $group = new TournamentGroup();
         $form = $this->createFormBuilder($group)
             ->add('name')
-            ->add('stage', 'entity', array('class' => 'App\Entity\TournamentGroupStage'))
-            ->add('participants', 'entity', array(
+            ->add('stage', EntityType::class, array('class' => 'App\Entity\TournamentGroupStage'))
+            ->add('participants', EntityType::class, array(
               'query_builder' => function(ParticipantRepository $er) {
                                     return $er->createQueryBuilder('e')
                                               ->leftJoin('e.manager', 'ma')
@@ -123,7 +122,7 @@ class AdminTournamentController extends Controller {
                     'Somme des scores' => TournamentGroup::STATS_SCORE
                 ),
                 'required' => true))
-            ->add('save', 'submit', array('label' => 'Créer'))
+            ->add('save', SubmitType::class, array('label' => 'Créer'))
             ->getForm();
 
         $request = $this->container->get('request_stack')->getCurrentRequest();
@@ -165,7 +164,7 @@ class AdminTournamentController extends Controller {
 
     /**
      * @Route("/tournament/group/modify/{id}", name="GroupModifyAction")
-     * @Template()
+     * @Template("Tournament/tournamentGroupModify.html.twig")
      */
     public function tournamentGroupModifyAction($id) {
         $em = $this->getDoctrine()->getManager(); // entity manager
@@ -173,8 +172,8 @@ class AdminTournamentController extends Controller {
 
         $form = $this->createFormBuilder($group)
             ->add('name')
-            ->add('stage', 'entity', array('class' => 'App\Entity\TournamentGroupStage'))
-            ->add('participants', 'entity', array(
+            ->add('stage', EntityType::class, array('class' => 'App\Entity\TournamentGroupStage'))
+            ->add('participants', EntityType::class, array(
               'query_builder' => function(ParticipantRepository $er) {
                                     return $er->createQueryBuilder('e')
                                               ->leftJoin('e.manager', 'ma')
@@ -191,7 +190,7 @@ class AdminTournamentController extends Controller {
                     'Somme des scores' => TournamentGroup::STATS_SCORE
                 ),
                 'required' => true))
-            ->add('save', 'submit', array('label' => 'Modifier'))
+            ->add('save', SubmitType::class, array('label' => 'Modifier'))
             ->getForm();
 
         $request = $this->container->get('request_stack')->getCurrentRequest();
@@ -214,6 +213,6 @@ class AdminTournamentController extends Controller {
      * Get all matches
      */
     public function tournamentMatchAction() {
-        return $this->redirect($this->generateUrl('app_tournament_admin_index'));
+        return $this->redirect($this->generateUrl('app_tournamentadmin_index'));
     }
 }

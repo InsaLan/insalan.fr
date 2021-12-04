@@ -59,7 +59,7 @@ class TournamentRoundAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('match', null, array('label' => "Match"))
+            ->add('match', null, array('label' => "TournamentMatch"))
             ->add('match.part1', null, array('label' => "Participant 1"))
             ->add('match.part2', null, array('label' => "Participant 2"))
             ->add('scores',      null, array('label' => "Scores"))

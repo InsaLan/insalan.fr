@@ -8,7 +8,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use App\Entity;
 use App\Entity\Player;
@@ -48,7 +47,6 @@ class TournamentMerchantController extends Controller
         $form = $this->createFormBuilder()
             ->add('registrable', ChoiceType::class, array(
                   'label' => 'Tournoi',
-                  'choices_as_values' => true,
                   'choices' => $a))
             ->setAction($this->generateUrl('app_tournament_merchant_index'))
             ->getForm();

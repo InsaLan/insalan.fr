@@ -22,9 +22,9 @@
       <td>
         <br><br>
         {% if t.participantType == "team" %}
-          <a class="btn2 btn2-nocolor" href="path('app_tournament_teamlist", {"id":t.id}) }}">
+          <a class="btn2 btn2-nocolor" href="{{ path("app_tournament_teamlist", {"id":t.id}) }}">
         {% else %}
-          <a class="btn2 btn2-nocolor" href="path('app_tournament_playerlist", {"id":t.id}) }}">
+          <a class="btn2 btn2-nocolor" href="{{ path("app_tournament_playerlist", {"id":t.id}) }}">
         {% endif %}
           Participants
         </a>

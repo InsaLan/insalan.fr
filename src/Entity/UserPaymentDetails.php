@@ -84,7 +84,7 @@ class UserPaymentDetails extends ArrayObject
      * Set user
      *
      * @param \App\Entity\User $user
-     * @return PaymentDetails
+     * @return UserPaymentDetails
      */
     public function setUser(\App\Entity\User $user = null)
     {
@@ -108,7 +108,7 @@ class UserPaymentDetails extends ArrayObject
      * Set discount
      *
      * @param \App\Entity\UserDiscount $discount
-     * @return PaymentDetails
+     * @return UserPaymentDetails
      */
     public function setDiscount(\App\Entity\UserDiscount $discount = null)
     {
@@ -131,7 +131,7 @@ class UserPaymentDetails extends ArrayObject
      * Set place
      *
      * @param integer $place
-     * @return PaymentDetails
+     * @return UserPaymentDetails
      */
     public function setPlace($place)
     {
@@ -154,7 +154,7 @@ class UserPaymentDetails extends ArrayObject
      * Set type
      *
      * @param integer $type
-     * @return PaymentDetails
+     * @return UserPaymentDetails
      */
     public function setType($type)
     {
@@ -177,7 +177,7 @@ class UserPaymentDetails extends ArrayObject
      * Set rawPrice
      *
      * @param float $rawPrice
-     * @return PaymentDetails
+     * @return UserPaymentDetails
      */
     public function setRawPrice($rawPrice)
     {

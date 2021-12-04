@@ -11,7 +11,7 @@ class ArchivesEditionLoader extends AbstractFixture implements OrderedFixtureInt
 {
     public function load(ObjectManager $manager)
     {
-        $e = new Edition();
+        $e = new ArchivesEdition();
         $e->setName('InsaLan XV');
         $e->setYear(2020);
         $e->setImage('app_14.jpg');

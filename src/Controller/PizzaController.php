@@ -60,11 +60,9 @@ class PizzaController extends Controller
 
         $form = $this->createFormBuilder()
                     ->add('order', ChoiceType::class, array(
-                          'choices_as_values' => true,
                           'choices' => $ordersChoices,
                           'label' => 'Heure de livraison'))
                     ->add('pizza', ChoiceType::class, array(
-                          'choices_as_values' => true,
                           'choices' => $pizzasChoices,
                           'label' => 'Pizza choisie'))
                     ->setAction($this->generateUrl('app_pizza_index'))

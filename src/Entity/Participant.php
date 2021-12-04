@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Entity\ParticipantRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ParticipantRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="kind", type="string")
  * @ORM\DiscriminatorMap({"team" = "TournamentTeam", "player" = "Player"})

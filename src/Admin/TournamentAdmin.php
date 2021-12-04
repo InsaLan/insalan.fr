@@ -37,7 +37,6 @@ class TournamentAdmin extends AbstractAdmin
             ->add('locked', null, array('required'=>false))
             ->add('placement', null, array('required' => false))
             ->add('participantType', ChoiceType::class, array(
-                'choices_as_values' => true,
                 'choices' => array(
                     'Par équipe' => 'team',
                     'Joueur seul' => 'player'
@@ -45,7 +44,6 @@ class TournamentAdmin extends AbstractAdmin
                 'required' => true
              ))
              ->add('type', ChoiceType::class, array(
-                 'choices_as_values' => true,
                  'choices'   => array(
                      'League of Legends' => 'lol',
                      'Counter Strike Global Offensive' => 'csgo',
@@ -60,7 +58,6 @@ class TournamentAdmin extends AbstractAdmin
                 'required'  => true))
             ->add('file', FileType::class, array('required' => false))
       			->add('loginType', ChoiceType::class, array(
-              'choices_as_values' => true,
       				'choices' => array(
       					  'Autre' => LoginPlatform::PLATFORM_OTHER,
       					  'Steam' => LoginPlatform::PLATFORM_STEAM,

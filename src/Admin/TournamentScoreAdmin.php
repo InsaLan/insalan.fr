@@ -6,7 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-use App\Entity\TournamentMatch as Match;
+use App\Entity\TournamentMatch;
 
 class TournamentScoreAdmin extends AbstractAdmin
 {

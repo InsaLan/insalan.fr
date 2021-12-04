@@ -12,15 +12,15 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\StringType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-use App\Entity\TournamentMatch as Match;
+use App\Entity\TournamentMatch;
 
 class TournamentRoyalMatchAdmin extends AbstractAdmin
 {
 
     protected $stateDef = array(
-        'En attente' => Match::STATE_UPCOMING,
-        'En cours' => Match::STATE_ONGOING,
-        'Terminé' => Match::STATE_FINISHED
+        'En attente' => TournamentMatch::STATE_UPCOMING,
+        'En cours' => TournamentMatch::STATE_ONGOING,
+        'Terminé' => TournamentMatch::STATE_FINISHED
    );
 
     // Fields to be shown on create/edit forms

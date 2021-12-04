@@ -7,8 +7,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
-use App\Entity;
+use App\Entity\Tournament;
+use App\Entity\TournamentTeam;
+use App\Entity\Participant;
+
 
 /**
  * @Route("/tournament")
@@ -52,9 +56,10 @@ class TournamentController extends Controller
     /**
      * Display tournament's match tree
      * @Route("/{id}/public", requirements={"id" = "\d+"})
+     * @Entity("Tournament", expr="App\Repository\TournamentRepository.find(id)")
      * @Template()
      */
-    public function tournamentAction(Entity\Tournament $tournament)
+    public function tournamentAction(Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -73,7 +78,8 @@ class TournamentController extends Controller
             $ko->jsonData = $em->getRepository('App\Entity\TournamentKnockoutMatch')->getJson($ko);
             $output[] = $ko;
         }
-        return $this->render('tournamentStages.html.twig',['t' => $tournament, 'stages' => $stages, 'knockouts' => $output]);
+        return array('t' => $tournament, 'stages' => $stages, 'knockouts' => $output);
+//        return $this->render('tournamentStages.html.twig',['t' => $tournament, 'stages' => $stages, 'knockouts' => $output]);
     }
 
     /**
@@ -81,7 +87,7 @@ class TournamentController extends Controller
      * @Route("/{id}/public/rules", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function rulesAction(Entity\Tournament $tournament)
+    public function rulesAction(Tournament $tournament)
     {
         return $this->render('tournamentRules.html.twig',['t' => $tournament]);
     }
@@ -91,7 +97,7 @@ class TournamentController extends Controller
      * @Route("/{id}/public/team", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function teamListAction(Entity\Tournament $tournament)
+    public function teamListAction(Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
         $teams =  $em->getRepository('App\Entity\TournamentTeam')->getTeamsForTournament($tournament);
@@ -99,8 +105,8 @@ class TournamentController extends Controller
         $nbPendingTeams = $nbWaitingTeams = 0;
 
         foreach($teams as $t) {
-            if ($t->getValidated() == Entity\Participant::STATUS_PENDING) $nbPendingTeams++;
-            if ($t->getValidated() == Entity\Participant::STATUS_WAITING) $nbWaitingTeams++;
+            if ($t->getValidated() == Participant::STATUS_PENDING) $nbPendingTeams++;
+            if ($t->getValidated() == Participant::STATUS_WAITING) $nbWaitingTeams++;
         }
         return $this->render('tournamentTeamList.html.twig',['teams' => $teams, 'tournament' => $tournament, 'nbPendingTeams' => $nbPendingTeams, 'nbWaitingTeams' => $nbWaitingTeams]);
     }
@@ -110,7 +116,7 @@ class TournamentController extends Controller
      * @Route("/{id}/public/player", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function playerListAction(Entity\Tournament $tournament)
+    public function playerListAction(Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
         $players =  $em->getRepository('App\Entity\Player')->getPlayersForTournament($tournament);
@@ -118,8 +124,8 @@ class TournamentController extends Controller
         $nbPendingPlayers = $nbWaitingPlayers = 0;
 
         foreach($players as $p) {
-            if ($p->getValidated() == Entity\Participant::STATUS_PENDING) $nbPendingPlayers++;
-            if ($p->getValidated() == Entity\Participant::STATUS_WAITING) $nbWaitingPlayers++;
+            if ($p->getValidated() == Participant::STATUS_PENDING) $nbPendingPlayers++;
+            if ($p->getValidated() == Participant::STATUS_WAITING) $nbWaitingPlayers++;
         }
         return $this->render('tournamentPlayerList.html.twig', ['players' => $players, 'tournament' => $tournament, 'nbPendingPlayers' => $nbPendingPlayers, 'nbWaitingPlayers' => $nbWaitingPlayers]);
     }
@@ -212,7 +218,7 @@ class TournamentController extends Controller
      * @Method({"GET"})
      * @Template
      */
-    public function knockoutAction(Entity\Tournament $t)
+    public function knockoutAction(Tournament $t)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -234,7 +240,7 @@ class TournamentController extends Controller
      * @Route("/public/team/{id}", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function teamDetailsAction(Entity\Participant $part)
+    public function teamDetailsAction(Participant $part)
     {
 
         // Get Knockout & Group Matches
@@ -269,12 +275,12 @@ class TournamentController extends Controller
         return $this->render('tournamentTeamDetails.html.twig',["part" => $part, "groupMatches" => $grs, "knockoutMatches" => $kos, "authorized" => $this->isUserInTeam($part)]);
     }
 
-    private function isUserInTeam(Entity\Participant $part) {
+    private function isUserInTeam(Participant $part) {
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if(!$user || $user === "anon.") return false;
 
-        if($part instanceof Entity\Team) {
+        if($part instanceof TournamentTeam) {
 
             foreach ($part->getPlayers() as $p) {
                 if($p->getUser() && $p->getUser()->getId() === $user->getId())

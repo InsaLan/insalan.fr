@@ -24,7 +24,6 @@ class TournamentTeamAdmin extends AbstractAdmin
             ->add('captain')
             ->add('manager')
             ->add('validated', ChoiceType::class, array(
-                'choices_as_values' => true,
                 'required' => true,
                 'choices' => array(
                     'Équipe incomplète' => 0,

@@ -65,6 +65,6 @@ class ArchivesController extends Controller
     $em = $this->getDoctrine()->getManager();
 
     $streams = $em->getRepository('App\Entity\ArchivesStream')->findBy(array ('edition' => $edition, 'album' => $album));
-    return $this->render('archivesPreviousYearStreams.html.twig', ['editions' => $editions, 'streams' => $streams, 'album' => $album, 'page' => $page]);
+    return $this->render('archivesPreviousYearStreams.html.twig', ['edition' => $edition, 'streams' => $streams, 'album' => $album, 'page' => $page]);
   }
 }

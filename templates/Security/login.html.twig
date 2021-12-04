@@ -1,6 +1,5 @@
-{% extends "Userbundle::layout.html.twig" %}
-
-{% trans_default_domain 'UserBundle' %}
+{#{% extends "FOSUserBundle::layout.html.twig" %} #}
+{% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
 {% if error %}
@@ -15,7 +14,7 @@
   </aside>
 
   <header>
-    <h2>{{ 'layout.login'|trans }}</h2>
+    <h2>Connexion</h2>
   </header>
 
   <section>
@@ -23,18 +22,18 @@
       <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
 
       <div class="input left">
-        <label for="username">{{ 'security.login.username'|trans }}</label>
+        <label for="username">{{ "Nom d'utilisateur" }}</label>
         <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
       </div>
 
       <div class="input left">
-        <label for="password">{{ 'security.login.password'|trans }}</label>
+        <label for="password">{{ "Mot de passe" }}</label>
         <input type="password" id="password" name="_password" required="required" />
       </div>
 
       <div class="input right">
         <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+        <label for="remember_me">{{ "Se souvenir de moi" }}</label>
       </div>
 
       <div class="input left">

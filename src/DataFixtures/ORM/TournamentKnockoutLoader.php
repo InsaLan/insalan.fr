@@ -15,13 +15,13 @@ class TournamentKnockoutLoader extends AbstractFixture implements OrderedFixture
 
     public function load(ObjectManager $manager)
     {
-        $e = new Knockout();
+        $e = new TournamentKnockout();
         $e->setName('Elite bracket');
         $e->setTournament($this->getReference('tournament-1'));
         $manager->persist($e);
         $this->addReference('knockout-1', $e);
 
-        $e = new Knockout();
+        $e = new TournamentKnockout();
         $e->setName('Amateur bracket');
         $e->setTournament($this->getReference('tournament-1'));
         $manager->persist($e);

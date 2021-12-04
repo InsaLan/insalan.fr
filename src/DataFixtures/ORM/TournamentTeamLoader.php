@@ -5,8 +5,10 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Entity\Team;
+use App\Entity\TournamentTeam;
 use App\Entity\User;
 
 class TournamentTeamLoader extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
@@ -31,11 +33,16 @@ class TournamentTeamLoader extends AbstractFixture implements OrderedFixtureInte
     public function load(ObjectManager $manager)
     {
 
-        $factory = $this->container->get('security.encoder_factory');
-        $encoder = $factory->getEncoder(new User());
+        $defaultEncoder = new MessageDigestPasswordEncoder('sha512');
 
+        $encoders = [
+            User::class => $defaultEncoder, // Your user class. This line specify you ant sha512 encoder for this user class
+           ];
+
+        $factory = new EncoderFactory($encoders);
+        $encoder = $factory->getEncoder(new User());
         for ($i = 0; $i <= 60; $i++) {
-            $t = new Team();
+            $t = new TournamentTeam();
             $name = "Tondeuse Gaming $i";
             $t->setName("Tondeuse Gaming $i");
             $t->generatePasswordSalt();
@@ -47,7 +54,7 @@ class TournamentTeamLoader extends AbstractFixture implements OrderedFixtureInte
         }
 
         for ($i = 1; $i <= 28; $i++) {
-            $t = new Team();
+            $t = new TournamentTeam();
             $t->setName("Tondeuse Royale $i");
             $t->generatePasswordSalt();
             $t->setPassword($encoder->encodePassword('hello', $t->getPasswordSalt()));

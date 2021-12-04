@@ -9,7 +9,7 @@ use App\Entity\Tournament;
 /**
  * Discount
  *
- * @ORM\Entity(repositoryClass="App\Entity\UserDiscountRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserDiscountRepository")
  * @ORM\Table()
  * @ORM\Entity
  */
@@ -52,7 +52,7 @@ class UserDiscount
      * Set name
      *
      * @param string $name
-     * @return Discount
+     * @return UserDiscount
      */
     public function setName($name)
     {
@@ -75,7 +75,7 @@ class UserDiscount
      * Set amount
      *
      * @param integer $amount
-     * @return Discount
+     * @return UserDiscount
      */
     public function setAmount($amount)
     {
@@ -98,7 +98,7 @@ class UserDiscount
      * Set registrable
      *
      * @param \App\Entity\Registrable $registrable
-     * @return Discount
+     * @return UserDiscount
      */
     public function setRegistrable(\App\Entity\Registrable $registrable = null)
     {

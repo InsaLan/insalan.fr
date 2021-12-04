@@ -18,7 +18,7 @@ class TournamentRoundLoader extends AbstractFixture implements OrderedFixtureInt
         
         for($i = 1; $i < 4; $i++)
         {
-            $e = new Round();
+            $e = new TournamentRound();
             $e->setMatch($this->getReference('match-'.$i));
             
             $manager->persist($e);
@@ -33,7 +33,7 @@ class TournamentRoundLoader extends AbstractFixture implements OrderedFixtureInt
         {
             for ($r = 1; $r <= 4; $r++)
             {
-                $e = new Round();
+                $e = new TournamentRound();
                 $e->setMatch($this->getReference('royal-match-'.$i));
                 
                 $manager->persist($e);

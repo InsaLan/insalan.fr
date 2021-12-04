@@ -3,13 +3,13 @@ namespace App\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Entity\Staff;
+use App\Entity\InsaLanStaff;
 
 class InsaLanStaffLoader implements FixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $e = new Staff();
+        $e = new InsaLanStaff();
         $e->setRole('Resp Com');
         $e->setFirstName('John');
         $e->setLastName('Doe');
@@ -17,7 +17,7 @@ class InsaLanStaffLoader implements FixtureInterface
         $e->setEmail('com@insalan.fr');
         $manager->persist($e);
 
-        $e = new Staff();
+        $e = new InsaLanStaff();
         $e->setRole('Resp Tournois');
         $e->setFirstName('Jane');
         $e->setLastName('Doe');

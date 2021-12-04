@@ -1,0 +1,23 @@
+{% extends 'tournamentLayout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Inscription à &laquo; {{ registrable.name }} &raquo;</h2>
+    {{ registrable.description }}
+  </header>
+
+  <section>
+      {% include 'Part/ChooseGameNameValidated.html.twig'  with {'counter': 1} %}
+      {% include 'Part/ChoiceTeamActive.html.twig'  with {'counter': 2} %}
+  </section>
+</article>
+{% endblock %}

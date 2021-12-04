@@ -1,0 +1,32 @@
+{% extends 'tournamentLayout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Inscription à &laquo; {{ registrable.name }} &raquo;</h2>
+    {{ registrable.description }}
+  </header>
+
+  <section>
+    {% if registrable.kind == 'tournament' and registrable.participantType == 'team' %}
+      {% include 'Part/ChooseGameNameValidated.html.twig' with {'counter': 1} %}
+      {% include 'Part/ChoiceTeamValidated.html.twig' with {'counter': 2} %}
+      {% include 'Part/CreateJoinTeamValidated.html.twig' with {'counter': 3} %}
+      {% include 'Part/BeforePaymentValidated.html.twig' with {'counter': 4} %}
+      {% include 'Part/AfterPaymentActive.html.twig' with {'counter': 5} %}
+    {% else %}
+      {% include 'Part/ChooseGameNameValidated.html.twig' with {'counter': 1} %}
+      {% include 'Part/BeforePaymentValidated.html.twig' with {'counter': 2} %}
+      {% include 'Part/AfterPaymentActive.html.twig' with {'counter': 3} %}
+    {% endif %}
+  </section>
+</article>
+{% endblock %}

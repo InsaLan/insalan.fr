@@ -15,7 +15,7 @@ use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use Endroid\QrCode\QrCode;
 
 use App\Entity\Player;
-use App\Entity\Manager;
+use App\Entity\TournamentManager;
 use App\Entity\Tournament;
 use App\Entity\Participant;
 use App\Entity\ETicket;
@@ -99,20 +99,20 @@ class AdminTicketingController extends Controller
           $isManager = true;
         } else {
           $this->get('session')->getFlashBag()->add('error', "Pas de joueur ni de manager correspondant.");
-          return $this->redirect($this->generateUrl("app_ticketing_admin_ready"));
+          return $this->redirect($this->generateUrl("app_adminticketing_ready"));
         }
 
         // Check csrf token
         $submittedToken = $request->request->get('_token');
         if (!$this->isCsrfTokenValid('send' . $participant->getId(), $submittedToken)) {
           $this->get('session')->getFlashBag()->add('error', "Token csrf invalide.");
-          return $this->redirect($this->generateUrl("app_ticketing_admin_ready"));
+          return $this->redirect($this->generateUrl("app_adminticketing_ready"));
         }
 
         // Check if a ticket already exists
         if ($participant->getETicket()) {
           $this->get('session')->getFlashBag()->add('error', "Billet déjà créé ");
-          return $this->redirect($this->generateUrl("app_ticketing_admin_ready"));
+          return $this->redirect($this->generateUrl("app_adminticketing_ready"));
         }
 
         // tournament is not in the same field between player and manager
@@ -136,7 +136,7 @@ class AdminTicketingController extends Controller
           $em->flush();
         } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
           $this->get('session')->getFlashBag()->add('error', "Le token généré est déjà utilisé. Réessayez dans quelques instants.\n Token : " . $token);
-          return $this->redirect($this->generateUrl("app_ticketing_admin_ready"));
+          return $this->redirect($this->generateUrl("app_adminticketing_ready"));
         }
 
         // Generate pdf
@@ -144,7 +144,7 @@ class AdminTicketingController extends Controller
         $this->get('session')->getFlashBag()->add('info', "Billet créé ".$eTicket->getToken());
 
         $this->sendETicket($eTicket, $pdf);
-        return $this->redirect($this->generateUrl("app_ticketing_admin_ready"));
+        return $this->redirect($this->generateUrl("app_adminticketing_ready"));
     }
 
     /**
@@ -163,14 +163,14 @@ class AdminTicketingController extends Controller
       }
       if ($participant == null) {
           $this->get('session')->getFlashBag()->add('error', "Pas de joueur ni de manager correspondant.");
-        return $this->redirect($this->generateUrl("app_ticketing_admin_sent"));
+        return $this->redirect($this->generateUrl("app_adminticketing_sent"));
       }
 
       // Check csrf token
       $submittedToken = $request->request->get('_token');
       if (!$this->isCsrfTokenValid('remove' . $eTicket->getId(), $submittedToken)) {
         $this->get('session')->getFlashBag()->add('error', "Token csrf invalide.");
-        return $this->redirect($this->generateUrl("app_ticketing_admin_sent"));
+        return $this->redirect($this->generateUrl("app_adminticketing_sent"));
       }
 
 
@@ -184,7 +184,7 @@ class AdminTicketingController extends Controller
       $this->sendCancelEmail($eTicket);
 
       $this->get('session')->getFlashBag()->add('info', "Billet annulé ");
-      return $this->redirect($this->generateUrl("app_ticketing_admin_sent"));
+      return $this->redirect($this->generateUrl("app_adminticketing_sent"));
     }
 
     /**
@@ -201,7 +201,7 @@ class AdminTicketingController extends Controller
       $submittedToken = $request->request->get('_token');
       if (!$this->isCsrfTokenValid('download' . $eTicket->getId(), $submittedToken)) {
         $this->get('session')->getFlashBag()->add('error', "Token csrf invalide.");
-        return $this->redirect($this->generateUrl("app_ticketing_admin_ready"));
+        return $this->redirect($this->generateUrl("app_adminticketing_ready"));
       }
 
       $pathName = realpath("").'/../data/ticket/'.$eTicket->getId().'.pdf';
@@ -245,7 +245,7 @@ class AdminTicketingController extends Controller
                "tournament" => $eTicket->getTournament(),
                "pseudo" => $participant->getGameName(),
                "type" => $participant->getParticipantType(),
-               "managerPrice" => Manager::ONLINE_PRICE,
+               "managerPrice" => TournamentManager::ONLINE_PRICE,
                "eTicket" => $eTicket
               ]
             );

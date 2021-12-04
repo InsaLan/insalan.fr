@@ -24,7 +24,7 @@ class PizzaOrderLoader extends AbstractFixture implements OrderedFixtureInterfac
         $h2->modify("+2 hour");
         $h3->modify("+3 hour");
 
-        $e = new Order();
+        $e = new PizzaOrder();
         $e->setExpiration($h1);
         $e->setDelivery($h2);
         $e->setCapacity(60);
@@ -32,7 +32,7 @@ class PizzaOrderLoader extends AbstractFixture implements OrderedFixtureInterfac
         $this->addReference('order-1', $e);
         $manager->persist($e);
 
-        $e = new Order();
+        $e = new PizzaOrder();
         $e->setExpiration($h2);
         $e->setDelivery($h3);
         $e->setCapacity(3);

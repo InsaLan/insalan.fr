@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Entity\TournamentMatchRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TournamentMatchRepository")
  */
 class TournamentMatch extends TournamentAbstractMatch
 {
@@ -87,7 +87,7 @@ class TournamentMatch extends TournamentAbstractMatch
      * Set part1
      *
      * @param \App\Entity\Participant $part1
-     * @return Match
+     * @return TournamentMatch
      */
     public function setPart1(\App\Entity\Participant $part1 = null)
     {
@@ -110,7 +110,7 @@ class TournamentMatch extends TournamentAbstractMatch
      * Set part2
      *
      * @param \App\Entity\Participant $part2
-     * @return Match
+     * @return TournamentMatch
      */
     public function setPart2(\App\Entity\Participant $part2 = null)
     {

@@ -9,7 +9,7 @@ use App\Entity\Tournament;
  * Stream
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="App\Entity\StreamRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\StreamRepository")
  */
 class Stream
 {

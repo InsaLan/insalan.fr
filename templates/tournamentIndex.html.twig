@@ -33,7 +33,7 @@
 {% if registration_closed_tournaments | length > 0 %}
 <article>
   <header>
-{    <h2>Tournois en cours</h2>
+    <h2>Tournois en cours</h2>
   </header>
   {% include 'Part/TournamentList.html.twig' with {'tournaments': registration_closed_tournaments} %}
 </article>

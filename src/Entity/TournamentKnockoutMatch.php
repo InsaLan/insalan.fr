@@ -11,9 +11,10 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
-
+use App\Entity\TournamentMatch;
+use App\Entity\TournamentKnockout;
 /**
- * @ORM\Entity(repositoryClass="App\Entity\TournamentKnockoutMatchRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TournamentKnockoutMatchRepository")
  * @Gedmo\Tree(type="nested")
  */
 class TournamentKnockoutMatch
@@ -245,10 +246,10 @@ class TournamentKnockoutMatch
     /**
      * Set knockout
      *
-     * @param \App\Entity\TournamentKnockout $knockout
+     * @param TournamentKnockout $knockout
      * @return KnockoutMatch
      */
-    public function setKnockout(\App\Entity\TournamentKnockout $knockout = null)
+    public function setKnockout(TournamentKnockout $knockout = null)
     {
         $this->knockout = $knockout;
 
@@ -258,7 +259,7 @@ class TournamentKnockoutMatch
     /**
      * Get knockout
      *
-     * @return \App\Entity\TournamentKnockout
+     * @return TournamentKnockout
      */
     public function getKnockout()
     {
@@ -268,10 +269,10 @@ class TournamentKnockoutMatch
     /**
      * Set match
      *
-     * @param \App\Entity\TournamentMatch $match
+     * @param TournamentMatch $match
      * @return KnockoutMatch
      */
-    public function setMatch(\App\Entity\TournamentMatch $match = null)
+    public function setMatch(TournamentMatch $match = null)
     {
         $this->match = $match;
 
@@ -281,7 +282,7 @@ class TournamentKnockoutMatch
     /**
      * Get match
      *
-     * @return \App\Entity\TournamentMatch
+     * @return TournamentMatch
      */
     public function getMatch()
     {
@@ -291,10 +292,10 @@ class TournamentKnockoutMatch
     /**
      * Set parent
      *
-     * @param \App\Entity\TournamentKnockoutMatch $parent
+     * @param TournamentKnockoutMatch $parent
      * @return KnockoutMatch
      */
-    public function setParent(\App\Entity\TournamentKnockoutMatch $parent = null)
+    public function setParent(TournamentKnockoutMatch $parent = null)
     {
         $this->parent = $parent;
 
@@ -304,7 +305,7 @@ class TournamentKnockoutMatch
     /**
      * Get parent
      *
-     * @return \App\Entity\TournamentKnockoutMatch
+     * @return TournamentKnockoutMatch
      */
     public function getParent()
     {
@@ -314,10 +315,10 @@ class TournamentKnockoutMatch
     /**
      * Add children
      *
-     * @param \App\Entity\TournamentKnockoutMatch $children
+     * @param TournamentKnockoutMatch $children
      * @return KnockoutMatch
      */
-    public function addChildren(\App\Entity\TournamentKnockoutMatch $children)
+    public function addChildren(TournamentKnockoutMatch $children)
     {
         $this->children[] = $children;
 
@@ -327,9 +328,9 @@ class TournamentKnockoutMatch
     /**
      * Remove children
      *
-     * @param \App\Entity\TournamentKnockoutMatch $children
+     * @param TournamentKnockoutMatch $children
      */
-    public function removeChildren(\App\Entity\TournamentKnockoutMatch $children)
+    public function removeChildren(TournamentKnockoutMatch $children)
     {
         $this->children->removeElement($children);
     }
@@ -347,10 +348,10 @@ class TournamentKnockoutMatch
     /**
      * Add children
      *
-     * @param \App\Entity\TournamentKnockoutMatch $children
+     * @param TournamentKnockoutMatch $children
      * @return KnockoutMatch
      */
-    public function addChild(\App\Entity\TournamentKnockoutMatch $children)
+    public function addChild(TournamentKnockoutMatch $children)
     {
         $this->children[] = $children;
 
@@ -360,9 +361,9 @@ class TournamentKnockoutMatch
     /**
      * Remove children
      *
-     * @param \App\Entity\TournamentKnockoutMatch $children
+     * @param TournamentKnockoutMatch $children
      */
-    public function removeChild(\App\Entity\TournamentKnockoutMatch $children)
+    public function removeChild(TournamentKnockoutMatch $children)
     {
         $this->children->removeElement($children);
     }
@@ -370,10 +371,10 @@ class TournamentKnockoutMatch
     /**
      * Set loserDestination
      *
-     * @param \App\Entity\TournamentKnockoutMatch $loserDestination
+     * @param TournamentKnockoutMatch $loserDestination
      * @return KnockoutMatch
      */
-    public function setLoserDestination(\App\Entity\TournamentKnockoutMatch $loserDestination = null)
+    public function setLoserDestination(TournamentKnockoutMatch $loserDestination = null)
     {
         $this->loserDestination = $loserDestination;
 
@@ -383,7 +384,7 @@ class TournamentKnockoutMatch
     /**
      * Get loserDestination
      *
-     * @return \App\Entity\TournamentKnockoutMatch 
+     * @return TournamentKnockoutMatch 
      */
     public function getLoserDestination()
     {
