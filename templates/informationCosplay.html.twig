@@ -2,13 +2,13 @@
 
 {% block stylesheets %}
 {{ parent() }}
-    <link rel="stylesheet" href="/public/css/news.css" />
+    <link rel="stylesheet" href="{{ asset("css/news.css") }}" />
 {% endblock %}
 
 {% block body %}
 {{ parent() }}
 
-<img src="{{ asset('/public/img/cosplay.png') }}" width="1000"/>
+<img src="{{ asset('img/cosplay.png') }}" width="1000"/>
 
 <article id="cosplay" class="info">
   <aside>
@@ -47,12 +47,12 @@
   <div class="partner-list">
     <div class="partner partner-big">
       <a href="https://www.shopforgeek.com/">
-        <img src="{{ asset('/public/img/partners/shop-for-geeks.png') }}" alt="Shopforgeek" />
+        <img src="{{ asset('img/partners/shop-for-geeks.png') }}" alt="Shopforgeek" />
       </a>
     </div>
     <div class="partner partner-big">
       <a href="https://www.rougier-ple.fr/">
-        <img src="{{ asset('/public/img/partners/rougier-ple.png') }}" alt="Rougier&Ple" />
+        <img src="{{ asset('img/partners/rougier-ple.png') }}" alt="Rougier&Ple" />
       </a>
     </div>
   </div>
@@ -73,16 +73,16 @@
     <p>
       <ol class="shift">
         {#<li>
-          <strong><a href="{{ asset('/public/pdf/reglement.pdf') }}" target="_blank">[Règlement &#x25BE;]</a></strong>.
+          <strong><a href="{{ asset('pdf/reglement.pdf') }}" target="_blank">[Règlement &#x25BE;]</a></strong>.
         </li>#}
         <li>
           <strong><a href="{{ path('app_information_cosplayrules') }}">Règlement</a></strong>.
         </li>
         <li>
-          <strong><a href="{{ asset('/public/pdf/droit-image-cosplay.pdf') }}" target="_blank">[Autorisation de droit à l'image &#x25BE;]</a></strong>.
+          <strong><a href="{{ asset('pdf/droit-image-cosplay.pdf') }}" target="_blank">[Autorisation de droit à l'image &#x25BE;]</a></strong>.
         </li>
         <li>
-          Pour les mineurs : <strong><a href="{{ asset('/public/pdf/autorisation-parental-cosplay.pdf') }}" target="_blank">[Autorisation parentale &#x25BE;]</a></strong>.
+          Pour les mineurs : <strong><a href="{{ asset('pdf/autorisation-parental-cosplay.pdf') }}" target="_blank">[Autorisation parentale &#x25BE;]</a></strong>.
         </li>
       </ol>
     </p>

@@ -3,8 +3,8 @@
 
 {% block stylesheets %}
 {{ parent() }}
-    <link rel="stylesheet" href="/public/css/archives.css" />
-    <link rel="stylesheet" href="/public/css/tournament.css" />
+    <link rel="stylesheet" href="{{ asset("css/archives.css") }}" />
+    <link rel="stylesheet" href="{{ asset("css/tournament.css") }}" />
 {% endblock %}
 
 {% block body %}
@@ -21,7 +21,7 @@
 <section>
   <div class="previous-years-list">
     <div class="previous-years">
-      <img src="{{ asset('/public/img/')  ~ poster}}" alt="{{edition.name}}" />
+      <img src="{{ asset('img/')  ~ poster}}" alt="{{edition.name}}" />
     </div>
   </div>
 </section>

@@ -18,7 +18,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
-    <link rel="stylesheet" href="/public/css/tournament2.css" />
+    <link rel="stylesheet" href="{{ asset("css/tournament2.css") }}" />
 {% endblock %}
 
 {% block body %}
@@ -259,10 +259,10 @@
 {% block javascripts %}
 {{ parent() }}
 
-<script src="/public/js/tournament.js" type="text/javascript"></script>
-<script src="/public/data/champion.js" type="text/javascript"></script>
-<script src="/public/data/item.js" type="text/javascript"></script>
-<script src="/public/data/summoner.js" type="text/javascript"></script>
+<script src="{{ asset("js/tournament.js") }}" type="text/javascript"></script>
+<script src="{{ asset("data/champion.js") }}" type="text/javascript"></script>
+<script src="{{ asset("data/item.js") }}" type="text/javascript"></script>
+<script src="{{ asset("data/summoner.js") }}" type="text/javascript"></script>
 
 <script type="text/javascript">
 loadMatch.url = '{{ path('app_tournament_matchdata', {id:'__id__'}) }}';
