@@ -67,7 +67,7 @@ class UserAdmin extends AbstractAdmin
     }
 
     //update password
-    public function updateUser(App\Entity\User $u) {
+    public function updateUser(\App\Entity\User $u) {
       if ($u->getPlainPassword()) {
         $u->setPlainPassword($u->getPlainPassword());
       }

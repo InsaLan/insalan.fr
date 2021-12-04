@@ -5,9 +5,8 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
-class TournamentTeamLoginType extends AbstractType
+class SetPlayerName extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -16,10 +15,7 @@ class TournamentTeamLoginType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('plainPassword', PasswordType::class, array(
-                'required' => true,
-            ))
+            ->add('gameName')
         ;
     }
 
@@ -29,7 +25,7 @@ class TournamentTeamLoginType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\Team'
+            'data_class' => 'App\Entity\Player'
         ));
     }
 
@@ -38,6 +34,6 @@ class TournamentTeamLoginType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return '_tournamentbundle_team';
+        return '_tournamentbundle_player';
     }
 }

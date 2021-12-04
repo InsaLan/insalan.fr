@@ -5,6 +5,10 @@ payum:
 
     storages:
         App\Entity\UserPaymentDetails: { doctrine: orm }
+        Payum\Core\Model\Payment:
+            filesystem:
+                storage_dir: '%kernel.root_dir%/Resources/payments'
+                id_property: number
 
     gateways:
         paypal_express_checkout_and_doctrine_orm:

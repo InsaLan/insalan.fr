@@ -17,6 +17,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 use Payum\Core\Model\PizzaOrder;
 use Payum\Core\Reply\HttpRedirect;
@@ -32,12 +34,13 @@ use App\Form\TeamLoginType;
 use App\Exception\ControllerException;
 
 use App\Entity\Player;
-use App\Entity\Team;
+use App\Entity\TournamentTeam;
 use App\Entity;
+use App\Entity\User;
 use App\Entity\InsaLanGlobalVars;
 
 use App;
-use App\Entity\PaymentDetails;
+use App\Entity\UserPaymentDetails;
 
 /**
  * @Route("/tournament")
@@ -67,13 +70,13 @@ class TournamentUserController extends Controller
         foreach($participants as $p) {
             $registered[] = $p->getRegistrable();
 
-            if ($p->getRegistrable() instanceof Entity\Bundle)
+            if ($p->getRegistrable() instanceof Entity\TournamentBundle)
                 foreach($p->getRegistrable()->getTournaments() as $t)
                     $registered[] = $t;
         }
 
         foreach($registrables as $r) {
-            if ($r instanceof Entity\Bundle) {
+            if ($r instanceof Entity\TournamentBundle) {
                 foreach($r->getTournaments() as $t) {
                     if (array_search($t, $registered) !== false) {
                         $registered[] = $r;
@@ -115,7 +118,7 @@ class TournamentUserController extends Controller
 
         if(!$participant ||
             $participant->getValidated() !== Entity\Participant::STATUS_VALIDATED ||
-            $participant instanceof Entity\Team &&
+            $participant instanceof Entity\TournamentTeam &&
             $participant->getCaptain()->getUser() !== $usr) {
             $this->get('session')->getFlashBag()->add('error', "Seul le capitaine peut choisir une place pour l'équipe.");
             return $this->redirect($this->generateUrl('app_user_index'));
@@ -236,7 +239,7 @@ class TournamentUserController extends Controller
             $player->setPendingRegistrable($registrable);
         }
 
-        if ($registrable instanceof Entity\Tournament && $registrable->getLoginType() != UserBundle\Service\LoginPlatform::PLATFORM_OTHER) {
+        if ($registrable instanceof Entity\Tournament && $registrable->getLoginType() != App\Service\LoginPlatform::PLATFORM_OTHER) {
             $name = $this->get("insalan.user.login_platform")->getGameName($usr, $registrable->getLoginType());
 
             $player->setGameName($name);
@@ -398,8 +401,8 @@ class TournamentUserController extends Controller
         $order->setDiscount($discount);
 
         $order->setRawPrice($price);
-        $order->setPlace(PaymentDetails::PLACE_WEB);
-        $order->setType(PaymentDetails::TYPE_PAYPAL);
+        $order->setPlace(UserPaymentDetails::PLACE_WEB);
+        $order->setType(UserPaymentDetails::TYPE_PAYPAL);
 
         $order->addPaymentDetail($title, $price, '');
         $order->addPaymentDetail('Majoration paiement en ligne', $registrable->getOnlineIncreaseInPrice(), 'Frais de gestion du paiement');
@@ -407,7 +410,7 @@ class TournamentUserController extends Controller
         return $this->redirect(
             $payment->getTargetUrl(
                 $order,
-                '_tournamentuser_paydonetemp',
+                'app_tournamentuser_paydonetemp',
                 array('registrable' => $registrable->getId())
             )
         );
@@ -607,10 +610,16 @@ class TournamentUserController extends Controller
                                       ));
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // update password if not empty
             if ($team->getPlainPassword() != ""){
-                $factory = $this->get('security.encoder_factory');
+                $defaultEncoder = new MessageDigestPasswordEncoder('sha512');
+
+                $encoders = [
+                    User::class => $defaultEncoder, // Your user class. This line specify you ant sha512 encoder for this user class
+                ];
+
+                $factory = new EncoderFactory($encoders);
                 $encoder = $factory->getEncoder($usr);
                 $team->setPassword($encoder->encodePassword($team->getPlainPassword(), $team->getPasswordSalt()));
             }
@@ -756,7 +765,7 @@ class TournamentUserController extends Controller
             ->getRepository('App\Entity\Player')
             ->findOneByUserAndPendingRegistrable($usr, $tournament);
 
-        $team = new Team();
+        $team = new TournamentTeam();
 
         $form = $this->createForm('App\Form\TeamType',
                                   $team,
@@ -767,8 +776,14 @@ class TournamentUserController extends Controller
                                       ));
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $factory = $this->get('security.encoder_factory');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $defaultEncoder = new MessageDigestPasswordEncoder('sha512');
+
+            $encoders = [
+                User::class => $defaultEncoder, // Your user class. This line specify you ant sha512 encoder for this user class
+            ];
+
+            $factory = new EncoderFactory($encoders);
             $encoder = $factory->getEncoder($usr);
             $team->generatePasswordSalt();
             $team->setPassword($encoder->encodePassword($team->getPlainPassword(), $team->getPasswordSalt()));
@@ -800,7 +815,7 @@ class TournamentUserController extends Controller
             ->getRepository('App\Entity\Player')
             ->findOneByUserAndPendingRegistrable($usr, $tournament);
 
-        $team = new Team();
+        $team = new TournamentTeam();
 
         $form = $this->createForm(TeamLoginType::class,
                                   $team,
@@ -812,9 +827,15 @@ class TournamentUserController extends Controller
         $form->handleRequest($request);
 
         $details = null;
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $factory = $this->get('security.encoder_factory');
+                $defaultEncoder = new MessageDigestPasswordEncoder('sha512');
+
+                $encoders = [
+                    User::class => $defaultEncoder, // Your user class. This line specify you ant sha512 encoder for this user class
+                ];
+
+                $factory = new EncoderFactory($encoders);
                 $encoder = $factory->getEncoder($usr);
                 $team2 = $em
                     ->getRepository('App\Entity\TournamentTeam')
@@ -874,7 +895,7 @@ class TournamentUserController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid())
+        if ($form->isSubmitted() && $form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
             $em->persist($round);
@@ -899,22 +920,22 @@ class TournamentUserController extends Controller
         $this->get('session')->set('callbackRegisterApiRoute','_tournamentuser_setplayer');
         $this->get('session')->set('callbackRegisterApiParams',array('registrable' => $registrable->getId()));
 
-        if ($registrable instanceof Entity\Bundle) {
+        if ($registrable instanceof Entity\TournamentBundle) {
             foreach($registrable->getTournaments() as $t) {
                 if (($res = $this->checkLoginPlatform($t)) !== null)
                     return $res;
             }
         }
         else {
-            if (($registrable->getLoginType() == UserBundle\Service\LoginPlatform::PLATFORM_STEAM && $user->getSteamId() == null)
-                || ($registrable->getLoginType() == UserBundle\Service\LoginPlatform::PLATFORM_BATTLENET && $user->getBattleTag() == null))
+            if (($registrable->getLoginType() == App\Service\LoginPlatform::PLATFORM_STEAM && $user->getSteamId() == null)
+                || ($registrable->getLoginType() == App\Service\LoginPlatform::PLATFORM_BATTLENET && $user->getBattleTag() == null))
                 return $this->redirect($this->generateUrl('app_tournamentuser_redirecttoapilogin', array('tournament' => $registrable->getId())));
         }
 
         return null;
     }
 
-    protected function usernameSet($em, UserBundle\Entity\User $usr, Entity\Player $player, $request, Entity\Registrable $registrable) {
+    protected function usernameSet($em, App\Entity\User $usr, Entity\Player $player, $request, Entity\Registrable $registrable) {
         $form = $this->createForm(SetPlayerName::class,
                                   $player,
                                   array(
@@ -924,7 +945,7 @@ class TournamentUserController extends Controller
                                       ));
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $player->setGameValidated(false);
             $em->persist($player);
             $em->flush();
@@ -953,7 +974,7 @@ class TournamentUserController extends Controller
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        if($part instanceof Entity\Team) {
+        if($part instanceof Entity\TournamentTeam) {
 
             foreach ($part->getPlayers() as $p) {
                 if($p->getUser() !== null && $p->getUser()->getId() === $user->getId())

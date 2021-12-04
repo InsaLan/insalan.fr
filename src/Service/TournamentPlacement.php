@@ -12,7 +12,7 @@
 namespace App\Service;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use App\Entity\Team;
+use App\Entity\TournamentTeam;
 
 class TournamentPlacement
 {

@@ -1,6 +1,7 @@
 security:
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
+        App\Entity\User: bcrypt
 
     role_hierarchy:
         ROLE_MERCHANT:    ROLE_USER

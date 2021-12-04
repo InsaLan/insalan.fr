@@ -5,7 +5,7 @@ namespace App\Subscriber;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
-use App\Entity\Team;
+use App\Entity\TournamentTeam;
 use App\Entity\Participant;
 use App\Entity\Player;
 use App\Entity\Bundle;

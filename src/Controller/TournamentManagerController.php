@@ -13,6 +13,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
+
 use Payum\Core\Model\PizzaOrder;
 use Payum\Core\Reply\HttpRedirect;
 use Payum\Core\Reply\HttpResponse;
@@ -30,7 +33,8 @@ use App\Entity\TournamentManager;
 use App\Entity\Participant;
 use App\Entity\Player;
 use App\Entity\Tournament;
-use App\Entity\Team;
+use App\Entity\tournamentTeam;
+use App\Entity\User;
 use App\Entity;
 
 use App\Entity\PaymentDetails;
@@ -57,13 +61,13 @@ class TournamentManagerController extends Controller
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
         if ($manager === null)
-            return $this->redirect($this->generateUrl('app_tournament_manager_setname',array('tournament' => $tournament->getId())));
+            return $this->redirect($this->generateUrl('app_tournamentmanager_setname',array('tournament' => $tournament->getId())));
         else if ($tournament->getParticipantType() === 'team' && $manager->getParticipant() === null)
-            return $this->redirect($this->generateUrl('app_tournament_manager_jointeamwithpassword',array('tournament' => $tournament->getId())));
+            return $this->redirect($this->generateUrl('app_tournamentmanager_jointeamwithpassword',array('tournament' => $tournament->getId())));
         else if (!$manager->getPaymentDone())
-            return $this->redirect($this->generateUrl('app_tournament_manager_pay',array('tournament' => $tournament->getId())));
+            return $this->redirect($this->generateUrl('app_tournamentmanager_pay',array('tournament' => $tournament->getId())));
         else
-            return $this->redirect($this->generateUrl('app_tournament_manager_paydone',array('tournament' => $tournament->getId())));
+            return $this->redirect($this->generateUrl('app_tournamentmanager_paydone',array('tournament' => $tournament->getId())));
     }
 
     /**
@@ -95,7 +99,7 @@ class TournamentManagerController extends Controller
                                   $manager,
                                   array(
                                         'method' => 'POST',
-                                        'action' => $this->generateUrl('app_tournament_manager_setname', array('tournament' => $tournament->getId())),
+                                        'action' => $this->generateUrl('app_tournamentmanager_setname', array('tournament' => $tournament->getId())),
                                         'attr' => array('id' => 'step1')
                                       ));
         $form->handleRequest($request);
@@ -106,11 +110,11 @@ class TournamentManagerController extends Controller
 
             if($tournament->getParticipantType() === "team")
                 return $this->redirect(
-                    $this->generateUrl('app_tournament_manager_jointeamwithpassword', array('tournament' => $tournament->getId()))
+                    $this->generateUrl('app_tournamentmanager_jointeamwithpassword', array('tournament' => $tournament->getId()))
                 );
             else // solo tournaments
                 return $this->redirect(
-                    $this->generateUrl('app_tournament_manager_joinsoloplayer', array('tournament' => $tournament->getId()))
+                    $this->generateUrl('app_tournamentmanager_joinsoloplayer', array('tournament' => $tournament->getId()))
                 );
         }
 
@@ -136,14 +140,14 @@ class TournamentManagerController extends Controller
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
         if($manager === null)
-            return $this->redirect($this->generateUrl('app_tournament_manager_setname', array('tournament' => $tournament->getId())));
+            return $this->redirect($this->generateUrl('app_tournamentmanager_setname', array('tournament' => $tournament->getId())));
 
         $form_player = new Player();
         $form = $this->createForm(SetPlayerName::class,
                                   $form_player,
                                   array(
                                         'method' => 'POST',
-                                        'action' => $this->generateUrl('app_tournament_manager_joinsoloplayer', array('tournament' => $tournament->getId())),
+                                        'action' => $this->generateUrl('app_tournamentmanager_joinsoloplayer', array('tournament' => $tournament->getId())),
                                         'attr' => array('id' => 'step3')
                                       )); // fill player gamename
         $form->handleRequest($request);
@@ -169,7 +173,7 @@ class TournamentManagerController extends Controller
                 $em->persist($player);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('app_tournament_manager_pay', array('tournament' => $tournament->getId())));
+                return $this->redirect($this->generateUrl('app_tournamentmanager_pay', array('tournament' => $tournament->getId())));
 
             } catch (ControllerException $e) {
                 $error_details = $e->getMessage();
@@ -198,14 +202,14 @@ class TournamentManagerController extends Controller
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
         if($manager === null)
-            return $this->redirect($this->generateUrl('app_tournament_manager_setname', array('tournament' => $tournament->getId())));
+            return $this->redirect($this->generateUrl('app_tournamentmanager_setname', array('tournament' => $tournament->getId())));
 
         $form_team = new Team();
         $form = $this->createForm(TeamLoginType::class,
                                   $form_team,
                                   array(
                                         'method' => 'POST',
-                                        'action' => $this->generateUrl('app_tournament_manager_jointeamwithpassword', array('tournament' => $tournament->getId())),
+                                        'action' => $this->generateUrl('app_tournamentmanager_jointeamwithpassword', array('tournament' => $tournament->getId())),
                                         'attr' => array('id' => 'step4')
                                       )); // fill name and plainPassword
         $form->handleRequest($request);
@@ -216,7 +220,13 @@ class TournamentManagerController extends Controller
         if ($form->isValid()) {
             try {
                 // hash password
-                $factory = $this->get('security.encoder_factory');
+                $defaultEncoder = new MessageDigestPasswordEncoder('sha512');
+
+                $encoders = [
+                    User::class => $defaultEncoder, // Your user class. This line specify you ant sha512 encoder for this user class
+                ];
+
+                $factory = new EncoderFactory($encoders);
                 $encoder = $factory->getEncoder($usr);
                 $team = $em
                     ->getRepository('App\Entity\TournamentTeam')
@@ -242,7 +252,7 @@ class TournamentManagerController extends Controller
                     $em->persist($team);
                     $em->flush();
 
-                    return $this->redirect($this->generateUrl('app_tournament_manager_pay', array('tournament' => $tournament->getId())));
+                    return $this->redirect($this->generateUrl('app_tournamentmanager_pay', array('tournament' => $tournament->getId())));
 
                 } else
                     throw new ControllerException("Mot de passe invalide");
@@ -280,7 +290,7 @@ class TournamentManagerController extends Controller
             $manager->setPaymentDone(true);
             $em->persist($manager);
             $em->flush();
-            return $this->redirect($this->generateUrl('app_tournament_manager_paydone', array("tournament" => $tournament->getId())));
+            return $this->redirect($this->generateUrl('app_tournamentmanager_paydone', array("tournament" => $tournament->getId())));
         }
 
         return array('tournament' => $tournament, 'user' => $usr, 'manager' => $manager);
@@ -315,7 +325,7 @@ class TournamentManagerController extends Controller
         return $this->redirect(
             $payment->getTargetUrl(
                 $order,
-                '_tournament_manager_paydonetemp',
+                '_tournamentmanager_paydonetemp',
                 array('tournament' => $tournament->getId())
             )
         );
@@ -359,7 +369,7 @@ class TournamentManagerController extends Controller
             $em->persist($player);
             $em->flush();
         }
-        return $this->redirect($this->generateUrl('app_tournament_manager_paydone', array('tournament' => $tournament->getId())));
+        return $this->redirect($this->generateUrl('app_tournamentmanager_paydone', array('tournament' => $tournament->getId())));
     }
 
     /**

@@ -122,13 +122,13 @@
     {% if participant.manager is not null and participant.manager.user == app.user %}
         {# 2-button layout #}{% if participant.registrable.isOpenedNow %}
         {% if participant.participantType == 'team' %}
-          <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('app_tournament_manager_leaveteam', {teamId: participant.id}) }}">Quitter l'équipe</a>
+          <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('app_tournamentmanager_leaveteam', {teamId: participant.id}) }}">Quitter l'équipe</a>
         {% elseif participant.participantType == 'player' %}
-          <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('app_tournament_manager_leave', {tournament: participant.registrable.id}) }}">Désinscription</a>
+          <a class="btn btn-danger ctrl grid-5 pull-left" href="{{ path('app_tournamentmanager_leave', {tournament: participant.registrable.id}) }}">Désinscription</a>
         {% endif %}
-          <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('app_tournament_manager_enroll', {tournament: participant.registrable.id}) }}">Mon inscription</a>
+          <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('app_tournamentmanager_enroll', {tournament: participant.registrable.id}) }}">Mon inscription</a>
         {# tournament is closed #}{% else %}
-        <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('app_tournament_manager_enroll', {tournament: participant.registrable.id}) }}">Inscription archivée</a>
+        <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('app_tournamentmanager_enroll', {tournament: participant.registrable.id}) }}">Inscription archivée</a>
         {% endif %}
     {% else %}
       {% if participant.validated == 2  %}
@@ -201,7 +201,7 @@
         <h2>{{ t.name }}{% if t.kind == "bundle" %} ({{ t.tournamentsString }}) {% endif %}{% if t.isFull %} - COMPLET {% endif %}</h2>
 
         {% if t.kind == "tournament" %}
-           <a href="{{ path('app_tournament_manager_setname', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription manager</a> 
+           <a href="{{ path('app_tournamentmanager_setname', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription manager</a> 
         {% endif %}
         {#
         {% if t.isFull and t.kind == 'tournament' and t.participantType == 'team' %}
@@ -240,7 +240,7 @@
           <small>(ce tournoi n'est accessible que sur invitation)</small>
         </h2>
         {% if t.participantType == 'team' %}
-          <a href="{{ path('app_tournament_manager_setname', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription manager</a> 
+          <a href="{{ path('app_tournamentmanager_setname', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription manager</a> 
         {% endif %}
         <p class="pull-left">
           {{ t.teamMinPlayer }} joueur{{ t.teamMinPlayer > 1 ? "s" : ""}}

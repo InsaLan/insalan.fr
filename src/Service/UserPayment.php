@@ -23,7 +23,7 @@ class UserPayment
 
     public function getOrder($currency, $price) {
 
-        $storage =  $this->payum->getStorage('App\Entity\PaymentDetails');
+        $storage =  $this->payum->getStorage('App\Entity\UserPaymentDetails');
 
         $order = $storage->create();
 
@@ -36,7 +36,7 @@ class UserPayment
     public function getTargetUrl($order, $callbackRoute, $callbackParameters = null) {
         
 
-        $storage =  $this->payum->getStorage('App\Entity\PaymentDetails');
+        $storage =  $this->payum->getStorage('App\Entity\UserPaymentDetails');
         $storage->update($order);
 
         $payment = $this->payum->getGateway($this->paymentName);
@@ -70,7 +70,7 @@ class UserPayment
 
     public function update($order)
     {
-        $storage = $this->payum->getStorage('App\Entity\PaymentDetails');
+        $storage = $this->payum->getStorage('App\Entity\UserPaymentDetails');
         $storage->update($order);
     }
 
