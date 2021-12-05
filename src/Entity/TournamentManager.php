@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\User;
 
 /**
  * Manager : This class handle the teams associated managers
@@ -93,7 +94,7 @@ class TournamentManager
     /**
      * Get user
      *
-     * @return \App\Entity\User
+     * @return User
      */
     public function getUser()
     {
@@ -103,10 +104,10 @@ class TournamentManager
     /**
      * Set user
      *
-     * @param \App\Entity\User $user
-     * @return Manager
+     * @param User $user
+     * @return TournamentManager
      */
-    public function setUser(\App\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
         return $this;
@@ -126,7 +127,7 @@ class TournamentManager
      * Set tournament
      *
      * @param \App\Entity\Tournament $tournament
-     * @return Manager
+     * @return TournamentManager
      */
     public function setTournament(\App\Entity\Tournament $tournament = null)
     {
@@ -148,7 +149,7 @@ class TournamentManager
      * Set related participant
      *
      * @param \App\Entity\Participant $participant
-     * @return Manager
+     * @return TournamentManager
      */
     public function setParticipant(\App\Entity\Participant $participant = null)
     {
@@ -170,7 +171,7 @@ class TournamentManager
      * Set gameName
      *
      * @param string $gameName
-     * @return Manager
+     * @return TournamentManager
      */
     public function setGameName($gameName)
     {
@@ -193,7 +194,7 @@ class TournamentManager
      * Set paymentDone
      *
      * @param boolean $paymentDone
-     * @return Manager
+     * @return TournamentManager
      */
     public function setPaymentDone($paymentDone)
     {
@@ -210,7 +211,7 @@ class TournamentManager
      * Set arrived
      *
      * @param boolean $arrived
-     * @return Manager
+     * @return TournamentManager
      */
     public function setArrived($arrived)
     {
@@ -262,7 +263,7 @@ class TournamentManager
      * Set eTicket
      *
      * @param integer eTicket
-     * @return Manager
+     * @return TournamentManager
      */
     public function setETicket($eTicket)
     {

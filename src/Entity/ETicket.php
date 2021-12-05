@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
 
 /**
  * ETicket
@@ -87,7 +88,7 @@ class ETicket
     /**
      * Get user
      *
-     * @return \App\Entity\User
+     * @return User
      */
     public function getUser()
     {
@@ -97,10 +98,10 @@ class ETicket
     /**
      * Set user
      *
-     * @param \App\Entity\User $user
+     * @param User $user
      * @return ETicket
      */
-    public function setUser(\App\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
         return $this;

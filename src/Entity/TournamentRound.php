@@ -9,6 +9,9 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Entity\TournamentMatch;
+use App\Entity\TournamentAbstractMatch;
+use App\Entity\TournamentScore;
+
 
 /**
  * @ORM\Entity

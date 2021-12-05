@@ -5,14 +5,14 @@ namespace App\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use App\Entity\User;
 
 
 
 class ParticipantRepository extends EntityRepository
 {
 
-    public function findByUser(\App\Entity\User $u) {
+    public function findByUser(User $u) {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("
@@ -77,7 +77,7 @@ class ParticipantRepository extends EntityRepository
 
     }
 
-    public function findOneByUserAndTournament(\App\Entity\User $u, \App\Entity\Tournament $t) {
+    public function findOneByUserAndTournament(User $u, \App\Entity\Tournament $t) {
         $participants = $this->findByUser($u);
         // TODO : do this is SQL only (when stable)
         foreach($participants as $p) {

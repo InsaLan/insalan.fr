@@ -12,16 +12,16 @@ parameters:
     table_prefix: intra_
 
 #TO COMMENT   
-#    debug_toolbar:          true
-#    debug_redirects:        false
-#
-#    fos_user_email_address: no-reply@example.com
-#    fos_user_email_sender_name: webmaster
-#    ga_tracking: UA-xxxxx
-#    paypal_express_checkout_username: xxxxx
-#    paypal_express_checkout_password: xxxx
-#    paypal_express_checkout_signature: xxxx
-#    paypal_express_checkout_sandbox: true
+    debug_toolbar:          true
+    debug_redirects:        false
+
+    fos_user_email_address: no-reply@example.com
+    fos_user_email_sender_name: webmaster
+    ga_tracking: UA-xxxxx
+    paypal_express_checkout_username: xxxxx
+    paypal_express_checkout_password: xxxx
+    paypal_express_checkout_signature: xxxx
+    paypal_express_checkout_sandbox: true
 #ENDOF TO COMMENT
 
 services:

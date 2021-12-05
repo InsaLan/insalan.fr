@@ -3,11 +3,12 @@
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use App\Entity\User;
 
 class PizzaUserOrderRepository extends EntityRepository
 {
 
-    public function getByUser(\App\Entity\User $user) {
+    public function getByUser(User $user) {
 
         $q = $this->createQueryBuilder('uo')
             ->leftJoin('uo.order', 'o')

@@ -9,11 +9,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Participant;
 use App\Entity\Tournament;
 use App\Entity\Registrable;
+use App\Entity\User;
 
 class PlayerRepository extends EntityRepository
 {
 
-    public function findOneByUserAndPendingRegistrable(\App\Entity\User $u, Registrable $r) {
+    public function findOneByUserAndPendingRegistrable(User $u, Registrable $r) {
 
         $q = $this->createQueryBuilder('p')
             ->where('p.user = :user AND p.pendingRegistrable = :registrable')

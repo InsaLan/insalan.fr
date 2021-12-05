@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use App\Entity\User;
 
 class UserAdmin extends AbstractAdmin
 {
@@ -67,7 +68,7 @@ class UserAdmin extends AbstractAdmin
     }
 
     //update password
-    public function updateUser(\App\Entity\User $u) {
+    public function updateUser(User $u) {
       if ($u->getPlainPassword()) {
         $u->setPlainPassword($u->getPlainPassword());
       }

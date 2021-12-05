@@ -3,10 +3,11 @@
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use App\Entity\User;
 
 class TournamentManagerRepository extends EntityRepository
 {
-    public function findOneByUserAndPendingTournament(\App\Entity\User $u, Tournament $t) {
+    public function findOneByUserAndPendingTournament(User $u, Tournament $t) {
 
         $q = $this->createQueryBuilder('m')
             ->where('m.user = :user AND m.tournament = :tournament')

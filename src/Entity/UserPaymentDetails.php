@@ -4,6 +4,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Payum\Core\Model\ArrayObject;
 use App\Entity\User;
+use App\Entity\UserDiscount;
 
 /**
  * @ORM\Table(name="payum_payment_details")
@@ -83,10 +84,10 @@ class UserPaymentDetails extends ArrayObject
     /**
      * Set user
      *
-     * @param \App\Entity\User $user
+     * @param User $user
      * @return UserPaymentDetails
      */
-    public function setUser(\App\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
         $this["INVNUM"] = $user->getId();
@@ -97,7 +98,7 @@ class UserPaymentDetails extends ArrayObject
     /**
      * Get user
      *
-     * @return \App\Entity\User
+     * @return User
      */
     public function getUser()
     {
@@ -107,10 +108,10 @@ class UserPaymentDetails extends ArrayObject
     /**
      * Set discount
      *
-     * @param \App\Entity\UserDiscount $discount
+     * @param UserDiscount $discount
      * @return UserPaymentDetails
      */
-    public function setDiscount(\App\Entity\UserDiscount $discount = null)
+    public function setDiscount(UserDiscount $discount = null)
     {
         $this->discount = $discount;
 
@@ -120,7 +121,7 @@ class UserPaymentDetails extends ArrayObject
     /**
      * Get discount
      *
-     * @return \App\Entity\UserDiscount
+     * @return UserDiscount
      */
     public function getDiscount()
     {

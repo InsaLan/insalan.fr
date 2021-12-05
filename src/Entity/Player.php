@@ -120,10 +120,10 @@ class Player extends Participant
     /**
      * Set user
      *
-     * @param \App\Entity\User $user
+     * @param User $user
      * @return Player
      */
-    public function setUser(\App\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -133,7 +133,7 @@ class Player extends Participant
     /**
      * Get user
      *
-     * @return \App\Entity\User
+     * @return User
      */
     public function getUser()
     {

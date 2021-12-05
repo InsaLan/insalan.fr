@@ -5,6 +5,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+use App\Entity\Tournament;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RegistrableRepository")
  * @ORM\HasLifecycleCallbacks
@@ -348,7 +350,7 @@ abstract class Registrable
     protected function getUploadRootDir()
     {
         // le chemin absolu du répertoire où les documents uploadés doivent être sauvegardés
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__.'/../../public/'.$this->getUploadDir();
     }
 
     public function setFileName() {

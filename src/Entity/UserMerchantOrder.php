@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use App\Entity\Player;
+use App\Entity\User;
+use App\UserPaymentDetails;
 
 /**
  * MerchantOrder
@@ -50,10 +52,10 @@ class UserMerchantOrder
     /**
      * Set user
      *
-     * @param \App\Entity\User $user
+     * @param User $user
      * @return UserMerchantOrder
      */
-    public function setMerchant(\App\Entity\User $user = null)
+    public function setMerchant(User $user = null)
     {
         $this->merchant = $user;
 
@@ -63,7 +65,7 @@ class UserMerchantOrder
     /**
      * Get user
      *
-     * @return \App\Entity\User
+     * @return User
      */
     public function getMerchant()
     {
@@ -73,10 +75,10 @@ class UserMerchantOrder
     /**
      * Set payment
      *
-     * @param \App\Entity\UserPaymentDetails $payment
+     * @param UserPaymentDetails $payment
      * @return UserMerchantOrder
      */
-    public function setPayment(\App\Entity\UserPaymentDetails $payment = null)
+    public function setPayment(UserPaymentDetails $payment = null)
     {
         $this->payment = $payment;
 
@@ -86,7 +88,7 @@ class UserMerchantOrder
     /**
      * Get payment
      *
-     * @return \App\Entity\UserPaymentDetails
+     * @return UserPaymentDetails
      */
     public function getPayment()
     {

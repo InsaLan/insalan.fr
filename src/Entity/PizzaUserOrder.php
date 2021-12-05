@@ -6,6 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use App\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PizzaUserOrderRepository")
@@ -162,10 +163,10 @@ class PizzaUserOrder
     /**
      * Set user
      *
-     * @param \App\Entity\User $user
+     * @param User $user
      * @return PizzaUserOrder
      */
-    public function setUser(\App\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -175,7 +176,7 @@ class PizzaUserOrder
     /**
      * Get user
      *
-     * @return \App\Entity\User
+     * @return User
      */
     public function getUser()
     {
