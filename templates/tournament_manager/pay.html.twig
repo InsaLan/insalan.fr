@@ -1,0 +1,30 @@
+{% extends 'tournamentLayout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Inscription à &laquo; {{ tournament.name }} &raquo; en tant que manager</h2>
+    {{ tournament.description }}
+  </header>
+
+  <section>
+    {% if tournament.participantType == 'team' %}
+      {% include 'tournament_manager/ChooseManagerNameValidated.html.twig'  with {'counter': 1}%}
+      {% include 'tournament_manager/CreateJoinTeamValidated.html.twig'  with {'counter': 2}%}
+      {% include 'tournament_manager/BeforePaymentActive.html.twig'  with {'counter': 3}%}
+    {% else %}
+      {% include 'tournament_manager/ChooseManagerNameValidated.html.twig'  with {'counter': 1}%}
+      {% include 'tournament_manager/JoinSoloPlayerValidated.html.twig'  with {'counter': 2} %}
+      {% include 'tournament_manager/BeforePaymentActive.html.twig'  with {'counter': 3} %}
+    {% endif %}
+  </section>
+</article>
+{% endblock %}

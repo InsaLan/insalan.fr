@@ -11,7 +11,6 @@
 {% if future_tournaments | length > 0 %}
 <article>
   <header>
-    {
     <h2>Tournois de la prochaine édition</h2>
   </header>
   {% include 'Part/TournamentList.html.twig' with {'tournaments': future_tournaments} %}

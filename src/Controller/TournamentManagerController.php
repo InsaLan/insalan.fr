@@ -27,13 +27,13 @@ use Payum\Paypal\ExpressCheckout\Nvp\Api;
 use App\Form\SetManagerName;
 use App\Form\SetPlayerName;
 use App\Form\TeamLoginType;
-use App\Exception\ControllerException;
+use App\Exception\TournamentControllerException;
 
 use App\Entity\TournamentManager;
 use App\Entity\Participant;
 use App\Entity\Player;
 use App\Entity\Tournament;
-use App\Entity\tournamentTeam;
+use App\Entity\TournamentTeam;
 use App\Entity\User;
 use App\Entity;
 
@@ -90,7 +90,7 @@ class TournamentManagerController extends Controller
         }
 
         if ($manager === null) {
-            $manager = new Manager();
+            $manager = new TournamentManager();
             $manager->setUser($usr);
             $manager->setTournament($tournament);
         }
@@ -104,7 +104,7 @@ class TournamentManagerController extends Controller
                                       ));
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($manager);
             $em->flush();
 
@@ -133,7 +133,7 @@ class TournamentManagerController extends Controller
 
         // handle only solo tournaments
         if($tournament->getParticipantType() !== "player")
-            throw new ControllerException("Joueurs solo non acceptées dans ce tournois");
+            throw new TournamentControllerException("Joueurs solo non acceptées dans ce tournois");
 
         // check if there is already a pending manager for this user and tournament
         $manager = $em->getRepository('App\Entity\TournamentManager')
@@ -153,7 +153,7 @@ class TournamentManagerController extends Controller
         $form->handleRequest($request);
 
         $error_details = null;
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 // find the targeted player related to the manager
                 $player = $em
@@ -163,9 +163,9 @@ class TournamentManagerController extends Controller
                         'tournament' => $tournament));
 
                 if ($player === null)
-                    throw new ControllerException("Joueur introuvable !");
+                    throw new TournamentControllerException("Joueur introuvable !");
                 if ($player->getManager() != null)
-                    throw new ControllerException("Le joueur possède déjà un manager !");
+                    throw new TournamentControllerException("Le joueur possède déjà un manager !");
 
                 $manager->setParticipant($player);
                 $player->setManager($manager);
@@ -175,7 +175,7 @@ class TournamentManagerController extends Controller
 
                 return $this->redirect($this->generateUrl('app_tournamentmanager_pay', array('tournament' => $tournament->getId())));
 
-            } catch (ControllerException $e) {
+            } catch (TournamentControllerException $e) {
                 $error_details = $e->getMessage();
             }
 
@@ -195,7 +195,7 @@ class TournamentManagerController extends Controller
 
         // handle only team tournaments
         if($tournament->getParticipantType() !== "team")
-            throw new ControllerException("Équipes non acceptées dans ce tournois");
+            throw new TournamentControllerException("Équipes non acceptées dans ce tournois");
 
         // check if there is already a pending manager for this user and tournament
         $manager = $em->getRepository('App\Entity\TournamentManager')
@@ -204,7 +204,7 @@ class TournamentManagerController extends Controller
         if($manager === null)
             return $this->redirect($this->generateUrl('app_tournamentmanager_setname', array('tournament' => $tournament->getId())));
 
-        $form_team = new Team();
+        $form_team = new TournamentTeam();
         $form = $this->createForm(TeamLoginType::class,
                                   $form_team,
                                   array(
@@ -217,7 +217,7 @@ class TournamentManagerController extends Controller
         // inspired by UserController::joinExistingTeam
         // TODO rework this by putting the password hash into the request ?
         $error_details = null;
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 // hash password
                 $defaultEncoder = new MessageDigestPasswordEncoder('sha512');
@@ -233,14 +233,14 @@ class TournamentManagerController extends Controller
                     ->findOneByNameAndTournament($form_team->getName(), $tournament);
 
                 if ($team === null || $team->getTournament()->getId() !== $tournament->getId())
-                    throw new ControllerException("Équipe invalide");
+                    throw new TournamentControllerException("Équipe invalide");
 
                 $form_team->setPassword($encoder->encodePassword($form_team->getPlainPassword(), $team->getPasswordSalt()));
 
                 if ($team->getPassword() === $form_team->getPassword()) {
                     // denied if there is already a manager in the team
                     if ($team->getManager() != null)
-                        throw new ControllerException("L'équipe a déjà un manager");
+                        throw new TournamentControllerException("L'équipe a déjà un manager");
 
                     // Because PHP don't support polymorphism, we must get the corresponding Participant object
                     $team_participant = $em
@@ -255,8 +255,8 @@ class TournamentManagerController extends Controller
                     return $this->redirect($this->generateUrl('app_tournamentmanager_pay', array('tournament' => $tournament->getId())));
 
                 } else
-                    throw new ControllerException("Mot de passe invalide");
-            } catch (ControllerException $e) {
+                    throw new TournamentControllerException("Mot de passe invalide");
+            } catch (TournamentControllerException $e) {
                 $error_details = $e->getMessage();
             }
 
@@ -407,7 +407,7 @@ class TournamentManagerController extends Controller
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
         if($manager->getTournament()->getParticipantType() !== "player")
-            throw new ControllerException("Not Allowed"); // must be a player only tournament
+            throw new TournamentControllerException("Not Allowed"); // must be a player only tournament
 
         // not allowed if he paid something
         if(!$tournament->isFree() && $manager->getPaymentDone()){

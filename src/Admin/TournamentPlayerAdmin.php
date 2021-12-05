@@ -33,7 +33,7 @@ class TournamentPlayerAdmin extends AbstractAdmin
             ))
             ->add('arrived', null, array('required'=>false))
             ->add('placement')
-            ->add('pendingTournamentRegistrable', null, array('required' => false))
+            ->add('pendingRegistrable', null, array('required' => false))
 
         ;
     }

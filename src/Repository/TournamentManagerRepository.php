@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use App\Entity\User;
+use App\Entity\Tournament;
 
 class TournamentManagerRepository extends EntityRepository
 {
