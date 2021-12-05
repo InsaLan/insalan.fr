@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 use App\Entity\Player;
 use App\Entity\User;
-use App\UserPaymentDetails;
+use App\Entity\UserPaymentDetails;
 
 /**
  * MerchantOrder
