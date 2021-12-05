@@ -114,10 +114,10 @@ class UserController extends Controller
             $steamDetails = $this->get("insalan.user.login_platform")->getSteamDetails($usr);
             $connectedAccount = $steamDetails->personaname;
             $imageSrc = $steamDetails->avatarmedium;
-            return $this->render('userSteamRegistrationSent.html.twig', ['connectedAccount' => $connectedAccount, 'avatarSteamSrc' => $imageSrc]);
+            return array('connectedAccount' => $connectedAccount, 'avatarSteamSrc' => $imageSrc);
         }
 
-        return $this->render('userSteamRegistrationSent.html.twig', ['erreur' => true]);
+        return array('erreur' => true);
     }
 
     /**

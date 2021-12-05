@@ -31,17 +31,20 @@ use Payum\Paypal\ExpressCheckout\Nvp\Api;
 use App\Form\SetPlayerName;
 use App\Form\TeamType;
 use App\Form\TeamLoginType;
-use App\Exception\ControllerException;
+use App\Exception\TournamentControllerException;
 
 use App\Entity\Player;
 use App\Entity\TournamentTeam;
-use App\Entity;
+use App\Entity\Tournament;
+use App\Entity\TournamentRound;
+use App\Entity\TournamentBundle;
 use App\Entity\User;
 use App\Entity\InsaLanGlobalVars;
-
-use App;
 use App\Entity\UserPaymentDetails;
+use App\Entity\Participant;
+use App\Entity\Registrable;
 
+use App\Service\LoginPlatform;
 /**
  * @Route("/tournament")
  */
@@ -70,13 +73,13 @@ class TournamentUserController extends Controller
         foreach($participants as $p) {
             $registered[] = $p->getRegistrable();
 
-            if ($p->getRegistrable() instanceof Entity\TournamentBundle)
+            if ($p->getRegistrable() instanceof TournamentBundle)
                 foreach($p->getRegistrable()->getTournaments() as $t)
                     $registered[] = $t;
         }
 
         foreach($registrables as $r) {
-            if ($r instanceof Entity\TournamentBundle) {
+            if ($r instanceof TournamentBundle) {
                 foreach($r->getTournaments() as $t) {
                     if (array_search($t, $registered) !== false) {
                         $registered[] = $r;
@@ -104,7 +107,7 @@ class TournamentUserController extends Controller
      * @Route("/{tournament}/user/placement")
      * @Template()
      */
-    public function placementAction(Request $request, Entity\Tournament $tournament) {
+    public function placementAction(Request $request, Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -117,8 +120,8 @@ class TournamentUserController extends Controller
                           ->findOneByUserAndTournament($usr, $tournament);
 
         if(!$participant ||
-            $participant->getValidated() !== Entity\Participant::STATUS_VALIDATED ||
-            $participant instanceof Entity\TournamentTeam &&
+            $participant->getValidated() !== Participant::STATUS_VALIDATED ||
+            $participant instanceof TournamentTeam &&
             $participant->getCaptain()->getUser() !== $usr) {
             $this->get('session')->getFlashBag()->add('error', "Seul le capitaine peut choisir une place pour l'équipe.");
             return $this->redirect($this->generateUrl('app_user_index'));
@@ -156,7 +159,7 @@ class TournamentUserController extends Controller
      * Manage all steps for registering into a tournament
      * @Route("/{registrable}/user/enroll")
      */
-    public function enrollAction(Request $request, Entity\Registrable $registrable) {
+    public function enrollAction(Request $request, Registrable $registrable) {
         $em = $this->getDoctrine()->getManager();
 
         $usr = $this->get('security.token_storage')->getToken()->getUser();
@@ -182,7 +185,7 @@ class TournamentUserController extends Controller
             return $this->redirect($this->generateUrl('app_tournamentuser_setplayer',array('registrable' => $registrable->getId())));
         else if (!$player->getGameValidated())
             return $this->redirect($this->generateUrl('app_tournamentuser_validateplayer',array('registrable' => $registrable->getId())));
-        else if ($registrable instanceof Entity\Tournament && $registrable->getParticipantType() === 'team' && $player->getTeamForTournament($registrable) === null)
+        else if ($registrable instanceof Tournament && $registrable->getParticipantType() === 'team' && $player->getTeamForTournament($registrable) === null)
             return $this->redirect($this->generateUrl('app_tournamentuser_jointeam',array('tournament' => $registrable->getId())));
         else if (!$player->getPaymentDone())
             return $this->redirect($this->generateUrl('app_tournamentuser_pay',array('registrable' => $registrable->getId())));
@@ -194,7 +197,7 @@ class TournamentUserController extends Controller
      * Manage all steps for registering into a LOCKED tournament
      * @Route("/{registrable}/user/enroll/{authToken}")
      */
-    public function enrollLockedAction(Request $request, Entity\Registrable $registrable, $authToken) {
+    public function enrollLockedAction(Request $request, Registrable $registrable, $authToken) {
         // check provided token
         if (!$registrable->checkLocked($authToken)) {
             $this->get('session')->getFlashBag()->add('error', "Ce tournois n'est accessible que sur invitation.");
@@ -212,7 +215,7 @@ class TournamentUserController extends Controller
      * @Route("/{registrable}/user/player/set")
      * @Template()
      */
-    public function setPlayerAction(Request $request, Entity\Registrable $registrable) {
+    public function setPlayerAction(Request $request, Registrable $registrable) {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -239,7 +242,7 @@ class TournamentUserController extends Controller
             $player->setPendingRegistrable($registrable);
         }
 
-        if ($registrable instanceof Entity\Tournament && $registrable->getLoginType() != App\Service\LoginPlatform::PLATFORM_OTHER) {
+        if ($registrable instanceof Tournament && $registrable->getLoginType() != LoginPlatform::PLATFORM_OTHER) {
             $name = $this->get("insalan.user.login_platform")->getGameName($usr, $registrable->getLoginType());
 
             $player->setGameName($name);
@@ -258,7 +261,7 @@ class TournamentUserController extends Controller
      * @Route("/{tournament}/user/player/registerLoginPlatform/")
      * @Template("User/redirectToApiLogin.html.twig")
      */
-    public function redirectToApiLoginAction(Request $request, Entity\Tournament $tournament) {
+    public function redirectToApiLoginAction(Request $request, Tournament $tournament) {
         return array('tournament' => $tournament);
     }
 
@@ -266,7 +269,7 @@ class TournamentUserController extends Controller
      * Manage validation of player registration into a tournament
      * @Route("/{registrable}/user/player/validate")
      */
-    public function validatePlayerAction(Request $request, Entity\Registrable $registrable) {
+    public function validatePlayerAction(Request $request, Registrable $registrable) {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -281,7 +284,7 @@ class TournamentUserController extends Controller
             $em->persist($player);
             $em->flush();
 
-            if ($registrable instanceof Entity\Tournament && $registrable->getParticipantType() === "team") {
+            if ($registrable instanceof Tournament && $registrable->getParticipantType() === "team") {
                 return $this->redirect(
                     $this->generateUrl('app_tournamentuser_jointeam', array('tournament' => $registrable->getId()))
                 );
@@ -294,8 +297,8 @@ class TournamentUserController extends Controller
         }
     }
 
-    private function finalizePlayerAfterValidation(Entity\Player $player, Entity\Registrable $registrable) {
-        if($registrable instanceof Entity\Tournament && $registrable->getParticipantType() === "player") {
+    private function finalizePlayerAfterValidation(Player $player, Registrable $registrable) {
+        if($registrable instanceof Tournament && $registrable->getParticipantType() === "player") {
             $player->setTournament($registrable);
         }
     }
@@ -304,7 +307,7 @@ class TournamentUserController extends Controller
      * Allow a player to drop a pending tournament registration if not managed by team
      * @Route("/{registrable}/user/leave")
      */
-    public function leaveAction(Entity\Registrable $registrable) {
+    public function leaveAction(Registrable $registrable) {
         $em = $this->getDoctrine()->getManager();
 
         $usr = $this->get('security.token_storage')->getToken()->getUser();
@@ -313,7 +316,7 @@ class TournamentUserController extends Controller
             ->findOneByUserAndPendingRegistrable($usr, $registrable);
 
         if($player->getTournament() !== null && $player->getTournament()->getParticipantType() !== "player")
-            throw new ControllerException("Not Allowed"); // must be a player only tournament
+            throw new TournamentControllerException("Not Allowed"); // must be a player only tournament
 
         // not allowed if he paid something
         if(!$player->getRegistrable()->isFree() && $player->getPaymentDone()){
@@ -337,7 +340,7 @@ class TournamentUserController extends Controller
      * @Route("/{registrable}/user/discount/{discount}/details", requirements={"discount" = "\d+"})
      * @Template()
      */
-    public function payAction(Entity\Registrable $registrable, $discount = null) {
+    public function payAction(Registrable $registrable, $discount = null) {
         $em = $this->getDoctrine()->getManager();
 
         $usr = $this->get('security.token_storage')->getToken()->getUser();
@@ -371,7 +374,7 @@ class TournamentUserController extends Controller
      * @Route("/{registrable}/user/pay/paypal_ec")
      * @Route("/{registrable}/user/discount/{discount}/paypal_ec", requirements={"discount" = "\d+"})
      */
-    public function payPaypalECAction(Entity\Registrable $registrable, $discount = null) {
+    public function payPaypalECAction(Registrable $registrable, $discount = null) {
         $em = $this->getDoctrine()->getManager();
 
         $usr = $this->get('security.token_storage')->getToken()->getUser();
@@ -421,7 +424,7 @@ class TournamentUserController extends Controller
      * @Route("/{registrable}/user/pay/done")
      * @Template()
      */
-    public function payDoneAction(Request $request, Entity\Registrable $registrable) {
+    public function payDoneAction(Request $request, Registrable $registrable) {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
@@ -439,7 +442,7 @@ class TournamentUserController extends Controller
     /**
      * @Route("/{registrable}/user/pay/done_temp")
      */
-    public function payDoneTempAction(Request $request, Entity\Registrable $registrable) {
+    public function payDoneTempAction(Request $request, Registrable $registrable) {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
@@ -462,7 +465,7 @@ class TournamentUserController extends Controller
      * @Route("/{registrable}/user/discount/{discount}/offline", requirements={"discount" = "\d+"})
      * @Template()
      */
-    public function payOfflineAction(Request $request, Entity\Registrable $registrable, $discount = null) {
+    public function payOfflineAction(Request $request, Registrable $registrable, $discount = null) {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
@@ -488,7 +491,7 @@ class TournamentUserController extends Controller
      * @Route("{tournament}/user/join/team")
      * @Template()
      */
-    public function joinTeamAction(Entity\Tournament $tournament)
+    public function joinTeamAction(Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.token_storage')->getToken()->getUser();
@@ -562,7 +565,7 @@ class TournamentUserController extends Controller
         // team cannot stay validated if someone leave and there is not enought players
         // TODO: Should be handled by the model ?
         if($team->getPlayers()->count() < $team->getTournament()->getTeamMinPlayer())
-            $team->setValidated(Entity\Participant::STATUS_PENDING); // reset to waiting state
+            $team->setValidated(Participant::STATUS_PENDING); // reset to waiting state
 
         $em->persist($team);
 
@@ -693,9 +696,9 @@ class TournamentUserController extends Controller
             $playerToBan->leaveTeam($team);
             $team->removePlayer($playerToBan);
 
-            if($team->getValidated() === Entity\Participant::STATUS_WAITING
-            || $team->getValidated() === Entity\Participant::STATUS_VALIDATED)
-                $team->setValidated(Entity\Participant::STATUS_PENDING); // reset to waiting state
+            if($team->getValidated() === Participant::STATUS_WAITING
+            || $team->getValidated() === Participant::STATUS_VALIDATED)
+                $team->setValidated(Participant::STATUS_PENDING); // reset to waiting state
 
             $em->persist($team);
 
@@ -754,11 +757,11 @@ class TournamentUserController extends Controller
      * @Route("{tournament}/user/join/team/create")
      * @Template()
      */
-    public function createTeamAction(Request $request, Entity\Tournament $tournament) {
+    public function createTeamAction(Request $request, Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
 
         if($tournament->getParticipantType() !== "team")
-            throw new ControllerException("Not Allowed");
+            throw new TournamentControllerException("Not Allowed");
 
         $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
@@ -804,11 +807,11 @@ class TournamentUserController extends Controller
      * @Route("{tournament}/user/join/team/existing")
      * @Template()
      */
-    public function existingTeamAction(Request $request, Entity\Tournament $tournament) {
+    public function existingTeamAction(Request $request, Tournament $tournament) {
         $em = $this->getDoctrine()->getManager();
 
         if($tournament->getParticipantType() !== "team")
-            throw new ControllerException("Équipes non acceptées dans ce tournois");
+            throw new TournamentControllerException("Équipes non acceptées dans ce tournois");
 
         $usr = $this->get('security.token_storage')->getToken()->getUser();
         $player = $em
@@ -842,7 +845,7 @@ class TournamentUserController extends Controller
                     ->findOneByNameAndTournament($team->getName(), $tournament);
 
                 if($team2 === null || $team2->getTournament()->getId() !== $tournament->getId())
-                    throw new ControllerException("Équipe invalide");
+                    throw new TournamentControllerException("Équipe invalide");
 
                 $team->setPassword($encoder->encodePassword($team->getPlainPassword(), $team2->getPasswordSalt()));
 
@@ -854,9 +857,9 @@ class TournamentUserController extends Controller
                     $em->flush();
                     return $this->redirect($this->generateUrl('app_tournamentuser_pay', array('registrable' => $tournament->getId())));
                 } else {
-                    throw new ControllerException("Mot de passe invalide");
+                    throw new TournamentControllerException("Mot de passe invalide");
                 }
-            } catch (ControllerException $e) {
+            } catch (TournamentControllerException $e) {
                 $details = $e->getMessage();
             }
 
@@ -870,20 +873,20 @@ class TournamentUserController extends Controller
      * @Route("/user/team/{id}/addReplay/{round}", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function roundAddReplayAction(Request $request, Entity\Participant $team, Entity\TournamentRound $round)
+    public function roundAddReplayAction(Request $request, Participant $team, TournamentRound $round)
     {
         try {
             // Check security
             if(!$this->isUserInTeam($team))
-                throw new ControllerException("Invalid user");
+                throw new TournamentControllerException("Invalid user");
 
             if($round->getMatch()->getPart1()->getId() !== $team->getId()
                 && $round->getMatch()->getPart2()->getId() !== $team->getId())
-                throw new ControllerException("Invalid round");
+                throw new TournamentControllerException("Invalid round");
 
             if($round->getReplay() !== null)
-                throw new ControllerException("Le fichier a déjà été envoyé !");
-        } catch (ControllerException $e) {
+                throw new TournamentControllerException("Le fichier a déjà été envoyé !");
+        } catch (TournamentControllerException $e) {
             $this->get('session')->getFlashBag()->add('error', $e->getMessage());
             return $this->redirect($this->generateUrl('app_tournamentuser_teamdetails', array('id' => $team->getId())));
         }
@@ -913,29 +916,29 @@ class TournamentUserController extends Controller
      * Check if the user needs to provide LoginPlatform infos for one of the tournaments.
      * Redirects if needed
      */
-    protected function checkLoginPlatform(Entity\Registrable $registrable)
+    protected function checkLoginPlatform(Registrable $registrable)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $this->get('session')->set('callbackRegisterApiRoute','_tournamentuser_setplayer');
         $this->get('session')->set('callbackRegisterApiParams',array('registrable' => $registrable->getId()));
 
-        if ($registrable instanceof Entity\TournamentBundle) {
+        if ($registrable instanceof TournamentBundle) {
             foreach($registrable->getTournaments() as $t) {
                 if (($res = $this->checkLoginPlatform($t)) !== null)
                     return $res;
             }
         }
         else {
-            if (($registrable->getLoginType() == App\Service\LoginPlatform::PLATFORM_STEAM && $user->getSteamId() == null)
-                || ($registrable->getLoginType() == App\Service\LoginPlatform::PLATFORM_BATTLENET && $user->getBattleTag() == null))
+            if (($registrable->getLoginType() == LoginPlatform::PLATFORM_STEAM && $user->getSteamId() == null)
+                || ($registrable->getLoginType() == LoginPlatform::PLATFORM_BATTLENET && $user->getBattleTag() == null))
                 return $this->redirect($this->generateUrl('app_tournamentuser_redirecttoapilogin', array('tournament' => $registrable->getId())));
         }
 
         return null;
     }
 
-    protected function usernameSet($em, App\Entity\User $usr, Entity\Player $player, $request, Entity\Registrable $registrable) {
+    protected function usernameSet($em, User $usr, Player $player, $request, Registrable $registrable) {
         $form = $this->createForm(SetPlayerName::class,
                                   $player,
                                   array(
@@ -970,11 +973,11 @@ class TournamentUserController extends Controller
         return true;
     }
 
-    private function isUserInTeam(Entity\Participant $part) {
+    private function isUserInTeam(Participant $part) {
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        if($part instanceof Entity\TournamentTeam) {
+        if($part instanceof TournamentTeam) {
 
             foreach ($part->getPlayers() as $p) {
                 if($p->getUser() !== null && $p->getUser()->getId() === $user->getId())

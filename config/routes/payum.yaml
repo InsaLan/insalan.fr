@@ -6,3 +6,6 @@ payum_authorize:
 
 payum_notify:
     resource: "@PayumBundle/Resources/config/routing/notify.xml"
+
+payum_all:
+    resource: "@PayumBundle/Resources/config/routing/all.xml"

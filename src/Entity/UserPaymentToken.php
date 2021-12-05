@@ -10,9 +10,5 @@ use Payum\Core\Model\Token;
  */
 class UserPaymentToken extends Token
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    
 }
