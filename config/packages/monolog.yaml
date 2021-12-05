@@ -8,3 +8,13 @@ monolog:
             path:     '%kernel.logs_dir%/user.log'
             channels: [user]
             max_files: 10
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+        nested:
+            type:  stream
+            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+            level: warning
+        console:
+            type:  console
