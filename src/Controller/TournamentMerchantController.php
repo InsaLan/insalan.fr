@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use App\Entity;
 use App\Entity\Player;
-use App\Exception\ControllerException;
+use App\Exception\TournamentControllerException;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 

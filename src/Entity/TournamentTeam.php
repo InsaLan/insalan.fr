@@ -174,7 +174,7 @@ class TournamentTeam extends Participant
     {
 
         if ($this->getPlayers()->count() >= $this->getTournament()->getTeamMaxPlayer()) {
-            throw new \App\Exception\ControllerException("Cette équipe est pleine.");
+            throw new \App\Exception\TournamentControllerException("Cette équipe est pleine.");
         }
         $this->players->add($players);
         $this->setLastUpdated(time());

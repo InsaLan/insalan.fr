@@ -17,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 Use App\Entity\TournamentGroupStage;
 use App\Entity\TournamentMatch;
 use App\Entity\Participant;
-use App\Exception\ControllerException;
+use App\Exception\TournamentControllerException;
 Use App\Entity;
 
 use App\Http\JsonResponse;
@@ -231,7 +231,7 @@ class TournamentAdminController extends Controller
         if($state !== TournamentMatch::STATE_UPCOMING &&
            $state !== TournamentMatch::STATE_ONGOING &&
            $state !== TournamentMatch::STATE_FINISHED)
-            throw new ControllerException("Unexpected argument state");
+            throw new TournamentControllerException("Unexpected argument state");
 
         $m->setState($state);
         $this->updateMatch($m);
@@ -249,7 +249,7 @@ class TournamentAdminController extends Controller
     public function match_addRoundAction(Request $request, TournamentMatch $m)
     {
         if($request->getMethod() !== "POST")
-            throw new ControllerException("Bad method");
+            throw new TournamentControllerException("Bad method");
 
         $score1 = intval($request->get('score1'));
         $score2 = intval($request->get('score2'));
@@ -298,12 +298,12 @@ class TournamentAdminController extends Controller
         $form->handleRequest($request);
 
         if(!$form->isValid())
-            throw new ControllerException("Not allowed");
+            throw new TournamentControllerException("Not allowed");
 
         $data = $form->getData();
 
         if($data['size'] <= 1)
-            throw new ControllerException("Not allowed");
+            throw new TournamentControllerException("Not allowed");
 
         $em = $this->getDoctrine()->getManager();
 
