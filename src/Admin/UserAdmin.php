@@ -23,6 +23,14 @@ class UserAdmin extends AbstractAdmin
             ->add('lastname', null, array("required" => false))
             ->add('phoneNumber', null, array("required" => false))
             ->add('roles')
+            ->add('plainPassword', RepeatedType::class, array(
+                'required' => false,
+                'type' => PasswordType::class,
+                'options' => array('translation_domain' => 'FOSUserBundle'),
+                'first_options' => array('label' => 'form.password'),
+                'second_options' => array('label' => 'form.password_confirmation'),
+                'invalid_message' => 'fos_user.password.mismatch',
+            ))
             ->add('enabled')
             ;
     }

@@ -4,7 +4,7 @@ fos_user:
     user_class: App\Entity\User
     from_email:
         address: "%fos_user_email_address%"
-        sender_name: "%fos_user_email_address%"
+        sender_name: "%fos_user_email_sender_name%"
     service:
         user_manager: fos_user.user_manager.default
     registration:
