@@ -37,7 +37,7 @@ use App\Entity\TournamentTeam;
 use App\Entity\User;
 use App\Entity;
 
-use App\Entity\PaymentDetails;
+use App\Entity\UserPaymentDetails;
 
 /**
 * ManagerController
@@ -316,8 +316,8 @@ class TournamentManagerController extends Controller
         $order->setUser($usr);
 
         $order->setRawPrice($manager::ONLINE_PRICE);
-        $order->setPlace(PaymentDetails::PLACE_WEB);
-        $order->setType(PaymentDetails::TYPE_PAYPAL);
+        $order->setPlace(UserPaymentDetails::PLACE_WEB);
+        $order->setType(UserPaymentDetails::TYPE_PAYPAL);
 
         $order->addPaymentDetail('Place manager pour le tournoi '.$tournament->getName(), $manager::ONLINE_PRICE, '');
         $order->addPaymentDetail('Majoration paiement en ligne', $tournament->getOnlineIncreaseInPrice(), 'Frais de gestion du paiement');
@@ -325,7 +325,7 @@ class TournamentManagerController extends Controller
         return $this->redirect(
             $payment->getTargetUrl(
                 $order,
-                '_tournamentmanager_paydonetemp',
+                'app_tournamentmanager_paydonetemp',
                 array('tournament' => $tournament->getId())
             )
         );
