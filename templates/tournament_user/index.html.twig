@@ -199,8 +199,7 @@
         <a class="list-choice" href="{{ path('app_tournamentuser_enroll', {registrable: t.id}) }}">
         <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" />
         <h2>{{ t.name }}{% if t.kind == "bundle" %} ({{ t.tournamentsString }}) {% endif %}{% if t.isFull %} - COMPLET {% endif %}</h2>
-
-        {% if t.kind == "tournament" and t.participantType == 'team'%}
+        {% if t.kind == "tournament" and  t.participantType == 'team' %}
            <a href="{{ path('app_tournamentmanager_setname', {tournament: t.id}) }}" class="btn2" style="float: right">Inscription manager</a> 
         {% endif %}
         {#
