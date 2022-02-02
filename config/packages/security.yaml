@@ -1,0 +1,54 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+        App\Entity\User: bcrypt
+
+    role_hierarchy:
+        ROLE_MERCHANT:    ROLE_USER
+        ROLE_ADMIN:       [ROLE_USER, ROLE_MERCHANT]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_MERCHANT]
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        api:
+            pattern: ^/api
+            http_basic:
+                realm: "API"
+        opening:
+            request_matcher: insalan.opening_matcher
+            anonymous: false
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+            switch_user: { role: ROLE_ADMIN, parameter: _want_to_be }
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+            logout:       true
+            anonymous:    true
+            switch_user: { role: ROLE_ADMIN, parameter: _want_to_be }
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        default:
+            anonymous: ~
+
+    access_control:
+        - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/, role: ROLE_USER }
+        - { path: ^/tournament/admin, role: ROLE_ADMIN }
+        - { path: ^/tournament/.*/?user, role: ROLE_USER }
+        - { path: /admin, role: ROLE_ADMIN }
+        - { path: /adminSonata, role: ROLE_ADMIN }
+        - { path: /merchant, role: ROLE_MERCHANT }
+        - { path: ^/pizza, role: ROLE_USER }
+        - { path: ^/infos/playersinfos, role: ROLE_USER }
+        - { path: ^/infos/hardwareRental, role: ROLE_USER }

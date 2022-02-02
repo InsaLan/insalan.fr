@@ -1,0 +1,126 @@
+{% extends 'tournamentLayout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+    <link rel="stylesheet" href="{{ asset("css/tournament2.css") }}" />
+{% endblock %}
+
+{% block title %}
+{{ parent() }}
+ - Joueurs
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="bg-{{ tournament.type }}">
+
+  <header class="game">
+    <div class="container">
+      <img style="height:100px" src="{{ asset(tournament.getUploadDir() ~ tournament.logoPath) }}" alt="Logo"/>
+      <div>      
+        <h1>{{ tournament.name }}</h1>
+      </div>
+    </div>
+  </header>
+
+  <article>
+    <header>
+      <h2>Joueurs validés</h2>
+    </header>
+
+    <section>
+      {% set count=0 %}
+      {% for p in players %}
+      {% if p.validated == 2 %}
+        <div class="frame frame-active grid-5 pull-left" style="background-color: rgba(0,0,0,.5)">
+          <header>
+            <div class="title pull-left">
+              {{count + 1}}. <a href="{{ path('app_tournament_teamdetails', {id: p.id}) }}">{{ p.name }}</a>
+            </div>
+            <br class="clear">
+          </header>
+        </div>
+
+        {% set count=count+1 %}
+        {% if count % 2 == 0%}
+          <br class="clear">
+        {% endif %}
+      {% endif %}
+      {% endfor %}
+      <br class="clear">
+
+      {% if count == 0 %}
+      <div class="frame frame-active grid-10" style="background-color: rgba(0,0,0,.5)">
+        <header class="full">
+          <div class="title" style="text-align: center">
+            Il n'y a pas encore de joueurs inscrits sur ce tournoi !<br/>
+            <a href="{{ path('app_user_index') }}" class="btn2">
+              Inscription
+            </a>
+          </div>
+        </header>
+      </div>
+      {% endif %}
+    </section>
+  </article>
+
+  {% if nbWaitingPlayers %}
+  <article>
+    <header>
+      <h2>Joueurs en liste d'attente</h2>
+    </header>
+
+    <section>
+      {% set count=0 %}
+      {% for p in players %}
+      {% if p.validated == 1 %}
+        <div class="frame frame-active grid-5 pull-left" style="background-color: rgba(0,0,0,.5)">
+          <header>
+            <div class="title pull-left">
+              {{count+1}}. {{ p.name }}
+            </div>
+            <br class="clear">
+          </header>
+        </div>
+        {% set count=count+1 %}
+        {% if count % 2 == 0%}
+          <br class="clear">
+        {% endif %}
+      {% endif %}
+      {% endfor %}
+      <br class="clear">
+    </section>
+  </article>
+  {% endif %}
+
+  {% if nbPendingPlayers %}
+  <article>
+    <header>
+      <h2>Joueurs en cours d'inscription</h2>
+    </header>
+
+    <section>
+      {% set count=0 %}
+      {% for p in players %}
+      {% if p.validated == 0 %}
+        <div class="frame frame-active grid-5 pull-left" style="background-color: rgba(0,0,0,.5)">
+          <header>
+            <div class="title pull-left">
+              {{count+1}}. {{ p.name }}
+            </div>
+            <br class="clear">
+          </header>
+        </div>
+        {% set count=count+1 %}
+        {% if count % 2 == 0%}
+          <br class="clear">
+        {% endif %}
+      {% endif %}
+      {% endfor %}
+      <br class="clear">
+    </section>
+  </article>
+</div>
+{% endif %}
+{% endblock %}

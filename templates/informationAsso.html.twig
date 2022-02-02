@@ -1,0 +1,31 @@
+{% extends 'informationLayout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article id="asso" class="info">
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+    <ul>
+      <li>Membres</li>
+      <li>{{ globalVars.staffNumber }}</li>
+      <li>Editions</li>
+      <li>{{ globalVars.number }}</li>
+    </ul>
+  </aside>
+
+  <header>
+    <h2>Association</h2>
+  </header>
+
+  <section>
+    <p>
+      L'InsaLan est un évènement de jeux en réseau d'envergure nationale organisé par un groupe d'étudiants de l'association <em>AEIR</em> (Amicale des Elèves de l'INSA Rennes) à but non lucratif de loi 1901. Cette association étudiante est issue de l'<em>INSA Rennes</em> (Institut National des Sciences Appliquées), une des écoles d'ingénieurs du Groupe INSA. L'InsaLan se compose cette année d'une équipe d'environ {{ globalVars.staffNumber }} étudiants, passionnés de jeux vidéo et de compétition électronique.
+      <br/>
+      Cette année, la {{ globalVars.lettersNumber }} édition de l'InsaLan accueillera <em>{{ globalVars.playersNumber }} joueurs</em> le temps d'un week-end. Les compétitions se dérouleront dans la zone tournois de l'évènement tandis que des animations gratuites seront proposées à tout le monde. L'équipe de l'InsaLan est ravie de vous présenter le résultat d'une année de travail et l'expérience de ses {{ globalVars.number - 1}} autres éditions.
+    </p>
+  </section>
+</article>
+{% endblock %}

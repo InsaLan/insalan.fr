@@ -1,0 +1,10 @@
+{% extends 'tournamentLayout.html.twig' %}
+
+{% block title %}
+{{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+    <link rel="stylesheet" href="{{ asset("css/tournament.css") }}" />
+{% endblock %}

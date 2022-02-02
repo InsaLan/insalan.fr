@@ -1,0 +1,73 @@
+{% extends 'tournamentLayout.html.twig' %}
+
+{% block customcss %}
+{{ parent() }}
+
+<style type="text/css">
+.container {
+    width: 98%;
+}
+
+section {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid silver;
+}
+
+td {
+    border: 1px solid silver;
+    padding: 5px;
+    text-align: center;
+}
+
+input[type=submit],
+input[type=button],
+button,
+.btn2 {
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+.darkButton {
+    background-color: #00475B !important;
+}
+
+.payment_not_ok {
+    background-color: #00475B !important;
+}
+
+.not_arrived {
+    background-color: #00475B !important;
+}
+
+.scoreInput {
+    color: black;
+    height: 25px;
+    font-size: 18px;
+    width: 40px;
+}
+</style>
+{% endblock %}
+
+{% block main_header %}
+{% endblock %}
+
+{% block main_bottom %}
+{% endblock %}
+
+{% block social %}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+  <script type="text/javascript" src="{{ asset("js/jquery.js") }}"></script>
+
+<script type="text/javascript">
+  jQuery.noConflict();
+</script>
+{% endblock %}

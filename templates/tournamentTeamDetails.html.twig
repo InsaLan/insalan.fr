@@ -1,0 +1,82 @@
+{% extends 'tournament_user/layout.html.twig' %}
+
+{% block title %}
+{{ parent() }}
+ - {{ part.name }}
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <header>
+    <h2>{{ part.name }}</h2>
+
+    <p>
+      <a href="{{ path('app_tournament_tournament', {id: part.tournament.id}) }}">
+        <<< Retour tournoi <b>{{ part.tournament.name }}</b>
+      </a>
+    </p>
+
+    {% if part.tournament.participantType == "team" %}
+      <p>
+        &Eacute;quipe composée de 
+        {% for player in part.players %}
+        {% if not loop.first and not loop.last %}
+          ,
+        {% elseif loop.last %}
+          et
+        {% endif %}
+          <strong>{{ player.name }}</strong>
+        {% endfor %}
+        .
+      </p>
+    {% endif %}
+
+  </header>
+
+  {% if groupMatches|length == 0 and knockoutMatches|length == 0 %}
+    <p style="margin-bottom:200px; margin-top:50px">
+      <i>Aucun match n'est pour l'instant disponible.</i>
+    </p>
+  {% endif %}
+
+  {% for g in groupMatches %}
+
+    <h3>{{ g[0].group.stage.name }} - {{ g[0].group.name }}</h3>
+
+    {% set i=0 %}
+    {% for m in g %}
+      {% set i=i+1 %}
+      {% include 'Part/matchDetailsForPart.html.twig' %}
+
+    {% endfor %}
+
+    <div class="clear"></div>
+
+  {% endfor %}
+
+  {% for k in knockoutMatches %}
+
+    <h3>{{ k[0].koMatch.knockout.name }}</h3>
+
+    {% set i=0 %}
+    {% for m in k %}
+      {% set i=i+1 %}
+      {% include 'Part/matchDetailsForPart.html.twig' %}
+
+    {% endfor %}
+
+    <div class="clear"></div>
+
+  {% endfor %}
+
+  {% if authorized and part.tournament.playerInfos %}
+    <div class="clear" style="margin-top:20px"></div>
+    <section class="infos">
+      {{ part.tournament.playerInfos | markdown_to_html }}
+    </section>
+    <div class="clear" style="margin-bottom:20px"></div>
+  {% endif %}
+
+{% endblock %}

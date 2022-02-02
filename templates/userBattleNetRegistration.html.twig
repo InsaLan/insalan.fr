@@ -1,0 +1,48 @@
+{% extends 'InsaLanLayout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="frame frame-active">
+  <header class="full">
+    <div class="step pull-left">
+      &#x2699;
+    </div>
+    <h2 class="title pull-left">Mon profil - Connexion Battle.net</h2>
+    <br class="clear">
+  </header>
+
+  <div class="text">
+    {% if erreur is defined %}
+      Une erreur est survenue lors de la sauvegarde du compte !
+      <div>
+        <a href="{{path ('app_user_index')}}" class="btn btn-primary">Retour au profil</a>
+      </div>
+    {% else %}
+      {% if battletag is defined %}
+        <div>
+          <br/>
+          <p style="text-align: center;">Votre BattleTag est : {{battletag}}</p>
+          <br/>
+          <p style="text-align: center;">Votre identifiant sera conservé pendant 30 jours.</p>
+          <br/>
+          <a href="{{ path ('app_user_index') }}" class="btn btn-primary ctrl grid-5 pull-left">Retour</a>
+          <a href="{{ path ('app_user_registerbattlenet', {'action': 'remove'}) }}" class="btn btn-danger ctrl grid-5 pull-left">Retirer ce compte</a>
+        </div>
+      {% else %}
+        {% if url is defined%}
+          <br/>
+          <p style="text-align: center;">
+            En cliquant sur le bouton ci-dessous, vous serez redirigé vers le site Battle.net afin de vous connecter.<br/>
+            Nous pourrons ainsi vérifier votre identifiant pour les tournois nécessitant Battle.net<br/>
+            Votre identifiant sera conservé au maximum 30 jours.<br/>
+          </p>
+          <br/>
+          <a href="{{ path ('app_user_index') }}" class="btn btn-danger ctrl grid-2 pull-left">Retour</a>
+          <a href="{{url}}" class="btn btn-primary ctrl grid-8 pull-left">Se connecter</a>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

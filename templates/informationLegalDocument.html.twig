@@ -1,0 +1,32 @@
+{% extends 'informationLayout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article class="info">
+  <div class="container">
+    <br /><br />
+    <section class="markdown">
+      <div class="frame frame-active grid-10" style="background-color: rgba(0,0,0,.5)">
+        <section class="full">
+          <div style="margin: 10px">
+              {% if document is not null %}
+                <center><h2>{{ document.name }}</h2></center>
+                <br />
+                {{ document.content|markdown_to_html }}
+                <div class="pull-right">
+                  Date de dernière mise à jour : {{ document.updatedAt | date("d/m/Y") }}
+                </div>
+              {% else %}
+                    <p style="text-align: center">
+                        Cette section n'est pas disponible actuellement.<br />
+                    </p>
+              {% endif %}
+          </div>
+          <br class="clear">
+        </section>
+      </div>
+    </section>
+  </div>
+</article>
+{% endblock %}

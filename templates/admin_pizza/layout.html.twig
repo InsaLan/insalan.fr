@@ -1,0 +1,25 @@
+{% extends 'Admin/adminLayout.html.twig' %}
+
+{% block customcss %}
+{{ parent() }}
+  <link rel="stylesheet" href="{{ asset("css/pizza.css") }}" />
+{% endblock %}
+
+{% block main_header %}
+{{ parent() }}
+{% endblock %}
+
+{% block rawbody %}{% endblock %}
+
+{% block main_bottom %}{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+  <script type="text/javascript" src="{{ asset("js/jquery.js") }}"></script>
+
+
+<script type="text/javascript">
+  jQuery.noConflict();
+</script>
+{% endblock %}

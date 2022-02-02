@@ -1,0 +1,19 @@
+{% extends 'InsaLanLayout.html.twig' %}
+
+{% block title %}
+{{ parent() }}
+
+- Archives
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset("css/news.css") }}" />
+{% endblock %}
+
+{% block rawbody %}
+{{ parent() }}
+
+<section class="container">
+  {% block body %}{% endblock %}
+</section>
+{% endblock %}

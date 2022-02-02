@@ -1,0 +1,47 @@
+{% extends 'tournamentLayout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+    <link rel="stylesheet" href="{{ asset("css/tournament2.css") }}" />
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<header class="game">
+  <div class="container">
+    <img style="height:100px" src="{{ asset(t.getUploadDir() ~ t.logoPath) }}" alt="Logo"/>
+      <div><h1>{{ t.name }}</h1></div>
+  </div>
+</header>
+{% endblock %}
+
+{% block rawbody %}
+{{ parent() }}
+
+<div class="container bg-{{ t.type }}">
+  <br/><br/>
+  <section class="markdown">
+    <div class="frame frame-active grid-10" style="background-color: rgba(0,0,0,.5)">
+      <section class="full">
+        <div style="margin: 10px">
+          <center>
+            <h2>Règlement du tournoi</h2>
+          </center>
+          <br/>
+          {% if t.rules | length > 0 %}
+            {{ t.rules|markdown_to_html }}
+          {% else %}
+            <p style="text-align: center">
+              Le règlement n'est pas disponible actuellement.<br/>
+              <br/>
+              Vous pouvez contacter les administrateurs du tournoi en cas de questions.
+            </p>
+          {% endif %}
+        </div>
+        <br class="clear">
+      </section>
+    </div>
+  </section>
+</div>
+{% endblock %}

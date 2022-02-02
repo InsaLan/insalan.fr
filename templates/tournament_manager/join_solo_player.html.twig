@@ -1,0 +1,23 @@
+{% extends 'tournamentLayout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Rejoindre le tournoi &laquo; {{ tournament.name }} &raquo; en tant que manager</h2>
+    {{ tournament.description }}
+  </header>
+
+  <section>
+    {% include 'tournament_manager/ChooseManagerNameValidated.html.twig'  with {'counter': 1}%}
+    {% include 'tournament_manager/JoinSoloPlayerActive.html.twig'        with {'counter': 2}%}
+  </section>
+</article>
+{% endblock %}

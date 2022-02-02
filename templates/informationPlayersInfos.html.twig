@@ -1,0 +1,46 @@
+{% extends 'informationLayout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article id="waitingList" class="info">
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Fonctionnement de la liste d’attente</h2>
+  </header>
+
+  <section>
+    <p>
+      Si vous souhaitez être placé dans la liste d’attente pour un tournoi, vous devez suivre la procédure suivante :
+      <ul class="shift">
+        <li>Créer l’équipe intégralement sur le site insalan.fr, y compris le compte de chaque joueur.</li>
+        <li>Remplir le formulaire d'inscription pour la file d'attente ci-dessous (par le capitaine de l'équipe).</li>
+      </ul>
+    </p>
+    <p>
+      Les placements dans la liste d’attente sont faits par <strong>date d’inscription</strong> des équipes sur le formulaire : l’équipe qui aura rempli le formulaire en premier sera placée en tête de liste.
+    </p>
+    <p>
+      <strong>Dans le cas d’un désistement</strong> de la part d’une équipe participant à un tournoi, l’emplacement serait attribué à l’équipe la plus haute dans la liste d’attente.
+      <br/>
+      Pour consulter votre place dans la liste d’attente, vous pouvez aller dans l’onglets <em>Participants</em> correspondant à votre tournoi. La liste d’attente sera mise à jour au fur et à mesure des inscriptions sur le formulaire.
+    </p>
+    <p>
+      Si aucune équipe n’est présente dans la liste d’attente, le slot sera à nouveau disponible pour tous, et sera attribué à la première équipe qui validera son inscription à partir de la libération du slot.
+    </p>
+  </section>
+</article>
+
+<hr/>
+
+<br/><br/>
+<center>
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdAT6ipU4P0-ySyJ0PHWE-4PHJy8UkI5CinWwxvifAhO85-xg/viewform?embedded=true" width="700" height="1200" frameborder="0" marginheight="0" marginwidth="0">Chargement en cours...</iframe>
+</center>
+<br/><br/>
+{% endblock %}

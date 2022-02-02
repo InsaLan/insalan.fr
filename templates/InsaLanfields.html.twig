@@ -1,0 +1,15 @@
+{% block form_row %}
+  {% apply spaceless %}
+  <div class="input left">
+    {{ form_label(form) }}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+  </div>
+  {% endapply %}
+{% endblock form_row %}
+
+{% block button_row -%}
+<div class="input left">
+  {{- form_widget(form) -}}
+</div>
+{%- endblock button_row %}

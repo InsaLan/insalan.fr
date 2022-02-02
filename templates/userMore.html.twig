@@ -1,0 +1,80 @@
+{% extends 'userLayout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="frame frame-active">
+  <header class="full">
+    <div class="step pull-left">
+      &#x2699;
+    </div>
+    <h2 class="title pull-left">Mon profil</h2>
+    <br class="clear">
+  </header>
+ 
+   <div class="text">
+     <form id="profile" method="POST" action="{{ path('app_user_index') }}">
+       <input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
+       {{ form_errors(form) }}
+       {{ form_row(form.firstname) }}
+       {{ form_row(form.lastname) }}
+       {{ form_row(form.phoneNumber) }}
+       {{ form_row(form.birthdate) }}
+     </form>
+     <br class="clear">
+   </div>
+
+   <style>select { float:left; } .input.left select {margin-left: 0px;}</style>
+
+    <a class="btn btn-primary ctrl grid-10" href="javascript:{}" onclick="document.getElementById('profile').submit();">Ok</a>
+</div>
+
+<div class="frame frame-active">
+  <header class="full">
+    <div class="step pull-left">
+      &#x2699;
+    </div>
+    <h2 class="title pull-left">Connexion à Steam</h2>
+    <br class="clear">
+  </header>
+
+  <div class="text">
+    <br/>
+    {% if steam %}
+      <a href="{{ steam.profileurl }}" target="_blank">
+        <img class="pull-left" style="width: 50px; padding-right: 20px" src="{{ steam.avatarmedium }}" />
+      </a>
+      <h2>{{ steam.personaname }}</h2>
+      <a href="{{ path('app_user_registersteamid') }}" class="btn2" style="float: right">Modifier / Supprimer la connexion</a>
+    {% else %}
+      <h2>Non connecté</h2>
+      <a href="{{ path('app_user_registersteamid') }}" class="btn2" style="float: right">Lier un compte Steam</a>
+    {% endif %}
+    <p>Utilisé pour les inscriptions aux tournois Steam</p>
+    <br>
+  </div>
+</div>
+
+<div class="frame frame-active">
+  <header class="full">
+    <div class="step pull-left">
+      &#x2699;
+    </div>
+    <h2 class="title pull-left">Connexion à Battle.net</h2>
+    <br class="clear">
+  </header>
+
+  <div class="text">
+    <br/>
+    {% if battletag %}
+      <h2>{{ battletag }}</h2>
+      <a href="{{ path('app_user_registerbattlenet') }}" class="btn2" style="float: right">Modifier / Supprimer la connexion</a>
+    {% else %}
+      <h2>Non connecté</h2>
+      <a href="{{ path('app_user_registerbattlenet') }}" class="btn2" style="float: right">Lier un compte BattleNet</a>
+    {% endif %}
+    <p>Utilisé pour les inscriptions aux tournois Battle.Net</p>
+    <br>
+  </div>
+</div>
+{% endblock %}

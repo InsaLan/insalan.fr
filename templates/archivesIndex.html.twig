@@ -1,0 +1,21 @@
+{% extends 'archivesLayout.html.twig' %}
+
+
+{% block stylesheets %}
+{{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/archives.css') }}" />
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="previous-years-list">
+  {% for e in editions %}
+  <div class="previous-years">
+    <a href="{{ path('app_archives_previousyear', {'edition': e.id}) }}">
+      <img src="{{ asset('img/')  ~ e.image}}" alt="{{e.name}}" />
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

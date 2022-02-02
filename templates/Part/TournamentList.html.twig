@@ -1,0 +1,46 @@
+<section>
+  <table class="list">
+    {% for t in tournaments %}
+    <tr>
+      <td>
+        <a href="{{ path('app_tournament_tournament', {id: t.id}) }}">
+          <img src="{{ asset(t.getUploadDir() ~ t.logoPath)  }}" alt="{{ t.name }}"/>
+        </a>
+      </td>
+      <td>
+        <a href="{{ path('app_tournament_tournament', {id: t.id}) }}" >
+          <div>
+            <h1>
+              {{ t.name }}
+            </h1>
+            Horaires : du {{ t.tournamentOpen|date('d/m/y H:i') }} au {{ t.tournamentClose|date('d/m/y H:i') }}
+            <br>
+            <em>Inscription du {{ t.registrationOpen|date('d/m/y H:i') }} au {{ t.registrationClose|date('d/m/y H:i') }}</em>
+          </div>
+        </a>
+      </td>
+      <td>
+        <br><br>
+        {% if t.participantType == "team" %}
+          <a class="btn2 btn2-nocolor" href="{{ path("app_tournament_teamlist", {"id":t.id}) }}">
+        {% else %}
+          <a class="btn2 btn2-nocolor" href="{{ path("app_tournament_playerlist", {"id":t.id}) }}">
+        {% endif %}
+          Participants
+        </a>
+        <br><br>
+        {% if t.isFull() %}
+          COMPLET
+        {% else %}
+          {{ t.validatedSlots }} / {{ t.registrationLimit }} participants
+        {% endif %}
+      </td>
+      <td>
+        <a class="btn2 btn2-nocolor" href="{{ path('app_tournament_rules', {id: t.id}) }}" >
+          Règlement
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</section>

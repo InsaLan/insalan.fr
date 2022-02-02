@@ -1,0 +1,68 @@
+{% extends 'informationLayout.html.twig' %}
+
+{#% block top_infos %}
+{% endblock %#}
+
+{% block bottom_infos %}
+<nav>
+  <ul>
+    <li>
+      <header><a href="{{ path('app_information_index') }}">Infos</a></header>
+      <div>
+        <ul>
+          <li><a href="{{ path('app_information_wait') }}#rewards">Récompenses</a></li>
+          <li><a href="{{ path('app_information_wait') }}#organization">Déroulement</a></li>
+          <li><a href="{{ path('app_information_wait') }}#games">Jeux</a></li>
+          <li><a href="{{ path('app_information_wait') }}#price">Prix</a></li>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <header><a href="{{ path('app_stream_index') }}">InsaLan.fr</a></header>
+      <ul>
+        <li><a href="http://www.insalan.fr/news/">News</a></li>
+        <li><a href="http://www.insalan.fr/gallery/">Galerie</a></li>
+        <li><a href="http://www.insalan.fr/forum/">Forum</a></li>
+        <li><a href="http://www.insalan.fr/pages/contact">Contact</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+{% endblock %}
+
+{% block body %}
+
+<iframe width="1000" height="563" src="//www.youtube.com/embed/XtK8iDKYOYw?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+<div style="width:100%; text-align:center; font-size: 30px; margin-top: 10px;">
+  Ouverture des <strong>inscriptions</strong> aux <strong>qualifications</strong> dans<br />
+  <strong id="timer_hours"></strong> heures 
+  <strong id="timer_minutes"></strong> minutes 
+  <strong id="timer_seconds"></strong> secondes
+</div>
+
+{% include 'Part/detailed_informations.html.twig' %}
+
+<script type="text/javascript">
+/** Raw script rocks. KiSS. **/
+
+(function printTimer() {
+  var seconds = 1412287201 - Math.floor(new Date().getTime() / 1000);
+  if (seconds < 0) {
+    window.location = '/';
+    return;
+  }
+
+  var minutes = Math.floor(seconds / 60);
+  var hours   = Math.floor(minutes / 60);
+
+  seconds %= 60;
+  minutes %= 60;
+
+  document.getElementById("timer_hours").innerHTML = hours;
+  document.getElementById("timer_minutes").innerHTML = minutes;
+  document.getElementById("timer_seconds").innerHTML = seconds;
+
+  setTimeout(printTimer, 1000);
+})();
+</script>
+{% endblock %}

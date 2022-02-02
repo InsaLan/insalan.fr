@@ -1,0 +1,73 @@
+{% extends 'tournament_user/layout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+<style type="text/css">
+.tournamentSlotPlacement {
+  position: absolute;
+  border: 1px solid black;
+  color: white;
+  height: 21px;
+  width: 21px;
+}
+
+.tournamentSlotPlacementAvailable {
+  cursor: pointer;
+}
+
+.tournamentSlotPlacementAvailable:hover {
+  opacity: 0.8;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <header>
+    <h2>Choix d'une place - {{ tournament.name }}</h2>
+  </header>
+
+  <p>
+    Vous pouvez, si vous le souhaitez, réserver une place spécifique pour l'InsaLan {{ globalVars.romanNumber }}.
+    {% if tournament.participantType == "team" %}
+      <br/>
+      Tous les membres de votre équipe seront bien entendu placés sur l'emplacement que vous choisirez.
+    {% endif %}
+  </p>
+</article>
+
+<div style="position:relative; margin-height: 50px; height:1000px; width: 900px; margin-top: 20px">
+  {% for s in structure %}
+
+    {% set color = "#1A1A1A" %}
+    {% set available = false %}
+    {% set mine = false %}
+
+    {% if s[0] == tournament.shortName %}
+      {% set color = "#00bff3" %}
+      {% if s[1] == participant.placement %}
+        {% set color = "yellow" %}
+        {% set mine = true %}
+      {% elseif unavailable[s[1]] is defined %}
+        {% set color = "#00475B" %}
+      {% else %}
+        {% set available = true %}
+      {% endif %}
+    {% endif %}
+    <div class="tournamentSlotPlacement{% if available %} tournamentSlotPlacementAvailable{% endif %}" style="background-color: {{ color }}; height:{{ 23*s[5]-2 }}px; width:{{  23*s[4]-2 }}px; top: {{ 23*s[3] }}px; left: {{ 23*s[2] }}px;" {% if available %}onclick="window.location='placement?placement={{ s[1] }}'"{% endif %}></div>
+  {% endfor %}
+
+  <div class="tournamentSlotPlacement" style="background-color: #00bff3; top: {{ 28*15 }}px; left: {{ 23*13 }}px;"></div>
+  <div class="tournamentSlotPlacement" style="background-color: #00475B; top: {{ 28*16 }}px; left: {{ 23*13 }}px;"></div>
+  <div class="tournamentSlotPlacement" style="background-color: yellow;  top: {{ 28*17 }}px; left: {{ 23*13 }}px;"></div>
+  <div class="tournamentSlotPlacement" style="background-color: #1A1A1A; top: {{ 28*18 }}px; left: {{ 23*13 }}px;"></div>
+
+  <div class="tournamentSlotPlacement" style="background-color: black; top: {{ 28*15 }}px; left: {{ 23*14 }}px; width: 100px"> &nbsp; Disponible</div>
+  <div class="tournamentSlotPlacement" style="background-color: black; top: {{ 28*16 }}px; left: {{ 23*14 }}px; width: 100px"> &nbsp; Occupé</div>
+  <div class="tournamentSlotPlacement" style="background-color: black; top: {{ 28*17 }}px; left: {{ 23*14 }}px; width: 100px"> &nbsp; Votre place</div>
+  <div class="tournamentSlotPlacement" style="background-color: black; top: {{ 28*18 }}px; left: {{ 23*14 }}px; width: 100px"> &nbsp; Autre tournoi</div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'tournament_admin/layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <header>
+    <h2>{{ knockout.name }} - {{ knockout.tournament.name }}</h2>
+    <a href="{{ path("app_tournamentadmin_index_1", {id: knockout.tournament.id}) }}">
+      <<< Retour
+    </a> 
+    -
+    <a href="{{ path("app_tournamentadmin_knockout_view", {id: knockout.id }) }}">
+      Voir Arbre
+    </a>
+  </header>
+
+  {% include 'Part/AdminMatches.html.twig' %}
+</article>
+{% endblock %}

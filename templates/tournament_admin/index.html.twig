@@ -1,0 +1,193 @@
+{% extends 'tournament_admin/layout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <header>
+    <h2>Gestion des Tournois</h2>
+  </header>
+
+  <section>
+    {{ form_start(form, {attr:{'class':'oneline'}}) }}
+      {{ form_errors(form) }}
+      {{ form_row(form.tournament) }}
+      <div class="input left">
+        <input type="submit" value="&rarr;"/>
+        &nbsp;&nbsp;&nbsp;
+        <small>
+          <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | merge({'showAll': not showAll})) }}">
+            {{ showAll ? "Masquer" : "Afficher" }} les anciens tournois
+          </a>
+        </small>
+      </div>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_tournamentapi_email') }}" class="btn btn-plain" style="float: right;">Mails équipes</a>
+  </section>
+</article>
+
+{% if tournament %}
+<hr style="margin: 20px 0px;"/>
+<section class="grid-5 pull-left">
+  {% if tournament %}
+    <a href="{{ path('app_tournamentadmin_placement', {id: tournament.id}) }}" class="btn btn-plain" style="float: right; margin-right: 15px;">
+      Placement
+    </a>
+  {% endif %}
+  <section class="groups">
+    <h2>Poules</h2>
+    <ul style="margin-left: 30px">
+      {% for s in stages %}
+      <li>
+        <a href="{{ path("app_tournamentadmin_stage", {id: s.id}) }}">
+          {{ s.name }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <div class="clear"></div>
+
+  <section class="knockouts">
+    <h2>Arbres</h2>
+    <ul style="margin-left: 30px">
+      {% for ko in knockouts %}
+      <li>
+        <a href="{{ path('app_tournamentadmin_knockout', {id: ko.id}) }}">
+          {{ ko.name }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <h2 style="margin-top:20px">Nouvel arbre</h2>
+
+    {{ form_start(formKo) }}
+      {{ form_errors(formKo) }}
+      {{ form_row(formKo.name) }}
+      {{ form_row(formKo.size) }}
+      {{ form_row(formKo.double) }}
+      <div class="input left">
+        <input type="submit" id="_submit" name="_submit" value="Ajouter" />
+      </div>
+    {{ form_end(formKo) }}
+  </section>
+</section>
+
+<section class="grid-5 pull-left">
+  <table style="width:100%">
+    <tr>
+      <th colspan="2" class="grid-3">Pseudo / Nom</th>
+      <th class="grid-3">Equipe</th>
+      <th class="grid-2">Payé</th>
+      <th class="grid-2">Arrivé</th>
+    </tr>
+    {% for player in players %}
+    <tr>
+      <td colspan="2">
+        {{ player.gameName }}
+        <br/>
+        <span style="font-size:10px; color: grey;">
+          {{ player.user.firstname }} {{ player.user.lastname}}
+        </span>
+      </td>
+      <td>
+        {% set solo = not (player.team | length > 0) %}
+        {% if not solo %}
+          {{ player.team[0].name }}
+        {% else %}
+          (solo)
+        {% endif %}
+      </td>
+      <td>
+        <span class="payment_status_{{ player.id }}">
+          <button class="payment_ok" data-url="{{ path('app_tournamentadmin_player_tooglepayment', { t: tournament.id, p: player.id, status: 0 }) }}" data-id="{{ player.id }}" onclick="changePaymentStatus(this)" {% if not player.paymentDone %}style="display:none"{% endif %}>OUI</button>
+          <button class="payment_not_ok" data-url="{{ path('app_tournamentadmin_player_tooglepayment', { t: tournament.id, p: player.id, status: 1 }) }}" data-id="{{ player.id }}" onclick="changePaymentStatus(this)" {% if player.paymentDone %}style="display:none"{% endif %}>NON</button>
+        </span>
+      </td>
+      <td>
+        <span class="arrived_status_{{ player.id }}">
+          <button class="arrived" data-url="{{ path('app_tournamentadmin_player_tooglearrived', { t: tournament.id, p: player.id, status: 0 }) }}" data-id="{{ player.id }}" onclick="changeArrivedStatus(this)" {% if not player.arrived %}style="display:none"{% endif %}>OUI</button>
+          <button class="not_arrived" data-url="{{ path('app_tournamentadmin_player_tooglearrived', { t: tournament.id, p: player.id, status: 1 }) }}" data-id="{{ player.id }}" onclick="changeArrivedStatus(this)" {% if player.arrived %}style="display:none"{% endif %}>NON</button>
+        </span>
+      </td>
+    </tr>
+    {% set manager = solo ? player.manager : player.team[0].manager %}
+    {% set next = (solo or loop.last) ? none : players[loop.index0 + 1] %}
+    {% set nextTeamId = next and (next.team | length > 0) ? next.team[0].id : none %}
+    {% if manager and (not next or player.team[0].id != nextTeamId) %}
+    <tr>
+      <td style="background-color: silver; width: 1%"></td>
+      <td colspan="2">
+        Manager : {{ manager.gameName }}
+        <span style="color: grey;">
+          ({{ manager.user.firstname }} {{ manager.user.lastname}})
+        </span>
+      </td>
+      <td>
+        <span class="payment_status_m{{ manager.id }}">
+          <button class="payment_ok" data-url="{{ path('app_tournamentadmin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 0 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if not manager.payementDone %}style="display:none"{% endif %}>OUI</button>
+          <button class="payment_not_ok" data-url="{{ path('app_tournamentadmin_manager_tooglepayment', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changePaymentStatus(this)" {% if manager.payementDone %}style="display:none"{% endif %}>NON</button>
+        </span>
+      </td>
+      <td>
+        <span class="arrived_status_m{{ manager.id }}">
+          <button class="arrived" data-url="{{ path('app_tournamentadmin_manager_tooglearrived', { t: tournament.id, m: manager.id, status: 0 }) }}" data-id="m{{ manager.id }}" onclick="changeArrivedStatus(this)" {% if not manager.arrived %}style="display:none"{% endif %}>OUI</button>
+          <button class="not_arrived" data-url="{{ path('app_tournamentadmin_manager_tooglearrived', { t: tournament.id, m: manager.id, status: 1 }) }}" data-id="m{{ manager.id }}" onclick="changeArrivedStatus(this)" {% if manager.arrived %}style="display:none"{% endif %}>NON</button>
+        </span>
+      </td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+  </table>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+<script type="text/javascript">
+(function($) {
+  window.changePaymentStatus = function(e) {
+    (function(e) {
+      $.post($(e).data('url'), function(res) {
+        if(!res.err) {
+          var playerID = $(e).data('id');
+          if(!$(e).hasClass('payment_ok')) {
+            $(".payment_status_" + playerID + " .payment_ok").show();
+            $(".payment_status_" + playerID + " .payment_not_ok").hide();
+          } else {
+            $(".payment_status_" + playerID + " .payment_ok").hide();
+            $(".payment_status_" + playerID + " .payment_not_ok").show();
+          }
+        }
+      });
+    })(e);
+  };
+})(jQuery);
+</script>
+
+<script type="text/javascript">
+(function($) {
+    window.changeArrivedStatus = function(e) {
+      (function(e) {
+        $.post($(e).data('url'), function(res) {
+          if(!res.err) {
+            var playerID = $(e).data('id');
+            if(!$(e).hasClass('arrived')) {
+              $(".arrived_status_" + playerID + " .arrived").show();
+              $(".arrived_status_" + playerID + " .not_arrived").hide();
+            } else {
+              $(".arrived_status_" + playerID + " .arrived").hide();
+              $(".arrived_status_" + playerID + " .not_arrived").show();
+            }
+          }
+        });
+      })(e);
+    };
+})(jQuery);
+</script>
+{% endblock %}

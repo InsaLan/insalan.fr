@@ -1,0 +1,45 @@
+{% extends 'Admin/adminLayout.html.twig' %}
+
+{% block title %}
+{{ parent() }}
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<article>
+  <header>
+    <h2>Gestion des Phases de poules</h2>
+  </header>
+
+  <div class="create">
+    <h2>Création d'une nouvelle phase de poules</h2>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+  </div>
+
+  <section style="margin-top:40px">
+    <strong>Liste des phases :</strong> (Du plus récent au plus ancien)
+
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Tournament</th>
+        <th>Actions</th>
+      </tr>
+      {% for groupStage in groupStages %}
+      <tr>
+        <td>{{ groupStage.name }}</td>
+        <td>{{ groupStage.tournament }}</td>
+        <td>
+          <a class="btn-plain" href = {{ path('GroupStageModifyAction', {'id': groupStage.id }) }}>Modifier</a>
+          <a class="btn-plain" href = {{ path('GroupStageRemoveAction', {'id': groupStage.id }) }}>Supprimer</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </section>
+</article>
+{% endblock %}

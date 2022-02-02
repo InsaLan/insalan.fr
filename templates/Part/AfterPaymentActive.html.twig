@@ -1,0 +1,113 @@
+{% if player.paymentDone %}
+<div class="frame frame-success">
+  <header class="full">
+    <div class="step pull-left">
+      {{ counter }}
+    </div>
+    {% if registrable.free %}
+      <div class="title pull-left">Inscription joueur terminée</div>
+    {% else %}
+      <div class="title pull-left">Paiement validé</div>
+    {% endif %}
+    <br class="clear">
+  </header>
+  <div class="text">
+    {% if registrable.free %}
+      Votre inscription en tant que joueur est validée. Si vous êtes en équipe, votre équipe sera validée quand plus de la moitié des joueurs auront validé leur inscription.
+
+      <b>Pour l'organisation du tournoi, vous serez contacté sur l'adresse e-mail de votre compte. Pensez à vérifier votre messagerie !</b> {# TODO Enlever ce texte après l'intralan ? #}
+    {% else %}
+      Votre paiement a été validé.
+    {% endif %}
+
+    Ces informations vous seront utiles plus tard :
+    <br>
+    <table class="order">
+      <tr>
+        <td>
+          Nom de votre compte insalan.fr
+        </td>
+        <td>
+          {{ user.username }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Email de contact
+        </td>
+        <td>
+          {{ user.email }}
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          Tournoi
+        </td>
+        <td>
+          {{ registrable.name }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Pseudonyme en jeu
+        </td>
+        <td>
+          {{ player.name }}
+        </td>
+      </tr>
+
+      {% if registrable.kind == 'tournament' %}
+      <tr>
+        <td>
+          Début du tournoi
+        </td>
+        <td>
+          Le {{ registrable.tournamentOpen|date('d/m/Y à H:i') }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Fin du tournoi
+        </td>
+        <td>
+          Le {{ registrable.tournamentClose|date('d/m/Y à H:i') }}
+        </td>
+      </tr>
+      {% endif %}
+    </table>
+
+    {#
+    <br/><br/>
+    <center>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfVqoy-M_d6FColSldTnUGuU1sT_NlAUDgyiZ3KO9ZeZuPdDA/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">
+        Chargement en cours...
+      </iframe>
+    </center>
+    <br/><br/>
+    #}
+
+  </div>
+
+  <a class="btn btn-primary ctrl grid-10 pull-left" href="{{ path('app_user_index') }}">
+    Ok
+  </a>
+  <br class="clear">
+</div>
+{% else %}
+<div class="frame frame-danger">
+  <header class="full">
+    <div class="step pull-left">
+      {{ counter }}
+    </div>
+    <div class="title pull-left">Echec du paiement</div>
+    <br class="clear">
+  </header>
+  <div class="text">
+    Une erreur est survenue. Vous pouvez contacter un administrateur via contact@insalan.fr ou au {{ globalVars.helpPhoneNumber }}.
+  </div>
+  <a class="btn btn-danger ctrl grid-10 pull-left" href="{{ path('app_tournamentuser_enroll', {registrable: registrable.id}) }}">
+    Réessayer
+  </a>
+</div>
+{% endif %}

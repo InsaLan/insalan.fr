@@ -1,0 +1,21 @@
+{% extends 'InsaLanLayout.html.twig' %}
+
+{% block title %}
+{{ parent() }}
+ - Streams
+{% endblock %}
+
+
+{% block stylesheets %}
+{{ parent() }}
+    <link rel="stylesheet" href="{{ asset("css/stream.css") }}" />
+{% endblock %}
+
+
+{% block rawbody %}
+{{ parent() }}
+
+<section class="container">
+  {% block body %}{% endblock %}
+</section>
+{% endblock %}

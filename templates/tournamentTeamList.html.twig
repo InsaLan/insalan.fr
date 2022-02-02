@@ -1,0 +1,175 @@
+{% extends 'tournamentLayout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+    <link rel="stylesheet" href="{{ asset("css/tournament2.css") }}" />
+{% endblock %}
+
+{% block title %}
+{{ parent() }}
+ - Equipes
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="bg-{{ tournament.type }}">
+
+  <header class="game">
+    <div class="container">
+      <img style="height:100px" src="{{ asset(tournament.getUploadDir() ~ tournament.logoPath) }}" alt="Logo"/>
+      <div>
+        <h1>{{ tournament.name }}</h1>
+      </div>
+    </div>
+  </header>
+
+  <article>
+    <header>
+      <h2>Équipes validées</h2>
+    </header>
+
+    <section>
+      {% set count=0 %}
+      {% for t in teams %}
+      {% if t.validated == 2 %}
+        <div class="frame frame-active grid-5 pull-left" style="background-color: rgba(0,0,0,.5)">
+          <header class="full">
+            <div class="title pull-left">
+              {{count + 1}}. <a href="{{ path('app_tournament_teamdetails', {id: t.id}) }}">{{ t.name }}</a>
+            </div>
+            <br class="clear">
+          </header>
+          <section>
+            <ul class="shift">
+              {% for p in t.players %}
+                <li>
+                  {% if is_granted('ROLE_ADMIN') %}
+                    {% if p.paymentDone == 1 %}
+                      <b style="color: green">&#x2713; </b>
+                    {% else %}
+                      <b style="color: red">&#x274C; </b>
+                    {% endif %}
+                  {% endif %}
+                  {{ p.name }}
+                </li>
+              {% endfor %}
+            </ul>
+          </section>
+        </div>
+        {% set count=count+1 %}
+        {% if count % 2 == 0%}
+          <br class="clear">
+        {% endif %}
+      {% endif %}
+      {% endfor %}
+      <br class="clear">
+
+      {% if count == 0 %}
+      <div class="frame frame-active grid-10" style="background-color: rgba(0,0,0,.5)">
+        <header class="full">
+          <div class="title" style="text-align: center">
+            Il n'y a pas encore d'équipes inscrites sur ce tournoi !<br/>
+            <a href="{{ path('app_user_index') }}" class="btn2">
+              Inscription
+            </a>
+          </div>
+        </header>
+      </div>
+      {% endif %}
+    </section>
+  </article>
+
+  {% if nbWaitingTeams %}
+  <article>
+    <header>
+      <h2>Équipes sur liste d'attente</h2>
+    </header>
+
+    <section>
+      {% set count=0 %}
+      {% for t in teams %}
+      {% if t.validated == 1 %}
+        <div class="frame frame-active grid-5 pull-left" style="background-color: rgba(0,0,0,.5)">
+          <header class="full">
+            <div class="title pull-left">
+              {{count+1}}. {{ t.name }}
+            </div>
+            <br class="clear">
+          </header>
+          <section>
+            <ul class="shift">
+              {% for p in t.players %}
+              <li>
+                {% if is_granted('ROLE_ADMIN') %}
+                  {% if p.paymentDone == 1 %}
+                    <b style="color: green">&#x2713; </b>
+                  {% else %}
+                    <b style="color: red">&#x274C; </b>
+                  {% endif %}
+                {% endif %}
+                {{ p.name }}
+              </li>
+              {% endfor %}
+            </ul>
+          </section>
+        </div>
+        {% set count=count+1 %}
+        {% if count % 2 == 0%}
+          <br class="clear">
+        {% endif %}
+      {% endif %}
+      {% endfor %}
+      <br class="clear">
+    </section>
+  </article>
+  {% endif %}
+
+  {% if nbPendingTeams %}
+  <article>
+    <header>
+      <h2>Équipes en cours de création</h2>
+    </header>
+
+    <section>
+      {% set count=0 %}
+      {% for t in teams %}
+      {% if t.validated == 0 %}
+        <div class="frame frame-active grid-5 pull-left" style="background-color: rgba(0,0,0,.5)">
+          <header class="full">
+            <div class="title pull-left">
+              {{count+1}}. {{ t.name }}
+            </div>
+            <br class="clear">
+          </header>
+          <section>
+            <ul class="shift">
+              {% for p in t.players %}
+              <li>
+                {% if is_granted('ROLE_ADMIN') %}
+                  {% if p.paymentDone == 1 %}
+                    <b style="color: green">&#x2713; </b>
+                  {% else %}
+                    <b style="color: red">&#x274C; </b>
+                  {% endif %}
+                {% endif %}
+                {{ p.name }}
+              </li>
+              {% endfor %}
+            </ul>
+          </section>
+        </div>
+        {% set count=count+1 %}
+        {% if count % 2 == 0%}
+          <br class="clear">
+        {% endif %}
+      {% endif %}
+      {% endfor %}
+      <br class="clear">
+    </section>
+  </article>
+  {% endif %}
+
+</div>
+{% endblock %}
+

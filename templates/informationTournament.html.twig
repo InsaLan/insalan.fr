@@ -1,0 +1,148 @@
+{% extends 'informationLayout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<article id="horaire" class="info">
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+    <ul>
+
+    </ul>
+  </aside>
+
+  <header>
+    <h2>Ce que vous devez apporter en tant que joueur</h2>
+  </header>
+
+  <section>
+    <p>
+    Voici la checklist pour ne rien oublier :
+
+    <ul class="shift">
+        <li>Vos papiers d'identité, ils seront vérifiés à l'entrée ;</li>
+        <li>Un câble réseau droit RJ45 (entre 7 et 10m) ;</li>
+        <li>Un casque audio (enceintes interdites) ;</li>
+        <li>Une multiprise avec fil (2m conseillé, triplettes électriques interdites) ;</li>
+        <li>Votre PC avec système d'exploitation, jeux, antivirus et drivers à jour ;</li>
+        <li>Un écran ;</li>
+        <li>Votre clavier et votre souris ;</li>
+        <li>Tout autre périphérique que vous utilisez habituellement ;</li>
+        <li>Un sac de couchage et matelas si vous dormez sur place ;</li>
+        <li>Tout participant mineur doit apporter une <strong><a href="{{ asset('pdf/autorisation-parental-joueur.pdf') }}" target="_blank" >[autorisation parentale &#x25BE;]</a></strong> signée par son responsable légal ;
+            <br/>
+            L'âge minimum est de 16 ans pour participer aux tournois ;</li>
+        <li>Un coussin de chaise pour votre confort.</li>
+        <li>Un passe sanitaire valide.</li>
+    </ul>
+    </p>
+  </section>
+</article>
+
+<hr/>
+
+<!--<article id="hebergement" class="info">
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+    <ul>
+      <li>Hôtel</li>
+      <li>40€</li>
+    </ul>
+  </aside>
+
+  <header>
+    <h2>Hébergement</h2>
+  </header>
+
+  <section>
+    <p>
+      Vous pourrez loger à <strong>l'Hôtel Campanile</strong> situé à 2 minutes à pied de l'InsaLan.
+    </p>
+    <p>
+      Notre partenaire Campanile vous propose des chambres pour 1 ou 2 personnes, au tarif suivant : 
+    </p>
+    <p>
+      <strong>40€</strong> la nuit* (avec garantie bancaire).
+    </p>
+    <p>
+      Il vous faudra ajouter la taxe de séjour de 1,32€ par personne et par nuit.
+      <br/>
+      Le petit déjeuner sera à 8€ par personne.
+    </p>
+    <p>
+      Pour profiter de cette offre, <strong>écrivez à l'Hôtel Campanile Rennes Est-Atalante à <a href="mailto:rennes.atalante@campanile.fr"> rennes.atalante@campanile.fr</a>, et notez «INSALAN» !</strong>
+    </p>
+    <p>
+      <small>
+        * Séjour non remboursable, non modifiable, non annulable, à payer lors de la réservation.
+      </small>
+    </p>
+    <p>
+      <small>
+        ** Séjour annulable et remboursable avant 18h00 le jour même sous peine de facturation (au-delà de cette heure la première nuitée sera facturée) et paiement sur place possible.
+      </small>
+    </p>
+    <p>
+      Si vous êtes plus guerrier, vous pourrez dormir dans l'InsaLan. La salle sera surveillée en permanence la nuit pour éviter les vols.
+    </p>
+  </section>
+</article>-->
+
+<hr/>
+
+<article id="tournoi" class="info">
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+    <ul>
+      <li>nombre</li>
+      <li>4</li>
+      <li>joueurs</li>
+      <li>{{ globalVars.playersNumber }}</li>
+    </ul>
+  </aside>
+
+  <header>
+    <h2>Tournois</h2>
+  </header>
+
+  <section>
+    <p>L'InsaLan accueille cette année 4 tournois officiels :</p>
+    <ul>
+      <li><span>counter-strike: global offensive</span> </li>
+      <li><span>league of legends</span> </li>
+      <li><span>trackmania</span> </li>
+      <li><span>dota 2</span> </li>
+    </ul>
+  </section>
+</article>
+
+<hr/>
+
+<article id="discord" class="info">
+  <aside>
+    <div class="square">
+      <a href="#body"><span></span></a>
+    </div>
+  </aside>
+
+  <header>
+    <h2>Discord</h2>
+  </header>
+
+  <section>
+    <p>
+      Un serveur Discord est disponible !<br>
+      Vous pourrez dessus rechercher une équipe à rejoindre, ou poster vos offres. <br>
+      Si jamais vous utilisez un jet privé pour venir, il y a un même un canal pour organiser des covoiturages. <br>
+      Petit bonus : on vous a fait un canal où vous pouvez nous poser des questions. <br>
+      Alors foncez ! &#128073;  <a href="https://discord.gg/eWEzRpjmj4">https://discord.gg/eWEzRpjmj4</a>
+    </p>
+  </section>
+</article>
+{% endblock %}

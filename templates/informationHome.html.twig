@@ -1,0 +1,36 @@
+{% extends 'informationLayout.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<section class="hero">
+  <div class="big-picture big-picture-1">
+    <div class="moto">
+      QUALIFICATIONS<br>LEAGUE OF LEGENDS
+    </div>
+  </div>
+  <div>
+    <a href="#games" class="btn btn-primary block pull-left">
+      LoL
+    </a>
+    <a href="#organization" class="btn btn-primary block pull-left">
+      64 Slots
+    </a>
+    <a href="#price" class="btn btn-primary block pull-left">
+      Gratuit
+    </a>
+    {% if app.user %}
+    <a href="{{ path('app_user_index') }}" class="btn btn-plain block-huge pull-left">
+      MON ESPACE 
+    </a>
+    {% else %}
+    <a href="{{ path('fos_user_registration_register') }}" class="btn btn-plain block-huge pull-left">
+      INSCRIPTION
+    </a>
+    {% endif %}
+    <br style="clear: both">
+  </div> 
+</section>
+
+{% include 'Part/detailed_informations.html.twig' %}
+{% endblock %}
