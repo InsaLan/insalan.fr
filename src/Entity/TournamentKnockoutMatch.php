@@ -259,7 +259,7 @@ class TournamentKnockoutMatch
     /**
      * Get knockout
      *
-     * @return TournamentKnockout
+     * @return \App\Entity\TournamentKnockout
      */
     public function getKnockout()
     {
@@ -282,7 +282,7 @@ class TournamentKnockoutMatch
     /**
      * Get match
      *
-     * @return TournamentMatch
+     * @return \App\Entity\TournamentMatch
      */
     public function getMatch()
     {
@@ -305,7 +305,7 @@ class TournamentKnockoutMatch
     /**
      * Get parent
      *
-     * @return TournamentKnockoutMatch
+     * @return \App\Entity\TournamentKnockoutMatch
      */
     public function getParent()
     {
@@ -384,7 +384,7 @@ class TournamentKnockoutMatch
     /**
      * Get loserDestination
      *
-     * @return TournamentKnockoutMatch 
+     * @return \App\Entity\TournamentKnockoutMatch 
      */
     public function getLoserDestination()
     {
