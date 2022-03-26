@@ -55,7 +55,7 @@ class TournamentGroupStage
      * Set name
      *
      * @param string $name
-     * @return TournamentGroupStage
+     * @return \App\Entity\TournamentGroupStage
      */
     public function setName($name)
     {
@@ -78,7 +78,7 @@ class TournamentGroupStage
      * Set tournament
      *
      * @param \App\Entity\Tournament $tournament
-     * @return TournamentGroupStage
+     * @return \App\Entity\TournamentGroupStage
      */
     public function setTournament(\App\Entity\Tournament $tournament = null)
     {
@@ -101,7 +101,7 @@ class TournamentGroupStage
      * Add groups
      *
      * @param \App\Entity\TournamentGroup $groups
-     * @return TournamentGroupStage
+     * @return \App\Entity\TournamentGroupStage
      */
     public function addGroup(\App\Entity\TournamentGroup $groups)
     {

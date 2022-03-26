@@ -32,7 +32,7 @@
           <b>{{ m.part2 }}</b>
         </td>
         <td class="grid-3">
-          <a href="{{ path("app_tournamentadmin_match_setstate", {id: m.id, state: 1}) }}">
+          <a href="{{ path("app_tournamentadmin_match_setstate", {id: m.id, state: 2}) }}">
             <button>TERMINER</button>
           </a>
           <a href="{{path('app_tournamentadmin_match_reset', {id: m.id}) }}" onclick="return confirm('Confirmer le reset des points ?')">

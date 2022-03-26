@@ -105,7 +105,7 @@ class TournamentManager
      * Set user
      *
      * @param User $user
-     * @return TournamentManager
+     * @return \App\Entity\TournamentManager
      */
     public function setUser(User $user = null)
     {
@@ -127,7 +127,7 @@ class TournamentManager
      * Set tournament
      *
      * @param \App\Entity\Tournament $tournament
-     * @return TournamentManager
+     * @return \App\Entity\TournamentManager
      */
     public function setTournament(\App\Entity\Tournament $tournament = null)
     {
@@ -149,7 +149,7 @@ class TournamentManager
      * Set related participant
      *
      * @param \App\Entity\Participant $participant
-     * @return TournamentManager
+     * @return \App\Entity\TournamentManager
      */
     public function setParticipant(\App\Entity\Participant $participant = null)
     {
@@ -171,7 +171,7 @@ class TournamentManager
      * Set gameName
      *
      * @param string $gameName
-     * @return TournamentManager
+     * @return \App\Entity\TournamentManager
      */
     public function setGameName($gameName)
     {
@@ -194,7 +194,7 @@ class TournamentManager
      * Set paymentDone
      *
      * @param boolean $paymentDone
-     * @return TournamentManager
+     * @return \App\Entity\TournamentManager
      */
     public function setPaymentDone($paymentDone)
     {
@@ -211,7 +211,7 @@ class TournamentManager
      * Set arrived
      *
      * @param boolean $arrived
-     * @return TournamentManager
+     * @return \App\Entity\TournamentManager
      */
     public function setArrived($arrived)
     {
@@ -263,7 +263,7 @@ class TournamentManager
      * Set eTicket
      *
      * @param integer eTicket
-     * @return TournamentManager
+     * @return \App\Entity\TournamentManager
      */
     public function setETicket($eTicket)
     {

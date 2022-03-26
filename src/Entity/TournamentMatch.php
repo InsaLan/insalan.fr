@@ -87,7 +87,7 @@ class TournamentMatch extends TournamentAbstractMatch
      * Set part1
      *
      * @param \App\Entity\Participant $part1
-     * @return TournamentMatch
+     * @return \App\Entity\TournamentMatch
      */
     public function setPart1(\App\Entity\Participant $part1 = null)
     {
@@ -110,7 +110,7 @@ class TournamentMatch extends TournamentAbstractMatch
      * Set part2
      *
      * @param \App\Entity\Participant $part2
-     * @return TournamentMatch
+     * @return \App\Entity\TournamentMatch
      */
     public function setPart2(\App\Entity\Participant $part2 = null)
     {

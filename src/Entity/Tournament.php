@@ -143,7 +143,7 @@ class Tournament extends Registrable
      * Set type
      *
      * @param string $type
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setType($type)
     {
@@ -166,7 +166,7 @@ class Tournament extends Registrable
      * Set teamMinPlayer
      *
      * @param integer $teamMinPlayer
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setTeamMinPlayer($teamMinPlayer)
     {
@@ -189,7 +189,7 @@ class Tournament extends Registrable
      * Set teamMaxPlayer
      *
      * @param integer $teamMaxPlayer
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setTeamMaxPlayer($teamMaxPlayer)
     {
@@ -233,7 +233,7 @@ class Tournament extends Registrable
      * Set participantType
      *
      * @param string $participantType
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setParticipantType($participantType)
     {
@@ -270,7 +270,7 @@ class Tournament extends Registrable
      * Add participants
      *
      * @param \App\Entity\Participant $participants
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function addParticipant(\App\Entity\Participant $participants)
     {
@@ -303,7 +303,7 @@ class Tournament extends Registrable
      * Set tournamentOpen
      *
      * @param \DateTime $tournamentOpen
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setTournamentOpen($tournamentOpen)
     {
@@ -326,7 +326,7 @@ class Tournament extends Registrable
      * Set tournamentClose
      *
      * @param \DateTime $tournamentClose
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setTournamentClose($tournamentClose)
     {
@@ -349,7 +349,7 @@ class Tournament extends Registrable
      * Set placement
      *
      * @param boolean $placement
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setPlacement($placement)
     {
@@ -372,7 +372,7 @@ class Tournament extends Registrable
      * Set shortName
      *
      * @param string $shortName
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setShortName($shortName)
     {
@@ -395,7 +395,7 @@ class Tournament extends Registrable
      * Set playerInfos
      *
      * @param string $playerInfos
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setPlayerInfos($playerInfos)
     {
@@ -418,7 +418,7 @@ class Tournament extends Registrable
      * Set rules
      *
      * @param string $rules
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setRules($rules)
     {
@@ -441,7 +441,7 @@ class Tournament extends Registrable
      * Set login type
      *
      * @param string $loginType
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setLoginType($loginType)
     {

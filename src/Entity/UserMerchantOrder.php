@@ -99,7 +99,7 @@ class UserMerchantOrder
      * Add players
      *
      * @param \App\Entity\Player $players
-     * @return TournamentGroup
+     * @return \App\Entity\TournamentGroup
      */
     public function addPlayer(\App\Entity\Player $players)
     {
