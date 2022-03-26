@@ -140,7 +140,7 @@ abstract class Registrable
      * Set name
      *
      * @param string $name
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setName($name)
     {
@@ -232,7 +232,7 @@ abstract class Registrable
      * Set description
      *
      * @param string $description
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setDescription($description)
     {
@@ -264,7 +264,7 @@ abstract class Registrable
      * Set registration_open
      *
      * @param \DateTime $registrationOpen
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setRegistrationOpen($registrationOpen)
     {
@@ -287,7 +287,7 @@ abstract class Registrable
      * Set registration_close
      *
      * @param \DateTime $registrationClose
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setRegistrationClose($registrationClose)
     {
@@ -310,7 +310,7 @@ abstract class Registrable
      * Set registration_limit
      *
      * @param \integer $registrationLimit
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setRegistrationLimit($registrationLimit)
     {
@@ -370,7 +370,7 @@ abstract class Registrable
      * Set logoPath
      *
      * @param string $logoPath
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setLogoPath($logoPath)
     {
@@ -393,7 +393,7 @@ abstract class Registrable
      * Set webPrice
      *
      * @param integer $webPrice
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setWebPrice($webPrice)
     {
@@ -416,7 +416,7 @@ abstract class Registrable
      * Set onlineIncreaseInPrice
      *
      * @param integer $onlineIncreaseInPrice
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setOnlineIncreaseInPrice($onlineIncreaseInPrice)
     {
@@ -439,7 +439,7 @@ abstract class Registrable
      * Set currency
      *
      * @param string $currency
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setCurrency($currency)
     {
@@ -462,7 +462,7 @@ abstract class Registrable
      * Set onSitePrice
      *
      * @param integer $onSitePrice
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setOnSitePrice($onSitePrice)
     {
@@ -485,7 +485,7 @@ abstract class Registrable
      * Set locked
      *
      * @param string $locked
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function setLocked($locked)
     {

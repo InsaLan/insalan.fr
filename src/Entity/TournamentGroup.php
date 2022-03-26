@@ -78,7 +78,7 @@ class TournamentGroup
      * Set name
      *
      * @param string $name
-     * @return TournamentGroup
+     * @return \App\Entity\TournamentGroup
      */
     public function setName($name)
     {
@@ -111,7 +111,7 @@ class TournamentGroup
      * Add matches
      *
      * @param \App\Entity\TournamentAbstractMatch $matches
-     * @return TournamentGroup
+     * @return \App\Entity\TournamentGroup
      */
     public function addMatch(\App\Entity\TournamentAbstractMatch $matches)
     {
@@ -194,7 +194,7 @@ class TournamentGroup
      * Set stage
      *
      * @param TournamentGroupStage $stage
-     * @return TournamentGroup
+     * @return \App\Entity\TournamentGroup
      */
     public function setStage(TournamentGroupStage $stage = null)
     {
@@ -206,7 +206,7 @@ class TournamentGroup
     /**
      * Get stage
      *
-     * @return TournamentGroupStage
+     * @return \App\Entity\TournamentGroupStage
      */
     public function getStage()
     {
@@ -223,7 +223,7 @@ class TournamentGroup
      * Add participants
      *
      * @param Participant $participants
-     * @return TournamentGroup
+     * @return \App\Entity\TournamentGroup
      */
     public function addParticipant(Participant $participants)
     {
@@ -262,7 +262,7 @@ class TournamentGroup
      * Set statsType
      *
      * @param integer $statsType
-     * @return TournamentMatch
+     * @return \App\Entity\TournamentMatch
      */
     public function setStatsType($statsType)
     {
@@ -286,7 +286,7 @@ class TournamentGroup
      *
      * @param  Participant $A
      * @param  Participant $B
-     * @return TournamentMatch       or null if not available
+     * @return \App\Entity\TournamentMatch       or null if not available
      */
     public function getMatchBetween(Participant $A, Participant $B)
     {

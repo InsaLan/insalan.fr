@@ -127,7 +127,7 @@ abstract class TournamentAbstractMatch
      * Add rounds
      *
      * @param \App\Entity\TournamentRound $rounds
-     * @return TournamentMatch
+     * @return \App\Entity\TournamentMatch
      */
     public function addRound(\App\Entity\TournamentRound $rounds)
     {
@@ -160,7 +160,7 @@ abstract class TournamentAbstractMatch
      * Set state
      *
      * @param integer $state
-     * @return TournamentMatch
+     * @return \App\Entity\TournamentMatch
      */
     public function setState($state)
     {
@@ -183,7 +183,7 @@ abstract class TournamentAbstractMatch
      * Set group
      *
      * @param \App\Entity\TournamentGroup $group
-     * @return TournamentMatch
+     * @return \App\Entity\TournamentMatch
      */
     public function setGroup(\App\Entity\TournamentGroup $group = null)
     {
@@ -206,7 +206,7 @@ abstract class TournamentAbstractMatch
      * Set koMatch
      *
      * @param \App\Entity\TournamentKnockoutMatch $koMatch
-     * @return TournamentKnockoutMatch
+     * @return \App\Entity\TournamentKnockoutMatch
      */
     public function setKoMatch(\App\Entity\TournamentKnockoutMatch $koMatch = null)
     {

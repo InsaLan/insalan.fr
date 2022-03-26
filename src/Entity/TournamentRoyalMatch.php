@@ -49,7 +49,7 @@ class TournamentRoyalMatch extends TournamentAbstractMatch
      * Add participants
      *
      * @param \App\Entity\Participant $participants
-     * @return Tournament
+     * @return \App\Entity\Tournament
      */
     public function addParticipant(\App\Entity\Participant $participants)
     {

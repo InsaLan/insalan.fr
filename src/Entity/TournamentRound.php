@@ -173,7 +173,7 @@ class TournamentRound
      *
      * @param \App\Entity\Participant $participant
      * @param integer $score
-     * @return TournamentRound
+     * @return \App\Entity\TournamentRound
      */
     public function setScore(\App\Entity\Participant $participant, $score)
     {
@@ -265,7 +265,7 @@ class TournamentRound
      * Set match
      *
      * @param TournamentAbstractMatch $match
-     * @return TournamentRound
+     * @return \App\Entity\TournamentRound
      */
     public function setMatch(TournamentAbstractMatch $match = null)
     {
@@ -277,7 +277,7 @@ class TournamentRound
     /**
      * Get match
      *
-     * @return TournamentAbstractMatch
+     * @return \App\Entity\TournamentAbstractMatch
      */
     public function getMatch()
     {
@@ -290,7 +290,7 @@ class TournamentRound
      * Set replay
      *
      * @param string $replay
-     * @return TournamentRound
+     * @return \App\Entity\TournamentRound
      */
     public function setReplay($replay)
     {
@@ -315,7 +315,7 @@ class TournamentRound
      * Set data
      *
      * @param string $data
-     * @return TournamentRound
+     * @return \App\Entity\TournamentRound
      */
     public function setData($data)
     {

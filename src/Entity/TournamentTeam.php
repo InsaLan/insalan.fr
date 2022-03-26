@@ -109,7 +109,7 @@ class TournamentTeam extends Participant
      * Set password salt
      *
      * @param string $passwordSalt
-     * @return TournamentTeam
+     * @return \App\Entity\TournamentTeam
      */
     public function setPasswordSalt($passwordSalt)
     {
@@ -131,7 +131,7 @@ class TournamentTeam extends Participant
     /**
      * Generate password salt
      *
-     * @return TournamentTeam
+     * @return \App\Entity\TournamentTeam
      */
     public function generatePasswordSalt()
     {
@@ -144,7 +144,7 @@ class TournamentTeam extends Participant
      * Set name
      *
      * @param string $name
-     * @return TournamentTeam
+     * @return \App\Entity\TournamentTeam
      */
     public function setName($name)
     {
@@ -168,7 +168,7 @@ class TournamentTeam extends Participant
      * Add players
      *
      * @param \App\Entity\Player $players
-     * @return TournamentTeam
+     * @return \App\Entity\TournamentTeam
      */
     public function addPlayer(\App\Entity\Player $players)
     {
@@ -221,7 +221,7 @@ class TournamentTeam extends Participant
      * Set captain
      *
      * @param \App\Entity\Player $captain
-     * @return TournamentTeam
+     * @return \App\Entity\TournamentTeam
      */
     public function setCaptain(\App\Entity\Player $captain = null)
     {
@@ -244,7 +244,7 @@ class TournamentTeam extends Participant
      * Set tournament
      *
      * @param \App\Entity\Tournament $tournament
-     * @return TournamentTeam
+     * @return \App\Entity\TournamentTeam
      */
     public function setTournament(\App\Entity\Tournament $tournament = null)
     {
@@ -267,7 +267,7 @@ class TournamentTeam extends Participant
      * Add groups
      *
      * @param \App\Entity\TournamentGroup $groups
-     * @return TournamentTeam
+     * @return \App\Entity\TournamentTeam
      */
     public function addGroup(\App\Entity\TournamentGroup $groups)
     {
@@ -299,7 +299,7 @@ class TournamentTeam extends Participant
     /**
      * To String of Team
      *
-     * @return TournamentTeam
+     * @return \App\Entity\TournamentTeam
      */
     public function __toString()
     {
@@ -327,7 +327,7 @@ class TournamentTeam extends Participant
      * Set lastUpdated
      *
      * @param integer $lastUpdated
-     * @return TournamentTeam
+     * @return \App\Entity\TournamentTeam
      */
     public function setLastUpdated($lastUpdated)
     {

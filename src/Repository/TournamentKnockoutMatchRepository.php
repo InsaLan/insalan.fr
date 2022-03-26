@@ -26,7 +26,7 @@ class TournamentKnockoutMatchRepository extends NestedTreeRepository
      * @param  TournamentKnockout $knockout
      * @param  Number   $players
      * @param  Boolean  $doubleElimination
-     * @return TournamentKnockoutMatch The root of the tree
+     * @return \App\Entity\TournamentKnockoutMatch The root of the tree
      */
     public function generateMatches(TournamentKnockout $knockout, $players, $doubleElimination = false) {
         $players = intval($players);
@@ -242,7 +242,7 @@ class TournamentKnockoutMatchRepository extends NestedTreeRepository
     /**
      * Get the correct KOMatch root (final) given a Knockout tree.
      * @param  TournamentKnockout $ko The knockout container
-     * @return TournamentKnockoutMatch
+     * @return \App\Entity\TournamentKnockoutMatch
      */
     public function getRoot(TournamentKnockout $ko) {
         $q = $this->createQueryBuilder('kom')
@@ -291,7 +291,7 @@ class TournamentKnockoutMatchRepository extends NestedTreeRepository
      * Get children that are at a specific level, sorted from left to right
      * @param  TournamentKnockout $ko  The knockout tree
      * @param  Number   $lvl 
-     * @return TournamentKnockoutMatch[]
+     * @return \App\Entity\TournamentKnockoutMatch[]
      */
     public function getLvlChildren(TournamentKnockoutMatch $root, $lvl, $sortOrder = "asc") {   
 

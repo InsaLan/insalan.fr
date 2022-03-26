@@ -39,7 +39,7 @@ class TournamentScore
     /**
      * Get round
      *
-     * @return TournamentRound
+     * @return \App\Entity\TournamentRound
      */
     public function getRound()
     {
@@ -50,7 +50,7 @@ class TournamentScore
      * Set round
      *
      * @param \App\Entity\TournamentRound $round
-     * @return TournamentRound
+     * @return \App\Entity\TournamentRound
      */
     public function setRound(\App\Entity\TournamentRound $round = null)
     {
@@ -63,7 +63,7 @@ class TournamentScore
      * Set score
      *
      * @param integer $score
-     * @return TournamentRound
+     * @return \App\Entity\TournamentRound
      */
     public function setScore($score)
     {
@@ -86,7 +86,7 @@ class TournamentScore
      * Set participant
      *
      * @param \App\Entity\Participant $participant
-     * @return TournamentRound
+     * @return \App\Entity\TournamentRound
      */
     public function setParticipant(\App\Entity\Participant $participant = null)
     {
