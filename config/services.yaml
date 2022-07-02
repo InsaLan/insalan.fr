@@ -343,13 +343,16 @@ services:
     insalan.free_slots:
         class: App\Service\FreeSlots
         arguments: ["@doctrine"]
+        public: true
     insalan.opening_matcher:
         class: App\Security\OpeningRequestMatcher
+        public: true
 
     insalan.tournament.participant_validator:
         class: App\Subscriber\ParticipantValidator
         tags:
             - { name: doctrine.event_subscriber }
+        public: true
 
     insalan.tournament.placement:
         class: App\Service\TournamentPlacement
@@ -369,3 +372,4 @@ services:
     insalan.user.login_platform:
         class: App\Service\LoginPlatform
         arguments: ["%steam_api_key%"]
+        public: true
