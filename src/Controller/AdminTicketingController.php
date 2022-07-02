@@ -213,7 +213,7 @@ class AdminTicketingController extends Controller
       // Create the message
       $message = (new \Swift_Message())
           ->setSubject('Votre inscription au tournoi ' . $eTicket->getTournament())
-          ->setFrom(['contact@insalan.fr' => 'InsaLan'])
+          ->setFrom(['noreply@insalan.fr' => 'InsaLan'])
           ->setTo([$eTicket->getUser()->getEmail()])
           ->setBody(
               $this->renderView(
@@ -233,6 +233,64 @@ class AdminTicketingController extends Controller
       $em->persist($eTicket);
       $em->flush();
       $this->get('session')->getFlashBag()->add('info', "Billet envoyé");
+    }
+
+    /**
+     * @Route("/ticketing/sendall")
+     */
+    public function sendAllAction()
+    {
+      $em = $this->getDoctrine()->getManager();
+      $tournaments = $em->getRepository('App\Entity\Tournament')->getUpcomingTournaments();
+      $soloTournaments = $teamTournaments = array();
+      foreach ($tournaments as $tournament) {
+        if ($tournament->getParticipantType() == 'team') {
+          $teamTournaments[] = $tournament;
+        } else if ($tournament->getParticipantType() == 'player'){
+          $soloTournaments[] = $tournament;
+        }
+      }
+      $soloPlayers = $em->getRepository('App\Entity\Player')->findBy(["tournament" => $soloTournaments, "validated" => Participant::STATUS_VALIDATED, "eTicket" => null]);
+      $teamPlayers = $em->getRepository('App\Entity\Player')->getValidatedTeamPlayers($teamTournaments);
+      $players = array_merge($soloPlayers, $teamPlayers);
+
+      // get validated managers
+      $managers = array();
+      $teams = $em->getRepository('App\Entity\TournamentTeam')->findBy(["tournament" => $teamTournaments, "validated" => Participant::STATUS_VALIDATED]);
+      foreach ($soloPlayers as $player) {
+        if ($player->getManager() && $player->getManager()->isOk() && $player->getManager()->getETicket() == null) {
+          $managers[] = $player->getManager();
+        }
+      }
+      foreach ($teams as $team) {
+        if ($team->getManager() && $team->getManager()->isOk() && $team->getManager()->getETicket() == null) {
+          $managers[] = $team->getManager();
+        }
+      }
+
+      foreach($players as $participant) {
+            // Check if a ticket already exists
+            if (! $participant->getETicket()) {
+                $tournament = $participant->getPendingRegistrable();
+                // Generate pdf
+                $pdf = $this->generateETicket($eTicket, $participant);
+                $this->get('session')->getFlashBag()->add('info', "Billet créé ".$eTicket->getToken());
+                $this->sendETicket($eTicket, $pdf);
+            }
+      }
+
+      foreach($managers as $participant) {
+            // Check if a ticket already exists
+            if (! $participant->getETicket()) {
+                $tournament = $participant->getTournament();
+                // Generate pdf
+                $pdf = $this->generateETicket($eTicket, $participant);
+                $this->get('session')->getFlashBag()->add('info', "Billet créé ".$eTicket->getToken());
+                $this->sendETicket($eTicket, $pdf);
+            }
+      }
+
+      return $this->redirect($this->generateUrl("app_adminticketing_ready"));
     }
 
     private function generateETicket(ETicket $eTicket, $participant) {
@@ -267,7 +325,7 @@ class AdminTicketingController extends Controller
       // Create the message
       $message = (new \Swift_Message())
           ->setSubject('Votre inscription au tournoi ' . $eTicket->getTournament())
-          ->setFrom(['contact@insalan.fr' => 'InsaLan'])
+          ->setFrom(['noreply@insalan.fr' => 'InsaLan'])
           ->setTo([$eTicket->getUser()->getEmail()])
           ->setBody(
               $this->renderView(
