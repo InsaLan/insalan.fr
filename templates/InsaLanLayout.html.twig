@@ -124,29 +124,6 @@
       </div>
     </header>
     {% endblock %}
-      
-    {% block social %}
-    <aside class="social">
-      <ul>
-        <li>
-          <div id="return-top"><a href="#body"><span></span></a></div>
-        </li>
-        <li>
-          <a id="twitter" target="_blank" href="https://twitter.com/insalan">
-            <img src="{{ asset('img/twitter.png') }}" alt="Twitter"/>
-          </a>
-        </li>
-        <li>
-          <a id="facebook" target="_blank" href="https://www.facebook.com/insalan">
-            <img src="{{ asset('img/facebook.png') }}" alt="Facebook"/>
-          </a>
-        </li>
-        <li>
-          <a id="mail" href="mailto:contact@insalan.fr"><span>📧</span></a>
-        </li> 
-      </ul>
-    </aside>
-    {% endblock %}
 
     {% if app.session.flashbag.peekAll()|length %}
       <section class="container">
