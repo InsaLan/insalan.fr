@@ -22,19 +22,19 @@
         <p>
           Vous devez renseigner votre identifiant
           <strong>
-            {% if tournament.loginType == constant('InsaLan\\UserBundle\\Service\\LoginPlatform::PLATFORM_BATTLENET') %} Battle.net {% endif %}
-            {% if tournament.loginType == constant('InsaLan\\UserBundle\\Service\\LoginPlatform::PLATFORM_STEAM') %} Steam {% endif %}
+            {% if tournament.loginType == constant('App\\Service\\LoginPlatform::PLATFORM_BATTLENET') %} Battle.net {% endif %}
+            {% if tournament.loginType == constant('App\\Service\\LoginPlatform::PLATFORM_STEAM') %} Steam {% endif %}
           </strong>
           pour participer à ce tournoi.
         </p>
         <br/>
         <div>
-          {% if tournament.loginType == constant('InsaLan\\UserBundle\\Service\\LoginPlatform::PLATFORM_BATTLENET') %}
+          {% if tournament.loginType == constant('App\\Service\\LoginPlatform::PLATFORM_BATTLENET') %}
             <a href="{{ path('app_user_registerbattlenet') }}" class="btn btn-primary">
               Renseigner votre identifiant
             </a>
           {% endif %}
-          {% if tournament.loginType == constant('InsaLan\\UserBundle\\Service\\LoginPlatform::PLATFORM_STEAM') %}
+          {% if tournament.loginType == constant('App\\Service\\LoginPlatform::PLATFORM_STEAM') %}
             <a href="{{ path('app_user_registersteamid') }}" class="btn btn-primary">
               Renseigner votre identifiant
             </a>

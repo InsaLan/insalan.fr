@@ -259,7 +259,7 @@ class TournamentUserController extends Controller
     /**
      * Prompt the user to fill-in his LoginPlatform infos
      * @Route("/{tournament}/user/player/registerLoginPlatform/")
-     * @Template("User/redirectToApiLogin.html.twig")
+     * @Template("tournament_user/redirectToApiLogin.html.twig")
      */
     public function redirectToApiLoginAction(Request $request, Tournament $tournament) {
         return array('tournament' => $tournament);

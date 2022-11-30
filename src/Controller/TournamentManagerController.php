@@ -381,7 +381,7 @@ class TournamentManagerController extends Controller
         $em = $this->getDoctrine()->getManager();
         $usr = $this->get('security.token_storage')->getToken()->getUser();
         $manager = $em
-            ->getRepository('App\Entity\Tournament:Manager')
+            ->getRepository('App\Entity\TournamentManager')
             ->findOneByUserAndPendingTournament($usr, $tournament);
 
         // Get global variables
