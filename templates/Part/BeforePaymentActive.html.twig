@@ -50,8 +50,8 @@
     <h2><strong>Moyens de paiement disponibles</strong></h2>
     <br>
     <ul class="shift">
-      <li>En ligne : Paypal , Chèque </li>
-      <li>Sur place : Chèque, Espèces, CB</li>
+      <li>En ligne :Lyfpay </li>
+      <li>Sur place : Espèces, CB</li>
       <!--<li>Point de vente partenaire (Le WarpZone - Rennes) : Chèque, Espèces, CB</li>-->
     </ul>
     <br/></br>
@@ -66,7 +66,7 @@
     {% include 'Part/ImportantDetails.html.twig'  with {'registrable': registrable}%}
       
     <p>
-      En cliquant sur le bouton "Chèque/Partenaire/Sur place" ou le bouton "Paiement en ligne" vous déclarez avoir lu et accepté sans réserve les <strong><a href="{{ path('app_information_salesterms') }}" target="_blank" >[conditions générales de vente &#x25BE;]</a></strong> ainsi que le <strong><a href="{{ path('app_tournament_rules', {id: registrable.id}) }}" target="_blank" >[règlement du tournoi &#x25BE;]</a></strong>
+      En cliquant sur le bouton "Sur place" ou le bouton "Paiement en ligne" vous déclarez avoir lu et accepté sans réserve les <strong><a href="{{ path('app_information_salesterms') }}" target="_blank" >[conditions générales de vente &#x25BE;]</a></strong> ainsi que le <strong><a href="{{ path('app_tournament_rules', {id: registrable.id}) }}" target="_blank" >[règlement du tournoi &#x25BE;]</a></strong>
     </p>
     <br/><br/>
   </div>
@@ -89,19 +89,13 @@
       </a>
     {% else %}
       <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('app_tournamentuser_payoffline', {registrable: registrable.id}) }}">
-        Chèque/Partenaire/Sur place
+        Sur place
       </a>
     {% endif %}
     {% if registrable.isOpenedNow %}
-      {% if selectedDiscount %}
-        <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('app_tournamentuser_paypaypalec_1', {registrable: registrable.id, discount: selectedDiscount.id}) }}">
-          Paiement en ligne
+        <a class="btn btn-primary ctrl grid-3 pull-left" href="https://boutique.lyf.eu/aeir-insalan/inscriptions-tournois-2023">
+          Paiement en ligne via lyfpay
         </a>
-      {% else %}
-        <a class="btn btn-primary ctrl grid-3 pull-left" href="{{ path('app_tournamentuser_paypaypalec', {registrable: registrable.id}) }}">
-          Paiement en ligne
-        </a>
-      {% endif %}
     {% else %}
       <span class="btn ctrl grid-3 pull-left">
         Paiement en ligne indisponible
@@ -112,11 +106,11 @@
 
     {% if selectedDiscount %}
       <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('app_tournamentuser_payoffline_1', {registrable: registrable.id, discount: selectedDiscount.id}) }}">
-        Chèque/Partenaire/Sur place
+        Sur place
       </a>
     {% else %}
       <a class="btn btn-primary ctrl grid-5 pull-left" href="{{ path('app_tournamentuser_payoffline', {registrable: registrable.id}) }}">
-        Chèque/Partenaire/Sur place
+        Sur place
       </a>
     {% endif %}
     <span class="btn ctrl grid-3 pull-left">
