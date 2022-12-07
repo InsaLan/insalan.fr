@@ -10,21 +10,11 @@
   </header>
 
   <div class="text">
-    {% if tournament.isOpenedNow %}
-      <h2><strong>Paiement par chèque</strong></h2>
-      <br>
-      Vous devez envoyer un chèque de {{ constant('ONLINE_PRICE', manager) }}€ à l'ordre de <strong>"AEIR InsaLan"</strong> par la poste à l'adresse suivante : 
-      <br>
-      {{ globalVars.payCheckAddress | raw }}
-      <br>
-      Votre inscription sera validé par le staff à la réception du chèque.
-      <br>
-    {% endif %}
     <h2><strong>Paiement sur place</strong></h2>
     <br>
     <h3>Le tarif manager sur place s'élève à {{ constant('ONSITE_PRICE', manager) }}€.</h3>
     <br/>
-    Vous pourrez régler sur place en liquide, par chèque ou par carte bancaire {#(avec une majoration de 1€ pour la CB)#}.
+    Vous pourrez régler sur place en liquide, ou par carte bancaire {#(avec une majoration de 1€ pour la CB)#}.
     <br>
     <br/>
     </br>
